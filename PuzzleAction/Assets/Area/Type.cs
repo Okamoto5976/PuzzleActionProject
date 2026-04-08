@@ -4,7 +4,8 @@ public enum Areatype
 {
     damage,
     summon,
-    normal
+    normal,
+    shop
 }
 
 public class Type : MonoBehaviour
