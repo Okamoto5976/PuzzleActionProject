@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float m_moveSpeed = 5f;
-    [SerializeField] private GameObject plane;
 
     private Rigidbody m_rb;
     private PlayerInputActions m_inputActions;
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1.1f))
         {
-            return hit.collider.gameObject == plane;
+            return hit.collider.tag == "plane";
         }
         return false;
     }
@@ -72,7 +71,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position + Vector3.up * 0.1f,
-            Vector3.down * 1.1f);
+        Gizmos.DrawRay(transform.position + Vector3.up * 0.1f, Vector3.down * 1.1f);
     }
 }
