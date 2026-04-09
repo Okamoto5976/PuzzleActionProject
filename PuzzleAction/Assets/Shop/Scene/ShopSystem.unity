@@ -312,7 +312,7 @@ MonoBehaviour:
   m_money: {fileID: 334503368}
   m_button: {fileID: 86882427}
   m_messageText: {fileID: 490082843}
-  m_fadeOutOffset: {x: 10, y: 10, z: 0}
+  m_fadeOutOffset: {x: 200, y: 200, z: 0}
 --- !u!114 &86882427
 MonoBehaviour:
   m_ObjectHideFlags: 0
