@@ -2,10 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System;
-using Unity.Android.Gradle.Manifest;
-using System.Runtime.InteropServices.WindowsRuntime;
-
-
 
 public class MapPieceBuild : MonoBehaviour
 {
