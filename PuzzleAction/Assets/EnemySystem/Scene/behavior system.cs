@@ -2,27 +2,33 @@ using UnityEngine;
 
 public class Behaviorsystem : MonoBehaviour
 {
-    
+
     private State state;
-    private Behaviorsystem movement;
+    //private EnemyMovement movement; //EnemyMovement‚Ì•”•ª‚ÍAI@Behavior=UŒ‚ movement=ˆÚ“®
+
+    [SerializeField] private GameObject attackCollider;
+    [SerializeField] private float attackTime = 0.3f;
+
+    public EnemyData data;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         state = GetComponent<State>();
-        movement = GetComponent<Behaviorsystem>();
+        //movement = GetComponent<EnemyMovement>(); //EnemyMovement‚Ì•”•ª‚ÍAI
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleBehaavior();
+
     }
 
     //ó‘Ô‚É‰‚¶‚½‹““®§Œä
     void HandleBehaavior()
     {
-        if (state == null || movement == null) return;
+        if (state == null /*|| movement == null*/ ) return;  //movement‚Ì•”•ª‚ÍAI
 
         switch (state.currentState)
         {
@@ -51,7 +57,7 @@ public class Behaviorsystem : MonoBehaviour
     //Šeó‘Ô‚Ìˆ—
     void HandleIdle()
     {
-        
+
     }
 
     void HandleChase()
@@ -61,17 +67,34 @@ public class Behaviorsystem : MonoBehaviour
             //movement.Move();
 
         }
-
-    
     }
+
 
     void HandleAttack()
     {
-        
+
         if (state.canAttack)
         {
-            Debug.Log("UŒ‚ˆ—");
+            Attack();
         }
+    }
+
+    void Attack()
+    {
+        if (data.m_attackType == EnemyData.AttackType.HitCollider)
+        {
+            Debug.Log("UŒ‚");
+
+            attackCollider.SetActive(true);
+
+            Invoke(nameof(EndAttack), attackTime);
+        }
+    }
+
+    void EndAttack()
+    {
+        attackCollider.SetActive(false);
+        Debug.Log("UŒ‚I—¹");
     }
 
     void HandheDamage()

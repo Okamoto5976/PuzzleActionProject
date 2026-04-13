@@ -21,8 +21,9 @@ public class State : MonoBehaviour
     public bool canAttack = true;
 
      void Update()
-     {
-         DebugState(); // 確認用（あとで消してOK）
+     { 
+            //DebugState(); // 確認用（あとで消してOK）
+        
      }
 
     //状態変更用
@@ -40,8 +41,8 @@ public class State : MonoBehaviour
     void DebugState()
     {
         Debug.Log("State: " + currentState +
-                  " | 無敵: " + canMove +
-                  " | 移動可: " + canAttack +
-                  " | 攻撃可: " + isInvincible);
+                  " | 無敵: " + isInvincible +
+                  " | 移動可: " + canMove +
+                  " | 攻撃可: " + canAttack);
     }
 }

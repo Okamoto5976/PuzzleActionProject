@@ -8,9 +8,11 @@ public class EnemyData : ScriptableObject
     [Header("UŒ‚İ’è")]
     public AttackType m_attackType = AttackType.HitCollider;
 
+
     public enum AttackType
     {
         HitCollider,
         Ray
     }
+
 }
