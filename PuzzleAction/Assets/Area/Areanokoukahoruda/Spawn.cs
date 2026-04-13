@@ -2,15 +2,37 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string m_objectKey = "SummonedObject";//pool名
+    public Transform m_spawnPoint;
+
+    private bool m_Spawned = false;//出現確認
+
+    public void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player") && !m_Spawned)
+        {
+            ActivateSpawn();
+            m_Spawned = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+
+    public void ActivateSpawn()
     {
-        
+        Debug.Log($"召喚{m_objectKey}発動");
+        //pool入れる
+    }
+
+
+
+
+
+    [ContextMenu("初期化")]
+    public void ResetSpawn()
+    {
+        m_Spawned = false;
+        Debug.Log("リセットしたお");
     }
 }
