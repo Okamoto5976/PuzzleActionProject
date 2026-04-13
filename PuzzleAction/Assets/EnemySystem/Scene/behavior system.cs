@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class behaviorsystem : MonoBehaviour
+public class Behaviorsystem : MonoBehaviour
 {
+    
     private State state;
-    private behaviorsystem movement;
+    private Behaviorsystem movement;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         state = GetComponent<State>();
-        movement = GetComponent<behaviorsystem>();
+        movement = GetComponent<Behaviorsystem>();
     }
 
     // Update is called once per frame

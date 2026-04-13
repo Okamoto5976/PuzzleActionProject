@@ -1,18 +1,16 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyData",menuName = "Enemy/Data")]
-public class EnmeyData:ScriptableObject
+[CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/EnemyData")]
+public class EnemyData : ScriptableObject
 {
     [Header("ˆÚ“®İ’è")]
+    public float m_moveSpeed = 3f;
     [Header("UŒ‚İ’è")]
-
-    //ˆÚ“®İ’è
-    public float moveSpeed = 0f;
-    //UŒ‚İ’è
-    public AttackType attackType;
+    public AttackType m_attackType = AttackType.HitCollider;
 
     public enum AttackType
     {
-        None,
+        HitCollider,
+        Ray
     }
 }
