@@ -3,14 +3,14 @@ using UnityEngine;
 
 public struct DamageData
 {
-    public int damage;
-    public DamageType type;
+    public int m_damage;
+    public DamageType m_type;
 
-    public float knockbackForce;
-    public Vector3 hitPoint;
+    public float m_knockbackForce;
+    public Vector3 m_hitPoint;
 
-    public GameObject hitEffect;
-    public AudioClip hitSound;
+    public GameObject m_hitEffect;
+    public AudioClip m_hitSound;
 }
 
 
@@ -22,40 +22,40 @@ public enum DamageType//ダメージタイプ
 public abstract class EntityHP:MonoBehaviour,IDamage 
 {
     [Header("HP設定")] 
-    public int maxHP = 100;
-    public int currentHP;
+    public int m_maxHP = 100;
+    public int m_currentHP;
 
     protected Rigidbody rb;
     protected virtual void Start() 
     {
-        currentHP = maxHP;
+        m_currentHP = m_maxHP;
         rb = GetComponent<Rigidbody>();
     }
     //ダメージを受ける
     public virtual void TakeDamage(DamageData data)
     {
-        currentHP -= data.damage;
-        Debug.Log("ダメージ :" + data.damage + " 残りHP :" + currentHP);
+        m_currentHP -= data.m_damage;
+        Debug.Log("ダメージ :" + data.m_damage + " 残りHP :" + m_currentHP);
 
         //ノックバック
         if(rb!=null)
         {
-            Vector3 dir = (transform.position - data.hitPoint).normalized;
-            rb.AddForce(dir * data.knockbackForce, ForceMode.Impulse);
+            Vector3 dir = (transform.position - data.m_hitPoint).normalized;
+            rb.AddForce(dir * data.m_knockbackForce, ForceMode.Impulse);
         }
         //エフェクト (Managerに任せる）
 
-        if (data.hitEffect!=null)
+        if (data.m_hitEffect!=null)
         {
             //Instantiate(data.hitEffect, data.hitPoint, Quaternion.identity);
         }
         //サウンド
-        if(data.hitSound!=null)
+        if(data.m_hitSound!=null)
         {
            //AudioSource.PlayClipAtPoint(data.hitSound, transform.position);
         }
         //死亡処理
-        if (currentHP <= 0)
+        if (m_currentHP <= 0)
         {
             Die();
         }
