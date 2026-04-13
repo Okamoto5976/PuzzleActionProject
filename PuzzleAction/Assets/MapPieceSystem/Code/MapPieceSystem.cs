@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -69,6 +68,17 @@ public class MapPieceSystem : MonoBehaviour
 
     [SerializeField] private MapPieceBuild m_build;
 
+    [SerializeField] private InputAction m_attack;
+
+    private void OnEnable()
+    {
+        m_attack.Enable();
+    }
+
+    private void OnDisable()
+    {
+        m_attack.Disable();
+    }
 
     private RoomShape m_roomPlan;
     private Room m_room;
@@ -78,9 +88,13 @@ public class MapPieceSystem : MonoBehaviour
     private int m_nextId = 0;
 
     private GameObject m_roomObj;
+    private bool m_isDrag;
 
     private int m_gridWidth = 10;
     private int m_gridHeight = 10;
+
+    private Vector2Int m_startPos;
+    private Vector2Int m_endPos;
 
     Cell[,] m_grid;//二次元配列はx行y列の配列を用意　その中に型を入れれる
     bool[,] m_isValid;
@@ -95,8 +109,10 @@ public class MapPieceSystem : MonoBehaviour
     private void Start()
     {
         GridMap(m_gridWidth, m_gridHeight);
-        GridValidMap(m_gridWidth, m_gridHeight);
+        //GridValidMap(m_gridWidth, m_gridHeight);
 
+        m_startPos = new Vector2Int(0, 0);
+        m_endPos = new Vector2Int(8, 8);
 
         //生成
         m_build.Generate(m_gridWidth, m_gridHeight);
@@ -114,16 +130,34 @@ public class MapPieceSystem : MonoBehaviour
 
     private void Update()
     {
-        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+        MousePos();
+  
+        //if(m_attack.IsPressed())
+        //{
+        //    if(m_isDrag)
+        //    {
 
-        Vector3 worldPos = m_mainCamera.ScreenToWorldPoint(mouseScreenPos);
+        //    }
 
-        Vector3 localPos = m_parent.InverseTransformPoint(worldPos);
+        //    if (m_roomObj == null) return;
 
-        int x = Mathf.FloorToInt(localPos.x / 1.5f);
-        int z = Mathf.FloorToInt(localPos.z / 1.5f);
+        //    Vector3 localPos = m_parent.InverseTransformPoint(m_roomObj.transform.position);
 
-        m_origin = new Vector2Int(x, z);
+        //    int x = Mathf.FloorToInt(localPos.x / 1.5f);
+        //    int z = Mathf.FloorToInt(localPos.z / 1.5f);
+
+        //    Vector2Int roomObj = new Vector2Int(x, z);
+
+        //    if(roomObj == m_origin)
+        //    {
+        //        m_isDrag = true;
+        //    }
+        //}
+
+        //if(m_isDrag)
+        //{
+            
+        //}
 
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
@@ -132,10 +166,11 @@ public class MapPieceSystem : MonoBehaviour
                 m_roomPlan = CreatePlan();
 
                 m_room = CreateBuild(m_roomPlan);//生成する際にTypeを入れたい
-                
-                //m_roomObj = m_build.InstantiatePieceObject(m_room);//シーンに実際に作る
 
+                m_roomPlan = null;
 
+                m_roomObj = m_build.InstantiatePieceObject(m_room);//シーンに実際に作る
+    
                 Debug.Log("you create room");
             }
             else
@@ -170,6 +205,20 @@ public class MapPieceSystem : MonoBehaviour
                 Debug.Log("No Place");
             }
         }
+    }
+
+    private void MousePos()
+    {
+        Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+
+        Vector3 worldPos = m_mainCamera.ScreenToWorldPoint(mouseScreenPos);
+
+        Vector3 localPos = m_parent.InverseTransformPoint(worldPos);
+
+        int x = Mathf.FloorToInt(localPos.x / 1.5f);
+        int z = Mathf.FloorToInt(localPos.z / 1.5f);
+
+        m_origin = new Vector2Int(x, z);
     }
 
     private RoomShape CreatePlan()//設計図を設計
@@ -322,6 +371,61 @@ public class MapPieceSystem : MonoBehaviour
         if(other == null) return false;
 
         return other.roomId == myId;
+    }
+
+    private Queue<Vector2Int> m_queue;
+    private bool[,] m_isVisited;
+
+    private bool IsConnectStage(Vector2Int startPos, Vector2Int endPos)
+    {
+        m_queue = null;
+        m_isVisited =null;
+
+        m_queue = new Queue<Vector2Int>();
+        m_isVisited = new bool[m_gridWidth, m_gridHeight];
+
+        m_queue.Enqueue(startPos);
+        m_isVisited[startPos.x, startPos.y] = true;
+
+        while (m_queue.Count > 0)
+        {
+            var pos = m_queue.Dequeue();
+
+            if (pos == endPos) return true;
+
+            var cell = m_grid[pos.x, pos.y];
+            if (cell == null) continue;
+
+            if(cell.up)
+            {
+                IsCheckRoute(pos.x, pos.y + 1);
+            }
+            else if (cell.down)
+            {
+                IsCheckRoute(pos.x, pos.y - 1);
+            }
+            else if(cell.left)
+            {
+                 IsCheckRoute(pos.x - 1, pos.y);
+            }
+            else
+            {
+                IsCheckRoute(pos.x  + 1, pos.y);
+            }
+        }
+
+        
+        return false;
+    }
+
+    private void IsCheckRoute(int x, int z)
+    {
+        if (m_isVisited[x, z]) return;
+
+        if (m_grid[x, z] == null) return;
+
+        m_queue.Enqueue(new Vector2Int(x,z));
+        m_isVisited[x, z] = true;
     }
 
     //上と右だけ
