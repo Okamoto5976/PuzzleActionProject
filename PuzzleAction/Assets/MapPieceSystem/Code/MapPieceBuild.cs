@@ -10,11 +10,11 @@ public class MapPieceBuild : MonoBehaviour
 
     [SerializeField] private Transform m_parent;
 
-    public void Generate(int gridWidth, int gridHeight)
+    public void Generate(Vector2Int size)
     {
-        for (int x = 0; x < gridWidth; x++)
+        for (int x = 0; x < size.x; x++)
         {
-            for (int z = 0; z < gridHeight; z++)
+            for (int z = 0; z < size.y; z++)
             {
                 var obj = InstantiateGridMap();
 

@@ -57,8 +57,7 @@ public class Cell
 //ゴール付きのRoomShapeを先につくり　m_gridに先に設置するか
 //RoomShapeの数増加
 
-
-public class MapPieceSystem : MonoBehaviour
+public class M : MonoBehaviour
 {
     [SerializeField] private Vector2Int m_origin;
 
@@ -115,7 +114,7 @@ public class MapPieceSystem : MonoBehaviour
         m_endPos = new Vector2Int(8, 8);
 
         //生成
-        m_build.Generate(m_gridWidth, m_gridHeight);
+        //m_build.Generate(m_gridWidth, m_gridHeight);
     }
 
     private void GridMap(int width, int height)//引数で受け取る
@@ -131,7 +130,7 @@ public class MapPieceSystem : MonoBehaviour
     private void Update()
     {
         MousePos();
-  
+
         //if(m_attack.IsPressed())
         //{
         //    if(m_isDrag)
@@ -156,7 +155,7 @@ public class MapPieceSystem : MonoBehaviour
 
         //if(m_isDrag)
         //{
-            
+
         //}
 
         if (Keyboard.current.pKey.wasPressedThisFrame)
@@ -170,7 +169,7 @@ public class MapPieceSystem : MonoBehaviour
                 m_roomPlan = null;
 
                 m_roomObj = m_build.InstantiatePieceObject(m_room);//シーンに実際に作る
-    
+
                 Debug.Log("you create room");
             }
             else
@@ -326,7 +325,7 @@ public class MapPieceSystem : MonoBehaviour
 
     private void ApplyDoor(int x, int z, Direction dir)
     {
-        switch(dir)
+        switch (dir)
         {
             case Direction.Up:
                 m_grid[x, z].up = true;
@@ -341,12 +340,12 @@ public class MapPieceSystem : MonoBehaviour
 
     private void CellConnections()
     {
-        for(int x = 0; x < m_gridWidth; x++)
+        for (int x = 0; x < m_gridWidth; x++)
         {
-            for(int z = 0; z < m_gridHeight; z++)
+            for (int z = 0; z < m_gridHeight; z++)
             {
                 var cell = m_grid[x, z];
-                if(cell == null) continue;
+                if (cell == null) continue;
 
                 int id = cell.roomId;
 
@@ -368,7 +367,7 @@ public class MapPieceSystem : MonoBehaviour
             return false;
 
         var other = m_grid[x, z];
-        if(other == null) return false;
+        if (other == null) return false;
 
         return other.roomId == myId;
     }
@@ -379,7 +378,7 @@ public class MapPieceSystem : MonoBehaviour
     private bool IsConnectStage(Vector2Int startPos, Vector2Int endPos)
     {
         m_queue = null;
-        m_isVisited =null;
+        m_isVisited = null;
 
         m_queue = new Queue<Vector2Int>();
         m_isVisited = new bool[m_gridWidth, m_gridHeight];
@@ -396,7 +395,7 @@ public class MapPieceSystem : MonoBehaviour
             var cell = m_grid[pos.x, pos.y];
             if (cell == null) continue;
 
-            if(cell.up)
+            if (cell.up)
             {
                 IsCheckRoute(pos.x, pos.y + 1);
             }
@@ -404,17 +403,17 @@ public class MapPieceSystem : MonoBehaviour
             {
                 IsCheckRoute(pos.x, pos.y - 1);
             }
-            else if(cell.left)
+            else if (cell.left)
             {
-                 IsCheckRoute(pos.x - 1, pos.y);
+                IsCheckRoute(pos.x - 1, pos.y);
             }
             else
             {
-                IsCheckRoute(pos.x  + 1, pos.y);
+                IsCheckRoute(pos.x + 1, pos.y);
             }
         }
 
-        
+
         return false;
     }
 
@@ -424,15 +423,15 @@ public class MapPieceSystem : MonoBehaviour
 
         if (m_grid[x, z] == null) return;
 
-        m_queue.Enqueue(new Vector2Int(x,z));
+        m_queue.Enqueue(new Vector2Int(x, z));
         m_isVisited[x, z] = true;
     }
 
     //上と右だけ
-                //if(IsWall(x + 1, z, id))
-                //{
-                //    //壁
-                //}
+    //if(IsWall(x + 1, z, id))
+    //{
+    //    //壁
+    //}
 
     //private bool IsWall(int x, int z, int myId)
     //{

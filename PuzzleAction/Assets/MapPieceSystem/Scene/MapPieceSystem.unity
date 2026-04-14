@@ -161,13 +161,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 50533898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a906a49daeae7804ba67cb7659653b69, type: 3}
+  m_Script: {fileID: 11500000, guid: f0d9baf96eccbe14788be09d0ffd81de, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapPieceBuild
-  m_cube: {fileID: 929673429548259954, guid: b517cf6b42b50a34da3c4c35db8d7379, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::MapPlaceSystem
+  m_action: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_build: {fileID: 50533901}
   m_parent: {fileID: 694388302}
-  m_pieceParent: {fileID: 4455652327021943327, guid: 8feda1c69eb908c4eba003a79d9c96cb, type: 3}
-  m_piece: {fileID: 1577742499282774699, guid: a2ea49dd888f9034786a71a0435721fa, type: 3}
+  m_mainCamera: {fileID: 218458766}
+  m_size: {x: 10, y: 10}
+  m_createRoomNumber: 3
+  m_origin: {x: 0, y: 0}
+  m_startPos: {x: 0, y: 0}
+  m_endPos: {x: 0, y: 0}
 --- !u!114 &50533901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,22 +182,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 50533898}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08706c1876a35234985f5a94e4a3fbcd, type: 3}
+  m_Script: {fileID: 11500000, guid: a906a49daeae7804ba67cb7659653b69, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapPieceSystem
-  m_origin: {x: 0, y: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::MapPieceBuild
+  m_cube: {fileID: 929673429548259954, guid: b517cf6b42b50a34da3c4c35db8d7379, type: 3}
   m_parent: {fileID: 694388302}
-  m_mainCamera: {fileID: 218458766}
-  m_build: {fileID: 50533900}
-  m_attack:
-    m_Name: Attack
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 4d35c89b-40fd-47fa-816c-e7c1a69b040a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  m_pieceParent: {fileID: 0}
+  m_piece: {fileID: 0}
 --- !u!1 &218458764
 GameObject:
   m_ObjectHideFlags: 0
