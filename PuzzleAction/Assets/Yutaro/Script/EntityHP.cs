@@ -19,7 +19,7 @@ public enum DamageType//ダメージタイプ
     Normal
 }
 
-public abstract class EntityHP:MonoBehaviour,IDamage 
+public abstract class EntityHP:MonoBehaviour 
 {
     [Header("HP設定")] 
     public int m_maxHP = 100;
