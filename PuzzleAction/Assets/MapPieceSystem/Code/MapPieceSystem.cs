@@ -29,7 +29,7 @@ public class DoorData
     public Direction dir;
 }
 
-public class Room
+public class Rooma
 {
     public int id;
     public AreaType type;
@@ -81,9 +81,9 @@ public class MapPieceSystem : MonoBehaviour
     }
 
     private RoomShape m_roomPlan;
-    private Room m_room;
+    private Rooma m_room;
 
-    private List<Room> m_rooms = new List<Room>();
+    private List<Rooma> m_rooms = new List<Rooma>();
 
     private int m_nextId = 0;
 
@@ -265,9 +265,9 @@ public class MapPieceSystem : MonoBehaviour
         return shape;
     }
 
-    private Room CreateBuild(RoomShape shape)//設計図を実体に
+    private Rooma CreateBuild(RoomShape shape)//設計図を実体に
     {
-        var room = new Room();
+        var room = new Rooma();
 
         room.cells = shape.cells;
 
@@ -279,7 +279,7 @@ public class MapPieceSystem : MonoBehaviour
         return room;
     }
 
-    private bool CanRoomPlace(Room room, Vector2Int origin)//置けるかどうか
+    private bool CanRoomPlace(Rooma room, Vector2Int origin)//置けるかどうか
     {
         foreach (var cell in room.cells)
         {
@@ -296,7 +296,7 @@ public class MapPieceSystem : MonoBehaviour
         return true;
     }
 
-    private void RoomPlace(Room room, Vector2Int origin)
+    private void RoomPlace(Rooma room, Vector2Int origin)
     {
         foreach (var cell in room.cells)
         {
@@ -310,7 +310,7 @@ public class MapPieceSystem : MonoBehaviour
         }
     }
 
-    private void RoomDoorPlace(List<Room> rooms)
+    private void RoomDoorPlace(List<Rooma> rooms)
     {
         foreach (var room in rooms)
         {

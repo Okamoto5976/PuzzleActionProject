@@ -33,7 +33,7 @@ public class MapPieceBuild : MonoBehaviour
     [SerializeField] private GameObject m_pieceParent;
     [SerializeField] private GameObject m_piece;
 
-    public GameObject InstantiatePieceObject(Room room)
+    public GameObject InstantiatePieceObject(Rooma room)
     {
         var parent = Instantiate(m_pieceParent);
         parent.transform.position = new Vector3(-10, 0, 0);
