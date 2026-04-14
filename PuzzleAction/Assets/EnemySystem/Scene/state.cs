@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class State : MonoBehaviour
 {
-    // ===== 状態 =====
+    //状態
     public enum EnemyState
     {
         Idle,
@@ -22,7 +22,7 @@ public class State : MonoBehaviour
 
      void Update()
      { 
-            //DebugState(); // 確認用（あとで消してOK）
+            DebugState(); // 確認用
         
      }
 
@@ -37,7 +37,7 @@ public class State : MonoBehaviour
     public void SetAttack(bool value) => canAttack = value;
     public void SetInvincible(bool value) => isInvincible = value;
 
-    // ===== デバッグ（今の状態確認） =====
+    //デバッグ
     void DebugState()
     {
         Debug.Log("State: " + currentState +

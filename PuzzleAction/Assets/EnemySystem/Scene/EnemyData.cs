@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     [Header("ˆÚ“®İ’è")]
-    public float m_moveSpeed = 3f;
+    public float m_moveSpeed = 3f; //ˆÚ“®‘¬“x‚Ìİ’è
     [Header("UŒ‚İ’è")]
     public AttackType m_attackType = AttackType.HitCollider;
 
@@ -12,7 +12,7 @@ public class EnemyData : ScriptableObject
     public enum AttackType
     {
         HitCollider,
-        Ray
+        RayCollider
     }
-
+     
 }

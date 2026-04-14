@@ -21,12 +21,12 @@ public class Behaviorsystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleBehaavior();
+        HandleBehavior();
 
     }
 
     //ó‘Ô‚É‰‚¶‚½‹““®§Œä
-    void HandleBehaavior()
+    void HandleBehavior()
     {
         if (state == null /*|| movement == null*/ ) return;  //movement‚Ì•”•ª‚ÍAI
 
@@ -45,11 +45,11 @@ public class Behaviorsystem : MonoBehaviour
                 break;
 
             case State.EnemyState.Damage:
-                HandheDamage();
+                HandleDamage();
                 break;
 
             case State.EnemyState.Dead:
-                HandheDead();
+                HandleDead();
                 break;
         }
     }
@@ -60,6 +60,7 @@ public class Behaviorsystem : MonoBehaviour
 
     }
 
+    //’ÇÕ
     void HandleChase()
     {
         if (state.canMove)
@@ -69,7 +70,7 @@ public class Behaviorsystem : MonoBehaviour
         }
     }
 
-
+    //UŒ‚
     void HandleAttack()
     {
 
@@ -79,6 +80,7 @@ public class Behaviorsystem : MonoBehaviour
         }
     }
 
+    //UŒ‚uŠÔ
     void Attack()
     {
         if (data.m_attackType == EnemyData.AttackType.HitCollider)
@@ -91,18 +93,20 @@ public class Behaviorsystem : MonoBehaviour
         }
     }
 
+    //UŒ‚I—¹
     void EndAttack()
     {
         attackCollider.SetActive(false);
         Debug.Log("UŒ‚I—¹");
     }
-
-    void HandheDamage()
+    //ƒ_ƒ[ƒW
+    void HandleDamage()
     {
     
     }
 
-    void HandheDead()
+    //€–S
+    void HandleDead()
     {
        
         Debug.Log("€–Só‘Ô");

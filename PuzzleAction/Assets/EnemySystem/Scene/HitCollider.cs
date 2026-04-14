@@ -2,22 +2,21 @@ using UnityEngine;
 
 public class HitCollider : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public enum HitType
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("ヒット！(ダメージ0)");
-        }
+        EnemyAttack,
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    /*void Start()
-    {
-        
-    }
+    public HitType hitType;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }*/
+    private void OnTriggerEnter(Collider other)
+    { 
+      if (other.CompareTag("Player"))
+      {
+        Debug.Log("敵攻撃ヒット！");
+      }
+                    
+    }
 }
+
+      
+
