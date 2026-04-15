@@ -124,44 +124,80 @@ public class MapPlaceSystem : MonoBehaviour
         {
             if(m_roompiece != null)
             {
-
-                //grid内で置けたとき　origin に合わせて置く　roompiece = null
-                if (!m_mapClass.IsRoomColliding(m_room, m_origin))
+                if (m_origin.x < m_size.x && m_origin.x >= 0&&
+                    m_origin.y < m_size.y && m_origin.y >= 0
+                )
                 {
-                    PlaceRoom();
+                    var obj = m_roompiece.GetComponent<RoomObj>();
+                    //grid内で置けたとき　origin に合わせて置く　roompiece = null
+                    if (!m_mapClass.IsRoomColliding(m_room, m_origin))
+                    {
+                        Debug.Log("On Place");
+                        obj.SetIsPlace(true);
+
+
+                        Vector3 localPos = new Vector3(
+                            (m_origin.x) * 1.5f,
+                            1,
+                            (m_origin.y) * 1.5f
+                            );
+
+                        Vector3 worldPos = m_parent.TransformPoint(localPos);
+                        m_roompiece.transform.position = worldPos;
+                        m_roompiece = null;
+
+                        PlaceRoom();
+                    }
+                    else
+                    {
+                        //grid内でおけないとき　roompieceを　保存していた場所に返す
+                        //room piece = null
+                        //roompiece return 
+                        Debug.Log("No Place");
+                        m_roompiece.transform.position = obj.OriginalPos;
+                        m_roompiece = null;
+
+                    }
                 }
                 else
                 {
-                    //roompiece return 
+                    //grid外である時　その場に置く　（roompiece = null)
+                    Debug.Log("NotFind Map");
+                    m_roompiece = null;
                 }
-
-                //grid内でおけないとき　roompieceを　保存していた場所に返す
-                //room piece = null
-
-                //grid外である時　その場に置く　（roompiece = null)
             }
             else
             {
-                //roomがありIsPlaceがtrueだったらRemoveRoom
-
-                //roomがありIsPlaceがfalseだったら取得
-                //取得の際 現在のparentの位置を保存
-
                 Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
                 var ray = Camera.main.ScreenPointToRay(mouseScreenPos);
                 if(Physics.Raycast(ray, out var hit))
                 {
                     var obj = hit.collider.gameObject.GetComponent<RoomPieceObj>();
                     if (obj == null) return;
-                    if (obj.IsPlace) return;
-                    m_roompiece = obj.Parent;
 
-                    
+                    var parent = obj.GetComponentInParent<RoomObj>();
+
+                    if (obj.IsPlace)
+                    {
+                        //roomがありIsPlaceがtrueだったらRemoveRoom
+                        //取得　
+                        //m_roompiece = obj.Parent;
+                        parent.SetIsPlace(false);
+                        m_roompiece = parent.gameObject;
+                        //remove
+
+                    }
+                    else
+                    {
+                        //roomがありIsPlaceがfalseだったら取得
+                        //取得の際 現在のparentの位置を保存
+                        parent.SetOriginalPos();
+                        m_roompiece = parent.gameObject;
+
+                    }
+
                 }
             }
-
-
-
 
         }
 

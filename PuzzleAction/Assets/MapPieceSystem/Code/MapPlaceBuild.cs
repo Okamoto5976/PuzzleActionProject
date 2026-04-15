@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class MapPlaceBuild : MonoBehaviour
@@ -54,6 +55,9 @@ public class MapPlaceBuild : MonoBehaviour
                 );
             }
         }
+
+        var obj = parent.GetComponent<RoomObj>();
+        obj.Init();
     }
 
 
