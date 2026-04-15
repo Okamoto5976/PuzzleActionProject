@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Behavior : MonoBehaviour
+public class Behaviour : MonoBehaviour
 {
     [SerializeField] private float m_normalSpeed = 5f;
     [SerializeField] private float m_dashSpeed = 10f;

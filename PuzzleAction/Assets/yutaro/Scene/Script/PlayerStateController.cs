@@ -13,12 +13,12 @@ public class PlayerStateController : MonoBehaviour
     public PlayerState CurrentState { get; private set; }= PlayerState.Normal;
 
     public bool IsInvincible { get; private set; } = false;
-    public bool CanMove { get; private set; } = true;
+    public bool CanMove { get; private set; } = true;　　　
 
     //状態変更
     public void SetState(PlayerState  newState)
     {
-        CurrentState = newState;
+        CurrentState = newState;                            
 
         switch(CurrentState)
         {
@@ -26,7 +26,7 @@ public class PlayerStateController : MonoBehaviour
                 CanMove = true;
                 break;
 
-            case PlayerState.Dead:
+             case PlayerState.Dead:
                 CanMove = false;
                 break;
         }
