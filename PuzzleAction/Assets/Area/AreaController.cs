@@ -47,6 +47,10 @@ public class AreaController : MonoBehaviour
                 {
                     SpawnScriput.ActivateSpawn();
                 }
+                else
+                {
+                    Debug.LogWarning("スポーンのスクリプトが見つからんアタッチしてるか？");
+                }
                 break;
 
             case AreaType.Normal:
@@ -60,7 +64,11 @@ public class AreaController : MonoBehaviour
                 shop shopScriput = GetComponent<shop>();
                 if (shopScriput != null)
                 {
-                    //shopScriput.
+                    shopScriput.ActivationShop();
+                }
+                else
+                {
+                    Debug.Log("ショップのスクリプトが見つからんアタッチしてるか");
                 }
                 break;
         }
