@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Rigidbody))]
 public class EnemyController : MonoBehaviour
 {
     [Header("Target")]
@@ -23,14 +22,12 @@ public class EnemyController : MonoBehaviour
     [NonSerialized] public bool m_isAttacking = false;
 
     public int AttackValue => m_attackValue;
-
     public bool IsFaund => m_isFound;
     public bool IsAttacking => m_isAttacking;
 
     private void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
-        m_rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -77,7 +74,7 @@ public class EnemyController : MonoBehaviour
     }
 
     // 攻撃（今はログのみ）
-    private void Attack()
+    public void Attack()
     {
         Debug.Log($"攻撃中！ ダメージ：{m_attackValue}");
     }
