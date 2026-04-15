@@ -65,7 +65,7 @@ public class M : MonoBehaviour
     [SerializeField] private Camera m_mainCamera;
 
 
-    [SerializeField] private MapPieceBuild m_build;
+    [SerializeField] private MapPlaceBuild m_build;
 
     [SerializeField] private InputAction m_attack;
 
@@ -168,7 +168,8 @@ public class M : MonoBehaviour
 
                 m_roomPlan = null;
 
-                m_roomObj = m_build.InstantiatePieceObject(m_room);//シーンに実際に作る
+                //m_roomObj = m_build.InstantiatePieceObject(m_room);
+                //シーンに実際に作る
 
                 Debug.Log("you create room");
             }

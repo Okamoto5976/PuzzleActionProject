@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,10 +6,13 @@ public class MapPlaceSystem : MonoBehaviour
 {
     [SerializeField] private InputActionReference m_action;
 
-    [SerializeField] private MapPieceBuild m_build;
-    [SerializeField] private Transform m_parent;
+    [SerializeField] private MapPlaceBuild m_build;
 
+    [SerializeField] private Transform m_parent;//mousePos parent
     [SerializeField] private Camera m_mainCamera;
+    private Vector3 m_mouseWorldPos;
+
+    private GameObject m_roompiece;
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
@@ -36,6 +38,7 @@ public class MapPlaceSystem : MonoBehaviour
         {
             Room room = CreateRoom();
             m_rooms.Enqueue(room);
+            m_build.GenerateRoomObject(room);
         }
 
         m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
@@ -119,19 +122,53 @@ public class MapPlaceSystem : MonoBehaviour
 
         if (m_action.action.WasPressedThisFrame())
         {
-            if(!m_mapClass.IsRoomColliding(m_room, m_origin))
+            if(m_roompiece != null)
             {
-                //もしroomがあったらRemoveRoom
-                m_mapClass.PlaceRoom(m_room, m_origin);
 
-                if (m_rooms.Count > 0)
+                //grid内で置けたとき　origin に合わせて置く　roompiece = null
+                if (!m_mapClass.IsRoomColliding(m_room, m_origin))
                 {
-                    m_room = m_rooms.Dequeue();
+                    PlaceRoom();
+                }
+                else
+                {
+                    //roompiece return 
+                }
 
-                    Debug.Log(m_room.Size);
+                //grid内でおけないとき　roompieceを　保存していた場所に返す
+                //room piece = null
 
+                //grid外である時　その場に置く　（roompiece = null)
+            }
+            else
+            {
+                //roomがありIsPlaceがtrueだったらRemoveRoom
+
+                //roomがありIsPlaceがfalseだったら取得
+                //取得の際 現在のparentの位置を保存
+
+                Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+                var ray = Camera.main.ScreenPointToRay(mouseScreenPos);
+                if(Physics.Raycast(ray, out var hit))
+                {
+                    var obj = hit.collider.gameObject.GetComponent<RoomPieceObj>();
+                    if (obj == null) return;
+                    if (obj.IsPlace) return;
+                    m_roompiece = obj.Parent;
+
+                    
                 }
             }
+
+
+
+
+        }
+
+        //もしroompieceがあるならmouseに追従
+        if(m_roompiece != null)
+        {
+            m_roompiece.transform.position = m_mouseWorldPos;
         }
     }
 
@@ -140,6 +177,8 @@ public class MapPlaceSystem : MonoBehaviour
         Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
 
         Vector3 worldPos = m_mainCamera.ScreenToWorldPoint(mouseScreenPos);
+        worldPos.y = 1;
+        m_mouseWorldPos = worldPos;
 
         Vector3 localPos = m_parent.InverseTransformPoint(worldPos);
 
@@ -149,14 +188,41 @@ public class MapPlaceSystem : MonoBehaviour
         m_origin = new Vector2Int(x, z);
     }
 
+    private void PlaceRoom()
+    {
+        m_mapClass.PlaceRoom(m_room, m_origin);
+        m_roompiece = null;
+
+        //roompiece place in scene grid
+
+        if (m_rooms.Count > 0)
+        {
+            m_room = m_rooms.Dequeue();
+
+            Debug.Log(m_room.Size);
+
+        }
+
+        if (BFS(m_startPos, m_endPos))
+        {
+            Debug.Log("IsGoal OK");
+        }
+        else
+        {
+            Debug.Log("IsGoal No");
+        }
+    }
+
     Dictionary<int,List<int>> m_roomsNumbers = new Dictionary<int,List<int>>();
 
-    public void BFS(Vector2Int startPos, Vector2Int endPos)
+    public bool BFS(Vector2Int startPos, Vector2Int endPos)
     {
         //startPosのid取得
         int startID = GetId(startPos);
         //endPosのid取得
         int endID = GetId(endPos);
+
+        bool IsRouteCheck = false;
 
         Queue<int> queue = new Queue<int>();
         HashSet<int> visited = new HashSet<int>();
@@ -169,8 +235,23 @@ public class MapPlaceSystem : MonoBehaviour
         {
             int currentID = queue.Dequeue();
 
+            //goalまでつながっても
+            //door生成の番号つけるため繰り返す
+            foreach(var neighborID in GetNeighborRooms(currentID,visited))
+            {
+                if(neighborID == endID)
+                {
+                    IsRouteCheck = true;
+                }
 
+                queue.Enqueue(neighborID);
+                visited.Add(neighborID);
+            }
         }
+
+        if(IsRouteCheck) return true;
+
+        return false;
     }
 
     private int GetId(Vector2Int pos)
@@ -182,7 +263,7 @@ public class MapPlaceSystem : MonoBehaviour
 
     private int m_roomNumber = 0;//初期
 
-    private HashSet<int> GetNeighborRooms(int id)
+    private HashSet<int> GetNeighborRooms(int id, HashSet<int> visited)
     {
         HashSet<int> neighborIDs = new HashSet<int>();
         m_roomNumber++;
@@ -203,7 +284,7 @@ public class MapPlaceSystem : MonoBehaviour
                 new Vector2Int(-1,0),
                 new Vector2Int(0,1),
                 new Vector2Int(0,-1)
-            };
+                };
 
                 foreach (var dir in dirs)
                 {
@@ -214,8 +295,14 @@ public class MapPlaceSystem : MonoBehaviour
                         continue;
 
                     int floorIndex = neighbor.x + neighbor.y * (m_size.x + 1);
-                    //同じidの部屋ならreturn
+                    //floorがemptyならcontinu
+                    if (m_mapClass.Floors[floorIndex].Id == -1) continue;
+                    //同じidの部屋ならcontinu
                     if (m_mapClass.Floors[floorIndex].Id == id) continue;
+                    //前回通ったidの部屋ならcontinu
+                    if (visited.Contains(m_mapClass.Floors[floorIndex].Id)) continue;
+
+                    neighborIDs.Add(m_mapClass.Floors[floorIndex].Id);
 
                     //indexとflootIndexをセットで覚えておきたい（idでもいい）追記　ここのindexだとpathはうまくいかない
                     //idを覚えよう
@@ -225,9 +312,11 @@ public class MapPlaceSystem : MonoBehaviour
                 }
             }
         }
-
-
-
         return neighborIDs;
+    }
+
+    private void MapRouteDoorPlace()
+    {
+
     }
 }
