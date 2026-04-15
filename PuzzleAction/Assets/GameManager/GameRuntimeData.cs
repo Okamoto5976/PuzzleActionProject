@@ -11,7 +11,7 @@ public class GameRuntimeData : ScriptableObject
     public int Money => money; //‚¨‹à
     public float Time => time; //ŠÔ
 
-    //‰Šú‰»
+    //‰Šú‰»š
     public void Init(int startScore,int startMoney,float startTime)
     {
         score = startScore;
