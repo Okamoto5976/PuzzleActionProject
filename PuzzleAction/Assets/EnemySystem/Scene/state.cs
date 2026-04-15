@@ -16,13 +16,19 @@ public class State : MonoBehaviour
     public EnemyState currentState = EnemyState.Idle;
 
     //共通のフラグ
-    public bool isInvincible = false;
-    public bool canMove = true;
-    public bool canAttack = true;
+    private bool m_isInvincible = false;
 
-     void Update()
+
+    private bool m_canMove = true;
+    private bool m_canAttack = true;
+
+    public bool IsInvincible { get => m_isInvincible; }
+    public bool CanMove { get => m_canMove; }
+    public bool CanAttack {  get => m_canAttack; } 
+
+    void Update()
      { 
-            DebugState(); // 確認用
+            //DebugState(); // 確認用
         
      }
 
@@ -33,16 +39,16 @@ public class State : MonoBehaviour
     }
 
     //フラグ操作
-    public void SetMove(bool value) => canMove = value;
-    public void SetAttack(bool value) => canAttack = value;
-    public void SetInvincible(bool value) => isInvincible = value;
+    public void SetCanMove(bool value) => m_canMove = value;
+    public void SetCanAttack(bool value) => m_canAttack = value;
+    public void SetIsInvincible(bool value) => m_isInvincible = value;
 
     //デバッグ
     void DebugState()
     {
         Debug.Log("State: " + currentState +
-                  " | 無敵: " + isInvincible +
-                  " | 移動可: " + canMove +
-                  " | 攻撃可: " + canAttack);
+                  " | 無敵: " + m_isInvincible +
+                  " | 移動可: " + m_canMove +
+                  " | 攻撃可: " + m_canAttack);
     }
 }

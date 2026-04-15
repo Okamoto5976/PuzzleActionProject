@@ -7,26 +7,29 @@ public class Behaviorsystem : MonoBehaviour
     //private EnemyMovement movement; //EnemyMovement‚Ì•”•ª‚ÍAI@Behavior=UŒ‚ movement=ˆÚ“®
 
     [SerializeField] private GameObject attackCollider;
-    [SerializeField] private float attackTime = 0.3f;
+    [SerializeField] private float attackTime = 0.3f;   //UŒ‚‘±ŠÔİ’è
 
     public EnemyData data;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         state = GetComponent<State>();
         //movement = GetComponent<EnemyMovement>(); //EnemyMovement‚Ì•”•ª‚ÍAI
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
     {
         HandleBehavior();
 
     }
 
     //ó‘Ô‚É‰‚¶‚½‹““®§Œä
-    void HandleBehavior()
+    private void HandleBehavior()
     {
         if (state == null /*|| movement == null*/ ) return;  //movement‚Ì•”•ª‚ÍAI
 
@@ -55,35 +58,36 @@ public class Behaviorsystem : MonoBehaviour
     }
 
     //Šeó‘Ô‚Ìˆ—
-    void HandleIdle()
+    private void HandleIdle()
     {
 
     }
 
     //’ÇÕ
-    void HandleChase()
+    private void HandleChase()
     {
-        if (state.canMove)
+        if (state.CanMove)
         {
             //movement.Move();
-
+            //EnemyAISystem
+            //Attack‚ğŒÄ‚Ô
         }
     }
 
     //UŒ‚
-    void HandleAttack()
+    private void HandleAttack()
     {
 
-        if (state.canAttack)
+        if (state.CanAttack)
         {
             Attack();
         }
     }
 
     //UŒ‚uŠÔ
-    void Attack()
+    private void Attack()
     {
-        if (data.m_attackType == EnemyData.AttackType.HitCollider)
+        if (data.MoveAttack == EnemyData.AttackType.HitCollider)
         {
             Debug.Log("UŒ‚");
 
@@ -91,24 +95,26 @@ public class Behaviorsystem : MonoBehaviour
 
             Invoke(nameof(EndAttack), attackTime);
         }
+        //else if Ray
     }
 
     //UŒ‚I—¹
-    void EndAttack()
+    private void EndAttack()
     {
         attackCollider.SetActive(false);
         Debug.Log("UŒ‚I—¹");
     }
     //ƒ_ƒ[ƒW
-    void HandleDamage()
+    private void HandleDamage()
     {
-    
+        //Damage State
+        //HP
     }
 
     //€–S
-    void HandleDead()
+    private void HandleDead()
     {
-       
+       //State•ÏX
         Debug.Log("€–Só‘Ô");
     }
 }
