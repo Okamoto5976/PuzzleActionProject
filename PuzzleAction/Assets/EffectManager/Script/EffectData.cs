@@ -1,11 +1,13 @@
 using UnityEngine;
 
-[System.Serializable]
-public struct EffectData
+[CreateAssetMenu(fileName = "EffectData", menuName = "Scriptable Objects/EffectData")]
+public class EffectData : ScriptableObject
 {
-    public GameObject m_effectPrefab;
-    public Vector3 m_effectPos;
-    public Quaternion m_effectRot;
+    [SerializeField] private GameObject m_effectprefab;
 
-    public float m_lifeTime;
+    [SerializeField] private float m_duration;
+
+
+    public GameObject EffectPrefab => m_effectprefab;
+    public float Duration => m_duration;
 }

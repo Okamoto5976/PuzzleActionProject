@@ -16,7 +16,7 @@ public class EffectManager : MonoBehaviour
     {
         m_effectEventDataSO.Unregister(SetEffect);
     }
-    public void SetEffect(EffectData _data)
+    public void SetEffect(Effect _data)
     {
         if (_data.m_effectPrefab == null) return;
 
