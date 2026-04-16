@@ -21,8 +21,8 @@ public class GenerateMap : MonoBehaviour
             new()
             {
                 Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
             }, new(3,3)
             );
         mapClass.PlaceRoom(room, new(0, 0));
@@ -36,22 +36,21 @@ public class GenerateMap : MonoBehaviour
             for (int x = 0; x < mapClass.Size.x; x++)
             {
                 var mapFloorIndex = x + y * mapClass.Size.x;
-                var classFloorIndex = x + y * (mapClass.Size.x + 1);
-                var floor = mapClass.Floors[classFloorIndex];
-                floorObjects[mapFloorIndex].SetActive(floor.State != Floor.FloorState.empty);
-                wallObjectsSouth[x + y * mapClass.Size.x].SetActive(floor.wallSouth.State != Wall.WallState.empty);
-                wallObjectsWest[x + y * (mapClass.Size.x + 1)].SetActive(floor.wallWest.State != Wall.WallState.empty);
+                floorObjects[mapFloorIndex]
+                    .SetActive( mapClass.GetFloor(x, y).State != Floor.FloorState.empty );
+                wallObjectsSouth[x + y * mapClass.Size.x]
+                    .SetActive( mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty );
+                wallObjectsWest[x + y * (mapClass.Size.x + 1)]
+                    .SetActive( mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty );
 
                 if (y == mapClass.Size.y - 1)
                 {
-                    var nFloor = mapClass.Floors[x + (y + 1) * (mapClass.Size.x + 1)];
-                    wallObjectsSouth[x + (y + 1) * mapClass.Size.x].SetActive(nFloor.wallSouth.State != Wall.WallState.empty);
+                    wallObjectsSouth[x + (y + 1) * mapClass.Size.x].SetActive(mapClass.GetWall(x, y + 1, Wall.Side.South).State != Wall.WallState.empty);
                 }
 
                 if (x == mapClass.Size.x - 1)
                 {
-                    var eFloor = mapClass.Floors[(x + 1) + y * (mapClass.Size.x + 1)];
-                    wallObjectsWest[(x + 1) + y * (mapClass.Size.x + 1)].SetActive(eFloor.wallWest.State != Wall.WallState.empty);
+                    wallObjectsWest[(x + 1) + y * (mapClass.Size.x + 1)].SetActive(mapClass.GetWall(x + 1, y, Wall.Side.West).State != Wall.WallState.empty);
                 }
             }
         }

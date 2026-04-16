@@ -14,7 +14,7 @@ public class MapClass
         floors = new();
         size = new Vector2Int(x, y);
         Floor def = new();
-        def.SetId(-1);
+        def.SetID(-1);
         def.SetState(Floor.FloorState.empty);
         for (int i = 0; i < (x + 1) * (y + 1); i++)
         {
@@ -22,8 +22,36 @@ public class MapClass
         }
     }
 
+    public Floor GetFloor(in int x, in int y)
+    {
+        int floorIndex = x + y * (size.x + 1);
+        return floors[floorIndex];
+    }
+
+    private void SetFloor(in int x, in int y, in Floor floor)
+    {
+        int floorIndex = x + y * (size.x + 1);
+        floors[floorIndex] = floor.Clone();
+    }
+
+    public int GetFloorID(in int x, in int y)
+    {
+        return GetFloor(x, y).ID;
+    }
+
+    public int GetRoomCount()
+    {
+        return Rooms.Count;
+    }
+
+    public Wall GetWall(in int x, in int y, in Wall.Side side)
+    {
+        return GetFloor(x,y).GetWall(side);
+    }
+
     public void SetFloors(in List<Tuple<int, bool>> inFloors, in Vector2Int size, in Vector2Int origin)
     {
+        if (origin.x < 0 || origin.y < 0) { return; }
         Vector2Int newBounds = origin + size;
         if (
             newBounds.x > this.size.x ||
@@ -38,12 +66,11 @@ public class MapClass
         {
             for (int x = 0; x < size.x; x++)
             {
-                Vector2Int pos = origin + new Vector2Int(x, y);
-                int floorIndex = pos.x + pos.y * (this.size.x + 1);
                 var roomFloorIndex = x + y * size.x;
                 (int id, bool state) = inFloors[roomFloorIndex];
-                floors[floorIndex].SetId(id);
-                floors[floorIndex].SetState(state ? Floor.FloorState.full : Floor.FloorState.empty);
+                Vector2Int pos = origin + new Vector2Int(x, y);
+                GetFloor(pos.x, pos.y).SetID(id);
+                GetFloor(pos.x, pos.y).SetState(state ? Floor.FloorState.full : Floor.FloorState.empty);
             }
         }
     }
@@ -54,9 +81,8 @@ public class MapClass
         {
             for (int x = 0; x < size.x + 1; x++)
             {
-                int floorIndex = x + y * (size.x + 1);
-                var floor = floors[floorIndex];
-                Debug.Log($"[{x},{y}] : {floor.Id} : {floor.State}, {(floor.wallWest.State != Wall.WallState.empty ? "W" : "")}{(floor.wallSouth.State != Wall.WallState.empty ? "S" : "")}");
+                var floor = GetFloor(x, y);
+                Debug.Log($"[{x},{y}] : {floor.ID} : {floor.State}, {(floor.GetWall(Wall.Side.West).State != Wall.WallState.empty ? "W" : "")}{(floor.GetWall(Wall.Side.South).State != Wall.WallState.empty ? "S" : "")}");
             }
         }
     }
@@ -67,11 +93,11 @@ public class MapClass
     public bool IsRoomColliding(in Room room, in Vector2Int origin)
     {
         // check bounds
+        // if negative
+        if (origin.x < 0 || origin.y < 0) return true;
         Vector2Int newBounds = origin + room.Size;
-        if (
-            newBounds.x > size.x ||
-            newBounds.y > size.y
-            ) return true;
+        // if extends outside
+        if (newBounds.x > size.x || newBounds.y > size.y) return true;
 
         // check each floor
         for (int y = 0; y < room.Size.y; y++)
@@ -79,10 +105,8 @@ public class MapClass
             for (int x = 0; x < room.Size.x; x++)
             {
                 Vector2Int pos = origin + new Vector2Int(x, y);
-                int floorIndex = pos.x + pos.y * (size.x + 1);
-                int roomFloorIndex = x + y * room.Size.x;
-                if (room.Floors[roomFloorIndex].State == Floor.FloorState.empty) continue;
-                if (Floors[floorIndex].Id != -1) return true;
+                if (room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
+                if (GetFloor(pos.x, pos.y).ID != -1) return true;
             }
         }
 
@@ -98,12 +122,10 @@ public class MapClass
         {
             for (int x = 0; x < room.Size.x; x++)
             {
+                if (room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
                 Vector2Int pos = origin + new Vector2Int(x, y);
-                int floorIndex = pos.x + pos.y * (size.x + 1);
-                int roomFloorIndex = x + y * room.Size.x;
-                if (room.Floors[roomFloorIndex].State == Floor.FloorState.empty) continue;
-                Floors[floorIndex] = room.Floors[roomFloorIndex];
-                Floors[floorIndex].SetId(roomID);
+                SetFloor(pos.x, pos.y, room.GetFloor(x, y));
+                GetFloor(pos.x, pos.y).SetID(roomID);
             }
         }
 
@@ -115,14 +137,14 @@ public class MapClass
         bool isRoomYoungest = roomID == id;
         foreach (var floor in Floors)
         {
-            if (floor.Id == id)
+            if (floor.ID == id)
             {
-                floor.SetId(-1);
+                floor.SetID(-1);
                 continue;
             }
-            if (!isRoomYoungest && floor.Id > id)
+            if (!isRoomYoungest && floor.ID > id)
             {
-                floor.SetId(floor.Id - 1);
+                floor.SetID(floor.ID - 1);
             }
         }
 
@@ -138,42 +160,44 @@ public class MapClass
         {
             for (int x = 0; x < size.x + 1; x++)
             {
-                var index = x + y * (size.x + 1);
-                if (Floors[index].Id == -1 || Floors[index].State == Floor.FloorState.empty)
+                var floor = GetFloor(x, y);
+                var wallWest = GetWall(x, y, Wall.Side.West);
+                var wallSouth = GetWall(x, y, Wall.Side.South);
+                if (floor.ID == -1 || floor.State == Floor.FloorState.empty)
                 {
-                    Floors[index].SetState(Floor.FloorState.empty);
-                    Floors[index].SetId(-1);
+                    floor.SetState(Floor.FloorState.empty);
+                    floor.SetID(-1);
                 }
 
                 if (x == 0)
                 {
-                    Floors[index].wallWest.SetState((Wall.WallState)Floors[index].State);
+                    wallWest.SetState((Wall.WallState)floor.State);
                 }
                 else
                 {
-                    if (Floors[index - 1].Id == Floors[index].Id)
+                    if (GetFloor(x-1,y).ID == floor.ID)
                     {
-                        Floors[index].wallWest.SetState(Wall.WallState.empty);
+                        wallWest.SetState(Wall.WallState.empty);
                     }
                     else
                     {
-                        Floors[index].wallWest.SetState(Wall.WallState.full);
+                        wallWest.SetState(Wall.WallState.full);
                     }
                 }
 
                 if (y == 0)
                 {
-                    Floors[index].wallSouth.SetState((Wall.WallState)Floors[index].State);
+                    wallSouth.SetState((Wall.WallState)floor.State);
                 }
                 else
                 {
-                    if (Floors[index - (size.x + 1)].Id == Floors[index].Id)
+                    if (GetFloor(x, y - 1).ID == floor.ID)
                     {
-                        Floors[index].wallSouth.SetState(Wall.WallState.empty);
+                       wallSouth.SetState(Wall.WallState.empty);
                     }
                     else
                     {
-                        Floors[index].wallSouth.SetState(Wall.WallState.full);
+                        wallSouth.SetState(Wall.WallState.full);
                     }
                 }
             }
@@ -203,6 +227,12 @@ public class Room
             }
         }
     }
+
+    public Floor GetFloor(in int x, in int y)
+    {
+        int floorIndex = x + y * size.x;
+        return floors[floorIndex];
+    }
 }
 
 
@@ -218,9 +248,9 @@ public class Floor
     private FloorState state;
     public FloorState State => state;
     private int id;
-    public int Id => id;
+    public int ID => id;
 
-    public void SetId(int id)
+    public void SetID(int id)
     {
         this.id = id;
     }
@@ -230,13 +260,23 @@ public class Floor
         this.state = state;
     }
 
-    public Wall wallSouth = new();
-    public Wall wallWest = new();
+    public Wall GetWall(Wall.Side side)
+    {
+        return side switch
+        {
+            Wall.Side.South => wallSouth,
+            Wall.Side.West => wallWest,
+            _ => null,
+        };
+    }
+
+    private Wall wallSouth = new();
+    private Wall wallWest = new();
 
     public Floor Clone()
     {
         Floor res = new();
-        res.SetId(id);
+        res.SetID(id);
         res.SetState(state);
         return res;
     }
@@ -244,6 +284,13 @@ public class Floor
 
 public class Wall
 {
+    public enum Side
+    {
+        South,
+        West,
+    }
+
+
     public enum WallState
     {
         empty,
