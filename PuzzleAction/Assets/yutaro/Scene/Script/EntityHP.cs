@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HP:MonoBehaviour 
+public class EntityHP:MonoBehaviour 
 {
     [Header("HPİ’è")]
     public int maxHP = 100;
@@ -22,6 +22,20 @@ public class HP:MonoBehaviour
         {
             Die();
         }
+    }
+
+    //‰ñ•œ
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+
+        //Å‘åHP‚ğ’´‚¦‚È‚¢‚æ‚¤‚É§ŒÀ
+        if(currentHP>maxHP)
+        {
+            currentHP = maxHP;
+        }
+
+        Debug.Log("‰ñ•œF"+amount+"Œ»İHPF"+currentHP);
     }
     void Die()
     {
