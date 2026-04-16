@@ -7,20 +7,28 @@ public class Spawn : MonoBehaviour
 
     private bool m_Spawned = false;//出現確認
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && !m_Spawned)
-        {
-            ActivateSpawn();
-            m_Spawned = true;
-        }
-    }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player") && !m_Spawned)
+    //    {
+    //        ActivateSpawn();
+    //        m_Spawned = true;
+    //    }
+    //}
 
-
-
+    //public void SpawnEnemy()
+    //{
+    //    Debug.Log("EnemySpawn");
+    //    Debug.Log(m_spawnPoint.position);
+    //    ActivateSpawn();
+    //    m_Spawned = true;
+    //}
+   
 
     public void ActivateSpawn()
     {
+        Debug.Log(m_spawnPoint.position);
+        m_Spawned = true;
         Debug.Log($"召喚{m_objectKey}発動");
         //pool入れる
     }
@@ -33,6 +41,6 @@ public class Spawn : MonoBehaviour
     public void ResetSpawn()
     {
         m_Spawned = false;
-        Debug.Log("リセットしたお");
+     
     }
 }

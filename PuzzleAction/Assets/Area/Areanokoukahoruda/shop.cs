@@ -7,20 +7,31 @@ public class shop : MonoBehaviour
     public UnityEvent m_ShopOpen;
     public UnityEvent m_ShopClose;
 
-    public void ActivationShop()
-    {
-        Debug.Log("ショップエリアに入ったお");
-    }
+    public Transform m_ShopPoint;
+
     private bool m_ButtonShop = false;
     private bool m_CurrentlyOpen = false;
-    private void OnTriggerEnter(Collider other)
+   // private void OnTriggerEnter(Collider other)
+   // {
+   //     if (other.CompareTag("Player")) m_ButtonShop = true;
+   // }
+   //
+   // private void OnTriggerExit(Collider other)
+   // {
+   //     if (other.CompareTag("Player")) m_ButtonShop = false;
+   // }
+    public void ActivationShop()
     {
-        if (other.CompareTag("Player")) m_ButtonShop = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player")) m_ButtonShop = false;
+      if(m_ButtonShop)
+        {
+            Debug.Log("ショップエリアから離脱(テスト)");
+            m_ButtonShop = false;
+        }
+        else
+        {
+            Debug.Log("ショップエリアに侵入(テスト)");
+            m_ButtonShop=true;
+        }
     }
 
 
@@ -33,13 +44,13 @@ public class shop : MonoBehaviour
             {
                 if (m_CurrentlyOpen == false)
                 {
-                    Debug.Log("らっしゃい!!");
+                  
                     m_ShopOpen.Invoke();
                     m_CurrentlyOpen = true;
                 }
                 else
                 {
-                    Debug.Log("ありがとうございました");
+                   
                     m_CurrentlyOpen = false;
                     m_ShopClose.Invoke();
                 }
@@ -47,7 +58,7 @@ public class shop : MonoBehaviour
         }
         if(m_CurrentlyOpen&&!m_ButtonShop)
         {
-            Debug.Log("ありがとうございました");
+           
             m_CurrentlyOpen = false;
             m_ShopClose.Invoke();
         }

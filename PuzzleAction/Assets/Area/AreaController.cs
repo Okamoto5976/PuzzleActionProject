@@ -11,22 +11,22 @@ public enum AreaType
 public class AreaController : MonoBehaviour
 {
 
-    public AreaType CurrentArea;
+    public AreaType m_CurrentArea;
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            ExecuteEffect();
-        }
-    }
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        ExecuteEffect();
+    //    }
+    //}
+    
 
-    void ExecuteEffect()
+  public void ExecuteEffect()
     {
-        switch (CurrentArea)
+        switch (m_CurrentArea)
         {
             case AreaType.Damage:
-                //Debug.Log("継続ダメ受けた痛");
                 //コンポーネント探し
                 damage damageScript = GetComponent<damage>();
                 if (damageScript != null)
@@ -40,7 +40,6 @@ public class AreaController : MonoBehaviour
                 break;
 
             case AreaType.Summon:
-                // Debug.Log("召喚");
                 //コンポーネント探し
                 Spawn SpawnScriput = GetComponent<Spawn>();
                 if (SpawnScriput != null)
@@ -55,11 +54,10 @@ public class AreaController : MonoBehaviour
 
             case AreaType.Normal:
                 //コンポーネント探しいる？
-                Debug.Log("なんもない面白味もないw");
+                Debug.Log("何もおこらない");
                 break;
 
             case AreaType.Shop:
-                Debug.Log("買い物しよ...盗みはできないのかな");
                 //コンポーネント探し
                 shop shopScriput = GetComponent<shop>();
                 if (shopScriput != null)
