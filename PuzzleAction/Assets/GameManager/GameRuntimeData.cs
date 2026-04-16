@@ -11,16 +11,34 @@ public class GameRuntimeData : ScriptableObject
     public int Money => money; //お金
     public float Time => time; //時間
 
-    //初期化★
-    public void Init(int startScore,int startMoney,float startTime)
+    //初期化
+    public void Init(int m_startScore,int m_startMoney,float m_startTime)
     {
-        score = startScore;
-        money = startMoney;
-        time = startTime;
+        score = m_startScore;
+        money = m_startMoney;
+        time = m_startTime;
+    }
+
+    //スコア加算計算
+    public void AddScore(int m_addValue)
+    {
+        score += m_addValue;
+    }
+    //お金換算計算
+    public void AddMoney(int m_addValue)
+    {
+        money += m_addValue;
+    }
+
+    //時間減少計算
+    public void DecreaseTime(float m_deltaTime)
+    {
+        time -= m_deltaTime;
+        if(time < 0) time = 0;
     }
 
     // 値変更用
-    public void SetScore(int value) => score = value;
-    public void SetMoney(int value) => money = value;
-    public void SetTime(float value) => time = value;
+    public void SetScore(int m_value) => score = m_value;
+    public void SetMoney(int m_value) => money = m_value;
+    public void SetTime(float m_value) => time = m_value;
 }

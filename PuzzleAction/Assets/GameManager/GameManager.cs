@@ -9,11 +9,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // 初期化
-        runtime.SetScore(data.StartScore);
-        runtime.SetMoney(data.StartMoney);
-        runtime.SetTime(data.TimeLimit);
-
+        runtime.Init(data.StartScore, data.StartMoney, data.TimeLimit);
+     
         Time.timeScale = 1f;
     }
 
@@ -30,26 +27,26 @@ public class GameManager : MonoBehaviour
             runtime.SetTime(0);
             GameOver();
         }
-
-        Debug.Log($"Score: {runtime.Score} | Money: {runtime.Money} | Time: {runtime.Time:F1}");
+        //デバック
+        //Debug.Log($"Score: {runtime.Score} | Money: {runtime.Money} | Time: {runtime.Time:F1}");
     }
 
     //ゲームオーバー
     public void GameOver()
     {
         isGameOver = true;
-        Debug.Log("ゲームオーバー");
+        //Debug.Log("ゲームオーバー");
         Time.timeScale = 0f;
     }
-    //スコア
-    public void AddScore(int value)
+    //スコア加算
+    public void AddScore(int m_value)
     {
-        runtime.SetScore(runtime.Score + value);
+        runtime.AddScore(m_value);
     }
 
-    //お金
-    public void AddMoney(int value)
+    //お金加算　
+    public void AddMoney(int m_value)
     {
-        runtime.SetMoney(runtime.Money + value);
+        runtime.AddMoney(m_value);
     }
 }
