@@ -3,9 +3,9 @@ using UnityEngine;
 [System.Serializable]
 public struct EffectData
 {
-    public string m_effectName;
-    public GameObject m_prefabEffect;
-    public int m_poolSize;
+    public GameObject m_effectPrefab;
+    public Vector3 m_effectPos;
+    public Quaternion m_effectRot;
 
-    public float m_lifeTime; //0‚È‚çŽ©“®
+    public float m_lifeTime;
 }
