@@ -4,9 +4,14 @@ using UnityEngine.UI;
 
 public class sufor : MonoBehaviour
 {
-    public int score = 0;
-    private TMP_Text scoreText;
+    public int score = 0;        //初期スコア
+    private TMP_Text scoreText;  //スコア表示用UI
+    int point = 0;  //追加スコア
 
+    public void ScorePoint(int point)
+    {
+        this.point = point;
+    }
     void Start()
     {
         score = 0;
@@ -17,6 +22,6 @@ public class sufor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "score:" + score.ToString();
+        scoreText.text = "score:" + (score + point).ToString();
     }
 }
