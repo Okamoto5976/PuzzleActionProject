@@ -239,120 +239,117 @@ public class MapPlaceSystem : MonoBehaviour
 
         }
 
-        if (BFS(m_startPos, m_endPos))
-        {
-            Debug.Log("IsGoal OK");
-        }
-        else
-        {
-            Debug.Log("IsGoal No");
-        }
+        //if (BFS(m_startPos, m_endPos))
+        //{
+        //    Debug.Log("IsGoal OK");
+        //}
+        //else
+        //{
+        //    Debug.Log("IsGoal No");
+        //}
     }
 
     Dictionary<int,List<int>> m_roomsNumbers = new Dictionary<int,List<int>>();
 
-    public bool BFS(Vector2Int startPos, Vector2Int endPos)
-    {
-        //startPosのid取得
-        int startID = GetId(startPos);
-        //endPosのid取得
-        int endID = GetId(endPos);
+    //public bool BFS(Vector2Int startPos, Vector2Int endPos)
+    //{
+    //    //startPosのid取得
+    //    int startID = GetId(startPos);
+    //    //endPosのid取得
+    //    int endID = GetId(endPos);
 
-        bool IsRouteCheck = false;
+    //    bool IsRouteCheck = false;
 
-        Queue<int> queue = new Queue<int>();
-        HashSet<int> visited = new HashSet<int>();
+    //    Queue<int> queue = new Queue<int>();
+    //    HashSet<int> visited = new HashSet<int>();
 
-        queue.Enqueue(startID);
-        visited.Add(startID);
-        //最初の部屋のIDと部屋番号0を入れる
+    //    queue.Enqueue(startID);
+    //    visited.Add(startID);
+    //    //最初の部屋のIDと部屋番号0を入れる
 
-        while (queue.Count > 0)
-        {
-            int currentID = queue.Dequeue();
+    //    while (queue.Count > 0)
+    //    {
+    //        int currentID = queue.Dequeue();
 
-            //goalまでつながっても
-            //door生成の番号つけるため繰り返す
-            foreach(var neighborID in GetNeighborRooms(currentID,visited))
-            {
-                if(neighborID == endID)
-                {
-                    IsRouteCheck = true;
-                }
+    //        //goalまでつながっても
+    //        //door生成の番号つけるため繰り返す
+    //        foreach(var neighborID in GetNeighborRooms(currentID,visited))
+    //        {
+    //            if(neighborID == endID)
+    //            {
+    //                IsRouteCheck = true;
+    //            }
 
-                queue.Enqueue(neighborID);
-                visited.Add(neighborID);
-            }
-        }
+    //            queue.Enqueue(neighborID);
+    //            visited.Add(neighborID);
+    //        }
+    //    }
 
-        if(IsRouteCheck) return true;
+    //    if(IsRouteCheck) return true;
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    private int GetId(Vector2Int pos)
-    {
-        int index = pos.x + pos.y * (m_size.x + 1);
+    //private int GetId(Vector2Int pos)
+    //{
+    //    int index = pos.x + pos.y * (m_size.x + 1);
 
-        return m_mapClass.Floors[index].Id;
-    }
+    //    return m_mapClass.Floors[index].Id;
+    //}
 
-    private int m_roomNumber = 0;//初期
+    //private int m_roomNumber = 0;//初期
 
-    private HashSet<int> GetNeighborRooms(int id, HashSet<int> visited)
-    {
-        HashSet<int> neighborIDs = new HashSet<int>();
-        m_roomNumber++;
+    //private HashSet<int> GetNeighborRooms(int id, HashSet<int> visited)
+    //{
+    //    HashSet<int> neighborIDs = new HashSet<int>();
+    //    m_roomNumber++;
 
-        for (int y = 0; y < m_size.y; y++)
-        {
-            for (int x = 0; x < m_size.x; x++)
-            {
-                int index = x + y * (m_size.x + 1);
-                var floor = m_mapClass.Floors[index];
+    //    for (int y = 0; y < m_size.y; y++)
+    //    {
+    //        for (int x = 0; x < m_size.x; x++)
+    //        {
+    //            int index = x + y * (m_size.x + 1);
+    //            var floor = m_mapClass.Floors[index];
 
-                //同じidの部屋のfloorを見つける
-                if (floor.Id != id) continue;
+    //            //同じidの部屋のfloorを見つける
+    //            if (floor.Id != id) continue;
 
-                // 4方向チェック
-                Vector2Int[] dirs = {
-                new Vector2Int(1,0),
-                new Vector2Int(-1,0),
-                new Vector2Int(0,1),
-                new Vector2Int(0,-1)
-                };
+    //            // 4方向チェック
+    //            Vector2Int[] dirs = {
+    //            new Vector2Int(1,0),
+    //            new Vector2Int(-1,0),
+    //            new Vector2Int(0,1),
+    //            new Vector2Int(0,-1)
+    //            };
 
-                foreach (var dir in dirs)
-                {
-                    Vector2Int neighbor = new Vector2Int(x, y) + dir;
+    //            foreach (var dir in dirs)
+    //            {
+    //                Vector2Int neighbor = new Vector2Int(x, y) + dir;
 
-                    //範囲外
-                    if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x > m_size.x || neighbor.y > m_size.y)
-                        continue;
+    //                //範囲外
+    //                if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x > m_size.x || neighbor.y > m_size.y)
+    //                    continue;
 
-                    int floorIndex = neighbor.x + neighbor.y * (m_size.x + 1);
-                    //floorがemptyならcontinu
-                    if (m_mapClass.Floors[floorIndex].Id == -1) continue;
-                    //同じidの部屋ならcontinu
-                    if (m_mapClass.Floors[floorIndex].Id == id) continue;
-                    //前回通ったidの部屋ならcontinu
-                    if (visited.Contains(m_mapClass.Floors[floorIndex].Id)) continue;
+    //                int floorIndex = neighbor.x + neighbor.y * (m_size.x + 1);
+    //                //floorがemptyならcontinu
+    //                if (m_mapClass.Floors[floorIndex].Id == -1) continue;
+    //                //同じidの部屋ならcontinu
+    //                if (m_mapClass.Floors[floorIndex].Id == id) continue;
+    //                //前回通ったidの部屋ならcontinu
+    //                if (visited.Contains(m_mapClass.Floors[floorIndex].Id)) continue;
 
-                    neighborIDs.Add(m_mapClass.Floors[floorIndex].Id);
+    //                neighborIDs.Add(m_mapClass.Floors[floorIndex].Id);
 
-                    //indexとflootIndexをセットで覚えておきたい（idでもいい）追記　ここのindexだとpathはうまくいかない
-                    //idを覚えよう
-                    //indexならpathのindexを覚えよう
-                    //知らないidの時は その部屋のpathのfloorIndexとindex保存
-                    //Dic id , List<Vector2Int index)
-                }
-            }
-        }
-        return neighborIDs;
-    }
+    //                //indexとflootIndexをセットで覚えておきたい（idでもいい）追記　ここのindexだとpathはうまくいかない
+    //                //idを覚えよう
+    //                //indexならpathのindexを覚えよう
+    //                //知らないidの時は その部屋のpathのfloorIndexとindex保存
+    //                //Dic id , List<Vector2Int index)
+    //            }
+    //        }
+    //    }
+    //    return neighborIDs;
+    //}
 
-    private void MapRouteDoorPlace()
-    {
 
-    }
 }
