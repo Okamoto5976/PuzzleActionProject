@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -119,7 +121,7 @@ public class MapPlaceSystem : MonoBehaviour
     {
         MousePos();
 
-
+        #region マウス操作
         if (m_action.action.WasPressedThisFrame())
         {
             if(m_roompiece != null)
@@ -200,9 +202,10 @@ public class MapPlaceSystem : MonoBehaviour
             }
 
         }
+        #endregion
 
         //もしroompieceがあるならmouseに追従
-        if(m_roompiece != null)
+        if (m_roompiece != null)
         {
             m_roompiece.transform.position = m_mouseWorldPos;
         }
@@ -249,107 +252,254 @@ public class MapPlaceSystem : MonoBehaviour
         //}
     }
 
-    Dictionary<int,List<int>> m_roomsNumbers = new Dictionary<int,List<int>>();
+    //------順------
+    //部屋を置く　GetNeighborRoomsで隣接の数のリスト（グラフ）を作る
+    //GetNeighborRoomsで隣接同士の値[02]の座標と方向を記録（後にdoorにステート変更）
+    //隣接リストを見て　BFSを走らせる
+    //startとgorlが繋がればDFSを走らせる
+    //DFSの順にdoorを設置
 
-    //public bool BFS(Vector2Int startPos, Vector2Int endPos)
-    //{
-    //    //startPosのid取得
-    //    int startID = GetId(startPos);
-    //    //endPosのid取得
-    //    int endID = GetId(endPos);
+    Dictionary<int, HashSet<int>> m_graph = new Dictionary<int, HashSet<int>>();
 
-    //    bool IsRouteCheck = false;
+    Dictionary<EdgeKey, List<EdgeVariant>> m_connectionMap = new Dictionary<EdgeKey, List<EdgeVariant>>();
 
-    //    Queue<int> queue = new Queue<int>();
-    //    HashSet<int> visited = new HashSet<int>();
 
-    //    queue.Enqueue(startID);
-    //    visited.Add(startID);
-    //    //最初の部屋のIDと部屋番号0を入れる
+    struct EdgeKey
+    {
+        public int A;
+        public int B;
 
-    //    while (queue.Count > 0)
-    //    {
-    //        int currentID = queue.Dequeue();
+        public EdgeKey(int a, int b)
+        {
+            if (a < b)
+            {
+                A = a;
+                B = b;
+            }
+            else
+            {
+                A = b;
+                B = a;
+            }
+        }
+    }
 
-    //        //goalまでつながっても
-    //        //door生成の番号つけるため繰り返す
-    //        foreach(var neighborID in GetNeighborRooms(currentID,visited))
-    //        {
-    //            if(neighborID == endID)
-    //            {
-    //                IsRouteCheck = true;
-    //            }
+    class EdgeVariant
+    {
+        public Vector2Int pos;
+        public Wall.Side dir;
+    }
 
-    //            queue.Enqueue(neighborID);
-    //            visited.Add(neighborID);
-    //        }
-    //    }
+    //floorのidを見て　そのidがどのidの部屋と隣接しているかみる
+    public void GetNeighborRooms()
+    {
+        m_graph.Clear();
+        m_connectionMap.Clear();
 
-    //    if(IsRouteCheck) return true;
+        for (int y = 0; y < m_size.y; y++)
+        {
+            for (int x = 0; x < m_size.x; x++)
+            {
+                var id = m_mapClass.GetFloorID(x, y);
 
-    //    return false;
-    //}
+                if (id == -1) return;
 
-    //private int GetId(Vector2Int pos)
-    //{
-    //    int index = pos.x + pos.y * (m_size.x + 1);
+                Vector2Int[] dirs =
+                {
+                    new Vector2Int(-1, 0),
+                    new Vector2Int(0, 1),
+                };
 
-    //    return m_mapClass.Floors[index].Id;
-    //}
+                foreach (var dir in dirs)
+                {
+                    Vector2Int neighbor = new Vector2Int(x, y) + dir;
 
-    //private int m_roomNumber = 0;//初期
+                    //範囲外
+                    if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x > m_size.x || neighbor.y > m_size.y)
+                        continue;
 
-    //private HashSet<int> GetNeighborRooms(int id, HashSet<int> visited)
-    //{
-    //    HashSet<int> neighborIDs = new HashSet<int>();
-    //    m_roomNumber++;
+                    var neighborID = m_mapClass.GetFloorID(neighbor.x, neighbor.y);
 
-    //    for (int y = 0; y < m_size.y; y++)
-    //    {
-    //        for (int x = 0; x < m_size.x; x++)
-    //        {
-    //            int index = x + y * (m_size.x + 1);
-    //            var floor = m_mapClass.Floors[index];
+                    if (neighborID == -1) continue;
+                    if (neighborID == id) continue;
 
-    //            //同じidの部屋のfloorを見つける
-    //            if (floor.Id != id) continue;
+                    //---graph----
+                    if (!m_graph.ContainsKey(id))
+                    {
+                        m_graph[id] = new HashSet<int>();
+                    }
 
-    //            // 4方向チェック
-    //            Vector2Int[] dirs = {
-    //            new Vector2Int(1,0),
-    //            new Vector2Int(-1,0),
-    //            new Vector2Int(0,1),
-    //            new Vector2Int(0,-1)
-    //            };
+                    m_graph[id].Add(neighborID);
 
-    //            foreach (var dir in dirs)
-    //            {
-    //                Vector2Int neighbor = new Vector2Int(x, y) + dir;
+                    //---edge-----
 
-    //                //範囲外
-    //                if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x > m_size.x || neighbor.y > m_size.y)
-    //                    continue;
+                    EdgeKey key = new EdgeKey(id, neighborID);
 
-    //                int floorIndex = neighbor.x + neighbor.y * (m_size.x + 1);
-    //                //floorがemptyならcontinu
-    //                if (m_mapClass.Floors[floorIndex].Id == -1) continue;
-    //                //同じidの部屋ならcontinu
-    //                if (m_mapClass.Floors[floorIndex].Id == id) continue;
-    //                //前回通ったidの部屋ならcontinu
-    //                if (visited.Contains(m_mapClass.Floors[floorIndex].Id)) continue;
+                    EdgeVariant variant = new EdgeVariant();
+                    variant.pos = new Vector2Int(x, y);
+                    if (dir == new Vector2Int(-1, 0))
+                    {
+                        variant.dir = Wall.Side.West;
+                    }
+                    else
+                    {
+                        variant.dir = Wall.Side.South;
+                    }
 
-    //                neighborIDs.Add(m_mapClass.Floors[floorIndex].Id);
 
-    //                //indexとflootIndexをセットで覚えておきたい（idでもいい）追記　ここのindexだとpathはうまくいかない
-    //                //idを覚えよう
-    //                //indexならpathのindexを覚えよう
-    //                //知らないidの時は その部屋のpathのfloorIndexとindex保存
-    //                //Dic id , List<Vector2Int index)
-    //            }
-    //        }
-    //    }
-    //    return neighborIDs;
-    //}
+                    if (!m_connectionMap.ContainsKey(key))
+                    {
+                        m_connectionMap[key] = new List<EdgeVariant>();
+                    }
+
+                    m_connectionMap[key].Add(variant);
+                }
+            }
+        }
+    }
+
+    public bool BFS(Vector2Int startPos, Vector2Int endPos)
+    {
+        //startPosのid取得
+        int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
+        //endPosのid取得
+        int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
+
+        Queue<int> queue = new Queue<int>();
+        HashSet<int> visited = new HashSet<int>();
+
+        queue.Enqueue(startID);
+        visited.Add(startID);
+
+        while (queue.Count > 0)
+        {
+            int currentID = queue.Dequeue();
+
+            foreach (var next in m_graph[currentID])
+            {
+                if (next == endID)
+                {
+                    return true;
+                }
+
+                if (visited.Contains(next)) continue;
+
+                queue.Enqueue(next);
+                visited.Add(next);
+            }
+        }
+
+        return false;
+    }
+
+    private List<int> m_bestPath = new List<int>();
+    private List<int> m_currentPath = new List<int>();
+
+    //DFSを呼ぶ
+    public void CallDFS(Vector2Int startPos, Vector2Int endPos)
+    {
+        //startPosのid取得
+        int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
+        //endPosのid取得
+        int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
+
+        HashSet<int> visited = new HashSet<int>();
+        visited.Add(startID);
+
+        DFS(startID, endID, visited);
+    }
+
+    //CallDFSから呼ばれる
+    //DFS（深さ優先探索）
+    //startIDからendIDに到達するまで枝状に進む
+    //endIDについたとき進んだ分を記録　前回の記録より多ければ上書き
+    private void DFS(int current, int goal, HashSet<int> visited)
+    {
+        m_currentPath.Add(current);
+
+        if(current == goal)
+        {
+            if(m_currentPath.Count > m_bestPath.Count)
+            {
+                //上書き
+                m_bestPath = new List<int>(m_currentPath);
+                return;
+            }
+        }
+
+        //m_graphの中　idを若順に取得
+        //端まで到達したら端から削除していく
+        foreach(var next in m_graph[current].OrderBy(x => x))
+        {
+            if(visited.Contains(next)) continue;
+
+            //同じidの部屋をさけるため
+            visited.Add(next);
+            DFS(next, goal, visited);
+            visited.Remove(next);
+        }
+
+        m_currentPath.RemoveAt(m_currentPath.Count - 1);
+    }
+
+    
+
+    public void GenerateDoor()
+    {
+        for(int i = 0; i < m_bestPath.Count - 1; i++)
+        {
+            Connect(m_bestPath[i], m_bestPath[i + 1]);
+        }
+
+        HashSet<int> mainPath = new HashSet<int>(m_bestPath);
+
+        bool added;
+
+        //trueなら続ける
+        //必ず一回通る
+        //bestPath(mainPath)に含まれるならつなげる
+        //孤立を防ぐ
+        do
+        {
+            added = false;
+
+            foreach(var id in m_graph.Keys)
+            {
+                if(mainPath.Contains(id)) continue;
+
+                foreach(var neighborID in m_graph[id])
+                {
+                    if(mainPath.Contains(neighborID))
+                    {
+                        //connect
+                        Connect(id, neighborID);
+
+                        mainPath.Add(neighborID);
+                        added = true;
+                        break;
+                    }
+                }
+            }
+
+        } while (added);
+    }
+
+    private void Connect(int id, int next)
+    {
+        int from = id;
+        int to = next;
+
+        var key = new EdgeKey(from, to);
+
+        List<EdgeVariant> list = m_connectionMap[key];
+
+        //keyが複数ある場合　ランダムに選ぶ
+        var edge = list[Random.Range(0, list.Count)];
+
+        var floor = m_mapClass.GetWall(edge.pos.x, edge.pos.y, edge.dir);
+
+        floor.SetState(Wall.WallState.door);
+    }
 
 
 }
