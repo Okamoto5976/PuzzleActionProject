@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class Hotbar : MonoBehaviour
 {
-    public PlayerItem[] slots = new PlayerItem[3];
+    //public PlayerItem[] slots = new PlayerItem[3];
+    [SerializeField] private PlayerData m_playerData;
 
+    public PlayerItem[] slots;
 
+    private void Awake()
+    {
+        //ここでサイズ決める
+        slots =new PlayerItem[m_playerData.hotbarSize];
+    }
     void Update()
     {
         //スロット選択
-        if (Input.GetKeyDown(KeyCode.Alpha1)) UseItem (0);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) UseItem (1);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) UseItem (2);
+        for(int i=0;i<slots.Length;i++)
+        {
+            if(Input.GetKeyDown(KeyCode.Alpha1+i))
+            {
+                UseItem(i);
+            }
+        }
 
     }
 

@@ -3,8 +3,10 @@ using UnityEngine.InputSystem;
 
 public class Behaviour : MonoBehaviour
 {
-    [SerializeField] private float m_normalSpeed = 5f;
-    [SerializeField] private float m_dashSpeed = 10f;
+    //[SerializeField] private float m_normalSpeed = 5f;
+    //[SerializeField] private float m_dashSpeed = 10f;
+
+    [SerializeField] private PlayerData m_playerData;
 
     private float m_speed;
 
@@ -40,7 +42,7 @@ public class Behaviour : MonoBehaviour
         //ダッシュ判定（押している間）
         m_isDashing = m_dashAction.action.IsPressed();
 
-        m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
+        m_speed =m_playerData.GetSpeed(m_isDashing);
     }
 
     private void FixedUpdate()
