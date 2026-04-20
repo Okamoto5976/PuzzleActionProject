@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class T_Gene : MonoBehaviour
+public class GenerateMap : MonoBehaviour
 {
-    private MapClass mapClass = new(0, 0);
+    private ClassMap classMap = new ClassMap(0, 0);
     [SerializeField] private Vector2Int size;
     [SerializeField] private GameObject m_floorPrefab;
     [SerializeField] private GameObject m_wallPrefab;
@@ -17,65 +17,64 @@ public class T_Gene : MonoBehaviour
     {
         InitializeMap();
 
-        Room room0 = new(
+        Room room1 = new(
             new()
             {
                 Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
             }, new(3, 3)
             );
+        classMap.PlaceRoom(room1, new(0, 0));
 
-
-        mapClass.PlaceRoom(room0, new(0, 0));
-        Room room1 = new(
-           new()
-           {
+        Room room2 = new(
+            new()
+            {
                 Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-                Floor.FloorState.empty,Floor.FloorState.empty,Floor.FloorState.full,
                 Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-           }, new(3, 3)
-           );
-
-
-        mapClass.PlaceRoom(room1, new(3, 3));
+                Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
+            }, new(3, 3)
+            );
+        classMap.PlaceRoom(room2, new(2, 2));
 
         UpdateObjects();
     }
 
     private void UpdateObjects()
     {
-        for (int y = 0; y < mapClass.Size.y; y++)
+        for (int y = 0; y < classMap.Size.y; y++)
         {
-            for (int x = 0; x < mapClass.Size.x; x++)
+            for (int x = 0; x < classMap.Size.x; x++)
             {
-                var mapFloorIndex = x + y * mapClass.Size.x;
-                var classFloorIndex = x + y * (mapClass.Size.x + 1);
-                var floor = mapClass.Floors[classFloorIndex];
-                floorObjects[mapFloorIndex].SetActive(floor.State != Floor.FloorState.empty);
-                wallObjectsSouth[x + y * mapClass.Size.x].SetActive(floor.wallSouth.State != Wall.WallState.empty);
-                wallObjectsWest[x + y * (mapClass.Size.x + 1)].SetActive(floor.wallWest.State != Wall.WallState.empty);
+                var mapFloorIndex = x + y * classMap.Size.x;
+                floorObjects[mapFloorIndex]
+                    .SetActive(classMap.GetFloor(x, y).State != Floor.FloorState.empty);
+                wallObjectsSouth[x + y * classMap.Size.x]
+                    .SetActive(classMap.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty);
+                wallObjectsWest[x + y * (classMap.Size.x + 1)]
+                    .SetActive(classMap.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty);
 
-                if (y == mapClass.Size.y - 1)
+                if (y == classMap.Size.y - 1)
                 {
-                    var nFloor = mapClass.Floors[x + (y + 1) * (mapClass.Size.x + 1)];
-                    wallObjectsSouth[x + (y + 1) * mapClass.Size.x].SetActive(nFloor.wallSouth.State != Wall.WallState.empty);
+                    wallObjectsSouth[x + (y + 1) * classMap.Size.x].SetActive(classMap.GetWall(x, y + 1, Wall.Side.South).State != Wall.WallState.empty);
                 }
 
-                if (x == mapClass.Size.x - 1)
+                if (x == classMap.Size.x - 1)
                 {
-                    var eFloor = mapClass.Floors[(x + 1) + y * (mapClass.Size.x + 1)];
-                    wallObjectsWest[(x + 1) + y * (mapClass.Size.x + 1)].SetActive(eFloor.wallWest.State != Wall.WallState.empty);
+                    wallObjectsWest[(x + 1) + y * (classMap.Size.x + 1)].SetActive(classMap.GetWall(x + 1, y, Wall.Side.West).State != Wall.WallState.empty);
                 }
             }
         }
+
+        //classMap.DebugPrintFloors();
+        classMap.DebugPrintWalls();
     }
 
     private void InitializeMap()
     {
         // new map class
-        mapClass = new MapClass(size.x, size.y);
-        Debug.Log(mapClass.Floors.Count);
+        classMap = new ClassMap(size.x, size.y);
+        Debug.Log(classMap.Floors.Count);
         var floorCount = size.x * size.y;
 
         // get prefab bounds
