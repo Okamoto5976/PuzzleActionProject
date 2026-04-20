@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class GenerateMap : MonoBehaviour
                 Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
             }, new(3,3)
             );
-        mapClass.PlaceRoom(room, new(0, 0));
+        mapClass.CheckAndPlaceRoom(room, new(0, 0));
         UpdateObjects();
     }
 
@@ -37,7 +38,7 @@ public class GenerateMap : MonoBehaviour
             {
                 var mapFloorIndex = x + y * mapClass.Size.x;
                 floorObjects[mapFloorIndex]
-                    .SetActive( mapClass.GetFloor(x, y).State != Floor.FloorState.empty );
+                    .SetActive( mapClass.GetFloor(x, y).State != Floor.FloorState.empty && mapClass.GetFloorID(x, y) != -1);
                 wallObjectsSouth[x + y * mapClass.Size.x]
                     .SetActive( mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty );
                 wallObjectsWest[x + y * (mapClass.Size.x + 1)]
@@ -58,8 +59,13 @@ public class GenerateMap : MonoBehaviour
 
     private void InitializeMap()
     {
+        HashSet<(int x, int y)> blockedFloors = new()
+        {
+            (1, 0)
+        };
+
         // new map class
-        mapClass = new MapClass(size.x, size.y);
+        mapClass = new MapClass(size.x, size.y, blockedFloors);
         Debug.Log(mapClass.Floors.Count);
         var floorCount = size.x * size.y;
 

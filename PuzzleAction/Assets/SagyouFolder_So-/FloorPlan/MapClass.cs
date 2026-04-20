@@ -9,16 +9,22 @@ public class MapClass
     private List<Floor> floors;
     public List<Floor> Floors => floors;
 
-    public MapClass(in int x, in int y)
+    public MapClass(in int width, in int height, in HashSet<(int x, int y)> blockedFloors = null)
     {
         floors = new();
-        size = new Vector2Int(x, y);
+        size = new Vector2Int(width, height);
         Floor def = new();
         def.SetID(-1);
         def.SetState(Floor.FloorState.empty);
-        for (int i = 0; i < (x + 1) * (y + 1); i++)
+        for (int i = 0; i < (width + 1) * (height + 1); i++)
         {
             floors.Add(def.Clone());
+        }
+
+        if (blockedFloors == null) return;
+        foreach ((int x, int y) in blockedFloors)
+        {
+            GetFloor(x, y).SetState(Floor.FloorState.blocked);
         }
     }
 
@@ -49,7 +55,7 @@ public class MapClass
         return GetFloor(x,y).GetWall(side);
     }
 
-    public void SetFloors(in List<Tuple<int, bool>> inFloors, in Vector2Int size, in Vector2Int origin)
+    public void SetFloors(in List<(int, bool)> inFloors, in Vector2Int size, in Vector2Int origin)
     {
         if (origin.x < 0 || origin.y < 0) { return; }
         Vector2Int newBounds = origin + size;
@@ -104,13 +110,22 @@ public class MapClass
         {
             for (int x = 0; x < room.Size.x; x++)
             {
+                // get current Position on map
                 Vector2Int pos = origin + new Vector2Int(x, y);
-                if (room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
-                if (GetFloor(pos.x, pos.y).ID != -1) return true;
+
+                bool isRoomFloorNotEmpty = room.GetFloor(x, y).State != Floor.FloorState.empty;
+                bool isMapFloorNotEmpty = GetFloor(pos.x, pos.y).State != Floor.FloorState.empty;
+                if (isRoomFloorNotEmpty && isMapFloorNotEmpty) return true;
             }
         }
 
         return false;
+    }
+
+    public void CheckAndPlaceRoom(in Room room, in Vector2Int origin)
+    {
+        if (IsRoomColliding(room, origin)) return;
+        PlaceRoom(room, origin);
     }
 
     public void PlaceRoom(in Room room, in Vector2Int origin)
@@ -163,10 +178,13 @@ public class MapClass
                 var floor = GetFloor(x, y);
                 var wallWest = GetWall(x, y, Wall.Side.West);
                 var wallSouth = GetWall(x, y, Wall.Side.South);
-                if (floor.ID == -1 || floor.State == Floor.FloorState.empty)
+                if (floor.ID == -1 || (floor.State == Floor.FloorState.empty || floor.State == Floor.FloorState.blocked))
                 {
-                    floor.SetState(Floor.FloorState.empty);
                     floor.SetID(-1);
+                    if (floor.State != Floor.FloorState.empty || floor.State != Floor.FloorState.blocked)
+                    {
+                        floor.SetState(Floor.FloorState.empty);
+                    }
                 }
 
                 if (x == 0)
@@ -242,7 +260,8 @@ public class Floor
     {
         empty,
         full,
-        path
+        path,
+        blocked
     }
 
     private FloorState state;
