@@ -7,6 +7,7 @@ public class HealItem:PlayerItem
     
     public override void Use(GameObject user)
     {
+        Debug.Log("Žg‚Á‚½");
         var hp =user.GetComponent<EntityHP>();
 
         if(hp!=null)
