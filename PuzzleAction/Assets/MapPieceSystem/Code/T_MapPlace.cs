@@ -16,12 +16,18 @@ public class T_MapPlace : MonoBehaviour
 
     private void Awake()
     {
+        
+    }
+
+    public void OnGenerate()
+    {
         mapClass = m_mapClassData.MapClass;
         Debug.Log(mapClass.Size.ToString());
         size = mapClass.Size;
 
         InitializeMap();
         UpdateObjects();
+        Debug.Log("èIóπ");
     }
 
     private void UpdateObjects()
@@ -54,7 +60,7 @@ public class T_MapPlace : MonoBehaviour
     private void InitializeMap()
     {
         // new map class
-        mapClass = new MapClass(size.x, size.y);
+        //mapClass = new MapClass(size.x, size.y);
         Debug.Log(mapClass.Floors.Count);
         var floorCount = size.x * size.y;
 

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -458,11 +457,11 @@ public class MapPlaceSystem : MonoBehaviour
     {
         visited.Add(current);
 
-        List<int> copy = visited;
+        
 
         if (current == goal)
         {
-            m_pathList.Add(copy);
+            m_pathList.Add(new List<int>(visited));
             return;
         }
 
@@ -472,6 +471,7 @@ public class MapPlaceSystem : MonoBehaviour
         {
             if (visited.Contains(next)) continue;
 
+            List<int> copy = new List<int>(visited);
             OnDFS(next, goal, copy);
         }
     }
@@ -511,18 +511,18 @@ public class MapPlaceSystem : MonoBehaviour
         {
             added = false;
 
-            foreach(var id in m_graph.Keys)
+            foreach (var id in m_graph.Keys)
             {
-                if(mainPath.Contains(id)) continue;
+                if (mainPath.Contains(id)) continue;
 
-                foreach(var neighborID in m_graph[id])
+                foreach (var neighborID in m_graph[id])
                 {
-                    if(mainPath.Contains(neighborID))
+                    if (mainPath.Contains(neighborID))
                     {
                         //connect
                         Connect(id, neighborID);
 
-                        mainPath.Add(neighborID);
+                        mainPath.Add(id);
                         added = true;
                         break;
                     }

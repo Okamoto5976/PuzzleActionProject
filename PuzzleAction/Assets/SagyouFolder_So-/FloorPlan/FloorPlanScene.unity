@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8267cfcdc4d07db40b39adf11550ed87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GenerateMap
-  size: {x: 3, y: 3}
+  size: {x: 10, y: 10}
   m_floorPrefab: {fileID: 8026624835377288137, guid: 6d36cf678cfb86442b0fc2f465d21d46, type: 3}
   m_wallPrefab: {fileID: 3648684842657275054, guid: 3462c65f45e5c5746b23c17027318b13, type: 3}
 --- !u!4 &1796124384

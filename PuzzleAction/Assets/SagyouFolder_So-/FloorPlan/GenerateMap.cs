@@ -22,10 +22,20 @@ public class GenerateMap : MonoBehaviour
             {
                 Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
                 Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
             }, new(3,3)
             );
         mapClass.PlaceRoom(room, new(0, 0));
+
+        Room room2 = new(
+            new()
+            {
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+            }, new(3, 3)
+            );
+        mapClass.PlaceRoom(room2, new(3, 3));
         UpdateObjects();
     }
 
