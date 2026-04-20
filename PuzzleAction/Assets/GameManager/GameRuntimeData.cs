@@ -34,11 +34,6 @@ public class GameRuntimeData : ScriptableObject
     public void DecreaseTime(float m_deltaTime)
     {
         time -= m_deltaTime;
-        if(time < 0) time = 0;
+        if (time < 0) time = 0;
     }
-
-    // ’l•ÏX—p
-    public void SetScore(int m_value) => score = m_value;
-    public void SetMoney(int m_value) => money = m_value;
-    public void SetTime(float m_value) => time = m_value;
 }
