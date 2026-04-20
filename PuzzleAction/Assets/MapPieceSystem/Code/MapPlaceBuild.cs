@@ -33,8 +33,8 @@ public class MapPlaceBuild : MonoBehaviour
     public void GenerateRoomObject(Room room)
     {
         var parent = Instantiate(m_pieceParent);
-        float worldPosX = UnityEngine.Random.Range(-7f, 8f);
-        float worldPosZ = UnityEngine.Random.Range(3f, 16f);
+        float worldPosX = UnityEngine.Random.Range(3f, 14f);
+        float worldPosZ = UnityEngine.Random.Range(7f, -7f);
         parent.transform.position = new Vector3(worldPosX, 1, worldPosZ);
 
 
@@ -57,6 +57,7 @@ public class MapPlaceBuild : MonoBehaviour
         }
 
         var obj = parent.GetComponent<RoomObj>();
+        obj.SetRoom(room);
         obj.Init();
     }
 

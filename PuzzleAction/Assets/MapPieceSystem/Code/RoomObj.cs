@@ -3,8 +3,10 @@ using UnityEngine;
 public class RoomObj : MonoBehaviour
 {
     private Vector3 m_originalPos;
+    private Room m_room;
 
     public Vector3 OriginalPos { get => m_originalPos; }
+    public Room Room { get => m_room; }
 
     private RoomPieceObj[] m_pieces;
 
@@ -16,6 +18,11 @@ public class RoomObj : MonoBehaviour
     public void SetOriginalPos()
     {
         m_originalPos = transform.position;
+    }
+
+    public void SetRoom(Room room)
+    {
+        m_room = room;
     }
 
     public void SetIsPlace(bool value)

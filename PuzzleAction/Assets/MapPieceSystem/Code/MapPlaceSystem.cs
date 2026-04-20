@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MapPlaceSystem : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private Camera m_mainCamera;
     private Vector3 m_mouseWorldPos;
 
-    private GameObject m_roompiece;
+    private GameObject m_roomObj;
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
@@ -31,6 +32,9 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private Vector2Int m_endPos;
 
 
+    private bool m_isDoorGenerate;
+
+
     private void Awake()
     {
         InitializeMapGrid();
@@ -43,14 +47,14 @@ public class MapPlaceSystem : MonoBehaviour
             m_build.GenerateRoomObject(room);
         }
 
-        m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
-        Debug.Log(m_room.Size);
+        //m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
+        //Debug.Log(m_room.Size);
     }
 
     #region ルーム作成
     private Room CreateRoom()
     {
-        int num = UnityEngine.Random.Range(0, 5);
+        int num = UnityEngine.Random.Range(0, 3);
 
         Room room = new(new(), new(0,0));
 
@@ -60,7 +64,7 @@ public class MapPlaceSystem : MonoBehaviour
                 new()
                 {
                     Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.path,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
                     Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
                 },new(3,3)
                 );
@@ -71,7 +75,7 @@ public class MapPlaceSystem : MonoBehaviour
                 new()
                 {
                     Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-                    Floor.FloorState.full, Floor.FloorState.path,Floor.FloorState.full,
+                    Floor.FloorState.full, Floor.FloorState.full,Floor.FloorState.full,
                     Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
                 }, new(3, 3)
                 );
@@ -82,7 +86,7 @@ public class MapPlaceSystem : MonoBehaviour
                 new()
                 {
                     Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                    Floor.FloorState.path,Floor.FloorState.empty,Floor.FloorState.path,
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
                     Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
                 }, new(3, 3)
                 );
@@ -93,7 +97,7 @@ public class MapPlaceSystem : MonoBehaviour
                 new()
                 {
                     Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.path,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,
                 }, new(2, 2)
                 );
         }
@@ -103,7 +107,7 @@ public class MapPlaceSystem : MonoBehaviour
                new()
                {
                     Floor.FloorState.full,Floor.FloorState.empty,
-                    Floor.FloorState.path,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,
                }, new(2, 2)
                );
         }
@@ -124,13 +128,13 @@ public class MapPlaceSystem : MonoBehaviour
         #region マウス操作
         if (m_action.action.WasPressedThisFrame())
         {
-            if(m_roompiece != null)
+            if(m_roomObj != null)
             {
                 if (m_origin.x < m_size.x && m_origin.x >= 0&&
                     m_origin.y < m_size.y && m_origin.y >= 0
                 )
                 {
-                    var obj = m_roompiece.GetComponent<RoomObj>();
+                    var obj = m_roomObj.GetComponent<RoomObj>();
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
                     if (!m_mapClass.IsRoomColliding(m_room, m_origin))
                     {
@@ -145,8 +149,8 @@ public class MapPlaceSystem : MonoBehaviour
                             );
 
                         Vector3 worldPos = m_parent.TransformPoint(localPos);
-                        m_roompiece.transform.position = worldPos;
-                        m_roompiece = null;
+                        m_roomObj.transform.position = worldPos;
+                        m_roomObj = null;
 
                         PlaceRoom();
                     }
@@ -156,8 +160,8 @@ public class MapPlaceSystem : MonoBehaviour
                         //room piece = null
                         //roompiece return 
                         Debug.Log("No Place");
-                        m_roompiece.transform.position = obj.OriginalPos;
-                        m_roompiece = null;
+                        m_roomObj.transform.position = obj.OriginalPos;
+                        m_roomObj = null;
 
                     }
                 }
@@ -165,7 +169,7 @@ public class MapPlaceSystem : MonoBehaviour
                 {
                     //grid外である時　その場に置く　（roompiece = null)
                     Debug.Log("NotFind Map");
-                    m_roompiece = null;
+                    m_roomObj = null;
                 }
             }
             else
@@ -185,8 +189,12 @@ public class MapPlaceSystem : MonoBehaviour
                         //取得　
                         //m_roompiece = obj.Parent;
                         parent.SetIsPlace(false);
-                        m_roompiece = parent.gameObject;
+                        m_roomObj = parent.gameObject;
+                        m_room = parent.Room;
                         //remove
+                        //マウスカーソルのfloorのID
+                        var id = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+                        m_mapClass.RemoveRoom(id);
 
                     }
                     else
@@ -194,7 +202,8 @@ public class MapPlaceSystem : MonoBehaviour
                         //roomがありIsPlaceがfalseだったら取得
                         //取得の際 現在のparentの位置を保存
                         parent.SetOriginalPos();
-                        m_roompiece = parent.gameObject;
+                        m_roomObj = parent.gameObject;
+                        m_room = parent.Room;
 
                     }
 
@@ -205,9 +214,9 @@ public class MapPlaceSystem : MonoBehaviour
         #endregion
 
         //もしroompieceがあるならmouseに追従
-        if (m_roompiece != null)
+        if (m_roomObj != null)
         {
-            m_roompiece.transform.position = m_mouseWorldPos;
+            m_roomObj.transform.position = m_mouseWorldPos;
         }
     }
 
@@ -230,26 +239,29 @@ public class MapPlaceSystem : MonoBehaviour
     private void PlaceRoom()
     {
         m_mapClass.PlaceRoom(m_room, m_origin);
-        m_roompiece = null;
+        m_roomObj = null;
+        m_room = null;
 
         //roompiece place in scene grid
 
-        if (m_rooms.Count > 0)
+        //if (m_rooms.Count > 0)
+        //{
+        //    m_room = m_rooms.Dequeue();
+
+        //    Debug.Log(m_room.Size);
+
+        //}
+
+        if (CallDFS(m_startPos, m_endPos))
         {
-            m_room = m_rooms.Dequeue();
-
-            Debug.Log(m_room.Size);
-
+            Debug.Log("IsGoal OK");
+            m_isDoorGenerate = true;
         }
-
-        //if (BFS(m_startPos, m_endPos))
-        //{
-        //    Debug.Log("IsGoal OK");
-        //}
-        //else
-        //{
-        //    Debug.Log("IsGoal No");
-        //}
+        else
+        {
+            Debug.Log("IsGoal No");
+            m_isDoorGenerate = false;
+        }
     }
 
     //------順------
@@ -259,9 +271,9 @@ public class MapPlaceSystem : MonoBehaviour
     //startとgorlが繋がればDFSを走らせる
     //DFSの順にdoorを設置
 
-    Dictionary<int, HashSet<int>> m_graph = new Dictionary<int, HashSet<int>>();
+    Dictionary<int, HashSet<int>> m_graph = new();
 
-    Dictionary<EdgeKey, List<EdgeVariant>> m_connectionMap = new Dictionary<EdgeKey, List<EdgeVariant>>();
+    Dictionary<EdgeKey, List<EdgeVariant>> m_connectionMap = new();
 
 
     struct EdgeKey
@@ -302,12 +314,12 @@ public class MapPlaceSystem : MonoBehaviour
             {
                 var id = m_mapClass.GetFloorID(x, y);
 
-                if (id == -1) return;
+                if (id == -1) continue;
 
                 Vector2Int[] dirs =
                 {
                     new Vector2Int(-1, 0),
-                    new Vector2Int(0, 1),
+                    new Vector2Int(0, -1),
                 };
 
                 foreach (var dir in dirs)
@@ -315,7 +327,7 @@ public class MapPlaceSystem : MonoBehaviour
                     Vector2Int neighbor = new Vector2Int(x, y) + dir;
 
                     //範囲外
-                    if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x > m_size.x || neighbor.y > m_size.y)
+                    if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x >= m_size.x || neighbor.y >= m_size.y)
                         continue;
 
                     var neighborID = m_mapClass.GetFloorID(neighbor.x, neighbor.y);
@@ -330,6 +342,13 @@ public class MapPlaceSystem : MonoBehaviour
                     }
 
                     m_graph[id].Add(neighborID);
+
+                    if (!m_graph.ContainsKey(neighborID))
+                    {
+                        m_graph[neighborID] = new HashSet<int>();
+                    }
+
+                    m_graph[neighborID].Add(id);
 
                     //---edge-----
 
@@ -349,6 +368,7 @@ public class MapPlaceSystem : MonoBehaviour
 
                     if (!m_connectionMap.ContainsKey(key))
                     {
+                        Debug.Log(key);
                         m_connectionMap[key] = new List<EdgeVariant>();
                     }
 
@@ -358,94 +378,122 @@ public class MapPlaceSystem : MonoBehaviour
         }
     }
 
-    public bool BFS(Vector2Int startPos, Vector2Int endPos)
+    //スタートとゴールがつながっているか
+    public bool CallDFS(Vector2Int startPos, Vector2Int endPos)
     {
+        GetNeighborRooms();
+
         //startPosのid取得
         int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
         //endPosのid取得
         int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
 
-        Queue<int> queue = new Queue<int>();
+        Debug.Log($"{startID} {endID}");
+
+        if (startID == -1) return false;
+        if (endID == -1) return false;
+
         HashSet<int> visited = new HashSet<int>();
 
-        queue.Enqueue(startID);
         visited.Add(startID);
 
-        while (queue.Count > 0)
+        return (DFS(startID, endID, visited));
+    }
+
+    public bool DFS(int current, int end, HashSet<int> visited)
+    {
+        if (current == end) return true;
+
+        if (!m_graph.ContainsKey(current))
         {
-            int currentID = queue.Dequeue();
-
-            foreach (var next in m_graph[currentID])
-            {
-                if (next == endID)
-                {
-                    return true;
-                }
-
-                if (visited.Contains(next)) continue;
-
-                queue.Enqueue(next);
-                visited.Add(next);
-            }
+            Debug.Log("Null");
+            return false;
         }
 
+        Debug.Log(current);
+
+
+        foreach (var next in m_graph[current].OrderBy(x => x))
+        {
+            if (visited.Contains(next)) continue;
+
+            visited.Add(next);
+            if(DFS(next, end, visited)) return true;
+             visited.Remove(next);
+
+        }
         return false;
     }
 
-    private List<int> m_bestPath = new List<int>();
-    private List<int> m_currentPath = new List<int>();
+    private List<int> m_bestPath;
+    private List<List<int>> m_pathList;
 
     //DFSを呼ぶ
-    public void CallDFS(Vector2Int startPos, Vector2Int endPos)
+    //ボタンで
+    public void OnClickDFS()
     {
+        if (!m_isDoorGenerate) return;
+
         //startPosのid取得
-        int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
+        int startID = m_mapClass.GetFloorID(m_startPos.x, m_startPos.y);
         //endPosのid取得
-        int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
+        int endID = m_mapClass.GetFloorID(m_endPos.x, m_endPos.y);
 
-        HashSet<int> visited = new HashSet<int>();
-        visited.Add(startID);
+        List<int> visited = new List<int>();//訪れたところ
 
-        DFS(startID, endID, visited);
+        m_pathList = new();
+
+        OnDFS(startID, endID, visited);
+
+        GenerateDoor();
+
+        SceneManager.LoadScene("MainMapClassScene");
     }
 
     //CallDFSから呼ばれる
     //DFS（深さ優先探索）
     //startIDからendIDに到達するまで枝状に進む
     //endIDについたとき進んだ分を記録　前回の記録より多ければ上書き
-    private void DFS(int current, int goal, HashSet<int> visited)
+    private void OnDFS(int current, int goal, List<int> visited)
     {
-        m_currentPath.Add(current);
+        visited.Add(current);
 
-        if(current == goal)
+        List<int> copy = visited;
+
+        if (current == goal)
         {
-            if(m_currentPath.Count > m_bestPath.Count)
-            {
-                //上書き
-                m_bestPath = new List<int>(m_currentPath);
-                return;
-            }
+            m_pathList.Add(copy);
+            return;
         }
 
         //m_graphの中　idを若順に取得
         //端まで到達したら端から削除していく
-        foreach(var next in m_graph[current].OrderBy(x => x))
+        foreach (var next in m_graph[current].OrderBy(x => x))
         {
-            if(visited.Contains(next)) continue;
+            if (visited.Contains(next)) continue;
 
-            //同じidの部屋をさけるため
-            visited.Add(next);
-            DFS(next, goal, visited);
-            visited.Remove(next);
+            OnDFS(next, goal, copy);
         }
-
-        m_currentPath.RemoveAt(m_currentPath.Count - 1);
     }
 
-    
+
+    [SerializeField] private MapClassData m_mapClassData;
 
     public void GenerateDoor()
     {
+        m_bestPath = new();
+
+
+        for(int i = 0;i < m_pathList.Count;i++)
+        {
+            var count = m_pathList[i].Count;
+
+            if(m_bestPath.Count < count)
+            {
+                m_bestPath = m_pathList[i];
+            }
+        }
+
         for(int i = 0; i < m_bestPath.Count - 1; i++)
         {
             Connect(m_bestPath[i], m_bestPath[i + 1]);
@@ -482,6 +530,8 @@ public class MapPlaceSystem : MonoBehaviour
             }
 
         } while (added);
+
+        m_mapClassData.SetValue(m_mapClass);
     }
 
     private void Connect(int id, int next)
@@ -490,6 +540,12 @@ public class MapPlaceSystem : MonoBehaviour
         int to = next;
 
         var key = new EdgeKey(from, to);
+
+        if(!m_connectionMap.ContainsKey(key))
+        {
+            Debug.Log("Null");
+            Debug.Log($"{key}{"is Null"}");
+        }
 
         List<EdgeVariant> list = m_connectionMap[key];
 
@@ -501,5 +557,37 @@ public class MapPlaceSystem : MonoBehaviour
         floor.SetState(Wall.WallState.door);
     }
 
+    //public bool OnBFS(Vector2Int startPos, Vector2Int endPos)
+    //{
+    //    //startPosのid取得
+    //    int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
+    //    //endPosのid取得
+    //    int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
 
+    //    Queue<int> queue = new Queue<int>();
+    //    HashSet<int> visited = new HashSet<int>();
+
+    //    queue.Enqueue(startID);
+    //    visited.Add(startID);
+
+    //    while (queue.Count > 0)
+    //    {
+    //        int currentID = queue.Dequeue();
+
+    //        foreach (var next in m_graph[currentID])
+    //        {
+    //            if (next == endID)
+    //            {
+    //                return true;
+    //            }
+
+    //            if (visited.Contains(next)) continue;
+
+    //            queue.Enqueue(next);
+    //            visited.Add(next);
+    //        }
+    //    }
+
+    //    return false;
+    //}
 }
