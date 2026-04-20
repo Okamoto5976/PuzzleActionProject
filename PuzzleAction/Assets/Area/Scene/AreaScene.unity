@@ -575,6 +575,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_ShopPoint: {fileID: 0}
+  m_actionKye: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!114 &1354401360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -587,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e794b4739e4038d46af7ec2d0a95886b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaController
-  m_CurrentArea: 0
+  m_CurrentArea: 3
 --- !u!1 &1598727768
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,7 +625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -97.4}
   m_SizeDelta: {x: 480, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1598727770
@@ -882,7 +883,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1661827018

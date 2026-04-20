@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using UnityEngine;
 
 public class damage : MonoBehaviour

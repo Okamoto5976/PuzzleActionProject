@@ -4,13 +4,16 @@ using UnityEngine.InputSystem;
 public class shop : MonoBehaviour
 {
     [Header("ショップ用イベント")]
-    public UnityEvent m_ShopOpen;
-    public UnityEvent m_ShopClose;
+    [SerializeField] private UnityEvent m_ShopOpen;
+    [SerializeField] private UnityEvent m_ShopClose;
 
     public Transform m_ShopPoint;
 
     private bool m_ButtonShop = false;
     private bool m_CurrentlyOpen = false;
+
+    [SerializeField] private InputActionReference m_actionKye;
+
    // private void OnTriggerEnter(Collider other)
    // {
    //     if (other.CompareTag("Player")) m_ButtonShop = true;
@@ -38,9 +41,9 @@ public class shop : MonoBehaviour
     void Update()
     {
         //ショップにいてキーを押したら
-        if (m_ButtonShop && Keyboard.current != null)
+        if (m_ButtonShop)
         {
-            if (Keyboard.current.eKey.wasPressedThisFrame)
+            if (m_actionKye.action.WasPressedThisFrame())
             {
                 if (m_CurrentlyOpen == false)
                 {
