@@ -49,9 +49,9 @@ public class GenerateMap : MonoBehaviour
                 floorObjects[mapFloorIndex]
                     .SetActive( mapClass.GetFloor(x, y).State != Floor.FloorState.empty );
                 wallObjectsSouth[x + y * mapClass.Size.x]
-                    .SetActive( mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty );
+                    .SetActive( mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty && mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.door);
                 wallObjectsWest[x + y * (mapClass.Size.x + 1)]
-                    .SetActive( mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty );
+                    .SetActive( mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty && mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.door);
 
                 if (y == mapClass.Size.y - 1)
                 {

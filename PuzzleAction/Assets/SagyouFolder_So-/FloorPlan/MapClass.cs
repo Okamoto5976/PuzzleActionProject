@@ -82,7 +82,7 @@ public class MapClass
             for (int x = 0; x < size.x + 1; x++)
             {
                 var floor = GetFloor(x, y);
-                Debug.Log($"[{x},{y}] : {floor.ID} : {floor.State}, {(floor.GetWall(Wall.Side.West).State != Wall.WallState.empty ? "W" : "")}{(floor.GetWall(Wall.Side.South).State != Wall.WallState.empty ? "S" : "")}");
+                Debug.Log($"[{x},{y}] : {floor.ID} : {floor.State}, {(floor.GetWall(Wall.Side.West).State != Wall.WallState.empty ? $"W{floor.GetWall(Wall.Side.West).State}" : "")}{(floor.GetWall(Wall.Side.South).State != Wall.WallState.empty ? $"S{floor.GetWall(Wall.Side.South).State}" : "")}");
             }
         }
     }

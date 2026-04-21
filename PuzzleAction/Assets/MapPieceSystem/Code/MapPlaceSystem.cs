@@ -253,12 +253,12 @@ public class MapPlaceSystem : MonoBehaviour
 
         if (CallDFS(m_startPos, m_endPos))
         {
-            Debug.Log("IsGoal OK");
+            //Debug.Log("IsGoal OK");
             m_isDoorGenerate = true;
         }
         else
         {
-            Debug.Log("IsGoal No");
+            //Debug.Log("IsGoal No");
             m_isDoorGenerate = false;
         }
     }
@@ -387,7 +387,7 @@ public class MapPlaceSystem : MonoBehaviour
         //endPos‚ÌidŽæ“¾
         int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
 
-        Debug.Log($"{startID} {endID}");
+        //Debug.Log($"{startID} {endID}");
 
         if (startID == -1) return false;
         if (endID == -1) return false;
@@ -405,7 +405,7 @@ public class MapPlaceSystem : MonoBehaviour
 
         if (!m_graph.ContainsKey(current))
         {
-            Debug.Log("Null");
+            //Debug.Log("Null");
             return false;
         }
 
@@ -540,8 +540,8 @@ public class MapPlaceSystem : MonoBehaviour
         int to = next;
 
         var key = new EdgeKey(from, to);
-
-        if(!m_connectionMap.ContainsKey(key))
+        m_mapClass.DebugPrintFloors();
+        if (!m_connectionMap.ContainsKey(key))
         {
             Debug.Log("Null");
             Debug.Log($"{key}{"is Null"}");
