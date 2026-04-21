@@ -34,7 +34,7 @@ public class Test : MonoBehaviour
         // Aキーが押された瞬間かどうか
         if (aKey.wasPressedThisFrame)
         {
-            m_hitCollider.AttackCollider(data, this.GameObject.GetComponent<ITeam>().Team);
+            m_hitCollider.AttackCollider(data, this.GameObject.GetComponent<ITeam>().Team, this.GameObject.GetComponent<Test_chara>().attackHitBox);
         }
         // Sキーが押された瞬間かどうか
         if (sKey.wasPressedThisFrame)

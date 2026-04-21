@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 // ▼(仮)--------------------------
 public enum TeamType 
@@ -12,7 +15,14 @@ public enum TeamType
     Item
 };
 
-public class DamageData{ }
+public class DamageData
+{
+    public int Attack;
+    public float Knockback;
+    public Vector3 AttackDir;
+    //public DamageType DamageType;
+    public int Duration;
+}
 public class DamageResult
 {
     public Vector3 hitPoint;
@@ -22,6 +32,13 @@ public class DamageResult
     //public AudioDataSO overrideAudioData = m_overrideAudio;
 }
 // ▲------------------------------
+
+[System.Serializable]
+public class AttackHitBox
+{
+    public Transform m_transform;
+    public float m_radius;
+}
 
 public class HitCollider : MonoBehaviour
 {
@@ -34,50 +51,53 @@ public class HitCollider : MonoBehaviour
     [SerializeField] private bool m_isViewCollider;
     [SerializeField] private bool m_isVisible;
 
-    [System.Serializable]
-    public class AttackHitBox
-    {
-        public Transform m_pos;
-        public float m_radius;
-    }
-    [SerializeField] private AttackHitBox[] m_hitBoxes;
+    
+    [SerializeField] private AttackHitBox[] hitBoxes;   // 当たり判定
+    [SerializeField] private AttackHitBox attackHitBox; // 攻撃判定
 
     //[SerializeField] private EffectDataSO m_overrideEffect;
     //[SerializeField] private AudioDataSO m_overrideAudio;
 
     private Coroutine m_viewCoroutine;
     
-    public void AttackCollider(DamageData data, TeamType myTeam)
+    public void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
         // ヒットした判定のセット
         HashSet<IDamage> hitSet = new HashSet<IDamage>();
 
-        foreach (var hitBox in m_hitBoxes)
+        this.attackHitBox = attackHitBox;
+
+        foreach (var hitBox in hitBoxes)
         {
-            if (hitBox.m_pos == null) continue;
-            Debug.Log($"m_hitBoxes.Length : {m_hitBoxes.Length}");
-            //Debug.Log($"hitBox.pos : {hitBox.m_pos.position}");
-            //Debug.Log($"hitBox.rad : {hitBox.m_radius}");
+            if (attackHitBox == hitBox) continue;
+            if (hitBox.m_transform == null) continue;
+            //Debug.Log($"hitBoxes.Length : {hitBoxes.Length}");
+            //Debug.Log($"hBIT : {hitBox.m_transform.GetComponentInParent<ITeam>()}");
 
-            Collider[] hits = Physics.OverlapSphere(
-                hitBox.m_pos.position,
-                hitBox.m_radius
+            //Collider[] hits = Physics.OverlapSphere(
+            //    hitBox.m_transform.position,
+            //    hitBox.m_radius
+            //);
+
+            Transform[] hits = My_OverlapSphere(
+                attackHitBox
             );
+            Debug.Log($"hits.Length : {hits.Length}");
 
-            foreach (var col in hits)
+            foreach (var hit in hits)
             {
-                Debug.Log($"col : {col}");
-                Debug.Log($"col.name : {col.name}");
-                var damageable = col.GetComponentInParent<IDamage>();
+                //Debug.Log($"hitBox.IDamage : {hitBox.m_transform.GetComponentInParent<IDamage>()}");
+                Debug.Log($"hit : {hit}");
+                var damageable = hit.GetComponentInParent<IDamage>();
                 if (damageable == null) continue;
                 if (hitSet.Contains(damageable)) continue;
 
-                var team = col.GetComponentInParent<ITeam>();
-                Debug.Log($"team : {team}");
-                //Debug.Log($"team.Team : {team.Team}");
+                var team = hit.GetComponentInParent<ITeam>();
+
+                Debug.Log($"team.Team : {team.Team}");
                 if (team != null)
                 {
-                    Debug.Log("team != null");
+                    Debug.Log($"myTeam : {myTeam}");
                     // 同じチームなら無視
                     if (team.Team == myTeam) continue;
                 }
@@ -87,10 +107,13 @@ public class HitCollider : MonoBehaviour
                 }
 
                 hitSet.Add(damageable);
-                Debug.Log("Damage");
+                //Debug.Log("Damage");
 
-                Vector3 hitPoint = col.ClosestPoint(hitBox.m_pos.position);
-                Vector3 hitNormal = (hitPoint - hitBox.m_pos.position).normalized;
+                //Vector3 hitPoint = col.ClosestPoint(hitBox.m_transform.position);
+                Vector3 hitPoint = My_ClosestPoint(hit.transform.position, hitBox.m_transform.position, hitBox.m_radius);
+                Vector3 hitNormal = (hitPoint - hitBox.m_transform.position).normalized;
+                Debug.Log($"hitName : {hit.name} , hitPos : {hit.transform.position} , hitBoxPos : {hitBox.m_transform.position}");
+                //Debug.Log($"hitPoint : {hitPoint}");
 
                 DamageResult result = new DamageResult
                 {
@@ -117,7 +140,6 @@ public class HitCollider : MonoBehaviour
     
     private IEnumerator ViewColliderTime()
     {
-        Debug.Log("ViewColliderTime");
         m_isVisible = true;
         yield return new WaitForSeconds(0.5f);
         m_isVisible = false;
@@ -134,13 +156,66 @@ public class HitCollider : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        foreach(var hitBox in m_hitBoxes)
+        foreach(var hitBox in hitBoxes)
         {
-            if (hitBox.m_pos == null) continue;
+            if (hitBox.m_transform == null) continue;
             Gizmos.DrawWireSphere(
-                hitBox.m_pos.position,
+                hitBox.m_transform.position,
                 hitBox.m_radius
                 );
         }
+    }
+
+    private Transform[] My_OverlapSphere(AttackHitBox attackHitBox)
+    {
+        List<Transform> colSet = new List<Transform>();
+        foreach (var hitBox in hitBoxes)
+        {
+            if (hitBox.m_transform == null) continue;
+            if (attackHitBox == hitBox)
+            {
+                Debug.Log("TTT");
+                continue;
+            }
+            else
+            {
+                Debug.Log("EEE");
+            }
+
+            if (Distance(hitBox.m_transform.position, attackHitBox.m_transform.position)
+                < (attackHitBox.m_radius + hitBox.m_radius) * (attackHitBox.m_radius + hitBox.m_radius))
+            {
+                Debug.Log("[collision] true");
+                colSet.Add(hitBox.m_transform.GetComponentInParent<Transform>());
+            }
+            else
+            {
+                Debug.Log("[collision] else");
+                continue;
+            }
+        }
+        Transform[] col = colSet.ToArray();
+        foreach (var col2 in col)
+        {
+            Debug.Log($"col[] : {col2}");
+        }
+        return col;
+    }
+
+    private Vector3 My_ClosestPoint(Vector3 pos1, Vector3 pos2, float rad2)
+    {
+        Vector3 closestPoint;
+        //closestPoint = pos1 + (pos2 - pos1) * (rad1 / (rad1 + rad2));
+        float distance = Mathf.Sqrt(Distance(pos1, pos2));
+        closestPoint = pos1 + (pos2 - pos1) * ((distance - rad2) / distance);
+        return closestPoint;
+    }
+
+    private float Distance(Vector3 pos1, Vector3 pos2)
+    {
+        float distance = (pos2.x - pos1.x) * (pos2.x - pos1.x)
+                       + (pos2.y - pos1.y) * (pos2.y - pos1.y)
+                       + (pos2.z - pos1.z) * (pos2.z - pos1.z);
+        return distance;
     }
 }

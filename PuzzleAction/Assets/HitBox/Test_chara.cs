@@ -8,6 +8,7 @@ public class Test_chara : MonoBehaviour, IDamage, ITeam
     }
     [SerializeField] private TeamType m_team;
     public TeamType Team { get; set; }
+    public AttackHitBox attackHitBox;
 
     void Awake()
     {
