@@ -19,7 +19,7 @@ public enum DamageType//ダメージタイプ
     Normal
 }
 
-public abstract class EntityHP:MonoBehaviour 
+public abstract class EntityHP:MonoBehaviour
 {
     [Header("HP設定")] 
     public int m_maxHP = 100;
@@ -41,6 +41,7 @@ public abstract class EntityHP:MonoBehaviour
         if(rb!=null)
         {
             Vector3 dir = (transform.position - data.m_hitPoint).normalized;
+            //dir.y = 0;
             rb.AddForce(dir * data.m_knockbackForce, ForceMode.Impulse);
         }
         //エフェクト (Managerに任せる）
