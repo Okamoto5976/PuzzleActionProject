@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a41c5b0c4fac54494c778f88e25dc9, type: 3}
   m_Name: TimeData
   m_EditorClassIdentifier: Assembly-CSharp::TimeRuntime
-  m_value: 0
+  m_value: 53.467598

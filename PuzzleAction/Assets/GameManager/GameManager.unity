@@ -148,8 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 023a7cf8650c16e4aa0621dd3fd14202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  data: {fileID: 11400000, guid: 70781622d727f8d46a1a1cc4fd0eef5d, type: 2}
-  runtime: {fileID: 11400000, guid: 953591502a0566f498c282e1e80cc038, type: 2}
+  scoreRuntime: {fileID: 11400000, guid: 42861d188f4784249b21b2f863d44415, type: 2}
+  moneyRuntime: {fileID: 11400000, guid: cc2d4cc2183ca314ca4e38a6fc80409e, type: 2}
+  timeRunTime: {fileID: 11400000, guid: 6a8e62ac3a1888246b228fd13fd5ba24, type: 2}
 --- !u!4 &1008203064
 Transform:
   m_ObjectHideFlags: 0

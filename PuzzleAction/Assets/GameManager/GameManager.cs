@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameData data;
-
     [SerializeField] private ScoreRuntime scoreRuntime;
     [SerializeField] private MoneyRuntime moneyRuntime;
     [SerializeField] private TimeRuntime timeRunTime;
@@ -12,10 +10,6 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        scoreRuntime.SetValue(data.StartScore);    
-        moneyRuntime.SetValue(data.StartMoney);
-        timeRunTime.SetValue(data.TimeLimit);
-   
         //デバック用
         Debug.Log("GameManagerが動く");
         Time.timeScale = 1f;
