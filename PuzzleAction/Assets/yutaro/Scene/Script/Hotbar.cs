@@ -52,6 +52,5 @@ public class Hotbar : MonoBehaviour
             }
         }
         return false;//é∏îs
-        Debug.Log("Ç¢Ç¡ÇœÇ¢Ç≈èEÇ¶Ç»Ç¢");
     }
 }

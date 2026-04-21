@@ -38,7 +38,7 @@ public class PlayerStateController : MonoBehaviour
     }
     private System.Collections.IEnumerator InvincibleCoroutine(float time)
     {
-    IsInvincible = true;
+        IsInvincible = true;
         yield return new WaitForSeconds(time);
         IsInvincible = false;
     }
