@@ -482,6 +482,7 @@ GameObject:
   - component: {fileID: 1354401356}
   - component: {fileID: 1354401359}
   - component: {fileID: 1354401358}
+  - component: {fileID: 1354401361}
   m_Layer: 0
   m_Name: administrator
   m_TagString: Untagged
@@ -588,7 +589,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e794b4739e4038d46af7ec2d0a95886b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaController
-  m_CurrentArea: 3
+  m_CurrentArea: 0
+--- !u!114 &1354401361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354401355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87d682ba6aa9eff4387a9bc307794a5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaSet
+  m_ShopPrefab: {fileID: 5059438631722109827, guid: 71a7a317caa9d0b45a1f08f40e58fdc7, type: 3}
+  m_GoalPrefab: {fileID: 4918719331509249058, guid: 982e1e2dd3d4ddb42ba4b225abf0716d, type: 3}
 --- !u!1 &1598727768
 GameObject:
   m_ObjectHideFlags: 0
