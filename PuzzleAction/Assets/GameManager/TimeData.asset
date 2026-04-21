@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ca4b88a80f60674a95541436cc5d8dd, type: 3}
-  m_Name: GameData
-  m_EditorClassIdentifier: Assembly-CSharp::GameData
-  m_startScore: 0
-  m_startMoney: 0
-  m_timeLimit: 0
+  m_Script: {fileID: 11500000, guid: 94a41c5b0c4fac54494c778f88e25dc9, type: 3}
+  m_Name: TimeData
+  m_EditorClassIdentifier: Assembly-CSharp::TimeRuntime
+  m_value: 0

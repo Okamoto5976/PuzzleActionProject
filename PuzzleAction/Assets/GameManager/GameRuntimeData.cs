@@ -11,7 +11,7 @@ public class GameRuntimeData : ScriptableObject
     public int Money => money; //‚¨‹à
     public float Time => time; //ŠÔ
 
-    //‰Šú‰»š
+    //‰Šú‰»
     public void Init(int m_startScore,int m_startMoney,float m_startTime)
     {
         score = m_startScore;
@@ -19,19 +19,19 @@ public class GameRuntimeData : ScriptableObject
         time = m_startTime;
     }
 
-    //ƒXƒRƒA‰ÁZŒvZš
+    //ƒXƒRƒA‰ÁZŒvZ
     public void AddScore(int m_addValue)
     {
         score += m_addValue;
     }
 
-    //‚¨‹àŠ·ZŒvZš
+    //‚¨‹àŠ·ZŒvZ
     public void AddMoney(int m_addValue)
     {
         money += m_addValue;
     }
 
-    //ŠÔŒ¸­ŒvZš
+    //ŠÔŒ¸­ŒvZ
     public void DecreaseTime(float m_deltaTime)
     {
         time -= m_deltaTime;
