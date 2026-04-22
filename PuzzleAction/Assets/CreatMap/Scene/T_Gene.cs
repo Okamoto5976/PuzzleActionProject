@@ -17,16 +17,6 @@ public class GenerateMap : MonoBehaviour
     {
         InitializeMap();
 
-        Room room1 = new(
-            new()
-            {
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.empty,Floor.FloorState.full,
-            }, new(3, 3)
-            );
-        classMap.PlaceRoom(room1, new(0, 0));
-
         Room room2 = new(
             new()
             {
@@ -35,7 +25,18 @@ public class GenerateMap : MonoBehaviour
                 Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
             }, new(3, 3)
             );
-        classMap.PlaceRoom(room2, new(2, 2));
+        classMap.PlaceRoom(room2, new(1, 1));
+
+        Room room1 = new(
+            new()
+            {
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+            }, new(3, 3)
+            );
+        classMap.PlaceRoom(room1, new(0, 0));
+
 
         UpdateObjects();
     }
@@ -66,8 +67,8 @@ public class GenerateMap : MonoBehaviour
             }
         }
 
-        //classMap.DebugPrintFloors();
-        classMap.DebugPrintWalls();
+        classMap.DebugPrintFloors();
+        //classMap.DebugPrintWalls();
     }
 
     private void InitializeMap()
