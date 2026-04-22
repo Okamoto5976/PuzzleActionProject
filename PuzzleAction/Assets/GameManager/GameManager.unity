@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1008203064}
-  - component: {fileID: 1008203063}
+  - component: {fileID: 1008203065}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -136,21 +136,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1008203063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1008203062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023a7cf8650c16e4aa0621dd3fd14202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  scoreRuntime: {fileID: 11400000, guid: 42861d188f4784249b21b2f863d44415, type: 2}
-  moneyRuntime: {fileID: 11400000, guid: cc2d4cc2183ca314ca4e38a6fc80409e, type: 2}
-  timeRunTime: {fileID: 11400000, guid: 6a8e62ac3a1888246b228fd13fd5ba24, type: 2}
 --- !u!4 &1008203064
 Transform:
   m_ObjectHideFlags: 0
@@ -166,6 +151,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1008203065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008203062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023a7cf8650c16e4aa0621dd3fd14202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_scoreRuntime: {fileID: 11400000, guid: b55efe0ffafbc8d408c6c25dae6a587b, type: 2}
+  m_moneyRuntime: {fileID: 11400000, guid: 23497dd6b185c9a4cbceb0b78cf42061, type: 2}
+  timemanager: {fileID: 11400000, guid: 6a8e62ac3a1888246b228fd13fd5ba24, type: 2}
 --- !u!1 &1794081017
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TimeRuntime", menuName = "Scriptable Objects/TimeRuntime")]
-public class TimeRuntime : ScriptableObject
+[CreateAssetMenu(fileName = "TimeManager", menuName = "Scriptable Objects/TimeManager")]
+public class TimeManager : ScriptableObject
 {
     [SerializeField] private float m_value;
 
     public float Value { get => m_value; }
 
-    public void  SetValue(float value)
+    public void SetValue(float value)
     {
         m_value = value;
     }
@@ -22,5 +22,4 @@ public class TimeRuntime : ScriptableObject
     {
         m_value += amount;
     }
-    
 }

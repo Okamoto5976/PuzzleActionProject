@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cb4a7bfae2d09a408b02d0e56f63a6c, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fe64ffba47508649ac3df78e38d5a7c, type: 3}
   m_Name: TimeData
-  m_EditorClassIdentifier: Assembly-CSharp::Timer
+  m_EditorClassIdentifier: Assembly-CSharp::TimeManager
   m_value: 0

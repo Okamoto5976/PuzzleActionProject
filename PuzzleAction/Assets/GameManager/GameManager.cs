@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private ScoreRuntime scoreRuntime;
-    [SerializeField] private MoneyRuntime moneyRuntime;
-    [SerializeField] private TimeRuntime timeRunTime;
+    [SerializeField] private IntRunTime m_scoreRuntime;
+    [SerializeField] private IntRunTime m_moneyRuntime;
+    [SerializeField] private TimeManager timemanager;
 
     private bool m_isGameOver = false;
     
@@ -18,13 +19,13 @@ public class GameManager : MonoBehaviour
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
-        timeRunTime.DecreaseValue(Time.deltaTime);
+        timemanager.DecreaseValue(Time.deltaTime);
 
         //デバック用
-        Debug.Log($"Score: {scoreRuntime.Value} | Money: {moneyRuntime.Value} | Time: {timeRunTime.Value:F1}");
+        Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
         
         //時間切れ
-        if (timeRunTime.Value <= 0)
+        if (timemanager.Value <= 0)
         {
             GameOver();
         }
