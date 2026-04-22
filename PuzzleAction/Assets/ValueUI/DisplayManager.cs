@@ -49,8 +49,6 @@ public class DisplayManager : MonoBehaviour
         if(m_money>=amount)
         {
             m_money -= amount;
-            //デバック
-            Debug.Log($"出金:{amount}|残り:{m_money}");
             return true; //支払い成功
         }      
         return false; //お金不足
