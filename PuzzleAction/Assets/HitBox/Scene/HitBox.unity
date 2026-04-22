@@ -321,9 +321,6 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 637287277}
     m_radius: 0.6
-  attackHitBox:
-    m_transform: {fileID: 0}
-    m_radius: 0
 --- !u!1 &926522300
 GameObject:
   m_ObjectHideFlags: 0

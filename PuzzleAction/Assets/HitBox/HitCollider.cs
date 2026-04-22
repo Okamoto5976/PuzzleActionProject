@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 // ▼(仮)--------------------------
 public enum TeamType 
@@ -53,7 +48,6 @@ public class HitCollider : MonoBehaviour
 
     
     [SerializeField] private AttackHitBox[] hitBoxes;   // 当たり判定
-    [SerializeField] private AttackHitBox attackHitBox; // 攻撃判定
 
     //[SerializeField] private EffectDataSO m_overrideEffect;
     //[SerializeField] private AudioDataSO m_overrideAudio;
@@ -65,14 +59,10 @@ public class HitCollider : MonoBehaviour
         // ヒットした判定のセット
         HashSet<IDamage> hitSet = new HashSet<IDamage>();
 
-        this.attackHitBox = attackHitBox;
-
         foreach (var hitBox in hitBoxes)
         {
             if (attackHitBox == hitBox) continue;
             if (hitBox.m_transform == null) continue;
-            //Debug.Log($"hitBoxes.Length : {hitBoxes.Length}");
-            //Debug.Log($"hBIT : {hitBox.m_transform.GetComponentInParent<ITeam>()}");
 
             //Collider[] hits = Physics.OverlapSphere(
             //    hitBox.m_transform.position,
@@ -82,22 +72,22 @@ public class HitCollider : MonoBehaviour
             Transform[] hits = My_OverlapSphere(
                 attackHitBox
             );
-            Debug.Log($"hits.Length : {hits.Length}");
+            
+            //Debug.Log($"hits.Length : {hits.Length}");
 
             foreach (var hit in hits)
             {
-                //Debug.Log($"hitBox.IDamage : {hitBox.m_transform.GetComponentInParent<IDamage>()}");
-                Debug.Log($"hit : {hit}");
+                //Debug.Log($"hit : {hit}");
                 var damageable = hit.GetComponentInParent<IDamage>();
                 if (damageable == null) continue;
                 if (hitSet.Contains(damageable)) continue;
 
                 var team = hit.GetComponentInParent<ITeam>();
 
-                Debug.Log($"team.Team : {team.Team}");
+                //Debug.Log($"team.Team : {team.Team}");
                 if (team != null)
                 {
-                    Debug.Log($"myTeam : {myTeam}");
+                    //Debug.Log($"myTeam : {myTeam}");
                     // 同じチームなら無視
                     if (team.Team == myTeam) continue;
                 }
@@ -107,12 +97,11 @@ public class HitCollider : MonoBehaviour
                 }
 
                 hitSet.Add(damageable);
-                //Debug.Log("Damage");
 
                 //Vector3 hitPoint = col.ClosestPoint(hitBox.m_transform.position);
                 Vector3 hitPoint = My_ClosestPoint(hit.transform.position, hitBox.m_transform.position, hitBox.m_radius);
                 Vector3 hitNormal = (hitPoint - hitBox.m_transform.position).normalized;
-                Debug.Log($"hitName : {hit.name} , hitPos : {hit.transform.position} , hitBoxPos : {hitBox.m_transform.position}");
+                //Debug.Log($"hitName : {hit.name} , hitPos : {hit.transform.position} , hitBoxPos : {hitBox.m_transform.position}");
                 //Debug.Log($"hitPoint : {hitPoint}");
 
                 DamageResult result = new DamageResult
@@ -172,33 +161,20 @@ public class HitCollider : MonoBehaviour
         foreach (var hitBox in hitBoxes)
         {
             if (hitBox.m_transform == null) continue;
-            if (attackHitBox == hitBox)
-            {
-                Debug.Log("TTT");
-                continue;
-            }
-            else
-            {
-                Debug.Log("EEE");
-            }
+            if (attackHitBox == hitBox) continue;
 
             if (Distance(hitBox.m_transform.position, attackHitBox.m_transform.position)
                 < (attackHitBox.m_radius + hitBox.m_radius) * (attackHitBox.m_radius + hitBox.m_radius))
             {
-                Debug.Log("[collision] true");
                 colSet.Add(hitBox.m_transform.GetComponentInParent<Transform>());
             }
             else
             {
-                Debug.Log("[collision] else");
                 continue;
             }
         }
         Transform[] col = colSet.ToArray();
-        foreach (var col2 in col)
-        {
-            Debug.Log($"col[] : {col2}");
-        }
+
         return col;
     }
 
