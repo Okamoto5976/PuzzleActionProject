@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        //デバック用
-        Debug.Log("GameManagerが動く");
         Time.timeScale = 1f;
     }
 

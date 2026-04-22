@@ -17,4 +17,10 @@ public class IntRunTime : ScriptableObject
     {
         m_value += value;
     }
+
+    public void SubtractValue(int value)
+    {
+        m_value -= value;
+        if (m_value < 0) m_value = 0; //所持金がマイナスにならないよう
+    }
 }
