@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+
 public class MapPlaceSystem : MonoBehaviour
 {
     [SerializeField] private InputActionReference m_action;
