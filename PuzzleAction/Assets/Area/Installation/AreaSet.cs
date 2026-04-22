@@ -6,6 +6,20 @@ public class AreaSet : MonoBehaviour
     public GameObject m_ShopPrefab;
     public GameObject m_GoalPrefab;
 
+    [Header("ê›íË")]
+    public bool m_IsGoal = false;
+    public Transform m_SpawnPoint;
+    void Start()
+    {
+        if (m_IsGoal) SetupGoal();
+
+    }
+    private void SetupGoal()
+    {
+        Transform targetPoint = m_SpawnPoint != null ? m_SpawnPoint : transform;
+        Instantiate(m_GoalPrefab, targetPoint.position, targetPoint.rotation, targetPoint);
+        Debug.Log("G");
+    }
     public void SetupRoom(AreaType type, Transform spawnPoint)
     {
         switch (type)
@@ -18,13 +32,13 @@ public class AreaSet : MonoBehaviour
                 }
                 break;
 
-            case AreaType.Summon:
-                if (m_GoalPrefab != null)
-                {
-                    Instantiate(m_GoalPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
-                    Debug.Log("G");
-                }
-                break;
-        }
+                // case AreaType.Summon:
+                //     if (m_GoalPrefab != null)
+                //     {
+                //         Instantiate(m_GoalPrefab, spawnPoint.position, spawnPoint.rotation, spawnPoint);
+                //         Debug.Log("G");
+                //     }
+                //     break;
+        }  
     }
 }
