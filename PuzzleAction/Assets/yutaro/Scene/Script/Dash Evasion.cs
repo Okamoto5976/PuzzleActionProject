@@ -1,45 +1,53 @@
 using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
+
 public class DashEvasion : MonoBehaviour
 {
-    float speed = 10.0f;
-    int hitPoit;
-    bool isHide;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public enum PlayerState
     {
-        hitPoit = 10;
+        Normal,
+        Dash
     }
+    
+    public float dashTime = 0.3f;
 
-    // Update is called once per frame
-    void Update()
+    public bool IsInvincible { get; private set; }
+    public bool IsDashing => currentState == PlayerState.Dash;
+
+    private PlayerState currentState = PlayerState.Normal;
+
+    public void StartDash()
     {
-     
-        if (Input.GetKeyDown(KeyCode.Space) && !isHide)
+        if (currentState == PlayerState.Normal)
         {
-            StartCoroutine("StartUnrivaled");
+            StartCoroutine(Dash());
         }
     }
-    IEnumerator StartUnrivaled()
+
+    IEnumerator Dash()
     {
-        isHide = true;
-        yield return new WaitForSeconds(3.0f);
-        isHide = false;
+        currentState = PlayerState.Dash;
+        IsInvincible = true;
+
+        yield return new WaitForSeconds(dashTime);
+
+        IsInvincible = false;
+        currentState = PlayerState.Normal;
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Ball")
+        if (other.gameObject.CompareTag("Ball"))
         {
-            if (!isHide)
+            if (IsInvincible)
             {
-                hitPoit--;
+                Debug.Log("ñ≥ìGèÛë‘Ç≈âÒî");
+            }
+            else
+            {
+                Debug.Log("É_ÉÅÅ[ÉW");
             }
             Destroy(other.gameObject);
-            Debug.Log(hitPoit);
         }
     }
 }
-
-
