@@ -1,82 +1,89 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Wall;
 
-public class GenerateMap : MonoBehaviour
+public class T_Gene : MonoBehaviour
 {
-    private ClassMap classMap = new ClassMap(0, 0);
-    [SerializeField] private Vector2Int size;
+    [Header("Map")]
+    private MapClass m_mapClass = new MapClass(0, 0);
+    [SerializeField] private Vector2Int m_size;
     [SerializeField] private GameObject m_floorPrefab;
     [SerializeField] private GameObject m_wallPrefab;
 
-    private List<GameObject> floorObjects = new();
-    private List<GameObject> wallObjectsSouth = new();
-    private List<GameObject> wallObjectsWest = new();
+    private List<GameObject> m_floorObjects = new();
+    private List<GameObject> m_wallObjectsSouth = new();
+    private List<GameObject> m_wallObjectsWest = new();
 
+    [SerializeField] private MapClassData m_mapClassData;
 
     private void Awake()
     {
+        m_mapClass = m_mapClassData.MapClass;
+        Debug.Log(m_mapClass.Size.ToString());
+        m_size = m_mapClass.Size;
+
         InitializeMap();
-
-        Room room2 = new(
-            new()
-            {
-                Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-            }, new(3, 3)
-            );
-        classMap.PlaceRoom(room2, new(1, 1));
-
-        Room room1 = new(
-            new()
-            {
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-            }, new(3, 3)
-            );
-        classMap.PlaceRoom(room1, new(0, 0));
-
 
         UpdateObjects();
     }
 
     private void UpdateObjects()
     {
-        for (int y = 0; y < classMap.Size.y; y++)
+        for (int y = 0; y < m_mapClass.Size.y; y++)
         {
-            for (int x = 0; x < classMap.Size.x; x++)
+            for (int x = 0; x < m_mapClass.Size.x; x++)
             {
-                var mapFloorIndex = x + y * classMap.Size.x;
-                floorObjects[mapFloorIndex]
-                    .SetActive(classMap.GetFloor(x, y).State != Floor.FloorState.empty);
-                wallObjectsSouth[x + y * classMap.Size.x]
-                    .SetActive(classMap.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty);
-                wallObjectsWest[x + y * (classMap.Size.x + 1)]
-                    .SetActive(classMap.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty);
+                //FLOOR
+                var mapFloorIndex = x + y * m_mapClass.Size.x;
+                m_floorObjects[mapFloorIndex].
+                    SetActive(m_mapClass.GetFloor(x, y).State != Floor.FloorState.empty);
 
-                if (y == classMap.Size.y - 1)
-                {
-                    wallObjectsSouth[x + (y + 1) * classMap.Size.x].SetActive(classMap.GetWall(x, y + 1, Wall.Side.South).State != Wall.WallState.empty);
-                }
+                //SOUTH WALL
+                var southWall = m_wallObjectsSouth[x + y * m_mapClass.Size.x];
+                ApplyWallState(southWall, m_mapClass.GetWall(x, y, Wall.Side.South).State);
 
-                if (x == classMap.Size.x - 1)
+                //WEST WALL
+                var westWall = m_wallObjectsWest[x + y * (m_mapClass.Size.x + 1)];
+                ApplyWallState(westWall, m_mapClass.GetWall(x, y, Wall.Side.West).State);
+
+                //NORTH EDGE
+                if(y == m_mapClass.Size.y - 1)
                 {
-                    wallObjectsWest[(x + 1) + y * (classMap.Size.x + 1)].SetActive(classMap.GetWall(x + 1, y, Wall.Side.West).State != Wall.WallState.empty);
+                    ApplyWallState(m_wallObjectsSouth[x + (y + 1) * m_mapClass.Size.x], 
+                                   m_mapClass.GetWall(x, y + 1, Wall.Side.South).State);
                 }
+                //EAST EDGE
+                if (x == m_mapClass.Size.x - 1)
+                {
+                    ApplyWallState(m_wallObjectsWest[(x + 1) + y * (m_mapClass.Size.x + 1)],
+                                   m_mapClass.GetWall(x + 1, y, Wall.Side.West).State);
+                }
+                //Debug.Log("!");
+
+                //wallObjectsSouth[x + y * m_mapClass.Size.x].SetActive(m_mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty);
+                //wallObjectsWest[x + y * (m_mapClass.Size.x + 1)].SetActive(m_mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty);
+                //
+                //if (y == m_mapClass.Size.y - 1)
+                //{
+                //    wallObjectsSouth[x + (y + 1) * m_mapClass.Size.x].SetActive(m_mapClass.GetWall(x, y + 1, Wall.Side.South).State != Wall.WallState.empty);
+                //}
+                //
+                //if (x == m_mapClass.Size.x - 1)
+                //{
+                //    wallObjectsWest[(x + 1) + y * (m_mapClass.Size.x + 1)].SetActive(m_mapClass.GetWall(x + 1, y, Wall.Side.West).State != Wall.WallState.empty);
+                //}
             }
         }
-
-        classMap.DebugPrintFloors();
-        //classMap.DebugPrintWalls();
+        m_mapClass.DebugPrintFloors();
     }
 
     private void InitializeMap()
     {
         // new map class
-        classMap = new ClassMap(size.x, size.y);
-        Debug.Log(classMap.Floors.Count);
-        var floorCount = size.x * size.y;
+        //m_mapClass = new MapClass(size.x, size.y);
+        Debug.Log(m_mapClass.Floors.Count);
+        var floorCount = m_size.x * m_size.y;
 
         // get prefab bounds
         var floorBounds = m_floorPrefab.GetComponent<Renderer>().bounds;
@@ -92,43 +99,43 @@ public class GenerateMap : MonoBehaviour
         wallParent.transform.parent = transform;
         wallParent.name = "Walls";
 
-        for (int i = 0; i < size.x * size.y; i++)
+        for (int i = 0; i < m_size.x * m_size.y; i++)
         {
             var obj = Instantiate(m_floorPrefab, floorParent.transform);
-            floorObjects.Add(obj);
+            m_floorObjects.Add(obj);
         }
 
-        for (int i = 0; i < (size.x) * (size.y + 1); i++)
+        for (int i = 0; i < (m_size.x) * (m_size.y + 1); i++)
         {
             var s = Instantiate(m_wallPrefab, wallParent.transform);
-            wallObjectsSouth.Add(s);
+            m_wallObjectsSouth.Add(s);
         }
 
-        for (int i = 0; i < (size.x + 1) * (size.y); i++)
+        for (int i = 0; i < (m_size.x + 1) * (m_size.y); i++)
         {
             var w = Instantiate(m_wallPrefab, wallParent.transform);
-            wallObjectsWest.Add(w);
+            m_wallObjectsWest.Add(w);
         }
 
         // set origin
         Vector2 origin = -floorBounds.extents;
 
         // create floor map
-        for (int y = 0; y < size.y; y++)
+        for (int y = 0; y < m_size.y; y++)
         {
-            for (int x = 0; x < size.x; x++)
+            for (int x = 0; x < m_size.x; x++)
             {
                 string name = $"({x},{y}";
 
                 // create floor
-                var floor = floorObjects[x + y * size.x];
+                var floor = m_floorObjects[x + y * m_size.x];
                 Vector3 floorPosition = new(origin.x + x, 0, origin.y + y);
                 floor.transform.position = floorPosition;
                 floor.name = name + ")";
 
 
                 // create southern wall
-                var sWall = wallObjectsSouth[x + y * size.x];
+                var sWall = m_wallObjectsSouth[x + y * m_size.x];
                 sWall.transform.SetPositionAndRotation(
                     floorPosition + new Vector3(0, wallBounds.extents.y, -floorBounds.extents.z),
                     Quaternion.Euler(0, 180, 0)
@@ -136,7 +143,7 @@ public class GenerateMap : MonoBehaviour
                 sWall.name = name + ",S)";
 
                 // create western wall
-                var wWall = wallObjectsWest[x + y * (size.x + 1)];
+                var wWall = m_wallObjectsWest[x + y * (m_size.x + 1)];
                 wWall.transform.SetPositionAndRotation(
                     floorPosition + new Vector3(-floorBounds.extents.x, wallBounds.extents.y, 0),
                     Quaternion.Euler(0, -90, 0)
@@ -144,9 +151,9 @@ public class GenerateMap : MonoBehaviour
                 wWall.name = name + ",W)";
 
                 // create extra southern wall if edge floor
-                if (y == size.y - 1)
+                if (y == m_size.y - 1)
                 {
-                    var nWall = wallObjectsSouth[x + y * size.x + size.x];
+                    var nWall = m_wallObjectsSouth[x + y * m_size.x + m_size.x];
                     nWall.transform.SetPositionAndRotation(
                         floorPosition + new Vector3(0, wallBounds.extents.y, floorBounds.extents.z),
                         Quaternion.Euler(0, 180, 0)
@@ -155,9 +162,9 @@ public class GenerateMap : MonoBehaviour
                 }
 
                 // create extra western wall if edge floor
-                if (x == size.x - 1)
+                if (x == m_size.x - 1)
                 {
-                    var eWall = wallObjectsWest[x + y * (size.x + 1) + 1];
+                    var eWall = m_wallObjectsWest[x + y * (m_size.x + 1) + 1];
                     eWall.transform.SetPositionAndRotation(
                         floorPosition + new Vector3(floorBounds.extents.x, wallBounds.extents.y, 0),
                         Quaternion.Euler(0, -90, 0)
@@ -167,4 +174,37 @@ public class GenerateMap : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// full == SetActive(true)
+    /// empty == SetActive(false)
+    /// door == SetActive(false or true)
+    /// </summary>
+    /// <param name="wallObj"></param>
+    /// <param name="state"></param>
+    private void ApplyWallState(GameObject wall, Wall.WallState state)
+    {
+
+        bool isVisible = state == Wall.WallState.full;
+
+        switch (state)
+        {
+            case Wall.WallState.full:
+                wall.SetActive(isVisible);
+                break;
+
+            case Wall.WallState.empty:
+                wall.SetActive(isVisible);
+                break;
+
+            case Wall.WallState.door:
+                wall.SetActive(!isVisible);
+
+                //Ç±Ç±Ç…doorÇæÇ¡ÇΩèÍçáÇÃèàóùí«â¡
+                var renderer = wall.GetComponent<Renderer>();
+                if (renderer != null) renderer.material.color = Color.red;
+                break;
+        }
+    }
+
 }
