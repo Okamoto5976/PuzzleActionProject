@@ -39,8 +39,26 @@ public class AudioManager : MonoBehaviour
     }
     private void PlayClip(AudioData data)
     {
-        audioSource.PlayOneShot(data.audioClip, data.clipVolume);
+        audioSource.loop = false;
+        audioSource.clip = null;
+        audioSource.volume = data.clipVolume;
+        //audioSource.loop = data.isLoop;
+        if (data.isLoop)
+        {
+            audioSource.loop = true;
+            audioSource.clip = data.audioClip;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.PlayOneShot(data.audioClip, data.clipVolume);
+        }
     }
+       // audioSource.PlayOneShot(data.audioClip, data.clipVolume);
+       // if (data.isLoop)
+      //  audioSource.loop = true;
+        //else
+        //    audioSource.loop = false;
    // private void HandleLifeTime(AudioData data)
    // {
    //     // if (data.lifeTime > 0f)

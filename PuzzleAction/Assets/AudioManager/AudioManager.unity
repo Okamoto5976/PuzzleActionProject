@@ -163,7 +163,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -514,7 +514,8 @@ MonoBehaviour:
   audioEvent: {fileID: 11400000, guid: 9b9c9444505753946a0cffaafc4a295c, type: 2}
   audioData:
     audioClip: {fileID: 8300000, guid: 42942343df9713547ba9e38fe0cbbce7, type: 3}
-    clipVolume: 50
+    clipVolume: 2
+    isLoop: 0
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     lifeTime: 0
