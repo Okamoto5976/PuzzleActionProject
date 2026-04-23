@@ -47,7 +47,7 @@ public class DashEvasion : MonoBehaviour
             {
                 Debug.Log("É_ÉÅÅ[ÉW");
             }
-            Destroy(other.gameObject);
+           Destroy(other.gameObject);
         }
     }
 }

@@ -602,7 +602,7 @@ MonoBehaviour:
   m_action: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   dashSpeed: 5
-  dashTime: 0.2
+  dashTime: 0.5
   dashEvasion: {fileID: 149557623}
   m_move: {fileID: 149557621}
 --- !u!114 &149557623
@@ -1471,7 +1471,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
