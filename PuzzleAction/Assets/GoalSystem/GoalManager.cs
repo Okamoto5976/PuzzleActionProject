@@ -10,48 +10,29 @@ public class SaveData
 
 public class GoalManager : MonoBehaviour
 {
-    [SerializeField] private bool hasKey;
-
-    // ▼仮------------------
-    [SerializeField] private int currentFloor;
-    // ▲--------------------
+    [SerializeField] private bool keyDoor;
+    [SerializeField] private bool hasKey;//後々RuntimeDatabool
 
     public void OnGoal()
     {
-        // セーブ
-        if (currentFloor % 5 == 0)
+        if (keyDoor)
         {
             if (!hasKey)
             {
                 Debug.Log("Can't goal");
                 return;
             }
+            else
+            {
+                Debug.Log("解錠");
+            }
         }
+
         Debug.Log("Goal");
-
-        // ロードシーン
-        //SceneManager.LoadScene("");
     }
 
-    public void SaveToJson()
+    public void SetValue(bool value)
     {
-        Debug.Log("Save");
-        SaveData data = new SaveData()
-        {
-            currentFloor = 0
-        };
-        string json = JsonUtility.ToJson(data);
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-    }
-
-    public void LoadFromJson()
-    {
-        string path = Application.persistentDataPath + "/savefile.json";
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            SaveData data = JsonUtility.FromJson<SaveData>(json);
-            Debug.Log($"floor: {data.currentFloor}");
-        }
+        keyDoor = value;
     }
 }
