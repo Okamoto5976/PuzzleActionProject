@@ -1,14 +1,28 @@
 using UnityEngine;
 
-    [System.Serializable]
-    public class Item
+[System.Serializable]
+
+public class Item
+
+{
+
+    public string name;
+
+    public string description;
+
+    public Sprite icon;
+
+    public Item(string name, string description, Sprite icon)
+
     {
-        public string name;
-        public string description;
-        
-        public Item(string name, string description)
-        {
-            this.name = name;
-            this.description = description;
-        }
+
+        this.name = name;
+
+        this.description = description;
+
+        this.icon = icon;
+
     }
+
+}
+

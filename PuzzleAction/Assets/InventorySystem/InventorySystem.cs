@@ -1,158 +1,129 @@
-using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
-//using UnityEngine.UIElements;
+
+[System.Serializable]
+public class ItemBox
+{
+    public Data data;
+    public int count;
+
+    public ItemBox(Data data, int count)
+    {
+        this.data = data;
+        this.count = count;
+    }
+}
+
 
 public class InventorySystem : MonoBehaviour
 {
-    [Header("UI設定")]
-    public TextMeshProUGUI m_descriptionText;//説明文を表示するテキストUI
-    public GameObject m_infoPanel;
+    [SerializeField] private InventoryUI m_inventoryUI;
+    //Inventory
+    public ItemBox[] slots = new ItemBox[30];
 
-    [Header("Inventory設定")]
-    public Vector2 m_inventoryOrigin;
-    public int m_slotSize = 64;
-
-    [Header("Inventory UI")]
-    public GameObject m_inventoryPanel;
-    public GameObject m_addButton;
-
-    [Header("Slot Images")]
-    public Image[] m_slotImages;
-
-    [Header("Item Images")]
-    public Sprite m_potionSprite;
-
-    
-
-
-    //private Camera _mainCamera;
-
-    private Item[,] m_inventory;
-    void Start()
+    private void Awake()
     {
-        // インベントリ初期化(3行×10列)
-        m_inventory = new Item[3, 10];//inspectorでいじれるように
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i] = null;
+        }
 
-        // テスト用アイテムを入れる
-        //m_inventory[0, 0] = new Item("Potion", "HPを50回復する");
-        //m_inventory[1, 2] = new Item("剣", "攻撃力が上がる");
-
-        m_infoPanel.SetActive(false);//最初は非表示
-       
+        for (int i = 0; i < hotbares.Length; i++)
+        {
+            hotbares[i] = -1;
+        }
     }
 
-    
-    private void Update()
+    public bool AddItem(Data data, int count)
     {
 
-        if(!m_isInventoryOpen)
+        for (int i = 0; i < slots.Length; i++)
         {
-            HideDescription();
+            if (slots[i] != null && slots[i].data == data)
+            {
+                slots[i].count += count;
+                Debug.Log("AddUI");
+                m_inventoryUI.InstantiateObject(i, slots[i]);
+
+
+                return true;
+            }
+        }
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            Debug.Log(slots[i] == null);
+
+            if (slots[i] == null)
+            {
+                slots[i] = new ItemBox(data, count);
+                Debug.Log("AddUI");
+
+                m_inventoryUI.InstantiateObject(i, slots[i]);
+
+
+                return true;
+            }
+        }
+
+        //slots[0] = new ItemBox(data, count);
+        //m_inventoryUI.InstantiateObject(0, slots[0]);
+        return false;
+    }
+
+    //削除
+    public void RemoveItem(int index)
+    {
+        slots[index] = null;
+    }
+
+    //使用
+    public void UseItem(int index)
+    {
+        ItemBox item = slots[index];
+        if (item == null) return;
+
+        item.count--;
+
+        if(item.count <= 0)
+        {
+            RemoveItem(index);
+        }
+    }
+
+    //hotber
+
+    public int[] hotbares = new int[3];
+
+
+    //ホットバーに追加
+    public void AddHotber(int hotberNumber, int index)
+    {
+        hotbares[hotberNumber] = index;
+    }
+
+    //使用
+    public void Use(int hotberNumber)
+    {
+        int index = hotbares[hotberNumber];
+        if(index < 0)
+        {
             return;
         }
 
-        Vector2 mousePos = Input.mousePosition;
-        
-        // スクリーン座標→UI基準Y座標へ変換
-        float uiMouseY = Screen.height - mousePos.y;
+        UseItem(index);
+    }
 
-        //Debug.Log($"mousePos : {mousePos}");
 
-        Debug.LogWarning($"uiMouseY : {uiMouseY}");
-
-        int x = (int)((mousePos.x - m_inventoryOrigin.x) / m_slotSize);
-        int y = (int)((uiMouseY - m_inventoryOrigin.y) / m_slotSize);
-
-        // 配列範囲内チェック
-        if (x >= 0 && x < m_inventory.GetLength(1) &&
-            y >= 0 && y < m_inventory.GetLength(0))
+    //インベントリ削除時クリア
+    public void hotberClear(int index)
+    {
+        for(int i = 0; i < hotbares.Length;i++)
         {
-            Item item = m_inventory[y, x];
-
-            if (item != null)
+            if (hotbares[i] == index)
             {
-                ShowDescription(item);
-                return;
+                hotbares[i] = -1;
             }
         }
-
-        // どの条件にも当てはまらなかったら非表示
-        HideDescription();
-
-        //transform.position = worldpos;
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
-
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        Debug.Log(hit.point);
-        //        Debug.Log(hit.collider.name);
-        //    }
-        //}
     }
-
-    private bool m_isInventoryOpen = false;
-
-    public void ToggleInventory()
-    {
-        Debug.Log("Inventoryボタンが押された");
-        m_isInventoryOpen = !m_isInventoryOpen;
-
-        m_inventoryPanel.SetActive(m_isInventoryOpen);
-        m_addButton.SetActive(m_isInventoryOpen);
-
-        // 閉じたら説明も消す
-        if (!m_isInventoryOpen)
-        {
-            HideDescription();
-        }
-    }
-    public void AddItemButton()
-    {
-        Item newItem = new Item("Potion", "HPを50回復する");
-
-        int columns = m_inventory.GetLength(1);
-
-        for (int y = 0; y < m_inventory.GetLength(0); y++)
-        {
-            for (int x = 0; x < m_inventory.GetLength(1); x++)
-            {
-                if (m_inventory[y, x] == null)
-                {
-                    m_inventory[y, x] = newItem;
-
-                    int slotIndex = y * columns + x;
-
-                    if (slotIndex < m_slotImages.Length)
-                    {
-                        m_slotImages[slotIndex].sprite = m_potionSprite;
-                        m_slotImages[slotIndex].color = Color.white;
-                    }
-
-                    Debug.Log($"Item追加({y}, {x}) / Slot {slotIndex}");
-                    return;
-                }
-            }
-        }
-
-        Debug.Log("インベントリが満杯です");
-
-    }
-
-    void ShowDescription(Item item)
-    {
-        m_infoPanel.SetActive(true);
-        m_descriptionText.text = item.description;
-    }
-
-    void HideDescription()
-    {
-        m_infoPanel.SetActive(false);
-    }
-   
 }
