@@ -1,56 +1,30 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UI;
 
 public class Mniy : MonoBehaviour
 {
-    public int money = 0;　　　　　　　 //初期所持金
-    private TMP_Text moneyText;        //所持金表示用UI
+    private TMP_Text moneyText;
 
-    //所持金を増やす
-    public void AddMoniy(int amount)
-     {
-         //マイナス値拒否
-         if (amount < 0) return;
-         money += amount;
-         UpdateMoneyUI();
-     }
-     //所持金を減らす
-     public void SubtractMoney(int amount)
-     {
-         //マイナス値拒否
-         if (amount > 0) return;
-         money -= amount;
-         //所持金がマイナスにならないように
-         if (money < 0) money = 0;
-         UpdateMoneyUI();
-     }
-     //お金UIの更新
-     private void UpdateMoneyUI()
-     {
-         if(moneyText != null)
-         {
-             moneyText.text = "所持金" + money + "円";
-         }
-
-     }
-     //ゲーム開始時UIの初期化
-/*     private void Start()
-     {
-        
-     }*/
-    void Start()
+    private void Awake()
     {
-        money = 0;
+        // 最初にコンポーネントを取得
         moneyText = GetComponent<TMP_Text>();
-        moneyText.text = "$:0"; 
-        UpdateMoneyUI(); 
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// DisplayManagerから呼ばれるお金表示更新用メソッド
+    /// </summary>
+    /// <param name="totalMoney">現在の合計所持金</param>
+    public void UpdateMoneyDisplay(int totalMoney)
     {
-        moneyText.text = "$:" + money.ToString();
+        // テキストが未取得なら取得を試みる
+        if (moneyText == null) moneyText = GetComponent<TMP_Text>();
+
+        if (moneyText != null)
+        {
+            // 表示形式を整える（$: 500 のような形式）
+            // "N0" を使うと 1,000 のようにカンマが入って見やすくなります
+            moneyText.text = "$:" + totalMoney.ToString("N0");
+        }
     }
 }

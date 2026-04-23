@@ -1,27 +1,29 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class sufor : MonoBehaviour
 {
-    public int score = 0;        //初期スコア
-    private TMP_Text scoreText;  //スコア表示用UI
-    int point = 0;  //追加スコア
+    private TMP_Text scoreText;
 
-    public void ScorePoint(int point)
+    private void Awake()
     {
-        this.point = point;
-    }
-    void Start()
-    {
-        score = 0;
+        // 最初にテキストコンポーネントを取得しておく
         scoreText = GetComponent<TMP_Text>();
-        scoreText.text = "score:0";
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// DisplayManagerから呼ばれるスコア表示更新用メソッド
+    /// </summary>
+    /// <param name="totalScore">現在の合計スコア</param>
+    public void UpdateScoreDisplay(int totalScore)
     {
-        scoreText.text = "score:" + (score + point).ToString();
+        // テキストが未取得なら取得を試みる
+        if (scoreText == null) scoreText = GetComponent<TMP_Text>();
+
+        if (scoreText != null)
+        {
+            // 文字列の更新（ score:100 のような形式）
+            scoreText.text = "score:" + totalScore.ToString();
+        }
     }
 }

@@ -3,15 +3,22 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    [SerializeField] private Slider HP_Slider;
+    private Slider HP_Slider;
     [SerializeField] private int maxHP;
-    private int currentHP;
+    [SerializeField] private int currentHP;
+
+    private void Awake()
+    {
+        HP_Slider = GetComponentInChildren<Slider>();
+    }
 
     private void Start()
     {
-        currentHP = maxHP;
+        //maxHP = data.HP
+        //currentHP = Player.Runtimevalue HP
         HP_Slider.maxValue = maxHP;
-        HP_Slider.value = currentHP;
+        HP_Slider.minValue = 0;
+
     }
     public void TakeDamage(int damage)
     {
@@ -19,9 +26,10 @@ public class NewMonoBehaviourScript : MonoBehaviour
         currentHP = Mathf.Max(0, currentHP);
         HP_Slider.value = currentHP;
     }
-    void LateUpdate()
+    void Update()
     {
-        transform.LookAt(Camera.main.transform);
-        transform.Rotate(0, 180, 0);
+        //transform.LookAt(Camera.main.transform);
+        //transform.Rotate(0, 180, 0);
+        HP_Slider.value = currentHP;
     }
 }

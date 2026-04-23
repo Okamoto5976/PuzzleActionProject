@@ -1,68 +1,69 @@
+using TMPro;
 using UnityEngine;
 
 public class DisplayManager : MonoBehaviour
 {
-    //内部データ
+    // ここが「None」の枠を作る部分です！
+    [Header("UI References")]
+    [SerializeField] private HPUI hpUI;      // HPUIスクリプトを紐付ける枠
+    [SerializeField] private TMP_Text hpText;
+    [SerializeField] private Mniy moneyUI;   // Mniyスクリプトを紐付ける枠
+    [SerializeField] private sufor scoreUI;  // suforスクリプトを紐付ける枠
+
     [Header("HP Setting")]
-    [SerializeField] private int maxHP = 100; //仮置き
+    [SerializeField] private int maxHP = 100;
     private int m_currentHP;
 
-    [Header("Economy")]
+    [Header("Money")]
     private int m_money;
 
     [Header("Score")]
     private int m_score;
-    
-    //初期化
+
     private void Start()
     {
-        m_currentHP=maxHP;
+        m_currentHP = maxHP;
         m_money = 0;
         m_score = 0;
+        
+        // 起動時に今の値をUIに送る
+        UpdateAllUI();
     }
 
-    //HP管理ロジック
+    // HPを減らす
     public void TakeDamage(int damage)
     {
-        if(damage <= 0)return;
+        if (damage <= 0) return;
         m_currentHP = Mathf.Max(0, m_currentHP - damage);
+        
+        // HPUIに「表示を更新して！」と命令する
+        if (hpUI != null) hpUI.UpdateHPBar(m_currentHP, maxHP);
     }
 
-    //回復
-    public void Heal(int amount)
-    {
-        if (amount <= 0) return;
-        m_currentHP = Mathf.Min(maxHP, m_currentHP + amount);
-    }
-
-
-    //お金管理ロジック
+    // お金を増やす
     public void AddMoney(int amount)
     {
         if (amount <= 0) return;
         m_money += amount;
+        
+        // Mniyに「表示を更新して！」と命令する
+        if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
     }
 
-    public bool TrySpendMoney(int amount)
-    {
-        if(amount <=0)return false;
-        if(m_money>=amount)
-        {
-            m_money -= amount;
-            return true; //支払い成功
-        }      
-        return false; //お金不足
-    }
-
-    //スコア管理ロジック
+    // スコアを増やす
     public void AddScore(int points)
     {
         if (points <= 0) return;
-        m_score += points;    
+        m_score += points;
+        
+        // suforに「表示を更新して！」と命令する
+        if (scoreUI != null) scoreUI.UpdateScoreDisplay(m_score);
     }
-    
-    //外部から呼び出す
-    public int CureentHP => m_currentHP;
-    public int CureentMoney => m_money;
-    public int CureentScore => m_score;
+
+    private void UpdateAllUI()
+    {
+        if (hpUI != null) hpUI.UpdateHPBar(m_currentHP, maxHP);
+        if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
+        if (scoreUI != null) scoreUI.UpdateScoreDisplay(m_score);
+    }
 }
