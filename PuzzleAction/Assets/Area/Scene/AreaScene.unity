@@ -360,7 +360,7 @@ Transform:
   m_GameObject: {fileID: 1194041153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -329, y: -129, z: 50}
+  m_LocalPosition: {x: 23.5, y: 121.9, z: 50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -481,10 +481,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1354401357}
   - component: {fileID: 1354401360}
-  - component: {fileID: 1354401356}
   - component: {fileID: 1354401359}
   - component: {fileID: 1354401358}
   - component: {fileID: 1354401361}
+  - component: {fileID: 1354401362}
   m_Layer: 0
   m_Name: administrator
   m_TagString: Untagged
@@ -492,20 +492,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1354401356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354401355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17026d710e3d46f4299175cd886418f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Spawn
-  m_objectKey: SummonedObject
-  m_spawnPoint: {fileID: 1194041154}
 --- !u!4 &1354401357
 Transform:
   m_ObjectHideFlags: 0
@@ -608,6 +594,20 @@ MonoBehaviour:
   m_GoalPrefab: {fileID: 3397845257371239018, guid: 0510daf7e85881f47851a39acc8547fc, type: 3}
   m_IsGoal: 1
   m_SpawnPoint: {fileID: 0}
+--- !u!114 &1354401362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354401355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17026d710e3d46f4299175cd886418f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Spawn
+  m_objectKey: SummonedObject
+  m_spawnPoint: {fileID: 1194041154}
 --- !u!1 &1468617982
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,14 +23,29 @@ public class Spawn : MonoBehaviour
     //    ActivateSpawn();
     //    m_Spawned = true;
     //}
-   
+
 
     public void ActivateSpawn()
     {
-        Debug.Log(m_spawnPoint.position);
+        if (m_spawnPoint == null)
+        {
+            Debug.LogWarning("スポーン地点が設定されてない");
+            return;
+        }
+        //範囲
+        Vector2 randomCircle = Random.insideUnitCircle * 3f;
+
+        Vector3 spawnPosition = new Vector3
+            (m_spawnPoint.position.x + randomCircle.x,
+            m_spawnPoint.position.y,
+            m_spawnPoint.position.z + randomCircle.y);
+
+        Debug.Log($"{m_objectKey}を{spawnPosition}に召喚");
+
+        //var obj = m_pool.Get{m_objectKey}
+        //obj.transform.position = spawnPosition
+
         m_Spawned = true;
-        Debug.Log($"召喚{m_objectKey}発動");
-        //pool入れる
     }
 
 
@@ -41,6 +56,6 @@ public class Spawn : MonoBehaviour
     public void ResetSpawn()
     {
         m_Spawned = false;
-     
+
     }
 }
