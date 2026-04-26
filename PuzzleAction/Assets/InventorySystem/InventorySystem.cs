@@ -1,7 +1,5 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
 public class ItemBox
 {
     public Data data;
@@ -19,19 +17,21 @@ public class InventorySystem : MonoBehaviour
 {
     [SerializeField] private InventoryUI m_inventoryUI;
     //Inventory
-    public ItemBox[] slots = new ItemBox[30];
+    public ItemBox[] slots;
 
     private void Awake()
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            slots[i] = null;
-        }
+        slots = new ItemBox[30];
 
-        for (int i = 0; i < hotbares.Length; i++)
-        {
-            hotbares[i] = -1;
-        }
+        //for (int i = 0; i < slots.Length; i++)
+        //{
+        //    slots[i] = null;
+        //}
+
+        //for (int i = 0; i < hotbares.Length; i++)
+        //{
+        //    hotbares[i] = -1;
+        //}
     }
 
     public bool AddItem(Data data, int count)
