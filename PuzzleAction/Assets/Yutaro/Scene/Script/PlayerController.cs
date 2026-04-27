@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Behaviour : MonoBehaviour
+public class PlayerCntoroller : MonoBehaviour
 {
     [SerializeField] private float m_normalSpeed = 5f;
     [Header("InputSystem")]

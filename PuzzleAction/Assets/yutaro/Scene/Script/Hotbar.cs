@@ -10,7 +10,7 @@ public class Hotbar : MonoBehaviour
     private void Awake()
     {
         //Ç±Ç±Ç≈ÉTÉCÉYåàÇﬂÇÈ
-        slots =new PlayerItem[m_playerData.hotbarSize];
+        slots =new PlayerItem[m_playerData.HotbarSize];
     }
     void Update()
     {
