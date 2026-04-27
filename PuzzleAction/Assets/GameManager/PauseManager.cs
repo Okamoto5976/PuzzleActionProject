@@ -6,38 +6,41 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private InputActionReference pauseAction;
     [SerializeField] GameObject pauseMenuUI;
 
+    private UIController m_controller;
+
+    [Header("Event")]
+    [SerializeField] private BoolEventSO m_menuUIEvent;
+
     bool isPaused = false;
 
     private void OnEnable()
     {
-        pauseAction.action.Enable();
+        pauseAction.action.performed += ToggleMenu;
     }
 
     private void OnDisable()
     {
-        pauseAction.action.Disable();
+        pauseAction.action.performed -= ToggleMenu;
     }
 
-
-    void Update()
+    public void ToggleMenu(InputAction.CallbackContext callback)
     {
-        if (pauseAction.action.WasPressedThisFrame())
-        { 
-        if(isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                PauseGame();
-            }
+        isPaused = !isPaused;
+        if (isPaused)
+        {
+            PauseGame();
         }
-                
+        else
+        {
+            ResumeGame();
+        }
     }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
         isPaused = true;
+        m_menuUIEvent.Raise(true);
         pauseMenuUI.SetActive(true);
     }
 
@@ -45,6 +48,7 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPaused = false;
+        m_menuUIEvent.Raise(false);
         pauseMenuUI.SetActive(false);
     }
 }
