@@ -6,6 +6,11 @@ public class AudioManager : MonoBehaviour
 {
     [SerializeField] private AudioEventSO audioEvent;
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioFader audioFader;
+    [SerializeField] private AudioClip BGM;
+
+   
+   // private Coroutine bgmFadeCoroutine;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -53,6 +58,11 @@ public class AudioManager : MonoBehaviour
         {
             audioSource.PlayOneShot(data.audioClip, data.clipVolume);
         }
+    }
+
+    public void FeadOut()
+    {
+        audioFader.FadeOutAndPlay(BGM, 0.8f);
     }
        // audioSource.PlayOneShot(data.audioClip, data.clipVolume);
        // if (data.isLoop)

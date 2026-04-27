@@ -8,5 +8,6 @@ public class AudioData
 
     public Vector3 position;
     public Quaternion rotation;
-    public float lifeTime;
+    //public float lifeTime;
+   // public float fadeTime;
 }
