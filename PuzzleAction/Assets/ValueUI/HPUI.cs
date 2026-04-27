@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HPUI : MonoBehaviour
 {
-    [SerializeField] private Slider HP_Slider;
+    [SerializeField] private Slider HP_Fill;
 
     // カメラ参照のキャッシュ（動作を軽くするため）
     private Transform _mainCameraTransform;
@@ -16,22 +16,19 @@ public class HPUI : MonoBehaviour
             _mainCameraTransform = Camera.main.transform;
         }
 
-        // Sliderが未設定なら自動取得を試みる（予備策）
-        if (HP_Slider == null)
+        
+        if (HP_Fill == null)
         {
-            HP_Slider = GetComponentInChildren<Slider>();
+            HP_Fill = GetComponentInChildren<Slider>();
         }
     }
 
-    /// <summary>
-    /// DisplayManagerから呼ばれる表示更新用メソッド
-    /// </summary>
     public void UpdateHPBar(int currentHP, int maxHP)
     {
-        if (HP_Slider != null)
+        if (HP_Fill != null)
         {
-            HP_Slider.maxValue = maxHP;
-            HP_Slider.value = currentHP;
+            HP_Fill.maxValue = maxHP;
+            HP_Fill.value = currentHP;
         }
     }
 
@@ -42,7 +39,6 @@ public class HPUI : MonoBehaviour
         {
             transform.LookAt(_mainCameraTransform);
             transform.Rotate(0, 180, 0);
-            transform.rotation=Camera.main.transform.rotation;
         }
     }
 }

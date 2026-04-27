@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class DisplayManager : MonoBehaviour
 {
-    // ここが「None」の枠を作る部分です！
     [Header("UI References")]
-    [SerializeField] private HPUI hpUI;      // HPUIスクリプトを紐付ける枠
+    [SerializeField] private HPUI hpUI;      
     [SerializeField] private TMP_Text hpText;
-    [SerializeField] private Mniy moneyUI;   // Mniyスクリプトを紐付ける枠
-    [SerializeField] private sufor scoreUI;  // suforスクリプトを紐付ける枠
+    [SerializeField] private Mniy moneyUI;  
+    [SerializeField] private sufor scoreUI;  
 
     [Header("HP Setting")]
     [SerializeField] private int maxHP = 100;
@@ -26,7 +25,6 @@ public class DisplayManager : MonoBehaviour
         m_money = 0;
         m_score = 0;
         
-        // 起動時に今の値をUIに送る
         UpdateAllUI();
     }
 
@@ -35,8 +33,7 @@ public class DisplayManager : MonoBehaviour
     {
         if (damage <= 0) return;
         m_currentHP = Mathf.Max(0, m_currentHP - damage);
-        
-        // HPUIに「表示を更新して！」と命令する
+       
         if (hpUI != null) hpUI.UpdateHPBar(m_currentHP, maxHP);
     }
 
@@ -46,7 +43,6 @@ public class DisplayManager : MonoBehaviour
         if (amount <= 0) return;
         m_money += amount;
         
-        // Mniyに「表示を更新して！」と命令する
         if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
     }
 
@@ -55,8 +51,7 @@ public class DisplayManager : MonoBehaviour
     {
         if (points <= 0) return;
         m_score += points;
-        
-        // suforに「表示を更新して！」と命令する
+       
         if (scoreUI != null) scoreUI.UpdateScoreDisplay(m_score);
     }
 
