@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MBTest_SO_Enemy
   m_EditorClassIdentifier: Assembly-CSharp::MBTest_SO_Enemy
   attack:
-    m_damage: 0
+    m_damage: 1
     m_damageArea: {fileID: 0}
   damage:
-    m_hp: 0
+    m_hp: 100
   move:
     m_speed: 0
     m_direction: {x: 0, y: 0, z: 0}
