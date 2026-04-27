@@ -37,7 +37,7 @@ public class AreaController : MonoBehaviour
                 damage damageScript = GetComponent<damage>();
                 if (damageScript != null)
                 {
-                    damageScript.ActivateDamage();
+                   // damageScript.ActivateDamage();
                 }
                 else
                 {

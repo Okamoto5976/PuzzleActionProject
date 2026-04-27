@@ -7,11 +7,11 @@ public class damage : MonoBehaviour
 
     private float m_timer = 0f;//計測器
 
-    private bool m_SlipDamageRoom = false;//入っているかどうか
+    private enm m_TaregetEntity;//エネミーのあの判定のやつ
 
     void Update()
     {
-        if (m_SlipDamageRoom)
+        if (m_TaregetEntity !=null)
         {
             m_timer += Time.deltaTime;
 
@@ -22,41 +22,34 @@ public class damage : MonoBehaviour
             }
         }
     }
-
-    public void ActivateDamage()
+    private void OnTriggerEnter(Collider other)
     {
-        m_SlipDamageRoom = !m_SlipDamageRoom;
+        enm entity = other.GetComponent<enm>();
 
-        if (m_SlipDamageRoom)
+        if (entity!=null)
         {
-            Debug.Log("ダメージエリアに侵入(テスト)");
-        }
-        else
-        {
-            m_timer = 0f;
-            Debug.Log("ダメージエリアから離脱(テスト)");
-
+            m_TaregetEntity = entity;
+            m_timer = 0;
+            Debug.Log($"{other.name}がダメージエリアに侵入");
         }
     }
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         m_timer += Time.deltaTime;
-    //
-    //         if (m_timer >= m_DamageInterval)
-    //         {
-    //             ApplyDamage();
-    //             m_timer = 0f; // タイマーをリセット
-    //         }
-    //     }
-    // }
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     m_timer = 0f;
-    // }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.GetComponent<enm>()==m_TaregetEntity)
+        {
+            m_TaregetEntity = null;
+            m_timer = 0;
+            Debug.Log("ダメージエリアから離脱");
+        }
+    }
+
     void ApplyDamage()
     {
+        if(m_TaregetEntity!=null)
+        {
+        m_TaregetEntity.TakeDamage(m_AmountDamage);
         Debug.Log($"継続{m_AmountDamage}ダメ");
+        }
     }
 }

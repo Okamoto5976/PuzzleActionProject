@@ -12,6 +12,7 @@ public class GOALSHOP : MonoBehaviour
 
     void Start()
     {
+        //プレイヤーの場所取得so変更予定だよ
         var player = Object.FindAnyObjectByType<omae>();
         if (player != null)
         {
@@ -35,8 +36,16 @@ public class GOALSHOP : MonoBehaviour
 
     void DoAction()
     {
-        if (m_type == AreaType.shop) Debug.Log("らっしゃい！");
-        else Debug.Log("ゴールおめ");
+        if (m_type == AreaType.shop)
+        {
+            Debug.Log("らっしゃい！");
+            //gameManager ShopUI true
+        }
+        else
+        {
+            Debug.Log("ゴールおめ");
+            //gameManager GoalUI true
+        }
     }
     private void OnDrawGizmosSelected()
     {
