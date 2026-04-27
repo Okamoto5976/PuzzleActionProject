@@ -10,7 +10,6 @@ public class Test : MonoBehaviour
 
     [SerializeField] private bool m_istrigger;
 
-    [SerializeField] private int m_index;
     //[SerializeField] private Sprite m_potion;
 
     //public void testButton()
@@ -19,29 +18,62 @@ public class Test : MonoBehaviour
     //    //inventorySystem.AddItem(_item);
     //}
 
-    public void OnAddItem()
+    public void OnItem()
     {
 
         Debug.Log("AddItem");
         if (m_istrigger)
         {
-            inventorySystem.AddItem(m_posion, 1);
+            inventorySystem.OnItem(m_posion, 1);
 
         }
         else
         {
-            inventorySystem.AddItem(m_dog, 1);
+            inventorySystem.OnItem(m_dog, 1);
         }
     }
 
+    //=========remove button=============
+
+
+    private int m_index = -1;
+
     public void OnRemoveItem()
     {
+        if (m_index == -1) return;
+
+        Debug.Log(m_index);
         inventorySystem.RemoveItem(m_index);
+        inventorySystem.UpdateUI();
     }
 
-    [SerializeField] private int m_hotberNumber;
-    //public void OnHotberItem()
-    //{
-    //    inventorySystem.AddHotber(m_hotberNumber, m_index);
-    //}
+    public void SetIndex(int index)
+    {
+        m_index = index;
+    }
+
+    //=========hotber=====================
+
+    [SerializeField] private int[] m_hotberNumber;
+
+    public void OnMoveItemHotber1()
+    {
+        if (m_index == -1) return;
+
+        inventorySystem.AddHotber(m_hotberNumber[0], m_index);
+    }
+
+    public void OnMoveItemHotber2()
+    {
+        if (m_index == -1) return;
+
+        inventorySystem.AddHotber(m_hotberNumber[1], m_index);
+    }
+
+    public void OnMoveItemHotber3()
+    {
+        if (m_index == -1) return;
+
+        inventorySystem.AddHotber(m_hotberNumber[2], m_index);
+    }
 }

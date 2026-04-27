@@ -1,61 +1,31 @@
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public class InventorySlot
+
+public class SlotUI : MonoBehaviour
 {
-    public Item item;
-    public bool IsEmpty => item == null;
+    [SerializeField] private Image m_icon;
+    private int m_index;
+    public GameObject m_InventoryPanel;
+
+
+    [SerializeField] private Test m_testButton;
+
+    public void SetItem(ItemBox item, int index)
+    {
+        m_icon.sprite = item.data.icon;
+        m_index = index;
+        m_icon.enabled = true;
+    }
 
     public void Clear()
     {
-        item = null;
+        m_icon.enabled = false;
     }
-}
 
-public class SlotUI : MonoBehaviour,
-    IBeginDragHandler,
-    IEndDragHandler,
-    IDragHandler
-{
-    public int x;
-    public int y;
-
-    public Image dragIconImage;
-    public InventorySlot Inventory;
-
-    [SerializeField] private InventorySystem inventory;
-
-    [SerializeField] private InputActionReference m_action;
-
-    void Start()
+    public void OnInventoryPanel()
     {
-        //inventory = FindFirstObjectByType<InventorySystem>();
-    }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        //inventory.BeginDrag(y, x);
+       m_testButton.SetIndex(m_index);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        dragIconImage.transform.position = eventData.position;
-    }
-
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        //inventory.EndDrag(eventData.position);
-
-    }
-
-    private void Update()
-    {
-        //if(m_action.action.IsPressed())
-        //{
-        //    inventory.BeginDrag(y,x);
-        //}
-    }
 }

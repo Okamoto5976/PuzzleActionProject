@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ItemBox
 {
@@ -15,77 +16,139 @@ public class ItemBox
 
 public class InventorySystem : MonoBehaviour
 {
-    [SerializeField] private InventoryUI m_inventoryUI;
+    private int m_width = 10;
+    private int m_height = 3;
+    private int Count => m_width * m_height;
+
+    private List<ItemBox> inventory = new();
+    [SerializeField] private SlotUI[] slots;
     //Inventory
-    public ItemBox[] slots;
 
     private void Awake()
     {
-        slots = new ItemBox[30];
+       //slots = GetComponentInChildren<T_SlotUI>();
+    }
 
-        //for (int i = 0; i < slots.Length; i++)
-        //{
-        //    slots[i] = null;
-        //}
+    private void Start()
+    {
+        inventory = new();
+    }
+    [SerializeField] private Data data;
 
-        //for (int i = 0; i < hotbares.Length; i++)
-        //{
-        //    hotbares[i] = -1;
-        //}
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.E))
+        {
+            if(AddItem(data, 1))
+            {
+                Debug.Log("OK");
+            }
+            else
+            {
+                Debug.Log("NO");
+            }
+        }
+    }
+
+    public void OnItem(Data data, int count)
+    {
+        if(AddItem(data, count))
+        {
+            UpdateUI();
+        }
     }
 
     public bool AddItem(Data data, int count)
     {
+        if (inventory.Count > Count) return false;
 
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i] != null && slots[i].data == data)
-            {
-                slots[i].count += count;
-                Debug.Log("AddUI");
-                m_inventoryUI.InstantiateObject(i, slots[i]);
-
-
-                return true;
-            }
-        }
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            Debug.Log(slots[i] == null);
-
-            if (slots[i] == null)
-            {
-                slots[i] = new ItemBox(data, count);
-                Debug.Log("AddUI");
-
-                m_inventoryUI.InstantiateObject(i, slots[i]);
-
-
-                return true;
-            }
-        }
-
-        //slots[0] = new ItemBox(data, count);
-        //m_inventoryUI.InstantiateObject(0, slots[0]);
-        return false;
+        inventory.Add(new ItemBox(data, count));
+        return true;
     }
+    //ソート　アイテム削除後などに
+    private void InventorySort()
+    {
+        //List<ItemBox> list = new List<ItemBox>();
+
+        //for(int y = 0; y < m_height; ++y)
+        //{
+        //    for(int x = 0; x < m_width;  ++x)
+        //    {
+        //        if(inventory[x, y] != null)
+        //        {
+        //            list.Add(inventory[x, y]);
+        //        }
+        //    }
+        //}
+
+        //for (int y = 0;y < m_height; ++y)
+        //{
+        //    for (int x = 0; x < m_width; ++x)
+        //    {
+        //        inventory[x, y] = null;
+        //    }
+        //}
+
+        //int index = 0;
+
+        //for (int y = 0; y<m_height; ++y)
+        //{
+        //    for (int x = 0; x<m_width; ++x)
+        //    {
+        //        if (index < list.Count)
+        //        {
+        //            inventory[x, y] = list[index];
+        //            index++;
+        //        }
+        //    }
+        //}
+    }
+
+    public void UpdateUI()
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            if (i >= inventory.Count)
+            {
+                slots[i].Clear();
+            }
+            else
+            {
+                slots[i].SetItem(inventory[i], i);
+            }
+        }
+    }
+
 
     //削除
     public void RemoveItem(int index)
     {
-        slots[index] = null;
+        if (index >= inventory.Count) return;
+        inventory.RemoveAt(index);
+        for (int i = 0; i < hotbares.Length; i++)
+        {
+            if (hotbares[i] < index) continue;
+            if (hotbares[i] > index)
+            {
+                hotbares[i]--;
+                continue;
+            }
+            if (hotbares[i] == index)
+            {
+                hotberClear(i);
+            }
+        }
     }
 
-    //使用
+    // 使用
     public void UseItem(int index)
     {
-        ItemBox item = slots[index];
-        if (item == null) return;
+        if (index >= inventory.Count) return;
+        ItemBox item = inventory[index];
 
         item.count--;
 
-        if(item.count <= 0)
+        if (item.count <= 0)
         {
             RemoveItem(index);
         }
@@ -93,7 +156,8 @@ public class InventorySystem : MonoBehaviour
 
     //hotber
 
-    public int[] hotbares = new int[3];
+    //public int[] hotbares = new int[3];
+    public int[]hotbares = new int[3];
 
 
     //ホットバーに追加
@@ -106,24 +170,15 @@ public class InventorySystem : MonoBehaviour
     public void Use(int hotberNumber)
     {
         int index = hotbares[hotberNumber];
-        if(index < 0)
-        {
-            return;
-        }
+        if (index < 0) return;
 
         UseItem(index);
     }
 
 
     //インベントリ削除時クリア
-    public void hotberClear(int index)
+    public void hotberClear(int hotbarNumber)
     {
-        for(int i = 0; i < hotbares.Length;i++)
-        {
-            if (hotbares[i] == index)
-            {
-                hotbares[i] = -1;
-            }
-        }
+        hotbares[hotbarNumber] = -1;
     }
 }
