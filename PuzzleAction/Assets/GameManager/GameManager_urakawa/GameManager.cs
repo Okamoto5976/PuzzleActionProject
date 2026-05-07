@@ -46,9 +46,15 @@ public class GameManager : MonoBehaviour
     
 
     //プレイヤー死亡を受け取る
+    //Event
     public void OnPlayerDead()
     {
         GameOver();
+    }
+
+    public void GameClear()
+    {
+
     }
 
     //ゲームオーバー
@@ -60,7 +66,11 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("ゲームオーバー");
 
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+
+        //プレイヤーの処理
+        //Sceneリセット　ゲームリセット
+        //SceneMove Tile
 
         m_gameOverUIEvent.Raise(true);
     }

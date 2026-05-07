@@ -16,10 +16,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private BoolEventSO m_shopUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
 
-
-    private bool m_isshopUI;
-    private bool m_isinventoryUI;
-
     private void OnEnable()
     {
         m_menuUIEvent.Register(MenuUI);
@@ -68,7 +64,6 @@ public class UIController : MonoBehaviour
     public void OnShopUI()
     {
         m_shopUIEvent.Raise(true);
-        m_isshopUI = true;
     }
 
     private void InventoryUI(bool isbool)
@@ -78,7 +73,6 @@ public class UIController : MonoBehaviour
     public void OnInventoryUI()
     {
         m_inventoryUIEvent.Raise(true);
-        m_isinventoryUI = true;
     }
 
 }
