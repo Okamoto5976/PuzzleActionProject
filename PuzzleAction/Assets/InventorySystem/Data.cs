@@ -7,4 +7,5 @@ public class Data : ScriptableObject
     public string itemName;
     public string info;
     public Sprite icon;
+    public bool stackable;
 }

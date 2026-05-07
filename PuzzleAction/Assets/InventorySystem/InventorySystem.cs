@@ -22,16 +22,24 @@ public class InventorySystem : MonoBehaviour
 
     private List<ItemBox> inventory = new();
     [SerializeField] private SlotUI[] slots;
-    //Inventory
+    [SerializeField] private SlotUI[] hotbarSlots;
 
+    //Inventory
+    [SerializeField] private GameObject inventoryPanel;
+    [SerializeField] private GameObject hotbarPanel;
     private void Awake()
     {
-       //slots = GetComponentInChildren<T_SlotUI>();
+        slots = inventoryPanel.GetComponentsInChildren<SlotUI>();
+        hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>();
     }
 
     private void Start()
     {
         inventory = new();
+        for (int i = 0; i < hotbares.Length; i++)
+        {
+            hotbares[i] = -1;
+        }
     }
     [SerializeField] private Data data;
 
@@ -164,6 +172,8 @@ public class InventorySystem : MonoBehaviour
     public void AddHotber(int hotberNumber, int index)
     {
         hotbares[hotberNumber] = index;
+
+        hotbarSlots[hotberNumber].SetItem(inventory[index], index);
     }
 
     //Žg—p
