@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EntityHP : MonoBehaviour
+abstract public class EntityHP : MonoBehaviour
 {
     [SerializeField] private int m_maxHP = 100;
     public int CurrentHP { get; private set; }
@@ -25,8 +25,5 @@ public class EntityHP : MonoBehaviour
         CurrentHP = Mathf.Min(CurrentHP + amount, m_maxHP);
     }
 
-    protected virtual void Die() 
-    {
-        Destroy(gameObject);
-    }
+    protected abstract void Die();
 }

@@ -6,8 +6,10 @@ public class PlayerData : ScriptableObject
   [SerializeField]private  float m_normalSpeed = 5f;
   [SerializeField]private float m_dashSpeed = 10f;
   [SerializeField]private int hotbarSize = 3;
-
     public int HotbarSize => hotbarSize;
+    public float NormalSpeed => m_normalSpeed;
+
+    public float DashSpeed => m_dashSpeed;
 
     public float GetSpeed(bool isDashing)
     {

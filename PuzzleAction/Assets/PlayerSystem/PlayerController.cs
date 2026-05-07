@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(EntityBase))]
+//[RequireComponent(typeof(EntityBase))]
 public class PlayerController : Entity
 {
     [SerializeField] private float m_normalSpeed = 5f;
@@ -11,7 +11,7 @@ public class PlayerController : Entity
     [SerializeField] private InputActionReference m_action;
     [SerializeField] private InputActionReference m_dashAction;
 
-    [SerializeField] private EntityMove m_move;
+    //[SerializeField] private EntityMove m_move;
 
     private bool m_isDashing;
 
@@ -28,6 +28,13 @@ public class PlayerController : Entity
     //    m_dashAction.Disable();
     //}
 
+    //protected override void FixedUpdate()
+    //{
+    //    base.FixedUpdate();
+
+    //    //Playerì∆éû
+    //}
+
     private void Update()
     {
         //à⁄ìÆèàóù
@@ -39,5 +46,7 @@ public class PlayerController : Entity
 
         m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
     }
+
+
 
 }

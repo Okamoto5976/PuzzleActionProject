@@ -1,12 +1,14 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody))]
 abstract public class Entity : MonoBehaviour
 {
     //component
     private Rigidbody m_rb;
     //anim
     private EntityHP m_hp;
-
+    //state
+    protected State m_state;
 
 
     protected float m_speed;
@@ -28,20 +30,26 @@ abstract public class Entity : MonoBehaviour
     [SerializeField] private Teamtype team;
     public Teamtype Team => team;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
         m_hp = GetComponent<EntityHP>();
+        m_state = GetComponent<State>();
         //m_Move = GetComponent<EntityMove>();
     }
 
     protected virtual void FixedUpdate()
     {
+        if(m_state != null && !m_state.CanMove)
+        {
+            return;
+        }
+
         OnMove(m_movement, m_speed);
 
     }
 
-    public void OnMove(Vector3 movement, float speed)
+    protected void OnMove(Vector3 movement, float speed)
     {
         //m_isDashing? m_dashSpeed:m_speed;
         float m_currentSpeed = speed;
@@ -51,15 +59,43 @@ abstract public class Entity : MonoBehaviour
         m_rb.linearVelocity = velocity;
     }
 
-    public bool IsSameTeam(Entity other)
+    public virtual void TakeDamage(int damage)//å„ÅXDamageDataÇ∆DamageResult
     {
-        if (other == null) return false;
-        return this.team== other.team;
+        if(m_state != null && m_state.IsInvincible)
+        {
+            return ;
+        }
+
+        m_hp.TakeDamage(damage);
     }
 
-    public bool IsEnemy(Entity other)
-    {
-        if (other == null) return false;
-        return this.team != other.team;
-    }
+    
+
+    //protected virtual void Die()
+    //{
+    //    Debug.Log("éÄñS");
+
+    //    Destroy(gameObject);
+
+
+    //}
+
+    //public bool IsSameTeam(Entity other)
+    //{
+    //    if (other == null) return false;
+    //    return this.team== other.team;
+    //}
+
+    //public bool IsEnemy(Entity other)
+    //{
+    //    if (other == null) return false;
+    //    return this.team != other.team;
+    //}
+
+    //public bool IsPlayer(Entity other)
+    //{
+    //    if (other == null) return false;
+    //    return true;
+
+    //}
 }

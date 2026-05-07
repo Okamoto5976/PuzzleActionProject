@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/Datas/EnemyData")]
@@ -9,6 +10,7 @@ public class EnemyData : ScriptableObject
     private  AttackType m_attackType = AttackType.HitCollider;
     [Header("‘Ì—ÍÝ’è")]
     private int m_hp = 100;
+
 
 
     public float MoveSpeed { get => m_moveSpeed; }
