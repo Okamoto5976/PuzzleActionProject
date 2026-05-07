@@ -11,6 +11,7 @@ public class SlotUI : MonoBehaviour
 
     [SerializeField] private Test m_testButton;
 
+
     public void SetItem(ItemBox item, int index)
     {
         m_icon.sprite = item.data.icon;
@@ -26,6 +27,7 @@ public class SlotUI : MonoBehaviour
     public void OnInventoryPanel()
     {
        m_testButton.SetIndex(m_index);
+       m_testButton.ShowActionPanel();
     }
 
 }

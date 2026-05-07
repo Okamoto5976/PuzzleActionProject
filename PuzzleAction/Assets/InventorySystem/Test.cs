@@ -10,6 +10,24 @@ public class Test : MonoBehaviour
 
     [SerializeField] private bool m_istrigger;
 
+    [SerializeField] private GameObject m_actionPanel;
+
+    private void Start()
+    {
+        m_actionPanel.SetActive(false);
+    }
+
+    public void ShowActionPanel()
+    {
+        Debug.Log("ShowActionPanel");
+
+        Debug.Log(m_index);
+
+        if (m_index == -1) return;
+
+        m_actionPanel.SetActive(true);
+    }
+
     //[SerializeField] private Sprite m_potion;
 
     //public void testButton()
@@ -45,6 +63,8 @@ public class Test : MonoBehaviour
         Debug.Log(m_index);
         inventorySystem.RemoveItem(m_index);
         inventorySystem.UpdateUI();
+
+        m_actionPanel.SetActive(false);
     }
 
     public void SetIndex(int index)
@@ -76,4 +96,12 @@ public class Test : MonoBehaviour
 
         inventorySystem.AddHotber(m_hotberNumber[2], m_index);
     }
+
+    //private void Update()
+    //{
+    //   if (Input.GetKeyDown(KeyCode.Space))
+    //   {
+    //        SetIndex(0);
+    //    }
+    //}
 }
