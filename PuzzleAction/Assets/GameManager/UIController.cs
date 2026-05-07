@@ -18,12 +18,14 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("UIController");
         m_menuUIEvent.Register(MenuUI);
         m_gameOverUIEvent.Register(GameOverUI);
         m_optionUIEvent.Register(OptionUI);
         m_shopUIEvent.Register(ShopUI);
-        m_inventoryUIEvent.Register(InventoryUI);   
+        m_inventoryUIEvent.Register(InventoryUI);
     }
+
 
     private void OnDisable()
     {
@@ -49,9 +51,10 @@ public class UIController : MonoBehaviour
 
     private void MenuUI(bool isbool)
     {
+        Debug.Log("MenuUI : " + isbool);
+
         m_menuUI.SetActive(isbool);
     }
-
     private void OptionUI(bool isbool)
     {
         m_optionUI.SetActive(isbool);
@@ -66,13 +69,26 @@ public class UIController : MonoBehaviour
         m_shopUIEvent.Raise(true);
     }
 
-    private void InventoryUI(bool isbool)
+    
+     private void InventoryUI(bool isbool)
     {
         m_inventoryUI.SetActive(isbool);
     }
     public void OnInventoryUI()
     {
         m_inventoryUIEvent.Raise(true);
+    }
+
+    public void OpenOption()
+    {
+        m_menuUI.SetActive(false);
+        m_optionUI.SetActive(true);
+    }
+
+    public void BackMenu()
+    {
+        m_optionUI.SetActive(false);
+        m_menuUI.SetActive(true);
     }
 
 }

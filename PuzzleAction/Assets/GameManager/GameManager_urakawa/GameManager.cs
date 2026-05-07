@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_menuUIEvent;
     [SerializeField] private BoolEventSO m_optionUIEvent;
+    //インベントリ、ショップ
+    [SerializeField] private BoolEventSO m_inventoryUIEvent;
+    [SerializeField] private BoolEventSO m_shopUIEvent;
 
     private bool m_isGameOver = false;
     
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
         if (Input.anyKeyDown)
         {
             Debug.Log("何かキー押された");
-            GameOver();
+            //GameOver();
         }
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
@@ -40,7 +43,7 @@ public class GameManager : MonoBehaviour
         //時間切れ
         if (timemanager.Value <= 0)
         {
-            GameOver();
+            //GameOver();
         }
     }
     
