@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Wall;
 
 public class T_Gene : MonoBehaviour
@@ -17,6 +18,19 @@ public class T_Gene : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
 
+    [Header("Scale Setthings")]
+    [SerializeField] private Vector3 m_floorScale = Vector3.one;
+    [SerializeField] private Vector3 m_wallScale = Vector3.one;
+
+    [Header("Debug用")]
+    [SerializeField] private Transform m_gridParent;
+    [SerializeField] private GameObject m_player;
+    private GameObject m_playerInstance;
+
+    [SerializeField] private T_Camera m_camera;
+
+
+
     private void Awake()
     {
         m_mapClass = m_mapClassData.MapClass;
@@ -26,8 +40,14 @@ public class T_Gene : MonoBehaviour
         InitializeMap();
 
         UpdateObjects();
+
+        //Debug用 疑似的にPlayerを生成
+        SpawnPlayer();
     }
 
+    /// <summary>
+    /// MapClassの状態を3Dに反映
+    /// </summary>
     private void UpdateObjects()
     {
         for (int y = 0; y < m_mapClass.Size.y; y++)
@@ -78,16 +98,38 @@ public class T_Gene : MonoBehaviour
         m_mapClass.DebugPrintFloors();
     }
 
+    /// <summary>
+    /// MapClassのサイズに基づいて3Dの見た目をすべて生成
+    /// </summary>
     private void InitializeMap()
     {
         // new map class
-        //m_mapClass = new MapClass(size.x, size.y);
         Debug.Log(m_mapClass.Floors.Count);
         var floorCount = m_size.x * m_size.y;
 
         // get prefab bounds
         var floorBounds = m_floorPrefab.GetComponent<Renderer>().bounds;
         var wallBounds = m_wallPrefab.GetComponent<Renderer>().bounds;
+
+        //get FloorPrefab size★
+        var floorRenderer = m_floorPrefab.GetComponent<Renderer>(); 
+        Vector3 baseFloorSize = floorRenderer.bounds.size;
+        baseFloorSize.x = 1;
+        baseFloorSize.y = 1;
+        baseFloorSize.z = 1;
+        
+        Debug.Log($"{baseFloorSize} ★★★★★★★★★★★");
+        Vector3 floorSize = new Vector3(
+            baseFloorSize.x * m_floorScale.x,
+            baseFloorSize.y * m_floorScale.z,
+            baseFloorSize.z * m_floorScale.z);
+        //get FloorPrefab size★
+        var wallRenderer = m_wallPrefab.GetComponent<Renderer>();
+        Vector3 baseWallSize = wallRenderer.bounds.size;
+        Vector3 wallSize = new Vector3(
+            baseWallSize.x * m_wallScale.x,
+            baseWallSize.y * m_wallScale.y,
+            baseWallSize.z * m_wallScale.z);
 
         // create floor parent
         var floorParent = new GameObject();
@@ -117,8 +159,13 @@ public class T_Gene : MonoBehaviour
             m_wallObjectsWest.Add(w);
         }
 
-        // set origin
-        Vector2 origin = -floorBounds.extents;
+        // set origin ★
+        //Vector2 origin = -floorBounds.extents;
+        Vector2 origin = new Vector2(
+            -floorSize.x * 0.5f,
+            -floorSize.z * 0.5f);
+
+
 
         // create floor map
         for (int y = 0; y < m_size.y; y++)
@@ -129,25 +176,28 @@ public class T_Gene : MonoBehaviour
 
                 // create floor
                 var floor = m_floorObjects[x + y * m_size.x];
-                Vector3 floorPosition = new(origin.x + x, 0, origin.y + y);
+                Vector3 floorPosition = new(origin.x + x * floorSize.x, 0, origin.y + y * floorSize.z);　//★
                 floor.transform.position = floorPosition;
+                floor.transform.localScale = floorSize;
                 floor.name = name + ")";
 
 
                 // create southern wall
                 var sWall = m_wallObjectsSouth[x + y * m_size.x];
                 sWall.transform.SetPositionAndRotation(
-                    floorPosition + new Vector3(0, wallBounds.extents.y, -floorBounds.extents.z),
+                    floorPosition + new Vector3(0, wallBounds.extents.y * m_wallScale.y, -floorSize.z * 0.5f),
                     Quaternion.Euler(0, 180, 0)
                 );
+                sWall.transform.localScale = wallSize;
                 sWall.name = name + ",S)";
 
                 // create western wall
                 var wWall = m_wallObjectsWest[x + y * (m_size.x + 1)];
                 wWall.transform.SetPositionAndRotation(
-                    floorPosition + new Vector3(-floorBounds.extents.x, wallBounds.extents.y, 0),
+                    floorPosition + new Vector3(-floorSize.x * 0.5f, wallBounds.extents.y * m_wallScale.y, 0),
                     Quaternion.Euler(0, -90, 0)
                 );
+                wWall.transform.localScale = wallSize;
                 wWall.name = name + ",W)";
 
                 // create extra southern wall if edge floor
@@ -158,6 +208,7 @@ public class T_Gene : MonoBehaviour
                         floorPosition + new Vector3(0, wallBounds.extents.y, floorBounds.extents.z),
                         Quaternion.Euler(0, 180, 0)
                     );
+                    nWall.transform.localScale = wallSize;
                     nWall.name = $"({x},{y + 1},S)";
                 }
 
@@ -169,10 +220,12 @@ public class T_Gene : MonoBehaviour
                         floorPosition + new Vector3(floorBounds.extents.x, wallBounds.extents.y, 0),
                         Quaternion.Euler(0, -90, 0)
                     );
+                    eWall.transform.localScale = wallSize;
                     eWall.name = $"({x + 1},{y},W)";
                 }
             }
         }
+
     }
 
     /// <summary>
@@ -198,13 +251,63 @@ public class T_Gene : MonoBehaviour
                 break;
 
             case Wall.WallState.door:
-                wall.SetActive(!isVisible);
+                wall.SetActive(isVisible);
 
                 //ここにdoorだった場合の処理追加
+                //現在は壁の色を赤色にしている
                 var renderer = wall.GetComponent<Renderer>();
                 if (renderer != null) renderer.material.color = Color.red;
                 break;
         }
     }
 
+
+    /// <summary>
+    /// ここから下はデバッグ用でPlayer関係の処理追加
+    /// </summary>
+    private void SpawnPlayer()
+    {
+        if (m_player == null)
+        {
+            Debug.LogError("T_Gene : Playerが設定されていません");
+            return;
+        }
+
+        Transform floor00 = GetFloor00();
+        if (floor00 == null) return;
+
+        Vector3 spawnPos = floor00.position + Vector3.up * 0.5f;
+
+        m_playerInstance = Instantiate(m_player, spawnPos, Quaternion.identity);
+        m_playerInstance.name = "Player";
+
+        var controller = m_playerInstance.GetComponent<T_PlayerController>();
+        if (controller != null)
+        {
+            controller.Initialize(this);
+        }
+
+        //カメラにPlayerを追従させる
+        if(m_camera != null)
+        {
+            m_camera.SetTarget(m_playerInstance.transform);
+        }
+        else
+        {
+            Debug.LogWarning("T_Gene : CT_Cameraが設定されていません");
+        }
+
+        Debug.Log("Player spawned at (0,0)");
+    }
+    private Transform GetFloor00()
+    {
+        // (0,0) は最初に配置した Floor
+        // m_floorObjects は x + y*width で詰めているので index=0
+        if (m_floorObjects.Count == 0)
+        {
+            Debug.LogError("No floor objects found");
+            return null;
+        }
+        return m_floorObjects[0].transform;
+    }
 }

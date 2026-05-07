@@ -256,7 +256,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1157772389}
   - component: {fileID: 1157772388}
-  - component: {fileID: 1157772390}
   m_Layer: 0
   m_Name: GenerateMap
   m_TagString: Untagged
@@ -280,6 +279,11 @@ MonoBehaviour:
   m_floorPrefab: {fileID: 8026624835377288137, guid: dcd16d78546c7654ea6b26534e62a61b, type: 3}
   m_wallPrefab: {fileID: 3648684842657275054, guid: ae332e803cfe0db468672d127c67fef7, type: 3}
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
+  m_floorScale: {x: 3, y: 1, z: 3}
+  m_wallScale: {x: 3, y: 1, z: 1}
+  m_gridParent: {fileID: 7446313429657402691, guid: 8feda1c69eb908c4eba003a79d9c96cb, type: 3}
+  m_player: {fileID: 4890633758928413418, guid: 307e042cc3917734f9d268dbd1bde28d, type: 3}
+  m_camera: {fileID: 1957982646}
 --- !u!4 &1157772389
 Transform:
   m_ObjectHideFlags: 0
@@ -295,23 +299,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1157772390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1157772387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16d6d9fdf003bda409953c6ec55e3e9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::T_GeneType
-  m_playerPrefab: {fileID: 0}
-  m_shopObject: {fileID: 0}
-  m_enemyObject: {fileID: 0}
-  m_gimmickObject: {fileID: 0}
-  m_roomPieces: []
 --- !u!1 &1957982641
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +311,7 @@ GameObject:
   - component: {fileID: 1957982643}
   - component: {fileID: 1957982642}
   - component: {fileID: 1957982645}
+  - component: {fileID: 1957982646}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -449,6 +437,21 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1957982646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957982641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cb8c74604637041bd47be14e8cd966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::T_Camera
+  m_target: {fileID: 3471582869197244886, guid: 307e042cc3917734f9d268dbd1bde28d, type: 3}
+  m_offset: {x: 0, y: 5, z: -2.5}
+  m_followSpeed: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
