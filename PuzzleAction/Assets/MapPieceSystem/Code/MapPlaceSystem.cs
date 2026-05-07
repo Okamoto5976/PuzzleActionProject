@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+public class RoomAreaType
+{
+    public int m_ID;
+    //public AreaType m_type
+    public List<Vector2Int> m_floors;
+
+    public RoomAreaType(int id, List<Vector2Int> floors)
+    {
+        m_ID = id;
+        //m_type = type
+        m_floors = floors;
+    }
+
+}
 
 public class MapPlaceSystem : MonoBehaviour
 {
@@ -139,8 +153,10 @@ public class MapPlaceSystem : MonoBehaviour
                     if (!m_mapClass.IsRoomColliding(m_room, m_origin))
                     {
                         Debug.Log("On Place");
-                        obj.SetIsPlace(true);
 
+                        //=========シーン上のための処理=========
+
+                        obj.SetIsPlace(true);
 
                         Vector3 localPos = new Vector3(
                             (m_origin.x) * 1.5f,
@@ -151,6 +167,8 @@ public class MapPlaceSystem : MonoBehaviour
                         Vector3 worldPos = m_parent.TransformPoint(localPos);
                         m_roomObj.transform.position = worldPos;
                         m_roomObj = null;
+                        //=======================================
+
 
                         PlaceRoom();
                     }
@@ -158,7 +176,7 @@ public class MapPlaceSystem : MonoBehaviour
                     {
                         //grid内でおけないとき　roompieceを　保存していた場所に返す
                         //room piece = null
-                        //roompiece return 
+
                         Debug.Log("No Place");
                         m_roomObj.transform.position = obj.OriginalPos;
                         m_roomObj = null;
@@ -167,11 +185,12 @@ public class MapPlaceSystem : MonoBehaviour
                 }
                 else
                 {
-                    //grid外である時　その場に置く　（roompiece = null)
+                    //grid外である時　その場に置く
                     Debug.Log("NotFind Map");
                     m_roomObj = null;
                 }
             }
+            //マウスがマップピースを持っていないとき
             else
             {
                 Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
@@ -236,30 +255,30 @@ public class MapPlaceSystem : MonoBehaviour
         m_origin = new Vector2Int(x, z);
     }
 
+    public List<RoomAreaType> m_roomAreaType;
+
     private void PlaceRoom()
     {
         m_mapClass.PlaceRoom(m_room, m_origin);
         m_roomObj = null;
         m_room = null;
 
-        //roompiece place in scene grid
+        int ID = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
 
-        //if (m_rooms.Count > 0)
-        //{
-        //    m_room = m_rooms.Dequeue();
+        List<Vector2Int> floors = new();
+        floors.Add(m_room.Size);
+        //origin + size のVector2Int データを入れる
 
-        //    Debug.Log(m_room.Size);
+        RoomAreaType roomAreaType = new RoomAreaType(ID, floors);
 
-        //}
+        m_roomAreaType.Add(roomAreaType);
 
         if (CallDFS(m_startPos, m_endPos))
         {
-            //Debug.Log("IsGoal OK");
             m_isDoorGenerate = true;
         }
         else
         {
-            //Debug.Log("IsGoal No");
             m_isDoorGenerate = false;
         }
     }
