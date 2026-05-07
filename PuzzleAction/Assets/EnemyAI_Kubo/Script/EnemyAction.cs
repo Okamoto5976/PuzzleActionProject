@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 
-
+/// <summary>
+/// 
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyAction : MonoBehaviour
 {

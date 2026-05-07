@@ -6,14 +6,14 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [Header("Target")]
-    [SerializeField] private GameObject m_target;
+    [SerializeField] private GameObject m_target;  //UŒ‚‘ÎÛ
 
     [Header("Status")]
-    [SerializeField] public int m_attackValue = 1;
+    [SerializeField] public int m_attackValue = 1; // Debug—p
 
     [Header("Range")]
-    [SerializeField] private float m_findRange = 8f;
-    [SerializeField] private float m_attackRange = 1.5f;
+    [SerializeField] private float m_findRange = 8f;      //õ“G”ÍˆÍ
+    [SerializeField] private float m_attackRange = 1.5f;  //UŒ‚‰Â”\”ÍˆÍ
 
     private NavMeshAgent m_agent;
     private Rigidbody m_rb;
@@ -34,9 +34,9 @@ public class EnemyController : MonoBehaviour
     {
         if (m_target == null) return;
 
-        float distance = Vector3.Distance(transform.position, m_target.transform.position);
+        float distance = Vector3.Distance(transform.position, m_target.transform.position);  //Player‚ÆEnemy‚Æ‚Ì‹——£ŒvZ
 
-        // õ“G
+        // õ“G”ÍˆÍ“à‚É“ü‚Á‚½‚ç”­Œ©
         if (distance <= m_findRange)
         {
             m_isFound = true;
@@ -50,7 +50,7 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        // UŒ‚
+        // UŒ‚”ÍˆÍ“à‚È‚çUŒ‚
         if (distance <= m_attackRange)
         {
             m_isAttacking = true;
