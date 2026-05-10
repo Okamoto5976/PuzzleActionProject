@@ -4,17 +4,23 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class RoomAreaType
+//マップ生成の際に使う
+public class RoomData
 {
     public int m_ID;
-    //public AreaType m_type
-    public List<Vector2Int> m_floors;
+    public AreaType m_type;
+    public List<Vector2Int> m_roomSizes;
 
-    public RoomAreaType(int id, List<Vector2Int> floors)
+    public RoomData(int id, AreaType type, List<Vector2Int> roomSizes)
     {
         m_ID = id;
-        //m_type = type
-        m_floors = floors;
+        m_type = type;
+        m_roomSizes = roomSizes;
+    }
+
+    public void SetID(int id)
+    {
+        m_ID = id;
     }
 
 }
@@ -30,6 +36,8 @@ public class MapPlaceSystem : MonoBehaviour
     private Vector3 m_mouseWorldPos;
 
     private GameObject m_roomObj;
+
+    public List<RoomData> m_roomData;
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
@@ -61,6 +69,7 @@ public class MapPlaceSystem : MonoBehaviour
             m_build.GenerateRoomObject(room);
         }
 
+        m_roomData = new List<RoomData>();
         //m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
         //Debug.Log(m_room.Size);
     }
@@ -170,7 +179,7 @@ public class MapPlaceSystem : MonoBehaviour
                         //=======================================
 
 
-                        PlaceRoom();
+                        PlaceRoom(obj.AreaType);
                     }
                     else
                     {
@@ -212,8 +221,8 @@ public class MapPlaceSystem : MonoBehaviour
                         m_room = parent.Room;
                         //remove
                         //マウスカーソルのfloorのID
-                        var id = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
-                        m_mapClass.RemoveRoom(id);
+                        RemoveRoom();
+
 
                     }
                     else
@@ -255,23 +264,37 @@ public class MapPlaceSystem : MonoBehaviour
         m_origin = new Vector2Int(x, z);
     }
 
-    public List<RoomAreaType> m_roomAreaType;
 
-    private void PlaceRoom()
+
+    private void PlaceRoom(AreaType type)
     {
         m_mapClass.PlaceRoom(m_room, m_origin);
+
+
+        //========= RoomData ============
+        List<Vector2Int> roomSizes = new();
+        int ID = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+
+        for (int y = 0; y < m_room.Size.y; y++)
+        {
+            for (int x = 0; x < m_room.Size.x; x++)
+            {
+                if (m_room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
+                Vector2Int pos = m_origin + new Vector2Int(x, y);
+
+                roomSizes.Add(pos);
+            }
+        }
+        
+        RoomData data = new RoomData(ID, type, roomSizes);
+
+        m_roomData.Add(data);
+
         m_roomObj = null;
         m_room = null;
 
-        int ID = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+        //===============================
 
-        List<Vector2Int> floors = new();
-        floors.Add(m_room.Size);
-        //origin + size のVector2Int データを入れる
-
-        RoomAreaType roomAreaType = new RoomAreaType(ID, floors);
-
-        m_roomAreaType.Add(roomAreaType);
 
         if (CallDFS(m_startPos, m_endPos))
         {
@@ -282,6 +305,27 @@ public class MapPlaceSystem : MonoBehaviour
             m_isDoorGenerate = false;
         }
     }
+
+    private void RemoveRoom()
+    {
+        var id = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+        m_mapClass.RemoveRoom(id);
+
+        //RoomDataでidが同じものを消す
+        var room = m_roomData.FirstOrDefault(x => x.m_ID == id);
+        m_roomData.Remove(room);
+
+        //IDをMapClassとそろえる
+        foreach(var data in m_roomData)
+        {
+            if(data.m_ID > id)
+            {
+                data.SetID(data.m_ID - 1);
+
+            }
+        }
+    }
+
 
     //------順------
     //部屋を置く　GetNeighborRoomsで隣接の数のリスト（グラフ）を作る
@@ -466,7 +510,10 @@ public class MapPlaceSystem : MonoBehaviour
 
         GenerateDoor();
 
-        SceneManager.LoadScene("MainMapClassScene");
+
+        //SceneMoveに変更
+
+        //SceneManager.LoadScene("MainMapClassScene");
     }
 
     //CallDFSから呼ばれる
