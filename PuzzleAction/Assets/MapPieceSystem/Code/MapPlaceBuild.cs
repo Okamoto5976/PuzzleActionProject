@@ -30,6 +30,7 @@ public class MapPlaceBuild : MonoBehaviour
     [SerializeField] private GameObject m_pieceParent;
     [SerializeField] private GameObject m_piece;
 
+    //シーン上でのマップピースを生成
     public void GenerateRoomObject(Room room)
     {
         var parent = Instantiate(m_pieceParent);
@@ -58,8 +59,12 @@ public class MapPlaceBuild : MonoBehaviour
 
         var obj = parent.GetComponent<RoomObj>();
         obj.SetRoom(room);
+
+        //SetAreatype
+        AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
+
+
+        obj.SetAreaType(type);
         obj.Init();
     }
-
-
 }

@@ -55,31 +55,31 @@ public class MapClass
         return GetFloor(x,y).GetWall(side);
     }
 
-    public void SetFloors(in List<(int, bool)> inFloors, in Vector2Int size, in Vector2Int origin)
-    {
-        if (origin.x < 0 || origin.y < 0) { return; }
-        Vector2Int newBounds = origin + size;
-        if (
-            newBounds.x > this.size.x ||
-            newBounds.y > this.size.y
-            )
-        {
-            Debug.LogError("Cannot Set floors at position: exceeding bounds");
-            return;
-        }
+    //public void SetFloors(in List<(int, bool)> inFloors, in Vector2Int size, in Vector2Int origin)
+    //{
+    //    if (origin.x < 0 || origin.y < 0) { return; }
+    //    Vector2Int newBounds = origin + size;
+    //    if (
+    //        newBounds.x > this.size.x ||
+    //        newBounds.y > this.size.y
+    //        )
+    //    {
+    //        Debug.LogError("Cannot Set floors at position: exceeding bounds");
+    //        return;
+    //    }
 
-        for (int y = 0; y < size.y; y++)
-        {
-            for (int x = 0; x < size.x; x++)
-            {
-                var roomFloorIndex = x + y * size.x;
-                (int id, bool state) = inFloors[roomFloorIndex];
-                Vector2Int pos = origin + new Vector2Int(x, y);
-                GetFloor(pos.x, pos.y).SetID(id);
-                GetFloor(pos.x, pos.y).SetState(state ? Floor.FloorState.full : Floor.FloorState.empty);
-            }
-        }
-    }
+    //    for (int y = 0; y < size.y; y++)
+    //    {
+    //        for (int x = 0; x < size.x; x++)
+    //        {
+    //            var roomFloorIndex = x + y * size.x;
+    //            (int id, bool state) = inFloors[roomFloorIndex];
+    //            Vector2Int pos = origin + new Vector2Int(x, y);
+    //            GetFloor(pos.x, pos.y).SetID(id);
+    //            GetFloor(pos.x, pos.y).SetState(state ? Floor.FloorState.full : Floor.FloorState.empty);
+    //        }
+    //    }
+    //}
 
     public void DebugPrintFloors()
     {
@@ -131,6 +131,7 @@ public class MapClass
     public void PlaceRoom(in Room room, in Vector2Int origin)
     {
         roomID++;
+        Debug.Log(roomID);
         Rooms.Add(room);
 
         for (int y = 0; y < room.Size.y; y++)

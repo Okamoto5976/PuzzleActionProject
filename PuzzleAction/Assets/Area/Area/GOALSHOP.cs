@@ -1,0 +1,71 @@
+//using UnityEngine;
+//using UnityEngine.InputSystem;
+
+///// <summary>
+///// GameManagerにマージする予定
+///// Playerの検知したAreaTypeがShopまたはGoalだった場合の処理の起動システム
+///// </summary>
+
+//public class GOALSHOP : MonoBehaviour
+//{
+//    [SerializeField] private AreaType m_type;
+
+//    private Transform m_playerTransform;
+//    private float m_InteractDistance = 3.0f;//Player検知範囲
+
+//    private void Start()
+//    {
+//        //プレイヤーの場所取得soに変更予定だよ
+//        //プレイヤーのTransform.Positionさえ取れればいい
+//        var player = Object.FindAnyObjectByType<omae>();
+//        if (player != null)
+//        {
+//            m_playerTransform = player.transform;
+//        }
+//    }
+
+//    private void Update()
+//    {
+//        if (m_playerTransform == null) return;
+//        //Playerとこのスクリプトがついたオブジェクトの距離を求めてる
+//        float distance = Vector3.Distance(transform.position, m_playerTransform.position);
+
+//        if (distance <= m_InteractDistance)
+//        {
+//            //debug用 ：　EKeyを押したら
+//            if (Keyboard.current.eKey.wasPressedThisFrame)
+//            {
+//                //おそらくGameManagerで検知予定
+//                DoAction();
+//            }
+//        }
+//    }
+
+//    /// <summary>
+//    /// AreaTypeがShopとGoalだった時の処理の起動
+//    /// </summary>
+//    private void DoAction()
+//    {
+//        switch(m_type)
+//        {
+//            case AreaType.Shop :
+//            Debug.Log("らっしゃい！");
+//            //AreaTypeがShopだった時の処理追加（Shopの起動）
+//            //gameManager ShopUI true
+//            break;
+
+//            case AreaType.Goal:
+//                Debug.Log("ゴールおめ");
+//                //AreaTypeがGoalだった時の処理追加（Goalの起動）
+//                //gameManager GoalUI true
+//                break;
+//        }
+//    }
+
+//    //debug用
+//    private void OnDrawGizmosSelected()
+//    {
+//        Gizmos.color = Color.red;
+//        Gizmos.DrawWireSphere(transform.position, m_InteractDistance);
+//    }
+//}
