@@ -54,6 +54,9 @@ public class MapPlaceBuild : MonoBehaviour
                     parent.transform.position.y,
                     (y + 0.5f) * 1.5f
                 );
+
+                var roomPieceObj = floor.GetComponent<RoomPieceObj>();
+                roomPieceObj.SetIndex(new Vector2Int(x, y));
             }
         }
 
