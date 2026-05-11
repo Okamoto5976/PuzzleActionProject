@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Wall;
@@ -22,12 +24,19 @@ public class T_Gene : MonoBehaviour
     [SerializeField] private Vector3 m_floorScale = Vector3.one;
     [SerializeField] private Vector3 m_wallScale = Vector3.one;
 
+
+
     [Header("Debug用")]
     [SerializeField] private Transform m_gridParent;
     [SerializeField] private GameObject m_player;
+    [SerializeField] private GameObject m_debugPrefab; 
     private GameObject m_playerInstance;
 
     [SerializeField] private T_Camera m_camera;
+
+    //外部API
+    public List<Vector3> EnemySpawnWorldPositions { get; private set; } = new();
+    public Vector3? ShopSpawnWorldPositions { get; private set; } = new();
 
 
 
@@ -37,14 +46,15 @@ public class T_Gene : MonoBehaviour
         Debug.Log(m_mapClass.Size.ToString());
         m_size = m_mapClass.Size;
 
-        InitializeMap();
+        InitializeMap(); //受け取った情報元に初期化
 
-        UpdateObjects();
+        UpdateObjects(); //マップの生成
+
+        ProcessAreaTypes();
 
         //Debug用 疑似的にPlayerを生成
         SpawnPlayer();
     }
-
     /// <summary>
     /// MapClassの状態を3Dに反映
     /// </summary>
@@ -68,9 +78,9 @@ public class T_Gene : MonoBehaviour
                 ApplyWallState(westWall, m_mapClass.GetWall(x, y, Wall.Side.West).State);
 
                 //NORTH EDGE
-                if(y == m_mapClass.Size.y - 1)
+                if (y == m_mapClass.Size.y - 1)
                 {
-                    ApplyWallState(m_wallObjectsSouth[x + (y + 1) * m_mapClass.Size.x], 
+                    ApplyWallState(m_wallObjectsSouth[x + (y + 1) * m_mapClass.Size.x],
                                    m_mapClass.GetWall(x, y + 1, Wall.Side.South).State);
                 }
                 //EAST EDGE
@@ -112,13 +122,13 @@ public class T_Gene : MonoBehaviour
         var wallBounds = m_wallPrefab.GetComponent<Renderer>().bounds;
 
         //get FloorPrefab size★
-        var floorRenderer = m_floorPrefab.GetComponent<Renderer>(); 
+        var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
         Vector3 baseFloorSize = floorRenderer.bounds.size;
         baseFloorSize.x = 1;
         baseFloorSize.y = 1;
         baseFloorSize.z = 1;
-        
-        Debug.Log($"{baseFloorSize} ★★★★★★★★★★★");
+
+        //Debug.Log($"{baseFloorSize} ★★★★★★★★★★★");
         Vector3 floorSize = new Vector3(
             baseFloorSize.x * m_floorScale.x,
             baseFloorSize.y * m_floorScale.z,
@@ -205,7 +215,7 @@ public class T_Gene : MonoBehaviour
                 {
                     var nWall = m_wallObjectsSouth[x + y * m_size.x + m_size.x];
                     nWall.transform.SetPositionAndRotation(
-                        floorPosition + new Vector3(0, wallBounds.extents.y, floorBounds.extents.z),
+                        floorPosition + new Vector3(0, wallBounds.extents.y, floorBounds.extents.z + 1),
                         Quaternion.Euler(0, 180, 0)
                     );
                     nWall.transform.localScale = wallSize;
@@ -217,7 +227,7 @@ public class T_Gene : MonoBehaviour
                 {
                     var eWall = m_wallObjectsWest[x + y * (m_size.x + 1) + 1];
                     eWall.transform.SetPositionAndRotation(
-                        floorPosition + new Vector3(floorBounds.extents.x, wallBounds.extents.y, 0),
+                        floorPosition + new Vector3(floorBounds.extents.x + 1, wallBounds.extents.y, 0),
                         Quaternion.Euler(0, -90, 0)
                     );
                     eWall.transform.localScale = wallSize;
@@ -256,12 +266,88 @@ public class T_Gene : MonoBehaviour
                 //ここにdoorだった場合の処理追加
                 //現在は壁の色を赤色にしている
                 var renderer = wall.GetComponent<Renderer>();
-                if (renderer != null) renderer.material.color = Color.red;
+                if (renderer != null) renderer.material.color = UnityEngine.Color.red;
                 break;
         }
     }
 
+    /// <summary>
+    /// AreaType 処理本体
+    /// </summary>
+    private void ProcessAreaTypes()
+    {
+        if (m_mapClassData == null || m_mapClassData.roomDatas == null)
+        {
+            Debug.LogWarning("T_Gene : RoomData が存在しない");
+            return;
+        }
 
+        //ID順に処理
+        var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
+        foreach (var room in sortedRoomDatas)
+        {
+            switch (room.m_type)
+            {
+                case AreaType.None:
+                    break; //何もしない
+
+
+                case AreaType.Enemy:
+
+                    var poses = RandomChoosePosition(room, 3); //マップとそのマスにオブジェクトを何個生成させるか指定
+                    foreach(var position in poses)
+                    {
+                       Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
+                        //CallAreaSetを呼ぶ
+                        GameObject obj = Instantiate(m_debugPrefab, debugPos, Quaternion.identity);
+                    }
+                    break;
+
+                //現在はDebug用にAreaTypeがNoneとEnemyしかないのでコメントアウトしている
+                //case AreaType.Shop:
+
+                //    break;
+
+
+                //case AreaType.Other:
+
+                //    break;
+            }
+        }
+    }
+
+    private  List<Vector2Int> RandomChoosePosition(RoomData room, int count)
+    {
+        List<Vector2Int> copy = new(room.m_roomSizes);
+        List<Vector2Int> poses = new();
+        for (int i = 0; i < count; i++)
+        {
+            int number = UnityEngine.Random.Range(0, copy.Count);
+            Vector2Int pos = copy[number];
+            poses.Add(pos);
+            copy.Remove(pos);
+            Debug.Log(pos + "★★★★★★★");
+        }
+        return poses;
+    }
+
+    private Vector3 GridToWorld(Vector2Int gridPos)
+    {
+        Transform floor00 = m_floorObjects[0].transform; //0,0 の床の座標を取得
+
+        var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
+        Vector3 baseSize = floorRenderer.bounds.size; //二倍
+
+        Vector3 floorSize = new Vector3(
+            baseSize.x * m_floorScale.x,
+            baseSize.y * m_floorScale.y,
+            baseSize.z * m_floorScale.z
+            );
+        return new Vector3(
+            floor00.position.x + gridPos.x * floorSize.x,
+            floor00.position.y + floorSize.y,
+            floor00.position.z + gridPos.y * floorSize.z);
+    }
     /// <summary>
     /// ここから下はデバッグ用でPlayer関係の処理追加
     /// </summary>
