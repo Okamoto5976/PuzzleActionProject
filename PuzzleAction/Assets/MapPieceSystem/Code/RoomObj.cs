@@ -4,8 +4,8 @@ public enum AreaType//‰¼‚È‚½‚ß@Œã‚Éíœ
 {
     None,
     Enemy,
-    //Shop,
-    //Other
+    Shop,
+    Other
 }
 
 public class RoomObj : MonoBehaviour

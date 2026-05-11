@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class T_Gene : MonoBehaviour
+public class CreatMap : MonoBehaviour
 {
     [Header("Map")]
     private MapClass m_mapClass = new MapClass(0, 0);
@@ -25,11 +25,11 @@ public class T_Gene : MonoBehaviour
         Debug.Log(m_mapClass.Size.ToString());
         m_size = m_mapClass.Size;
 
-        InitializeMap(); //受け取った情報を元に初期化
+        InitializeMap(); //受け取った情報元に初期化
 
         UpdateObjects(); //マップの生成
 
-        ProcessAreaTypes();
+        ProcessAreaTypes();// マップのAreaType識別　＆　Type事の処理
     }
     /// <summary>
     /// MapClassの状態を3Dに反映
@@ -66,6 +66,19 @@ public class T_Gene : MonoBehaviour
                                    m_mapClass.GetWall(x + 1, y, Wall.Side.West).State);
                 }
                 //Debug.Log("!");
+
+                //wallObjectsSouth[x + y * m_mapClass.Size.x].SetActive(m_mapClass.GetWall(x, y, Wall.Side.South).State != Wall.WallState.empty);
+                //wallObjectsWest[x + y * (m_mapClass.Size.x + 1)].SetActive(m_mapClass.GetWall(x, y, Wall.Side.West).State != Wall.WallState.empty);
+                //
+                //if (y == m_mapClass.Size.y - 1)
+                //{
+                //    wallObjectsSouth[x + (y + 1) * m_mapClass.Size.x].SetActive(m_mapClass.GetWall(x, y + 1, Wall.Side.South).State != Wall.WallState.empty);
+                //}
+                //
+                //if (x == m_mapClass.Size.x - 1)
+                //{
+                //    wallObjectsWest[(x + 1) + y * (m_mapClass.Size.x + 1)].SetActive(m_mapClass.GetWall(x + 1, y, Wall.Side.West).State != Wall.WallState.empty);
+                //}
             }
         }
         m_mapClass.DebugPrintFloors();
@@ -262,11 +275,11 @@ public class T_Gene : MonoBehaviour
                     {
                        Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
                         //CallAreaSetを呼ぶ
-                        //Enemy召喚！！
+                        //Eenemy召喚！！！
                     }
                     break;
 
-
+                //現在はAreaTypeがNoneとEnemyしかないのでコメントアウトしている
                 case AreaType.Shop:
 
                     break;
@@ -296,7 +309,7 @@ public class T_Gene : MonoBehaviour
 
     private Vector3 GridToWorld(Vector2Int gridPos)
     {
-        Transform floor00 = GetFloor00(); //0,0 の床の座標を取得
+        Transform floor00 = m_floorObjects[0].transform; //0,0 の床の座標を取得
 
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
         Vector3 baseSize = floorRenderer.bounds.size; //二倍
