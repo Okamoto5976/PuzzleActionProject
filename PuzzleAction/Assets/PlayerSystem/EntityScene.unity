@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 271460987}
   - component: {fileID: 271460986}
   - component: {fileID: 271460992}
+  - component: {fileID: 271460993}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -291,6 +292,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   m_maxHP: 100
+--- !u!114 &271460993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271460985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bce176f5c5593f4fb24e52ec3b9b70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  team: 0
+  m_normalSpeed: 5
+  m_dashSpeed: 10
+  m_action: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &351414507
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,6 +766,7 @@ GameObject:
   - component: {fileID: 1194998589}
   - component: {fileID: 1194998588}
   - component: {fileID: 1194998587}
+  - component: {fileID: 1194998591}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -849,6 +868,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1194998591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1194998586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 284e44c4f97c2ea49910bb26e4840cdd, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1512429248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1061,9 @@ GameObject:
   - component: {fileID: 1532440964}
   - component: {fileID: 1532440963}
   - component: {fileID: 1532440962}
+  - component: {fileID: 1532440969}
+  - component: {fileID: 1532440968}
+  - component: {fileID: 1532440970}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1152,6 +1206,59 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1532440968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532440961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413486a484a766f4cadd334b4a601cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  m_target: {fileID: 271460985}
+  m_attackValue: 1
+  m_findRange: 8
+  m_attackRange: 1.5
+--- !u!195 &1532440969
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532440961}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1532440970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532440961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
+  team: 0
+  m_data: {fileID: 11400000, guid: 61a0789176796e1448817c8a88097104, type: 2}
+  m_target: {fileID: 271460991}
 --- !u!1 &2106572745
 GameObject:
   m_ObjectHideFlags: 0
