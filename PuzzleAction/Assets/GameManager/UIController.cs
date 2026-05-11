@@ -8,7 +8,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_shopUI;
     [SerializeField] private GameObject m_inventoryUI;
 
-
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_menuUIEvent;
@@ -16,16 +15,17 @@ public class UIController : MonoBehaviour
     [SerializeField] private BoolEventSO m_shopUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
 
+    private bool isMenuOpen = false;
+    private bool isInventoryOpen = false;
+
     private void OnEnable()
     {
-        Debug.Log("UIController");
         m_menuUIEvent.Register(MenuUI);
         m_gameOverUIEvent.Register(GameOverUI);
         m_optionUIEvent.Register(OptionUI);
         m_shopUIEvent.Register(ShopUI);
         m_inventoryUIEvent.Register(InventoryUI);
     }
-
 
     private void OnDisable()
     {
@@ -35,6 +35,7 @@ public class UIController : MonoBehaviour
         m_shopUIEvent.Unregister(ShopUI);
         m_inventoryUIEvent.Unregister(InventoryUI);
     }
+
     private void Start()
     {
         m_gameOverUI.SetActive(false);
@@ -44,6 +45,31 @@ public class UIController : MonoBehaviour
         m_inventoryUI.SetActive(false);
     }
 
+    private void Update()
+    {
+        // ESCでメニュー
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isMenuOpen = !isMenuOpen;
+
+            m_menuUIEvent.Raise(isMenuOpen);
+
+            // メニュー閉じたらオプションも閉じる
+            if (!isMenuOpen)
+            {
+                m_optionUIEvent.Raise(false);
+            }
+        }
+
+        // TABでインベントリ
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            isInventoryOpen = !isInventoryOpen;
+
+            m_inventoryUIEvent.Raise(isInventoryOpen);
+        }
+    }
+
     private void GameOverUI(bool isbool)
     {
         m_gameOverUI.SetActive(isbool);
@@ -51,44 +77,47 @@ public class UIController : MonoBehaviour
 
     private void MenuUI(bool isbool)
     {
-        Debug.Log("MenuUI : " + isbool);
-
         m_menuUI.SetActive(isbool);
     }
+
     private void OptionUI(bool isbool)
     {
         m_optionUI.SetActive(isbool);
     }
-    //ショップとインベントリ
+
     private void ShopUI(bool isbool)
     {
         m_shopUI.SetActive(isbool);
     }
+
+    private void InventoryUI(bool isbool)
+    {
+        m_inventoryUI.SetActive(isbool);
+    }
+
+    // ショップ開く
     public void OnShopUI()
     {
         m_shopUIEvent.Raise(true);
     }
 
-    
-     private void InventoryUI(bool isbool)
-    {
-        m_inventoryUI.SetActive(isbool);
-    }
+    // インベントリ開く
     public void OnInventoryUI()
     {
         m_inventoryUIEvent.Raise(true);
     }
 
+    // オプション開く
     public void OpenOption()
     {
         m_menuUI.SetActive(false);
         m_optionUI.SetActive(true);
     }
 
+    // メニューに戻る
     public void BackMenu()
     {
         m_optionUI.SetActive(false);
         m_menuUI.SetActive(true);
     }
-
 }

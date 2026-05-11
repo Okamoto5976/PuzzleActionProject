@@ -4,31 +4,44 @@ using UnityEngine.InputSystem;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] private InputActionReference pauseAction;
+    [SerializeField] private InputActionReference inventoryAction;
 
     [Header("Event")]
-    [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_menuUIEvent;
     [SerializeField] private BoolEventSO m_optionUIEvent;
-    [SerializeField] private BoolEventSO m_shopUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
 
-    bool isPaused = false;
+    private bool isPaused = false;
+    private bool isInventoryOpen = false;
+    private bool isOptionOpen = false;
 
     private void OnEnable()
     {
         pauseAction.action.Enable();
+        inventoryAction.action.Enable();
+
         pauseAction.action.performed += ToggleMenu;
+        inventoryAction.action.performed += ToggleInventory;
     }
 
     private void OnDisable()
     {
         pauseAction.action.performed -= ToggleMenu;
+        inventoryAction.action.performed -= ToggleInventory;
+
         pauseAction.action.Disable();
+        inventoryAction.action.Disable();
     }
 
-    public void ToggleMenu(InputAction.CallbackContext callback)
+    // ESC
+    private void ToggleMenu(InputAction.CallbackContext callback)
     {
-        Debug.Log("Escape押された");
+        // オプション開いてるなら戻る
+        if (isOptionOpen)
+        {
+            CloseOption();
+            return;
+        }
 
         isPaused = !isPaused;
 
@@ -42,24 +55,42 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    // TAB
+    private void ToggleInventory(InputAction.CallbackContext callback)
+    {
+        isInventoryOpen = !isInventoryOpen;
+
+        m_inventoryUIEvent.Raise(isInventoryOpen);
+    }
+
     public void PauseGame()
     {
-        Debug.Log("Raise True");
         Time.timeScale = 0f;
-        m_gameOverUIEvent.Raise(true);
         m_menuUIEvent.Raise(true);
-        m_optionUIEvent.Raise(true);
-        m_shopUIEvent.Raise(true);
-        m_inventoryUIEvent.Raise(true);
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
-        m_gameOverUIEvent.Raise(false);
+
         m_menuUIEvent.Raise(false);
         m_optionUIEvent.Raise(false);
-        m_shopUIEvent.Raise(false);
-        m_inventoryUIEvent.Raise(false);
+    }
+
+    // ボタンから呼ぶ
+    public void OpenOption()
+    {
+        isOptionOpen = true;
+
+        m_menuUIEvent.Raise(false);
+        m_optionUIEvent.Raise(true);
+    }
+
+    public void CloseOption()
+    {
+        isOptionOpen = false;
+
+        m_optionUIEvent.Raise(false);
+        m_menuUIEvent.Raise(true);
     }
 }

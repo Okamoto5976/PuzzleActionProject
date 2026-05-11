@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -10,11 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private IntRunTime m_moneyRuntime;
     [SerializeField] private TimeManager timemanager;
 
+    [Header("Clear")]
+    [SerializeField] private ClearCount m_clearCount;
+
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_menuUIEvent;
     [SerializeField] private BoolEventSO m_optionUIEvent;
-    //インベントリ、ショップ
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
     [SerializeField] private BoolEventSO m_shopUIEvent;
 
@@ -57,7 +60,9 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
-
+        //クリア階層記録　
+        m_clearCount.Add(1);
+        Debug.Log($"クリア回数：{m_clearCount.Value}");
     }
 
     //ゲームオーバー
