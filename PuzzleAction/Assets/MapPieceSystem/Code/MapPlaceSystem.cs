@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 //マップ生成の際に使う
+[System.Serializable]
 public class RoomData
 {
     public int m_ID;
@@ -38,7 +39,7 @@ public class MapPlaceSystem : MonoBehaviour
     private GameObject m_roomPieceParentObj;//RoomPieceの親オブジェクト
     //private GameObject m_roomPieceChildObj;//マウス追従オブジェクト
 
-    public List<RoomData> m_roomData;
+    [SerializeField] private List<RoomData> m_roomData;
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
@@ -72,6 +73,12 @@ public class MapPlaceSystem : MonoBehaviour
         }
 
         m_roomData = new List<RoomData>();
+        //goalPos設定
+
+
+        //goalPosをDataに渡す
+        m_mapClassData.SetGoalPos(m_endPos);
+
         //m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
         //Debug.Log(m_room.Size);
     }
@@ -79,7 +86,7 @@ public class MapPlaceSystem : MonoBehaviour
     #region ルーム作成
     private Room CreateRoom()
     {
-        int num = UnityEngine.Random.Range(0, 3);
+        int num = UnityEngine.Random.Range(0, 6);
 
         Room room = new(new(), new(0,0));
 
@@ -136,8 +143,17 @@ public class MapPlaceSystem : MonoBehaviour
                }, new(2, 2)
                );
         }
+        else if(num == 5)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                }, new(5,1)
+                );
+        }
 
-            return room;
+        return room;
     }
     #endregion
 
@@ -282,7 +298,7 @@ public class MapPlaceSystem : MonoBehaviour
 
         //========= RoomData ============
         List<Vector2Int> roomSizes = new();
-        Vector2Int origin = new Vector2Int(m_origin.x - m_difference.x, m_origin.y - m_difference.y);
+        Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
 
         int ID = m_mapClass.GetFloorID(origin.x, origin.y);
 
@@ -319,7 +335,7 @@ public class MapPlaceSystem : MonoBehaviour
 
     private void RemoveRoom()
     {
-        Vector2Int origin = new Vector2Int(m_origin.x - m_difference.x, m_origin.y - m_difference.y);
+        Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
 
         var id = m_mapClass.GetFloorID(origin.x, origin.y);
         m_mapClass.RemoveRoom(id);

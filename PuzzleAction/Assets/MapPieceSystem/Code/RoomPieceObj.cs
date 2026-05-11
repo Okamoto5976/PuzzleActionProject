@@ -11,6 +11,13 @@ public class RoomPieceObj : MonoBehaviour
     public bool IsPlace { get => m_isPlace; }
     public Vector2Int Index { get => m_index; }
 
+    private Renderer m_ren;
+
+    private void Awake()
+    {
+        m_ren = GetComponent<Renderer>();
+    }
+
     //RoomObje‚©‚çq‚Éó‘Ô‚ğ“n‚·
     public void SetPlace(bool value)
     {
@@ -20,5 +27,10 @@ public class RoomPieceObj : MonoBehaviour
     public void SetIndex(Vector2Int value)
     {
         m_index = value;
+    }
+
+    public void SetColor(Color color)
+    {
+        m_ren.material.color = color;
     }
 }
