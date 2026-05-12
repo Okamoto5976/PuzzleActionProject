@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_optionUI;
     [SerializeField] private GameObject m_shopUI;
     [SerializeField] private GameObject m_inventoryUI;
+    [SerializeField] private GameObject m_gameClearUI;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
@@ -14,6 +15,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private BoolEventSO m_optionUIEvent;
     [SerializeField] private BoolEventSO m_shopUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
+    [SerializeField] private BoolEventSO m_gameClearUIEvent;
 
     private bool isMenuOpen = false;
     private bool isInventoryOpen = false;
@@ -25,6 +27,7 @@ public class UIController : MonoBehaviour
         m_optionUIEvent.Register(OptionUI);
         m_shopUIEvent.Register(ShopUI);
         m_inventoryUIEvent.Register(InventoryUI);
+        m_gameClearUIEvent.Register(ShowGameClearUI);
     }
 
     private void OnDisable()
@@ -34,6 +37,7 @@ public class UIController : MonoBehaviour
         m_optionUIEvent.Unregister(OptionUI);
         m_shopUIEvent.Unregister(ShopUI);
         m_inventoryUIEvent.Unregister(InventoryUI);
+        m_gameClearUIEvent.Unregister(ShowGameClearUI);
     }
 
     private void Start()
@@ -43,6 +47,7 @@ public class UIController : MonoBehaviour
         m_optionUI.SetActive(false);
         m_shopUI.SetActive(false);
         m_inventoryUI.SetActive(false);
+        m_gameClearUI.SetActive(false);
     }
 
     private void Update()
@@ -93,6 +98,11 @@ public class UIController : MonoBehaviour
     private void InventoryUI(bool isbool)
     {
         m_inventoryUI.SetActive(isbool);
+    }
+
+    private void ShowGameClearUI(bool isShow)
+    {
+        m_gameClearUI.SetActive(isShow);
     }
 
     // ショップ開く

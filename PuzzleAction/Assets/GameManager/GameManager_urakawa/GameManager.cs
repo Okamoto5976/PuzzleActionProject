@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
+    [SerializeField] private BoolEventSO m_gameClearUIEvent;
     [SerializeField] private BoolEventSO m_menuUIEvent;
     [SerializeField] private BoolEventSO m_optionUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
@@ -60,9 +61,16 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
+        if(!m_isGameOver) return;
+
+        m_isGameOver = true;
+
         //クリア階層記録　
         m_clearCount.Add(1);
         Debug.Log($"クリア回数：{m_clearCount.Value}");
+
+        //リザルト表示、関数を呼ぶ
+        m_gameClearUIEvent.Raise(true);
     }
 
     //ゲームオーバー
