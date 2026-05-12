@@ -1,6 +1,6 @@
 using UnityEngine;
 
-abstract public class EnemyHP : EntityHP
+public class EnemyHP : EntityHP
 {
     protected override void Die()
     {

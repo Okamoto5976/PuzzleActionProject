@@ -155,8 +155,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   team: 0
-  m_normalSpeed: 5
-  m_dashSpeed: 10
   m_action: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!54 &271460987
@@ -305,8 +303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   team: 0
-  m_normalSpeed: 5
-  m_dashSpeed: 10
   m_action: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!1 &351414507
@@ -1060,10 +1056,10 @@ GameObject:
   - component: {fileID: 1532440965}
   - component: {fileID: 1532440964}
   - component: {fileID: 1532440963}
-  - component: {fileID: 1532440962}
   - component: {fileID: 1532440969}
   - component: {fileID: 1532440968}
   - component: {fileID: 1532440970}
+  - component: {fileID: 1532440971}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1071,21 +1067,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1532440962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1532440961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
-  team: 0
-  m_data: {fileID: 11400000, guid: 61a0789176796e1448817c8a88097104, type: 2}
-  m_target: {fileID: 271460991}
 --- !u!54 &1532440963
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1259,6 +1240,19 @@ MonoBehaviour:
   team: 0
   m_data: {fileID: 11400000, guid: 61a0789176796e1448817c8a88097104, type: 2}
   m_target: {fileID: 271460991}
+--- !u!114 &1532440971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532440961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55600d7f2a23164bbce58dc663e7e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
+  m_maxHP: 100
 --- !u!1 &2106572745
 GameObject:
   m_ObjectHideFlags: 0

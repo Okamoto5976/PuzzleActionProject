@@ -30,6 +30,14 @@ abstract public class Entity : MonoBehaviour
     [SerializeField] private Teamtype team;
     public Teamtype Team => team;
 
+    //追加した部分★
+    //[Header("Damage")]
+
+    //[SerializeField]
+    //protected bool m_damageable = true;
+
+    //public bool Damageable => m_damageable;
+
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -56,21 +64,39 @@ abstract public class Entity : MonoBehaviour
 
         Vector3 velocity = new Vector3(movement.x * m_currentSpeed, m_rb.linearVelocity.y, movement.z * m_currentSpeed);
 
-        m_rb.linearVelocity = velocity;
+        m_rb.MovePosition
+            (
+                m_rb.position + 
+                velocity * Time.fixedDeltaTime
+
+            );
     }
 
     public virtual void TakeDamage(int damage)//後々DamageDataとDamageResult
     {
+        //追加した部分★
+        //ダメージ無効
+        //if(!m_damageable)
+        //{
+        //    return;
+        //}
+
         if(m_state != null && m_state.IsInvincible)
         {
             return ;
         }
 
+        //追加した部分★
+        //HPを持たないUnity対応
+        //if(m_hp==null)
+        //{
+        //    return;
+        //}
+
         m_hp.TakeDamage(damage);
     }
 
-    
-
+   
     //protected virtual void Die()
     //{
     //    Debug.Log("死亡");
@@ -97,5 +123,16 @@ abstract public class Entity : MonoBehaviour
     //    if (other == null) return false;
     //    return true;
 
+
+    //追加した部分↓★
+    //public virtual bool CanHit(Entity other)
+    //{
+    //    if (other == null)
+    //        return false;
+
+    //    if(IsSameTeam(other))
+    //        return false;
+    //    return true;
+    //}
     //}
 }

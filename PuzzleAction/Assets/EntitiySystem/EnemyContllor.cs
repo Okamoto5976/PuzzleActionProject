@@ -5,15 +5,16 @@ public class EnemyContllor : Entity
     [SerializeField] private EnemyData m_data;
     [SerializeField] Transform m_target;
 
-    private EnemyState m_state;
+    //private EnemyState m_state;
 
     protected override void Awake()
     {
         base.Awake();
 
-        m_state = GetComponent<EnemyState>();
+        //m_state = GetComponent<EnemyState>();
 
-        Debug.Log(m_state);
+        //ämîFóp
+        //Debug.Log(m_state);
     }
 
     private void Start()
@@ -23,6 +24,7 @@ public class EnemyContllor : Entity
     }
     private void Update()
     {
+        //à⁄ìÆêßå‰
         if (m_state != null && !m_state.CanMove)
         {
             return;
@@ -31,8 +33,6 @@ public class EnemyContllor : Entity
         Vector3 dir = (m_target.position - transform.position);
 
         m_movement = dir.normalized;
-    }
 
-    
-    
+    }
 }
