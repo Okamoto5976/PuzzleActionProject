@@ -5,7 +5,7 @@ public enum AreaType//âºÇ»ÇΩÇﬂÅ@å„Ç…çÌèú
     None,
     Enemy,
     Shop,
-    Other
+    Trap
 }
 
 public class RoomObj : MonoBehaviour
@@ -52,6 +52,15 @@ public class RoomObj : MonoBehaviour
         foreach(var piece in m_pieces)
         {
             piece.SetPlace(value);
+        }
+    }
+
+    //éqÇ…êFÇìnÇ∑
+    public void SetColor(Color color)
+    {
+        foreach(var piece in m_pieces)
+        {
+            piece.SetColor(color);
         }
     }
 }

@@ -1,4 +1,3 @@
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class MapPlaceBuild : MonoBehaviour
@@ -54,6 +53,9 @@ public class MapPlaceBuild : MonoBehaviour
                     parent.transform.position.y,
                     (y + 0.5f) * 1.5f
                 );
+
+                var roomPieceObj = floor.GetComponent<RoomPieceObj>();
+                roomPieceObj.SetIndex(new Vector2Int(x, y));
             }
         }
 
@@ -63,8 +65,26 @@ public class MapPlaceBuild : MonoBehaviour
         //SetAreatype
         AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
 
-
         obj.SetAreaType(type);
         obj.Init();
+
+        //å„Å@AreaTypeÇâºÇ©ÇÁïœçX
+        switch (type)
+        {
+            case AreaType.None:
+                break;
+            case AreaType.Enemy:
+                obj.SetColor(Color.red);
+                break;
+            case AreaType.Shop:
+                obj.SetColor(Color.green);
+                break;
+            case AreaType.Trap:
+                obj.SetColor(Color.cyan);
+
+                break;
+        }
+
+        
     }
 }

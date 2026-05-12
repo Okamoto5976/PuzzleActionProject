@@ -4,11 +4,11 @@ using UnityEngine;
 public class T_PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    private T_Gene gene;
+    private CreatMap gene;
 
     [SerializeField] private float speed = 4f;
 
-    public void Initialize(T_Gene geneRef)
+    public void Initialize(CreatMap geneRef)
     {
         gene = geneRef;
     }

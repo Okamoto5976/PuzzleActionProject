@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 //マップ生成の際に使う
+[System.Serializable]
 public class RoomData
 {
     public int m_ID;
@@ -35,9 +36,10 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private Camera m_mainCamera;
     private Vector3 m_mouseWorldPos;
 
-    private GameObject m_roomObj;
+    private GameObject m_roomPieceParentObj;//RoomPieceの親オブジェクト
+    //private GameObject m_roomPieceChildObj;//マウス追従オブジェクト
 
-    public List<RoomData> m_roomData;
+    [SerializeField] private List<RoomData> m_roomData;
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
@@ -48,6 +50,7 @@ public class MapPlaceSystem : MonoBehaviour
 
     private Room m_room;
 
+    [SerializeField] private Vector2Int m_difference; //マウスとpieceのオリジンの差分（マウス座標が左下よりVector2Int多いときm_origin - m_difference）
     [SerializeField] private Vector2Int m_origin;
 
     [SerializeField] private Vector2Int m_startPos;
@@ -70,6 +73,12 @@ public class MapPlaceSystem : MonoBehaviour
         }
 
         m_roomData = new List<RoomData>();
+        //goalPos設定
+
+
+        //goalPosをDataに渡す
+        m_mapClassData.SetGoalPos(m_endPos);
+
         //m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
         //Debug.Log(m_room.Size);
     }
@@ -77,7 +86,7 @@ public class MapPlaceSystem : MonoBehaviour
     #region ルーム作成
     private Room CreateRoom()
     {
-        int num = UnityEngine.Random.Range(0, 3);
+        int num = UnityEngine.Random.Range(0, 6);
 
         Room room = new(new(), new(0,0));
 
@@ -134,8 +143,17 @@ public class MapPlaceSystem : MonoBehaviour
                }, new(2, 2)
                );
         }
+        else if(num == 5)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
+                }, new(5,1)
+                );
+        }
 
-            return room;
+        return room;
     }
     #endregion
 
@@ -151,15 +169,15 @@ public class MapPlaceSystem : MonoBehaviour
         #region マウス操作
         if (m_action.action.WasPressedThisFrame())
         {
-            if(m_roomObj != null)
+            if(m_roomPieceParentObj != null)
             {
                 if (m_origin.x < m_size.x && m_origin.x >= 0&&
                     m_origin.y < m_size.y && m_origin.y >= 0
                 )
                 {
-                    var obj = m_roomObj.GetComponent<RoomObj>();
+                    var obj = m_roomPieceParentObj.GetComponent<RoomObj>();
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
-                    if (!m_mapClass.IsRoomColliding(m_room, m_origin))
+                    if (!m_mapClass.IsRoomColliding(m_room, m_origin - m_difference))
                     {
                         Debug.Log("On Place");
 
@@ -168,14 +186,14 @@ public class MapPlaceSystem : MonoBehaviour
                         obj.SetIsPlace(true);
 
                         Vector3 localPos = new Vector3(
-                            (m_origin.x) * 1.5f,
+                            (m_origin.x - m_difference.x) * 1.5f,
                             1,
-                            (m_origin.y) * 1.5f
+                            (m_origin.y - m_difference.y) * 1.5f
                             );
 
                         Vector3 worldPos = m_parent.TransformPoint(localPos);
-                        m_roomObj.transform.position = worldPos;
-                        m_roomObj = null;
+                        m_roomPieceParentObj.transform.position = worldPos;
+                        m_roomPieceParentObj = null;
                         //=======================================
 
 
@@ -187,8 +205,8 @@ public class MapPlaceSystem : MonoBehaviour
                         //room piece = null
 
                         Debug.Log("No Place");
-                        m_roomObj.transform.position = obj.OriginalPos;
-                        m_roomObj = null;
+                        m_roomPieceParentObj.transform.position = obj.OriginalPos;
+                        m_roomPieceParentObj = null;
 
                     }
                 }
@@ -196,7 +214,7 @@ public class MapPlaceSystem : MonoBehaviour
                 {
                     //grid外である時　その場に置く
                     Debug.Log("NotFind Map");
-                    m_roomObj = null;
+                    m_roomPieceParentObj = null;
                 }
             }
             //マウスがマップピースを持っていないとき
@@ -209,6 +227,8 @@ public class MapPlaceSystem : MonoBehaviour
                     var obj = hit.collider.gameObject.GetComponent<RoomPieceObj>();
                     if (obj == null) return;
 
+                    m_difference = obj.Index;
+
                     var parent = obj.GetComponentInParent<RoomObj>();
 
                     if (obj.IsPlace)
@@ -217,7 +237,7 @@ public class MapPlaceSystem : MonoBehaviour
                         //取得　
                         //m_roompiece = obj.Parent;
                         parent.SetIsPlace(false);
-                        m_roomObj = parent.gameObject;
+                        m_roomPieceParentObj = parent.gameObject;
                         m_room = parent.Room;
                         //remove
                         //マウスカーソルのfloorのID
@@ -230,7 +250,7 @@ public class MapPlaceSystem : MonoBehaviour
                         //roomがありIsPlaceがfalseだったら取得
                         //取得の際 現在のparentの位置を保存
                         parent.SetOriginalPos();
-                        m_roomObj = parent.gameObject;
+                        m_roomPieceParentObj = parent.gameObject;
                         m_room = parent.Room;
 
                     }
@@ -242,9 +262,14 @@ public class MapPlaceSystem : MonoBehaviour
         #endregion
 
         //もしroompieceがあるならmouseに追従
-        if (m_roomObj != null)
+        if (m_roomPieceParentObj != null)
         {
-            m_roomObj.transform.position = m_mouseWorldPos;
+            Vector3 differencePos = new Vector3(
+                            (m_difference.x) * 1.5f + 0.5f,
+                            1,
+                            (m_difference.y) * 1.5f + 0.5f
+                            );
+            m_roomPieceParentObj.transform.position = m_mouseWorldPos - differencePos;
         }
     }
 
@@ -268,19 +293,21 @@ public class MapPlaceSystem : MonoBehaviour
 
     private void PlaceRoom(AreaType type)
     {
-        m_mapClass.PlaceRoom(m_room, m_origin);
+        m_mapClass.PlaceRoom(m_room, m_origin - m_difference);
 
 
         //========= RoomData ============
         List<Vector2Int> roomSizes = new();
-        int ID = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+        Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
+
+        int ID = m_mapClass.GetFloorID(origin.x, origin.y);
 
         for (int y = 0; y < m_room.Size.y; y++)
         {
             for (int x = 0; x < m_room.Size.x; x++)
             {
                 if (m_room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
-                Vector2Int pos = m_origin + new Vector2Int(x, y);
+                Vector2Int pos = origin + new Vector2Int(x, y);
 
                 roomSizes.Add(pos);
             }
@@ -290,7 +317,7 @@ public class MapPlaceSystem : MonoBehaviour
 
         m_roomData.Add(data);
 
-        m_roomObj = null;
+        m_roomPieceParentObj = null;
         m_room = null;
 
         //===============================
@@ -308,7 +335,9 @@ public class MapPlaceSystem : MonoBehaviour
 
     private void RemoveRoom()
     {
-        var id = m_mapClass.GetFloorID(m_origin.x, m_origin.y);
+        Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
+
+        var id = m_mapClass.GetFloorID(origin.x, origin.y);
         m_mapClass.RemoveRoom(id);
 
         //RoomDataでidが同じものを消す
