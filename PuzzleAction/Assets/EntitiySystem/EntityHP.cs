@@ -14,6 +14,12 @@ abstract public class EntityHP : MonoBehaviour
     {
         CurrentHP -= damage;
 
+        CurrentHP = Mathf.Max( CurrentHP, 0 );
+
+        Debug.Log($"{gameObject.name} : {damage}damage");
+
+        Debug.Log($"åªç›HP : {CurrentHP}");
+
         if( CurrentHP <= 0 ) 
         {
             Die();

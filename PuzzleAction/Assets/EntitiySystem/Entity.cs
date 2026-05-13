@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
@@ -20,23 +21,25 @@ abstract public class Entity : MonoBehaviour
     //public EntityHP m_HP { get; private set; }
     //public EntityMove m_Move { get; private set; }
 
+    private Dictionary<StatusType, EntityStatus> m_status = new();
+
     public enum Teamtype
     {
         Player,
         Enemy,
-        Neutral
+        Neutral,
+        Nature
     }
 
     [SerializeField] private Teamtype team;
     public Teamtype Team => team;
 
-    //追加した部分★
-    //[Header("Damage")]
-
-    //[SerializeField]
-    //protected bool m_damageable = true;
-
-    //public bool Damageable => m_damageable;
+    //追加した部分
+    //トラップのダメージ対象かどうか
+    [Header("Damage")]
+    [SerializeField]
+    protected bool m_damageable = true;
+    public bool Damageable => m_damageable;
 
     protected virtual void Awake()
     {
@@ -44,6 +47,19 @@ abstract public class Entity : MonoBehaviour
         m_hp = GetComponent<EntityHP>();
         m_state = GetComponent<State>();
         //m_Move = GetComponent<EntityMove>();
+    }
+
+    protected virtual void Start()
+    {
+        m_status.Add(StatusType.HP, new EntityStatus(100));
+        m_status.Add(StatusType.Attack, new EntityStatus(10));
+        m_status.Add(StatusType.Speed, new EntityStatus(10));
+
+    }
+
+    public EntityStatus GetStatus(StatusType type)
+    {
+        return m_status[type];
     }
 
     protected virtual void FixedUpdate()
@@ -74,43 +90,33 @@ abstract public class Entity : MonoBehaviour
 
     public virtual void TakeDamage(int damage)//後々DamageDataとDamageResult
     {
-        //追加した部分★
+        //追加した部分
         //ダメージ無効
-        //if(!m_damageable)
-        //{
-        //    return;
-        //}
+        if (!m_damageable)
+        {
+            return;
+        }
 
-        if(m_state != null && m_state.IsInvincible)
+        if (m_state != null && m_state.IsInvincible)
         {
             return ;
         }
 
-        //追加した部分★
-        //HPを持たないUnity対応
-        //if(m_hp==null)
-        //{
-        //    return;
-        //}
+        //追加した部分
+        //HPを持たない(トラップ等)対応
+        if(m_hp==null)
+        {
+            return;
+        }
 
         m_hp.TakeDamage(damage);
     }
 
-   
-    //protected virtual void Die()
-    //{
-    //    Debug.Log("死亡");
-
-    //    Destroy(gameObject);
-
-
-    //}
-
-    //public bool IsSameTeam(Entity other)
-    //{
-    //    if (other == null) return false;
-    //    return this.team== other.team;
-    //}
+    public bool IsSameTeam(Entity other)
+    {
+        if (other == null) return false;
+        return this.team == other.team;
+    }
 
     //public bool IsEnemy(Entity other)
     //{
@@ -124,15 +130,21 @@ abstract public class Entity : MonoBehaviour
     //    return true;
 
 
-    //追加した部分↓★
-    //public virtual bool CanHit(Entity other)
-    //{
-    //    if (other == null)
-    //        return false;
+    //追加した部分
+    //相手に攻撃が当たるかどうか
+    public virtual bool CanHit(Entity other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
 
-    //    if(IsSameTeam(other))
-    //        return false;
-    //    return true;
-    //}
-    //}
+        // 同チーム無効
+        if (Team == other.Team)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

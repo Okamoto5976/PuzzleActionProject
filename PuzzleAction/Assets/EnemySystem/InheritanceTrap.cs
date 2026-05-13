@@ -15,6 +15,8 @@ public class InheritanceTrap : Entity
 
     protected virtual void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trap Trigger");
+
         Entity target = other.GetComponent<Entity>();
 
         //Entity‚¶‚á‚È‚¢
