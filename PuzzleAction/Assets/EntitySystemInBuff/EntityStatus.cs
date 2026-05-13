@@ -8,11 +8,20 @@ public enum ModifierType
     Multiply
 }
 
+public enum StatusType
+{
+    HP,
+    Attack,
+    Defense,
+    Speed
+}
 
 public class StatusModifier
 {
+    public StatusType m_statType;
+
     public float m_value;
-    public ModifierType m_type;
+    public ModifierType m_modType;
 
     public object m_source;
 }
@@ -32,7 +41,7 @@ public class EntityStatus
 
             foreach(var modifier in m_modifiers)
             {
-                switch(modifier.m_type)
+                switch(modifier.m_modType)
                 {
                     case ModifierType.Add:
                         add += modifier.m_value;
@@ -61,4 +70,11 @@ public class EntityStatus
     {
         m_modifiers.Remove(modifier);
     }
+
+    public void RemoveModifierFromSource(object source)
+    {
+        m_modifiers.RemoveAll(x => x.m_source == source);
+    }
 }
+
+
