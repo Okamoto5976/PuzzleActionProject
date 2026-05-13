@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.EventSystems.EventTrigger;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -17,14 +18,13 @@ public class HitBox
 {
     public Transform m_transform;
     public float m_radius;
+    [NonSerialized] public float m_distance;
 }
 
 public class RayCollider : MonoBehaviour
 {
     [SerializeField] private int m_howManyPenetrate;    // 何体貫通するか
     [SerializeField] private float m_range;             // 射程距離(Rayをどこまで飛ばすか)
-
-    [SerializeField] private Transform m_test;
 
     [SerializeField] private bool m_isVisible; 
 
@@ -43,10 +43,6 @@ public class RayCollider : MonoBehaviour
         foreach (var hitRay in hitRays)
         {
             int i = 0;
-            Debug.Log($"hitRay: {hitRay}");
-            Debug.Log($"origin: {hitRay.m_transform.position}");
-            Debug.Log($"direction: {hitRay.m_transform.rotation}");
-            Debug.Log($"radius: {hitRay.m_radius}");
 
             Entity[] hits = OverlapRay(hitRay);
 
@@ -61,10 +57,8 @@ public class RayCollider : MonoBehaviour
 
                 hitSet.Add(hit);
 
-                Debug.Log("ffff");
                 // My_ClosestPoint で使うために m_hitBox を用意
                 m_hitBox = m_hitBoxes[i];
-                i++;
                 Vector3 hitPoint = My_ClosestPoint(hit, m_hitBox, hitRay);
                 Vector3 hitNormal = (hitPoint - hitRay.m_transform.position).normalized;
 
@@ -76,6 +70,15 @@ public class RayCollider : MonoBehaviour
                     //overrideEffectData = m_overrideEffect,
                     //overrideAudioData = m_overrideAudio
                 };
+
+                m_hitBoxes[i].m_distance = hitPoint.x * hitPoint.x + hitPoint.y * hitPoint.y + hitPoint.z * hitPoint.z;
+                i++;
+            }
+            // リストを昇順ソート(Rayの起点とhit位置が近い順)
+            Partition(m_hitBoxes, 0, m_hitBoxes.Count - 1);
+            if (m_hitBoxes.Count > m_howManyPenetrate)
+            {
+                m_hitBoxes.RemoveRange(m_howManyPenetrate - 1, m_hitBoxes.Count - 1);
             }
         }
     }
@@ -102,21 +105,16 @@ public class RayCollider : MonoBehaviour
 
             // Entityの位置がRayより後ろなら無視
             if (localPos.z + hitBox.m_radius < 0) continue;
-            if (localPos.z > m_range) continue;
+            // 射程を超えたら無視
+            if (localPos.z - hitBox.m_radius > m_range) continue;
 
             // (相対座標の)Z座標を無視して、円形で当たり判定を行う
             if (Distance(Vector2.zero, localPos) < (hitRay.m_radius + hitBox.m_radius) * (hitRay.m_radius + hitBox.m_radius))
             {
-                Debug.Log("true");
                 m_hitBoxes.Add(hitBox);
                 hitList.Add(hitBox.m_transform.GetComponentInParent<Entity>());
             }
-            else
-            {
-                Debug.Log("false");
-            }
         }
-
 
         Entity[] hits = hitList.ToArray();
 
@@ -139,29 +137,16 @@ public class RayCollider : MonoBehaviour
         Vector2 posNormal = localPos2d.normalized;
         Vector2 hitTarPos = posNormal * rayRad; // ターゲットが当たったRayの側面上の(Zを無視した)位置...(2)
 
-        Debug.Log($"localPos: {localPos}");
-        Debug.Log($"localPos2d: {localPos2d}");
-
-        Debug.Log($"posNormal: {posNormal}");
-        Debug.Log($"hitTarPos: {hitTarPos}");
-
-        Debug.Log($"tarPos: {tarPos}");
-        Debug.Log($"rayPos: {rayPos}");
-
         float edge_x = localPos.x;
         float edge_y = localPos.y;
 
-        Debug.Log($"edge_x: {edge_x}");
-        Debug.Log($"edge_y: {edge_y}");
         if (edge_x == 0) edge_x = 0.0001f;
 
         // 球上の、Rayに平行な円の角度(Z軸)
-        float tarCirDir = Mathf.Atan(edge_y / edge_x) * 180 / Mathf.PI;
-        Debug.Log($"tarCirDir: {tarCirDir}");
+        float tarCirDir = Mathf.Atan(edge_y / edge_x) * Mathf.Rad2Deg;
 
         // Z座標が同じ地点のRayとRayに平行な円の距離
         float distance = Mathf.Sqrt(Distance(localPos, new Vector3(0, 0, localPos.z)));
-        Debug.Log($"distance: {distance}");
 
         float z, z1, z2;
         float D = Mathf.Abs(distance - rayRad);
@@ -195,8 +180,8 @@ public class RayCollider : MonoBehaviour
             z = Mathf.Sqrt(tarRad * tarRad - D * D);
             z1 = z + localPos.z;
             z2 = -z + localPos.z;
-            Debug.Log($"D: {D}, z1: {z1}, z2: {z2}");
-            Debug.Log($"localPos.z: {localPos.z}, z: {z}, -z: {-z}");
+            //Debug.Log($"D: {D}, z1: {z1}, z2: {z2}");
+            //Debug.Log($"localPos.z: {localPos.z}, z: {z}, -z: {-z}");
 
             // 交点の内、(相対座標の)Z座標が小さい方がヒット位置
             localClosestPoint.z = z1 < z2 ? z1 : z2;
@@ -208,7 +193,6 @@ public class RayCollider : MonoBehaviour
         closestPoint = hitRay.m_transform.TransformPoint(localClosestPoint);
         Debug.Log($"closestPoint: {closestPoint}");
 
-        m_test.position = closestPoint;
         return closestPoint;
     }
 
@@ -217,6 +201,42 @@ public class RayCollider : MonoBehaviour
         float distance = (pos2.x - pos1.x) * (pos2.x - pos1.x)
                        + (pos2.y - pos1.y) * (pos2.y - pos1.y);
         return distance;
+    }
+
+    private void Partition(List<HitBox> hitBoxes, int left, int right)
+    {
+        int len = hitBoxes.Count;
+        int pl = left;                              // 左カーソル
+        int pr = right;                             // 右カーソル
+        float x = hitBoxes[len / 2].m_distance;   // 中央の要素
+
+        do
+        {
+            while (hitBoxes[pl].m_distance < x) pl++;
+            while (hitBoxes[pr].m_distance > x) pr--;
+            if (pl <= pr)
+            {
+                Swap(pl, pr);
+                pl++;
+                pr--;
+            }
+        } while (pl <= pr);
+
+        if (left < pr) Partition(hitBoxes, left, pr);
+        if (pl < right) Partition (hitBoxes, pl, right);
+
+        //Debug.Log($"枢軸の値: {x}");
+        //for (int i = 0; i < len; i++)
+        //{
+        //    Debug.Log($"hitBox[{i}].distance: {hitBoxes[i].m_distance}");
+        //}
+    }
+
+    private void Swap(int pl, int pr)
+    {
+        HitBox t = m_hitBoxes[pl];
+        m_hitBoxes[pl] = m_hitBoxes[pr];
+        m_hitBoxes[pr] = t;
     }
 
     private void OnDrawGizmos()
