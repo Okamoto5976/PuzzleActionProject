@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 // ▼(仮)--------------------------
 public enum TeamType 
@@ -57,7 +58,7 @@ public class HitCollider : MonoBehaviour
     public void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
         // ヒットした判定のセット
-        HashSet<IDamage> hitSet = new HashSet<IDamage>();
+        //HashSet<Entity> hitSet = new();
 
         foreach (var hitBox in hitBoxes)
         {
@@ -73,30 +74,38 @@ public class HitCollider : MonoBehaviour
                 attackHitBox
             );
             
+
             //Debug.Log($"hits.Length : {hits.Length}");
 
             foreach (var hit in hits)
             {
                 //Debug.Log($"hit : {hit}");
-                var damageable = hit.GetComponentInParent<IDamage>();
-                if (damageable == null) continue;
-                if (hitSet.Contains(damageable)) continue;
+                //var damageable = hit.GetComponentInParent<IDamage>();
+                //if (damageable == null) continue;
+                //if (hitSet.Contains(damageable)) continue;
+                //
+                //var team = hit.GetComponentInParent<ITeam>();
+                //
+                ////Debug.Log($"team.Team : {team.Team}");
+                //if (team != null)
+                //{
+                //    //Debug.Log($"myTeam : {myTeam}");
+                //    // 同じチームなら無視
+                //    if (team.Team == myTeam) continue;
+                //}
+                //else
+                //{
+                //    continue;
+                //}
+                //var entity = hit.GetComponentInParent<Entity>();
+                //if(entity.Team != myTeam) continue;
 
-                var team = hit.GetComponentInParent<ITeam>();
 
-                //Debug.Log($"team.Team : {team.Team}");
-                if (team != null)
-                {
-                    //Debug.Log($"myTeam : {myTeam}");
-                    // 同じチームなら無視
-                    if (team.Team == myTeam) continue;
-                }
-                else
-                {
-                    continue;
-                }
 
-                hitSet.Add(damageable);
+
+                //var damageable =
+
+                //hitSet.Add(damageable);
 
                 //Vector3 hitPoint = col.ClosestPoint(hitBox.m_transform.position);
                 Vector3 hitPoint = My_ClosestPoint(hit.transform.position, hitBox.m_transform.position, hitBox.m_radius);
@@ -113,7 +122,8 @@ public class HitCollider : MonoBehaviour
                     //overrideAudioData = m_overrideAudio
                 };
 
-                damageable.TakeDamage(data, result);
+                //entity.OnTakeDamage(data, result);
+                //damageable.TakeDamage(data, result);
             }
 
         }
