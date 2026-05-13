@@ -18,7 +18,7 @@ public enum StatusType
     //状態異常 Resistance
     PoisonRes,      //毒耐性
     StunRes,　　　　//スタン耐性
-    SlowRes,　　　//鈍足耐性
+    SlowRes,　　　  //鈍足耐性
     BlindRes　　　　//盲目耐性
 }
 

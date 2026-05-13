@@ -1,87 +1,108 @@
-using System;
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAIController : MonoBehaviour
 {
-    [Header("Target")]
-    [SerializeField] private GameObject m_target;  //UŒ‚‘ÎÛ
+    public enum EnemyType
+    {
+        Chase,
+        Rush
+    }
 
-    [Header("Status")]
-    [SerializeField] public int m_attackValue = 1; // Debug—p
+    [Header("Type")]
+    [SerializeField] private EnemyType m_type;
+
+    [Header("Target")]
+    [SerializeField] private GameObject m_target;
 
     [Header("Range")]
-    [SerializeField] private float m_findRange = 8f;      //õ“G”ÍˆÍ
-    [SerializeField] private float m_attackRange = 1.5f;  //UŒ‚‰Â”\”ÍˆÍ
+    [SerializeField] private float m_findRange = 8f;
+    [SerializeField] private float m_attackRange = 1.5f;
 
-    private NavMeshAgent m_agent;
-    private Rigidbody m_rb;
-
-    [NonSerialized] public bool m_isFound = false;
-    [NonSerialized] public bool m_isAttacking = false;
-
-    public int AttackValue => m_attackValue;
-    public bool IsFaund => m_isFound;
-    public bool IsAttacking => m_isAttacking;
+    private Enemy_Chase chase;
+    private Enemy_Rush rush;
 
     private void Start()
     {
-        m_agent = GetComponent<NavMeshAgent>();
+        if (m_type == EnemyType.Chase)
+        {
+            chase = GetComponent<Enemy_Chase>();
+            chase.Initialized(m_target);
+        }
+        else
+        {
+            rush = GetComponent<Enemy_Rush>();
+        }
     }
 
     private void Update()
     {
         if (m_target == null) return;
 
-        float distance = Vector3.Distance(transform.position, m_target.transform.position);  //Player‚ÆEnemy‚Æ‚Ì‹——£ŒvZ
+        float distance =
+            Vector3.Distance(transform.position, m_target.transform.position);
 
-        // õ“G”ÍˆÍ“à‚É“ü‚Á‚½‚ç”­Œ©
-        if (distance <= m_findRange)
+        // õ“G”ÍˆÍŠO
+        if (distance > m_findRange)
         {
-            m_isFound = true;
-            m_agent.isStopped = false;
-        }
-        else
-        {
-            m_isFound = false;
-            m_isAttacking = false;
-            m_agent.isStopped = true;
+            StopAll();
             return;
         }
 
-        // UŒ‚”ÍˆÍ“à‚È‚çUŒ‚
+        // UŒ‚”ÍˆÍ“à
         if (distance <= m_attackRange)
         {
-            m_isAttacking = true;
-            m_agent.isStopped = true;
+            StopAll();
             Attack();
+            return;
+        }
+
+        // í—Ş‚²‚Æ‚Ìˆ—
+        if (m_type == EnemyType.Chase)
+        {
+            chase.Move();
         }
         else
         {
-            m_isAttacking = false;
-            ChaseTarget();
+            RushLogic();
         }
     }
 
-    // target ’Ç]
-    private void ChaseTarget()
+    // =========================
+    // “Ëiˆ—i®—”Åj
+    // =========================
+    private void RushLogic()
     {
-        if (!m_agent.pathPending)
+        // ‚Ü‚¾“®‚¢‚Ä‚È‚¢‚È‚ç€”õ ¨ “Ëi
+        if (!rush.IsRunning)
         {
-            m_agent.SetDestination(m_target.transform.position);
+            rush.ReadyRush(m_target.transform.position);
+
+            // ­‚µ—­‚ß‚Ä‚©‚ç“Ëii1•bj
+            Invoke(nameof(StartRush), 1.0f);
         }
     }
 
-    // UŒ‚i¡‚ÍƒƒO‚Ì‚İj
-    public void Attack()
+    private void StartRush()
     {
-        //ÀÛ‚ÌUŒ‚ˆ—’Ç‰Á
-        Debug.Log($"UŒ‚’†I ƒ_ƒ[ƒWF{m_attackValue}");
+        rush.StartRush();
     }
 
-    // ƒfƒoƒbƒO‰Â‹‰»
-    private void OnDrawGizmosSelected()
+    private void StopAll()
+    {
+        if (chase != null) chase.Stop();
+        if (rush != null) rush.StopRush();
+
+        CancelInvoke(); // Invoke‚Ì–\‘––h~
+    }
+
+    private void Attack()
+    {
+        // UŒ‚ˆ—
+        Debug.Log("H I T");
+    }
+
+    // Debug•\¦
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, m_findRange);
