@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyContllor : Entity
 {
-    [SerializeField] private EnemyData m_data;
+    //[SerializeField] private EnemyData m_data;
     [SerializeField] Transform m_target;
 
     //private EnemyState m_state;
@@ -19,16 +19,16 @@ public class EnemyContllor : Entity
 
     private void Start()
     {
-        m_speed = m_data.MoveSpeed;
+        //Speed = m_data.MoveSpeed;
 
     }
     private void Update()
     {
         //à⁄ìÆêßå‰
-        if (m_state != null && !m_state.CanMove)
-        {
-            return;
-        }
+        //if (m_currentState != null && !m_currentState.CanMove)
+        //{
+        //    return;
+        //}
 
         Vector3 dir = (m_target.position - transform.position);
 

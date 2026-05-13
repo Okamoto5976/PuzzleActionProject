@@ -8,14 +8,6 @@ public enum ModifierType
     Multiply
 }
 
-public enum StatusType
-{
-    HP,
-    Attack,
-    Defense,
-    Speed
-}
-
 public class StatusModifier
 {
     public StatusType m_statType;
