@@ -466,8 +466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
-  team: 1
-  m_data: {fileID: 11400000, guid: 61a0789176796e1448817c8a88097104, type: 2}
+  m_team: 1
+  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
   m_target: {fileID: 1909587332}
 --- !u!54 &1838854056
 Rigidbody:
@@ -603,7 +603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55600d7f2a23164bbce58dc663e7e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
-  m_maxHP: 100
 --- !u!1 &1867688177
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d12c3344507e9bc42afd8a5d74572381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
-  m_maxHP: 100
 --- !u!114 &1909587334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -883,8 +881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bce176f5c5593f4fb24e52ec3b9b70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  team: 0
-  m_playerData: {fileID: 11400000, guid: 0d65259208bc23b44b307361bc6dc820, type: 2}
+  m_team: 0
+  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
   m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!54 &1909587335

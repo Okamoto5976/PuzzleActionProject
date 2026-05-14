@@ -32,7 +32,11 @@ public class EnemyContllor : Entity
 
         Vector3 dir = (m_target.position - transform.position);
 
-        m_movement = dir.normalized;
+        dir.y = 0f;
+        Quaternion rot = Quaternion.LookRotation(dir);
+        transform.rotation = rot;
+
+        m_moveDir = dir.normalized;
 
     }
 }

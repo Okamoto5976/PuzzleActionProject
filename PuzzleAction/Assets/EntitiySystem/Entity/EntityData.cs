@@ -14,10 +14,10 @@ public enum StatusType
     Agility,        //攻撃速度(敵のステータス）
     Vision,         //明るさ(Playerのステータス）
     BreakRate,      //一撃率（9999ダメの確率）
-    Recover,        //スタン、ノックバックからの復帰
-    //状態異常 Resistance
+    Stun,
+    //状態異常 Resistance　100％が基礎
     PoisonRes,      //毒耐性
-    StunRes,　　　　//スタン耐性
+    StunRes,　　　　//スタン耐性 スタンになる確率 スタン、ノックバックからの復帰速度
     SlowRes,　　　//鈍足耐性
     BlindRes　　　　//盲目耐性
 }
@@ -49,6 +49,8 @@ public class EntityData : ScriptableObject
     private float m_vision;
     [SerializeField, Header("BreakRate")]
     private float m_breakRate;
+    [SerializeField, Header("Stun")]
+    private float m_stun;
     [SerializeField, Header("Recover")]
     private float m_recover;
     [SerializeField, Header("Poison Resistance")]
@@ -73,7 +75,7 @@ public class EntityData : ScriptableObject
     public float AGI { get => m_agi; }
     public float Vision { get => m_vision; }
     public float BreakRate { get => m_breakRate; }
-    public float Recover { get => m_recover; }
+    public float Stun { get => m_stun; }
     public float PoisonRes { get => m_poisonRes; }
     public float StunRes { get => m_stunRes; }
     public float SlowRes { get => m_slowRes; }
