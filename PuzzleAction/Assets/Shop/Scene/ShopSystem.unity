@@ -319,6 +319,7 @@ MonoBehaviour:
   m_itemId: 1
   m_speechBubble: {fileID: 801678118}
   m_messageManager: {fileID: 1162773484}
+  m_timer: {fileID: 1469426882}
 --- !u!114 &86882427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1430,6 +1431,7 @@ MonoBehaviour:
   m_itemId: 5
   m_speechBubble: {fileID: 801678118}
   m_messageManager: {fileID: 1162773484}
+  m_timer: {fileID: 1469426882}
 --- !u!1 &635923904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,6 +2039,7 @@ MonoBehaviour:
   m_itemId: 2
   m_speechBubble: {fileID: 801678118}
   m_messageManager: {fileID: 1162773484}
+  m_timer: {fileID: 1469426882}
 --- !u!114 &1025797059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2516,6 +2519,7 @@ MonoBehaviour:
   m_itemId: 3
   m_speechBubble: {fileID: 801678118}
   m_messageManager: {fileID: 1162773484}
+  m_timer: {fileID: 1469426882}
 --- !u!1 &1311889259
 GameObject:
   m_ObjectHideFlags: 0
@@ -3355,6 +3359,7 @@ MonoBehaviour:
   m_itemId: 4
   m_speechBubble: {fileID: 801678118}
   m_messageManager: {fileID: 1162773484}
+  m_timer: {fileID: 1469426882}
 --- !u!1 &2009581007
 GameObject:
   m_ObjectHideFlags: 0
