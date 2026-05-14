@@ -124,6 +124,7 @@ public class RayCollider : MonoBehaviour
     private Vector3 My_ClosestPoint(Entity tar, HitBox hitBox, HitRay hitRay)
     {
         Vector3 closestPoint;
+        Vector3 worldClosestPoint;
         Vector3 localClosestPoint;
         Vector3 tarPos = tar.transform.position;
         Vector3 rayPos = hitRay.m_transform.position;
@@ -190,7 +191,11 @@ public class RayCollider : MonoBehaviour
         Debug.Log($"localClosestPoint: {localClosestPoint}");
 
         // 相対座標を絶対座標(ワールド座標)に変換
-        closestPoint = hitRay.m_transform.TransformPoint(localClosestPoint);
+        worldClosestPoint = hitRay.m_transform.TransformPoint(localClosestPoint);
+
+        // ターゲットの相対座標に変換
+        closestPoint = hitBox.m_transform.InverseTransformPoint(worldClosestPoint);
+
         Debug.Log($"closestPoint: {closestPoint}");
 
         return closestPoint;
