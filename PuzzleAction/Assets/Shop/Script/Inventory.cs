@@ -1,8 +1,11 @@
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Schema;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] public ItemSlot[,] slots = new ItemSlot[3, 3]; //マス生成
+    [SerializeField] private int maxStack = 10;
     private void Awake()
     {
         //全マス初期化
@@ -14,7 +17,7 @@ public class Inventory : MonoBehaviour
             }
         }
     }
-    
+
     //アイテムを追加する関数
     public bool AddItem(int itemId)
     {
@@ -25,9 +28,12 @@ public class Inventory : MonoBehaviour
             {
                 if (slots[y, x].m_itemId == itemId)
                 {
-                    slots[y, x].m_count++;
-                    Debug.Log($"アイテム{itemId}を重ねた({slots[y, x].m_count}個)");
-                    return true;
+                    if (slots[y, x].m_count < maxStack)
+                    {
+                        slots[y, x].m_count++;
+                        Debug.Log($"アイテム{itemId}を重ねた({slots[y, x].m_count}個)");
+                        return true;
+                    }
                 }
             }
         }
@@ -48,5 +54,20 @@ public class Inventory : MonoBehaviour
         //どこにも入らない
         Debug.Log("インベントリがいっぱい");
         return false;
+    }
+    public int GetItemCount(int itemId)
+    {
+        int total = 0;
+        for (int y = 0; y < 3; y++)
+        {
+            for (int x = 0; x < 3; x++)
+            {
+                if (slots[y, x].m_itemId == itemId)
+                {
+                    total += slots[y, x].m_count;
+                }
+            }
+        }
+        return total;
     }
 }

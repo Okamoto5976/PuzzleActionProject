@@ -13,6 +13,8 @@ public class Button : MonoBehaviour
     [SerializeField] private string m_itemName;    //送るアイテム名
     [SerializeField] private Inventory m_inventory;
     [SerializeField] private int m_itemId;  //このボタンが売るアイテム
+    [SerializeField] private GameObject m_speechBubble; //吹き出し本体
+    [SerializeField] private MessageManager m_messageManager;
 
     public string ItemName => m_itemName;
     public int ItemId => m_itemId;
@@ -27,18 +29,32 @@ void Start()
     }
     public void BuyItem()
     {
-        if (m_money.UseMoney(m_price))
+        if (m_inventory.GetItemCount(m_itemId) >= 10)
         {
-            ShowMessage("Buy \n : " + m_price, Color.blue);            //ここにアイテム入手、効果発動などを書く
-            //お金が足りた時だけインベントリに送る
-            SendItemAtInventory();
+            m_messageManager.ShowByState(State.InventoryFull);
+            return;
         }
-        else
+        //お金チェック
+        if (!m_money.UseMoney(m_price))
         {
-            ShowMessage("No Money" , Color.blue);
+            m_messageManager.ShowByState(State.NoMoney);
+            return;
+            //ShowMessage("Buy : " + m_price, Color.blue);
+            //SendItemAtInventory();
         }
+        //インベントリに追加
+        if (!m_inventory.AddItem(m_itemId))
+        {
+            m_messageManager.ShowByState(State.InventoryFull);
+            return;
+        }
+        //購入メッセージ
+        m_messageManager.ShowBuyMessage(m_itemName, 1);
+        //else
+        //{
+        //    m_messageManager.ShowByState(State.NoMoney);
+        //}
     }
-
     public void SendItemAtInventory()
     {
         if (m_inventory.AddItem(m_itemId))
@@ -53,6 +69,7 @@ void Start()
     void ShowMessage(string message, Color color)
     {
         StopAllCoroutines();        //前のフェードを止める
+        m_speechBubble.SetActive(true); //吹き出しを表示
 
         m_messageText.text = message;
         m_messageText.color = new Color(color.r,color.g, color.b, 1f);
@@ -78,6 +95,12 @@ void Start()
             yield return null;
         }
 
-        m_messageText.text = ""; 
+        m_messageText.text = "";
+
+        m_speechBubble.SetActive(false); //吹き出し事非表示
     }
+    //public void OnClickClose()
+    //{
+    //    m_messageManager.ShowByState(State.SeeYou);
+    //}
 }
