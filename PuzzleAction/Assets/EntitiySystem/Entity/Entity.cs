@@ -74,10 +74,7 @@ abstract public class Entity : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_entityHP = GetComponent<EntityHP>();
-    }
 
-    private void Start()
-    {
         if (m_data == null) return;
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
         m_status.Add(StatusType.Strength, new EntityStatus(m_data.STR));
@@ -98,6 +95,10 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.BlindRes, new EntityStatus(m_data.BlindRes));
 
 
+    }
+
+    protected virtual void Start()
+    {
     }
 
     public EntityStatus GetStatus(StatusType type)

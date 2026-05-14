@@ -48,6 +48,13 @@ public class PlayerController : Entity
     //    //Player独時
     //}
 
+    private bool m_isInitialized;
+    protected override void Start()
+    {
+        base.Start();
+
+        m_isInitialized = true;
+    }
     private void Update()
     {
         //移動制御
@@ -56,14 +63,21 @@ public class PlayerController : Entity
         //    return;
         //}
 
+        if(!m_isInitialized)return;
         //移動処理
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
-        m_movement = new Vector3(input.x, 0f, input.y);
+        //m_movement = new Vector3(input.x, 0f, input.y);
 
         //ダッシュ判定（押している間）
         m_isDashing = m_dashAction.action.IsPressed();
 
         //m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
+        //倍率速度
+        float speedMultiplier = m_isDashing?DashSpeed/Speed:1f;
+
+        //movementに倍率をかける
+        m_movement = new Vector3(
+            input.x * speedMultiplier, 0f, input.y * speedMultiplier);
     }
 
 }

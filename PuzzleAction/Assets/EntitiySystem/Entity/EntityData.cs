@@ -25,39 +25,39 @@ public enum StatusType
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]
 public class EntityData : ScriptableObject
 {
-    [Header("HP")]
+    [SerializeField, Header("HP")]
     private float m_hp;
-    [Header("STR")]
+    [SerializeField, Header("STR")]
     private float m_str;
-    [Header("KnockBack")]
+    [SerializeField, Header("KnockBack")]
     private float m_knockBack;
-    [Header("DEF")]
+    [SerializeField, Header("DEF")]
     private float m_def;
-    [Header("Speed")]
+    [SerializeField, Header("Speed")]
     private float m_speed;
-    [Header("DashSpeed")]
+    [SerializeField, Header("DashSpeed")]
     private float m_dashSpeed;
-    [Header("CriticalRate")]
+    [SerializeField, Header("CriticalRate")]
     private float m_criticalRate;
-    [Header("CriticalDamage")]
+    [SerializeField, Header("CriticalDamage")]
     private float m_criticalDamage;
-    [Header("DEX")]
+    [SerializeField, Header("DEX")]
     private float m_dex;
-    [Header("AGI")]
+    [SerializeField, Header("AGI")]
     private float m_agi;
-    [Header("Vision")]
+    [SerializeField, Header("Vision")]
     private float m_vision;
-    [Header("BreakRate")]
+    [SerializeField, Header("BreakRate")]
     private float m_breakRate;
-    [Header("Recover")]
+    [SerializeField, Header("Recover")]
     private float m_recover;
-    [Header("Poison Resistance")]
+    [SerializeField, Header("Poison Resistance")]
     private float m_poisonRes;
-    [Header("Stun Resistance")]
+    [SerializeField, Header("Stun Resistance")]
     private float m_stunRes;
-    [Header("Slow Resistance")]
+    [SerializeField, Header("Slow Resistance")]
     private float m_slowRes;
-    [Header("Blind Resistance")]
+    [SerializeField, Header("Blind Resistance")]
     private float m_blindRes;
 
 
