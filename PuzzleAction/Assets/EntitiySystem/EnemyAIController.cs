@@ -80,6 +80,7 @@ public class EnemyAIController : MonoBehaviour
         Debug.Log($"攻撃中！ ダメージ：{m_attackValue}");
     }
 
+#if UNITY_EDITOR
     // デバッグ可視化
     private void OnDrawGizmosSelected()
     {
@@ -89,4 +90,5 @@ public class EnemyAIController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_attackRange);
     }
+#endif
 }

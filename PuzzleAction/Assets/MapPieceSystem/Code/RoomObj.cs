@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 public class RoomObj : MonoBehaviour
 {
     private Vector3 m_originalPos;
@@ -46,6 +44,15 @@ public class RoomObj : MonoBehaviour
         foreach(var piece in m_pieces)
         {
             piece.SetPlace(value);
+        }
+    }
+
+    //éqÇ…êFÇìnÇ∑
+    public void SetColor(Color color)
+    {
+        foreach(var piece in m_pieces)
+        {
+            piece.SetColor(color);
         }
     }
 }

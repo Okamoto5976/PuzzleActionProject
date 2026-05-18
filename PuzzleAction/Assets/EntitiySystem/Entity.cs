@@ -34,7 +34,7 @@ abstract public class Entity : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_hp = GetComponent<EntityHP>();
-        m_state = GetComponent<State>();
+        //m_state = GetComponent<State>();
         //m_Move = GetComponent<EntityMove>();
     }
 
