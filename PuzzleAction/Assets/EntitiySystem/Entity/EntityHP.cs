@@ -21,7 +21,9 @@ abstract public class EntityHP : MonoBehaviour
         m_currentHP = (int)m_entity.HP;
     }
 
-    public void TakeDamage(int damage )
+    //trap側で書き換えができるようvirtualに
+    //trapはHPのないものもあるため
+    public void TakeDamage(int damage )//DamageData
     {
         m_currentHP -= damage;
 
@@ -33,7 +35,7 @@ abstract public class EntityHP : MonoBehaviour
 
         //ダメージ計算
 
-        //命中率基本１
+        //命中率基本100
         //DEX確率
         //BreakRate率でtrueなら9999
         //Criticalかどうかbool
@@ -41,6 +43,8 @@ abstract public class EntityHP : MonoBehaviour
         //ノックバック（stunResで軽減）大きさで復帰の速度変更
         //スタン確率 10% 1秒　　100％　10秒
 
+        //Damage();
+        //KnockBack();
 
         //effect audio再生 hit時の
         //攻撃の音は　与ダメのほうが

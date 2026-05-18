@@ -9,15 +9,15 @@ public enum StatusType
     Speed,　　　　　//スピード
     DashSpeed,　　　//ダッシュ
     CriticalRate,　 //クリティカル率
-    CriticalDamage, //クリティカルダメージ
-    Dexterity,　　　 //命中率
+    CriticalDamage, //クリティカルダメージ 倍率1.3とか
+    Dexterity,　　　 //命中率　基本100
     Agility,        //攻撃速度(敵のステータス）
     Vision,         //明るさ(Playerのステータス）
     BreakRate,      //一撃率（9999ダメの確率）
-    Stun,
+    Stun,           //スタン攻撃大きさ　20が最大　耐性200が防ぐには必要
     //状態異常 Resistance　100％が基礎
     PoisonRes,      //毒耐性
-    StunRes,　　　　//スタン耐性 スタンになる確率 スタン、ノックバックからの復帰速度
+    StunRes,　　　　//スタン耐性 スタンを引き算 スタン、ノックバックからの復帰速度
     SlowRes,　　　//鈍足耐性
     BlindRes　　　　//盲目耐性
 }
@@ -25,42 +25,24 @@ public enum StatusType
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]
 public class EntityData : ScriptableObject
 {
-    [SerializeField, Header("HP")]
-    private float m_hp;
-    [SerializeField, Header("STR")]
-    private float m_str;
-    [SerializeField, Header("KnockBack")]
-    private float m_knockBack;
-    [SerializeField, Header("DEF")]
-    private float m_def;
-    [SerializeField, Header("Speed")]
-    private float m_speed;
-    [SerializeField, Header("DashSpeed")]
-    private float m_dashSpeed;
-    [SerializeField, Header("CriticalRate")]
-    private float m_criticalRate;
-    [SerializeField, Header("CriticalDamage")]
-    private float m_criticalDamage;
-    [SerializeField, Header("DEX")]
-    private float m_dex;
-    [SerializeField, Header("AGI")]
-    private float m_agi;
-    [SerializeField, Header("Vision")]
-    private float m_vision;
-    [SerializeField, Header("BreakRate")]
-    private float m_breakRate;
-    [SerializeField, Header("Stun")]
-    private float m_stun;
-    [SerializeField, Header("Recover")]
-    private float m_recover;
-    [SerializeField, Header("Poison Resistance")]
-    private float m_poisonRes;
-    [SerializeField, Header("Stun Resistance")]
-    private float m_stunRes;
-    [SerializeField, Header("Slow Resistance")]
-    private float m_slowRes;
-    [SerializeField, Header("Blind Resistance")]
-    private float m_blindRes;
+    [SerializeField] private float m_hp;
+    [SerializeField] private float m_str;
+    [SerializeField] private float m_knockBack;
+    [SerializeField] private float m_def;
+    [SerializeField] private float m_speed;
+    [SerializeField] private float m_dashSpeed;
+    [SerializeField] private float m_criticalRate;
+    [SerializeField] private float m_criticalDamage;
+    [SerializeField] private float m_dex;
+    [SerializeField] private float m_agi;
+    [SerializeField] private float m_vision;
+    [SerializeField] private float m_breakRate;
+    [SerializeField] private float m_stun;
+    [SerializeField] private float m_recover;
+    [SerializeField] private float m_poisonRes;
+    [SerializeField] private float m_stunRes;
+    [SerializeField] private float m_slowRes;
+    [SerializeField] private float m_blindRes;
 
 
     public float HP { get => m_hp; }

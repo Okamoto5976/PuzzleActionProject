@@ -25,15 +25,15 @@ abstract public class Entity : MonoBehaviour
 
     //状態
     //今のところ使ってない
-    //public enum EntityState
-    //{
-    //    Idle,
-    //    Attack,
-    //    Damage,
-    //    Dead
-    //}
-    //protected EntityState m_currentState = EntityState.Idle;
-    //public EntityState CurrentState { get => m_currentState; }
+    public enum EntityState
+    {
+        Idle,
+        Attack,
+        Damage,
+        Dead
+    }
+    protected EntityState m_currentState = EntityState.Idle;
+    public EntityState CurrentState { get => m_currentState; }
 
 
     //component
@@ -65,10 +65,15 @@ abstract public class Entity : MonoBehaviour
     public bool IsStun { get => m_isStun; }
     public bool IsInvincible {  get => m_isInvincible; }
 
+    protected float m_stunTime;
+
+
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
     protected Vector3 m_moveDir;
     protected Vector3 m_velocity;
+
+    public Vector3 MoveDir { get => m_moveDir; }
 
     protected virtual void Awake()
     {
@@ -115,6 +120,21 @@ abstract public class Entity : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if(m_isStun)
+        {
+            m_stunTime -= Time.deltaTime;
+
+            if(m_stunTime <= 0)
+            {
+                m_isStun = false;
+
+                ChangeState(EntityState.Idle);
+            }
+        }
+    }
+
     protected void OnMove(Vector3 dir)
     {
         //Vector3 velocity = new Vector3(dir.x * speed, m_rb.linearVelocity.y, dir.z * speed);
@@ -149,16 +169,37 @@ abstract public class Entity : MonoBehaviour
 
     //状態変更用
     //特に使ってない
-    //public void ChangeState(EntityState newState)
-    //{
-    //    m_currentState = newState;
-    //}
+    public void ChangeState(EntityState newState)
+    {
+        m_currentState = newState;
+    }
 
     public void SetCanMove(bool value) => m_canMove = value;
     public void SetIsStun(bool value) => m_isStun = value;
     public void SetIsInvincible(bool value) => m_isInvincible = value;
 
+    //ノックバックの処理
+    //EntityStateを変更
+    public virtual void ApplyKnockBack(Vector3 direction,float power,float stunTime)
+    {
+        //無敵なら無効にしたい場合
+        if (m_isInvincible) return;
 
+
+        ChangeState(EntityState.Damage);
+
+        //スタン状態
+        m_isStun = true;
+        m_stunTime = stunTime;
+
+        direction.y = 0;
+
+        //今の速度をリセット
+        m_rb.linearVelocity = Vector3.zero;
+
+        //力を加える
+        m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
+    }
 }
 //public bool IsEnemy(Entity other)
 //{
