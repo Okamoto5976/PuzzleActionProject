@@ -18,15 +18,17 @@ public class HitBox
 {
     public Transform m_transform;
     public float m_radius;
-    [NonSerialized] public float m_distance;
+    [NonSerialized] public float m_distance;    // HitBoxのListを近い順に並べ替える際に使用する
+    [NonSerialized] public DamageResult result; // ダメージを与える際に使用する
 }
 
+// 壁の貫通対策は未実装
 public class RayCollider : MonoBehaviour
 {
     [SerializeField] private int m_howManyPenetrate;    // 何体貫通するか
     [SerializeField] private float m_range;             // 射程距離(Rayをどこまで飛ばすか)
 
-    [SerializeField] private bool m_isVisible; 
+    [SerializeField] private bool m_isVisible;  // UnityEditorでHitBoxの当たり判定を表示するか
 
     [SerializeField] private HitRay[] hitRays;  // 攻撃判定
     [SerializeField] private HitBox[] hitBoxes; // 当たり判定
@@ -46,11 +48,10 @@ public class RayCollider : MonoBehaviour
 
             Entity[] hits = OverlapRay(hitRay);
 
-            Debug.Log($"hits.Length: {hits.Length}");
+            //Debug.Log($"hits.Length: {hits.Length}");
 
             foreach (var hit in hits)
             {
-                Debug.Log($"foreach.i: {i}");
                 if (hitSet.Contains(hit)) continue;
                 // 同じチームなら無視
                 if (hit.Team == myTeam) continue;
@@ -62,7 +63,7 @@ public class RayCollider : MonoBehaviour
                 Vector3 hitPoint = My_ClosestPoint(hit, m_hitBox, hitRay);
                 Vector3 hitNormal = (hitPoint - hitRay.m_transform.position).normalized;
 
-                DamageResult result = new DamageResult
+                m_hitBox.result = new DamageResult
                 {
                     hitPoint = hitPoint,
                     hitNormal = hitNormal,
@@ -74,18 +75,31 @@ public class RayCollider : MonoBehaviour
                 m_hitBoxes[i].m_distance = hitPoint.x * hitPoint.x + hitPoint.y * hitPoint.y + hitPoint.z * hitPoint.z;
                 i++;
             }
+
             // リストを昇順ソート(Rayの起点とhit位置が近い順)
             Partition(m_hitBoxes, 0, m_hitBoxes.Count - 1);
+
+            // ヒット数が貫通制限を超えた場合、以降のHitBoxを削除する
             if (m_hitBoxes.Count > m_howManyPenetrate)
             {
                 m_hitBoxes.RemoveRange(m_howManyPenetrate - 1, m_hitBoxes.Count - 1);
             }
+
+            // ダメージを与える
+            foreach (var _hitBox in m_hitBoxes)
+            {
+                var entity = _hitBox.m_transform.GetComponentInParent<Entity>();
+                //entity.OnTakeDamage(data, _hitBox.result);
+            }
         }
     }
 
+    // HitBoxにRayが当たったかどうかを検知する関数
+    // Rayは円柱の当たり判定
+    // HitBoxの座標を、Rayを基準としたローカル座標で取得して、
+    //  ローカル座標のX,Yで当たり判定を行う
     public Entity[] OverlapRay(HitRay hitRay)
     {
-        Debug.Log("OverlapRay");
         List<Entity> hitList = new();
         foreach (var hitBox in hitBoxes)
         {
@@ -101,7 +115,7 @@ public class RayCollider : MonoBehaviour
             //     hitBox2 座標(0, -2, 2.828427)         |     hitBox2 座標(0, 1.632816, 2.309526)
             Vector3 localPos = hitRay.m_transform.InverseTransformPoint(hitBox.m_transform.position);
 
-            Debug.Log($"localPos: {localPos}");
+            //Debug.Log($"localPos: {localPos}");
 
             // Entityの位置がRayより後ろなら無視
             if (localPos.z + hitBox.m_radius < 0) continue;
@@ -116,11 +130,13 @@ public class RayCollider : MonoBehaviour
             }
         }
 
+        // Listを配列にする
         Entity[] hits = hitList.ToArray();
 
         return hits;
     }
 
+    // HitBoxとRayの(Rayの起点から最も近い)衝突位置を、HitBoxを基準としたローカル座標で返す関数
     private Vector3 My_ClosestPoint(Entity tar, HitBox hitBox, HitRay hitRay)
     {
         Vector3 closestPoint;
@@ -131,6 +147,7 @@ public class RayCollider : MonoBehaviour
         float tarRad = hitBox.m_radius;
         float rayRad = hitRay.m_radius;
 
+        // Rayを基準としたローカル座標
         Vector3 localPos = hitRay.m_transform.InverseTransformPoint(tarPos);
 
         // (相対座標の)Z座標が同じ地点のRayから見た位置(x, y)
@@ -141,7 +158,7 @@ public class RayCollider : MonoBehaviour
         float edge_x = localPos.x;
         float edge_y = localPos.y;
 
-        if (edge_x == 0) edge_x = 0.0001f;
+        if (edge_x == 0) edge_x = 0.0001f;  // 0の除算回避用
 
         // 球上の、Rayに平行な円の角度(Z軸)
         float tarCirDir = Mathf.Atan(edge_y / edge_x) * Mathf.Rad2Deg;
@@ -188,7 +205,7 @@ public class RayCollider : MonoBehaviour
             localClosestPoint.z = z1 < z2 ? z1 : z2;
         }
 
-        Debug.Log($"localClosestPoint: {localClosestPoint}");
+        //Debug.Log($"localClosestPoint: {localClosestPoint}");
 
         // 相対座標を絶対座標(ワールド座標)に変換
         worldClosestPoint = hitRay.m_transform.TransformPoint(localClosestPoint);
@@ -196,11 +213,12 @@ public class RayCollider : MonoBehaviour
         // ターゲットの相対座標に変換
         closestPoint = hitBox.m_transform.InverseTransformPoint(worldClosestPoint);
 
-        Debug.Log($"closestPoint: {closestPoint}");
+        //Debug.Log($"closestPoint: {closestPoint}");
 
         return closestPoint;
     }
 
+    // 2点間の距離(2D)
     private float Distance(Vector2 pos1, Vector2 pos2)
     {
         float distance = (pos2.x - pos1.x) * (pos2.x - pos1.x)
@@ -208,11 +226,12 @@ public class RayCollider : MonoBehaviour
         return distance;
     }
 
+    // クイックソートで、closestPointが近い順にList内を並べ替える関数
     private void Partition(List<HitBox> hitBoxes, int left, int right)
     {
         int len = hitBoxes.Count;
-        int pl = left;                              // 左カーソル
-        int pr = right;                             // 右カーソル
+        int pl = left;                            // 左カーソル
+        int pr = right;                           // 右カーソル
         float x = hitBoxes[len / 2].m_distance;   // 中央の要素
 
         do
@@ -237,6 +256,7 @@ public class RayCollider : MonoBehaviour
         //}
     }
 
+    // 並べ替える
     private void Swap(int pl, int pr)
     {
         HitBox t = m_hitBoxes[pl];
