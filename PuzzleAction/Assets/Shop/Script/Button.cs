@@ -95,8 +95,4 @@ void Start()
 
         m_speechBubble.SetActive(false); //‚«o‚µ–”ñ•\¦
     }
-    //public void OnClickClose()
-    //{
-    //    m_messageManager.ShowByState(State.SeeYou);
-    //}
 }

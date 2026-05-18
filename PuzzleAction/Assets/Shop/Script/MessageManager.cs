@@ -10,18 +10,6 @@ public class MessageManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_speakerText;
     [SerializeField] private GameObject m_speechParent ;
     [SerializeField] private UnityEngine.UI.Button m_button;
-    //メッセージのランダム表示のやり方　参考程度
-    //isActionがtrueの時は普通表示（StateがNone以外のＳＯの表示）
-    //isActionがfalseの時にランダム表示
-    //ランダム表示の仕組みとしては、最初の分はいらっしいから始まるけど、そのあとに何もアクションがなかったらstateがnoneのSOをランダムで抽選してそのメッセージをmessageTextに表示させる
-    //isActionがtrueになる条件はstateがnone以外になる、または、ショップの中の何かしらのボタンが押されたらtrueにする（ボタンが読んでいる関数に一つずつ書くより一括で管理できるように関数化してほしい）
-    //isActionがfalseになる条件はアクションがtrue以外は基本的にfalse
-    //stateがnone用の配列とそれ以外のstate用の配列を準備
-    //
-    //Playerがアイテムを購入した場合購入したアイテムの名前と何個購入したかmessageTextに表示してほしい（日本語フォントが入っていないので英語表記でお願い）
-    //お金がなくなったら　nomoneyと表示
-    //インベントリーがいっぱいになったら　FullInventryと表示
-    //必要な値は適宜参照する
     private int m_index = 0;
 
     void Start()
