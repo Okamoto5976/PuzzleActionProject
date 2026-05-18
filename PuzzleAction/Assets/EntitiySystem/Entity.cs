@@ -45,7 +45,8 @@ abstract public class Entity : MonoBehaviour
             return;
         }
 
-        OnMove(m_movement, m_speed);
+        //OnMove(m_movement, m_speed);
+        OnMove(m_movement);
 
     }
 
@@ -58,10 +59,24 @@ abstract public class Entity : MonoBehaviour
 
         m_rb.MovePosition
             (
-                m_rb.position + 
+                m_rb.position +
                 velocity * Time.fixedDeltaTime
 
             );
+    }
+
+    private Vector3 m_velocity = Vector3.zero;
+    private float Speed = 4.2f;
+
+    protected void OnMove(Vector3 dir)
+    {
+        dir = dir.normalized;
+        m_velocity = m_rb.linearVelocity;
+
+        m_velocity.x = dir.x * Speed;
+        m_velocity.z = dir.z * Speed;
+
+        m_rb.linearVelocity = m_velocity;
     }
 
     public virtual void TakeDamage(int damage)//å„ÅXDamageDataÇ∆DamageResult

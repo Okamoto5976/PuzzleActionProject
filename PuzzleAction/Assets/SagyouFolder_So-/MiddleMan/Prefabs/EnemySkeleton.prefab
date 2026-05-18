@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 658525140841485859}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -117,8 +117,8 @@ Transform:
   m_GameObject: {fileID: 949025703134939820}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.772, z: -0.006}
-  m_LocalScale: {x: 0.36283, y: 0.76239, z: 0.46243}
+  m_LocalPosition: {x: 0, y: 0.25, z: -0.006}
+  m_LocalScale: {x: 0.3, y: 0.5, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5192190198220617858}
@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 4273408005679039058}
   - component: {fileID: -599725407257659535}
   - component: {fileID: -5650931996729087381}
+  - component: {fileID: 4641239434405801737}
   m_Layer: 0
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -238,7 +239,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &-1553549938300698823
@@ -253,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413486a484a766f4cadd334b4a601cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
-  m_type: 1
+  m_type: 0
   m_target: {fileID: 11400000, guid: 0d65259208bc23b44b307361bc6dc820, type: 2}
   m_findRange: 8
   m_attackRange: 1.5
@@ -420,3 +421,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceShift
   offset: {x: 0, y: 3, z: 0}
+--- !u!114 &4641239434405801737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e768d22e2e61408f53d26d4076bec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Chase

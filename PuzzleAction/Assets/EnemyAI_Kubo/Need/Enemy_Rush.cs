@@ -71,12 +71,23 @@ public class Enemy_Rush : MonoBehaviour
         //éüÇÃà⁄ìÆó\íËà íu
         Vector3 nextPos = m_rb.position + m_direction * rushSpeed * Time.fixedDeltaTime;
 
-        //NavMeshè„Ç…Ç†ÇÈÇ©Ç«Ç§Ç©
-        if (!NavMesh.SamplePosition(nextPos, out NavMeshHit hit, 0.5f, NavMesh.AllAreas) || !NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, new NavMeshPath()))
-        {
-            StopRush();
-            return;
-        }
+        ////NavMeshè„Ç…Ç†ÇÈÇ©Ç«Ç§Ç©
+        //if (!NavMesh.SamplePosition(nextPos, out NavMeshHit hit, 0.5f, NavMesh.AllAreas) || !NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, new NavMeshPath()))
+        //{
+        //    StopRush();
+        //    return;
+        //}
+
+        //bool samplePos = NavMesh.SamplePosition(nextPos, out NavMeshHit hit, 0.5f, NavMesh.AllAreas);
+        bool path = NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, new NavMeshPath());
+
+        ////NavMeshè„Ç…Ç†ÇÈÇ©Ç«Ç§Ç©
+        //if (!path)
+        //{
+        //    Debug.Log("Path");
+        //    StopRush();
+        //    return;
+        //}
 
         //âΩÇ‡ñ‚ëËÇ»ÇØÇÍÇŒà⁄ìÆäJén
         m_rb.MovePosition(nextPos);

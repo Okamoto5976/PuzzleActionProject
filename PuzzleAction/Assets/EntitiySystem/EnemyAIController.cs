@@ -122,12 +122,12 @@ public class EnemyAIController : MonoBehaviour
     }
 
     // Debug•\Ž¦
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, m_findRange);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, m_findRange);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_attackRange);
-    }
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, m_attackRange);
+    //}
 }
