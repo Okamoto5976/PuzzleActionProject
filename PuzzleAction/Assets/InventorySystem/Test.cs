@@ -10,22 +10,40 @@ public class Test : MonoBehaviour
 
     [SerializeField] private bool m_istrigger;
 
-    [SerializeField] private GameObject m_actionPanel;
+    [SerializeField] private GameObject m_trashButton;
+
+    [SerializeField] private GameObject m_selectButton;
+
+    [SerializeField] private GameObject m_hotbarActionPanel;
 
     private void Start()
     {
-        m_actionPanel.SetActive(false);
+        m_trashButton.SetActive(false);
+        m_selectButton.SetActive(false);
+        m_hotbarActionPanel.SetActive(false);
     }
 
-    public void ShowActionPanel()
+    public void ShowActiveButtons()
     {
-        Debug.Log("ShowActionPanel");
-
-        Debug.Log(m_index);
-
         if (m_index == -1) return;
 
-        m_actionPanel.SetActive(true);
+        m_trashButton.SetActive(true);
+        m_selectButton.SetActive(true);
+    }
+
+    public void ShowPassiveButtons()
+    {
+        if (m_index == -1) return;
+
+        m_trashButton.SetActive(true);
+        m_selectButton.SetActive(false);
+    }
+
+    public void ShowHotbarActonPanel()
+    {
+        if (m_index == -1) return;
+
+        m_hotbarActionPanel.SetActive(true);
     }
 
     //[SerializeField] private Sprite m_potion;
@@ -53,48 +71,86 @@ public class Test : MonoBehaviour
 
     //=========remove button=============
 
-
     private int m_index = -1;
 
+    private bool m_isPassive;
     public void OnRemoveItem()
     {
         if (m_index == -1) return;
 
         Debug.Log(m_index);
-        inventorySystem.RemoveItem(m_index);
-        inventorySystem.UpdateUI();
 
-        m_actionPanel.SetActive(false);
+        if (m_isPassive)
+        {
+            inventorySystem.RemovePassiveItem(m_index);
+        }
+        else
+        {
+            inventorySystem.RemoveActiveItem(m_index);
+        }
+
+            HideButtons();
     }
 
-    public void SetIndex(int index)
+    public void OnUseItem()
+    {
+        if (m_index == -1) return;
+
+        inventorySystem.UseItem(m_index);
+
+        m_hotbarActionPanel.SetActive(false);
+    }
+
+    public void SetIndex(int index, bool isPassive)
     {
         m_index = index;
+        m_isPassive = isPassive;
     }
 
-    //=========hotber=====================
+    public void HideButtons()
+    {
+        m_trashButton.SetActive(false);
+        m_selectButton.SetActive(false);
 
-    [SerializeField] private int[] m_hotberNumber;
+        m_index = -1;
+    }
+
+    //=========hotbar=====================
 
     public void OnMoveItemHotber1()
     {
         if (m_index == -1) return;
 
-        inventorySystem.AddHotber(m_hotberNumber[0], m_index);
+        inventorySystem.AddHotber(0, m_index);
     }
 
     public void OnMoveItemHotber2()
     {
         if (m_index == -1) return;
 
-        inventorySystem.AddHotber(m_hotberNumber[1], m_index);
+        inventorySystem.AddHotber(1, m_index);
     }
 
     public void OnMoveItemHotber3()
     {
         if (m_index == -1) return;
 
-        inventorySystem.AddHotber(m_hotberNumber[2], m_index);
+        inventorySystem.AddHotber(2, m_index);
+    }
+
+    public void OnUseHotbar1()
+    {
+        inventorySystem.Use(0);
+    }
+
+    public void OnUseHotbar2()
+    {
+        inventorySystem.Use(1);
+    }
+
+    public void OnUseHotbar3()
+    {
+        inventorySystem.Use(2);
     }
 
     //private void Update()

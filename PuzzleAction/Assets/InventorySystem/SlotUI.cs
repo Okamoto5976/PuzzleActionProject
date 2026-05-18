@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class SlotUI : MonoBehaviour
 {
@@ -8,26 +8,49 @@ public class SlotUI : MonoBehaviour
     private int m_index;
     public GameObject m_InventoryPanel;
 
-
     [SerializeField] private Test m_testButton;
 
+    [SerializeField] private bool isPassive;
+
+    [SerializeField] private TMP_Text m_countText;
 
     public void SetItem(ItemBox item, int index)
     {
         m_icon.sprite = item.data.icon;
         m_index = index;
         m_icon.enabled = true;
+
+        if (m_countText != null)
+        {
+            if (item.count > 1)
+            {
+                m_countText.text = item.count.ToString();
+            }
+            else
+            {
+                m_countText.text = "";
+            }
+        }
     }
 
     public void Clear()
     {
         m_icon.enabled = false;
+        m_countText.text = "";
     }
 
     public void OnInventoryPanel()
     {
-       m_testButton.SetIndex(m_index);
-       m_testButton.ShowActionPanel();
+       m_testButton.SetIndex(m_index, isPassive);
+        if(isPassive)
+        {
+            m_testButton.ShowPassiveButtons();
+        }
+        else
+        {
+            m_testButton.ShowActiveButtons();
+        }
+
     }
 
 }
