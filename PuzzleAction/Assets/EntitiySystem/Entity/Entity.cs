@@ -17,7 +17,7 @@ abstract public class Entity : MonoBehaviour
     public float AGI { get => m_status[StatusType.Agility].Value; }
     public float Vision { get => m_status[StatusType.Vision].Value; }
     public float BreakRate { get => m_status[StatusType.BreakRate].Value; }
-    public float Recover { get => m_status[StatusType.Recover].Value; }
+    public float Stun { get => m_status[StatusType.Stun].Value; }
     public float PoisonRes { get => m_status[StatusType.PoisonRes].Value; }
     public float StunRes { get => m_status[StatusType.StunRes].Value; }
     public float SlowRes { get => m_status[StatusType.SlowRes].Value; }
@@ -67,17 +67,14 @@ abstract public class Entity : MonoBehaviour
 
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
-
-    protected Vector3 m_movement;
+    protected Vector3 m_moveDir;
+    protected Vector3 m_velocity;
 
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
         m_entityHP = GetComponent<EntityHP>();
-    }
 
-    private void Start()
-    {
         if (m_data == null) return;
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
         m_status.Add(StatusType.Strength, new EntityStatus(m_data.STR));
@@ -91,11 +88,16 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
         m_status.Add(StatusType.Vision, new EntityStatus(m_data.Vision));
         m_status.Add(StatusType.BreakRate, new EntityStatus(m_data.BreakRate));
-        m_status.Add(StatusType.Recover, new EntityStatus(m_data.Recover));
+        m_status.Add(StatusType.Stun, new EntityStatus(m_data.Stun));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
         m_status.Add(StatusType.BlindRes, new EntityStatus(m_data.BlindRes));
+    }
+
+    private void Start()
+    {
+        
 
 
     }
@@ -109,20 +111,29 @@ abstract public class Entity : MonoBehaviour
     {
         if (m_isStun) return;
 
-        OnMove(m_movement, Speed);
+        OnMove(m_moveDir);
 
     }
 
-    protected void OnMove(Vector3 movement, float speed)
+    protected void OnMove(Vector3 dir)
     {
-        Vector3 velocity = new Vector3(movement.x * speed, m_rb.linearVelocity.y, movement.z * speed);
+        //Vector3 velocity = new Vector3(dir.x * speed, m_rb.linearVelocity.y, dir.z * speed);
 
-        m_rb.MovePosition
-            (
-                m_rb.position + 
-                velocity * Time.fixedDeltaTime
+        //m_rb.MovePosition
+        //    (
+        //        m_rb.position + 
+        //        velocity * Time.fixedDeltaTime
 
-            );
+        //    );
+        dir = dir.normalized; //強制的にベクトルを1に
+
+        m_velocity = m_rb.linearVelocity;
+
+        m_velocity.x = dir.x * Speed;
+        m_velocity.z = dir.z * Speed;
+
+        m_rb.linearVelocity = m_velocity;
+
     }
 
     public virtual void TakeDamage(int damage)//後々DamageDataとDamageResult

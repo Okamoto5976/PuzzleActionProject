@@ -58,7 +58,18 @@ public class PlayerController : Entity
 
         //移動処理
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
-        m_movement = new Vector3(input.x, 0f, input.y);
+        m_moveDir = new Vector3(input.x, 0f, input.y);
+
+        //移動方向に向く
+        if (m_moveDir.sqrMagnitude > 0.0001f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRot,
+                Time.deltaTime * 10f);
+
+        }
 
         //ダッシュ判定（押している間）
         m_isDashing = m_dashAction.action.IsPressed();
