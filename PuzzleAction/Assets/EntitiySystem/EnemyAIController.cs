@@ -1,88 +1,128 @@
-using System;
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAIController : MonoBehaviour
 {
-    [Header("Target")]
-    [SerializeField] private GameObject m_target;  //攻撃対象
+    public enum EnemyType
+    {
+        Chase,
+        Rush
+    }
 
-    [Header("Status")]
-    [SerializeField] public int m_attackValue = 1; // Debug用
+    [Header("Type")]
+    [SerializeField] private EnemyType m_type;
+
+    [Header("Target")]
+    [SerializeField] private PlayerData m_target;
 
     [Header("Range")]
-    [SerializeField] private float m_findRange = 8f;      //索敵範囲
-    [SerializeField] private float m_attackRange = 1.5f;  //攻撃可能範囲
+    [SerializeField] private float m_findRange = 8f;
+    [SerializeField] private float m_attackRange = 1.5f;
 
-    private NavMeshAgent m_agent;
-    private Rigidbody m_rb;
+    private Enemy_Chase chase;
+    private Enemy_Rush rush;
 
-    [NonSerialized] public bool m_isFound = false;
-    [NonSerialized] public bool m_isAttacking = false;
-
-    public int AttackValue => m_attackValue;
-    public bool IsFaund => m_isFound;
-    public bool IsAttacking => m_isAttacking;
+    private bool m_isPreparing = false;
 
     private void Start()
     {
-        m_agent = GetComponent<NavMeshAgent>();
+        if (m_type == EnemyType.Chase)
+        {
+            chase = GetComponent<Enemy_Chase>();
+            chase.Initialized(m_target);
+        }
+        else
+        {
+            rush = GetComponent<Enemy_Rush>();
+        }
     }
 
     private void Update()
     {
         if (m_target == null) return;
 
-        float distance = Vector3.Distance(transform.position, m_target.transform.position);  //PlayerとEnemyとの距離計算
+        float distance =
+            Vector3.Distance(transform.position, m_target.PlayerPostition);
 
-        // 索敵範囲内に入ったら発見
-        if (distance <= m_findRange)
+        //直線移動中はtargetがFindRangeから出てもすぐにはやめない
+        if(m_type == EnemyType.Rush && rush.IsRunningStart || m_isPreparing)
         {
-            m_isFound = true;
-            m_agent.isStopped = false;
+            return;
         }
-        else
+        // 索敵範囲外
+        if (distance > m_findRange)
         {
-            m_isFound = false;
-            m_isAttacking = false;
-            m_agent.isStopped = true;
+            StopAll();
             return;
         }
 
-        // 攻撃範囲内なら攻撃
+        // 攻撃範囲内
         if (distance <= m_attackRange)
         {
-            m_isAttacking = true;
-            m_agent.isStopped = true;
+            StopAll();
             Attack();
+            return;
+        }
+
+        // 種類ごとの処理
+        if (m_type == EnemyType.Chase)
+        {
+            chase.Move();
         }
         else
         {
-            m_isAttacking = false;
-            ChaseTarget();
+            RushLogic();
         }
     }
 
-    // target 追従
-    private void ChaseTarget()
+    /// <summary>
+    /// 突進処理
+    /// </summary>
+    private void RushLogic()
     {
-        if (!m_agent.pathPending)
+        //準備開始
+        if (!rush.IsRunningStart && !m_isPreparing)
         {
-            m_agent.SetDestination(m_target.transform.position);
+            m_isPreparing = true;
+
+            //この時点の位置を固定
+            rush.ReadyRush();
+
+            Invoke(nameof(StartRush), Random.Range(0.5f, 1.0f));
+        }
+
+        //準備中は毎フレームtargetを補足する
+        if(m_isPreparing)
+        {
+            rush.UpdatePreparation(m_target.PlayerPostition);
         }
     }
 
-    // 攻撃（今はログのみ）
-    public void Attack()
+    private void StartRush()
     {
-        //実際の攻撃処理追加
-        Debug.Log($"攻撃中！ ダメージ：{m_attackValue}");
+        rush.StartRush();
+
+        //準備終了
+        m_isPreparing = false;
     }
 
-#if UNITY_EDITOR
-    // デバッグ可視化
-    private void OnDrawGizmosSelected()
+    private void StopAll()
+    {
+        if (chase != null) chase.Stop();
+        if (rush != null) rush.StopRush();
+
+        CancelInvoke(); // Invokeが何回も呼ばれないように停止
+
+        m_isPreparing = false; //準備終了
+    }
+
+    private void Attack()
+    {
+        // 攻撃処理
+        Debug.Log("H I T");
+    }
+
+    // Debug表示
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, m_findRange);
@@ -90,5 +130,4 @@ public class EnemyAIController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, m_attackRange);
     }
-#endif
 }

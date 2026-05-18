@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9816c1c7de88e3d43a9a53d5c5add60e, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
-  m_normalSpeed: 5
-  m_dashSpeed: 10
+  m_normalSpeed: 10
+  m_dashSpeed: 20
   hotbarSize: 3
+  PlayerPostition: {x: 9.626586, y: 0.5, z: 6.841422}

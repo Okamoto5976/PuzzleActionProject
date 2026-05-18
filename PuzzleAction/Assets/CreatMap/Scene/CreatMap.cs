@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-
-[RequireComponent(typeof(NavMeshSurface))]
 public class CreatMap : MonoBehaviour
 {
     [Header("Map")]
@@ -26,8 +24,11 @@ public class CreatMap : MonoBehaviour
 
     [Header("Debug用")]
     [SerializeField] private GameObject m_enemyPrefab; 
-    [SerializeField] private GameObject m_goalPrefab; 
+    [SerializeField] private GameObject m_goalPrefab;
 
+    [SerializeField] private GameObject m_player;
+    [SerializeField] private T_Camera m_camera;
+    private GameObject m_playerController;
     private void Awake()
     {
         m_mapClass = m_mapClassData.MapClass;
@@ -40,8 +41,7 @@ public class CreatMap : MonoBehaviour
 
         ProcessAreaTypes();
 
-        var navmesh = GetComponent<NavMeshSurface>();
-        navmesh.BuildNavMesh();
+        SpawnPlayer();
     }
     /// <summary>
     /// MapClassの状態を3Dに反映
@@ -322,13 +322,48 @@ public class CreatMap : MonoBehaviour
             );
         return new Vector3(
             floor00.position.x + gridPos.x * floorSize.x,
-            floor00.position.y + floorSize.y,
+            floor00.position.y + floorSize.y + 1,
             floor00.position.z + gridPos.y * floorSize.z);
     }
     /// <summary>
     /// ここから下はデバッグ用でPlayer関係の処理追加
     /// </summary>
-  
+
+    private void SpawnPlayer()
+    {
+        if (m_player == null)
+        {
+            Debug.LogError("T_Gene : Playerが設定されていません");
+            return;
+        }
+
+        Transform floor00 = GetFloor00();
+        if (floor00 == null) return;
+
+        Vector3 spawnPos = floor00.position + Vector3.up * 0.5f;
+
+        m_playerController = Instantiate(m_player, spawnPos, Quaternion.identity);
+        m_playerController.name = "Player";
+
+        //var controller = m_playerController.GetComponent<PlayerController>();
+        //if (controller != null)
+        //{
+        //    controller.Initialize(this);
+        //}
+
+        //カメラにPlayerを追従させる
+        if (m_camera != null)
+        {
+            m_camera.SetTarget(m_playerController.transform);
+        }
+        else
+        {
+            Debug.LogWarning("T_Gene : T_Cameraが設定されていません");
+        }
+
+        Debug.Log("Player spawned at (0,0)");
+    }
+
     private Transform GetFloor00()
     {
         // (0,0) は最初に配置した Floor

@@ -65,6 +65,7 @@ public class PlayerController : Entity
         m_isDashing = m_dashAction.action.IsPressed();
 
         m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
+        m_playerData.PlayerPostition = transform.position;
     }
 
 }
