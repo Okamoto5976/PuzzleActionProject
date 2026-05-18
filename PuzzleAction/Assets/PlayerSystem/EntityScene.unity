@@ -157,6 +157,7 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: 3fd44fca6054fb14c8e957766f2885e3, type: 2}
   m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_dashTime: 0.15
 --- !u!54 &271460987
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &271460988
 BoxCollider:
@@ -1221,7 +1222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
-  m_team: 0
+  m_team: 1
   m_data: {fileID: 11400000, guid: 5dcccfd925ed5e44eb637c0b2d9cfaad, type: 2}
   m_target: {fileID: 271460991}
 --- !u!114 &1532440971
