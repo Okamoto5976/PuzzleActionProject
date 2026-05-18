@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7541d2123e2bc949ad3db636c0979b3, type: 3}
+  m_Name: Player_EntityData
+  m_EditorClassIdentifier: Assembly-CSharp::EntityData
+  m_hp: 0
+  m_str: 0
+  m_knockBack: 0
+  m_def: 0
+  m_speed: 10
+  m_dashSpeed: 0
+  m_criticalRate: 0
+  m_criticalDamage: 0
+  m_dex: 0
+  m_agi: 0
+  m_vision: 0
+  m_breakRate: 0
+  m_recover: 0
+  m_poisonRes: 0
+  m_stunRes: 0
+  m_slowRes: 0
+  m_blindRes: 0

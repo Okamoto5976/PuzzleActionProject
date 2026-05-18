@@ -1,4 +1,6 @@
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(LineRenderer))]
@@ -12,10 +14,11 @@ public class Enemy_Rush : MonoBehaviour
     private Vector3 m_targetPosition;
     private Vector3 m_direction;
 
-    private bool m_isRushing = false;
+    private bool m_isRushingStart = false;
+    private bool m_isPreparing = false;
 
 
-    public bool IsRunning => m_isRushing;
+    public bool IsRunningStart => m_isRushingStart;
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -26,18 +29,27 @@ public class Enemy_Rush : MonoBehaviour
     }
 
     // 突進開始準備
-    public void ReadyRush(Vector3 playerPos)
+    public void ReadyRush()
     {
+        m_isPreparing = true;
+        m_line.enabled = true;
+    }
+
+    public void UpdatePreparation(Vector3 playerPos)
+    {
+        if (!m_isPreparing) return;
+
         m_targetPosition = playerPos;
         m_direction = (m_targetPosition - transform.position).normalized;
 
         DrawPredictionLine();
     }
 
+
     // 予測線
     private void DrawPredictionLine()
     {
-        m_line.enabled = true;
+        //m_line.enabled = true;
 
         m_line.positionCount = 2;
         m_line.SetPosition(0, transform.position);
@@ -47,26 +59,39 @@ public class Enemy_Rush : MonoBehaviour
     // 突進開始
     public void StartRush()
     {
-        m_isRushing = true;
+        m_isPreparing = false;
+        m_isRushingStart = true;
         m_line.enabled = false;
     }
 
     private void FixedUpdate()
     {
-        if (!m_isRushing) return;
+        if (!m_isRushingStart) return;
 
-        m_rb.MovePosition(m_rb.position + m_direction * rushSpeed * Time.fixedDeltaTime);
+        //次の移動予定位置
+        Vector3 nextPos = m_rb.position + m_direction * rushSpeed * Time.fixedDeltaTime;
+
+        //NavMesh上にあるかどうか
+        if (!NavMesh.SamplePosition(nextPos, out NavMeshHit hit, 0.5f, NavMesh.AllAreas) || !NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, new NavMeshPath()))
+        {
+            StopRush();
+            return;
+        }
+
+        //何も問題なければ移動開始
+        m_rb.MovePosition(nextPos);
 
         // 到達で終了
         if (Vector3.Distance(transform.position, m_targetPosition) < 0.5f)
         {
-            m_isRushing = false;
+            m_isRushingStart = false;
         }
     }
 
     public void StopRush()
     {
-        m_isRushing = false;
+        m_isRushingStart = false;
         m_line.enabled = false;
     }
+    
 }

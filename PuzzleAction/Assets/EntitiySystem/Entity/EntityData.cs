@@ -14,50 +14,52 @@ public enum StatusType
     Agility,        //攻撃速度(敵のステータス）
     Vision,         //明るさ(Playerのステータス）
     BreakRate,      //一撃率（9999ダメの確率）
-    Recover,        //スタン、ノックバックからの復帰
-    //状態異常 Resistance
+    Stun,
+    //状態異常 Resistance　100％が基礎
     PoisonRes,      //毒耐性
-    StunRes,　　　　//スタン耐性
-    SlowRes,　　　  //鈍足耐性
+    StunRes,　　　　//スタン耐性 スタンになる確率 スタン、ノックバックからの復帰速度
+    SlowRes,　　　//鈍足耐性
     BlindRes　　　　//盲目耐性
 }
 
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]
 public class EntityData : ScriptableObject
 {
-    [Header("HP")]
+    [SerializeField, Header("HP")]
     private float m_hp;
-    [Header("STR")]
+    [SerializeField, Header("STR")]
     private float m_str;
-    [Header("KnockBack")]
+    [SerializeField, Header("KnockBack")]
     private float m_knockBack;
-    [Header("DEF")]
+    [SerializeField, Header("DEF")]
     private float m_def;
-    [Header("Speed")]
+    [SerializeField, Header("Speed")]
     private float m_speed;
-    [Header("DashSpeed")]
+    [SerializeField, Header("DashSpeed")]
     private float m_dashSpeed;
-    [Header("CriticalRate")]
+    [SerializeField, Header("CriticalRate")]
     private float m_criticalRate;
-    [Header("CriticalDamage")]
+    [SerializeField, Header("CriticalDamage")]
     private float m_criticalDamage;
-    [Header("DEX")]
+    [SerializeField, Header("DEX")]
     private float m_dex;
-    [Header("AGI")]
+    [SerializeField, Header("AGI")]
     private float m_agi;
-    [Header("Vision")]
+    [SerializeField, Header("Vision")]
     private float m_vision;
-    [Header("BreakRate")]
+    [SerializeField, Header("BreakRate")]
     private float m_breakRate;
-    [Header("Recover")]
+    [SerializeField, Header("Stun")]
+    private float m_stun;
+    [SerializeField, Header("Recover")]
     private float m_recover;
-    [Header("Poison Resistance")]
+    [SerializeField, Header("Poison Resistance")]
     private float m_poisonRes;
-    [Header("Stun Resistance")]
+    [SerializeField, Header("Stun Resistance")]
     private float m_stunRes;
-    [Header("Slow Resistance")]
+    [SerializeField, Header("Slow Resistance")]
     private float m_slowRes;
-    [Header("Blind Resistance")]
+    [SerializeField, Header("Blind Resistance")]
     private float m_blindRes;
 
 
@@ -73,7 +75,7 @@ public class EntityData : ScriptableObject
     public float AGI { get => m_agi; }
     public float Vision { get => m_vision; }
     public float BreakRate { get => m_breakRate; }
-    public float Recover { get => m_recover; }
+    public float Stun { get => m_stun; }
     public float PoisonRes { get => m_poisonRes; }
     public float StunRes { get => m_stunRes; }
     public float SlowRes { get => m_slowRes; }

@@ -21,6 +21,8 @@ public class EnemyAIController : MonoBehaviour
     private Enemy_Chase chase;
     private Enemy_Rush rush;
 
+    private bool m_isPreparing = false;
+
     private void Start()
     {
         if (m_type == EnemyType.Chase)
@@ -41,6 +43,11 @@ public class EnemyAIController : MonoBehaviour
         float distance =
             Vector3.Distance(transform.position, m_target.transform.position);
 
+        //直線移動中はtargetがFindRangeから出てもすぐにはやめない
+        if(m_type == EnemyType.Rush && rush.IsRunningStart || m_isPreparing)
+        {
+            return;
+        }
         // 索敵範囲外
         if (distance > m_findRange)
         {
@@ -67,24 +74,35 @@ public class EnemyAIController : MonoBehaviour
         }
     }
 
-    // =========================
-    // 突進処理（整理版）
-    // =========================
+    /// <summary>
+    /// 突進処理
+    /// </summary>
     private void RushLogic()
     {
-        // まだ動いてないなら準備 → 突進
-        if (!rush.IsRunning)
+        //準備開始
+        if (!rush.IsRunningStart && !m_isPreparing)
         {
-            rush.ReadyRush(m_target.transform.position);
+            m_isPreparing = true;
 
-            // 少し溜めてから突進（1秒）
-            Invoke(nameof(StartRush), 1.0f);
+            //この時点の位置を固定
+            rush.ReadyRush();
+
+            Invoke(nameof(StartRush), Random.Range(0.5f, 1.0f));
+        }
+
+        //準備中は毎フレームtargetを補足する
+        if(m_isPreparing)
+        {
+            rush.UpdatePreparation(m_target.transform.position);
         }
     }
 
     private void StartRush()
     {
         rush.StartRush();
+
+        //準備終了
+        m_isPreparing = false;
     }
 
     private void StopAll()
@@ -92,7 +110,9 @@ public class EnemyAIController : MonoBehaviour
         if (chase != null) chase.Stop();
         if (rush != null) rush.StopRush();
 
-        CancelInvoke(); // Invokeの暴走防止
+        CancelInvoke(); // Invokeが何回も呼ばれないように停止
+
+        m_isPreparing = false; //準備終了
     }
 
     private void Attack()
