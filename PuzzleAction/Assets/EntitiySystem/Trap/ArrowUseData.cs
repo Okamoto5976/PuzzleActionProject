@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public struct ArrowSpawnData
+public class ArrowUseData : MonoBehaviour
 {
+    //使用者
+    public GameObject Owner;
+
     //出現位置
     public Vector3 Position;
 
     //飛ぶ方向
     public Vector3 Direction;
 
-    //飛距離
+    //範囲
     public float Range;
 }
