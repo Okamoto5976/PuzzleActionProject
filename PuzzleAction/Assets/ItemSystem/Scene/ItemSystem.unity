@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
+  prefab: {fileID: 0}
   ItemList:
   - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
   - {fileID: 11400000, guid: ffc372f43c79df34ebd05f365a9282fd, type: 2}

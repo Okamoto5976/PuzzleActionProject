@@ -1,29 +1,25 @@
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class ItemManager : MonoBehaviour
 {
-    public enum EfectType
+
+    public enum EffectType
     {
         Null,
         Heal,
         Damage,
         Buff,
         Debuff,
+        Torap
     }
     //[SerializeField] private EntityData entityprefab;
-    private ObjectPool<Entity> pool;
+    private ItemPool itempool;
     public GameObject prefab; //アイテムのプレハブ
     //private int nextId = 1; //次のIDを管理する変数
-    public struct ItemRecieveData
-    {
-        public Entity entity;
-        public float baseValue; //Entity用　例）矢の攻撃力＋Entityの攻撃力
-        public Vector3 pos;
-        public Vector3 dir;//向き
-        public Vector2 size;
-    }
+    
 
     //リスト初期化
     public List<Item> ItemList = new List<Item>();
@@ -36,11 +32,11 @@ public class ItemManager : MonoBehaviour
     }
     public void ItemUse(int id , Entity entity)  // Entity
     {
-        //見つけたアイテムを使用する}
+        //見つけたアイテムを使用する
         Item item = LookForID(id);
         if (item != null)
         {
-         /*   item.RecieveData();*/
+            //item.RecieveData(id, entity);
         }
         else
         {
@@ -56,30 +52,17 @@ public class ItemManager : MonoBehaviour
         return ItemList[index];
 
     }
-    private  void  PrefabCool( ItemRecieveData data)
+    public void PrefabCool(EffectType type, ItemRecieveData data)
     {
 
         Debug.Log("Test");
-
-        //ItemManagerがpoolからEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
-
-        pool = new ObjectPool<Entity>(
-        createFunc: () => Instantiate(prefab).GetComponent<Entity>(), //オブジェクトを生成する関数
-        actionOnGet: entity => entity.gameObject.SetActive(true), //オブジェクトがプールから取得されるときに呼び出されるアクション
-        actionOnRelease: entity => entity.gameObject.SetActive(false), //オブジェクトがプールから取得されるときに呼び出されるアクション
-        actionOnDestroy: entity => Destroy(entity.gameObject), //オブジェクトがプールから削除されるときに呼び出されるアクション
-        defaultCapacity: 10, //初期サイズ
-
-            maxSize: 10); //ObjectPoolを初期化
-        //Entity entity = EfectType.Count; //enumで種類を渡す
-
-
-
+        //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
+        Entity entity = itempool.Get(type); //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
         //Playerから渡されたdataの中にある座標の位置に呼び出す
         GameObject obj = Instantiate(prefab, data.pos, Quaternion.LookRotation(data.dir)); //プレイヤーデータから座標と向きを呼び出す
-        //Playerから渡されたdataのbaseValueを呼び出したEntityに渡す
-        //Entity entity = ItemPool.entity(data.baseValue); //EntityにbaseValueを渡す
-        
+        //Playerから渡されたdataのbaseValueを呼び出したEntityに渡す 
+        entity.BaseValue = data.baseValue; //EntityにbaseValueを渡す
+
     }
 
 

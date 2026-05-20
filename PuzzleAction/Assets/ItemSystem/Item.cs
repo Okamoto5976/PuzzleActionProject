@@ -21,14 +21,14 @@ abstract public class Item : ScriptableObject
 
     //ID@ŒöŠJ
 
-    public void RecieveData(ItemRecieveData data) //Entity‚ğˆø”‚É
+    public void RecieveData(int id, ItemRecieveData data) //Entity‚ğˆø”‚É
     {
         
         Activation(m_value, data);
     }
 
     public virtual void Activation(float value, ItemRecieveData data) { }
-
+    
  
 }
 /*using UnityEngine;
