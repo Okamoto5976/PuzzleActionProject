@@ -49,7 +49,7 @@ public class PlayerController : Entity
     //    //Player“ÆŽž
     //}
 
-    private Vector3 m_moveDir = Vector3.zero;
+    //private Vector3 m_moveDir = Vector3.zero;
 
     private void Update()
     {
@@ -67,14 +67,14 @@ public class PlayerController : Entity
         //m_isDashing = m_dashAction.action.IsPressed();
 
         //m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
-        //m_playerData.PlayerPostition = transform.position;
+        m_playerData.PlayerPostition = transform.position;
 
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
-        m_moveDir = new Vector3(input.x, 0f, input.y);
+        m_movement = new Vector3(input.x, 0f, input.y);
 
-        if (m_moveDir.sqrMagnitude > 0.0001f)
+        if (m_movement.sqrMagnitude > 0.0001f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
+            Quaternion targetRot = Quaternion.LookRotation(m_movement);
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRot,

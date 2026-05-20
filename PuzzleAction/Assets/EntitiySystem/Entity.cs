@@ -40,10 +40,10 @@ abstract public class Entity : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if(m_state != null && !m_state.CanMove)
-        {
-            return;
-        }
+        //if(m_state != null && !m_state.CanMove)
+        //{
+        //    return;
+        //}
 
         //OnMove(m_movement, m_speed);
         OnMove(m_movement);

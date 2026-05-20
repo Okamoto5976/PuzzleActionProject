@@ -193,9 +193,8 @@ GameObject:
   - component: {fileID: -1553549938300698823}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
-  - component: {fileID: -599725407257659535}
   - component: {fileID: -5650931996729087381}
-  - component: {fileID: 4641239434405801737}
+  - component: {fileID: 151283188857711319}
   m_Layer: 0
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -395,19 +394,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-599725407257659535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41fd289c7b76db442b5a34a3627441f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Rush
-  rushSpeed: 10
 --- !u!114 &-5650931996729087381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -421,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceShift
   offset: {x: 0, y: 3, z: 0}
---- !u!114 &4641239434405801737
+--- !u!114 &151283188857711319
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
