@@ -27,7 +27,7 @@ public class ArrowTrap : MonoBehaviour
         //初期位置保存
         m_startPosition = transform.position;
 
-        //Hit判定
+        //使用者
         m_owner = data.Owner;
     }
 
@@ -40,7 +40,10 @@ public class ArrowTrap : MonoBehaviour
 
     private void Move()
     {
-        transform.position += m_direction * m_data.speed * Time.deltaTime;
+        transform.position += 
+            m_direction * 
+            m_data.speed * 
+            Time.deltaTime;
     }
 
     private void CheckRange()
@@ -59,59 +62,56 @@ public class ArrowTrap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //自分無視
-        if(other.gameObject == m_owner)
+        // 自分無視
+        if (other.gameObject == m_owner)
         {
             return;
         }
 
-        //Debug.Log(other.name + "にHit");
+        // Entity取得
+        Entity target =
+            other.GetComponent<Entity>();
 
-        //HP取得
-        //EnemyHP hP=
-        //    other.GetComponent<EnemyHP>();
+        Entity owner =
+          m_owner.GetComponent<Entity>();
 
-        //if(hP != null) 
-        //{
-        //    hP.TakeDamage(10);
-        //}
-        
-        //Team取得
-        TestTeam targetTeam =
-            other.GetComponent<TestTeam>();
 
-        TestTeam ownerTeam=
-            m_owner.GetComponent<TestTeam>();
-
-        //Teamある
-        if(
-            targetTeam != null &&
-            ownerTeam != null
-            ) 
+        //Entitiyなし
+        if (target == null || owner == null)
         {
-            //同じTeam   
-            if(
-                targetTeam.Team ==
-                ownerTeam.Team
+            return;
+        }
+
+        // 同チーム無効
+        if (target.Team == owner.Team)
+        {
+            // Nature例外
+            if (
+                target.Team != Entity.Teamtype.Nature
                 )
-
             {
-                Debug.Log("同じチーム");
-
                 return;
             }
-
-            //Nature同士
-            if(
-                targetTeam.Team ==
-                TestTeam.TeamType.Nature &&
-                ownerTeam.Team ==
-                TestTeam.TeamType.Nature
-                )
-            {
-                Debug.Log("Nature同士HIt");
-            }
         }
+
+        //DamageData作成
+        DamageData damageData =
+          new DamageData();
+
+        //攻撃者
+        damageData.Attacker =
+            m_owner;
+
+        //ダメージ
+        damageData.Damage =
+          m_data.damage;
+
+        //Hit位置
+        damageData.HitPoint =
+            transform.position;
+
+        //ダメージ
+        target.TakeDamage(damageData.Damage);
 
         Debug.Log(other.name + "Hit");
 

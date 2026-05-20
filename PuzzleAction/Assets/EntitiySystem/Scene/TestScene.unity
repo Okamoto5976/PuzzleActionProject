@@ -130,7 +130,6 @@ GameObject:
   - component: {fileID: 190813348}
   - component: {fileID: 190813347}
   - component: {fileID: 190813346}
-  - component: {fileID: 190813345}
   m_Layer: 0
   m_Name: NatureText
   m_TagString: Untagged
@@ -138,19 +137,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &190813345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190813344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c4d7ac77ae56cb4abe2e3640403b00e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TestTeam
-  m_team: 2
 --- !u!54 &190813346
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -851,6 +837,7 @@ GameObject:
   - component: {fileID: 1909587334}
   - component: {fileID: 1909587333}
   - component: {fileID: 1909587336}
+  - component: {fileID: 1909587337}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1006,7 +993,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1909587336
 MonoBehaviour:
@@ -1022,6 +1009,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowItemTest
   m_arrowPrefab: {fileID: 6751463442840912120, guid: eea3e736900a19d4e993065854e5ee4b, type: 3}
   m_owner: {fileID: 1909587334}
+--- !u!114 &1909587337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909587328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b18e217f7a7a34d4298729eeb1aedee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RockItemTest
+  m_rockPrefab: {fileID: 3771671782655084289, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+--- !u!1001 &5972442463146542998
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.53188
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.33879
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.51796
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2129491003573776217, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2975182450046396673, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190788566527821770, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_Name
+      value: RockTrapTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190788566527821770, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ddf875576ddcb374291984cb3dd7e9f7, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1032,3 +1097,4 @@ SceneRoots:
   - {fileID: 1909587332}
   - {fileID: 1838854060}
   - {fileID: 190813348}
+  - {fileID: 5972442463146542998}

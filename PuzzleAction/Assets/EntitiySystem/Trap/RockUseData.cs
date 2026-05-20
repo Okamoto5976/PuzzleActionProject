@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct ArrowUseData 
+public struct RockUseData 
 {
     //égópé“
     public GameObject Owner;
