@@ -34,6 +34,13 @@ public class Trap_zikkou : MonoBehaviour
             Debug.Log($"[SYSTEM]{gameObject.name}が沼地トラップ(半径:{m_Range}/減速:{(int)m_Power}倍)");
             return;
         }
+        var dynamite = trapObj.GetComponent<Dynamite_Trap>();
+        if (dynamite != null)
+        {
+            dynamite.Init(transform.position, m_Range, m_Power);
+            Debug.Log($"[SYSTEM]{gameObject.name}がダイナマイトを設置(半径:{m_Range}/ダメージ:{(int)m_Power})");
+            return;
+        }
     }
 
 }
