@@ -6,12 +6,13 @@ using JetBrains.Annotations;
 public class Button : MonoBehaviour
 {
     [SerializeField] private int m_price = 100;  //このアイテムの値段
-    [SerializeField] private Money m_money;   //お金管理
+    //[SerializeField] private Money m_money;   //お金管理
     [SerializeField] private UnityEngine.UI.Button m_button;  //このボタン自身
     [SerializeField] private TextMeshProUGUI m_messageText; //メッセージ表示用
     [SerializeField] private Vector3 m_fadeOutOffset;
+
     [SerializeField] private string m_itemName;    //送るアイテム名
-    [SerializeField] private Inventory m_inventory;
+    //[SerializeField] private Inventory m_inventory;
     [SerializeField] private int m_itemId;  //このボタンが売るアイテム
     [SerializeField] private GameObject m_speechBubble; //吹き出し本体
     [SerializeField] private MessageManager m_messageManager;
@@ -31,38 +32,45 @@ void Start()
     {
         m_timer.NotifyAction();
 
-        if (m_inventory.GetItemCount(m_itemId) >= 10)
-        {
-            m_messageManager.ShowByState(State.InventoryFull);
-            return;
-        }
+        //購入したアイテムをインベントリーに送る処理
         //お金チェック
-        if (!m_money.UseMoney(m_price))
-        {
-            m_messageManager.ShowByState(State.NoMoney);
-            return;
-        }
         //インベントリに追加
-        if (!m_inventory.AddItem(m_itemId))
-        {
-            m_messageManager.ShowByState(State.InventoryFull);
-            return;
-        }
         //購入メッセージ
-        m_messageManager.ShowBuyMessage(m_itemName, 1);
+        m_messageManager.ShowBuyMessage(m_itemName, 1); //m_itemNameを1個購入した
+
+        //if (m_inventory.GetItemCount(m_itemId) >= 10)
+        //{
+        //    m_messageManager.ShowByState(State.InventoryFull);
+        //    return;
+        //}
+        //if (!m_money.UseMoney(m_price))
+        //{
+        //    m_messageManager.ShowByState(State.NoMoney);
+        //    return;
+        //}
+        //if (!m_inventory.AddItem(m_itemId))
+        //{
+        //    m_messageManager.ShowByState(State.InventoryFull);
+        //    return;
+        //}
     }
+
+    /// <summary>
+    /// アイテムを購入して
+    /// </summary>
     public void SendItemAtInventory()
     {
-        if (m_inventory.AddItem(m_itemId))
-        {
-            Debug.Log("インベントリにアイテムを送った" +  m_itemName);
-        }
-        else
-        {
-            Debug.Log("インベントリがいっぱいで送れない");
-        }
+        //if (m_inventory.AddItem(m_itemId))
+        //{
+        //    Debug.Log("インベントリにアイテムを送った" + m_itemName);
+        //}
+        //else
+        //{
+        //    Debug.Log("インベントリがいっぱいで送れない");
+        //}
     }
-    void ShowMessage(string message, Color color)
+
+    public void ShowMessage(string message, Color color)
     {
         StopAllCoroutines();        //前のフェードを止める
         m_speechBubble.SetActive(true); //吹き出しを表示

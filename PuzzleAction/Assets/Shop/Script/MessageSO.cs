@@ -7,7 +7,7 @@ public enum State
     Buy,        // w“ü¬Œ÷
     NoMoney,    // ‚¨‹à‚È‚µ
     InventoryFull, // ƒCƒ“ƒxƒ“ƒgƒŠ–ƒ^ƒ“
-    SeeYou     //‘Ş“X
+    Exit     //‘Ş“X
 }
 
 [CreateAssetMenu(fileName = "MessageSO", menuName = "Scriptable Objects/MessageSO")]
