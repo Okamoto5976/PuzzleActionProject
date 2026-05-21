@@ -1,9 +1,5 @@
 using UnityEngine;
 using TMPro;
-
-/// <summary>
-/// アイテムの詳細を見れる情報元？
-/// </summary>
 public class ItemInfoText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_itemInfoText;
