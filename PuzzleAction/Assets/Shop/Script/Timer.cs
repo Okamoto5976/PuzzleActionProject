@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     private bool isFirst = true;
     void Start()
     {
-     m_messageManager.ShowByState(State.Welcome);
+     //m_messageManager.ShowByState(State.Welcome);
         timer = 0f;
     }
     //ボタンなどの操作があったらリセット

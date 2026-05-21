@@ -27,30 +27,30 @@ public class MessageManager : MonoBehaviour
     }
     public void ShowWelcome()
     {
-        foreach (var data in m_messages)
-        {
-            if (data.state_ == State.None)
-            {
-                m_speechParent.SetActive(true);
-                Show(data);
-                return;
-            }
-        }
+        //foreach (var data in m_messages)
+        //{
+        //    if (data.state_ == State.None)
+        //    {
+        //        m_speechParent.SetActive(true);
+        //        Show(data);
+        //        return;
+        //    }
+        //}
     }
     //Noneだけ順番表示
     public void ShowNextNoneMessage()
     {
-        while (m_index < m_messages.Length)
-        {
-            MessageSO data = m_messages[m_index];
-            m_index++;
+        //while (m_index < m_messages.Length)
+        //{
+        //    MessageSO data = m_messages[m_index];
+        //    m_index++;
 
-            if (data.state_ == State.None)
-            {
-                Show(data);
-                return;
-            }
-        }
+        //    if (data.state_ == State.None)
+        //    {
+        //        Show(data);
+        //        return;
+        //    }
+        //}
 
         EndMessage();
     }
@@ -58,15 +58,15 @@ public class MessageManager : MonoBehaviour
     //条件メッセージ表示
     public void ShowByState(State state)
     {
-        foreach (var data in m_messages)
-        {
-            if (data.state_ == state)
-            {
-                m_speechParent.SetActive(true);
-                Show(data);
-                return;
-            }
-        }
+        //foreach (var data in m_messages)
+        //{
+        //    if (data.state_ == state)
+        //    {
+        //        m_speechParent.SetActive(true);
+        //        Show(data);
+        //        return;
+        //    }
+        //}
 
         Debug.Log("該当するメッセージなし: " + state);
     }
@@ -85,13 +85,13 @@ public class MessageManager : MonoBehaviour
     {
         var list = new
         System.Collections.Generic.List<MessageSO>();
-        foreach (var data in m_messages)
-        {
-            if (data.state_ == State.None)
-            {
-                list.Add(data);
-            }
-        }
+        //foreach (var data in m_messages)
+        //{
+        //    if (data.state_ == State.None)
+        //    {
+        //        list.Add(data);
+        //    }
+        //}
         if (list.Count == 0) return;
 
         int rand = Random.Range(0, list.Count);
@@ -107,11 +107,11 @@ public class MessageManager : MonoBehaviour
             MessageSO data = m_messages[m_index];
             m_index++;
 
-            if (data.state_ == State.SeeYou)
-            {
-                Show(data);
-                return;
-            }
+            //if (data.state_ == State.SeeYou)
+            //{
+            //    Show(data);
+            //    return;
+            //}
         }
     }
 

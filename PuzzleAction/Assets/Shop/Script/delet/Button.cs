@@ -33,19 +33,19 @@ void Start()
 
         if (m_inventory.GetItemCount(m_itemId) >= 10)
         {
-            m_messageManager.ShowByState(State.InventoryFull);
+            //m_messageManager.ShowByState(State.InventoryFull);
             return;
         }
         //お金チェック
         if (!m_money.UseMoney(m_price))
         {
-            m_messageManager.ShowByState(State.NoMoney);
+            //m_messageManager.ShowByState(State.NoMoney);
             return;
         }
         //インベントリに追加
         if (!m_inventory.AddItem(m_itemId))
         {
-            m_messageManager.ShowByState(State.InventoryFull);
+            //m_messageManager.ShowByState(State.InventoryFull);
             return;
         }
         //購入メッセージ
