@@ -107,7 +107,7 @@ public class MessageManager : MonoBehaviour
             MessageSO data = m_messages[m_index];
             m_index++;
 
-            if (data.state_ == State.SeeYou)
+            if (data.state_ == State.Exit)
             {
                 Show(data);
                 return;
@@ -119,15 +119,15 @@ public class MessageManager : MonoBehaviour
     void Show(MessageSO data)
     {
         m_messageText.text = data.message;
-
-        if (m_speakerText != null)
-            m_speakerText.text = data.speaker;
+        //if (m_speakerText != null)
+        m_speakerText.text = data.speaker;
     }
 
     void EndMessage()
     {
         m_speechParent.SetActive(false);
         m_messageText.text = "";
-        if (m_speakerText != null) m_speakerText.text = "";
+        //if (m_speakerText != null)
+        m_speakerText.text = "";
     }
 }
