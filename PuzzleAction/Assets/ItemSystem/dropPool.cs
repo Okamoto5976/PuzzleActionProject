@@ -5,41 +5,41 @@ using UnityEngine;
 
 public class dropPool:MonoBehaviour
 {
-    [Header("ドロップ率")]
-    [SerializeField] private float item_drop_rat; // ドロップ率
-    [SerializeField] private int initialPoolSize = 10; // 初期プールサイズ
-    [SerializeField] private GameObject itemPrefab; // ドロップアイテムのプレハブ
-    //[SerializeField] private int drop_item_glade; // ドロップアイテムのグレード（例：1=一般、2=レア、3=エピックなど）
-    private Queue<GameObject> pool =new Queue<GameObject>(); // アイテムのプール
-    private List <Item> dropList = new List<Item>(); // ドロップするアイテムのリスト
+    ItemData itemData; // アイテムのデータクラス
+    ItemManager ItemList;
+     private Queue<GameObject> pool =new Queue<GameObject>(); // アイテムのプール
 
-
-
-    public GameObject GetItem(Vector3 position) // アイテムを取得してドロップ
-    {
-        GameObject obj; // ドロップするアイテム
-        if (pool.Count > 0) // プールにアイテムがある場合はそれを使用
-        {
-            obj = pool.Dequeue(); // プールからアイテムを取り出す
-        }
-        else 
-        {
-            obj = Instantiate(itemPrefab); // プールにアイテムがない場合は新しく生成
-        }
-        obj.transform.position = position; // アイテムの位置を設定
-        obj.SetActive(true); // アイテムをアクティブにしてドロップ
-        return obj; // ドロップしたアイテムを返す
-    }
+    // アイテムのドロップ率とドロップサイズを考慮してアイテムをドロップするクラス
     private void Awake()
     {
+        
+        //float rool = Random.value * itemData.DropRate; // ランダムクラスのロード
         // 初期プール生成
-        for (int i = 0; i < initialPoolSize; i++) // 初期プールサイズ分のアイテムを生成
-        {
-            GameObject obj = Instantiate(itemPrefab); // アイテムのプレハブから新しいアイテムを生成
-            obj.SetActive(false); // アイテムを非アクティブにする
-            pool.Enqueue(obj); // アイテムをプールに追加
-        }
-    }
+        //for (int i = 0; i < itemData.DropSize; i++) // 初期プールサイズ分のアイテムを生成
+        //{
+        //    GameObject dropIndex = Instantiate(); // アイテムのプレハブから新しいアイテムを生成
+        //    dropIndex.SetActive(false); // アイテムを非アクティブにする
+        //    pool.Enqueue(dropIndex); // アイテムをプールに追加
+        //}
+    }// アイテムのドロップ
+    //public GameObject DropItem(Vector3 position) // アイテムを取得してドロップ
+    //{
+
+    //    //GameObject dropIndex; // ドロップするアイテム
+    //    //if (pool.Count > 0) // プールにアイテムがある場合はそれを使用
+    //    //{
+    //    //    dropIndex = pool.Dequeue(); // プールからアイテムを取り出す
+    //    //}
+    //    //else
+    //    //{
+    //    //    dropIndex = Instantiate(itemData.DropPrefab); // プールにアイテムがない場合は新しく生成
+    //    //}
+
+    //    //dropIndex.transform.position = position; // アイテムの位置を設定
+    //    //dropIndex.SetActive(true); // アイテムをアクティブにしてドロップ
+    //    //Debug.Log("アイテムをドロップしました。"); // ドロップしたことをログに出力
+    //    //return dropIndex; // ドロップしたアイテムを返す
+    //}
     public void ReturnItem(GameObject obj)
     {
         obj.SetActive(false); // アイテムを非アクティブにする

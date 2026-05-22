@@ -129,15 +129,9 @@ public class BuffItem : Item
             }
 
         }
-
- 
-
-
-
-
         //以下はパッシブの話
         //パッシブ側でEntityのバフの追加と解除を行う
-        //entity.BaseValue += value;
+       
 
         //パッシブアイテムは後回し
 

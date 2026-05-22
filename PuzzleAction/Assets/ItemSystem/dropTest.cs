@@ -1,15 +1,19 @@
 using UnityEngine;
 
-public class dropTest : MonoBehaviour
-{
-    dropPool pool;
+//public class dropTest : MonoBehaviour
+//{
+//    dropPool pool;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
+//    void Start()
+//    {
+//        pool = GetComponent<dropPool>();
+//    }
+//    void Update()
+//    {
+//        if (Input.GetKeyDown(KeyCode.Space))
+//        {
+//            pool.DropItem(transform.position);
+//        }
+//    }
 
-    //}
-
-    // Update is called once per frame
-   
-}
+//}

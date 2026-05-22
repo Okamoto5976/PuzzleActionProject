@@ -9,12 +9,12 @@ public class ItemPool : MonoBehaviour
     [System.Serializable]
     public class PoolItem
     {
-        public ItemManager.EffectType type;
-        public Entity prefab;
-        public int initialSize = 5;
+        public ItemManager.EffectType type; // アイテムの種類
+        public Entity prefab; // アイテムのプレハブ
+        public int initialSize = 5; // 初期プールサイズ
     }
 
-    public List<PoolItem> poolItems;
+    public List<PoolItem> poolItems; // プールアイテムのリスト
     private Dictionary<ItemManager.EffectType, Queue<Entity>> poolDictionary; // プールの辞書
 
     public static object Instance { get; internal set; } // シングルトンインスタンス
