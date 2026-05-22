@@ -17,4 +17,4 @@ MonoBehaviour:
   info: dog is cute
   icon: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
   stackable: 1
-  itemType: 0
+  itemType: 1

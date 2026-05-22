@@ -14,11 +14,14 @@ public class SlotUI : MonoBehaviour
 
     [SerializeField] private TMP_Text m_countText;
 
+    private Data m_data;
+
     public void SetItem(ItemBox item, int index)
     {
         m_icon.sprite = item.data.icon;
         m_index = index;
         m_icon.enabled = true;
+        m_data = item.data;
 
         if (m_countText != null)
         {
@@ -36,12 +39,28 @@ public class SlotUI : MonoBehaviour
     public void Clear()
     {
         m_icon.enabled = false;
-        m_countText.text = "";
+
+        if (m_countText != null)
+        {
+            m_countText.text = "";
+        }
+
+        m_index = -1;
+
+        m_data = null;
     }
 
     public void OnInventoryPanel()
     {
+        if (m_index == -1 || m_data == null)
+        {
+            return;
+        }
+
        m_testButton.SetIndex(m_index, isPassive);
+
+       m_testButton.ShowItemInfo(m_data);
+
         if(isPassive)
         {
             m_testButton.ShowPassiveButtons();

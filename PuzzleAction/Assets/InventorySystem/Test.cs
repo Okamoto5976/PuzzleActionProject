@@ -1,5 +1,6 @@
 using UnityEditor.Rendering;
 using UnityEngine;
+using TMPro;
 
 public class Test : MonoBehaviour
 {
@@ -16,11 +17,21 @@ public class Test : MonoBehaviour
 
     [SerializeField] private GameObject m_hotbarActionPanel;
 
+    [SerializeField] private TMP_Text m_nameText;
+
+    [SerializeField] private TMP_Text m_infoText;
+
+
     private void Start()
     {
         m_trashButton.SetActive(false);
         m_selectButton.SetActive(false);
         m_hotbarActionPanel.SetActive(false);
+
+        m_nameText.gameObject.SetActive(false);
+        m_infoText.gameObject.SetActive(false);
+
+       // m_infoPanel.SetActive(false);
     }
 
     public void ShowActiveButtons()
@@ -44,6 +55,17 @@ public class Test : MonoBehaviour
         if (m_index == -1) return;
 
         m_hotbarActionPanel.SetActive(true);
+    }
+    public void ShowItemInfo(Data data)
+    {
+        Debug.Log(data);
+
+        m_nameText.gameObject.SetActive (true);
+        m_infoText.gameObject.SetActive (true);
+
+        m_nameText.text = data.itemName;
+
+        m_infoText.text = data.info;
     }
 
     //[SerializeField] private Sprite m_potion;
