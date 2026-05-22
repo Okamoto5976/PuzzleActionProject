@@ -1,6 +1,9 @@
 using UnityEditor.Rendering;
 using UnityEngine;
+<<<<<<< HEAD
 using TMPro;
+=======
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
 
 public class Test : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class Test : MonoBehaviour
 
     [SerializeField] private bool m_istrigger;
 
+<<<<<<< HEAD
     [SerializeField] private GameObject m_trashButton;
 
     [SerializeField] private GameObject m_selectButton;
@@ -66,6 +70,24 @@ public class Test : MonoBehaviour
         m_nameText.text = data.itemName;
 
         m_infoText.text = data.info;
+=======
+    [SerializeField] private GameObject m_actionPanel;
+
+    private void Start()
+    {
+        m_actionPanel.SetActive(false);
+    }
+
+    public void ShowActionPanel()
+    {
+        Debug.Log("ShowActionPanel");
+
+        Debug.Log(m_index);
+
+        if (m_index == -1) return;
+
+        m_actionPanel.SetActive(true);
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     //[SerializeField] private Sprite m_potion;
@@ -93,14 +115,21 @@ public class Test : MonoBehaviour
 
     //=========remove button=============
 
+<<<<<<< HEAD
     private int m_index = -1;
 
     private bool m_isPassive;
+=======
+
+    private int m_index = -1;
+
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     public void OnRemoveItem()
     {
         if (m_index == -1) return;
 
         Debug.Log(m_index);
+<<<<<<< HEAD
 
         if (m_isPassive)
         {
@@ -138,25 +167,50 @@ public class Test : MonoBehaviour
     }
 
     //=========hotbar=====================
+=======
+        inventorySystem.RemoveItem(m_index);
+        inventorySystem.UpdateUI();
+
+        m_actionPanel.SetActive(false);
+    }
+
+    public void SetIndex(int index)
+    {
+        m_index = index;
+    }
+
+    //=========hotber=====================
+
+    [SerializeField] private int[] m_hotberNumber;
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
 
     public void OnMoveItemHotber1()
     {
         if (m_index == -1) return;
 
+<<<<<<< HEAD
         inventorySystem.AddHotber(0, m_index);
+=======
+        inventorySystem.AddHotber(m_hotberNumber[0], m_index);
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     public void OnMoveItemHotber2()
     {
         if (m_index == -1) return;
 
+<<<<<<< HEAD
         inventorySystem.AddHotber(1, m_index);
+=======
+        inventorySystem.AddHotber(m_hotberNumber[1], m_index);
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     public void OnMoveItemHotber3()
     {
         if (m_index == -1) return;
 
+<<<<<<< HEAD
         inventorySystem.AddHotber(2, m_index);
     }
 
@@ -173,6 +227,9 @@ public class Test : MonoBehaviour
     public void OnUseHotbar3()
     {
         inventorySystem.Use(2);
+=======
+        inventorySystem.AddHotber(m_hotberNumber[2], m_index);
+>>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     //private void Update()

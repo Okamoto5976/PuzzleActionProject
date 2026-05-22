@@ -10,14 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be6e804747448504090eb3b9794ca480, type: 3}
-  m_Name: ItemData1
+  m_Name: ItemData
   m_EditorClassIdentifier: Assembly-CSharp::Data
-  ID: 1
-  itemName: Dog
-  info: dog is cute
-  icon: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
-<<<<<<< HEAD
-  stackable: 1
-  itemType: 1
-=======
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
+  ID: 0
+  itemName: Posion
+  info: aiueo
+  icon: {fileID: 21300000, guid: 9eae07abb66668c458004cf89bf586b8, type: 3}
