@@ -15,18 +15,18 @@ public class RockTrap : MonoBehaviour
     //使用者
     private GameObject m_owner;
 
+    //トラップ生成の初期化管理
     public void Initialize(RockUseData data)
     {
         transform.position = data.Position;
 
         m_direction = data.Direction.normalized;
 
-       
-
         m_startPostion=transform.position;
 
         m_owner=data.Owner;
     }
+
 
     private void Update()
     {
@@ -37,7 +37,6 @@ public class RockTrap : MonoBehaviour
 
     private void Move()
     {
-        
         transform.position +=
             m_direction *
             m_data.Speed *
@@ -64,12 +63,14 @@ public class RockTrap : MonoBehaviour
             return;
         }
 
+        //Entitiy取得
         Entity target=
             other.GetComponent<Entity>();
 
         Entity owner=
             m_owner.GetComponent<Entity>();
 
+        //Entityなし
         if(target==null||owner==null)
         {
             return;
@@ -85,19 +86,12 @@ public class RockTrap : MonoBehaviour
             }
         }
         //ダメージ
-        target.TakeDamage(
-              m_data.damage
+        target.TakeDamage(m_data.damage);
 
-          );
-
-        Debug.Log(
-            other.name +
-            " に岩Hit"
-        );
+        Debug.Log(other.name +" に岩Hit");
 
         //岩を消す
         Destroy(gameObject);
         //のちにPull
-
     }    
 }
