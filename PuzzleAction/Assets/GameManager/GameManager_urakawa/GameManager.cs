@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
         timemanager.DecreaseValue(Time.deltaTime);
 
         //デバック用
-        Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
+        //Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
         
         //時間切れ
         if (timemanager.Value <= 0)

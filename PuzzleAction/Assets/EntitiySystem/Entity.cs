@@ -24,7 +24,8 @@ abstract public class Entity : MonoBehaviour
     {
         Player,
         Enemy,
-        Neutral
+        Neutral,
+        Nature
     }
 
     [SerializeField] private Teamtype team;
