@@ -109,10 +109,9 @@ public class EnemyContllor : Entity
         m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
         m_agent.avoidancePriority = 50;
 
-        // RushMoveÅiAgent.MoveÅj
-        m_agent.Move(dir.normalized * m_agent.speed * Time.deltaTime);
+        m_agent.Move(dir * m_agent.speed * Time.deltaTime);
 
-        Rotate(dir);
+       // Rotate(dir);
     }
 
     private void StartRushPrepare()
@@ -140,7 +139,7 @@ public class EnemyContllor : Entity
         m_agent.speed = Speed;
         m_agent.acceleration = Speed * 5;
         m_agent.SetDestination(targetPos);
-        Rotate(targetPos);
+        //Rotate(targetPos);
     }
 
     //-----common-----
@@ -157,7 +156,7 @@ public class EnemyContllor : Entity
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(dir),
-            10f * Time.deltaTime
+            Time.deltaTime * 10
         );
     }
 

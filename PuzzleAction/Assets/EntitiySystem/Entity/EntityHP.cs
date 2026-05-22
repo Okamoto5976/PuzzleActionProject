@@ -74,4 +74,5 @@ abstract public class EntityHP : MonoBehaviour
     }
 
     protected abstract void Die();
+       
 }
