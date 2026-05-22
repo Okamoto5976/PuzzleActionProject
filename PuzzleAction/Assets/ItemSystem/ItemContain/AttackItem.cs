@@ -1,11 +1,10 @@
-using JetBrains.Annotations;
 using UnityEngine;
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
 {
     [SerializeField] private float attackRange; //攻撃範囲
     [SerializeField] private float Damage; //攻撃力
-    public ItemPool itempool; //アイテムプールへの参照
+    //public ItemPool itempool; //アイテムプールへの参照
 
 
     public override void Activation(float value, ItemRecieveData data)

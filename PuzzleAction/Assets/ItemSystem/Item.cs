@@ -23,7 +23,7 @@ abstract public class Item : ScriptableObject
 
     public void RecieveData(int id, ItemRecieveData data) //Entity‚ğˆø”‚É
     {
-        
+
         Activation(m_value, data);
     }
 

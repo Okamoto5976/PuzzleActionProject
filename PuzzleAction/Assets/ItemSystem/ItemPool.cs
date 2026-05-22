@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+
 
 // 汎用オブジェクトプール
 public class ItemPool : MonoBehaviour

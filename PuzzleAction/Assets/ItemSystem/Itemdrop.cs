@@ -1,12 +1,20 @@
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class ItemDrop : MonoBehaviour
 {
-    private dropPool pool;
-    //public event Action m_event;
-
     
+    Item item; // アイテムのクラス
+    dropPool dropList; // ドロップするアイテムのリストのクラス
+    dropPool pool; // アイテムを管理するドロッププールのクラス
+    //public event Action m_event;
+    void dropItem(Vector3 position) // アイテムをドロップするメソッド
+    {
+        //if (Random.value<= dropList.DropRate) // ドロップ率に基づいてアイテムをドロップするかどうかを決定
+        //{
+        //    pool.GetItem(position); // アイテムを取得してドロップ
+        //}
+    }
+
 
     //playerの座標か
     //自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。

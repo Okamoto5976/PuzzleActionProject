@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class ItemManager : MonoBehaviour
 {
@@ -36,7 +34,7 @@ public class ItemManager : MonoBehaviour
         Item item = LookForID(id);
         if (item != null)
         {
-            //item.RecieveData(id, entity);
+            //item.RecieveData(id, );
         }
         else
         {
@@ -52,6 +50,7 @@ public class ItemManager : MonoBehaviour
         return ItemList[index];
 
     }
+    //アイテムのエフェクトを呼び出す
     public void PrefabCool(EffectType type, ItemRecieveData data)
     {
 
@@ -64,8 +63,6 @@ public class ItemManager : MonoBehaviour
         entity.BaseValue = data.baseValue; //EntityにbaseValueを渡す
 
     }
-
-
 
 }
 
