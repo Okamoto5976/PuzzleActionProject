@@ -57,6 +57,9 @@ public class SlotUI : MonoBehaviour
             return;
         }
 
+        Debug.Log(m_index);
+        Debug.Log(isPassive);
+
        m_testButton.SetIndex(m_index, isPassive);
 
        m_testButton.ShowItemInfo(m_data);

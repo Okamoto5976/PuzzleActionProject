@@ -16,7 +16,7 @@ public class Goods : MonoBehaviour,
     private bool m_soldOn = false;
 
     //仮　ItemDataに変更
-    private ItemData m_data;
+    private Data m_data;
 
     private ShopManager m_shopManager;
 
@@ -28,13 +28,13 @@ public class Goods : MonoBehaviour,
     }
 
     //仮　ItemDataの中のデータ（Iconと値段）を受け取る
-    public void Init(Item data,ShopManager manager)
+    public void Init(Data data,ShopManager manager)
     {
-        m_data = data.Data;
+        m_data = data;
         m_shopManager = manager;
 
-        m_icon.sprite = m_data.ItemIcon;
-        m_priceText.text = m_data.Price.ToString() + " $";
+        m_icon.sprite = m_data.Data.ItemIcon;
+        m_priceText.text = m_data.Data.Price.ToString() + " $";
     }
 
     //カーソルが上に乗った時
@@ -44,7 +44,7 @@ public class Goods : MonoBehaviour,
         //SE再生
 
         //info　表示
-        m_shopManager.OnInfoPanelFromGoods(m_data);
+        m_shopManager.OnInfoPanelFromGoods(m_data.Data);
 
 
         //infoの量に応じて　大きさ変更したい

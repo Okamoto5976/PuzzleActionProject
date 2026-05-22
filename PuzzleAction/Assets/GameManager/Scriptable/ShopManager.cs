@@ -22,10 +22,10 @@ public class TestItemData
 public class ShopManager : MonoBehaviour
 {
     [Header("TestItemDataManager")]
-    [SerializeField] private List<Item> t_itemData;
+    [SerializeField] private List<Data> t_itemData;
 
 
-    private List<Item> t_itemDataList = new();
+    private List<Data> t_itemDataList = new();
 
     [SerializeField] private int m_itemNumber;
 
@@ -39,6 +39,7 @@ public class ShopManager : MonoBehaviour
 
     //InfoText Prefab
     [SerializeField] private InfoText m_infoTextPrefab;
+    [SerializeField] private InventorySystem m_inventorySystem;
 
 
     //仮　Initializeで呼ぶ
@@ -92,10 +93,10 @@ public class ShopManager : MonoBehaviour
         //}
     }
 
-    public bool PurchaseItem(ItemData data)
+    public bool PurchaseItem(Data data)
     {
         //少ない　購入出来ない場合
-        if(data.Price > m_money)
+        if(data.Data.Price > m_money)
         {
             Debug.Log("you do not have money");
             return false;
@@ -104,12 +105,12 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log("you purchase item");
 
-            m_money -= data.Price;
+            m_money -= data.Data.Price;
 
             m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
 
             //InventoryManagerにItemを渡す
-            //InventoryManager.AddItem(data);
+            m_inventorySystem.AddItem(data, 1);
 
             return true;
         }
