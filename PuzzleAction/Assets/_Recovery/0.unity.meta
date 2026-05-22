@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:PuzzleAction/Assets/_Recovery/0.unity.meta
 guid: b8c025e6feb90bb40aa60eee081c6df7
 DefaultImporter:
+========
+guid: 1a4152bd967120e47aeaa81eb84378cc
+PrefabImporter:
+>>>>>>>> origin/ShopSystem:PuzzleAction/Assets/GameManager/Scriptable/Goods.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
