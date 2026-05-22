@@ -63,7 +63,7 @@ public class Test : MonoBehaviour
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
 
-        m_nameText.text = data.itemName;
+        m_nameText.text = data.ItemName;
 
         m_infoText.text = data.info;
     }

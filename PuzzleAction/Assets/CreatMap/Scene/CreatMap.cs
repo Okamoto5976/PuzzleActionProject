@@ -25,6 +25,7 @@ public class CreatMap : MonoBehaviour
     [Header("Debug用")]
     [SerializeField] private GameObject m_enemyPrefab; 
     [SerializeField] private GameObject m_goalPrefab;
+    [SerializeField] private GameObject m_shopPrefab;
 
     [SerializeField] private GameObject m_player;
     [SerializeField] private T_Camera m_camera;
@@ -270,20 +271,28 @@ public class CreatMap : MonoBehaviour
 
 
                 case AreaType.Summon:
-
-                    var poses = RandomChoosePosition(room, 3); //マップとそのマスにオブジェクトを何個生成させるか指定
-                    foreach(var position in poses)
                     {
-                       Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
-                        //CallAreaSetを呼ぶ
-                        GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
+                        var poses = RandomChoosePosition(room, 3); //マップとそのマスにオブジェクトを何個生成させるか指定
+                        foreach(var position in poses)
+                        {
+                           Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
+                            //CallAreaSetを呼ぶ
+                            GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
+                        }
+                        break;
                     }
-                    break;
-
                 //現在はDebug用にAreaTypeがNoneとEnemyしかないのでコメントアウトしている
                 case AreaType.Shop:
+                    {
+                        var poses = RandomChoosePosition(room, 1);
+                        foreach (var position in poses)
+                        {
+                            Vector3 debugPos = GridToWorld(position);
+                            GameObject obj = Instantiate(m_shopPrefab, debugPos, Quaternion.identity);
+                        }
+                        break;
 
-                    break;
+                    }
 
 
                 case AreaType.Damage:

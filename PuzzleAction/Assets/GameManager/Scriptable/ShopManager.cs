@@ -22,10 +22,10 @@ public class TestItemData
 public class ShopManager : MonoBehaviour
 {
     [Header("TestItemDataManager")]
-    [SerializeField] private List<TestItemData> t_itemData;
+    [SerializeField] private List<Item> t_itemData;
 
 
-    private List<TestItemData> t_itemDataList = new();
+    private List<Item> t_itemDataList = new();
 
     [SerializeField] private int m_itemNumber;
 
@@ -92,10 +92,10 @@ public class ShopManager : MonoBehaviour
         //}
     }
 
-    public bool PurchaseItem(TestItemData data)
+    public bool PurchaseItem(ItemData data)
     {
         //少ない　購入出来ない場合
-        if(data.m_price > m_money)
+        if(data.Price > m_money)
         {
             Debug.Log("you do not have money");
             return false;
@@ -104,7 +104,7 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log("you purchase item");
 
-            m_money -= data.m_price;
+            m_money -= data.Price;
 
             m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
 
@@ -116,7 +116,7 @@ public class ShopManager : MonoBehaviour
     }
 
     //説明文表示
-    public void OnInfoPanelFromGoods(TestItemData data)
+    public void OnInfoPanelFromGoods(ItemData data)
     {
         m_infoTextPrefab.gameObject.SetActive(true);
         m_infoTextPrefab.GetItemDataInfo(data);

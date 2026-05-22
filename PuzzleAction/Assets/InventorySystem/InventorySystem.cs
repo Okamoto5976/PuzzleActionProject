@@ -80,7 +80,7 @@ public class InventorySystem : MonoBehaviour
     public bool AddItem(Data data, int count)
     {
        // Activeアイテム
-       if (data.itemType == ItemType.Active)
+       if (data.ItemType == ItemType.Active)
         {
             return AddActiveItem(data, count);
         }
@@ -288,7 +288,7 @@ for (int i = 0; i < hotbars.Length; i++)
 
         item.count--;
 
-        Debug.Log(item.data.itemName + " を使用");
+        Debug.Log(item.data.ItemName + " を使用");
 
         // 0以下なら削除
         if (item.count <= 0)

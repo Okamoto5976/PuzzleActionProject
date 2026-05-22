@@ -8,10 +8,10 @@ public class InfoText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_infoText;
 
     //âºÅ@å„Ç…à¯êîÇÕItemData
-    public void GetItemDataInfo(TestItemData data)
+    public void GetItemDataInfo(ItemData data)
     {
-        m_nameText.text = data.m_name;
-        m_infoText.text = data.m_info;
+        m_nameText.text = data.ItemName;
+        m_infoText.text = data.Description;
 
         SetPlace();
     }
