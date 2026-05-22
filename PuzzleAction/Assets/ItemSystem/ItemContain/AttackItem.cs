@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
@@ -15,7 +14,8 @@ public class AttackItem : Item
     [SerializeField] private GameObject AttackObject;
     [SerializeField] private float Durability; //‘Ï‹v’l
     [SerializeField] private float attackRange; //UŒ‚”ÍˆÍ
-    [SerializeField] private float Damage; //UŒ‚—Í
+    [SerializeField] private float Damage; //ƒ_ƒ[ƒW
+    
      
     void Durabity(float durability)
     {
@@ -39,17 +39,10 @@ public class AttackItem : Item
         //ˆê’èŽžŠÔŒo‚Á‚½‚çAttackObject‚ðÁ‚·
         //if(AttackTime > 0)
         //{
-        //    //attack.transform.localScale = new Vector3(
+  
         //}
         //Destroy(AttackObject);
 
-
-
-
-        //effect.GetComponent<>
-
-
-
-
+        
     }
 }

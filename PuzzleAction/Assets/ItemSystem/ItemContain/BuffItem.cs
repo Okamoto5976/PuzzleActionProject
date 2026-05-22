@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuffItem", menuName = "Scriptable Objects/Datas/BuffItem")]
 public class BuffItem : Item 
