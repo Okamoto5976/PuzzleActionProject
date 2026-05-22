@@ -4,8 +4,9 @@ public class test : MonoBehaviour
 {
     [SerializeField] private Entity Player;
 
+    [SerializeField] private Entity attacker;
     public void OnClick()
     {
-        Player.TakeDamage(10);
+        Player.TakeDamage(attacker);
     }
 }

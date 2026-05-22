@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyContllor : Entity
+public class EnemyControllor : Entity
 {
     //[SerializeField] private EnemyData m_data;
     [SerializeField] Transform m_target;

@@ -41,6 +41,19 @@ abstract public class Entity : MonoBehaviour
     //protected Animator m_anim;
     protected EntityHP m_entityHP;
 
+    //SE
+    [SerializeField] 
+    protected AudioClip m_attackSE;
+
+    public AudioClip AttackSE => m_attackSE;
+
+    [SerializeField]
+    protected AudioClip m_damageSE;
+
+    public AudioClip DamageSE=> m_damageSE;
+
+    protected AudioSource m_audioSource;
+    public AudioSource AudioSource => m_audioSource;
 
     public enum Teamtype
     {
@@ -79,6 +92,7 @@ abstract public class Entity : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody>();
         m_entityHP = GetComponent<EntityHP>();
+        m_audioSource=GetComponent<AudioSource>();
 
         if (m_data == null) return;
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
@@ -156,7 +170,7 @@ abstract public class Entity : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(int damage)//後々DamageDataとDamageResult
+    public virtual void TakeDamage(Entity attacker)//後々DamageDataとDamageResult
     {
         if (m_isInvincible) return;
 
@@ -164,7 +178,7 @@ abstract public class Entity : MonoBehaviour
         //HPを持たない(トラップ等)対応
         if (m_entityHP == null) return;
 
-        m_entityHP.TakeDamage(damage);
+        m_entityHP.TakeDamage(attacker);
     }
 
     //状態変更用
@@ -184,7 +198,6 @@ abstract public class Entity : MonoBehaviour
     {
         //無敵なら無効にしたい場合
         if (m_isInvincible) return;
-
 
         ChangeState(EntityState.Damage);
 

@@ -38,6 +38,6 @@ public class InheritanceTrap : Entity
         //}
 
         //ƒ_ƒ[ƒW
-        target.TakeDamage(m_damage);
+        target.TakeDamage(this);
     }
 }
