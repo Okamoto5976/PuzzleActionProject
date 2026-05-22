@@ -11,6 +11,8 @@ public class PlayerData : ScriptableObject
 
     public float DashSpeed => m_dashSpeed;
 
+    public Vector3 PlayerPosition => Vector3.zero;
+
     public float GetSpeed(bool isDashing)
     {
         return isDashing ?m_dashSpeed :m_normalSpeed;

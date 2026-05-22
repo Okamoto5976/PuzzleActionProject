@@ -1,97 +1,90 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(LineRenderer))]
 public class Enemy_Rush : MonoBehaviour
 {
-    [SerializeField] private float rushSpeed = 10f;
+    private EnemyContllor m_controller;
 
-    private Rigidbody m_rb;
     private LineRenderer m_line;
 
-    private Vector3 m_targetPosition;
-    private Vector3 m_direction;
+    private Vector3 m_targetPos;
+    private Vector3 m_dir;
 
-    private bool m_isRushingStart = false;
-    private bool m_isPreparing = false;
+    private bool m_isRunning;
+    private bool m_isPreparing;
 
+    private Vector3 m_fixedDir;
 
-    public bool IsRunningStart => m_isRushingStart;
-    private void Awake()
+    public bool IsRunning => m_isRunning;
+
+    public void Initialized(EnemyContllor controller)
     {
-        m_rb = GetComponent<Rigidbody>();
+        m_controller = controller;
+
         m_line = GetComponent<LineRenderer>();
-
         m_line.enabled = false;
-
     }
 
-    // 突進開始準備
-    public void ReadyRush()
+    // 準備
+    public void Ready()
     {
         m_isPreparing = true;
         m_line.enabled = true;
     }
 
-    public void UpdatePreparation(Vector3 playerPos)
+    public void UpdatePrepare(Vector3 playerPos)
     {
         if (!m_isPreparing) return;
 
-        m_targetPosition = playerPos;
-        m_direction = (m_targetPosition - transform.position).normalized;
+        if (NavMesh.SamplePosition(playerPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            m_targetPos = hit.position;
+        else
+            m_targetPos = playerPos;
 
-        DrawPredictionLine();
-    }
+        m_dir = (m_targetPos - transform.position).normalized;
 
-
-    // 予測線
-    private void DrawPredictionLine()
-    {
-        //m_line.enabled = true;
-
+        //予測線表示
         m_line.positionCount = 2;
         m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1, m_targetPosition);
+        m_line.SetPosition(1, m_targetPos);
     }
 
     // 突進開始
     public void StartRush()
     {
         m_isPreparing = false;
-        m_isRushingStart = true;
+        m_isRunning = true;
+
+        m_fixedDir = m_dir;
         m_line.enabled = false;
     }
 
-    private void FixedUpdate()
+    public Vector3 GetDirection()
     {
-        if (!m_isRushingStart) return;
+        if (!m_isRunning) return Vector3.zero;
 
-        //次の移動予定位置
-        Vector3 nextPos = m_rb.position + m_direction * rushSpeed * Time.fixedDeltaTime;
-
-        //NavMesh上にあるかどうか
-        if (!NavMesh.SamplePosition(nextPos, out NavMeshHit hit, 0.5f, NavMesh.AllAreas) || !NavMesh.CalculatePath(transform.position, nextPos, NavMesh.AllAreas, new NavMeshPath()))
+        if (Vector3.Distance(transform.position, m_targetPos) < 0.5f)
         {
-            StopRush();
-            return;
+            Stop();
+            return Vector3.zero;
         }
 
-        //何も問題なければ移動開始
-        m_rb.MovePosition(nextPos);
+        Vector3 next = transform.position + m_dir * 0.5f;
 
-        // 到達で終了
-        if (Vector3.Distance(transform.position, m_targetPosition) < 0.5f)
+        if (!NavMesh.SamplePosition(next, out _, 0.5f, NavMesh.AllAreas))
         {
-            m_isRushingStart = false;
+            Stop();
+            return Vector3.zero;
         }
+
+        return m_fixedDir;
     }
 
-    public void StopRush()
+    public void Stop()
     {
-        m_isRushingStart = false;
+        m_isRunning = false;
+        m_isPreparing = false;
         m_line.enabled = false;
     }
-    
 }
