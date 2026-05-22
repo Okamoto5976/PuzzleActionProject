@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 666433084fc0be848a3f2ee5bc68046a, type: 2}
   - {fileID: 11400000, guid: b52ebfab427c8d947854956f35e9f556, type: 2}
   - {fileID: 11400000, guid: dfe6e5d9371b56c408d71b768694dd0d, type: 2}
+  - {fileID: 11400000, guid: 38e25d40207fb534ab28f249a315d570, type: 2}
   m_itemNumber: 6
   m_goodsPrefab: []
   m_moneyText: {fileID: 0}

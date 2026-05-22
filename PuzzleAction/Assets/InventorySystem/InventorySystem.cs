@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 
 public class ItemBox
 {
