@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class TestItemData
 {
     public string m_name;
-    public int m_price;
+    [Min(0)] public int m_price;
     [TextArea(2, 10)]
     public string m_info;
     public Sprite m_icon;

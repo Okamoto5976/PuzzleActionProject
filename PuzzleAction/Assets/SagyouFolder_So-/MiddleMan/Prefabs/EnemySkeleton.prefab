@@ -191,10 +191,10 @@ GameObject:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1553549938300698823}
+  - component: {fileID: 151283188857711319}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
   - component: {fileID: -5650931996729087381}
-  - component: {fileID: 151283188857711319}
   m_Layer: 0
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -257,6 +257,18 @@ MonoBehaviour:
   m_target: {fileID: 11400000, guid: 0d65259208bc23b44b307361bc6dc820, type: 2}
   m_findRange: 8
   m_attackRange: 1.5
+--- !u!114 &151283188857711319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e7e768d22e2e61408f53d26d4076bec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Chase
 --- !u!54 &-1027978937202661744
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -407,15 +419,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForceShift
   offset: {x: 0, y: 3, z: 0}
---- !u!114 &151283188857711319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e7e768d22e2e61408f53d26d4076bec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Chase
