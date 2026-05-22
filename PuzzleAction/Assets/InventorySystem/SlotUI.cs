@@ -1,10 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-<<<<<<< HEAD
 using TMPro;
-=======
-
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
 
 public class SlotUI : MonoBehaviour
 {
@@ -12,7 +8,6 @@ public class SlotUI : MonoBehaviour
     private int m_index;
     public GameObject m_InventoryPanel;
 
-<<<<<<< HEAD
     [SerializeField] private Test m_testButton;
 
     [SerializeField] private bool isPassive;
@@ -20,18 +15,12 @@ public class SlotUI : MonoBehaviour
     [SerializeField] private TMP_Text m_countText;
 
     private Data m_data;
-=======
-
-    [SerializeField] private Test m_testButton;
-
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
 
     public void SetItem(ItemBox item, int index)
     {
         m_icon.sprite = item.data.icon;
         m_index = index;
         m_icon.enabled = true;
-<<<<<<< HEAD
         m_data = item.data;
 
         if (m_countText != null)
@@ -45,14 +34,11 @@ public class SlotUI : MonoBehaviour
                 m_countText.text = "";
             }
         }
-=======
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     public void Clear()
     {
         m_icon.enabled = false;
-<<<<<<< HEAD
 
         if (m_countText != null)
         {
@@ -62,13 +48,10 @@ public class SlotUI : MonoBehaviour
         m_index = -1;
 
         m_data = null;
-=======
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
     public void OnInventoryPanel()
     {
-<<<<<<< HEAD
         if (m_index == -1 || m_data == null)
         {
             return;
@@ -86,11 +69,6 @@ public class SlotUI : MonoBehaviour
         {
             m_testButton.ShowActiveButtons();
         }
-
-=======
-       m_testButton.SetIndex(m_index);
-       m_testButton.ShowActionPanel();
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)
     }
 
 }
