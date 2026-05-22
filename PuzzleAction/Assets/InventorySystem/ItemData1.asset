@@ -16,8 +16,5 @@ MonoBehaviour:
   itemName: Dog
   info: dog is cute
   icon: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
-<<<<<<< HEAD
   stackable: 1
   itemType: 1
-=======
->>>>>>> parent of 56b0578 (remove: Shop&Inventory)

@@ -69,6 +69,7 @@ public class SlotUI : MonoBehaviour
         {
             m_testButton.ShowActiveButtons();
         }
+
     }
 
 }
