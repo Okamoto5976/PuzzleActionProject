@@ -4987,7 +4987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotUI
   m_icon: {fileID: 1041223770}
   m_InventoryPanel: {fileID: 1054141423}
-  m_testButton: {fileID: 0}
+  m_testButton: {fileID: 164305083}
   isPassive: 0
   m_countText: {fileID: 1745747737}
 --- !u!114 &1041223773
@@ -5037,6 +5037,18 @@ MonoBehaviour:
       - m_Target: {fileID: 164305083}
         m_TargetAssemblyTypeName: Test, Assembly-CSharp
         m_MethodName: ShowHotbarActonPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1041223772}
+        m_TargetAssemblyTypeName: SlotUI, Assembly-CSharp
+        m_MethodName: OnHotbar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5775,7 +5787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotUI
   m_icon: {fileID: 1119354763}
   m_InventoryPanel: {fileID: 1054141423}
-  m_testButton: {fileID: 0}
+  m_testButton: {fileID: 164305083}
   isPassive: 0
   m_countText: {fileID: 664372443}
 --- !u!114 &1119354766
@@ -5825,6 +5837,18 @@ MonoBehaviour:
       - m_Target: {fileID: 164305083}
         m_TargetAssemblyTypeName: Test, Assembly-CSharp
         m_MethodName: ShowHotbarActonPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1119354765}
+        m_TargetAssemblyTypeName: SlotUI, Assembly-CSharp
+        m_MethodName: OnHotbar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6590,7 +6614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SlotUI
   m_icon: {fileID: 1281262451}
   m_InventoryPanel: {fileID: 1054141423}
-  m_testButton: {fileID: 0}
+  m_testButton: {fileID: 164305083}
   isPassive: 0
   m_countText: {fileID: 1209433147}
 --- !u!114 &1281262454
@@ -6640,6 +6664,18 @@ MonoBehaviour:
       - m_Target: {fileID: 164305083}
         m_TargetAssemblyTypeName: Test, Assembly-CSharp
         m_MethodName: ShowHotbarActonPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1281262453}
+        m_TargetAssemblyTypeName: SlotUI, Assembly-CSharp
+        m_MethodName: OnHotbar
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6801,7 +6837,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1307178482
 Transform:
   m_ObjectHideFlags: 0

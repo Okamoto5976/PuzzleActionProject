@@ -23,6 +23,7 @@ public class SlotUI : MonoBehaviour
         m_icon.enabled = true;
         m_data = item.data;
 
+
         if (m_countText != null)
         {
             if (item.count > 1)
@@ -48,12 +49,16 @@ public class SlotUI : MonoBehaviour
         m_index = -1;
 
         m_data = null;
+
+        m_testButton.HideButtons();
     }
 
     public void OnInventoryPanel()
     {
         if (m_index == -1 || m_data == null)
         {
+            m_testButton.HideButtons();
+
             return;
         }
 
@@ -70,6 +75,19 @@ public class SlotUI : MonoBehaviour
             m_testButton.ShowActiveButtons();
         }
 
+    }
+
+    public void OnHotbar()
+    {
+        if (m_index == -1 || m_data == null)
+        {
+            m_testButton.HideButtons();
+            return;
+        }
+
+        m_testButton.SetIndex(m_index, false);
+
+        m_testButton.ShowHotbarActonPanel();
     }
 
 }
