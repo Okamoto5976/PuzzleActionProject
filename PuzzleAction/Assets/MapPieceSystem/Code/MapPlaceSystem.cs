@@ -295,12 +295,13 @@ public class MapPlaceSystem : MonoBehaviour
     {
         m_mapClass.PlaceRoom(m_room, m_origin - m_difference);
 
-
         //========= RoomData ============
         List<Vector2Int> roomSizes = new();
-        Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
+        Vector2Int roomPos = new Vector2Int(m_origin.x, m_origin.y);
 
-        int ID = m_mapClass.GetFloorID(origin.x, origin.y);
+        int ID = m_mapClass.GetFloorID(roomPos.x, roomPos.y);
+
+        Vector2Int origin = new Vector2Int(m_origin.x - m_difference.x, m_origin.y - m_difference.y);
 
         for (int y = 0; y < m_room.Size.y; y++)
         {
@@ -312,7 +313,7 @@ public class MapPlaceSystem : MonoBehaviour
                 roomSizes.Add(pos);
             }
         }
-        
+
         RoomData data = new RoomData(ID, type, roomSizes);
 
         m_roomData.Add(data);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum AreaType//‰¼‚È‚½‚ß@Œã‚Éíœ
+public enum AreaType
 {
     None,
     Enemy,
