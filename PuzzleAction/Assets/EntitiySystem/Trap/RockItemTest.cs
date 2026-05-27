@@ -23,8 +23,8 @@ public class RockItemTest :
             );
 
         
-        RockUseData data =
-            new RockUseData();
+        TrapUseData data =
+            new TrapUseData();
 
         //使用者
         data.Owner =
@@ -36,10 +36,6 @@ public class RockItemTest :
         //使用方向
         data.Direction =
             transform.forward;
-
-        //範囲
-        data.Range =
-            10f;
 
         //初期化
         rock.Initialize(data);

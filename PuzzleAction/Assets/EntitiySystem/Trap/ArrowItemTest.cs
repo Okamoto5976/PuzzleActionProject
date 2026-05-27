@@ -8,6 +8,7 @@ public class ArrowItemTest : MonoBehaviour
     [SerializeField]
     private Entity m_owner;
 
+    //キー設定
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
@@ -23,7 +24,7 @@ public class ArrowItemTest : MonoBehaviour
             m_arrowPrefab
             );
 
-        ArrowUseData data = new();
+        TrapUseData data = new();
 
         //使用者
         data.Owner =
@@ -36,9 +37,6 @@ public class ArrowItemTest : MonoBehaviour
         //使用方向
         data.Direction =
         m_owner.transform.forward;
-
-        //範囲
-        data.Range = 10f;
 
         //初期化
         arrow.Initialize( data );

@@ -12,5 +12,5 @@ public struct ArrowUseData
     public Vector3 Direction;
 
     //”ÍˆÍ
-    public float Range;
+    //public float Range;
 }

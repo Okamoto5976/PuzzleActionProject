@@ -1,12 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Trap/RockData")] 
+[CreateAssetMenu(fileName = "RockData" ,menuName = "Trap/RockData")] 
 
 public class RockData : ScriptableObject
 {
-    public float Speed = 5f;
-
-    public int damage = 20;
+    public int damage = 10;
 
     public float range = 10f;
 }
