@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class DropManager : MonoBehaviour
-{
-    dropPool pool;
-}
+//public class DropManager : MonoBehaviour
+//{
+//    dropPool pool;
+//}

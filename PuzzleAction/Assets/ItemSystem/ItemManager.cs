@@ -4,18 +4,9 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
 
-    public enum EffectType
-    {
-        Null,
-        Heal,
-        Damage,
-        Buff,
-        Debuff,
-        Torap
-    }
+  
     //[SerializeField] private EntityData entityprefab;
-    private ItemPool itempool;
-    public GameObject prefab; //アイテムのプレハブ
+
     //private int nextId = 1; //次のIDを管理する変数
     
 
@@ -28,20 +19,20 @@ public class ItemManager : MonoBehaviour
     {
         return ItemList.Find(x => x.Id == id);
     }
-    public void ItemUse(int id , Entity entity)  // Entity
-    {
-        //見つけたアイテムを使用する
-        Item item = LookForID(id);
-        if (item != null)
-        {
-            //item.RecieveData(id, );
-        }
-        else
-        {
-            Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
-        }
+    //public void ItemUse(int id , Entity entity)  // Entity
+    //{
+    //    //見つけたアイテムを使用する
+    //    Item item = LookForID(id);
+    //    if (item != null)
+    //    {
+    //        //item.RecieveData(id, );
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
+    //    }
 
-    }
+    //}
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
@@ -51,18 +42,7 @@ public class ItemManager : MonoBehaviour
 
     }
     //アイテムのエフェクトを呼び出す
-    public void PrefabCool(EffectType type, ItemRecieveData data)
-    {
-
-        Debug.Log("Test");
-        //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
-        Entity entity = itempool.Get(type); //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
-        //Playerから渡されたdataの中にある座標の位置に呼び出す
-        GameObject obj = Instantiate(prefab, data.pos, Quaternion.LookRotation(data.dir)); //プレイヤーデータから座標と向きを呼び出す
-        //Playerから渡されたdataのbaseValueを呼び出したEntityに渡す 
-        entity.BaseValue = data.baseValue; //EntityにbaseValueを渡す
-
-    }
+   
 
 }
 

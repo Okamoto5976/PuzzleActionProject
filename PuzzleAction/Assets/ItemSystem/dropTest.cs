@@ -1,19 +1,10 @@
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-//public class dropTest : MonoBehaviour
-//{
-//    dropPool pool;
+public class dropTest : MonoBehaviour
+{
+    
+    //Dropper.DropItem(transform.positon);
 
-//    void Start()
-//    {
-//        pool = GetComponent<dropPool>();
-//    }
-//    void Update()
-//    {
-//        if (Input.GetKeyDown(KeyCode.Space))
-//        {
-//            pool.DropItem(transform.position);
-//        }
-//    }
-
-//}
+}

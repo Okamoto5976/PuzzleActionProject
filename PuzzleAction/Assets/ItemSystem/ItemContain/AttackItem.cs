@@ -1,48 +1,36 @@
+using NUnit.Framework;
 using UnityEngine;
+using static ItemManager;
+using static UnityEngine.EventSystems.EventTrigger;
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
 {
-    private enum AttackPrefab
+    public enum EffectType
     {
-        Effect,
-        Attack
+        Null,
+        Heal,
+        Damage,
+        Buff,
+        Debuff,
+        Torap
     }
-    [SerializeField] public GameObject ItemPrefab;
-    [SerializeField] private float WeponDameg;
-    [SerializeField] private float WeponRange;
-    [SerializeField] private AttackPrefab PrefabType;
-    [SerializeField] private GameObject AttackObject;
     [SerializeField] private float Durability; //耐久値
     [SerializeField] private float attackRange; //攻撃範囲
     [SerializeField] private float Damage; //ダメージ
+    [SerializeField] private float ObjectTime;
+    public GameObject prefab; //アイテムのプレハブ
+    private ItemPool itempool;
     
-     
-    void Durabity(float durability)
-    {
-        
-        //耐久値の処理
-        Durability -= 1; //攻撃するたびに耐久値を減らす
-        if (Durability <= 0)
-        {
-            //耐久値が0以下になったらアイテムを破壊する処理
-            Destroy(this.ItemPrefab);
-        }
-    }
     public override void Activation(float value, ItemRecieveData data)
     {
-        Instantiate(ItemPrefab, data.pos, Quaternion.identity);
-        //int AttackPos =data.pos;
-
-        GameObject attack = Instantiate(AttackObject, data.pos, Quaternion.identity); //
-        attack.transform.forward = data.dir; //
-        attack.transform.rotation = Quaternion.identity; //
-        //一定時間経ったらAttackObjectを消す
-        //if(AttackTime > 0)
-        //{
-  
-        //}
-        //Destroy(AttackObject);
-
-        
+        Debug.Log("Test");
+        //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
+    //    Entity entity = itempool.Get(type); //ItemManagerからpool経由してEntityを呼ぶItemManagerでpoolを仲介にenumで種類を渡す
+    //    //Playerから渡されたdataの中にある座標の位置に呼び出す
+    //    GameObject obj = Instantiate(prefab, data.pos, Quaternion.LookRotation(data.dir)); //プレイヤーデータから座標と向きを呼び出す
+    //    //Playerから渡されたdataのbaseValueを呼び出したEntityに渡す 
+    //    entity.BaseValue = data.baseValue; //EntityにbaseValueを渡す
+    //    //Destroy();
+    //    Return(Entity entity);
     }
 }
