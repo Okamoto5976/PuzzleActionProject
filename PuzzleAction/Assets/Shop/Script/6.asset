@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ac7227819e8d546a28bd35d9f2427a, type: 3}
   m_Name: 6
   m_EditorClassIdentifier: Assembly-CSharp::MessageSO
-  state_: 1
+  m_messageType: 1
   speaker: Owner
   message: I Love You

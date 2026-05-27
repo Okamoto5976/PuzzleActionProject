@@ -40,6 +40,21 @@ public class ShopManager : MonoBehaviour
     //InfoText Prefab
     [SerializeField] private InfoText m_infoTextPrefab;
 
+    //MessageManagerを呼ぶ
+    [SerializeField] private MessageManager m_messageManager;
+
+    private void OnEnable()
+    {
+        m_messageManager.StartSequence();
+        m_messageManager.ShowMessageByType(MessageType.ShopEnter);
+    }
+
+    private void OnDisable()
+    {
+        m_messageManager.ShowMessageByType(MessageType.ShopExit);
+        gameObject.SetActive(false);
+       // m_messageManager.ResetTimer();
+    }
 
     //仮　Initializeで呼ぶ
     private void Awake()
@@ -97,6 +112,7 @@ public class ShopManager : MonoBehaviour
         //少ない　購入出来ない場合
         if(data.m_price > m_money)
         {
+            m_messageManager.ShowMessageByType(MessageType.NoMoney);
             Debug.Log("you do not have money");
             return false;
         }
@@ -108,8 +124,10 @@ public class ShopManager : MonoBehaviour
 
             m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
 
-            //InventoryManagerにItemを渡す
-            //InventoryManager.AddItem(data);
+            //アイテム購入メッセージ表示
+            m_messageManager.ShowMessageByType(MessageType.Buy);
+
+            m_messageManager.ResetTimer();
 
             return true;
         }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ac7227819e8d546a28bd35d9f2427a, type: 3}
   m_Name: 5
   m_EditorClassIdentifier: Assembly-CSharp::MessageSO
-  state_: 4
+  m_messageType: 4
   speaker: Owner
   message: Inventory Full!

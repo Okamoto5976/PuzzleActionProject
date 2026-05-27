@@ -20,7 +20,7 @@ public class Goods : MonoBehaviour,
 
     private ShopManager m_shopManager;
 
-    [SerializeField] private InfoText m_infoTextPrefab;
+   //[SerializeField] private InfoText m_infoTextPrefab;
 
     private void Start()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7ac7227819e8d546a28bd35d9f2427a, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: Assembly-CSharp::MessageSO
-  state_: 2
+  m_messageType: 3
   speaker: Owner
   message: 'You Don''t Have Money!!
 
