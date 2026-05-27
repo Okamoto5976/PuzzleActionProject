@@ -281,6 +281,9 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_floorScale: {x: 2, y: 1, z: 2}
   m_wallScale: {x: 2, y: 1, z: 1}
+  m_treasurePrefab: {fileID: 3003183038306201094, guid: e8f9d859482a02a4cb6d7608ba8ba270, type: 3}
+  m_treasureCount: 3
+  m_mimicRate: 0.2
   m_player: {fileID: 4890633758928413418, guid: 307e042cc3917734f9d268dbd1bde28d, type: 3}
   m_enemyPrefab: {fileID: 8077312470995242836, guid: f0b427464670b5c408782f5ff355ec62, type: 3}
   m_goalPrefab: {fileID: 5552784110905450052, guid: a482975c6bcb9ff4487d4e88f17b4837, type: 3}

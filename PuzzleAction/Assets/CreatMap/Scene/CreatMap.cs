@@ -20,11 +20,11 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private Vector3 m_wallScale = Vector3.one;
 
     [Header("TreasureBox")]
-    //[SerializeField] private GameObject m_treasurePrefab;
-    //[SerializeField] private     int m_treasureCount = 3;
+    [SerializeField] private GameObject m_treasurePrefab;
+    [SerializeField] private int m_treasureCount = 3;
+    [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
 
     [Header("Debug")]
-    //[SerializeField] private Transform m_gridParent;
     [SerializeField] private GameObject m_player;
     [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private GameObject m_goalPrefab;
@@ -40,9 +40,12 @@ public class CreatMap : MonoBehaviour
 
         InitializeMap();
 
-        UpdateObjects(); //GeneratMap
+        UpdateObjects(); //GenerateMap
 
+        //apply AreaType
         ProcessAreaTypes();
+
+        GenerateTreasures();
 
         //Debug
         SpawnPlayer();
@@ -266,6 +269,8 @@ public class CreatMap : MonoBehaviour
             switch (room.m_type)
             {
                 case AreaType.None:
+                    //GenerateTreasures();
+
                     break; //‰½‚à‚µ‚È‚¢
 
 
@@ -295,7 +300,39 @@ public class CreatMap : MonoBehaviour
 
     private void GenerateTreasures()
     {
-        //List<Vector2Int> 
+        //•ó” ¶¬êŠŒó•â
+        List<Vector2Int> candidates = new();
+
+        foreach(var room in m_mapClassData.roomDatas)
+        {
+            //reject other than None
+            if (room.m_type != AreaType.None) continue;
+
+            candidates.AddRange(room.m_roomSizes);
+        }
+
+        //return smallest value
+        int spawnCount = Mathf.Min(m_treasureCount, candidates.Count); 
+
+        for(int i = 0; i < spawnCount; i++)
+        {
+            //random select || Max roomSize
+            int index = Random.Range(0, candidates.Count); 
+
+            Vector2Int gridPos = candidates[index];
+
+            //delete index candidates
+            candidates.RemoveAt(index); 
+
+            Vector3 worldPos = GridToWorld(gridPos);
+
+            GameObject obj = Instantiate(m_treasurePrefab, worldPos, Quaternion.identity, transform);
+
+            bool isMimic = Random.value < m_mimicRate;
+
+            Treasure treasure = obj.GetComponent<Treasure>();
+            treasure.SetIsMimic(isMimic);
+        }
     }
 
     /// <summary>
@@ -314,7 +351,7 @@ public class CreatMap : MonoBehaviour
             Vector2Int pos = copy[number];
             poses.Add(pos);
             copy.Remove(pos);
-            Debug.Log(pos + "ššššššš");
+            //Debug.Log(pos + "ššššššš");
         }
         return poses;
     }
