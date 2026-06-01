@@ -1,92 +1,135 @@
-using System;
-using UnityEngine;
-using UnityEngine.AI;
+//using UnityEngine;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class EnemyAIController : MonoBehaviour
-{
-    [Header("Target")]
-    [SerializeField] private GameObject m_target;  //攻撃対象
+//public class EnemyAIController : MonoBehaviour
+//{
+//    public enum EnemyType
+//    {
+//        Chase,
+//        Rush
+//    }
 
-    [Header("Status")]
-    [SerializeField] public int m_attackValue = 1; // Debug用
+//    [Header("Type")]
+//    [SerializeField] private EnemyType m_type;
 
-    [Header("Range")]
-    [SerializeField] private float m_findRange = 8f;      //索敵範囲
-    [SerializeField] private float m_attackRange = 1.5f;  //攻撃可能範囲
+//    [Header("Target")]
+//    [SerializeField] private GameObject m_target;
 
-    private NavMeshAgent m_agent;
-    private Rigidbody m_rb;
+//    [Header("Range")]
+//    [SerializeField] private float m_findRange = 8f;
+//    [SerializeField] private float m_attackRange = 1.5f;
 
-    [NonSerialized] public bool m_isFound = false;
-    [NonSerialized] public bool m_isAttacking = false;
+//    [SerializeField] private EntityData m_enemyData;
 
-    public int AttackValue => m_attackValue;
-    public bool IsFaund => m_isFound;
-    public bool IsAttacking => m_isAttacking;
+//    private Enemy_Chase chase;
+//    private Enemy_Rush rush;
 
-    private void Start()
-    {
-        m_agent = GetComponent<NavMeshAgent>();
-    }
+//    private bool m_isPreparing = false;
 
-    private void Update()
-    {
-        if (m_target == null) return;
+//    private void Start()
+//    {
+//        if (m_type == EnemyType.Chase)
+//        {
+//            chase = GetComponent<Enemy_Chase>();
+//            chase.Initialized(m_target);
+//        }
+//        else
+//        {
+//            rush = GetComponent<Enemy_Rush>();
+//        }
+//    }
 
-        float distance = Vector3.Distance(transform.position, m_target.transform.position);  //PlayerとEnemyとの距離計算
+//    private void Update()
+//    {
+//        if (m_target == null) return;
 
-        // 索敵範囲内に入ったら発見
-        if (distance <= m_findRange)
-        {
-            m_isFound = true;
-            m_agent.isStopped = false;
-        }
-        else
-        {
-            m_isFound = false;
-            m_isAttacking = false;
-            m_agent.isStopped = true;
-            return;
-        }
+//        float distance =
+//            Vector3.Distance(transform.position, m_target.transform.position);
 
-        // 攻撃範囲内なら攻撃
-        if (distance <= m_attackRange)
-        {
-            m_isAttacking = true;
-            m_agent.isStopped = true;
-            Attack();
-        }
-        else
-        {
-            m_isAttacking = false;
-            ChaseTarget();
-        }
-    }
+//        //直線移動中はtargetがFindRangeから出てもすぐにはやめない
+//        if (m_type == EnemyType.Rush && rush.IsRunningStart || m_isPreparing)
+//        {
+//            return;
+//        }
+//        // 索敵範囲外
+//        if (distance > m_findRange)
+//        {
+//            StopAll();
+//            return;
+//        }
 
-    // target 追従
-    private void ChaseTarget()
-    {
-        if (!m_agent.pathPending)
-        {
-            m_agent.SetDestination(m_target.transform.position);
-        }
-    }
+//        // 攻撃範囲内
+//        if (distance <= m_attackRange)
+//        {
+//            StopAll();
+//            Attack();
+//            return;
+//        }
 
-    // 攻撃（今はログのみ）
-    public void Attack()
-    {
-        //実際の攻撃処理追加
-        Debug.Log($"攻撃中！ ダメージ：{m_attackValue}");
-    }
+//        // 種類ごとの処理
+//        if (m_type == EnemyType.Chase)
+//        {
+//            chase.Move();
+//        }
+//        else
+//        {
+//            RushLogic();
+//        }
+//    }
 
-    // デバッグ可視化
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, m_findRange);
+//    /// <summary>
+//    /// 突進処理
+//    /// </summary>
+//    private void RushLogic()
+//    {
+//        //準備開始
+//        if (!rush.IsRunningStart && !m_isPreparing)
+//        {
+//            m_isPreparing = true;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_attackRange);
-    }
-}
+//            //この時点の位置を固定
+//            rush.ReadyRush();
+
+//            Invoke(nameof(StartRush), Random.Range(0.5f, 1.0f));
+//        }
+
+//        //準備中は毎フレームtargetを補足する
+//        if (m_isPreparing)
+//        {
+//            rush.UpdatePreparation(m_target.transform.position);
+//        }
+//    }
+
+//    private void StartRush()
+//    {
+//        rush.StartRush();
+
+//        //準備終了
+//        m_isPreparing = false;
+//    }
+
+//    private void StopAll()
+//    {
+//        if (chase != null) chase.Stop();
+//        if (rush != null) rush.StopRush();
+
+//        CancelInvoke(); // Invokeが何回も呼ばれないように停止
+
+//        m_isPreparing = false; //準備終了
+//    }
+
+//    private void Attack()
+//    {
+//        // 攻撃処理
+//        Debug.Log("H I T");
+//    }
+
+//    // Debug表示
+//    private void OnDrawGizmos()
+//    {
+//        Gizmos.color = Color.yellow;
+//        Gizmos.DrawWireSphere(transform.position, m_findRange);
+
+//        Gizmos.color = Color.red;
+//        Gizmos.DrawWireSphere(transform.position, m_attackRange);
+//    }
+//}

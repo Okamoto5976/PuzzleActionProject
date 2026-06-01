@@ -7,7 +7,7 @@ abstract public class EntityHP : MonoBehaviour
     private AudioSource m_audioSource;
 
     private int m_currentHP;
-    //HPBer‚È‚Ç‚É
+    //HPBerï¿½È‚Ç‚ï¿½
     public int CurrentHP { get => m_currentHP;}
 
     private void Awake()
@@ -23,11 +23,11 @@ abstract public class EntityHP : MonoBehaviour
         m_currentHP = (int)m_entity.HP;
     }
 
-    //trap‘¤‚Å‘‚«Š·‚¦‚ª‚Å‚«‚é‚æ‚¤virtual‚É
-    //trap‚ÍHP‚Ì‚È‚¢‚à‚Ì‚à‚ ‚é‚½‚ß
+    //trapï¿½ï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½æ‚¤virtualï¿½ï¿½
+    //trapï¿½ï¿½HPï¿½Ì‚È‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ï¿½
     public virtual void TakeDamage(Entity attacker)//DamageData
     {
-        //UŒ‚‰¹Ä¶
+        //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½
         if (attacker.AttackSE != null)
         {
             if (attacker.AudioSource != null)
@@ -36,7 +36,7 @@ abstract public class EntityHP : MonoBehaviour
             }
         }
 
-        //–½’†—¦
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float hitRate =
             100f + attacker.DEX - m_entity.DEX;
 
@@ -48,7 +48,7 @@ abstract public class EntityHP : MonoBehaviour
             return;
         }
 
-        //Break”»’è
+        //Breakï¿½ï¿½ï¿½ï¿½
         bool isBreak = false;
 
         if(Random.Range(0f,100f)<=attacker.BreakRate)
@@ -56,7 +56,7 @@ abstract public class EntityHP : MonoBehaviour
             isBreak = true;
         }
 
-        //Critical”»’è
+        //Criticalï¿½ï¿½ï¿½ï¿½
         bool isCritical = false;
 
         if(Random.Range(0f,100f)<=attacker.CriticalRate)
@@ -64,7 +64,7 @@ abstract public class EntityHP : MonoBehaviour
             isCritical = true;
         }
 
-        //ƒ_ƒ[ƒWŒvZ
+        //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Z
         int damage = 0;
 
         //Break
@@ -74,7 +74,7 @@ abstract public class EntityHP : MonoBehaviour
         }
         else
         {
-            //Šî–{ƒ_ƒ[ƒW
+            //ï¿½ï¿½{ï¿½_ï¿½ï¿½ï¿½[ï¿½W
             damage = Mathf.Max((int)(attacker.STR - m_entity.DEF), 1);
 
             //Critical
@@ -84,59 +84,59 @@ abstract public class EntityHP : MonoBehaviour
             }
         }
 
-        //HPŒ¸­
+        //HPï¿½ï¿½ï¿½ï¿½
             m_currentHP -= damage;
 
         m_currentHP = Mathf.Max( m_currentHP, 0 );
 
         Debug.Log($"{gameObject.name} : {damage}damage");
 
-        Debug.Log($"Œ»İHP : {m_currentHP}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½HP : {m_currentHP}");
 
-        //”íƒ_ƒ‰¹Ä¶
+        //ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½
         if(m_entity.DamageSE !=null&&m_audioSource!=null)
         {
             m_audioSource.PlayOneShot(m_entity.DamageSE);
         }
 
-        //ƒmƒbƒNƒoƒbƒN
+        //ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½N
         float knockBackPower = Mathf.Max(attacker.KnockBack - m_entity.DEF, 0);
 
-        //ƒXƒ^ƒ“
+        //ï¿½Xï¿½^ï¿½ï¿½
         float stunPower = Mathf.Max(attacker.Stun - m_entity.StunRes, 0);
 
         float stunTime=stunPower * 0.1f;
 
-        //•ûŒü
-        //‰¼@•Ê‚Ì‚Æ‚±‚ë‚©‚çæ“¾
+        //ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½@ï¿½Ê‚Ì‚Æ‚ï¿½ï¿½ë‚©ï¿½ï¿½æ“¾
         Vector3 dir =(transform.position-attacker.transform.position).normalized;
 
-        //‚Á”ò‚Î‚µ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î‚ï¿½
         m_entity.ApplyKnockBack(dir, knockBackPower,stunTime);
 
         //SE
-        //”íƒ_ƒSE
+        //ï¿½ï¿½_ï¿½ï¿½SE
 
-        //ƒ_ƒ[ƒWŒvZ
+        //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½vï¿½Z
 
-        //–½’†—¦Šî–{100
-        //DEXŠm—¦
-        //BreakRate—¦‚Åtrue‚È‚ç9999
-        //Critical‚©‚Ç‚¤‚©bool
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{100
+        //DEXï¿½mï¿½ï¿½
+        //BreakRateï¿½ï¿½ï¿½ï¿½trueï¿½È‚ï¿½9999
+        //Criticalï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½bool
         //HP -= (STR - DEF) * critical
-        //ƒmƒbƒNƒoƒbƒNistunRes‚ÅŒyŒ¸j‘å‚«‚³‚Å•œ‹A‚Ì‘¬“x•ÏX
-        //ƒXƒ^ƒ“Šm—¦ 10% 1•b@@100“@10•b
+        //ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½istunResï¿½ÅŒyï¿½ï¿½ï¿½jï¿½å‚«ï¿½ï¿½ï¿½Å•ï¿½ï¿½Aï¿½Ì‘ï¿½ï¿½xï¿½ÏX
+        //ï¿½Xï¿½^ï¿½ï¿½ï¿½mï¿½ï¿½ 10% 1ï¿½bï¿½@ï¿½@100ï¿½ï¿½ï¿½@10ï¿½b
 
         //Damage();
         //KnockBack();
 
-        //effect audioÄ¶ hit‚Ì
-        //UŒ‚‚Ì‰¹‚Í@—^ƒ_ƒ‚Ì‚Ù‚¤‚ª
-        //UŒ‚‚³‚ê‚½‰¹‚Í”íƒ_ƒ‚Ì‚Ù‚¤‚ª
-        //”íƒ_ƒ‘¤‚Í©g‚Ì“Á’¥‚É‚ ‚é”íƒ_ƒ‰¹‚ğ‚Â —ájƒXƒ‰ƒCƒ€@‚Í@”S’…“x‚Ì‚ ‚é‰¹
-        //“Áê‚È‰¹‚ª‚ ‚éê‡‚Í@ƒ_ƒ[ƒWData‚É“n‚·@i‰Š‚Ì‰¹‚Æ‚©
+        //effect audioï¿½Äï¿½ hitï¿½ï¿½ï¿½ï¿½
+        //ï¿½Uï¿½ï¿½ï¿½Ì‰ï¿½ï¿½Í@ï¿½^ï¿½_ï¿½ï¿½ï¿½Ì‚Ù‚ï¿½ï¿½ï¿½
+        //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Í”ï¿½_ï¿½ï¿½ï¿½Ì‚Ù‚ï¿½ï¿½ï¿½
+        //ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½gï¿½Ì“ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½jï¿½Xï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½@ï¿½Í@ï¿½Sï¿½ï¿½ï¿½xï¿½Ì‚ï¿½ï¿½é‰¹
+        //ï¿½ï¿½ï¿½ï¿½È‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Í@ï¿½_ï¿½ï¿½ï¿½[ï¿½WDataï¿½É“nï¿½ï¿½ï¿½@ï¿½iï¿½ï¿½ï¿½Ì‰ï¿½ï¿½Æ‚ï¿½
 
-        //€–S
+        //ï¿½ï¿½ï¿½S
 
         if ( m_currentHP <= 0 ) 
         {
@@ -162,4 +162,5 @@ abstract public class EntityHP : MonoBehaviour
     }
 
     protected abstract void Die();
+       
 }

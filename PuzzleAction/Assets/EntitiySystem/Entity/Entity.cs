@@ -23,7 +23,7 @@ abstract public class Entity : MonoBehaviour
     public float SlowRes { get => m_status[StatusType.SlowRes].Value; }
     public float BlindRes { get => m_status[StatusType.BlindRes].Value; }
 
-    //ó‘Ô
+    //ï¿½ï¿½ï¿½
     public enum EntityState
     {
         Idle,
@@ -66,11 +66,11 @@ abstract public class Entity : MonoBehaviour
 
     [SerializeField] private EntityData m_data;
 
-    //ƒQ[ƒ€ƒI[ƒo[‚È‚ÇƒCƒxƒ“ƒg’† ˆÚ“®ƒL[§ŒÀ
+    //ï¿½Qï¿½[ï¿½ï¿½ï¿½Iï¿½[ï¿½oï¿½[ï¿½È‚ÇƒCï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ ï¿½Ú“ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½
     protected bool m_canMove;
-    //ƒmƒbƒNƒoƒbƒN’†‚âƒXƒ^ƒ“’†@“®‚¯‚È‚¢ƒtƒ‰ƒOiŠÔŒo‰ß‚Å‰ñ•œj
+    //ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½tï¿½ï¿½ï¿½Oï¿½iï¿½ï¿½ï¿½ÔŒoï¿½ß‚Å‰ñ•œj
     protected bool m_isStun;
-    //–³“G’†@ƒ_ƒ[ƒWŒã‚â@‰ñ”ğ‚Å
+    //ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½@ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½
     protected bool m_isInvincible;
 
     public bool CanMove { get => m_canMove; }
@@ -158,7 +158,7 @@ abstract public class Entity : MonoBehaviour
         //        velocity * Time.fixedDeltaTime
 
         //    );
-        dir = dir.normalized; //‹­§“I‚ÉƒxƒNƒgƒ‹‚ğ1‚É
+        dir = dir.normalized; //ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½Éƒxï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½
 
         m_velocity = m_rb.linearVelocity;
 
@@ -169,18 +169,18 @@ abstract public class Entity : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(Entity attacker)//ŒãXDamageData‚ÆDamageResult
+    public virtual void TakeDamage(Entity attacker)//ï¿½ï¿½XDamageDataï¿½ï¿½DamageResult
     {
         if (m_isInvincible) return;
 
-        //’Ç‰Á‚µ‚½•”•ª
-        //HP‚ğ‚½‚È‚¢(ƒgƒ‰ƒbƒv“™)‘Î‰
+        //ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //HPï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½(ï¿½gï¿½ï¿½ï¿½bï¿½vï¿½ï¿½)ï¿½Î‰ï¿½
         if (m_entityHP == null) return;
 
         m_entityHP.TakeDamage(attacker);
     }
 
-    //ó‘Ô•ÏX—p
+    //ï¿½ï¿½Ô•ÏXï¿½p
     public void ChangeState(EntityState newState)
     {
         m_currentState = newState;
@@ -190,25 +190,25 @@ abstract public class Entity : MonoBehaviour
     public void SetIsStun(bool value) => m_isStun = value;
     public void SetIsInvincible(bool value) => m_isInvincible = value;
 
-    //ƒmƒbƒNƒoƒbƒN‚Ìˆ—
-    //EntityState‚ğ•ÏX
+    //ï¿½mï¿½bï¿½Nï¿½oï¿½bï¿½Nï¿½Ìï¿½ï¿½ï¿½
+    //EntityStateï¿½ï¿½ÏX
     public virtual void ApplyKnockBack(Vector3 direction,float power,float stunTime)
     {
-        //–³“G‚È‚ç–³Œø‚É‚µ‚½‚¢ê‡
+        //ï¿½ï¿½ï¿½Gï¿½È‚ç–³ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡
         if (m_isInvincible) return;
 
         ChangeState(EntityState.Damage);
 
-        //ƒXƒ^ƒ“ó‘Ô
+        //ï¿½Xï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½
         m_isStun = true;
         m_stunTime = stunTime;
 
         direction.y = 0;
 
-        //¡‚Ì‘¬“x‚ğƒŠƒZƒbƒg
+        //ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
         m_rb.linearVelocity = Vector3.zero;
 
-        //—Í‚ğ‰Á‚¦‚é
+        //ï¿½Í‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
     }
 }
@@ -224,8 +224,8 @@ abstract public class Entity : MonoBehaviour
 //    return true;
 
 
-//’Ç‰Á‚µ‚½•”•ª
-//‘Šè‚ÉUŒ‚‚ª“–‚½‚é‚©‚Ç‚¤‚©
+//ï¿½Ç‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//ï¿½ï¿½ï¿½ï¿½ÉUï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚©ï¿½Ç‚ï¿½ï¿½ï¿½
 //public virtual bool CanHit(Entity other)
 //{
 //    if (other == null)
@@ -233,7 +233,7 @@ abstract public class Entity : MonoBehaviour
 //        return false;
 //    }
 
-//    // “¯ƒ`[ƒ€–³Œø
+//    // ï¿½ï¿½ï¿½`ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //    if (Team == other.Team)
 //    {
 //        return false;
