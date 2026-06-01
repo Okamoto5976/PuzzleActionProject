@@ -20,6 +20,12 @@ public class Test : MonoBehaviour
 
     [SerializeField] private TMP_Text m_infoText;
 
+    [SerializeField] private GameObject m_activePanel;
+
+    [SerializeField] private GameObject m_passivepanel;
+
+    [SerializeField] private GameObject m_hotbarPanel;
+
 
     private void Start()
     {
@@ -30,9 +36,19 @@ public class Test : MonoBehaviour
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
 
+        m_activePanel.SetActive(false);
+        m_passivepanel.SetActive(false);
+        m_hotbarPanel.SetActive(false);
+
        // m_infoPanel.SetActive(false);
     }
 
+    public void SetInventoryVisibility(bool state)
+    {
+        m_activePanel.SetActive(state);
+        m_passivepanel.SetActive(state);
+        m_hotbarPanel.SetActive(state);
+    }
     public void ShowActiveButtons()
     {
         if (m_index == -1) return;
@@ -51,8 +67,13 @@ public class Test : MonoBehaviour
 
     public void ShowHotbarActonPanel()
     {
-        if (m_index == -1) return;
+        if (m_index == -1)
+        {
+            m_hotbarActionPanel.SetActive(false);
 
+            return;
+
+        }
         m_hotbarActionPanel.SetActive(true);
     }
     public void ShowItemInfo(Data data)
@@ -130,8 +151,15 @@ public class Test : MonoBehaviour
 
     public void HideButtons()
     {
+        Debug.Log("Hide!");
+
         m_trashButton.SetActive(false);
         m_selectButton.SetActive(false);
+
+        m_hotbarActionPanel.SetActive(false);
+
+        m_nameText.gameObject.SetActive(false);
+        m_infoText.gameObject.SetActive(false);
 
         m_index = -1;
     }
