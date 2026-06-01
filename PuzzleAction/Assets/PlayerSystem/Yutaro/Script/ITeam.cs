@@ -1,7 +1,0 @@
-using UnityEngine;
-
-
-interface ITeam
-{
-
-}
