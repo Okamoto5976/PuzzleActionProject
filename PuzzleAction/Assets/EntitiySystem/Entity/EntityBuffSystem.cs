@@ -23,18 +23,18 @@ public class EntityBuffSystem : MonoBehaviour
 
     public void AddBuff(StatusModifier modifier, float duration)
     {
-        //EntityStatus status = m_Entity.GetStatus(modifier.m_statType);
+        EntityStatus status = m_Entity.GetStatus(modifier.m_statType);
 
         BuffInstance instance = new BuffInstance
         {
             m_duration = duration,
-            //m_status = status,
+            m_status = status,
             m_modifier = modifier,
         };
 
         m_buffs.Add(instance);
 
-        //status.AddModifier(modifier)
+        status.AddModifier(modifier);
     }
 
     private void Update()
@@ -59,3 +59,5 @@ public class EntityBuffSystem : MonoBehaviour
         //buff.m_status.RemoveModifier(buff.m_modifier);
     }
 }
+//新しいバフを追加したときに使えるようにする
+

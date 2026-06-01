@@ -24,7 +24,6 @@ abstract public class Entity : MonoBehaviour
     public float BlindRes { get => m_status[StatusType.BlindRes].Value; }
 
     //状態
-    //今のところ使ってない
     public enum EntityState
     {
         Idle,
@@ -182,7 +181,6 @@ abstract public class Entity : MonoBehaviour
     }
 
     //状態変更用
-    //特に使ってない
     public void ChangeState(EntityState newState)
     {
         m_currentState = newState;
