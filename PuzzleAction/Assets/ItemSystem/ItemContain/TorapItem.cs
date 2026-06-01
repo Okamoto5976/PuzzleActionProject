@@ -11,12 +11,12 @@ public class TorapItem : Item
 
     public override void Activation(float value, ItemRecieveData data)
     {
-        //data posにobjを置く
-        //objにEntityがついている　Enityに dataのbaseValueを送る（コメントにする
+        //data posにobjを置く dataに向きも入れる
+        //objにEntity(Trap)がついている　Enityに dataのbaseValueを送る（コメントにする
+        //EntityTrap.SetbaseValue(data.baseValue)                Trap側でTrapの攻撃力＋baseValue
         //objのEntityにmoveDirがあるからdataのdirを入れる
         var entity = TrapPrefab.GetComponent<Entity>();
-        entity.Initialize(ItemType.Weapon, data.baseValue);
-        //entity.moveDir = data.dir;
-        //GameObject obj = Instantiate(TrapPrefab, data.pos, Quaternion.LookRotation(data.dir));
+        TrapPrefab.transform.position = data.pos;
+        TrapPrefab.transform.rotation = Quaternion.LookRotation(data.dir);
     }
 }
