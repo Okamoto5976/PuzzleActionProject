@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class CreatMap : MonoBehaviour
@@ -259,11 +260,13 @@ public class CreatMap : MonoBehaviour
             return;
         }
 
-        //get goal pos && put debug goal
-        Vector3 goalPos = GridToWorld(m_mapClassData.GoalPos);
+        Vector3 goalPos = GridToWorld(GetGoalPos());
+        Vector3 startPos = GridToWorld(GetStartPos());
+
+        //put goal object(Debug)
         GameObject obj2 = Instantiate(m_goalPrefab, goalPos, Quaternion.identity);
 
-        //ID順に処理
+        //Process in order of ID
         var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
 
         foreach (var room in sortedRoomDatas)
@@ -273,7 +276,7 @@ public class CreatMap : MonoBehaviour
                 case AreaType.None:
                     //GenerateTreasures();
 
-                    break; //何もしない
+                    break; 
 
 
                 case AreaType.Enemy:
@@ -281,13 +284,14 @@ public class CreatMap : MonoBehaviour
                     var poses = RandomChoosePosition(room, 3); //マップとそのマスにオブジェクトを何個生成させるか指定
                     foreach (var position in poses)
                     {
-                        Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
-                        //CallAreaSetを呼ぶ
+                        if (IsForbiddenPos(position)) continue;
+
+                        Vector3 debugPos = GridToWorld(position); //Vector2Int transformed into World coordinates
+                        //call CallAreaSet
                         GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
                     }
                     break;
 
-                //現在はDebug用にAreaTypeがNoneとEnemyしかないのでコメントアウトしている
                 case AreaType.Shop:
 
                     break;
@@ -300,9 +304,34 @@ public class CreatMap : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Start with Floor(0, 0)
+    /// </summary>
+    /// <returns></returns>
+    private Vector2Int GetStartPos()
+    {
+        return Vector2Int.zero; 
+    }
+
+    /// <summary>
+    /// get Goal Grid pos
+    /// </summary>
+    /// <returns></returns>
+    private Vector2Int GetGoalPos()
+    {
+        return m_mapClassData.GoalPos;
+    }
+
+    private bool IsForbiddenPos(Vector2Int pos )
+    {
+        if (pos == GetStartPos()) return true;
+        if (pos == GetGoalPos())  return true;
+                                  return false;
+    }
+
     private void GenerateTreasures()
     {
-        //宝箱生成場所候補
+        //Potential treasure chest spawn locations
         List<Vector2Int> candidates = new();
 
         foreach(var room in m_mapClassData.roomDatas)
@@ -311,7 +340,7 @@ public class CreatMap : MonoBehaviour
             if (room.m_type != AreaType.None) continue;
             foreach(var pos in room.m_roomSizes)
             {
-                if (pos == m_mapClassData.GoalPos) continue;
+                if (IsForbiddenPos(pos)) continue;
                     candidates.Add(pos);
 
             }
@@ -370,10 +399,11 @@ public class CreatMap : MonoBehaviour
     /// <returns></returns>
     private Vector3 GridToWorld(Vector2Int gridPos)
     {
-        Transform floor00 = GetFloor00(); //0,0 の床の座標を取得
+        Transform floor00 = GetFloor00(); //get Floor(0, 0)
 
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
-        Vector3 baseSize = floorRenderer.bounds.size; //二倍
+        Vector3 baseSize = floorRenderer.bounds.size; //2x
+
 
         Vector3 floorSize = new Vector3(
             baseSize.x * m_floorScale.x,
@@ -386,6 +416,21 @@ public class CreatMap : MonoBehaviour
             floor00.position.z + gridPos.y * floorSize.z);
     }
 
+    /// <summary>
+    /// Get Start with FLoor(0, 0)
+    /// </summary>
+    /// <returns></returns>
+    private Transform GetFloor00()
+    {
+        // (0,0) は最初に配置した Floor
+        // m_floorObjects は x + y*width で詰めているので index=0
+        if (m_floorObjects.Count == 0)
+        {
+            Debug.LogError("No floor objects found");
+            return null;
+        }
+        return m_floorObjects[0].transform;
+    }
 
     /// <summary>
     /// ここから下はデバッグ用でPlayer関係の処理追加
@@ -423,16 +468,5 @@ public class CreatMap : MonoBehaviour
         }
 
         Debug.Log("Player spawned at (0,0)");
-    }
-    private Transform GetFloor00()
-    {
-        // (0,0) は最初に配置した Floor
-        // m_floorObjects は x + y*width で詰めているので index=0
-        if (m_floorObjects.Count == 0)
-        {
-            Debug.LogError("No floor objects found");
-            return null;
-        }
-        return m_floorObjects[0].transform;
     }
 }
