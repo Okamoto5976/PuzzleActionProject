@@ -259,10 +259,12 @@ public class CreatMap : MonoBehaviour
             return;
         }
 
-        //IDèáÇ…èàóù
-        var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
+        //get goal pos && put debug goal
         Vector3 goalPos = GridToWorld(m_mapClassData.GoalPos);
         GameObject obj2 = Instantiate(m_goalPrefab, goalPos, Quaternion.identity);
+
+        //IDèáÇ…èàóù
+        var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
 
         foreach (var room in sortedRoomDatas)
         {
@@ -307,8 +309,13 @@ public class CreatMap : MonoBehaviour
         {
             //reject other than None
             if (room.m_type != AreaType.None) continue;
+            foreach(var pos in room.m_roomSizes)
+            {
+                if (pos == m_mapClassData.GoalPos) continue;
+                    candidates.Add(pos);
 
-            candidates.AddRange(room.m_roomSizes);
+            }
+
         }
 
         //return smallest value
