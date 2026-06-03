@@ -9,6 +9,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class TestItemData
 {
+    public int m_id;
     public string m_name;
     public int m_price;
     [TextArea(2, 10)]
@@ -43,6 +44,9 @@ public class ShopManager : MonoBehaviour
     //MessageManagerを呼ぶ
     [SerializeField] private MessageManager m_messageManager;
 
+    //SaveSOを呼び出す
+    [SerializeField] private SaveSO saveData;
+
     private void OnEnable()
     {
         m_messageManager.StartSequence();
@@ -62,6 +66,7 @@ public class ShopManager : MonoBehaviour
         m_infoTextPrefab.gameObject.SetActive(false);
 
         m_moneyText.text = "money :" + m_money.ToString();
+
 
         for(int i = 0; i < m_itemNumber; i++)
         {
@@ -123,6 +128,9 @@ public class ShopManager : MonoBehaviour
             m_money -= data.m_price;
 
             m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
+
+            //保存
+            saveData.AddItem(data.m_id);
 
             //アイテム購入メッセージ表示
             m_messageManager.ShowMessageByType(MessageType.Buy);

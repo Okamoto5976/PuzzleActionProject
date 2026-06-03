@@ -149,27 +149,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
   t_itemData:
-  - m_name: dog
+  - m_id: 0
+    m_name: dog
     m_price: 50
     m_info: dog is cute
     m_icon: {fileID: 21300000, guid: afe4a05b19923a54d97f77b1b7fba419, type: 3}
-  - m_name: dark
+  - m_id: 0
+    m_name: dark
     m_price: 100
     m_info: dark is cute
     m_icon: {fileID: 21300000, guid: 207cf381ef28d6640bb558aca8c4b1cf, type: 3}
-  - m_name: town
+  - m_id: 0
+    m_name: town
     m_price: 150
     m_info: town is cute
     m_icon: {fileID: 21300000, guid: c664ff0feb14d5e47a14dc2254aaacf5, type: 3}
-  - m_name: sky
+  - m_id: 0
+    m_name: sky
     m_price: 500
     m_info: sky is cute
     m_icon: {fileID: 21300000, guid: a5aecac552f01a345bdc79fadc19ff0c, type: 3}
-  - m_name: oni
+  - m_id: 0
+    m_name: oni
     m_price: 600
     m_info: oni is cute
     m_icon: {fileID: 21300000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
-  - m_name: pajama
+  - m_id: 0
+    m_name: pajama
     m_price: 1000
     m_info: pajama is cute
     m_icon: {fileID: 21300000, guid: 32c9703d0f6a1184797fd5fc0bfd2523, type: 3}
@@ -185,6 +191,7 @@ MonoBehaviour:
   m_money: 1000
   m_infoTextPrefab: {fileID: 2798160629299818821}
   m_messageManager: {fileID: 1162773484}
+  saveData: {fileID: 11400000, guid: dfe53c8b9df33cf4685b166333f464ae, type: 2}
 --- !u!4 &36079957
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,6 +1117,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1844025450}
+        m_TargetAssemblyTypeName: Test, Assembly-CSharp
+        m_MethodName: MoveScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &948016542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,6 +1187,51 @@ RectTransform:
   m_AnchoredPosition: {x: -740, y: -512}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1095922598
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1095922600}
+  - component: {fileID: 1095922599}
+  m_Layer: 0
+  m_Name: TestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1095922599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095922598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 571748eaaa268a94eb81f28d84e29805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveSOTest
+  saveData: {fileID: 11400000, guid: dfe53c8b9df33cf4685b166333f464ae, type: 2}
+--- !u!4 &1095922600
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095922598}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 732.1845, y: 0.00001, z: 2167.0996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1162773483
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2126,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a4152bd967120e47aeaa81eb84378cc, type: 3}
+--- !u!1 &1844025449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1844025451}
+  - component: {fileID: 1844025450}
+  m_Layer: 0
+  m_Name: TestScenemanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1844025450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844025449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5324725a384be7a4c9fbcd0864f45248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Test
+--- !u!4 &1844025451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844025449}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 732.1845, y: 0.00001, z: 2167.0996}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1859360369
 GameObject:
   m_ObjectHideFlags: 0
@@ -2768,3 +2876,5 @@ SceneRoots:
   - {fileID: 1162773485}
   - {fileID: 1469426883}
   - {fileID: 36079957}
+  - {fileID: 1095922600}
+  - {fileID: 1844025451}
