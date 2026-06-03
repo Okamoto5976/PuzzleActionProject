@@ -4,25 +4,29 @@ public class ArrowTrap : TrapBase
 {
     [Header("ArrowData")]
     [SerializeField]
-    private ArrowData m_arrowdata;
+    private TrapData m_trapdata;
 
     public void Initialize(TrapUseData data)
     {
-        //出現位置
+        //position
         transform.position = data.Position;
 
-        //Normalize方向(正規化)
+        //Normalizedirection
         m_direction = data.Direction.normalized;
 
-        //初期位置保存
+        //startposition
         m_startPosition = transform.position;
 
-        //使用者
+        //user
         m_owner = data.Owner;
 
-        //Data
-        m_range=m_arrowdata.range;
+        //BaseValue
+        //m_basevalue = data.BaseValue;
 
-        m_damage = m_arrowdata.damage;
+        //Data
+        m_range=m_trapdata.range;
+
+        //damage
+        m_damage = m_trapdata.damage + m_basevalue;
     }     
 }

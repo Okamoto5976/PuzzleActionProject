@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RockTrap
   m_team: 0
   m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
-  m_rockdata: {fileID: 11400000, guid: 8a0445cabea409441a85d150615f00d0, type: 2}
+  m_trapdata: {fileID: 11400000, guid: 0a0eca8a05fa73a47b74e76775af260b, type: 2}
 --- !u!135 &2975182450046396673
 SphereCollider:
   m_ObjectHideFlags: 0

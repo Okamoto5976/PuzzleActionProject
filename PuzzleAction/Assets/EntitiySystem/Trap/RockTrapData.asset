@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4ef110a0dbf022488aac907cc43bdc5, type: 3}
-  m_Name: RockData
-  m_EditorClassIdentifier: Assembly-CSharp::RockData
-  Speed: 5
-  damage: 20
+  m_Script: {fileID: 11500000, guid: d38b14e4aa45114489b6f2a88c4093e2, type: 3}
+  m_Name: RockTrapData
+  m_EditorClassIdentifier: Assembly-CSharp::TrapData
+  damage: 10
   range: 10

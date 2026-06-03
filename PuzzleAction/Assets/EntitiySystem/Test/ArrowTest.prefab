@@ -163,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArrowTrap
   m_team: 0
   m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
-  m_arrowdata: {fileID: 11400000, guid: 8540ade53ea5aee48b705211ff0ace95, type: 2}
+  m_trapdata: {fileID: 11400000, guid: 5822d667c8e272c4185ef5a50c1df8fc, type: 2}
 --- !u!54 &8295334557620497459
 Rigidbody:
   m_ObjectHideFlags: 0

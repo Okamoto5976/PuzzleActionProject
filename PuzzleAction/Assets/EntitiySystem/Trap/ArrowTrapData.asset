@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dac5a6bef8a07724f927e97e054863cd, type: 3}
-  m_Name: ArrowData
-  m_EditorClassIdentifier: Assembly-CSharp::ArrowData
-  speed: 10
-  range: 10
+  m_Script: {fileID: 11500000, guid: d38b14e4aa45114489b6f2a88c4093e2, type: 3}
+  m_Name: ArrowTrapData
+  m_EditorClassIdentifier: Assembly-CSharp::TrapData
   damage: 10
+  range: 10

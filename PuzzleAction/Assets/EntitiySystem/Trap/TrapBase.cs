@@ -1,37 +1,45 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class TrapBase : Entity
 {
-    //方向
+    //direction
     protected Vector3 m_direction;
 
-    //開始位置
+    //startPosition
     protected Vector3 m_startPosition;
 
-    //使用者
+    //user
     protected GameObject m_owner;
 
-    //射程
+    //range
     protected float m_range;
 
-    //ダメージ
+    //damage
     protected int m_damage;
 
+    //basevalue
+    protected int m_basevalue;
+
+    //Receive orientation
+    public void SetDirection(Vector3 direction)
+    {
+        m_direction = direction.normalized;
+    }
 
     protected override void FixedUpdate()
     {
-        //移動方向
+        //movement
         m_moveDir = m_direction;
 
-        //Entity移動
+        //Entitymovement
         base.FixedUpdate();
 
-        //射程
+        //range
         CheckRange();
-
     }
 
-    //射程
+    //range
     private void CheckRange()
     {
         float distance =
