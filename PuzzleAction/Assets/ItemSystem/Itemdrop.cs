@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    ItemData Iitem;
     Item item; // アイテムのクラス
-    dropPool i_data;
     dropPool dropList; // ドロップするアイテムのリストのクラス
     dropPool pool; // アイテムを管理するドロッププールのクラス
     private GameObject prefab;
