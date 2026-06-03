@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6e804747448504090eb3b9794ca480, type: 3}
   m_Name: ItemData1
   m_EditorClassIdentifier: Assembly-CSharp::Data
-  ID: 1
-  itemName: Dog
-  info: dog is cute
-  icon: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
-  stackable: 1
-  itemType: 1
+  m_value: 0
+  m_data:
+    itemID: 0
+    itemName: 
+    itemIcon: {fileID: 0}
+    itemPrefab: {fileID: 0}
+    description: 
+    maxStack: 0
+    dropRate: 0
+    dorpPrefab: {fileID: 0}
+    itemType: 0
+    price: 0
+    dropWeight: 0

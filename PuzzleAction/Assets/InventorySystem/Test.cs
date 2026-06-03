@@ -1,8 +1,5 @@
-using UnityEditor.Rendering;
-using UnityEngine.EventSystems;
 using UnityEngine;
 using TMPro;
-using System.Runtime.CompilerServices;
 
 public class Test : MonoBehaviour
 {
@@ -23,6 +20,12 @@ public class Test : MonoBehaviour
 
     [SerializeField] private TMP_Text m_infoText;
 
+    [SerializeField] private GameObject m_activePanel;
+
+    [SerializeField] private GameObject m_passivepanel;
+
+    [SerializeField] private GameObject m_hotbarPanel;
+
 
     private void Start()
     {
@@ -33,9 +36,19 @@ public class Test : MonoBehaviour
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
 
+        m_activePanel.SetActive(false);
+        m_passivepanel.SetActive(false);
+        m_hotbarPanel.SetActive(false);
+
        // m_infoPanel.SetActive(false);
     }
 
+    public void SetInventoryVisibility(bool state)
+    {
+        m_activePanel.SetActive(state);
+        m_passivepanel.SetActive(state);
+        m_hotbarPanel.SetActive(state);
+    }
     public void ShowActiveButtons()
     {
         if (m_index == -1) return;
@@ -59,8 +72,8 @@ public class Test : MonoBehaviour
             m_hotbarActionPanel.SetActive(false);
 
             return;
-        }
 
+        }
         m_hotbarActionPanel.SetActive(true);
     }
     public void ShowItemInfo(Data data)
@@ -70,7 +83,7 @@ public class Test : MonoBehaviour
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
 
-        m_nameText.text = data.itemName;
+        m_nameText.text = data.ItemName;
 
         m_infoText.text = data.info;
     }
@@ -102,10 +115,7 @@ public class Test : MonoBehaviour
 
     private int m_index = -1;
 
-    private Data m_data;
-
     private bool m_isPassive;
-
     public void OnRemoveItem()
     {
         if (m_index == -1) return;
@@ -152,8 +162,6 @@ public class Test : MonoBehaviour
         m_infoText.gameObject.SetActive(false);
 
         m_index = -1;
-
-        m_data = null;
     }
 
     //=========hotbar=====================
@@ -192,18 +200,6 @@ public class Test : MonoBehaviour
     public void OnUseHotbar3()
     {
         inventorySystem.Use(2);
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //UI以外をクリックしたら閉じる
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                HideButtons();
-            }
-        }
     }
 
     //private void Update()

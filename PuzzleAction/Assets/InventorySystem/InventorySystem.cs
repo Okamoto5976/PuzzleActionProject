@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 
 public class ItemBox
 {
@@ -79,8 +78,8 @@ public class InventorySystem : MonoBehaviour
 
     public bool AddItem(Data data, int count)
     {
-        // Activeアイテム
-        if (data.itemType == ItemType.Active)
+       // Activeアイテム
+       if (data.ItemType == ItemType.Active)
         {
             return AddActiveItem(data, count);
         }
@@ -202,29 +201,29 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        // Hotbar
-        for (int i = 0; i < hotbars.Length; i++)
-        {
-            int index = hotbars[i];
+// Hotbar
+for (int i = 0; i < hotbars.Length; i++)
+{
+    int index = hotbars[i];
 
-            // 空なら消す
-            if (index < 0)
-            {
-                hotbarSlots[i].Clear();
-                continue;
-            }
+    // 空なら消す
+    if (index < 0)
+    {
+        hotbarSlots[i].Clear();
+        continue;
+    }
 
-            // インデックス範囲外
-            if (index >= activeInventory.Count)
-            {
-                hotbarSlots[i].Clear();
-                hotbarClear(i);
-                continue;
-            }
+    // インデックス範囲外
+    if (index >= activeInventory.Count)
+    {
+        hotbarSlots[i].Clear();
+        hotbarClear(i);
+        continue;
+    }
 
-            // 表示更新
-            hotbarSlots[i].SetItem(activeInventory[index], index);
-        }
+    // 表示更新
+    hotbarSlots[i].SetItem(activeInventory[index], index);
+}
     }
 
     public void RemoveActiveItem(int index)
@@ -288,7 +287,7 @@ public class InventorySystem : MonoBehaviour
 
         item.count--;
 
-        Debug.Log(item.data.itemName + " を使用");
+        Debug.Log(item.data.ItemName + " を使用");
 
         // 0以下なら削除
         if (item.count <= 0)
@@ -303,7 +302,7 @@ public class InventorySystem : MonoBehaviour
     //hotber
 
     //public int[] hotbares = new int[3];
-    public int[] hotbars = new int[3];
+    public int[]hotbars = new int[3];
 
 
     //ホットバーに追加

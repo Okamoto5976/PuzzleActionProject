@@ -23,7 +23,6 @@ public class SlotUI : MonoBehaviour
         m_icon.enabled = true;
         m_data = item.data;
 
-
         if (m_countText != null)
         {
             if (item.count > 1)
@@ -50,7 +49,7 @@ public class SlotUI : MonoBehaviour
 
         m_data = null;
 
-        m_testButton.HideButtons();
+        //m_testButton.HideButtons();
     }
 
     public void OnInventoryPanel()
@@ -61,6 +60,9 @@ public class SlotUI : MonoBehaviour
 
             return;
         }
+
+        Debug.Log(m_index);
+        Debug.Log(isPassive);
 
        m_testButton.SetIndex(m_index, isPassive);
 
