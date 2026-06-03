@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum TeamType
+{
+    Player,
+    Enemy,
+    Nature
+}
 [RequireComponent (typeof(Rigidbody))]
 abstract public class Entity : MonoBehaviour
 {
@@ -54,15 +59,10 @@ abstract public class Entity : MonoBehaviour
     protected AudioSource m_audioSource;
     public AudioSource AudioSource => m_audioSource;
 
-    public enum Teamtype
-    {
-        Player,
-        Enemy,
-        Nature
-    }
+    
 
-    [SerializeField] protected Teamtype m_team;
-    public Teamtype Team => m_team;
+    [SerializeField] protected TeamType m_team;
+    public TeamType Team => m_team;
 
     [SerializeField] private EntityData m_data;
 
@@ -169,7 +169,8 @@ abstract public class Entity : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(Entity attacker)//��XDamageData��DamageResult
+    //EntityをTakeDamageに
+    public virtual void TakeDamage(DamageData data)//��XDamageData��DamageResult
     {
         if (m_isInvincible) return;
 
@@ -177,7 +178,7 @@ abstract public class Entity : MonoBehaviour
         //HP�������Ȃ�(�g���b�v��)�Ή�
         if (m_entityHP == null) return;
 
-        m_entityHP.TakeDamage(attacker);
+        m_entityHP.TakeDamage(data);
     }
 
     //��ԕύX�p

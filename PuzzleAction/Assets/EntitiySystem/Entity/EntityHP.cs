@@ -7,7 +7,6 @@ abstract public class EntityHP : MonoBehaviour
     private AudioSource m_audioSource;
 
     private int m_currentHP;
-    //HPBer�Ȃǂ�
     public int CurrentHP { get => m_currentHP;}
 
     private void Awake()
@@ -23,22 +22,18 @@ abstract public class EntityHP : MonoBehaviour
         m_currentHP = (int)m_entity.HP;
     }
 
-    //trap���ŏ����������ł���悤virtual��
-    //trap��HP�̂Ȃ����̂����邽��
-    public virtual void TakeDamage(Entity attacker)//DamageData
+    public virtual void TakeDamage(DamageData data)//DamageData
     {
-        //�U�����Đ�
-        if (attacker.AttackSE != null)
+        if (data.AttackerSE != null)
         {
-            if (attacker.AudioSource != null)
+            if (data.AudioSource != null)
             {
-                attacker.AudioSource.PlayOneShot(attacker.AttackSE);
+                data.AudioSource.PlayOneShot(data.AttackerSE);
             }
         }
 
-        //������
         float hitRate =
-            100f + attacker.DEX - m_entity.DEX;
+            data.HitRate - m_entity.DEX;
 
         hitRate = Mathf.Clamp(hitRate, 0, 100);
 
@@ -48,23 +43,20 @@ abstract public class EntityHP : MonoBehaviour
             return;
         }
 
-        //Break����
         bool isBreak = false;
 
-        if(Random.Range(0f,100f)<=attacker.BreakRate)
+        if(Random.Range(0f,100f)<=data.BreakRate)
         {
             isBreak = true;
         }
 
-        //Critical����
         bool isCritical = false;
 
-        if(Random.Range(0f,100f)<=attacker.CriticalRate)
+        if(Random.Range(0f,100f)<=data.CriticalRate)
         {
             isCritical = true;
         }
 
-        //�_���[�W�v�Z
         int damage = 0;
 
         //Break
@@ -74,17 +66,15 @@ abstract public class EntityHP : MonoBehaviour
         }
         else
         {
-            //��{�_���[�W
-            damage = Mathf.Max((int)(attacker.STR - m_entity.DEF), 1);
+            damage = Mathf.Max(data.Attack -(int) m_entity.DEF, 1);
 
             //Critical
             if(isCritical)
             {
-                damage = (int)(damage * attacker.CriticalDamage);
+                damage = (int)(damage * data.CriticalDamage);
             }
         }
 
-        //HP����
             m_currentHP -= damage;
 
         m_currentHP = Mathf.Max( m_currentHP, 0 );
@@ -93,25 +83,19 @@ abstract public class EntityHP : MonoBehaviour
 
         Debug.Log($"����HP : {m_currentHP}");
 
-        //��_�����Đ�
         if(m_entity.DamageSE !=null&&m_audioSource!=null)
         {
             m_audioSource.PlayOneShot(m_entity.DamageSE);
         }
 
-        //�m�b�N�o�b�N
-        float knockBackPower = Mathf.Max(attacker.KnockBack - m_entity.DEF, 0);
+        float knockBackPower = Mathf.Max(data.Knockback - m_entity.DEF, 0);
 
-        //�X�^��
-        float stunPower = Mathf.Max(attacker.Stun - m_entity.StunRes, 0);
+        float stunPower = Mathf.Max(data.Stun - m_entity.StunRes, 0);
 
         float stunTime=stunPower * 0.1f;
 
-        //����
-        //���@�ʂ̂Ƃ��납��擾
-        Vector3 dir =(transform.position-attacker.transform.position).normalized;
+        Vector3 dir = data.AttackDir.normalized;
 
-        //������΂�
         m_entity.ApplyKnockBack(dir, knockBackPower,stunTime);
 
         //SE

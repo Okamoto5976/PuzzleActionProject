@@ -25,6 +25,20 @@ public class InheritanceTrap : Entity
             return;
         }
 
+        DamageData data = new DamageData();
+
+        data.Attack = m_damage;
+        data.HitRate = 100f;
+
+        data.Knockback = 0f;
+        data.Stun = 0f;
+        data.Duration = 0f;
+
+        data.AttackDir = (target.transform.position - transform.position).normalized;
+
+        data.Attacker = this;
+        data.AttackerSE = AttackSE;
+        data.AudioSource = AudioSource;
         //ìñÇΩÇÈÇ©
         //if(!CanHit(target))
         //{
@@ -38,6 +52,6 @@ public class InheritanceTrap : Entity
         //}
 
         //É_ÉÅÅ[ÉW
-        target.TakeDamage(this);
+        target.TakeDamage(data);
     }
 }

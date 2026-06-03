@@ -172,7 +172,7 @@ public class EnemyContllor : Entity
         Stop();
     }
 
-    private void Attack()
+    public void Attack()
     {
         //Attack Process
         Debug.Log("HIT");
