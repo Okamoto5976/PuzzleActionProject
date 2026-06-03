@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 
 public class ItemManager : MonoBehaviour
 {
-    public enum EfectType
+    public enum EffectType
     {
         Null,
         Heal,
@@ -71,7 +71,7 @@ public class ItemManager : MonoBehaviour
         defaultCapacity: 10, //‰ŠúƒTƒCƒY
 
             maxSize: 10); //ObjectPool‚ğ‰Šú‰»
-        //Entity entity = EfectType.Count; //enum‚Åí—Ş‚ğ“n‚·
+        //Entity entity = EffectType.Count; //enum‚Åí—Ş‚ğ“n‚·
 
 
 

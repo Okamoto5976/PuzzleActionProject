@@ -1,6 +1,6 @@
 using UnityEngine;
 
-/*public class TorpManager : MonoBehaviour
+/*public class TrapManager : MonoBehaviour
 {
     PlayerHealth PlayerHealth;
     [Header("ã©‚Ìƒ_ƒ[ƒW—Ê")]

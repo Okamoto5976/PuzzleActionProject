@@ -1,8 +1,8 @@
 using UnityEngine;
 [CreateAssetMenu(fileName = "SpecialItem", menuName = "Scriptable Objects/Datas/SpecialItem")]
-public class TorapItem : Item
+public class TrapItem : Item
 {
-    [SerializeField] private float torpvalue;
+    [SerializeField] private float trapValue;
     //trapType
     //{arrow,gas
 
