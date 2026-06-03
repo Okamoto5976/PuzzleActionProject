@@ -2,7 +2,7 @@ using UnityEngine;
 
 public struct ItemRecieveData
 {
-    public Entity entity;
+    //public Entity entity;
     public float baseValue; //Entity用　例）矢の攻撃力＋Entityの攻撃力
     public Vector3 pos;
     public Vector3 dir;//向き
@@ -15,7 +15,7 @@ abstract public class Item : ScriptableObject
 
     [SerializeField]protected ItemData m_data;
 
-    protected ItemPool itemPool;
+   // protected ItemPool itemPool;
     public int Id => m_data.ItemID;
 
     //ID　公開

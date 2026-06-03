@@ -28,7 +28,7 @@ public class BuffItem : Item
     [SerializeField] private float buffDuration; //バフ効果時間
     [SerializeField] private BuffType buffType; //バフの種類
     [SerializeField] private BUffEffectType buffEffectType; //バフの効果タイプ
-    Entity entity;
+    //Entity entity;
     public List <Item> Buffdata = new List<Item>();
     public override void Activation(float value, ItemRecieveData data)
     {
@@ -53,40 +53,40 @@ public class BuffItem : Item
             //entity.BuffSet(buffType, value, buffDuration); //EntityのBuffSetにbuffTypeとvalueとbuffDurationを渡す
             switch (buffType)
             {
-                case BuffType.AttackUp:
-                    //攻撃力上昇の処理
-                    data.entity.BuffSet(value); //攻撃力を上昇させる処理
-                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
-                    break;
-                case BuffType.DefenseUp:
-                    //防御力上昇の処理
-                    data.entity.BuffSet(value);
-                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
-                    break;
-                case BuffType.SpeedUp:
-                    //速度上昇の処理
-                    data.entity.BuffSet(value);
-                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
-                    break;
-                case BuffType.AttackDown:
-                    //攻撃力減少の処理
-                    data.entity.BuffSet(value);
-                    Buffdata.Add(this);
-                    break;
-                case BuffType.DefenseDown:
-                    //防御力減少の処理
-                    data.entity.BuffSet(value);
-                    Buffdata.Add(this);
-                    break;
-                case BuffType.SpeedDown:
-                    //速度減少の処理
-                    data.entity.BuffSet(value);
-                    Buffdata.Add(this);
-                    break;
-                default:
-                    //その他のバフの処理
-                    Debug.LogWarning("未定義のバフタイプです");
-                    break;
+                //case BuffType.AttackUp:
+                //    //攻撃力上昇の処理
+                //    data.entity.BuffSet(value); //攻撃力を上昇させる処理
+                //    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
+                //    break;
+                //case BuffType.DefenseUp:
+                //    //防御力上昇の処理
+                //    data.entity.BuffSet(value);
+                //    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
+                //    break;
+                //case BuffType.SpeedUp:
+                //    //速度上昇の処理
+                //    data.entity.BuffSet(value);
+                //    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
+                //    break;
+                //case BuffType.AttackDown:
+                //    //攻撃力減少の処理
+                //    data.entity.BuffSet(value);
+                //    Buffdata.Add(this);
+                //    break;
+                //case BuffType.DefenseDown:
+                //    //防御力減少の処理
+                //    data.entity.BuffSet(value);
+                //    Buffdata.Add(this);
+                //    break;
+                //case BuffType.SpeedDown:
+                //    //速度減少の処理
+                //    data.entity.BuffSet(value);
+                //    Buffdata.Add(this);
+                //    break;
+                //default:
+                //    //その他のバフの処理
+                //    Debug.LogWarning("未定義のバフタイプです");
+                //    break;
             }
             while (buffDuration > 0) //buffDurationが0になるまでループ
             {
@@ -94,7 +94,7 @@ public class BuffItem : Item
                                                //バフの効果を維持する処理
                 if ( buffDuration <= 0) //buffDurationが0以下になったらループを抜ける
                 {
-                    data.entity.BaseValueReset(value); //EntityのBaseValueを元に戻す処理
+                //    data.entity.BaseValueReset(value); //EntityのBaseValueを元に戻す処理
                     Buffdata.Remove(this); //BuffdataからこのBuffItemを削除
                 }
 

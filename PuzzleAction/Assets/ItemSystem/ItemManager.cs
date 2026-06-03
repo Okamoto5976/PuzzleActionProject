@@ -14,7 +14,7 @@ public class ItemManager : MonoBehaviour
     public List<Item> ItemList = new List<Item>();
  
 
-    //Listの中からIDと同じアイテムを探す
+ /*   //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
     {
         return ItemList.Find(x => x.Id == id);
@@ -32,7 +32,7 @@ public class ItemManager : MonoBehaviour
             Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
         }
 
-    }
+    }*/
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
