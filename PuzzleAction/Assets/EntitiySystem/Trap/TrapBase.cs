@@ -80,7 +80,7 @@ public class TrapBase : Entity
             }
         }
 
-        target.TakeDamage(m_damage);
+        //target.TakeDamage(m_damage);
         Debug.Log(other.name + "Hit");
 
         Destroy(gameObject);
