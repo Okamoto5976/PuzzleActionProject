@@ -1,13 +1,11 @@
-//using Unity.Multiplayer.Center.Common.Analytics;
-//using System.Net.NetworkInformation;
 using UnityEngine;
 
 public struct ItemRecieveData
 {
-    public Entity entity;
-    public float baseValue; //Entity—p@—áj–î‚ÌUŒ‚—Í{Entity‚ÌUŒ‚—Í
+    //public Entity entity;
+    public float baseValue; //Entityï¿½pï¿½@ï¿½ï¿½jï¿½ï¿½ÌUï¿½ï¿½ï¿½Í{Entityï¿½ÌUï¿½ï¿½ï¿½ï¿½
     public Vector3 pos;
-    public Vector3 dir;//Œü‚«
+    public Vector3 dir;//ï¿½ï¿½ï¿½ï¿½
     public Vector2 size;
 }
 
@@ -20,9 +18,9 @@ abstract public class Item : ScriptableObject
     public int Id => m_data.ItemID;
     public ItemData Data => m_data;
 
-    //ID@ŒöŠJ
+    //IDï¿½@ï¿½ï¿½ï¿½J
 
-    public void RecieveData(int id, ItemRecieveData data) //Entity‚ğˆø”‚É
+    public void RecieveData(int id, ItemRecieveData data) //Entityï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
 
         Activation(m_value, data);
@@ -32,17 +30,3 @@ abstract public class Item : ScriptableObject
     
  
 }
-/*using UnityEngine;
-
-public class Enemy : MonoBehaviour
-{
-    [SerializeField] private ItemPoolManager itemPool;
-
-    public void OnDeath()
-    {
-        // “G‚ÌˆÊ’u‚ÉƒAƒCƒeƒ€‚ğƒhƒƒbƒv
-        itemPool.DropItem(transform.position);
-        Destroy(gameObject);
-    }
-}
-*/

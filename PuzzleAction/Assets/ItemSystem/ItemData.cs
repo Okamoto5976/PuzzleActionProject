@@ -5,33 +5,36 @@ using UnityEngine;
 [System.Serializable]
 public class ItemData //: ScriptableObject
 {
-    //ƒAƒCƒeƒ€ƒ^ƒCƒv
-    [Header("Šî–{î•ñ")]
-    [SerializeField] private int itemID;
-    [SerializeField] private string itemName;       //ƒAƒCƒeƒ€–¼
-    [SerializeField] private Sprite itemIcon;       //ƒAƒCƒeƒ€ƒAƒCƒRƒ“   
-    [SerializeField] private Object itemPrefab;     //ƒAƒCƒeƒ€‚ÌƒvƒŒƒnƒu
-    [SerializeField] private string description;    //ƒAƒCƒeƒ€à–¾
-    [SerializeField] private int maxStack;          //Å‘åƒXƒ^ƒbƒN”
-    [SerializeField] private float dropRate;        //ƒhƒƒbƒv—¦
-    [SerializeField] private GameObject dorpPrefab; //ƒhƒƒbƒvƒAƒCƒeƒ€‚ÌƒvƒŒƒnƒu
+    //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½^ï¿½Cï¿½v
+    [Header("ï¿½ï¿½{ï¿½ï¿½ï¿½")]
+    [SerializeField] private int itemID;            //ï¿½Aï¿½Cï¿½eï¿½ï¿½ID
+    [SerializeField] private string itemName;       //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private Sprite itemIcon;       //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Aï¿½Cï¿½Rï¿½ï¿½   
+    [SerializeField] private Object itemPrefab;     //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
+    [SerializeField] private string description;    //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private int maxStack;          //ï¿½Å‘ï¿½Xï¿½^ï¿½bï¿½Nï¿½ï¿½
+    [SerializeField] private float dropRate;        //ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½
+    [SerializeField] private int itemGrade;         //ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½hï¿½iï¿½ï¿½F1=ï¿½ï¿½ÊA2=ï¿½ï¿½ï¿½Aï¿½A3=ï¿½Gï¿½sï¿½bï¿½Nï¿½È‚Çj
+    [SerializeField] private GameObject dropPrefab; //ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìƒvï¿½ï¿½ï¿½nï¿½u
+    [SerializeField] private int dropsize;          //ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½Tï¿½Cï¿½Y
     [SerializeField] private ItemType itemType;
     [SerializeField, Min(0)] private int price;
 
-    public int ItemID { get => itemID; }
-    public string ItemName { get => itemName; }
-    public Sprite ItemIcon { get => itemIcon; }
-    public string Description { get => description; }
-    public int MaxStack { get => maxStack; }
-    public float DropRate { get => dropRate; }
 
+    public int ItemID { get => itemID; }// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ID
+    public string ItemName { get => itemName; }// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ì–ï¿½ï¿½O
+    public Sprite ItemIcon { get => itemIcon; } // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÌƒAï¿½Cï¿½Rï¿½ï¿½
+    public string Description { get => description; }// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+    public int MaxStack { get => maxStack; }// ï¿½Å‘ï¿½Xï¿½^ï¿½bï¿½Nï¿½ï¿½
+    public float DropRate { get => dropRate; }// ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½ï¿½ï¿½iï¿½ï¿½F0.1=10%ï¿½ÌŠmï¿½ï¿½ï¿½Åƒhï¿½ï¿½ï¿½bï¿½vï¿½j
+    public int ItemGrade { get => itemGrade; }// ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½hï¿½iï¿½ï¿½F1=ï¿½ï¿½ÊA2=ï¿½ï¿½ï¿½Aï¿½A3=ï¿½Gï¿½sï¿½bï¿½Nï¿½È‚Çj
+    public GameObject ItemPrefab { get => ItemPrefab; }
+    public GameObject DropPrefab { get => dropPrefab; }
+    public int DropSize { get => dropsize; } // ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½mï¿½ï¿½ï¿½Ìdï¿½ï¿½
     public ItemType ItemType => itemType;
-    public int Price { get => price; }
+    public int Price => price;
+    public bool IsShopCompatible => price > 0;
 
-    public GameObject DropPrefab { get => dorpPrefab; }
-    public int dropWeight; // ƒhƒƒbƒvŠm—¦‚Ìd‚Ý
-
-    public bool IsShopCompatible => price != 0;
 }
 
 
