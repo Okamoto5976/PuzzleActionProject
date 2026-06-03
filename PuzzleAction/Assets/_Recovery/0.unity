@@ -169,7 +169,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 9aa4221aa2d0a6441b9a424c8caaa923, type: 2}
   m_BuildHeightMesh: 0
 --- !u!64 &221701212
 MeshCollider:
@@ -262,6 +262,51 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &564285931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 564285933}
+  - component: {fileID: 564285932}
+  m_Layer: 0
+  m_Name: ArrowSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &564285932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564285931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c89f5bd3202cfa478f4498d2778305d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ArrowSpawner
+  m_arrowPrefab: {fileID: 7885831428452714030, guid: 9d53ebe8d96a3864aa5caf70b17baf50, type: 3}
+--- !u!4 &564285933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564285931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.84683, y: 0.11982, z: 6.82342}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -428,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413486a484a766f4cadd334b4a601cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
-  m_target: {fileID: 0}
+  m_target: {fileID: 1909587328}
   m_attackValue: 1
   m_findRange: 8
   m_attackRange: 1.5
@@ -466,10 +511,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
-  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
   m_target: {fileID: 1909587332}
 --- !u!54 &1838854056
 Rigidbody:
@@ -883,12 +926,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bce176f5c5593f4fb24e52ec3b9b70b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 0
-  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
   m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!54 &1909587335
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -925,3 +966,4 @@ SceneRoots:
   - {fileID: 221701215}
   - {fileID: 1909587332}
   - {fileID: 1838854060}
+  - {fileID: 564285933}
