@@ -9,20 +9,20 @@ public class ItemDrop : MonoBehaviour
     private GameObject prefab;
 
     //public event Action m_event;
-    void Update()
-    {
-        if(Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= radius)
-        {
-            AddToInventory();
-        }
-    }
+    //void Update()
+    //{
+    //    if(Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= radius)
+    //    {
+    //        AddToInventory();
+    //    }
+    //}
 
-    void AddToInventory()
-    {
-        //InventoryManager .Instance.AddItem(item);
-        Destroy(gameObject);
-    }
-    //playerの座標か
+    //void AddToInventory()
+    //{
+    //    //InventoryManager .Instance.AddItem(item);
+    //    Destroy(gameObject);
+    //}
+    ////playerの座標か
     //自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
     private void ItemGet(Collider other)
     {
