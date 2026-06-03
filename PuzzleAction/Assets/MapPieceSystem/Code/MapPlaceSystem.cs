@@ -524,6 +524,9 @@ public class MapPlaceSystem : MonoBehaviour
     private List<int> m_bestPath;
     private List<List<int>> m_pathList;
 
+
+    //[SerializeField] private EventBusAsset 
+    [SerializeField] private List<InstanceCounter> m_instanceCounterList;
     //DFS‚ğŒÄ‚Ô
     //ƒ{ƒ^ƒ“‚Å
     public void OnClickDFS()
@@ -543,10 +546,15 @@ public class MapPlaceSystem : MonoBehaviour
 
         GenerateDoor();
 
+        //shopObject reset
+        foreach (var counter in m_instanceCounterList)
+        {
+            counter.ResetCount();
+        }
 
         //SceneMove‚É•ÏX
 
-        //SceneManager.LoadScene("MainMapClassScene");
+        SceneManager.LoadScene("MainMapClassScene");
     }
 
     //CallDFS‚©‚çŒÄ‚Î‚ê‚é
@@ -657,38 +665,4 @@ public class MapPlaceSystem : MonoBehaviour
 
         floor.SetState(Wall.WallState.door);
     }
-
-    //public bool OnBFS(Vector2Int startPos, Vector2Int endPos)
-    //{
-    //    //startPos‚Ìidæ“¾
-    //    int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
-    //    //endPos‚Ìidæ“¾
-    //    int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
-
-    //    Queue<int> queue = new Queue<int>();
-    //    HashSet<int> visited = new HashSet<int>();
-
-    //    queue.Enqueue(startID);
-    //    visited.Add(startID);
-
-    //    while (queue.Count > 0)
-    //    {
-    //        int currentID = queue.Dequeue();
-
-    //        foreach (var next in m_graph[currentID])
-    //        {
-    //            if (next == endID)
-    //            {
-    //                return true;
-    //            }
-
-    //            if (visited.Contains(next)) continue;
-
-    //            queue.Enqueue(next);
-    //            visited.Add(next);
-    //        }
-    //    }
-
-    //    return false;
-    //}
 }
