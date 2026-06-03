@@ -31,7 +31,7 @@ public class ItemData //: ScriptableObject
     public GameObject DropPrefab { get => dorpPrefab; }
     public int dropWeight; // ドロップ確率の重み
 
-
+    public bool IsShopCompatible => price != 0;
 }
 
 

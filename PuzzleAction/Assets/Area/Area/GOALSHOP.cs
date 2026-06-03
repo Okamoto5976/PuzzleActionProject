@@ -10,13 +10,22 @@ public class GOALSHOP : MonoBehaviour
 {
     [SerializeField] private AreaType m_type;
 
+    [SerializeField] private InstanceCounter _shopInstanceCounter;
+    private int _shopId;
+
+
     private Transform m_playerTransform;
     [SerializeField] private float m_InteractDistance = 3.0f;//Player検知範囲
+    [SerializeField] private IntEventSO m_showShopId;
     [SerializeField] private BoolEventSO m_showShopUI;
 
     [SerializeField] private GameObject[] m_areaObject;
 
     private bool m_active = false;
+    private void Awake()
+    {
+        _shopId = _shopInstanceCounter.Register();
+    }
 
 
     private void Start()
@@ -70,6 +79,7 @@ public class GOALSHOP : MonoBehaviour
                 //AreaTypeがShopだった時の処理追加（Shopの起動）
                 //gameManager ShopUI true
                 m_active = !m_active;
+                m_showShopId.Raise(_shopId);
                 m_showShopUI.Raise(m_active);
                 break;
 
@@ -90,6 +100,7 @@ public class GOALSHOP : MonoBehaviour
                 Debug.Log("らっしゃい！");
                 //AreaTypeがShopだった時の処理追加（Shopの起動）
                 //gameManager ShopUI true
+                m_showShopId.Raise(_shopId);
                 m_showShopUI.Raise(m_active);
                 break;
 

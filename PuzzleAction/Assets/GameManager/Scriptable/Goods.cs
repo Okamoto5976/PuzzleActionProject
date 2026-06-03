@@ -13,6 +13,8 @@ public class Goods : MonoBehaviour,
     [SerializeField] private GameObject m_soldImage;
     [SerializeField] private TextMeshProUGUI m_priceText;
 
+    private int m_slotId;
+
     private bool m_soldOn = false;
 
     //仮　ItemDataに変更
@@ -27,14 +29,36 @@ public class Goods : MonoBehaviour,
         m_soldImage.SetActive(false);
     }
 
-    //仮　ItemDataの中のデータ（Iconと値段）を受け取る
-    public void Init(Data data,ShopManager manager)
+    /// <summary>
+    /// Initialize Slot
+    /// </summary>
+    /// <param name="shopManager"></param>
+    /// <param name="id"></param>
+    public void Init(ShopManager shopManager, int id)
     {
-        m_data = data;
-        m_shopManager = manager;
+        InjectShopManager(shopManager);
+        m_slotId = id;
+    }
 
+    /// <summary>
+    /// Inject SlotId
+    /// </summary>
+    /// <param name="id"></param>
+    public void InjectSlotId(int id) => m_slotId = id;
+
+    /// <summary>
+    /// Inject ShopManager
+    /// </summary>
+    /// <param name="manager"></param>
+    public void InjectShopManager(ShopManager manager) => m_shopManager = manager;
+
+    // Set Data
+    public void SetData(ShopItem shopItem)
+    {
+        m_data = shopItem.data;
         m_icon.sprite = m_data.Data.ItemIcon;
         m_priceText.text = m_data.Data.Price.ToString() + " $";
+        SetSoldVisibility(shopItem.IsSold);
     }
 
     //カーソルが上に乗った時
@@ -60,14 +84,19 @@ public class Goods : MonoBehaviour,
     //クリック時
     public void OnPointerClick(PointerEventData eventData)
     {
+        Debug.Log("Clicked!");
         //購入済みの際　買えない
         if (m_soldOn) return;
-
-        if(m_shopManager.PurchaseItem(m_data))
+        Debug.Log("Buying...");
+        if (m_shopManager.PurchaseItem(m_slotId))
         {
-            m_soldOn = true;
-
-            m_soldImage.SetActive(true);
+            SetSoldVisibility(true);
         }
+    }
+
+    private void SetSoldVisibility(bool state)
+    {
+        m_soldOn = state;
+        m_soldImage.SetActive(m_soldOn);
     }
 }

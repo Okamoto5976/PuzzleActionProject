@@ -1134,6 +1134,61 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1251004856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1251004858}
+  - component: {fileID: 1251004857}
+  m_Layer: 0
+  m_Name: TemporaryItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1251004857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251004856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2806fc0b786c534ea3ddffc9e3f6ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TemporaryItemManager
+  m_onGenerateShopInventory: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
+  m_masterItemDatas:
+  - {fileID: 11400000, guid: 86558c8220f7ee44e8d5f0b0627c00e6, type: 2}
+  - {fileID: 11400000, guid: 666433084fc0be848a3f2ee5bc68046a, type: 2}
+  - {fileID: 11400000, guid: dfe6e5d9371b56c408d71b768694dd0d, type: 2}
+  - {fileID: 11400000, guid: 38e25d40207fb534ab28f249a315d570, type: 2}
+  - {fileID: 11400000, guid: b52ebfab427c8d947854956f35e9f556, type: 2}
+  - {fileID: 11400000, guid: 95253c96720d3524bbfe98942950b24e, type: 2}
+  - {fileID: 11400000, guid: 95253c96720d3524bbfe98942950b24e, type: 2}
+  - {fileID: 11400000, guid: 95253c96720d3524bbfe98942950b24e, type: 2}
+  - {fileID: 11400000, guid: 95253c96720d3524bbfe98942950b24e, type: 2}
+--- !u!4 &1251004858
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251004856}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.26577, y: 0, z: 11.08082}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1585637270 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7174138788086197111, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
@@ -4275,6 +4330,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1940521860}
     - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_shopCount
+      value: 
+      objectReference: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
+    - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_shopIdEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 5eebf7a62372b904b91ac504c2d6f6e9, type: 2}
+    - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_currentLevel
+      value: 
+      objectReference: {fileID: 11400000, guid: 5941a506a3cc5f04ca2734ec88234660, type: 2}
+    - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_infoTextPrefab
       value: 
       objectReference: {fileID: 1940521861}
@@ -4282,6 +4349,10 @@ PrefabInstance:
       propertyPath: m_inventorySystem
       value: 
       objectReference: {fileID: 1128147158}
+    - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_temporaryItemManager
+      value: 
+      objectReference: {fileID: 1251004857}
     - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_goodsPrefab.Array.size
       value: 6
@@ -4310,6 +4381,10 @@ PrefabInstance:
       propertyPath: 'm_goodsPrefab.Array.data[5]'
       value: 
       objectReference: {fileID: 1940521862}
+    - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_onGenerateShopInventories
+      value: 
+      objectReference: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4330,3 +4405,4 @@ SceneRoots:
   - {fileID: 1940521859}
   - {fileID: 1921030341}
   - {fileID: 1128147157}
+  - {fileID: 1251004858}
