@@ -5,6 +5,5 @@ using UnityEngine;
 public class dropTest : MonoBehaviour
 {
     
-    //Dropper.DropItem(transform.positon);
 
 }

@@ -7,7 +7,7 @@ public class ItemManager : MonoBehaviour
   
     //[SerializeField] private EntityData entityprefab;
 
-    //private int nextId = 1; //次のIDを管理する変数
+    private int nextId; //次のIDを管理する変数
     
 
     //リスト初期化
@@ -19,20 +19,20 @@ public class ItemManager : MonoBehaviour
     {
         return ItemList.Find(x => x.Id == id);
     }
-    //public void ItemUse(int id , Entity entity)  // Entity
-    //{
-    //    //見つけたアイテムを使用する
-    //    Item item = LookForID(id);
-    //    if (item != null)
-    //    {
-    //        //item.RecieveData(id, );
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
-    //    }
+    public void ItemUse(int id , Entity entity)  // Entity
+    {
+        //見つけたアイテムを使用する
+        Item item = LookForID(id);
+        if (item != null)
+        {
+            //item.RecieveData(id, );
+        }
+        else
+        {
+            Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
+        }
 
-    //}
+    }
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()

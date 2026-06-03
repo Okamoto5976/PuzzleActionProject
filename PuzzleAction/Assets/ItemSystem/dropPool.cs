@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 
@@ -9,7 +8,7 @@ public class dropPool : MonoBehaviour
     [System.Serializable]
     public class PoolItem
     {
-        ItemData i_data;
+        public ItemData i_data;
         public GameObject prefab;
         public int poolSize = 5;
         [Range(0f, 1f)]
@@ -90,7 +89,12 @@ public class dropPool : MonoBehaviour
     {
         item.SetActive(false); // アイテムを非アクティブにする
         pools[prefab].Enqueue(item);
-        //pool.Enqueue(obj); // アイテムをプールに戻す
+        pools[item].Enqueue(prefab); // アイテムをプールに戻す
+    }
+
+    internal void ReturnItem(Item item, GameObject prefab)
+    {
+        throw new System.NotImplementedException();
     }
 }
 

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuffItem", menuName = "Scriptable Objects/Datas/BuffItem")]
 public class BuffItem : Item 
@@ -28,8 +28,8 @@ public class BuffItem : Item
     [SerializeField] private float buffDuration; //バフ効果時間
     [SerializeField] private BuffType buffType; //バフの種類
     [SerializeField] private BUffEffectType buffEffectType; //バフの効果タイプ
-
-
+    Entity entity;
+    public List <Item> Buffdata = new List<Item>();
     public override void Activation(float value, ItemRecieveData data)
     {
         //以下は効果時間アイテムの話
@@ -55,23 +55,33 @@ public class BuffItem : Item
             {
                 case BuffType.AttackUp:
                     //攻撃力上昇の処理
-                    //attack = entity.BaseValue + value; //攻撃力を上昇させる処理
+                    data.entity.BuffSet(value); //攻撃力を上昇させる処理
+                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
                     break;
                 case BuffType.DefenseUp:
                     //防御力上昇の処理
-
+                    data.entity.BuffSet(value);
+                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
                     break;
                 case BuffType.SpeedUp:
                     //速度上昇の処理
+                    data.entity.BuffSet(value);
+                    Buffdata.Add(this); //BuffdataにこのBuffItemを追加
                     break;
                 case BuffType.AttackDown:
                     //攻撃力減少の処理
+                    data.entity.BuffSet(value);
+                    Buffdata.Add(this);
                     break;
                 case BuffType.DefenseDown:
                     //防御力減少の処理
+                    data.entity.BuffSet(value);
+                    Buffdata.Add(this);
                     break;
                 case BuffType.SpeedDown:
                     //速度減少の処理
+                    data.entity.BuffSet(value);
+                    Buffdata.Add(this);
                     break;
                 default:
                     //その他のバフの処理
@@ -82,15 +92,17 @@ public class BuffItem : Item
             {
                 buffDuration = Time.deltaTime; //buffDurationを減らす
                                                //バフの効果を維持する処理
-                if (buffDuration <= 0) //buffDurationが0以下になったらループを抜ける
+                if ( buffDuration <= 0) //buffDurationが0以下になったらループを抜ける
                 {
-                    //BaseValueReset(entity); //EntityのBaseValueを元に戻す処理
+                    data.entity.BaseValueReset(value); //EntityのBaseValueを元に戻す処理
+                    Buffdata.Remove(this); //BuffdataからこのBuffItemを削除
                 }
 
             }
             //if (HP == 0)
             //{
             //    //HPが0になったときの処理
+            //    data.Entity.BuffSet();
             //    BaseValueReset(entity); //EntityのBaseValueを元に戻す処理
             //}
 

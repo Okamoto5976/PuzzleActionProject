@@ -1,13 +1,9 @@
-
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HealItem", menuName = "Scriptable Objects/Datas/HealItem")]
 
 public class HealItem : Item
 {
-
-
-    //[SerializeField] private ItemData ItemName;
     [SerializeField] private float HealingInterval;
     [SerializeField] private float HealTime;
 

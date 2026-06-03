@@ -26,7 +26,7 @@ public class ItemData //: ScriptableObject
     public int MaxStack { get => maxStack; }// 最大スタック数
     public float DropRate { get => dropRate; }// ドロップ率（例：0.1=10%の確率でドロップ）
     public int ItemGrade { get => itemGrade; }// アイテムのグレード（例：1=一般、2=レア、3=エピックなど）
-
+    public GameObject ItemPrefab { get => ItemPrefab; }
     public GameObject DropPrefab { get => dropPrefab; }
     public int DropSize { get => dropsize; } // ドロップ確率の重み
 
