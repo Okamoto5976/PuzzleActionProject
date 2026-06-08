@@ -81,7 +81,7 @@ abstract public class EntityHP : MonoBehaviour
 
         Debug.Log($"{gameObject.name} : {damage}damage");
 
-        Debug.Log($"����HP : {m_currentHP}");
+        Debug.Log($"HP : {m_currentHP}");
 
         if(m_entity.DamageSE !=null&&m_audioSource!=null)
         {
@@ -97,30 +97,6 @@ abstract public class EntityHP : MonoBehaviour
         Vector3 dir = data.AttackDir.normalized;
 
         m_entity.ApplyKnockBack(dir, knockBackPower,stunTime);
-
-        //SE
-        //��_��SE
-
-        //�_���[�W�v�Z
-
-        //��������{100
-        //DEX�m��
-        //BreakRate����true�Ȃ�9999
-        //Critical���ǂ���bool
-        //HP -= (STR - DEF) * critical
-        //�m�b�N�o�b�N�istunRes�Ōy���j�傫���ŕ��A�̑��x�ύX
-        //�X�^���m�� 10% 1�b�@�@100���@10�b
-
-        //Damage();
-        //KnockBack();
-
-        //effect audio�Đ� hit����
-        //�U���̉��́@�^�_���̂ق���
-        //�U�����ꂽ���͔�_���̂ق���
-        //��_�����͎��g�̓����ɂ����_���������� ��j�X���C���@�́@�S���x�̂��鉹
-        //����ȉ�������ꍇ�́@�_���[�WData�ɓn���@�i���̉��Ƃ�
-
-        //���S
 
         if ( m_currentHP <= 0 ) 
         {

@@ -58,26 +58,31 @@ public class HitCollider : MonoBehaviour
     {
         // ヒットした判定のセット
         //HashSet<Entity> hitSet = new();
-
-        foreach (var hitBox in hitBoxes)
         {
-            if (attackHitBox == hitBox) continue;
-            if (hitBox.m_transform == null) continue;
-
-            //Collider[] hits = Physics.OverlapSphere(
-            //    hitBox.m_transform.position,
-            //    hitBox.m_radius
-            //);
-
-            Transform[] hits = My_OverlapSphere(
-                attackHitBox
-            );
+            Collider[] hits = Physics.OverlapSphere(
+                attackHitBox.m_transform.position,
+                attackHitBox.m_radius
+                       );
             
 
             //Debug.Log($"hits.Length : {hits.Length}");
 
             foreach (var hit in hits)
             {
+                Entity entity = hit.GetComponentInParent<Entity>();
+
+                if (entity == null)
+                {
+                    continue;
+                }
+                if(entity.Team==myTeam)
+                {
+                    continue;
+                }
+
+                entity.TakeDamage(data);
+
+                Debug.Log($"{entity.name}にヒット");
                 //Debug.Log($"hit : {hit}");
                 //var damageable = hit.GetComponentInParent<IDamage>();
                 //if (damageable == null) continue;
@@ -107,19 +112,19 @@ public class HitCollider : MonoBehaviour
                 //hitSet.Add(damageable);
 
                 //Vector3 hitPoint = col.ClosestPoint(hitBox.m_transform.position);
-                Vector3 hitPoint = My_ClosestPoint(hit.transform.position, hitBox.m_transform.position, hitBox.m_radius);
-                Vector3 hitNormal = (hitPoint - hitBox.m_transform.position).normalized;
+                //Vector3 hitPoint = My_ClosestPoint(hit.transform.position, hitBox.m_transform.position, hitBox.m_radius);
+                //Vector3 hitNormal = (hitPoint - hitBox.m_transform.position).normalized;
                 //Debug.Log($"hitName : {hit.name} , hitPos : {hit.transform.position} , hitBoxPos : {hitBox.m_transform.position}");
                 //Debug.Log($"hitPoint : {hitPoint}");
 
-                DamageResult result = new DamageResult
-                {
-                    hitPoint = hitPoint,
-                    hitNormal = hitNormal,
+                //DamageResult result = new DamageResult
+                //{
+                //    hitPoint = hitPoint,
+                //    hitNormal = hitNormal,
 
                     //overrideEffectData = m_overrideEffect,
                     //overrideAudioData = m_overrideAudio
-                };
+                //};
 
                 //entity.OnTakeDamage(data, result);
                 //damageable.TakeDamage(data, result);

@@ -21,6 +21,14 @@ public class EnemyContllor : Entity
     [SerializeField] private float m_findRange = 8f;
     [SerializeField] private float m_attackRange = 1.5f;
 
+    [Header("Attack")]
+    [SerializeField] private float m_attackCooldown = 5f;
+    private float m_attackCooldownDuration;
+    private bool m_isCooldownEnd = false;
+
+    [SerializeField] private HitCollider m_hitCollider;
+    [SerializeField] private AttackHitBox m_attackHitBox;
+
     private NavMeshAgent m_agent;
     private Enemy_Chase m_chase;
     private Enemy_Rush m_rush;
@@ -28,6 +36,7 @@ public class EnemyContllor : Entity
     private bool m_isPreparing;
     public Transform Target => m_target;
     public NavMeshAgent Agent => m_agent;
+    public Vector3 Forward => transform.forward;
 
     protected override void Awake()
     {
@@ -49,6 +58,19 @@ public class EnemyContllor : Entity
     {
         if (m_target == null) return;
 
+        //attackCooldown---------------------
+        if (m_attackCooldownDuration > m_attackCooldown)
+        {
+            m_isCooldownEnd = true;
+            m_attackCooldownDuration = 0f;
+        }
+
+        if (!m_isCooldownEnd)
+        {
+            m_attackCooldownDuration += Time.deltaTime;
+        }
+        //------------------------------------
+
 
         float distance = Vector3.Distance(transform.position, m_target.transform.position);
 
@@ -63,7 +85,11 @@ public class EnemyContllor : Entity
         if (distance <= m_attackRange)
         {
             StopAll();
-            Attack();
+            if(m_isCooldownEnd)
+            {
+                Attack();
+                m_isCooldownEnd = false;
+            }
             return;
         }
 
@@ -111,7 +137,7 @@ public class EnemyContllor : Entity
 
         m_agent.Move(dir * m_agent.speed * Time.deltaTime);
 
-       // Rotate(dir);
+        //Rotate(dir);
     }
 
     private void StartRushPrepare()
@@ -139,7 +165,7 @@ public class EnemyContllor : Entity
         m_agent.speed = Speed;
         m_agent.acceleration = Speed * 5;
         m_agent.SetDestination(targetPos);
-        //Rotate(targetPos);
+        Rotate(targetPos);
     }
 
     //-----common-----
@@ -174,8 +200,24 @@ public class EnemyContllor : Entity
 
     public void Attack()
     {
+        //HitCollider‚ðŽg‚Á‚Ä
         //Attack Process
+        DamageData damage = new DamageData
+        {
+            Attack = (int)STR,
+            HitRate = 100f,
+            CriticalRate=CriticalRate,
+            CriticalDamage=CriticalDamage,
+            BreakRate=BreakRate,
+            Knockback=KnockBack,
+            Stun=Stun,
+            AttackDir=transform.forward,
+            Attacker=this,
+            AttackerSE=AttackSE,
+            AudioSource=AudioSource,
+        };
+
+        m_hitCollider.AttackCollider(damage,Team,m_attackHitBox);
         Debug.Log("HIT");
     }
-
 }

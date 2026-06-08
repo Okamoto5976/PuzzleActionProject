@@ -59,5 +59,4 @@ public class EntityBuffSystem : MonoBehaviour
         //buff.m_status.RemoveModifier(buff.m_modifier);
     }
 }
-//新しいバフを追加したときに使えるようにする
 

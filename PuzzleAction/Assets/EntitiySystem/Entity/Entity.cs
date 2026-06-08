@@ -172,10 +172,9 @@ abstract public class Entity : MonoBehaviour
     //EntityをTakeDamageに
     public virtual void TakeDamage(DamageData data)//��XDamageData��DamageResult
     {
+        Debug.Log("TakeDamageよばれた");
         if (m_isInvincible) return;
 
-        //�ǉ���������
-        //HP�������Ȃ�(�g���b�v��)�Ή�
         if (m_entityHP == null) return;
 
         m_entityHP.TakeDamage(data);

@@ -2,24 +2,23 @@ using UnityEngine;
 
 public enum StatusType
 {
-    HP, //�̗�
-    Strength,//�U����
-    KnockBack,//�m�b�N�o�b�N��
-    Defense,//�h��(�_���[�W��m�b�N�o�b�N����߂�j
-    Speed,//�X�s�[�h
-    DashSpeed,//�_�b�V��
-    CriticalRate, //�N���e�B�J����
-    CriticalDamage, //�N���e�B�J���_���[�W �{��1.3�Ƃ�
-    Dexterity, //�������@��{100
-    Agility,        //�U�����x(�G�̃X�e�[�^�X�j
-    Vision,         //���邳(Player�̃X�e�[�^�X�j
-    BreakRate,      //�ꌂ���i9999�_���̊m���j
-    Stun,           //�X�^���U���傫���@20���ő�@�ϐ�200���h���ɂ͕K�v
-    //��Ԉُ� Resistance�@100������b
-    PoisonRes,      //�őϐ�
-    StunRes,//�X�^���ϐ� �X�^���������Z �X�^���A�m�b�N�o�b�N����̕��A���x
-    SlowRes,//�ݑ��ϐ�
-    BlindRes//�Ӗڑϐ�
+    HP,
+    Strength,
+    KnockBack,
+    Defense,
+    Speed,
+    DashSpeed,
+    CriticalRate, 
+    CriticalDamage,
+    Dexterity,
+    Agility,  
+    Vision,   
+    BreakRate,
+    Stun,
+    PoisonRes,
+    StunRes,
+    SlowRes,
+    BlindRes
 }
 
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]
