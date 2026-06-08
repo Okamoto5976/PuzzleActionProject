@@ -59,6 +59,9 @@ public class MapPlaceSystem : MonoBehaviour
 
     private bool m_isDoorGenerate;
 
+    //error all connect roomcheck;
+    private HashSet<int> m_allRoomID;
+
 
     private void Awake()
     {
@@ -179,7 +182,7 @@ public class MapPlaceSystem : MonoBehaviour
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
                     if (!m_mapClass.IsRoomColliding(m_room, m_origin - m_difference))
                     {
-                        Debug.Log("On Place");
+                        //Debug.Log("On Place");
 
                         //=========シーン上のための処理=========
 
@@ -204,7 +207,7 @@ public class MapPlaceSystem : MonoBehaviour
                         //grid内でおけないとき　roompieceを　保存していた場所に返す
                         //room piece = null
 
-                        Debug.Log("No Place");
+                        //Debug.Log("No Place");
                         m_roomPieceParentObj.transform.position = obj.OriginalPos;
                         m_roomPieceParentObj = null;
 
@@ -213,7 +216,7 @@ public class MapPlaceSystem : MonoBehaviour
                 else
                 {
                     //grid外である時　その場に置く
-                    Debug.Log("NotFind Map");
+                    //Debug.Log("NotFind Map");
                     m_roomPieceParentObj = null;
                 }
             }
@@ -399,6 +402,8 @@ public class MapPlaceSystem : MonoBehaviour
     //floorのidを見て　そのidがどのidの部屋と隣接しているかみる
     public void GetNeighborRooms()
     {
+        m_allRoomID = new();
+
         m_graph.Clear();
         m_connectionMap.Clear();
 
@@ -409,6 +414,9 @@ public class MapPlaceSystem : MonoBehaviour
                 var id = m_mapClass.GetFloorID(x, y);
 
                 if (id == -1) continue;
+
+                //all place room id check
+                m_allRoomID.Add(id);
 
                 Vector2Int[] dirs =
                 {
@@ -506,7 +514,7 @@ public class MapPlaceSystem : MonoBehaviour
             return false;
         }
 
-        Debug.Log(current);
+        //Debug.Log(current);
 
 
         foreach (var next in m_graph[current].OrderBy(x => x))
@@ -531,11 +539,23 @@ public class MapPlaceSystem : MonoBehaviour
     //ボタンで
     public void OnClickDFS()
     {
-        if (!m_isDoorGenerate) return;
 
-        //startPosのid取得
+        if (!m_isDoorGenerate)
+        {
+            //errorcheck is not connect to start form end
+            Debug.Log("error: not connect to start from end");
+
+            return;
+        }
+
+        foreach (var placeId in m_graph.Keys)
+        {
+            
+        }
+
+        //Get startId
         int startID = m_mapClass.GetFloorID(m_startPos.x, m_startPos.y);
-        //endPosのid取得
+        //Get endId
         int endID = m_mapClass.GetFloorID(m_endPos.x, m_endPos.y);
 
         List<int> visited = new List<int>();//訪れたところ
@@ -544,7 +564,12 @@ public class MapPlaceSystem : MonoBehaviour
 
         OnDFS(startID, endID, visited);
 
-        GenerateDoor();
+        if(!GenerateDoor())
+        {
+            //errorcheck is all conect piece?
+            Debug.Log("error: not connect all piece");
+            return;
+        }
 
         //shopObject reset
         foreach (var counter in m_instanceCounterList)
@@ -587,7 +612,7 @@ public class MapPlaceSystem : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
 
-    public void GenerateDoor()
+    public bool GenerateDoor()
     {
         m_bestPath = new();
 
@@ -639,8 +664,20 @@ public class MapPlaceSystem : MonoBehaviour
 
         } while (added);
 
+        //errorcheck is all conect piece?
+        foreach (var placeId in m_allRoomID)
+        {
+            Debug.Log($"allRoomID{placeId}");
+            if (mainPath.Contains(placeId)) continue;
+            Debug.Log("check false");
+            return false;
+        }
+
         m_mapClassData.SetMapClass(m_mapClass);
         m_mapClassData.SetRoomDatas(m_roomData);
+        Debug.Log("check true");
+
+        return true;
     }
 
     private void Connect(int id, int next)
@@ -649,7 +686,7 @@ public class MapPlaceSystem : MonoBehaviour
         int to = next;
 
         var key = new EdgeKey(from, to);
-        m_mapClass.DebugPrintFloors();
+        //m_mapClass.DebugPrintFloors();
         if (!m_connectionMap.ContainsKey(key))
         {
             Debug.Log("Null");
