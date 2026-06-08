@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum MapPlaceErrorMessageType
@@ -20,15 +21,32 @@ public class MapPlaceErrorMessage : MonoBehaviour
 {
     [SerializeField] private List<MapPlaceErrorMessageData> m_errorList;
 
+    [SerializeField] private GameObject m_panel;
+    [SerializeField] private TextMeshProUGUI m_errorText;
+
     public void ShowErrorMessage(MapPlaceErrorMessageType type)
     {
-        switch (type)
-        {
-            case MapPlaceErrorMessageType.CountOver:
-                
 
-                break;
+        foreach(var error in m_errorList)
+        {
+            if(error.Type == type)
+            {
+                m_errorText.text = error.Message;
+            }
         }
+
+        OnShowErrorMessage();
+
     }
 
+    private void OnShowErrorMessage()
+    {
+        m_panel.SetActive(true);
+        Invoke(nameof(OnHideErrorMessage), 2f);
+    }
+
+    private void OnHideErrorMessage()
+    {
+        m_panel.SetActive(false);
+    }
 }

@@ -62,9 +62,12 @@ public class MapPlaceSystem : MonoBehaviour
     //error all connect roomcheck;
     private HashSet<int> m_allRoomID;
 
+    private MapPlaceErrorMessage m_errorMessageClass;
 
     private void Awake()
     {
+        m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
+
         InitializeMapGrid();
         m_build.Generate(m_size);
 
@@ -544,7 +547,7 @@ public class MapPlaceSystem : MonoBehaviour
         {
             //errorcheck is not connect to start form end
             Debug.Log("error: not connect to start from end");
-
+            m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotRouteConnected);
             return;
         }
 
@@ -568,6 +571,7 @@ public class MapPlaceSystem : MonoBehaviour
         {
             //errorcheck is all conect piece?
             Debug.Log("error: not connect all piece");
+            m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotPieceConnected);
             return;
         }
 
