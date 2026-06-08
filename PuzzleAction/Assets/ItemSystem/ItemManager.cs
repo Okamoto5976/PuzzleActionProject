@@ -1,25 +1,23 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ItemManager : MonoBehaviour
 {
-
-  
-    //[SerializeField] private EntityData entityprefab;
-
+    dropPool droppool;
     private int nextId; //次のIDを管理する変数
     
 
     //リスト初期化
     public List<Item> ItemList = new List<Item>();
- 
 
- /*   //Listの中からIDと同じアイテムを探す
+    //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
     {
         return ItemList.Find(x => x.Id == id);
     }
-    public void ItemUse(int id , Entity entity)  // Entity
+    public void ItemUse(int id/*, Entity entity*/)  // Entity
     {
         //見つけたアイテムを使用する
         Item item = LookForID(id);
@@ -32,16 +30,19 @@ public class ItemManager : MonoBehaviour
             Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
         }
 
-    }*/
+    }
+
+
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
     {
-        int index = Random.Range(0, ItemList.Count);
-        return ItemList[index];
+        int index = UnityEngine. Random.Range(0, ItemList.Count); //アイテムを抽選する
+        return ItemList[index]; // アイテムを渡す
 
     }
     //アイテムのエフェクトを呼び出す
+
 
 
 }

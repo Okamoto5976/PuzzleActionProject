@@ -19,7 +19,7 @@ public class ItemDrop : MonoBehaviour
 
     //void AddToInventory()
     //{
-    //    //InventoryManager .Instance.AddItem(item);
+       //InventoryManager .Instance.AddItem(item);
     //    Destroy(gameObject);
     //}
     ////playerÇÃç¿ïWÇ©
@@ -35,7 +35,7 @@ public class ItemDrop : MonoBehaviour
             }
             if (other.CompareTag("Player"))
             {
-                //Add.itemData;
+                //Add.inventory();
                 Return();
             }
         }
