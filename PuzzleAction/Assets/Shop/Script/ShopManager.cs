@@ -44,8 +44,7 @@ public class ShopManager : MonoBehaviour
     //MessageManagerを呼ぶ
     [SerializeField] private MessageManager m_messageManager;
 
-    //SaveSOを呼び出す
-    [SerializeField] private SaveSO saveData;
+    private DataManager m_dataManager;
 
     private void OnEnable()
     {
@@ -63,6 +62,7 @@ public class ShopManager : MonoBehaviour
     //仮　Initializeで呼ぶ
     private void Awake()
     {
+        m_dataManager = FindObjectOfType<DataManager>();
         m_infoTextPrefab.gameObject.SetActive(false);
 
         m_moneyText.text = "money :" + m_money.ToString();
@@ -129,10 +129,9 @@ public class ShopManager : MonoBehaviour
 
             m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
 
-            //保存
-            saveData.AddItem(data.m_id);
 
             //アイテム購入メッセージ表示
+            m_dataManager.AddItem(data.m_id);
             m_messageManager.ShowMessageByType(MessageType.Buy);
 
             m_messageManager.ResetTimer();
