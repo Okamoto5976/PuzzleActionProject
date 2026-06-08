@@ -48,6 +48,11 @@ public class Test : MonoBehaviour
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
+
+        if (!state)
+        {
+            HideButtons();
+        }
     }
     public void ShowActiveButtons()
     {
@@ -131,7 +136,7 @@ public class Test : MonoBehaviour
             inventorySystem.RemoveActiveItem(m_index);
         }
 
-            HideButtons();
+        HideButtons();
     }
 
     public void OnUseItem()
