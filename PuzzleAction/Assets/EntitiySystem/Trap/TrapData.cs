@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TrapData:ScriptableObject
 {
+    [Header("ƒ_ƒ[ƒW")]
     public int damage = 10;
 
+    [Header("Ë’ö")]
     public float range = 10f;
 }
