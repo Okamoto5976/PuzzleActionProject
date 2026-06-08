@@ -42,7 +42,7 @@ public class ItemManager : MonoBehaviour
 
     }
     //アイテムのエフェクトを呼び出す
-   
+
 
 }
 

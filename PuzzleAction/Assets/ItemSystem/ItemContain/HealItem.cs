@@ -19,7 +19,7 @@ public class HealItem : Item
             {
                 HealTime -= Time.deltaTime;
                 //yield return new WaitForSeconds(HealingInterval);
-                // entity = Mathf.Min(entity + itemvalue, maxHP);
+                //entity = Mathf.Min(entity + itemvalue, maxHP);
                 // return entity;
             }
         }
