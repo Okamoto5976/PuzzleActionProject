@@ -1,90 +1,93 @@
 using UnityEngine;
-using UnityEngine.AI;
+using System.Collections;
 
 [RequireComponent(typeof(LineRenderer))]
-public class Enemy_Rush : MonoBehaviour
+public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyContllor m_controller;
 
-    private LineRenderer m_line;
-
-    private Vector3 m_targetPos;
     private Vector3 m_dir;
+    private Vector3 m_targetPos;
 
     private bool m_isRunning;
-    private bool m_isPreparing;
+    private bool m_preparing;
+    
+    private LineRenderer m_line;
 
-    private Vector3 m_fixedDir;
-
+    public Vector3 CurrentDirection => m_dir;
     public bool IsRunning => m_isRunning;
+
+    private void Awake()
+    {
+        m_line = GetComponent<LineRenderer>();  
+        m_line.enabled = false;
+    }
 
     public void Initialized(EnemyContllor controller)
     {
         m_controller = controller;
-
-        m_line = GetComponent<LineRenderer>();
-        m_line.enabled = false;
     }
 
-    // 準備
-    public void Ready()
+    public void Execute()
     {
-        m_isPreparing = true;
-        m_line.enabled = true;
+        if (m_isRunning)
+        {
+            m_controller.Move(m_dir, m_controller.DashSpeed);
+
+            if (Vector3.Distance(transform.position, m_targetPos) < 0.5f)
+            {
+                Stop();
+            }
+            return;
+        }
+
+        if (m_preparing)
+        {
+            DrawLine();
+            return;
+        }
+
+        StartCoroutine(Rush());
     }
 
-    public void UpdatePrepare(Vector3 playerPos)
-    {
-        if (!m_isPreparing) return;
 
-        if (NavMesh.SamplePosition(playerPos, out NavMeshHit hit, 2f, NavMesh.AllAreas))
-            m_targetPos = hit.position;
-        else
-            m_targetPos = playerPos;
+    IEnumerator Rush()
+    {
+        m_preparing = true;
+
+        m_targetPos = m_controller.Target.position;
 
         m_dir = (m_targetPos - transform.position).normalized;
+        m_dir.y = 0;
 
-        //予測線表示
-        m_line.positionCount = 2;
-        m_line.SetPosition(0, transform.position);
-        m_line.SetPosition(1, m_targetPos);
-    }
+        m_line.enabled = true;
 
-    // 突進開始
-    public void StartRush()
-    {
-        m_isPreparing = false;
+        yield return new WaitForSeconds(5f);
+
+        m_preparing = false;
         m_isRunning = true;
 
-        m_fixedDir = m_dir;
         m_line.enabled = false;
+
+        yield return new WaitForSeconds(10f);
     }
-
-    public Vector3 GetDirection()
+    private void DrawLine()
     {
-        if (!m_isRunning) return Vector3.zero;
+        if (m_controller.Target == null) return;
 
-        if (Vector3.Distance(transform.position, m_targetPos) < 0.5f)
-        {
-            Stop();
-            return Vector3.zero;
-        }
+        m_line.positionCount = 2;
 
-        Vector3 next = transform.position + m_dir * 0.5f;
+        m_line.SetPosition(0, transform.position);
 
-        if (!NavMesh.SamplePosition(next, out _, 0.5f, NavMesh.AllAreas))
-        {
-            Stop();
-            return Vector3.zero;
-        }
-
-        return m_fixedDir;
+        m_line.SetPosition(1, m_targetPos);
     }
 
     public void Stop()
     {
         m_isRunning = false;
-        m_isPreparing = false;
+        m_preparing = false;
+
         m_line.enabled = false;
     }
+
 }

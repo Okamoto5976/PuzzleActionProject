@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy_Chase : MonoBehaviour
+public class Enemy_Chase : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyContllor m_enemyController;
 
@@ -17,9 +16,10 @@ public class Enemy_Chase : MonoBehaviour
     {
         if (m_enemyController.Target == null) return;
 
-        var agent = m_enemyController.Agent;
-        if(!agent.pathPending)
-            m_enemyController.SetDestination(m_enemyController.Target.position);
+        m_enemyController.SetDestination(
+            m_enemyController.Target.position,
+            m_enemyController.Speed
+            );
     }
 
     public void Stop()

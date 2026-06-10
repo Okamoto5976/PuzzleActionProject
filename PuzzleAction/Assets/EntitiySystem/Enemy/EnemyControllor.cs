@@ -5,15 +5,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyContllor : Entity
 {
-    public enum EnemyType
-    {
-        Chase,
-        Rush
-    }
-
-    [Header("Type")]
-    [SerializeField] private EnemyType m_type;
-
     [Header("Target")]
     [SerializeField] private Transform m_target;
 
@@ -30,8 +21,7 @@ public class EnemyContllor : Entity
     [SerializeField] private AttackHitBox m_attackHitBox;
 
     private NavMeshAgent m_agent;
-    private Enemy_Chase m_chase;
-    private Enemy_Rush m_rush;
+    private IEnemyBehaviour m_enemyBehaviour;
 
     private bool m_isPreparing;
     public Transform Target => m_target;
@@ -43,11 +33,12 @@ public class EnemyContllor : Entity
         base.Awake();
 
         m_agent = GetComponent<NavMeshAgent>();
-        m_chase = GetComponent<Enemy_Chase>();
-        m_rush = GetComponent<Enemy_Rush>();
+        m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
 
-        if (m_chase != null) m_chase.Initialized(this);
-        if (m_rush != null) m_rush.Initialized(this);
+        if (m_enemyBehaviour != null)
+        {
+            m_enemyBehaviour.Initialized(this);
+        }
 
         m_agent.updateRotation = false;
         m_agent.updatePosition = true;
@@ -76,6 +67,8 @@ public class EnemyContllor : Entity
 
         float distance = Vector3.Distance(transform.position, m_target.transform.position);
 
+        HandleRotation(distance);
+
         // out findRange
         if (distance > m_findRange)
         {
@@ -95,36 +88,14 @@ public class EnemyContllor : Entity
             return;
         }
 
-   
-        switch (m_type)
-        {
-            case EnemyType.Chase:
-                m_chase.Execute();
-                return;
-
-            case EnemyType.Rush:
-
-                if (m_rush.IsRunning)
-                {
-                    Move(m_rush.GetDirection());
-                    return;
-                }
-
-                if (m_isPreparing)
-                {
-                    m_rush.UpdatePrepare(m_target.transform.position);
-                    return;
-                }
-
-                StartRushPrepare();
-                return;
-        }
+        m_enemyBehaviour.Execute();
     }
 
     // NavMesh Move
-    //-----Rush-----
-    public void Move(Vector3 dir)
+    public void Move(Vector3 dir, float speed)
     {
+        //Rotate(dir);
+
         if (dir == Vector3.zero)
         {
             Stop();
@@ -133,41 +104,25 @@ public class EnemyContllor : Entity
 
         m_agent.isStopped = false;
 
-        m_agent.speed = DashSpeed;
+        m_agent.speed = speed;
+
         m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
         m_agent.avoidancePriority = 50;
 
         m_agent.Move(dir * m_agent.speed * Time.deltaTime);
 
-        //Rotate(dir);
     }
 
-    private void StartRushPrepare()
+    public void SetDestination(Vector3 targetPos, float speed)
     {
-        if (!m_isPreparing)
-        {
-            m_isPreparing = true;
-
-            m_rush.Ready();
-            StartCoroutine(RushDelay());
-        }
-    }
-
-    private IEnumerator RushDelay()
-    {
-        yield return new WaitForSeconds(Random.Range(0.5f, 1f));
-
-        m_rush.StartRush();
-        m_isPreparing = false;
-    }
-    //-----Chase-----
-    public void SetDestination(Vector3 targetPos)
-    {
+        //targetPos.y = 0;
+        //Rotate(targetPos);
         m_agent.isStopped = false;
-        m_agent.speed = Speed;
-        m_agent.acceleration = Speed * 5;
+        m_agent.speed = speed;
+        m_agent.acceleration = m_agent.speed * 2.5f;
+        m_agent.stoppingDistance = m_attackRange;
+
         m_agent.SetDestination(targetPos);
-        Rotate(targetPos);
     }
 
     //-----common-----
@@ -184,25 +139,36 @@ public class EnemyContllor : Entity
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(dir),
-            Time.deltaTime * 10
+            10 * Time.deltaTime
         );
     }
 
+    private void HandleRotation(float distance)
+    {
+        if (distance > m_findRange) return;
+
+        var rush = m_enemyBehaviour as Enemy_Rush;
+
+        if (rush != null && rush.IsRunning)
+        {
+            Rotate(rush.CurrentDirection);
+        }
+        else
+        {
+            Vector3 dir = m_target.position - transform.position;
+            Rotate(dir);
+        }
+    }
 
     private void StopAll()
     {
-        if (m_chase != null) m_chase.Stop();
-        if (m_rush != null) m_rush.Stop();
-
-        StopAllCoroutines();
-        m_isPreparing = false;
-
+        m_enemyBehaviour.Stop();
         Stop();
     }
 
     public void Attack()
     {
-        //HitCollider‚ðŽg‚Á‚Ä
+        //HitColliderï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½
         //Attack Process
         DamageData damage = new DamageData
         {
@@ -222,4 +188,12 @@ public class EnemyContllor : Entity
         m_hitCollider.AttackCollider(damage,Team,m_attackHitBox);
         Debug.Log("HIT");
     }
+}
+
+
+public interface IEnemyBehaviour
+{
+    void Initialized(EnemyContllor Controller);
+    void Execute();
+    void Stop();
 }
