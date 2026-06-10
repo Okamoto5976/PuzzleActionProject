@@ -18,21 +18,6 @@ public class MapPlaceBuild : MonoBehaviour
             }
         }
     }
-    public GameObject CreatePreviewMap(MapDefinition def, Transform parent)
-    {
-        GameObject root = new GameObject(def.m_name);
-        root.transform.parent = parent;
-
-        foreach (var pos in def.m_activeTiles)
-        {
-            var tile = Instantiate(m_cube, root.transform);
-
-            tile.transform.localPosition =
-                new Vector3((pos.x + 0.5f) * 1.5f, 0, (pos.y + 0.5f) * 1.5f);
-        }
-
-        return root;
-    }
     private GameObject InstantiateGridMap()
     {
         var obj = Instantiate(m_cube, m_parent);

@@ -62,11 +62,6 @@ public class MapPlaceSystem : MonoBehaviour
 
     private void Awake()
     {
-
-        m_mapClass = m_mapClassData.MapClass;
-        m_size = m_mapClass.Size;
-
-
         InitializeMapGrid();
         m_build.Generate(m_size);
 
