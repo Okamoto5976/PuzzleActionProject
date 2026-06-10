@@ -20,11 +20,12 @@ abstract public class Item : ScriptableObject
 
     //ID@ŒöŠJ
 
+
     
 
     public void RecieveData(int id, ItemRecieveData data) //Entity‚ğˆø”‚É
     {
-
+        
         Activation(m_value, data);
     }
 

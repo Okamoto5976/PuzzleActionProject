@@ -277,6 +277,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
+  EnemyName: 
+  DropList: []
+  ShopList: []
   ItemList:
   - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
   - {fileID: 11400000, guid: ffc372f43c79df34ebd05f365a9282fd, type: 2}
@@ -689,7 +692,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1647900279}
   - component: {fileID: 1647900280}
-  - component: {fileID: 1647900281}
   m_Layer: 0
   m_Name: dropManager
   m_TagString: Untagged
@@ -724,19 +726,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adc6beef49d0f74ca608147e2fdc720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::dropPool
-  doropList: []
---- !u!114 &1647900281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1647900278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6c04ae795e95ec43b23c644afe1c9b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::dropTest
+  ItemList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

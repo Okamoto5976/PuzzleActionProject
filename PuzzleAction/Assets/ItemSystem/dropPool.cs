@@ -1,62 +1,53 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.Pool;
+using static UnityEditor.PlayerSettings;
 
 
 
-public class dropPool : MonoBehaviour
+public class DropPool : MonoBehaviour
 {
-    [System.Serializable]
+     
+    
     public class PoolItem
     {
-        public string Enemeadrop;
-
-        [Range(0f, 1f)]
-        public float dropChance = 0.5f;
+        public List<Item> ItemList;
+        public ItemData Prefab;
+        public ItemData ItemSize;
     }
 
+    [SerializeField] private List<GameObject>initialList = new List<GameObject>();
+
     ItemData data;
-    public List<PoolItem> doropList;
+    private List<Item> ItemList = new List<Item>();
     private Dictionary<GameObject, Queue<GameObject>> pools;
     private Queue<GameObject> pool = new Queue<GameObject>();
-    private List<ItemData> DropList = new List<ItemData>();
+    private void Awake()
+    {
+        // 初期リストのデータをプールへ移行
+        foreach (var obj in initialList)
+        {
+            if (obj == null) continue;
+            obj.SetActive(false);  // 非表示にしてプールへ
+            pool.Enqueue(obj);
+        }
 
- //   private void Awake()
- //   {
- //       pools = new Dictionary<GameObject, Queue<GameObject>>();
- //       pools[data.Prefab] = ;
- //   }
+    }
 
- //   public void dorp(Vector3 position, ItemManager index)
- //   {
-        
- //       List<Item> condidatews = new DropList<Item>();
- //       //forearch(var  in item)
- //       //{
- //       //}
- //       PoolItem dropChance =Random.Range(0, DropList.Count);
-
- //       if (pools[data.Prefab] Count > 0)
-	//{
- //           GameObject item = pools[data.Prefab].Dequeue();
- //           item.transform.position = position;
- //           item.SetActive(false);
- //           Debug.Log($"{item.name}をドロップしました。");
+    public void Get(string id)
+    {
+        //return pool.Dequeue();
 
 
- //       }
- //       {
- //           GameObject item = Instantiate(data.Prefab, position, Quaternion.identity);
+    }
 
- //       }
-
- //   }
-
-
+   
     public void ReturnItem(GameObject item, GameObject prefab)
     {
-        item.SetActive(true); // アイテムを非アクティブにする
+        item.SetActive(false); // アイテムを非アクティブにする
+
         pools[data.Prefab].Enqueue(item);
         pools[item].Enqueue(prefab); // アイテムをプールに戻す
     }
@@ -65,7 +56,9 @@ public class dropPool : MonoBehaviour
     {
         throw new System.NotImplementedException();
     }
+
 }
+
 
 
 

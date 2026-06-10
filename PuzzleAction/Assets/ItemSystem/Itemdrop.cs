@@ -2,28 +2,16 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
+    ItemData data;
     Item item; // アイテムのクラス
     float radius = 3f; // アイテムを拾うための半径
     float timeToReturn = 5f; // アイテムが自動的に戻るまでの時間
-    dropPool pool; // アイテムを管理するドロッププールのクラス
+    DropPool pool; // アイテムを管理するドロッププールのクラス
     private GameObject prefab;
-
+    [SerializeField]public GameObject prefabPrefab; 
     //public event Action m_event;
-    //void Update()
-    //{
-    //    if(Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= radius)
-    //    {
-    //        AddToInventory();
-    //    }
-    //}
-
-    //void AddToInventory()
-    //{
-       //InventoryManager .Instance.AddItem(item);
-    //    Destroy(gameObject);
-    //}
-    ////playerの座標か
-    //自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
+    
+    ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
     private void ItemGet(Collider other)
     {
         if (Vector3.Distance(transform.position, other.transform.position) <= radius)

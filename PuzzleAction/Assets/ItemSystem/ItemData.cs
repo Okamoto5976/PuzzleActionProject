@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class ItemData //: ScriptableObject
 {
+  
+
     //アイテムタイプ
     [Header("基本情報")]
     [SerializeField] private int itemID;            //アイテムID
