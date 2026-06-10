@@ -24,6 +24,19 @@ abstract public class EntityHP : MonoBehaviour
 
     public virtual void TakeDamage(DamageData data)//DamageData
     {
+        switch (data.AttackType)
+        {
+            case AttackType.None:
+                break;
+
+            case AttackType.Recovery:
+                Heal(data.Attack);
+                break;
+
+            case AttackType.Fire:
+                break;
+        }
+
         if (data.AttackerSE != null)
         {
             if (data.AudioSource != null)

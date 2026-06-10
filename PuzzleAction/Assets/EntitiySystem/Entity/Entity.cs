@@ -45,6 +45,8 @@ abstract public class Entity : MonoBehaviour
     //protected Animator m_anim;
     protected EntityHP m_entityHP;
 
+    protected EntityBuffSystem m_buffSystem;
+
     //SE
     [SerializeField] 
     protected AudioClip m_attackSE;
@@ -93,6 +95,8 @@ abstract public class Entity : MonoBehaviour
         m_entityHP = GetComponent<EntityHP>();
         m_audioSource=GetComponent<AudioSource>();
 
+        m_buffSystem=GetComponent<EntityBuffSystem>();
+
         if (m_data == null) return;
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
         m_status.Add(StatusType.Strength, new EntityStatus(m_data.STR));
@@ -125,16 +129,24 @@ abstract public class Entity : MonoBehaviour
         return m_status[type];
     }
 
+    public void AddBuff(StatusModifier modifier,float duration)
+    {
+        if(m_buffSystem==null)
+        {
+            return;
+        }
+        m_buffSystem.AddBuff(modifier,duration);
+    }
     protected virtual void FixedUpdate()
     {
         if (m_isStun) return;
-
         OnMove(m_moveDir);
 
     }
 
-    private void Update()
+    protected virtual void Update()
     {
+
         if(m_isStun)
         {
             m_stunTime -= Time.deltaTime;
@@ -202,7 +214,6 @@ abstract public class Entity : MonoBehaviour
         //�X�^�����
         m_isStun = true;
         m_stunTime = stunTime;
-
         direction.y = 0;
 
         //���̑��x�����Z�b�g

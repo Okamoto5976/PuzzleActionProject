@@ -41,15 +41,17 @@ public class PlayerController : Entity
     //    m_dashAction.Disable();
     //}
 
-    //protected override void FixedUpdate()
-    //{
-    //    base.FixedUpdate();
-
-    //    //Player“Æ
-    //}
-
-    private void Update()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
+
+        //Player“Æ
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
         //ˆÚ“®§Œä
         //if(m_currentState != null && !m_currentState.CanMove)
         //{

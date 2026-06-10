@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
+public enum AttackType
+{
+None, 
+Recovery,
+Fire
+}
+
+
 public class DamageData
 {
     public int Attack;//
+    public AttackType AttackType;
     public float HitRate = 100f;//
     public float CriticalRate;//
     public float CriticalDamage;
