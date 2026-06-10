@@ -656,11 +656,10 @@ MonoBehaviour:
   m_attackSE: {fileID: 0}
   m_damageSE: {fileID: 0}
   m_team: 1
-  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
-  m_type: 0
+  m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
   m_target: {fileID: 1909587332}
   m_findRange: 8
-  m_attackRange: 1.5
+  m_attackRange: 5
   m_attackCooldown: 1.5
   m_hitCollider: {fileID: 1838854062}
   m_attackHitBox:
@@ -827,9 +826,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838854052}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e7e768d22e2e61408f53d26d4076bec, type: 3}
+  m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Chase
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
+  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
 --- !u!1 &1867688177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,5 +1199,3 @@ SceneRoots:
   - {fileID: 1909587332}
   - {fileID: 1838854060}
   - {fileID: 190813348}
-  - {fileID: 3881058307349249266}
-  - {fileID: 5128071108330377056}

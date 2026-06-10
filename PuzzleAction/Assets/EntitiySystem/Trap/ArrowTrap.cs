@@ -6,9 +6,11 @@ public class ArrowTrap : TrapBase
     [SerializeField]
     private TrapData m_trapdata;
 
-    public void Init(Vector3 dir, int baseValue)
+    public void Init(Entity entity, Vector3 dir, int baseValue)
     {
+        m_direction = dir.normalized;
         transform.rotation = Quaternion.LookRotation(dir);
+        m_owner = entity;
 
         m_basevalue = baseValue;
     }

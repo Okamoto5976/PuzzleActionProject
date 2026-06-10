@@ -12,7 +12,7 @@ public class TrapBase : Entity
     protected Entity m_owner;
 
     //range
-    protected float m_range;
+    protected float m_range = 10f;
 
     //basevalue
     protected float m_basevalue;
