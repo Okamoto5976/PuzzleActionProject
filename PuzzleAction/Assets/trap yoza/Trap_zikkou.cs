@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Trap_zikkou : MonoBehaviour
 {
+
     [Header("トラップの種類")]
     public GameObject m_TrapKinds;
     [Header("トラップの設定")]
@@ -16,8 +17,7 @@ public class Trap_zikkou : MonoBehaviour
             Debug.LogWarning("トラップのプレハブがセットされていません");
             return;
         }
-
-        //自分の位置にトラップ生成
+        //自分の位置にトラップ生成 
         GameObject trapObj = Instantiate(m_TrapKinds, transform.position, Quaternion.identity);
         Debug.Log($"[TEST] オブジェクトを生成しました: {trapObj.name}");
         var gas = trapObj.GetComponent<Gas_Trap>();
