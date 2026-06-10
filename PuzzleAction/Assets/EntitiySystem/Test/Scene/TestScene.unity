@@ -346,6 +346,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &998013432 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2055255562710447867, guid: 2a9a928f8fed7534d9d8c3cf8073674c, type: 3}
+  m_PrefabInstance: {fileID: 5128071108330377056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &998013436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998013432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22e6828b6e2255a40b1b753c41fa79ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RockTrap
+  m_team: 0
+  m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
+  m_trapdata: {fileID: 11400000, guid: 0a0eca8a05fa73a47b74e76775af260b, type: 2}
 --- !u!1 &1000502447
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1154,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2055255562710447867, guid: 2a9a928f8fed7534d9d8c3cf8073674c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 998013436}
   m_SourcePrefab: {fileID: 100100000, guid: 2a9a928f8fed7534d9d8c3cf8073674c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

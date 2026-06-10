@@ -1,133 +1,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwampTrap : Entity
+public class Swamp_Trap : Entity
 {
-    [SerializeField]
-    private SwampTrapData m_data;
+    private Vector3 m_Center;
+    private float m_Radius;
+    private float m_Slow;
 
-    private readonly Dictionary<Entity, StatusModifier>
-        m_slowTargets = new();
+   
+    // 現在沼の中で減速しているオブジェクト記録
+    private List<Entity> m_SlowedTargets = new List<Entity>();
 
-    public void Initialize(TrapUseData data)
+    ///<summary>
+    ///アイテム側から呼ぶ初期化
+    /// </summary>
+    public void Init(Vector3 pos,float radius,float slowMultiplier)
     {
-        transform.position = data.Position;
+        m_Slow = slowMultiplier;
+        transform.position = pos;
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        Entity target = other.GetComponent<Entity>();
+        if (target != null && target.Team == Entity.Teamtype.Nature)
+        {
+            if (!m_SlowedTargets.Contains(target))
+            {
+                m_SlowedTargets.Add(target);
+                Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が四角い沼に入った！速度を -{m_Slow} 倍にします");
+            }
+        }
     }
 
-    private void Update()
+   
+    private void OnTriggerExit(Collider other)
     {
-        Collider[] hits =
-            Physics.OverlapSphere(
-                transform.position,
-                m_data.m_radius
-            );
-
-        HashSet<Entity> currentTargets =
-            new();
-
-        foreach (Collider hit in hits)
+        Entity target = other.GetComponent<Entity>();
+        if (target != null && m_SlowedTargets.Contains(target))
         {
-            Entity target =
-                hit.GetComponent<Entity>();
-
-            if (target == null)
-            {
-                continue;
-            }
-
-            currentTargets.Add(target);
-
-            if (!m_slowTargets.ContainsKey(target))
-            {
-                StatusModifier slow =
-                    new StatusModifier();
-
-                slow.m_statType =
-                    StatusType.Speed;
-
-                slow.m_modType =
-                    ModifierType.Multiply;
-
-                slow.m_value =
-                    m_data.m_slowMultiplier;
-
-                slow.m_source =
-                    this;
-
-                target
-                    .GetStatus(StatusType.Speed)
-                    .AddModifier(slow);
-
-                m_slowTargets.Add(
-                    target,
-                    slow
-                );
-
-                Debug.Log(
-                    target.name +
-                    " が沼に入った"
-                );
-            }
-        }
-
-        List<Entity> removeList =
-            new();
-
-        foreach (var pair in m_slowTargets)
-        {
-            if (!currentTargets.Contains(pair.Key))
-            {
-                pair.Key
-                    .GetStatus(StatusType.Speed)
-                    .RemoveModifier(pair.Value);
-
-                removeList.Add(pair.Key);
-
-                Debug.Log(
-                    pair.Key.name +
-                    " が沼から出た"
-                );
-            }
-        }
-
-        foreach (Entity target in removeList)
-        {
-            m_slowTargets.Remove(target);
+            Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が四角い沼から出た！速度を戻します");
+            m_SlowedTargets.Remove(target);
         }
     }
 
     private void OnDestroy()
     {
-        foreach (var pair in m_slowTargets)
+        // 罠が途中で消えるときに、減速していた敵の速度をちゃんと安全に戻してあげる処理
+        foreach (var target in m_SlowedTargets)
         {
-            if (pair.Key != null)
+            if (target == null)
             {
-                pair.Key
-                    .GetStatus(StatusType.Speed)
-                    .RemoveModifier(pair.Value);
+                return;
+                // 速度を戻す処理
             }
         }
-
-        m_slowTargets.Clear();
     }
-
     private void OnDrawGizmosSelected()
     {
-        if (m_data == null)
+        BoxCollider box = GetComponent<BoxCollider>();
+        if (box != null)
         {
-            return;
+            Gizmos.color = new Color(0.5f, 0.25f, 0f); // 茶色っぽい線
+            Gizmos.DrawWireCube(transform.position + box.center, box.size);
         }
-
-        Gizmos.color =
-            new Color(
-                0.5f,
-                0.25f,
-                0f
-            );
-
-        Gizmos.DrawWireSphere(
-            transform.position,
-            m_data.m_radius
-        );
     }
-}
+}  
+

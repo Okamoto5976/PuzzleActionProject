@@ -1,138 +1,112 @@
 ﻿using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
-public class DynamiteTrap : Entity
+public class Dynamite_Trap : Entity
 {
-    [SerializeField]
-    private DynamiteTrapData m_data;
+    private Vector3 m_Center;
+    private float m_Radius;
+    private int m_DamageAmount;
 
-    private GameObject m_owner;
+    [Header("起動から爆発までの時間")]
+    [SerializeField] private float m_ExplosionDelay = 3.0f;
+    private float m_Timer = 0f;
+    private bool m_IsTriggered = false;//起爆スイッチが入ったか
 
-    private int m_damage;
+    private Entity m_dinamite;
 
-    private int m_baseValue;
-
-    private bool m_isTriggered;
-
-    private float m_timer;
-
-    public void Initialize(TrapUseData data)
+    ///<summary>
+    ///アイテム側から呼ぶ初期化
+    /// </summary>
+    public void Init(Vector3 pos, float radius, float power)
     {
-        transform.position = data.Position;
+        m_Center = pos;
+        m_Radius = radius;
+        m_DamageAmount = (int)power;
 
-        m_owner = data.Owner;
-
-        m_baseValue = data.BaseValue;
-
-        m_damage =
-            m_data.m_damage +
-            m_baseValue;
+        transform.position = pos;
     }
-
-    private void Update()
+    void Update()
     {
-        if (!m_isTriggered)
+        if (m_IsTriggered)
         {
-            return;
-        }
-
-        m_timer += Time.deltaTime;
-
-        if (m_timer >= m_data.m_explosionDelay)
-        {
-            Explosion();
+            m_Timer += Time.deltaTime;
+            if (m_Timer >= m_ExplosionDelay)
+            {
+                Explosion();//ドカン！！！
+            }
         }
     }
-
+    /// <summary>
+    /// テスト用　触れたら起爆にしたほうが攻撃したら起爆に近いと思ったから どっちも触れてはいる(消す)
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (m_isTriggered)
-        {
-            return;
-        }
-
-        Entity target =
-            other.GetComponent<Entity>();
-
+        //すでに起爆なら何もしない
+        if (m_IsTriggered) return;
+        Entity target = other.GetComponent<Entity>();
         if (target == null)
         {
             return;
         }
-
-        Entity ownerEntity =
-            m_owner.GetComponent<Entity>();
-
-        if (ownerEntity != null)
-        {
-            if (target.Team ==
-                ownerEntity.Team)
-            {
-                return;
-            }
-        }
-
-        TriggerExplosion();
-    }
-
-    public void TriggerExplosion()
-    {
-        if (m_isTriggered)
+        if (target.Team == Entity.Teamtype.Nature)
         {
             return;
+            //Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name}({target.m_MyTeam})がダイナマイトに触れた！");
         }
-
-        m_isTriggered = true;
-
-        Debug.Log("Dynamite Trigger");
+        TriggerExplosion();
     }
-
-    private void Explosion()
+    /// <summary>
+    /// 起爆スイッチ　ポチー
+    /// </summary>
+    public void TriggerExplosion()
     {
-        Collider[] hits =
-            Physics.OverlapSphere(
-                transform.position,
-                m_data.m_radius
-            );
+        if (m_IsTriggered) return;
 
-        foreach (Collider hit in hits)
+        m_IsTriggered = true;
+        Debug.Log($"[DYMAITTE]{gameObject.name}がダメージをウケた！{m_ExplosionDelay}秒後に爆発");
+    }
+    /// <summary>
+    /// 爆発処理
+    /// </summary>
+    private void Explosion()
+   {
+        Debug.Log("[DYNAMITE]💥ドォーーーン！！！爆破！");
+
+        // シーン内のすべてのターゲット検索
+        Entity[] allTargets = Object.FindObjectsByType<Entity>(FindObjectsSortMode.None);
+        foreach (var target in allTargets)
         {
-            Entity target =
-                hit.GetComponent<Entity>();
+            if (target == null || target == this) continue; // 自分自身（ダイナマイト）は除外
 
-            if (target == null)
+            float distance = Vector3.Distance(m_Center, target.transform.position);
+
+            if (distance <= m_Radius)
             {
-                continue;
+                // 自分と同じチームにはダメージを与えない（フレンドリーファイアなしの場合）
+                if (target.Team == this.Team) continue;
+
+                // 敵チームにダメージを与える
+                target.TakeDamage(m_DamageAmount);
+                Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name} に {m_DamageAmount} の爆発ダメージ！");
             }
-
-            Entity ownerEntity =
-                m_owner.GetComponent<Entity>();
-
-            if (ownerEntity != null)
-            {
-                if (target.Team ==
-                    ownerEntity.Team)
-                {
-                    continue;
-                }
-            }
-
-            target.TakeDamage(m_damage);
         }
 
+        // 自分自身を消去
         Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (m_data == null)
-        {
-            return;
-        }
+        Gizmos.color = m_IsTriggered ? Color.yellow : Color.red;
 
-        Gizmos.color = Color.red;
-
-        Gizmos.DrawWireSphere(
-            transform.position,
-            m_data.m_radius
-        );
+        float visualRadius = m_Radius > 0f ? m_Radius : 5f;
+        Gizmos.DrawWireSphere(transform.position, visualRadius);
     }
-}
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = m_IsTriggered ? Color.yellow : Color.red;
+    //    float visualRadius = m_Radius > 0f ? m_Radius : 5f;
+    //    Gizmos.DrawWireSphere(transform.position, visualRadius);
+    //}
+}   //

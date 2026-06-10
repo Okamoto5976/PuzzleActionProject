@@ -1,89 +1,55 @@
 using UnityEngine;
 
+
 public class Gas_Trap : Entity
 {
-    [SerializeField]
-    private GasTrapData m_data;
+    private Vector3 m_Center;
+    private float m_Radius;
+    private int m_DamageAmount;
 
-    private GameObject m_owner;
-
-    private int m_damage;
-
-    private int m_baseValue;
-
-    private float m_timer;
-
-    public void Initialize(TrapUseData data)
+    private float m_DamageInterval = 1.0f;
+    private float m_Timer;
+   
+    ///<summary>
+    ///アイテム側から呼ぶ初期化
+    /// </summary>
+    public void Init(Vector3 pos, float radius, int damage)
     {
-        transform.position = data.Position;
-
-        m_owner = data.Owner;
-
-        m_baseValue = data.BaseValue;
-
-        m_damage =
-            m_data.m_damage +
-            m_baseValue;
+        m_DamageAmount = damage;
+        transform.position = pos;
     }
-
-    private void Update()
+    void Update()
     {
-        m_timer += Time.deltaTime;
-
-        if (m_timer >= m_data.m_damageInterval)
-        {
-            DamageTargets();
-
-            m_timer = 0f;
-        }
+        m_Timer += Time.deltaTime;
     }
-
-    private void DamageTargets()
+    private void OnTriggerStay(Collider other)
     {
-        Collider[] hits =
-            Physics.OverlapSphere(
-                transform.position,
-                m_data.m_radius
-            );
-
-        foreach (Collider hit in hits)
+        // タイマーのタイミングがちょうど来たらダメージを計算する
+        if (m_Timer >= m_DamageInterval)
         {
-            Entity target =
-                hit.GetComponent<Entity>();
-
-            if (target == null)
+            Entity target = other.GetComponent<Entity>();
+            if (target != null)
             {
-                continue;
-            }
-
-            Entity ownerEntity =
-                m_owner.GetComponent<Entity>();
-
-            if (ownerEntity != null)
-            {
-                if (target.Team ==
-                    ownerEntity.Team)
+                // Nature（自然・中立）チーム以外ならダメージ！
+                if (target.Team == Entity.Teamtype.Nature)
                 {
-                    continue;
+                    m_Timer = 0;
+                    Debug.Log($"[GAS_BOX] {target.gameObject.name} ({target.Team}) に四角いエリア内で {m_DamageAmount} ダメージ！");
+
+                    // target.GetComponent<HPスクリプト>().ReduceHP(m_DamageAmount);
                 }
             }
-
-            target.TakeDamage(m_damage);
         }
     }
+
 
     private void OnDrawGizmosSelected()
     {
-        if (m_data == null)
+        BoxCollider box=GetComponent<BoxCollider>();
+        if (box != null) 
         {
-            return;
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(transform.position + box.center, box.size);
         }
-
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawWireSphere(
-            transform.position,
-            m_data.m_radius
-        );
     }
 }

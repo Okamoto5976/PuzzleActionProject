@@ -1,16 +1,16 @@
-using UnityEngine;
+//using UnityEngine;
 
-[CreateAssetMenu(
-    fileName = "DynamiteTrapData",
-    menuName = "Scriptable Objects/Trap/DynamiteTrapData")]
-public class DynamiteTrapData : ScriptableObject
-{
-    [Header("ダメージ")]
-    public int m_damage = 0;
+//[CreateAssetMenu(
+//    fileName = "DynamiteTrapData",
+//    menuName = "Scriptable Objects/Trap/DynamiteTrapData")]
+//public class DynamiteTrapData : ScriptableObject
+//{
+//    [Header("ダメージ")]
+//    public int m_damage = 0;
 
-    [Header("爆発範囲")]
-    public float m_radius = 0f;
+//    [Header("爆発範囲")]
+//    public float m_radius = 0f;
 
-    [Header("爆発までの時間")]
-    public float m_explosionDelay = 0f;
-}
+//    [Header("爆発までの時間")]
+//    public float m_explosionDelay = 0f;
+//}
