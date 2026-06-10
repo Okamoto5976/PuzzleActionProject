@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,8 +18,12 @@ public class EnemyContllor : Entity
     private float m_attackCooldownDuration;
     private bool m_isCooldownEnd = false;
 
+    [Header("ref")]
     [SerializeField] private HitCollider m_hitCollider;
     [SerializeField] private AttackHitBox m_attackHitBox;
+
+    [Header("Debug")]
+    [SerializeField] private ArrowTrap m_arrowPrefab;
 
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
@@ -125,6 +130,15 @@ public class EnemyContllor : Entity
         m_agent.SetDestination(targetPos);
     }
 
+    public void UseItem(Vector3 dir)
+    {
+        ArrowTrap arrow = Instantiate(
+            m_arrowPrefab
+        );
+
+        arrow.Init(this, dir, 5);
+        arrow.transform.position = transform.position;
+    }
     //-----common-----
     public void Stop()
     {
