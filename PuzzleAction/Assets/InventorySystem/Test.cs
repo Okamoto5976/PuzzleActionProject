@@ -48,6 +48,11 @@ public class Test : MonoBehaviour
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
+
+        if (!state)
+        {
+            HideButtons();
+        }
     }
     public void ShowActiveButtons()
     {

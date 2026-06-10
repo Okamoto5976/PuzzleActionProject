@@ -34,6 +34,13 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject activePanel;
     [SerializeField] private GameObject passivePanel;
     [SerializeField] private GameObject hotbarPanel;
+
+    [SerializeField] private SaveData saveData;
+
+    //ItemManager仮------------------------------------------
+    [SerializeField] private ItemManager itemManager;
+    //-------------------------------------------------------
+
     private void Awake()
     {
         activeSlots = activePanel.GetComponentsInChildren<SlotUI>(true);
@@ -53,6 +60,7 @@ public class InventorySystem : MonoBehaviour
         {
             hotbars[i] = -1;
         }
+        LoadInventory();
     }
     [SerializeField] private Data data;
 
@@ -74,6 +82,8 @@ public class InventorySystem : MonoBehaviour
     public void OnItem(Data data, int count)
     {
         AddItem(data, count);
+
+        SaveInventory();
     }
 
     public bool AddItem(Data data, int count)
@@ -350,6 +360,83 @@ for (int i = 0; i < hotbars.Length; i++)
         //
 
         //UseItem();ホットバーのアイテムを
+    }
+
+    //SaveDataを渡す処理
+    public void SaveInventory()
+    {
+        saveData.activeItems.Clear();
+        saveData.passiveItems.Clear();
+
+        foreach (ItemBox item in activeInventory)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            saveItem.id = item.data.ID;
+            saveItem.count = item.count;
+
+            saveData.activeItems.Add(saveItem);
+        }
+
+        foreach (ItemBox item in passiveInventory)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            saveItem.id = item.data.ID;
+            saveItem.count = item.count;
+
+            saveData.passiveItems.Add(saveItem);
+        }
+
+        Debug.Log("=== Active ===");
+
+        foreach (SaveItemData item in saveData.activeItems)
+        {
+            Debug.Log($"ID:{item.id} Count:{item.count}");
+        }
+
+        Debug.Log("=== Passive ===");
+
+        foreach (SaveItemData item in saveData.passiveItems)
+        {
+            Debug.Log($"ID:{item.id} Count:{item.count}");
+        }
+    }
+
+    public void LoadInventory()
+    {
+        activeInventory.Clear();
+        passiveInventory.Clear();
+
+        foreach (SaveItemData saveItem in saveData.activeItems)
+        {
+            Debug.Log($"ロード中 ID:{saveItem.id}");
+
+            Data data = itemManager.GetItem(saveItem.id);
+
+            if (data != null)
+            {
+                Debug.Log($"取得成功 {data.ItemName}");
+
+                activeInventory.Add(
+                    new ItemBox(data, saveItem.count)
+                );
+            }
+        }
+
+        foreach (SaveItemData saveItem in saveData.passiveItems)
+        {
+            Data data = itemManager.GetItem(saveItem.id);
+
+            if (data != null)
+            {
+                passiveInventory.Add(
+                    new ItemBox(data, saveItem.count)
+                );
+            }
+        }
+
+        UpdateUI();
     }
 
 }
