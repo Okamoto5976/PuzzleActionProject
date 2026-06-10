@@ -8,19 +8,23 @@ public class TrapBase : Entity
     //startPosition
     protected Vector3 m_startPosition;
 
-    //user
-    protected GameObject m_owner;
+    //user entity
+    protected Entity m_owner;
 
     //range
     protected float m_range;
 
-    //damage
-    protected int m_damage;
-
     //basevalue
-    protected int m_basevalue;
+    protected float m_basevalue;
 
     //Receive orientation
+
+    protected override void Awake()
+    {
+        base.Awake();
+        //Fix the rotation
+        m_rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
     public void SetDirection(Vector3 direction)
     {
         m_direction = direction.normalized;
@@ -55,35 +59,28 @@ public class TrapBase : Entity
     //Hit
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == m_owner)
-        {
-            return;
-        }
 
-        Entity target=
-            other.GetComponent<Entity>();
+        //layer check
 
+        Entity target = other.GetComponent<Entity>();
         if(target == null)
         {
             return;
         }
 
-        Entity ownerEntity=
-            m_owner.GetComponent<Entity>();
+        //if nature can takeDamage , this return delete
+        if (target.Team == Teamtype.Nature) return;
 
-        if (ownerEntity != null)
+        if(target.Team == m_owner.Team)
         {
-            if (target.Team == ownerEntity.Team)
-            {
-                return;
-            }
+            return;
         }
 
-        //target.TakeDamage(m_damage);
+        //target.TakeDamage(STR + m_basevalue);
         Debug.Log(other.name + "Hit");
 
         Destroy(gameObject);
-        //Œã‚Åpull
+        //ï¿½ï¿½ï¿½poolreturn;
     }
 }
 

@@ -28,15 +28,17 @@ public class ArrowItemTest : MonoBehaviour
 
         //使用者
         data.Owner =
-            gameObject;
+            m_owner.gameObject;
 
         //出現位置
         data.Position =
             transform.position;
 
         //使用方向
-        data.Direction =
-        m_owner.transform.forward;
+        data.Direction = m_owner.MoveDir;
+        //m_owner.transform.forward;
+        //Debug.Log(m_owner.name);
+        //Debug.Log(m_owner.transform.forward);
 
         //初期化
         arrow.Initialize( data );
