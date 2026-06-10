@@ -18,8 +18,9 @@ public class Gas_Trap : Entity
         m_DamageAmount = damage;
         transform.position = pos;
     }
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         m_Timer += Time.deltaTime;
     }
     private void OnTriggerStay(Collider other)
@@ -31,7 +32,7 @@ public class Gas_Trap : Entity
             if (target != null)
             {
                 // Nature（自然・中立）チーム以外ならダメージ！
-                if (target.Team == Entity.Teamtype.Nature)
+                if (target.Team ==TeamType.Nature)
                 {
                     m_Timer = 0;
                     Debug.Log($"[GAS_BOX] {target.gameObject.name} ({target.Team}) に四角いエリア内で {m_DamageAmount} ダメージ！");

@@ -23,7 +23,7 @@ public class Swamp_Trap : Entity
     private void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
-        if (target != null && target.Team == Entity.Teamtype.Nature)
+        if (target != null && target.Team ==TeamType.Nature)
         {
             if (!m_SlowedTargets.Contains(target))
             {

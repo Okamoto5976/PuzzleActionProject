@@ -54,8 +54,10 @@ public class EnemyContllor : Entity
     }
 
     
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (m_target == null) return;
 
         //attackCooldown---------------------

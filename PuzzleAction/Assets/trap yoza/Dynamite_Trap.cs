@@ -25,8 +25,10 @@ public class Dynamite_Trap : Entity
 
         transform.position = pos;
     }
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (m_IsTriggered)
         {
             m_Timer += Time.deltaTime;
@@ -48,7 +50,7 @@ public class Dynamite_Trap : Entity
         {
             return;
         }
-        if (target.Team == Entity.Teamtype.Nature)
+        if (target.Team == TeamType.Nature)
         {
             return;
             //Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name}({target.m_MyTeam})がダイナマイトに触れた！");
@@ -86,7 +88,7 @@ public class Dynamite_Trap : Entity
                 if (target.Team == this.Team) continue;
 
                 // 敵チームにダメージを与える
-                target.TakeDamage(m_DamageAmount);
+                //target.TakeDamage(m_DamageAmount);
                 Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name} に {m_DamageAmount} の爆発ダメージ！");
             }
         }

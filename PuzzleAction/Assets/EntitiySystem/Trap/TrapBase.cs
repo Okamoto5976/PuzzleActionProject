@@ -69,7 +69,7 @@ public class TrapBase : Entity
         }
 
         //if nature can takeDamage , this return delete
-        if (target.Team == Teamtype.Nature) return;
+        if (target.Team == TeamType.Nature) return;
 
         if(target.Team == m_owner.Team)
         {
