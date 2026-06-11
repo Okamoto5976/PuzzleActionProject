@@ -1,9 +1,7 @@
-using JetBrains.Annotations;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using static UnityEditor.PlayerSettings;
+
 
 
 
@@ -14,6 +12,7 @@ public class DropPool : MonoBehaviour
     public class PoolItem
     {
         public List<Item> ItemList;
+        public ItemData ItemID;
         public ItemData Prefab;
         public ItemData ItemSize;
     }
@@ -38,9 +37,7 @@ public class DropPool : MonoBehaviour
 
     public void Get(string id)
     {
-        //return pool.Dequeue();
-
-
+        return PoolItem.Find(x=> x.Id ==id);
     }
 
    
