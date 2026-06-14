@@ -71,17 +71,21 @@ public class MapPlaceSystem : MonoBehaviour
 
     private MapPlaceErrorMessage m_errorMessageClass;
     private BoardManager m_boardManager;
-    private RoomPieceManager m_roomPieceManager;
+
+    [SerializeField] private int m_enemyPieceMax;
+    private int m_enemyPieceCount;
+    [SerializeField] private int m_shopPieceMax;
+    private int m_shopPieceCount;
+    [SerializeField] private int m_trapPieceMax;
+    private int m_trapPieceCount;
 
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
         m_boardManager = GetComponent<BoardManager>();
-        m_roomPieceManager = GetComponent<RoomPieceManager>();
 
         InitializeMapGrid();
         m_boardManager.Generate(m_size);
-        m_roomPieceManager.OnCallGenerate();
         //m_build.Generate(m_size);
 
         //for(int i = 0; i < m_createRoomNumber; i++)
@@ -116,6 +120,11 @@ public class MapPlaceSystem : MonoBehaviour
     {
         MousePos();
 
+        if(m_roomPieceParentObj)
+        {
+
+        }
+
         #region マウス操作
         if (m_action.action.WasPressedThisFrame())
         {
@@ -140,12 +149,46 @@ public class MapPlaceSystem : MonoBehaviour
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
                     if (!m_mapClass.IsRoomColliding(m_room, m_origin - m_difference))
                     {
-                        //Debug.Log("On Place");
-
                         //========= Scene Processing =========
 
                         //if can not get GameScene gridObj, return;
                         if (m_gridObj == null) return;
+
+                        switch (roomPieceParent.AreaType)
+                        {
+                            case AreaType.None:
+                                break;
+                            case AreaType.Enemy:
+                                if (m_enemyPieceMax <= m_enemyPieceCount)
+                                {
+                                    RoomCountLimitError();
+                                    return;
+                                }
+
+                                m_enemyPieceCount++;
+
+                                break;
+                            case AreaType.Shop:
+                                if(m_shopPieceMax <= m_shopPieceCount)
+                                {
+                                    RoomCountLimitError();
+
+                                    return;
+                                }
+                                m_shopPieceCount++;
+
+                                break;
+                            case AreaType.Trap:
+                                if(m_trapPieceMax <= m_trapPieceCount)
+                                {
+                                    RoomCountLimitError();
+
+                                    return;
+                                }
+                                m_trapPieceCount++;
+
+                                break;
+                        }
 
                         m_gridObj.OnPlaceFloor(
                             m_room,
@@ -157,6 +200,7 @@ public class MapPlaceSystem : MonoBehaviour
                         Debug.Log("Place");
                         //======================================
 
+                       
                         PlaceRoom(roomPieceParent.AreaType);
 
                     }
@@ -165,11 +209,6 @@ public class MapPlaceSystem : MonoBehaviour
                         //grid内でおけないとき　roompieceを　保存していた場所に返す
                         //errormessage
                         Debug.Log("Error");
-
-
-                        //roomPieceParent.CallResetTransform();
-                        //m_roomPieceParentObj = null;
-
                     }
                 }
                 else
@@ -226,44 +265,7 @@ public class MapPlaceSystem : MonoBehaviour
                         break;
                     }
                 }
-                //var roomPieceObj = hit.collider.gameObject.GetComponent<RoomPiece>();
-                //if (roomPieceObj == null) return;
-
-                //m_difference = roomPieceObj.Index;
-
-                //var roomPieceParent = roomPieceObj.GetComponentInParent<RoomPieceParent>();
-
-                //m_roomPieceParentObj = roomPieceParent.gameObject;
-                //m_room = roomPieceParent.Room;
-                //Debug.Log("catch");
-
-                //if (roomPieceObj.IsPlace)
-                //{
-                //    //roomがありIsPlaceがtrueだったらRemoveRoom
-                //    //取得　
-                //    //m_roompiece = obj.Parent;
-                //    roomPieceParent.SetIsPlace(false);
-                //    m_roomPieceParentObj = roomPieceParent.gameObject;
-                //    m_room = roomPieceParent.Room;
-                //    //remove
-                //    //マウスカーソルのfloorのID
-                //    RemoveRoom();
-
-
-                //}
-                //else
-                //{
-                //    //roomがありIsPlaceがfalseだったら取得
-                //    //取得の際 現在のparentの位置を保存
-                //    roomPieceParent.SetOriginalPos();
-                //    m_roomPieceParentObj = roomPieceParent.gameObject;
-                //    m_room = roomPieceParent.Room;
-
-                //}
-
-
             }
-
         }
         #endregion
 
@@ -278,6 +280,13 @@ public class MapPlaceSystem : MonoBehaviour
                             );
             m_roomPieceParentRect.position = mouseScreenPos - differencePos;
         }
+    }
+
+    private void RoomCountLimitError()
+    {
+        //errorcheck is not connect to start form end
+        Debug.Log("error: not connect to start from end");
+        m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.CountOver);
     }
 
     private void MousePos()

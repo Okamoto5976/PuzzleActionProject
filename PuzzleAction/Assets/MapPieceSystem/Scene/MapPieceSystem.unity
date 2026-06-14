@@ -176,6 +176,9 @@ MonoBehaviour:
   m_startPos: {x: 0, y: 0}
   m_endPos: {x: 5, y: 5}
   m_roomPieceCanvas: {fileID: 515237897}
+  m_enemyPieceMax: 3
+  m_shopPieceMax: 3
+  m_trapPieceMax: 10
   m_instanceCounterList: []
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
 --- !u!114 &50533902
@@ -195,6 +198,8 @@ MonoBehaviour:
     Message: not connect all piece
   - Type: 3
     Message: not connect to start from end
+  - Type: 0
+    Message: this room is count over
   m_panel: {fileID: 474219650}
   m_errorText: {fileID: 1558637464}
 --- !u!114 &50533903
@@ -212,7 +217,10 @@ MonoBehaviour:
   m_MapPieceUI: {fileID: 608630134}
   m_roomPieceParent: {fileID: 3621389001753909684, guid: 25bd27e716aa7ac4695448e183184818, type: 3}
   m_roomPiece: {fileID: 7110370001246736035, guid: 79fef458a04c8654d8e4144e06e29400, type: 3}
-  m_pieceAmount: 10
+  m_pieceAmount: 20
+  m_enemyPieceMax: 0
+  m_shopPieceMax: 0
+  m_trapPieceMax: 0
 --- !u!114 &50533904
 MonoBehaviour:
   m_ObjectHideFlags: 0

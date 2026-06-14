@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Audio.ProcessorInstance;
 
 public class RoomPieceManager : MonoBehaviour
 {
@@ -8,14 +10,23 @@ public class RoomPieceManager : MonoBehaviour
     [SerializeField] private GameObject m_roomPieceParent;
     [SerializeField] private GameObject m_roomPiece;
 
-    [SerializeField] private int m_pieceAmount;
+    private Queue<RoomPieceParent> m_pieces = new();
 
-    public void OnCallGenerate()
+    [SerializeField] private int m_pieceAmount = 20;
+    [SerializeField] private int m_poolPieceAmount = 100;
+
+    //[SerializeField] private int m_normalRoomGenerate = 40;
+    //[SerializeField] private int m_enemyRoomGenerate = 20;
+    //[SerializeField] private int m_shopRoomGenerate = 20;
+    //[SerializeField] private int m_trapRoomGenerate = 20;
+
+    public void Awake()
     {
         for(int i = 0; i < m_pieceAmount; i++)
         {
             Room room = CreateRoom();
-            GenerateRoomObject(room);
+            RoomPieceParent piece= GenerateRoomObject(room);
+            //m_pieces.Enqueue(piece);
         }
     }
 
@@ -94,17 +105,17 @@ public class RoomPieceManager : MonoBehaviour
     #endregion
 
 
-    //シーン上でのマップピースを生成
-    public void GenerateRoomObject(Room room)
+    //map piece generate
+    public RoomPieceParent GenerateRoomObject(Room room)
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
+
         float rectX = UnityEngine.Random.Range(-300f, 300f);
         float rectY = UnityEngine.Random.Range(-500f, 500f);
 
-        RectTransform rect = parentObj.GetComponent<RectTransform>();
+        RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
         rect.anchoredPosition = new Vector2(rectX, rectY);
-
 
         for (int y = 0; y < room.Size.y; y++)
         {
@@ -151,6 +162,30 @@ public class RoomPieceManager : MonoBehaviour
 
                 break;
         }
+
+        return roomPieceParent;
+    }
+
+    public void ResetRoomPiece()
+    {
+        //一回全てけす
+        //見た目、　UIを右にスライド
+        //20こ　表示
+    }
+
+    private void ShowRoomObject()
+    {
+        //queueから取る
+        RoomPieceParent piece = m_pieces.Dequeue();
+
+        //座標をランダムにだし設置
+        float rectX = UnityEngine.Random.Range(-300f, 300f);
+        float rectY = UnityEngine.Random.Range(-500f, 500f);
+
+        RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
+
+        rect.anchoredPosition = new Vector2(rectX, rectY);
+        //繰り返す
     }
 
     public void OnResetTransform(RoomPieceParent piece)
