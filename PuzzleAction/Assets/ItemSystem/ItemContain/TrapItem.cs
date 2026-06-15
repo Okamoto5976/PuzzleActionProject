@@ -15,8 +15,9 @@ public class TrapItem : Item
         //objにEntity(Trap)がついている　Enityに dataのbaseValueを送る（コメントにする
         //EntityTrap.SetbaseValue(data.baseValue)                Trap側でTrapの攻撃力＋baseValue
         //objのEntityにmoveDirがあるからdataのdirを入れる
-        var entity = TrapPrefab.GetComponent<Entity>();
+        //var entity = TrapPrefab.GetComponent<Entity>();
         TrapPrefab.transform.position = data.pos;
         TrapPrefab.transform.rotation = Quaternion.LookRotation(data.dir);
+        //entity.moveDir = data.dir;
     }
 }
