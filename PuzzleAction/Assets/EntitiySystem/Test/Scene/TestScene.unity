@@ -665,6 +665,7 @@ MonoBehaviour:
   m_attackHitBox:
     m_transform: {fileID: 544160406}
     m_radius: 1
+  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
 --- !u!54 &1838854056
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -829,7 +830,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
-  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
 --- !u!1 &1867688177
 GameObject:
   m_ObjectHideFlags: 0
