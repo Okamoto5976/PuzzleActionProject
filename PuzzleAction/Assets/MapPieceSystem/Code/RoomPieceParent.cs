@@ -10,6 +10,8 @@ public class RoomPieceParent : MonoBehaviour
 
     private Room m_room;
 
+    private Vector2 m_recodePos;
+
     private AreaType m_areaType;
 
     private RoomPiece[] m_pieces;
@@ -38,6 +40,11 @@ public class RoomPieceParent : MonoBehaviour
         m_room = room;
     }
 
+    public void SetRecodePos()
+    {
+        m_recodePos = m_rect.anchoredPosition;
+    }
+
     public void SetAreaType(AreaType type)
     {
         m_areaType = type;
@@ -64,6 +71,6 @@ public class RoomPieceParent : MonoBehaviour
 
     public void CallResetTransform()
     {
-        m_roomPieceManager.OnResetTransform(this);
+        m_roomPieceManager.OnResetTransform(this, m_recodePos);
     }
 }

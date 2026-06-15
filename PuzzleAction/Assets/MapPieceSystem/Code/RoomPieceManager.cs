@@ -187,13 +187,14 @@ public class RoomPieceManager : MonoBehaviour
         //ŒJ‚è•Ô‚·
     }
 
-    public void OnResetTransform(RoomPieceParent piece)
+    public void OnResetTransform(RoomPieceParent piece, Vector2 pos)
     {
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        //float rectX = UnityEngine.Random.Range(-300f, 300f);
+        //float rectY = UnityEngine.Random.Range(-500f, 500f);
 
         RectTransform rect = piece.GetComponent<RectTransform>();
-        Vector2 target = new Vector2(rectX, rectY);
+        //Vector2 target = new Vector2(rectX, rectY);
+        Vector2 target = pos;
 
         StartCoroutine(ReturnPiecePosition(rect, target, 0.2f));
     }

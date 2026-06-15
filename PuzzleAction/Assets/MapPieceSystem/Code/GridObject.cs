@@ -10,16 +10,19 @@ public class GridObject : MonoBehaviour
     [SerializeField] private GameObject m_grid;
     //--------------------------
 
+    private bool m_IsGlow;
+
+    //if place piece, set index. when remove piece, use value. mouse difference piecePos
     private Vector2Int m_pieceIndex;
 
     private bool m_isPlace;
 
-    public Vector2Int PieceIndex { get => m_pieceIndex; }
-    public bool IsPlace { get => m_isPlace; }
+    public Vector2Int PieceIndex => m_pieceIndex;
+    public bool IsPlace => m_isPlace;
 
     private void Awake()
     {
-        m_ren = GetComponent<Renderer>();
+        m_ren = m_grid.GetComponent<Renderer>();
     }
 
     private void Start()
@@ -32,14 +35,29 @@ public class GridObject : MonoBehaviour
         m_boardManager = component;
     }
 
-    public void SetIndex(Vector2Int value)
+    public void SetGlow(bool value)
+    {
+        m_IsGlow = value;
+    }
+
+    public void SetPieceIndex(Vector2Int value)
     {
         m_pieceIndex = value;
     }
 
-    public void OnSelectGrid()
+    public void OnGlowGrid(float value)
     {
-        //mat glow
+        if(!m_IsGlow)
+        {
+            m_ren.material.SetColor("_EmissionColor",
+                     Color.white * 0);
+        }
+        else
+        {
+            //mat glow
+            m_ren.material.SetColor("_EmissionColor",
+                      Color.white * value);
+        }  
     }
 
     //frome call mapsystem

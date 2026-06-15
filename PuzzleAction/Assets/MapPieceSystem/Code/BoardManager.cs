@@ -18,7 +18,12 @@ public class BoardManager : MonoBehaviour
 
     private List<RoomPieceParent> m_roomPieces = new();
 
-    private GridKind[,] m_gridState;
+    //if isSelecting, glow list(queue)
+    private HashSet<GridObject> m_IsGlowRooms = new();
+    private HashSet<GridObject> m_currentGlowRooms = new();
+    private HashSet<GridObject> m_recodeGlowRooms = new();
+
+    private Vector2Int m_size;
 
     private GridObject[,] m_gridObjects;
 
@@ -33,23 +38,89 @@ public class BoardManager : MonoBehaviour
 
     private void Update()
     {
+        float value = Mathf.PingPong(Time.time, 1f);
+        GlowGrid(value);
+
+
         Vector2Int origine = m_mapSystem.Origin;
-        //if (!m_gridObjects[origine.x, origine.y]) return;
-        //var gridObj = m_gridObjects[origine.x, origine.y];
+        Room room = m_mapSystem.HaveRoom;
+
+        m_currentGlowRooms.Clear();
+
+
+
+        if (room == null)
+        {
+            foreach (var obj in m_currentGlowRooms)
+            {
+                if (!m_recodeGlowRooms.Contains(obj))
+                {
+                    obj.SetGlow(true);
+                }
+            }
+
+            foreach (var obj in m_recodeGlowRooms)
+            {
+                if (!m_currentGlowRooms.Contains(obj))
+                {
+                    obj.SetGlow(false);
+                }
+            }
+
+            (m_currentGlowRooms, m_recodeGlowRooms) = (m_recodeGlowRooms, m_currentGlowRooms);
+            return;
+        }
+
+        for (int y = 0; y < room.Size.y; y++)
+        {
+            for(int x = 0; x < room.Size.x; x++)
+            {
+                if (room.GetFloor(x, y).State == Floor.FloorState.empty) continue; 
+
+                Vector2Int index = new Vector2Int(origine.x + x, origine.y + y);
+
+                if (index.x < 0 || index.x >= m_size.x ||
+                    index.y < 0 || index.y >= m_size.y) continue;
+
+                if (m_gridObjects[index.x, index.y] == null) continue;
+
+                var gridObj = m_gridObjects[index.x, index.y];
+                m_currentGlowRooms.Add(gridObj);
+            }
+        }
+
+        foreach(var obj in m_currentGlowRooms)
+        {
+            if(!m_recodeGlowRooms.Contains(obj))
+            {
+                obj.SetGlow(true);
+            }
+        }
+
+        foreach (var obj in m_recodeGlowRooms)
+        {
+            if (!m_currentGlowRooms.Contains(obj))
+            {
+                obj.SetGlow(false);
+            }
+        }
+
+        (m_currentGlowRooms, m_recodeGlowRooms) = (m_recodeGlowRooms, m_currentGlowRooms);
     }
 
     public void Generate(MapClass map)
     {
         m_mapClass = map;
         Vector2Int size = map.Size;
+        m_size = size;
 
         m_gridObjects = new GridObject[size.x, size.y];
 
-        for (int x = 0; x < size.x; x++)
+        for (int y = 0; y < size.y; y++)
         {
-            for (int z = 0; z < size.y; z++)
+            for (int x = 0; x < size.x; x++)
             {
-                var floor = m_mapClass.GetFloor(x, z);
+                var floor = m_mapClass.GetFloor(x, y);
                 //Debug.Log($"{floor.State}");
 
 
@@ -60,9 +131,11 @@ public class BoardManager : MonoBehaviour
                 GridObject gridObj = obj.GetComponent<GridObject>();
 
                 gridObj.Initialize(this);
-                m_gridObjects[x,z] = gridObj;
+                gridObj.SetPieceIndex(new Vector2Int(x, y));
+                m_gridObjects[x,y] = gridObj;
+                m_IsGlowRooms.Add(gridObj);
 
-                obj.transform.localPosition = new Vector3((x + 0.5f) * 1.5f, 0, (z + 0.5f) * 1.5f);
+                obj.transform.localPosition = new Vector3((x + 0.5f) * 1.5f, 0, (y + 0.5f) * 1.5f);
             }
         }
     }
@@ -130,8 +203,16 @@ public class BoardManager : MonoBehaviour
                 piece.SetFloorIndex(pos);
 
                 m_gridObjects[pos.x, pos.y].SetPlaceFloor(type);
-                m_gridObjects[pos.x, pos.y].SetIndex(new Vector2Int(x,y));
+                m_gridObjects[pos.x, pos.y].SetPieceIndex(new Vector2Int(x,y));
             }
+        }
+    }
+
+    private void GlowGrid(float value)
+    {
+        foreach(var room in m_currentGlowRooms)
+        {
+            room.OnGlowGrid(value);
         }
     }
 }

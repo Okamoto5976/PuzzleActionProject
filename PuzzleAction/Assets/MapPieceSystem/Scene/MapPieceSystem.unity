@@ -170,17 +170,18 @@ MonoBehaviour:
   m_parent: {fileID: 694388302}
   m_mainCamera: {fileID: 218458766}
   m_roomData: []
-  m_size: {x: 10, y: 10}
   m_difference: {x: 0, y: 0}
   m_origin: {x: 0, y: 0}
-  m_startPos: {x: 0, y: 0}
-  m_endPos: {x: 5, y: 5}
+  m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_roomPieceCanvas: {fileID: 515237897}
   m_enemyPieceMax: 3
   m_shopPieceMax: 3
   m_trapPieceMax: 10
+  m_debugCheck: 1
+  m_size: {x: 10, y: 10}
+  m_DebugStartPos: {x: 0, y: 0}
+  m_DebugEndPos: {x: 0, y: 0}
   m_instanceCounterList: []
-  m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
 --- !u!114 &50533902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,9 +219,7 @@ MonoBehaviour:
   m_roomPieceParent: {fileID: 3621389001753909684, guid: 25bd27e716aa7ac4695448e183184818, type: 3}
   m_roomPiece: {fileID: 7110370001246736035, guid: 79fef458a04c8654d8e4144e06e29400, type: 3}
   m_pieceAmount: 20
-  m_enemyPieceMax: 0
-  m_shopPieceMax: 0
-  m_trapPieceMax: 0
+  m_poolPieceAmount: 100
 --- !u!114 &50533904
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,52 +25,51 @@ public class RoomData
     {
         m_ID = id;
     }
-
 }
 
 public class MapPlaceSystem : MonoBehaviour
 {
     [SerializeField] private InputActionReference m_action;
 
-    //[SerializeField] private MapPlaceBuild m_build;
-
     [SerializeField] private Transform m_parent;//mousePos parent
     [SerializeField] private Camera m_mainCamera;
+
     private Vector3 m_mouseWorldPos;
 
     private GameObject m_roomPieceParentObj;//RoomPieceの親オブジェクト
     private RectTransform m_roomPieceParentRect;
-    //private GameObject m_roomPieceChildObj;//マウス追従オブジェクト
 
+
+    //use GenerateMap MainSece, PlaceRoomDatas
     [SerializeField] private List<RoomData> m_roomData = new();
 
-    [Header("MapClass")]
-    private MapClass m_mapClass = new(0, 0);
-    [SerializeField] private Vector2Int m_size;
-
-    //[SerializeField] private int m_createRoomNumber;
-    //public Queue<Room> m_rooms = new Queue<Room>();
-
+   
+    //Use Place Room--------------------------
+    //you have room naw,
     private Room m_room;
+
+    public Room HaveRoom => m_room;
 
     [SerializeField] private Vector2Int m_difference; //マウスとpieceのオリジンの差分（マウス座標が左下よりVector2Int多いときm_origin - m_difference）
     [SerializeField] private Vector2Int m_origin;
-
-    [SerializeField] private Vector2Int m_startPos;
-    [SerializeField] private Vector2Int m_endPos;
 
     public Vector2Int Origin { get => m_origin - m_difference; }
 
     private bool m_isDoorGenerate;
 
-    //error all connect roomcheck;
-    private HashSet<int> m_allRoomID;
 
+    //MapClass Data---------------
+    [SerializeField] private MapClassData m_mapClassData;
+
+    private Vector2Int m_startPos;
+    private Vector2Int m_endPos;
+
+    //UI reference-----------------
     [SerializeField] private GraphicRaycaster m_roomPieceCanvas;
 
-    private MapPlaceErrorMessage m_errorMessageClass;
-    private BoardManager m_boardManager;
 
+
+    //use error check or limit ----
     [SerializeField] private int m_enemyPieceMax;
     private int m_enemyPieceCount;
     [SerializeField] private int m_shopPieceMax;
@@ -78,16 +77,45 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private int m_trapPieceMax;
     private int m_trapPieceCount;
 
-    [SerializeField] private MapClassData m_mapClassData;
+    //error all connect roomcheck
+    private HashSet<int> m_allRoomID;
 
+
+
+    //component-----------
+    private MapPlaceErrorMessage m_errorMessageClass;
+    private BoardManager m_boardManager;
+
+    //Debug---------------
+    [Header("Debug")]
+    //if ture, make MapClass by myself(scene)
+    [SerializeField] private bool m_debugCheck;
+
+    private MapClass m_mapClass = new(0, 0);
+    [SerializeField] private Vector2Int m_size;
+
+    [SerializeField] private Vector2Int m_DebugStartPos;
+    [SerializeField] private Vector2Int m_DebugEndPos;
 
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
         m_boardManager = GetComponent<BoardManager>();
 
-        //InitializeMapGrid();
-        m_mapClass = m_mapClassData.MapClass;
+        if(m_debugCheck)
+        {
+            InitializeMapGrid();
+
+            m_startPos = m_DebugStartPos;
+            m_endPos = m_DebugEndPos;
+        }
+        else
+        {
+            m_mapClass = m_mapClassData.MapClass;
+
+            m_startPos = m_DebugStartPos;
+            m_endPos = m_mapClassData.GoalPos;
+        }
         m_boardManager.Generate(m_mapClass);
         //m_build.Generate(m_size);
 
@@ -132,13 +160,26 @@ public class MapPlaceSystem : MonoBehaviour
         if (m_action.action.WasPressedThisFrame())
         {
             m_gridObj = null;
-
+            
+            //this is GridObject-----------------
             Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
             var ray = Camera.main.ScreenPointToRay(mouseScreenPos);
             if (Physics.Raycast(ray, out var hit))
             {
                 m_gridObj = hit.collider.gameObject.GetComponent<GridObject>();
             }
+
+
+
+            //this is UI Canvas-------------------
+            m_pointerData = new PointerEventData(EventSystem.current);
+            m_pointerData.position = Mouse.current.position.ReadValue();
+
+            List<RaycastResult> results = new();
+
+            m_roomPieceCanvas.Raycast(m_pointerData, results);
+            //------------------------------------
+
 
             if (m_roomPieceParentObj != null)
             {
@@ -209,7 +250,6 @@ public class MapPlaceSystem : MonoBehaviour
                     }
                     else
                     {
-                        //grid内でおけないとき　roompieceを　保存していた場所に返す
                         //errormessage
                         Debug.Log("Error");
                     }
@@ -218,11 +258,19 @@ public class MapPlaceSystem : MonoBehaviour
                 {
                     //grid外である時　その場に置く
                     //Debug.Log("NotFind Map");
-                    roomPieceParent.CallResetTransform();
+                    bool isHitCanvas = results.Count > 1;
+
+                    if(!isHitCanvas)
+                    {
+                        roomPieceParent.CallResetTransform();
+
+                    }
+
                     m_roomPieceParentObj = null;
+                    m_room = null;
                 }
             }
-            //マウスがマップピースを持っていないとき
+            //if do not have roompiece to mouse
             else
             {
                 if (m_gridObj)
@@ -230,13 +278,31 @@ public class MapPlaceSystem : MonoBehaviour
                     if (!m_gridObj.IsPlace) return;
 
                     m_difference = m_gridObj.PieceIndex;
-                    RoomPieceParent piece = m_gridObj.OnRemoveFloor(m_origin);
+                    RoomPieceParent roomPieceParent = m_gridObj.OnRemoveFloor(m_origin);
 
-                    if (piece == null) return;
+                    if (roomPieceParent == null) return;
 
-                    m_roomPieceParentObj = piece.gameObject;
-                    m_roomPieceParentRect = piece.Rect;
-                    m_room = piece.Room;
+                    m_roomPieceParentObj = roomPieceParent.gameObject;
+                    m_roomPieceParentRect = roomPieceParent.Rect;
+                    m_room = roomPieceParent.Room;
+
+                    switch (roomPieceParent.AreaType)
+                    {
+                        case AreaType.None:
+                            break;
+                        case AreaType.Summon:
+                            m_enemyPieceCount--;
+
+                            break;
+                        case AreaType.Shop:
+                            m_shopPieceCount--;
+
+                            break;
+                        case AreaType.Damage:
+                            m_trapPieceCount--;
+
+                            break;
+                    }
 
                     Debug.Log("Call remove");
 
@@ -244,18 +310,11 @@ public class MapPlaceSystem : MonoBehaviour
                 }
                 else
                 {
-                    m_pointerData = new PointerEventData(EventSystem.current);
-                    m_pointerData.position = Mouse.current.position.ReadValue();
-
-                    List<RaycastResult> results = new();
-
-                    m_roomPieceCanvas.Raycast(m_pointerData, results);
-
                     foreach (var result in results)
                     {
                         RoomPiece roomPieceObj = result.gameObject.GetComponent<RoomPiece>();
 
-                        if (roomPieceObj == null) return;
+                        if (roomPieceObj == null) continue;
 
                         m_difference = roomPieceObj.Index;
 
@@ -265,6 +324,9 @@ public class MapPlaceSystem : MonoBehaviour
                         m_roomPieceParentRect = roomPieceParent.Rect;
                         m_room = roomPieceParent.Room;
 
+
+                        roomPieceParent.SetRecodePos();
+
                         break;
                     }
                 }
@@ -272,11 +334,12 @@ public class MapPlaceSystem : MonoBehaviour
         }
         #endregion
 
-        //もしroompieceがあるならmouseに追従
+        //if have roomPieceParentObject, following mousePoint
         if (m_roomPieceParentObj != null)
         {
             Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
+            //piece index 0, 1, 2...  Shift piece index difference
             Vector2 differencePos = new Vector2(
                             (m_difference.x) * 15f + 0.5f,
                             (m_difference.y) * 15f + 0.5f
@@ -361,11 +424,10 @@ public class MapPlaceSystem : MonoBehaviour
         var id = m_mapClass.GetFloorID(origin.x, origin.y);
         m_mapClass.RemoveRoom(id);
 
-        //RoomDataでidが同じものを消す
         var room = m_roomData.FirstOrDefault(x => x.m_ID == id);
         m_roomData.Remove(room);
 
-        //IDをMapClassとそろえる
+        //m_roomDataID make mapClassID the same
         foreach(var data in m_roomData)
         {
             if(data.m_ID > id)
@@ -377,12 +439,20 @@ public class MapPlaceSystem : MonoBehaviour
     }
 
 
-    //------順------
-    //部屋を置く　GetNeighborRoomsで隣接の数のリスト（グラフ）を作る
-    //GetNeighborRoomsで隣接同士の値[02]の座標と方向を記録（後にdoorにステート変更）
-    //隣接リストを見て　BFSを走らせる
-    //startとgorlが繋がればDFSを走らせる
-    //DFSの順にdoorを設置
+    //Process
+    //       2
+    //       |
+    // 0 --- 1--- 4
+    //       |
+    //       3
+    //when place room, make a list(graph) of NeighborRooms numbers
+    //0| 1
+    //1| 2,3,4
+    //2| 1
+    //3| 1
+    //4| 1
+    //run BFS
+    //if connect start from goal, run DFS
 
     Dictionary<int, HashSet<int>> m_graph = new();
 
@@ -415,7 +485,7 @@ public class MapPlaceSystem : MonoBehaviour
         public Wall.Side dir;
     }
 
-    //floorのidを見て　そのidがどのidの部屋と隣接しているかみる
+    //look floor id, Check which room that ID is connected
     public void GetNeighborRooms()
     {
         m_allRoomID = new();
@@ -496,14 +566,14 @@ public class MapPlaceSystem : MonoBehaviour
         }
     }
 
-    //スタートとゴールがつながっているか
+    //are the start and goal connected?
     public bool CallDFS(Vector2Int startPos, Vector2Int endPos)
     {
         GetNeighborRooms();
 
-        //startPosのid取得
+        //get startPos ID
         int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
-        //endPosのid取得
+        //get goalPos ID
         int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
 
         //Debug.Log($"{startID} {endID}");
@@ -518,8 +588,8 @@ public class MapPlaceSystem : MonoBehaviour
         return (DFS(startID, endID, visited));
     }
 
-    //深さ優先探索
-    //ゴールまで行けばtrue
+    //DFS
+    //if you can find goal, true
     public bool DFS(int current, int end, HashSet<int> visited)
     {
         if (current == end) return true;
@@ -550,9 +620,9 @@ public class MapPlaceSystem : MonoBehaviour
 
 
     //[SerializeField] private EventBusAsset 
-    //[SerializeField] private List<InstanceCounter> m_instanceCounterList;
-    //DFSを呼ぶ
-    //ボタンで
+    [SerializeField] private List<InstanceCounter> m_instanceCounterList;
+    
+    //Call by Button
     public void OnClickDFS()
     {
 
@@ -574,7 +644,7 @@ public class MapPlaceSystem : MonoBehaviour
         //Get endId
         int endID = m_mapClass.GetFloorID(m_endPos.x, m_endPos.y);
 
-        List<int> visited = new List<int>();//訪れたところ
+        List<int> visited = new List<int>();
 
         m_pathList = new();
 
@@ -589,25 +659,17 @@ public class MapPlaceSystem : MonoBehaviour
         }
 
         ////shopObject reset
-        //foreach (var counter in m_instanceCounterList)
-        //{
-        //    counter.ResetCount();
-        //}
-
-        //SceneMoveに変更
+        foreach (var counter in m_instanceCounterList)
+        {
+            counter.ResetCount();
+        }
 
         SceneManager.LoadScene("CreateMap");
     }
 
-    //CallDFSから呼ばれる
-    //DFS（深さ優先探索）
-    //startIDからendIDに到達するまで枝状に進む
-    //endIDについたとき進んだ分を記録　前回の記録より多ければ上書き
     private void OnDFS(int current, int goal, List<int> visited)
     {
         visited.Add(current);
-
-        
 
         if (current == goal)
         {
@@ -615,8 +677,6 @@ public class MapPlaceSystem : MonoBehaviour
             return;
         }
 
-        //m_graphの中　idを若順に取得
-        //端まで到達したら端から削除していく
         foreach (var next in m_graph[current].OrderBy(x => x))
         {
             if (visited.Contains(next)) continue;
@@ -632,7 +692,7 @@ public class MapPlaceSystem : MonoBehaviour
     {
         m_bestPath = new();
 
-
+        //if more steps to the goal, overWrite
         for(int i = 0;i < m_pathList.Count;i++)
         {
             var count = m_pathList[i].Count;
@@ -652,10 +712,8 @@ public class MapPlaceSystem : MonoBehaviour
 
         bool added;
 
-        //trueなら続ける
-        //必ず一回通る
-        //bestPath(mainPath)に含まれるならつなげる
-        //孤立を防ぐ
+
+        //prevent isolated rooms
         do
         {
             added = false;
@@ -696,6 +754,7 @@ public class MapPlaceSystem : MonoBehaviour
         return true;
     }
 
+    //Connect rooms random
     private void Connect(int id, int next)
     {
         int from = id;
@@ -711,7 +770,6 @@ public class MapPlaceSystem : MonoBehaviour
 
         List<EdgeVariant> list = m_connectionMap[key];
 
-        //keyが複数ある場合　ランダムに選ぶ
         var edge = list[Random.Range(0, list.Count)];
 
         var floor = m_mapClass.GetWall(edge.pos.x, edge.pos.y, edge.dir);

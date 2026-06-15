@@ -29,6 +29,4 @@ public class RoomPiece : MonoBehaviour
     {
         m_img.color = color;
     }
-
-
 }
