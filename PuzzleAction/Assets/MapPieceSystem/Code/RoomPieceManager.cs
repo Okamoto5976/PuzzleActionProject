@@ -1,7 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Audio.ProcessorInstance;
+
+public enum AreaType//âºÇ»ÇΩÇﬂÅ@å„Ç…çÌèú
+{
+    None,
+    Summon,
+    Shop,
+    Damage
+}
 
 public class RoomPieceManager : MonoBehaviour
 {
@@ -151,13 +158,13 @@ public class RoomPieceManager : MonoBehaviour
         {
             case AreaType.None:
                 break;
-            case AreaType.Enemy:
+            case AreaType.Summon:
                 roomPieceParent.SetColor(Color.red);
                 break;
             case AreaType.Shop:
                 roomPieceParent.SetColor(Color.green);
                 break;
-            case AreaType.Trap:
+            case AreaType.Damage:
                 roomPieceParent.SetColor(Color.cyan);
 
                 break;

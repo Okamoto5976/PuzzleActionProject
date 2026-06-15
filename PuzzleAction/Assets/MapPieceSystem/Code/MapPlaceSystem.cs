@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -79,13 +78,17 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private int m_trapPieceMax;
     private int m_trapPieceCount;
 
+    [SerializeField] private MapClassData m_mapClassData;
+
+
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
         m_boardManager = GetComponent<BoardManager>();
 
-        InitializeMapGrid();
-        m_boardManager.Generate(m_size);
+        //InitializeMapGrid();
+        m_mapClass = m_mapClassData.MapClass;
+        m_boardManager.Generate(m_mapClass.Size);
         //m_build.Generate(m_size);
 
         //for(int i = 0; i < m_createRoomNumber; i++)
@@ -158,7 +161,7 @@ public class MapPlaceSystem : MonoBehaviour
                         {
                             case AreaType.None:
                                 break;
-                            case AreaType.Enemy:
+                            case AreaType.Summon:
                                 if (m_enemyPieceMax <= m_enemyPieceCount)
                                 {
                                     RoomCountLimitError();
@@ -178,7 +181,7 @@ public class MapPlaceSystem : MonoBehaviour
                                 m_shopPieceCount++;
 
                                 break;
-                            case AreaType.Trap:
+                            case AreaType.Damage:
                                 if(m_trapPieceMax <= m_trapPieceCount)
                                 {
                                     RoomCountLimitError();
@@ -624,7 +627,6 @@ public class MapPlaceSystem : MonoBehaviour
     }
 
 
-    [SerializeField] private MapClassData m_mapClassData;
 
     public bool GenerateDoor()
     {

@@ -1,13 +1,5 @@
 using UnityEngine;
 
-public enum AreaType//âºÇ»ÇΩÇﬂÅ@å„Ç…çÌèú
-{
-    None,
-    Enemy,
-    Shop,
-    Trap
-}
-
 public class RoomObj : MonoBehaviour
 {
     private Vector3 m_originalPos;

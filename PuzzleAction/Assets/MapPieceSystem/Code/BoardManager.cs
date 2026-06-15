@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Audio.ProcessorInstance;
-using static UnityEngine.UI.Image;
 
 public enum GridKind
 {
@@ -14,6 +12,8 @@ public class BoardManager : MonoBehaviour
 {
     //component-----------
     private MapPlaceSystem m_mapSystem;
+
+    private MapClass m_mapClass;
     //--------------------
 
     private List<RoomPieceParent> m_roomPieces = new();
@@ -38,14 +38,22 @@ public class BoardManager : MonoBehaviour
         //var gridObj = m_gridObjects[origine.x, origine.y];
     }
 
-    public void Generate(Vector2Int size)
+    public void Generate(Vector2Int size, MapClass map)
     {
+        m_mapClass = map;
+
         m_gridObjects = new GridObject[size.x, size.y];
 
         for (int x = 0; x < size.x; x++)
         {
             for (int z = 0; z < size.y; z++)
             {
+                var floor = m_mapClass.GetFloor(x, z);
+
+
+                if (floor.State == Floor.FloorState.blocked) return;
+
+
                 var obj = InstantiateGridMap();
                 GridObject gridObj = obj.GetComponent<GridObject>();
 
