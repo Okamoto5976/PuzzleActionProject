@@ -700,7 +700,6 @@ MonoBehaviour:
   m_mapCount: 3
   m_allMaps:
   - {fileID: 11400000, guid: 7e89c14c1f0d1fa459b619bca7ccd97b, type: 2}
-  - {fileID: 11400000, guid: f6982d333379c6145b44c2ecb5780875, type: 2}
   - {fileID: 11400000, guid: c63226a26e1c0b54c8bbbd370b76b39f, type: 2}
   - {fileID: 11400000, guid: f61802b1ba819b643970a581950ba67f, type: 2}
   - {fileID: 11400000, guid: 790069eb4d6817e49a9b0e48e639a8e3, type: 2}
