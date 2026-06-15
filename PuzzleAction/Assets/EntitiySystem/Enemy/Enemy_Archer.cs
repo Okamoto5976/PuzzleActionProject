@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 {
-    private EnemyContllor m_controller;
+    private EnemyController m_controller;
 
     //[SerializeField] private ItemManager m_itemManager;
 
     private float m_coolTime = 1.5f;
     private float m_lastFireTime;
 
-    public void Initialized(EnemyContllor controller)
+    public void Initialized(EnemyController controller)
     {
         m_controller = controller;
     }

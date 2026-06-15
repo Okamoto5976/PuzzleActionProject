@@ -1,11 +1,18 @@
 using UnityEngine;
-
-public struct DamageData
+public class DamageData
 {
-    public GameObject Attacker;
-
-    public int Damage;
-
-    public Vector3 HitPoint;
+    public int Attack;//
+    public AttackType AttackType;
+    public float HitRate = 100f;//
+    public float CriticalRate;//
+    public float CriticalDamage;
+    public float BreakRate;//
+    public float Knockback;//
+    public float Stun;//
+    public float Duration;
+    public Vector3 AttackDir;//
+    public Entity Attacker;//
+    public AudioClip AttackerSE;//
+    public AudioSource AudioSource;
+    //public DamageType DamageType;
 }
-

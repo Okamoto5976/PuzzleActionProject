@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 6101576487352509601}
   - component: {fileID: 2896587697290758714}
   - component: {fileID: 5252047331736682537}
+  - component: {fileID: 1370178514978815636}
   - component: {fileID: 7311085719930065014}
-  - component: {fileID: 7590102554825596988}
   - component: {fileID: 2664981436260987012}
   m_Layer: 0
   m_Name: Player
@@ -93,6 +93,24 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1370178514978815636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551359788576524226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2e1a9e2623a024e925b52eec850d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 0
+  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!54 &7311085719930065014
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -120,22 +138,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &7590102554825596988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4551359788576524226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bce176f5c5593f4fb24e52ec3b9b70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  team: 0
-  m_playerData: {fileID: 11400000, guid: 0d65259208bc23b44b307361bc6dc820, type: 2}
-  m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_dashAction: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!65 &2664981436260987012
 BoxCollider:
   m_ObjectHideFlags: 0

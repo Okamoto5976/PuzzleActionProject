@@ -189,12 +189,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5192190198220617858}
+  - component: {fileID: 528806279578718545}
+  - component: {fileID: 2131340806950030132}
   - component: {fileID: 7341675702321249772}
-  - component: {fileID: -1553549938300698823}
-  - component: {fileID: 151283188857711319}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
-  - component: {fileID: -5650931996729087381}
   m_Layer: 0
   m_Name: EnemySkeleton
   m_TagString: Untagged
@@ -219,6 +218,43 @@ Transform:
   - {fileID: 4137929383140127322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528806279578718545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 1
+  m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
+  m_target: {fileID: 0}
+  m_findRange: 8
+  m_attackRange: 1.5
+  m_attackCooldown: 5
+  m_hitCollider: {fileID: 0}
+  m_attackHitBox:
+    m_transform: {fileID: 0}
+    m_radius: 0
+  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
+--- !u!114 &2131340806950030132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -241,34 +277,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-1553549938300698823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 413486a484a766f4cadd334b4a601cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
-  m_type: 0
-  m_target: {fileID: 11400000, guid: 0d65259208bc23b44b307361bc6dc820, type: 2}
-  m_findRange: 8
-  m_attackRange: 1.5
---- !u!114 &151283188857711319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e7e768d22e2e61408f53d26d4076bec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Chase
 --- !u!54 &-1027978937202661744
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -406,16 +414,3 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-5650931996729087381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 752f80149647d414785706161f3a0649, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ForceShift
-  offset: {x: 0, y: 3, z: 0}

@@ -4,9 +4,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy_Chase : MonoBehaviour, IEnemyBehaviour
 {
-    private EnemyContllor m_enemyController;
+    private EnemyController m_enemyController;
 
-    public void Initialized(EnemyContllor enemyController)
+    public void Initialized(EnemyController enemyController)
     {
         m_enemyController = enemyController;
     }

@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(LineRenderer))]
 public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 {
-    private EnemyContllor m_controller;
+    private EnemyController m_controller;
 
     private Vector3 m_dir;
     private Vector3 m_targetPos;
@@ -23,7 +23,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         m_line.enabled = false;
     }
 
-    public void Initialized(EnemyContllor controller)
+    public void Initialized(EnemyController controller)
     {
         m_controller = controller;
     }

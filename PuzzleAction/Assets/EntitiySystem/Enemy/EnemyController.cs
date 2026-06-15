@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Xml;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyContllor : Entity
+public class EnemyController : Entity
 {
     [Header("Target")]
     [SerializeField] private Transform m_target;
@@ -207,7 +205,7 @@ public class EnemyContllor : Entity
 
 public interface IEnemyBehaviour
 {
-    void Initialized(EnemyContllor Controller);
+    void Initialized(EnemyController Controller);
     void Execute();
     void Stop();
 }

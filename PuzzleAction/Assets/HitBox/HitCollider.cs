@@ -10,24 +10,6 @@ Recovery,
 Fire
 }
 
-
-public class DamageData
-{
-    public int Attack;//
-    public AttackType AttackType;
-    public float HitRate = 100f;//
-    public float CriticalRate;//
-    public float CriticalDamage;
-    public float BreakRate;//
-    public float Knockback;//
-    public float Stun;//
-    public float Duration;
-    public Vector3 AttackDir;//
-    public Entity Attacker;//
-    public AudioClip AttackerSE;//
-    public AudioSource AudioSource;
-    //public DamageType DamageType;
-}
 public class DamageResult
 {
     public Vector3 hitPoint;
