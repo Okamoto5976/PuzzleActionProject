@@ -1,58 +1,110 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using static UnityEditor.Progress;
+//using static UnityEditor.PlayerSettings;
 
 
 
 
 public class DropPool : MonoBehaviour
 {
-     
-    
     public class PoolItem
     {
-        public List<Item> ItemList;
-        public ItemData ItemID;
-        public ItemData Prefab;
-        public ItemData ItemSize;
+        public string id;
+    //    public GameObject prefab;
+    //    public int initialCount = 5;
     }
+    public GameObject prefab;
+    [SerializeField] public Dictionary<string, Queue<object>> pools;
+    //public List<PoolItem> ItemList;
 
-    [SerializeField] private List<GameObject>initialList = new List<GameObject>();
-
-    ItemData data;
-    private List<Item> ItemList = new List<Item>();
-    private Dictionary<GameObject, Queue<GameObject>> pools;
-    private Queue<GameObject> pool = new Queue<GameObject>();
+    //ItemData data;
+    private ObjectPool<GameObject> pool;
     private void Awake()
     {
-        // 初期リストのデータをプールへ移行
-        foreach (var obj in initialList)
-        {
-            if (obj == null) continue;
-            obj.SetActive(false);  // 非表示にしてプールへ
-            pool.Enqueue(obj);
-        }
-
+        pool = new ObjectPool<GameObject>(
+            createFunc: CreateItem,       // 生成時
+            actionOnGet: OnGetFromPool,   // Get 時
+            actionOnRelease: OnReleasedToPool, // Release 時
+            collectionCheck: true,        // 重複返却などの安全チェック
+            defaultCapacity: 10,          // 初期数
+            maxSize: 50                   // 最大数
+         );
     }
+    //pools = new Dictionary<string,Queue<GameObject>>();
+    //foreach(var item in ItemList)
+    //{
 
-    public void Get(string id)
+
+    //    //    var queue= new Queue<GameObject>();
+    //    //    for(int i =0; i < item.initialCount; i++)
+    //    //    {
+    //    //        var obj = Instantiate(item.prefab);
+    //    //        obj.SetActive(false);
+    //    //        queue.Enqueue(obj);
+    //    //    }
+    //    //    pools[item.id] = queue;
+    //    //}
+
+
+    private GameObject CreateItem()
     {
-        return PoolItem.Find(x=> x.Id ==id);
+        GameObject obj = Instantiate(prefab);
+        obj.SetActive(false);
+        return obj;
     }
 
-   
-    public void ReturnItem(GameObject item, GameObject prefab)
+    private void OnGetFromPool(GameObject obj)
     {
-        item.SetActive(false); // アイテムを非アクティブにする
-
-        pools[data.Prefab].Enqueue(item);
-        pools[item].Enqueue(prefab); // アイテムをプールに戻す
+        obj.SetActive(true);
     }
 
-    internal void ReturnItem(Item item, GameObject prefab)
+    private void OnReleasedToPool(GameObject obj)
     {
-        throw new System.NotImplementedException();
+        obj.SetActive(false);
     }
+
+
+    //public void GetItem(string id)
+    //{
+
+    //    foreach (var id in pool)
+    //    {
+
+    //        GameObject item = pool.Get();
+    //        item.transform.position = position;
+    //        return item;
+    //    }
+
+        
+    //}
+    //public void Drop(string id , ItemRecieveData r_data)
+    //{
+
+    //    Instantiate(prefab, r_data.pos, r_data.dir);
+    //    //Debug.Log($"{item.name}をドロップしました。");
+    //}
+
+    //public GameObject Get()
+    //{
+    //    GameObject obj = Instantiate(PoolItem.prefab);
+    //    obj.SetActive(false);
+    //    return obj;
+
+    //}
+
+
+
+    public void ReturnItem(string id, GameObject obj)
+    {
+        obj.SetActive(false); // アイテムを非アクティブにする
+
+        pools[id].Enqueue(obj);
+        //pool[item].Enqueue(prefab); // アイテムをプールに戻す
+    }
+
+
 
 }
 

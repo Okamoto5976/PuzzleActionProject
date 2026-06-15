@@ -1,27 +1,18 @@
-using System;
 using System.Collections.Generic;
-using Unity.Multiplayer.Center.Common;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+
 
 
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] public string EnemyName;
+    public List <Item> EnemyDropList = new();
     public List<Item> DropList = new();
     private List<Item> DeforutDropList = new List<Item>();
-    DropPool pools;
     
     public List<Item> ShopList = new();
-    private int nextId; //次のIDを管理する変数
-    public struct ItemRecieveData
-    {
-        //public Entity entity;
-        public float baseValue; //Entity用　例）矢の攻撃力＋Entityの攻撃力
-        public Vector3 pos;
-        public Vector3 dir;//向き
-        public Vector2 size;
-    }
+    //private int nextId; //次のIDを管理する変数
+   
     ItemData data;
     //リスト初期化
     public List<Item> ItemList = new List<Item>();
@@ -37,7 +28,7 @@ public class ItemManager : MonoBehaviour
         Item item = LookForID(id);
         if (item != null)
         {
-            //item.RecieveData(id, );
+            
         }
         else
         {
@@ -45,31 +36,26 @@ public class ItemManager : MonoBehaviour
         }
 
     }
-    public void Drop(ItemRecieveData r_data, ItemManager DropIndex)
+    public void RandomDropItem(string id, ItemRecieveData r_data)
     {
-        //DropList = EnemyDropList;
+        DropList = EnemyDropList;
         List<DropPool> candidates = new List<DropPool>();
-        Vector3 DropPos = r_data.pos;
-        int dropIndex = UnityEngine.Random.Range(0, DropList.Count);
-        //DropPool Get(dropIndex);
-    
-
-
-        //GameObject item = Instantiate(data.Prefab, DropPos, Quaternion.identity);
+        int dropIndex = Random.Range(0, DropList.Count);
+        //ItemDorp(r_data.pos, dropIndex);
+        //return DropList[dropIndex];
+        GetItem(id);
+        //GameObject item = pools[PoolItem.prefab].Dequeue();
+        //item.SetActive(true);
 
 
     }
 
-    public void drop(GameObject item)
+    private void GetItem(string id)
     {
-        //if (pools[selectied.data.Prefab].Count > 0)
-        //{
-        //    GameObject item = pools[data.Prefab].Dequeue();
-        //    item.transform.position = pos;
-        //    item.SetActive(false);
-        //    Debug.Log($"{item.name}をドロップしました。");
-        //}
+        throw new System.NotImplementedException();
     }
+
+
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
     {
@@ -84,12 +70,7 @@ public class ItemManager : MonoBehaviour
         int ShopIndex= UnityEngine.Random.Range(0, ShopList.Count);
         return ShopList[ShopIndex];
     }
-    public Item RandomDropItem()
-    {
-        //DropList = EnemyDropList;
-        int DorpIndex= UnityEngine.Random.Range(0,DropList.Count);
-        return DropList[DorpIndex];
-    }
+
 
 
 }

@@ -39,7 +39,7 @@ public class ItemDrop : MonoBehaviour
         if (pool != null)
         {
             //Pool‚É•Ô‚·ˆ—
-            pool.ReturnItem(item, prefab);
+            //pool.ReturnItem(item, prefab);
         }
     }
 }
