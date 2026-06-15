@@ -27,13 +27,16 @@ abstract public class EntityHP : MonoBehaviour
         switch (data.AttackType)
         {
             case AttackType.None:
+                //’ÊíUŒ‚
                 break;
 
             case AttackType.Recovery:
                 Heal(data.Attack);
-                break;
+                Debug.Log($"{gameObject.name}‚ğ{data.Attack}‰ñ•œ");
+                return;
 
             case AttackType.Fire:
+                Debug.Log("‰Š‘®«UŒ‚");
                 break;
         }
 
