@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
+
+//–ğŠ„@Piece‚ğ’u‚¯‚È‚¢êŠ‚ÉBlocked‚Ìtype‚ğŠ„‚è“–‚Ä‚é‚¾‚¯
 public class MapSelectPhaseSystem : MonoBehaviour
 {
     [Header("ref")]
@@ -131,14 +133,36 @@ public class MapSelectPhaseSystem : MonoBehaviour
     {
         var definition = m_selectedMaps[m_selectedIndex];
 
+        Debug.Log(definition);
         MapClass map = new MapClass(definition.size.x, definition.size.y);
 
-        foreach(var pos in definition.activeTiles)
+        //all tile apply type full 
+        //for(int y = 0;y < definition.size.y; y++)
+        //{
+        //    for(int x = 0; x < definition.size.x; x++)
+        //    {
+        //        map.GetFloor(x, y).SetState(Floor.FloorState.full);
+        //    }
+        //}
+
+        //
+        HashSet<Vector2Int> activeSet = new HashSet<Vector2Int>(definition.activeTiles);
+
+        for (int y = 0; y < definition.size.y; y++)
         {
-            map.GetFloor(pos.x, pos.y).SetState(Floor.FloorState.full);
+            for (int x = 0; x < definition.size.x; x++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+
+                if (!activeSet.Contains(pos))
+                {
+                    map.GetFloor(x, y).SetState(Floor.FloorState.blocked);
+                }
+            }
         }
 
         m_mapClassData.SetMapClass(map);
+
     }
     #endregion
 

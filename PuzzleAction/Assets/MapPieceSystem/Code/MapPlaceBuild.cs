@@ -18,6 +18,7 @@ public class MapPlaceBuild : MonoBehaviour
             }
         }
     }
+
     private GameObject InstantiateGridMap()
     {
         var obj = Instantiate(m_cube, m_parent);

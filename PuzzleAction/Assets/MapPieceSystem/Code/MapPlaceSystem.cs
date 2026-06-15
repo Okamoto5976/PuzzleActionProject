@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-//マップ生成の際に使う
+//Use Map Generate
 [System.Serializable]
 public class RoomData
 {
@@ -30,23 +32,24 @@ public class MapPlaceSystem : MonoBehaviour
 {
     [SerializeField] private InputActionReference m_action;
 
-    [SerializeField] private MapPlaceBuild m_build;
+    //[SerializeField] private MapPlaceBuild m_build;
 
     [SerializeField] private Transform m_parent;//mousePos parent
     [SerializeField] private Camera m_mainCamera;
     private Vector3 m_mouseWorldPos;
 
     private GameObject m_roomPieceParentObj;//RoomPieceの親オブジェクト
+    private RectTransform m_roomPieceParentRect;
     //private GameObject m_roomPieceChildObj;//マウス追従オブジェクト
 
-    [SerializeField] private List<RoomData> m_roomData;
+    [SerializeField] private List<RoomData> m_roomData = new();
 
     [Header("MapClass")]
     private MapClass m_mapClass = new(0, 0);
     [SerializeField] private Vector2Int m_size;
 
-    [SerializeField] private int m_createRoomNumber;
-    public Queue<Room> m_rooms = new Queue<Room>();
+    //[SerializeField] private int m_createRoomNumber;
+    //public Queue<Room> m_rooms = new Queue<Room>();
 
     private Room m_room;
 
@@ -56,23 +59,45 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private Vector2Int m_startPos;
     [SerializeField] private Vector2Int m_endPos;
 
+    public Vector2Int Origin { get => m_origin - m_difference; }
 
     private bool m_isDoorGenerate;
+
+    //error all connect roomcheck;
+    private HashSet<int> m_allRoomID;
+
+    [SerializeField] private GraphicRaycaster m_roomPieceCanvas;
+
+    private MapPlaceErrorMessage m_errorMessageClass;
+    private BoardManager m_boardManager;
+
+    [SerializeField] private int m_enemyPieceMax;
+    private int m_enemyPieceCount;
+    [SerializeField] private int m_shopPieceMax;
+    private int m_shopPieceCount;
+    [SerializeField] private int m_trapPieceMax;
+    private int m_trapPieceCount;
+
+    [SerializeField] private MapClassData m_mapClassData;
 
 
     private void Awake()
     {
-        InitializeMapGrid();
-        m_build.Generate(m_size);
+        m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
+        m_boardManager = GetComponent<BoardManager>();
 
-        for(int i = 0; i < m_createRoomNumber; i++)
-        {
-            Room room = CreateRoom();
-            m_rooms.Enqueue(room);
-            m_build.GenerateRoomObject(room);
-        }
+        //InitializeMapGrid();
+        m_mapClass = m_mapClassData.MapClass;
+        m_boardManager.Generate(m_mapClass);
+        //m_build.Generate(m_size);
 
-        m_roomData = new List<RoomData>();
+        //for(int i = 0; i < m_createRoomNumber; i++)
+        //{
+        //    Room room = CreateRoom();
+        //m_rooms.Enqueue(room);
+        //    m_build.GenerateRoomObject(room);
+        //}
+
         //goalPos設定
 
 
@@ -83,194 +108,188 @@ public class MapPlaceSystem : MonoBehaviour
         //Debug.Log(m_room.Size);
     }
 
-    #region ルーム作成
-    private Room CreateRoom()
-    {
-        int num = UnityEngine.Random.Range(0, 6);
-
-        Room room = new(new(), new(0,0));
-
-        if (num == 0)
-        {
-            room = new(
-                new()
-                {
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                },new(3,3)
-                );
-        }
-        else if(num == 1)
-        {
-            room = new(
-                new()
-                {
-                    Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-                    Floor.FloorState.full, Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.empty,Floor.FloorState.full,Floor.FloorState.empty,
-                }, new(3, 3)
-                );
-        }
-        else if(num == 2)
-        {
-            room = new(
-                new()
-                {
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                }, new(3, 3)
-                );
-        }
-        else if(num == 3)
-        {
-            room = new(
-                new()
-                {
-                    Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,
-                }, new(2, 2)
-                );
-        }
-        else if( num == 4)
-        {
-            room = new(
-               new()
-               {
-                    Floor.FloorState.full,Floor.FloorState.empty,
-                    Floor.FloorState.full,Floor.FloorState.full,
-               }, new(2, 2)
-               );
-        }
-        else if(num == 5)
-        {
-            room = new(
-                new()
-                {
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                }, new(5,1)
-                );
-        }
-
-        return room;
-    }
-    #endregion
-
     private void InitializeMapGrid()
     {
         m_mapClass = new MapClass(m_size.x, m_size.y);
     }
 
+    //mause select gridObj
+    private GridObject m_gridObj;
+
+    private PointerEventData m_pointerData;
+
+
     private void Update()
     {
         MousePos();
 
+        if(m_roomPieceParentObj)
+        {
+
+        }
+
         #region マウス操作
         if (m_action.action.WasPressedThisFrame())
         {
-            if(m_roomPieceParentObj != null)
+            m_gridObj = null;
+
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+            var ray = Camera.main.ScreenPointToRay(mouseScreenPos);
+            if (Physics.Raycast(ray, out var hit))
             {
+                m_gridObj = hit.collider.gameObject.GetComponent<GridObject>();
+            }
+
+            if (m_roomPieceParentObj != null)
+            {
+                var roomPieceParent = m_roomPieceParentObj.GetComponent<RoomPieceParent>();
+
                 if (m_origin.x < m_size.x && m_origin.x >= 0&&
                     m_origin.y < m_size.y && m_origin.y >= 0
                 )
                 {
-                    var obj = m_roomPieceParentObj.GetComponent<RoomObj>();
+                    
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
                     if (!m_mapClass.IsRoomColliding(m_room, m_origin - m_difference))
                     {
-                        Debug.Log("On Place");
+                        //========= Scene Processing =========
 
-                        //=========シーン上のための処理=========
+                        //if can not get GameScene gridObj, return;
+                        if (m_gridObj == null) return;
 
-                        obj.SetIsPlace(true);
+                        switch (roomPieceParent.AreaType)
+                        {
+                            case AreaType.None:
+                                break;
+                            case AreaType.Summon:
+                                if (m_enemyPieceMax <= m_enemyPieceCount)
+                                {
+                                    RoomCountLimitError();
+                                    return;
+                                }
 
-                        Vector3 localPos = new Vector3(
-                            (m_origin.x - m_difference.x) * 1.5f,
-                            1,
-                            (m_origin.y - m_difference.y) * 1.5f
-                            );
+                                m_enemyPieceCount++;
 
-                        Vector3 worldPos = m_parent.TransformPoint(localPos);
-                        m_roomPieceParentObj.transform.position = worldPos;
-                        m_roomPieceParentObj = null;
-                        //=======================================
+                                break;
+                            case AreaType.Shop:
+                                if(m_shopPieceMax <= m_shopPieceCount)
+                                {
+                                    RoomCountLimitError();
 
+                                    return;
+                                }
+                                m_shopPieceCount++;
 
-                        PlaceRoom(obj.AreaType);
+                                break;
+                            case AreaType.Damage:
+                                if(m_trapPieceMax <= m_trapPieceCount)
+                                {
+                                    RoomCountLimitError();
+
+                                    return;
+                                }
+                                m_trapPieceCount++;
+
+                                break;
+                        }
+
+                        m_gridObj.OnPlaceFloor(
+                            m_room,
+                            roomPieceParent.AreaType, 
+                            m_origin - m_difference, 
+                            roomPieceParent
+                        );
+
+                        Debug.Log("Place");
+                        //======================================
+
+                       
+                        PlaceRoom(roomPieceParent.AreaType);
+
                     }
                     else
                     {
                         //grid内でおけないとき　roompieceを　保存していた場所に返す
-                        //room piece = null
-
-                        Debug.Log("No Place");
-                        m_roomPieceParentObj.transform.position = obj.OriginalPos;
-                        m_roomPieceParentObj = null;
-
+                        //errormessage
+                        Debug.Log("Error");
                     }
                 }
                 else
                 {
                     //grid外である時　その場に置く
-                    Debug.Log("NotFind Map");
+                    //Debug.Log("NotFind Map");
+                    roomPieceParent.CallResetTransform();
                     m_roomPieceParentObj = null;
                 }
             }
             //マウスがマップピースを持っていないとき
             else
             {
-                Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-                var ray = Camera.main.ScreenPointToRay(mouseScreenPos);
-                if(Physics.Raycast(ray, out var hit))
+                if (m_gridObj)
                 {
-                    var obj = hit.collider.gameObject.GetComponent<RoomPieceObj>();
-                    if (obj == null) return;
+                    if (!m_gridObj.IsPlace) return;
 
-                    m_difference = obj.Index;
+                    m_difference = m_gridObj.PieceIndex;
+                    RoomPieceParent piece = m_gridObj.OnRemoveFloor(m_origin);
 
-                    var parent = obj.GetComponentInParent<RoomObj>();
+                    if (piece == null) return;
 
-                    if (obj.IsPlace)
+                    m_roomPieceParentObj = piece.gameObject;
+                    m_roomPieceParentRect = piece.Rect;
+                    m_room = piece.Room;
+
+                    Debug.Log("Call remove");
+
+                    RemoveRoom();
+                }
+                else
+                {
+                    m_pointerData = new PointerEventData(EventSystem.current);
+                    m_pointerData.position = Mouse.current.position.ReadValue();
+
+                    List<RaycastResult> results = new();
+
+                    m_roomPieceCanvas.Raycast(m_pointerData, results);
+
+                    foreach (var result in results)
                     {
-                        //roomがありIsPlaceがtrueだったらRemoveRoom
-                        //取得　
-                        //m_roompiece = obj.Parent;
-                        parent.SetIsPlace(false);
-                        m_roomPieceParentObj = parent.gameObject;
-                        m_room = parent.Room;
-                        //remove
-                        //マウスカーソルのfloorのID
-                        RemoveRoom();
+                        RoomPiece roomPieceObj = result.gameObject.GetComponent<RoomPiece>();
 
+                        if (roomPieceObj == null) return;
 
+                        m_difference = roomPieceObj.Index;
+
+                        RoomPieceParent roomPieceParent = roomPieceObj.Parent;
+
+                        m_roomPieceParentObj = roomPieceParent.gameObject;
+                        m_roomPieceParentRect = roomPieceParent.Rect;
+                        m_room = roomPieceParent.Room;
+
+                        break;
                     }
-                    else
-                    {
-                        //roomがありIsPlaceがfalseだったら取得
-                        //取得の際 現在のparentの位置を保存
-                        parent.SetOriginalPos();
-                        m_roomPieceParentObj = parent.gameObject;
-                        m_room = parent.Room;
-
-                    }
-
                 }
             }
-
         }
         #endregion
 
         //もしroompieceがあるならmouseに追従
         if (m_roomPieceParentObj != null)
         {
-            Vector3 differencePos = new Vector3(
-                            (m_difference.x) * 1.5f + 0.5f,
-                            1,
-                            (m_difference.y) * 1.5f + 0.5f
+            Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+            Vector2 differencePos = new Vector2(
+                            (m_difference.x) * 15f + 0.5f,
+                            (m_difference.y) * 15f + 0.5f
                             );
-            m_roomPieceParentObj.transform.position = m_mouseWorldPos - differencePos;
+            m_roomPieceParentRect.position = mouseScreenPos - differencePos;
         }
+    }
+
+    private void RoomCountLimitError()
+    {
+        //errorcheck is not connect to start form end
+        Debug.Log("error: not connect to start from end");
+        m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.CountOver);
     }
 
     private void MousePos()
@@ -295,6 +314,7 @@ public class MapPlaceSystem : MonoBehaviour
     {
         m_mapClass.PlaceRoom(m_room, m_origin - m_difference);
 
+
         //========= RoomData ============
         List<Vector2Int> roomSizes = new();
         Vector2Int roomPos = new Vector2Int(m_origin.x, m_origin.y);
@@ -313,7 +333,7 @@ public class MapPlaceSystem : MonoBehaviour
                 roomSizes.Add(pos);
             }
         }
-
+        
         RoomData data = new RoomData(ID, type, roomSizes);
 
         m_roomData.Add(data);
@@ -398,6 +418,8 @@ public class MapPlaceSystem : MonoBehaviour
     //floorのidを見て　そのidがどのidの部屋と隣接しているかみる
     public void GetNeighborRooms()
     {
+        m_allRoomID = new();
+
         m_graph.Clear();
         m_connectionMap.Clear();
 
@@ -408,6 +430,9 @@ public class MapPlaceSystem : MonoBehaviour
                 var id = m_mapClass.GetFloorID(x, y);
 
                 if (id == -1) continue;
+
+                //all place room id check
+                m_allRoomID.Add(id);
 
                 Vector2Int[] dirs =
                 {
@@ -505,7 +530,7 @@ public class MapPlaceSystem : MonoBehaviour
             return false;
         }
 
-        Debug.Log(current);
+        //Debug.Log(current);
 
 
         foreach (var next in m_graph[current].OrderBy(x => x))
@@ -523,15 +548,30 @@ public class MapPlaceSystem : MonoBehaviour
     private List<int> m_bestPath;
     private List<List<int>> m_pathList;
 
+
+    //[SerializeField] private EventBusAsset 
+    //[SerializeField] private List<InstanceCounter> m_instanceCounterList;
     //DFSを呼ぶ
     //ボタンで
     public void OnClickDFS()
     {
-        if (!m_isDoorGenerate) return;
 
-        //startPosのid取得
+        if (!m_isDoorGenerate)
+        {
+            //errorcheck is not connect to start form end
+            Debug.Log("error: not connect to start from end");
+            m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotRouteConnected);
+            return;
+        }
+
+        foreach (var placeId in m_graph.Keys)
+        {
+            
+        }
+
+        //Get startId
         int startID = m_mapClass.GetFloorID(m_startPos.x, m_startPos.y);
-        //endPosのid取得
+        //Get endId
         int endID = m_mapClass.GetFloorID(m_endPos.x, m_endPos.y);
 
         List<int> visited = new List<int>();//訪れたところ
@@ -540,12 +580,23 @@ public class MapPlaceSystem : MonoBehaviour
 
         OnDFS(startID, endID, visited);
 
-        GenerateDoor();
+        if(!GenerateDoor())
+        {
+            //errorcheck is all conect piece?
+            Debug.Log("error: not connect all piece");
+            m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotPieceConnected);
+            return;
+        }
 
+        ////shopObject reset
+        //foreach (var counter in m_instanceCounterList)
+        //{
+        //    counter.ResetCount();
+        //}
 
         //SceneMoveに変更
 
-        SceneManager.LoadScene("CreatMap");
+        SceneManager.LoadScene("CreateMap");
     }
 
     //CallDFSから呼ばれる
@@ -576,9 +627,8 @@ public class MapPlaceSystem : MonoBehaviour
     }
 
 
-    [SerializeField] private MapClassData m_mapClassData;
 
-    public void GenerateDoor()
+    public bool GenerateDoor()
     {
         m_bestPath = new();
 
@@ -630,8 +680,20 @@ public class MapPlaceSystem : MonoBehaviour
 
         } while (added);
 
+        //errorcheck is all conect piece?
+        foreach (var placeId in m_allRoomID)
+        {
+            Debug.Log($"allRoomID{placeId}");
+            if (mainPath.Contains(placeId)) continue;
+            Debug.Log("check false");
+            return false;
+        }
+
         m_mapClassData.SetMapClass(m_mapClass);
         m_mapClassData.SetRoomDatas(m_roomData);
+        Debug.Log("check true");
+
+        return true;
     }
 
     private void Connect(int id, int next)
@@ -640,7 +702,7 @@ public class MapPlaceSystem : MonoBehaviour
         int to = next;
 
         var key = new EdgeKey(from, to);
-        m_mapClass.DebugPrintFloors();
+        //m_mapClass.DebugPrintFloors();
         if (!m_connectionMap.ContainsKey(key))
         {
             Debug.Log("Null");
@@ -656,38 +718,4 @@ public class MapPlaceSystem : MonoBehaviour
 
         floor.SetState(Wall.WallState.door);
     }
-
-    //public bool OnBFS(Vector2Int startPos, Vector2Int endPos)
-    //{
-    //    //startPosのid取得
-    //    int startID = m_mapClass.GetFloorID(startPos.x, startPos.y);
-    //    //endPosのid取得
-    //    int endID = m_mapClass.GetFloorID(endPos.x, endPos.y);
-
-    //    Queue<int> queue = new Queue<int>();
-    //    HashSet<int> visited = new HashSet<int>();
-
-    //    queue.Enqueue(startID);
-    //    visited.Add(startID);
-
-    //    while (queue.Count > 0)
-    //    {
-    //        int currentID = queue.Dequeue();
-
-    //        foreach (var next in m_graph[currentID])
-    //        {
-    //            if (next == endID)
-    //            {
-    //                return true;
-    //            }
-
-    //            if (visited.Contains(next)) continue;
-
-    //            queue.Enqueue(next);
-    //            visited.Add(next);
-    //        }
-    //    }
-
-    //    return false;
-    //}
 }
