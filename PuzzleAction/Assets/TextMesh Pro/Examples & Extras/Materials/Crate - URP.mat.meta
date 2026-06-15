@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:PuzzleAction/Assets/TextMesh Pro/Examples & Extras/Materials/Crate - URP.mat.meta
 guid: 3b5cc91c3bf8cf74391252247f52fb59
+========
+guid: 5822d667c8e272c4185ef5a50c1df8fc
+>>>>>>>> EntitySystem:PuzzleAction/Assets/EntitiySystem/Trap/ArrowTrapData.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

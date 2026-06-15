@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:PuzzleAction/Assets/CreatMap.meta
 guid: bee691bb9408721429b721d56f61d0e1
+========
+guid: 308ee0042a47de743966ccb92fea8e3f
+>>>>>>>> EntitySystem:PuzzleAction/Assets/EnemyAI_Kubo/Need.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

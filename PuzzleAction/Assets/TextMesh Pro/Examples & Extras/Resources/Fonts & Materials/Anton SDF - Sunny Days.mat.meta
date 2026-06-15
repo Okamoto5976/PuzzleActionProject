@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:PuzzleAction/Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Sunny Days.mat.meta
 guid: 6522f30e342599e4e9dd4cc2cc03c830
+========
+guid: 0a0eca8a05fa73a47b74e76775af260b
+>>>>>>>> EntitySystem:PuzzleAction/Assets/EntitiySystem/Trap/RockTrapData.asset.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 11400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:PuzzleAction/Assets/ButtonSystem.meta
 guid: 5f29c1dc258998549bd82ced7b7ef371
+========
+guid: bfbb26ddd09b8754baa304536054d02d
+>>>>>>>> EntitySystem:PuzzleAction/Assets/EnemyAI_Kubo.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
