@@ -84,13 +84,13 @@ public class GridObject : MonoBehaviour
             case AreaType.None:
                 color = Color.white;
                 break;
-            case AreaType.Summon:
+            case AreaType.Enemy:
                 color = Color.red;
                 break;
             case AreaType.Shop:
                 color = Color.green;
                 break;
-            case AreaType.Damage:
+            case AreaType.Trap:
                 color = Color.blue;
                 break;
         }

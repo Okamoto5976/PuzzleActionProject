@@ -38,9 +38,9 @@ public class BoardManager : MonoBehaviour
         //var gridObj = m_gridObjects[origine.x, origine.y];
     }
 
-    public void Generate(Vector2Int size, MapClass map)
+    public void Generate(Vector2Int size)
     {
-        m_mapClass = map;
+        //m_mapClass = map;
 
         m_gridObjects = new GridObject[size.x, size.y];
 
@@ -48,10 +48,10 @@ public class BoardManager : MonoBehaviour
         {
             for (int z = 0; z < size.y; z++)
             {
-                var floor = m_mapClass.GetFloor(x, z);
+                //var floor = m_mapClass.GetFloor(x, z);
 
 
-                if (floor.State == Floor.FloorState.blocked) return;
+                //if (floor.State == Floor.FloorState.blocked) return;
 
 
                 var obj = InstantiateGridMap();

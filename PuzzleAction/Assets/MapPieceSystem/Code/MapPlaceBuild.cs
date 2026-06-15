@@ -73,13 +73,13 @@ public class MapPlaceBuild : MonoBehaviour
         {
             case AreaType.None:
                 break;
-            case AreaType.Summon:
+            case AreaType.Enemy:
                 obj.SetColor(Color.red);
                 break;
             case AreaType.Shop:
                 obj.SetColor(Color.green);
                 break;
-            case AreaType.Damage:
+            case AreaType.Trap:
                 obj.SetColor(Color.cyan);
 
                 break;

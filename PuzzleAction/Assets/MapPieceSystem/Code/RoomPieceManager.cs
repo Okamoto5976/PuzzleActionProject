@@ -5,9 +5,9 @@ using UnityEngine;
 public enum AreaType//âºÇ»ÇΩÇﬂÅ@å„Ç…çÌèú
 {
     None,
-    Summon,
+    Enemy,
     Shop,
-    Damage
+    Trap
 }
 
 public class RoomPieceManager : MonoBehaviour
@@ -158,13 +158,13 @@ public class RoomPieceManager : MonoBehaviour
         {
             case AreaType.None:
                 break;
-            case AreaType.Summon:
+            case AreaType.Enemy:
                 roomPieceParent.SetColor(Color.red);
                 break;
             case AreaType.Shop:
                 roomPieceParent.SetColor(Color.green);
                 break;
-            case AreaType.Damage:
+            case AreaType.Trap:
                 roomPieceParent.SetColor(Color.cyan);
 
                 break;

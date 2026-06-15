@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -86,9 +87,8 @@ public class MapPlaceSystem : MonoBehaviour
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
         m_boardManager = GetComponent<BoardManager>();
 
-        //InitializeMapGrid();
-        m_mapClass = m_mapClassData.MapClass;
-        m_boardManager.Generate(m_mapClass.Size);
+        InitializeMapGrid();
+        m_boardManager.Generate(m_size);
         //m_build.Generate(m_size);
 
         //for(int i = 0; i < m_createRoomNumber; i++)
@@ -161,7 +161,7 @@ public class MapPlaceSystem : MonoBehaviour
                         {
                             case AreaType.None:
                                 break;
-                            case AreaType.Summon:
+                            case AreaType.Enemy:
                                 if (m_enemyPieceMax <= m_enemyPieceCount)
                                 {
                                     RoomCountLimitError();
@@ -181,7 +181,7 @@ public class MapPlaceSystem : MonoBehaviour
                                 m_shopPieceCount++;
 
                                 break;
-                            case AreaType.Damage:
+                            case AreaType.Trap:
                                 if(m_trapPieceMax <= m_trapPieceCount)
                                 {
                                     RoomCountLimitError();
