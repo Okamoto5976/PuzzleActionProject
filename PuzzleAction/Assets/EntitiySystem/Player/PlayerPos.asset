@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9816c1c7de88e3d43a9a53d5c5add60e, type: 3}
-  m_Name: PlayerData
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerData
-  m_normalSpeed: 5
-  m_dashSpeed: 10
-  hotbarSize: 3
+  m_Script: {fileID: 11500000, guid: 8bddac37a50ac9d4f8fdd3fa4958b36c, type: 3}
+  m_Name: PlayerPos
+  m_EditorClassIdentifier: Assembly-CSharp::Vector3Asset
+  m_value: {x: 0, y: 0, z: 0}

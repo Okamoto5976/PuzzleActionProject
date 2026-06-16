@@ -17,7 +17,7 @@ public class Enemy_Chase : MonoBehaviour, IEnemyBehaviour
         if (m_enemyController.Target == null) return;
 
         m_enemyController.SetDestination(
-            m_enemyController.Target.position,
+            m_enemyController.Target.Value,
             m_enemyController.Speed
             );
     }

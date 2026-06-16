@@ -13,6 +13,7 @@ public class PlayerController : Entity
     [SerializeField] private InputActionReference m_moveAction;
     [SerializeField] private InputActionReference m_dashAction;
 
+    [SerializeField] private  Vector3Asset m_position;
     //[SerializeField] private EntityMove m_move;
 
     private bool m_isDashing;
@@ -51,6 +52,9 @@ public class PlayerController : Entity
     protected override void Update()
     {
         base.Update();
+
+        //Debug
+        m_position.SetValue(transform.position);
 
         //à⁄ìÆêßå‰
         //if(m_currentState != null && !m_currentState.CanMove)

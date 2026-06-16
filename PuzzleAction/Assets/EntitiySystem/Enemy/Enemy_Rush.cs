@@ -7,7 +7,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     private EnemyController m_controller;
 
     private Vector3 m_dir;
-    private Vector3 m_targetPos;
+    private Vector3 m_targetPos; //save value
 
     private bool m_isRunning;
     private bool m_preparing;
@@ -55,7 +55,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     {
         m_preparing = true;
 
-        m_targetPos = m_controller.Target.position;
+        m_targetPos = m_controller.Target.Value;
 
         m_dir = (m_targetPos - transform.position).normalized;
         m_dir.y = 0;
