@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 //Use Map Generate
 [System.Serializable]
@@ -151,10 +152,9 @@ public class MapPlaceSystem : MonoBehaviour
     {
         MousePos();
 
-        if(m_roomPieceParentObj)
-        {
+        Vector2Int mousePos = m_origin;
+        Vector2Int origin = m_origin - m_difference;
 
-        }
 
         #region マウス操作
         if (m_action.action.WasPressedThisFrame())
@@ -185,15 +185,16 @@ public class MapPlaceSystem : MonoBehaviour
             {
                 var roomPieceParent = m_roomPieceParentObj.GetComponent<RoomPieceParent>();
 
-                if (m_origin.x < m_size.x && m_origin.x >= 0&&
-                    m_origin.y < m_size.y && m_origin.y >= 0
+                if (mousePos.x < m_size.x && mousePos.x >= 0&&
+                    mousePos.y < m_size.y && mousePos.y >= 0
                 )
                 {
                     
                     //grid内で置けたとき　origin に合わせて置く　roompiece = null
-                    if (!m_mapClass.IsRoomColliding(m_room, m_origin - m_difference))
+                    if (!m_mapClass.IsRoomColliding(m_room, origin))
                     {
                         //========= Scene Processing =========
+                        Debug.Log(m_mapClass.GetFloor(2, 2).State != Floor.FloorState.empty);
 
                         //if can not get GameScene gridObj, return;
                         if (m_gridObj == null) return;
@@ -233,15 +234,13 @@ public class MapPlaceSystem : MonoBehaviour
 
                                 break;
                         }
-
                         m_gridObj.OnPlaceFloor(
                             m_room,
                             roomPieceParent.AreaType, 
-                            m_origin - m_difference, 
+                            origin, 
                             roomPieceParent
                         );
 
-                        Debug.Log("Place");
                         //======================================
 
                        
@@ -278,7 +277,7 @@ public class MapPlaceSystem : MonoBehaviour
                     if (!m_gridObj.IsPlace) return;
 
                     m_difference = m_gridObj.PieceIndex;
-                    RoomPieceParent roomPieceParent = m_gridObj.OnRemoveFloor(m_origin);
+                    RoomPieceParent roomPieceParent = m_gridObj.OnRemoveFloor(mousePos);
 
                     if (roomPieceParent == null) return;
 
