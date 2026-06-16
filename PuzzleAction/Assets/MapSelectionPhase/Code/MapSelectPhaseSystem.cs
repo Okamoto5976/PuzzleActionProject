@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 
-//役割　Pieceを置けない場所にBlockedのtypeを割り当てるだけ
 public class MapSelectPhaseSystem : MonoBehaviour
 {
     [Header("ref")]
@@ -136,16 +135,6 @@ public class MapSelectPhaseSystem : MonoBehaviour
         Debug.Log(definition);
         MapClass map = new MapClass(definition.size.x, definition.size.y);
 
-        //all tile apply type full 
-        //for(int y = 0;y < definition.size.y; y++)
-        //{
-        //    for(int x = 0; x < definition.size.x; x++)
-        //    {
-        //        map.GetFloor(x, y).SetState(Floor.FloorState.full);
-        //    }
-        //}
-
-        //
         HashSet<Vector2Int> activeSet = new HashSet<Vector2Int>(definition.activeTiles);
 
         for (int y = 0; y < definition.size.y; y++)
@@ -161,8 +150,9 @@ public class MapSelectPhaseSystem : MonoBehaviour
             }
         }
 
+        m_mapClassData.SetGoalPos(definition.goalPos);
+        m_mapClassData.SetStartPos(definition.startPos);
         m_mapClassData.SetMapClass(map);
-
     }
     #endregion
 
@@ -185,7 +175,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
     {
         if(m_selectedIndex == -1)
         {
-            Debug.Log("マップ未選択");
+            Debug.Log("not select map");
             return;
         }
 

@@ -664,7 +664,7 @@ public class MapPlaceSystem : MonoBehaviour
             counter.ResetCount();
         }
 
-        SceneManager.LoadScene("CreateMap");
+        SceneManager.LoadScene("CreatMap");
     }
 
     private void OnDFS(int current, int goal, List<int> visited)
