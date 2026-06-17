@@ -47,9 +47,10 @@ public class TrapBase : Entity
     {
         float distance =
           Vector3.Distance(
-              m_startPosition,
+              m_owner.transform.position,
               transform.position
               );
+
         if (distance >= m_range)
         {
             Destroy(gameObject);
@@ -59,7 +60,7 @@ public class TrapBase : Entity
     //Hit
     private void OnTriggerEnter(Collider other)
     {
-
+        Debug.Log($"Arrow Hit : {other.name}");
         //layer check
 
         Entity target = other.GetComponent<Entity>();
