@@ -141,13 +141,13 @@ public class MapSelectPhaseSystem : MonoBehaviour
         {
             for (int x = 0; x < definition.size.x; x++)
             {
-                Vector2Int pos = new Vector2Int(x, y);
-
-                if (!activeSet.Contains(pos))
-                {
-                    map.GetFloor(x, y).SetState(Floor.FloorState.blocked);
-                }
+                map.GetFloor(x, y).SetState(Floor.FloorState.blocked);
             }
+        }
+
+        foreach (var pos in definition.activeTiles)
+        {
+            map.GetFloor(pos.x, pos.y).SetState(Floor.FloorState.empty);
         }
 
         m_mapClassData.SetGoalPos(definition.goalPos);

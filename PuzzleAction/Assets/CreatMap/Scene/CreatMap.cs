@@ -62,8 +62,10 @@ public class CreatMap : MonoBehaviour
             {
                 //FLOOR
                 var mapFloorIndex = x + y * m_mapClass.Size.x;
+                var floorState = m_mapClass.GetFloor(x, y).State;
                 m_floorObjects[mapFloorIndex].
-                    SetActive(m_mapClass.GetFloor(x, y).State != Floor.FloorState.empty);
+                    SetActive(floorState != Floor.FloorState.empty 
+                           && floorState != Floor.FloorState.blocked);
 
                 //SOUTH WALL
                 var southWall = m_wallObjectsSouth[x + y * m_mapClass.Size.x];
@@ -224,12 +226,11 @@ public class CreatMap : MonoBehaviour
     /// </summary>
     /// <param name="wallObj"></param>
     /// <param name="state"></param>
-    private void ApplyWallState(GameObject wall, Wall.WallState state)
+    private void ApplyWallState(GameObject wall, Wall.WallState wallState)
     {
+        bool isVisible = wallState == Wall.WallState.full;
 
-        bool isVisible = state == Wall.WallState.full;
-
-        switch (state)
+        switch (wallState)
         {
             case Wall.WallState.full:
                 wall.SetActive(isVisible);
@@ -312,29 +313,28 @@ public class CreatMap : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Start with Floor(0, 0)
-    /// </summary>
-    /// <returns></returns>
     private Vector2Int GetStartPos()
     {
-        return Vector2Int.zero;
+        return m_mapClassData.StartPos;
     }
-
-    /// <summary>
-    /// get GoalPos (Grid
-    /// </summary>
-    /// <returns></returns>
 
     private Vector2Int GetGoalPos()
     {
         return m_mapClassData.GoalPos;
     }
 
+    private Transform GetWorldOrigin()
+    {
+        return m_floorObjects[0].transform;
+    }
+
     private bool IsForbiddenPos(Vector2Int pos)
     {
+        var floorState = m_mapClass.GetFloor(pos.x, pos.y).State;
         if (pos == GetStartPos()) return true;
         if (pos == GetGoalPos())  return true;
+        //if(floorState == Floor.FloorState.blocked)
+        //                          return true;
                                   return false;
     }
 
@@ -409,7 +409,7 @@ public class CreatMap : MonoBehaviour
     /// <returns></returns>
     private Vector3 GridToWorld(Vector2Int gridPos)
     {
-        Transform floor00 = GetFloor00(); //get Floor(0, 0)
+        Transform origin = GetWorldOrigin(); //0, 0
 
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
         Vector3 baseSize = floorRenderer.bounds.size; //2x
@@ -419,11 +419,13 @@ public class CreatMap : MonoBehaviour
             baseSize.y * m_floorScale.y,
             baseSize.z * m_floorScale.z
             );
+
+
         return new Vector3(
-            floor00.position.x + gridPos.x * floorSize.x,
-            floor00.position.y + floorSize.y,
-            floor00.position.z + gridPos.y * floorSize.z);
-    }
+            origin.position.x + gridPos.x * floorSize.x, 
+            0.5f, 
+            origin.position.z + gridPos.y * floorSize.z);
+     }
     /// <summary>
     /// ここから下はデバッグ用でPlayer関係の処理追加
     /// </summary>
@@ -432,23 +434,15 @@ public class CreatMap : MonoBehaviour
     {
         if (m_player == null)
         {
-            Debug.LogError("T_Gene : Playerが設定されていません");
+            Debug.LogError("CreatMap : Playerが設定されていません");
             return;
         }
 
-        Transform floor00 = GetFloor00();
-        if (floor00 == null) return;
-
-        Vector3 spawnPos = floor00.position + Vector3.up * 0.5f;
+        Vector3 spawnPos = GridToWorld(GetStartPos());
+        spawnPos.y = 0.5f;
 
         m_playerController = Instantiate(m_player, spawnPos, Quaternion.identity);
         m_playerController.name = "Player";
-
-        //var controller = m_playerController.GetComponent<PlayerController>();
-        //if (controller != null)
-        //{
-        //    controller.Initialize(this);
-        //}
 
         //カメラにPlayerを追従させる
         if (m_camera != null)
@@ -463,15 +457,4 @@ public class CreatMap : MonoBehaviour
         Debug.Log("Player spawned at (0,0)");
     }
 
-    private Transform GetFloor00()
-    {
-        // (0,0) は最初に配置した Floor
-        // m_floorObjects は x + y*width で詰めているので index=0
-        if (m_floorObjects.Count == 0)
-        {
-            Debug.LogError("No floor objects found");
-            return null;
-        }
-        return m_floorObjects[0].transform;
-    }
 }
