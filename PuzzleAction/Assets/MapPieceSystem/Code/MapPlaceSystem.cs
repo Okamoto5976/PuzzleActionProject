@@ -114,7 +114,7 @@ public class MapPlaceSystem : MonoBehaviour
         {
             m_mapClass = m_mapClassData.MapClass;
 
-            m_startPos = m_DebugStartPos;
+            m_startPos = m_mapClassData.StartPos;
             m_endPos = m_mapClassData.GoalPos;
         }
         m_boardManager.Generate(m_mapClass);
