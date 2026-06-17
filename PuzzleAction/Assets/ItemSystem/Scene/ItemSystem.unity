@@ -277,7 +277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  EnemyName: 
   EnemyDropList: []
   DropList: []
   ShopList: []
@@ -546,7 +545,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1d2aad50c702f249a0f68d069a27428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDrop
-  prefabPrefab: {fileID: 0}
 --- !u!1 &1476566987
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adc6beef49d0f74ca608147e2fdc720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPool
-  prefab: {fileID: 0}
+  prefab: {fileID: 4752866384152218059, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
