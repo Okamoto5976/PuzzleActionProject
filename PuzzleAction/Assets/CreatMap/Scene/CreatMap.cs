@@ -25,30 +25,34 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private int m_treasureCount = 3;
     [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
 
-    [Header("Debug用")]
-    [SerializeField] private GameObject m_enemyPrefab; 
+    [Header("Debug")]
+    [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
     [SerializeField] private GameObject m_player;
     [SerializeField] private T_Camera m_camera;
     private GameObject m_playerController;
+
+
+    //--------------External API---------------
+    public List<GameObject> SouthWall => m_wallObjectsSouth;
+    public List<GameObject> WestWall => m_wallObjectsWest;
+
     private void Awake()
     {
         m_mapClass = m_mapClassData.MapClass;
         Debug.Log(m_mapClass.Size.ToString());
         m_size = m_mapClass.Size;
 
-        InitializeMap(); 
+        InitializeMap();
 
         UpdateObjects(); //GeneratMap
 
-        //apply AreaType
-        ProcessAreaTypes();
+        ProcessAreaTypes();//apply AreaType
 
         GenerateTreasures();
 
-        //Debug
         SpawnPlayer();
     }
     /// <summary>
@@ -64,7 +68,7 @@ public class CreatMap : MonoBehaviour
                 var mapFloorIndex = x + y * m_mapClass.Size.x;
                 var floorState = m_mapClass.GetFloor(x, y).State;
                 m_floorObjects[mapFloorIndex].
-                    SetActive(floorState != Floor.FloorState.empty 
+                    SetActive(floorState != Floor.FloorState.empty
                            && floorState != Floor.FloorState.blocked);
 
                 //SOUTH WALL
@@ -104,7 +108,7 @@ public class CreatMap : MonoBehaviour
         var floorBounds = m_floorPrefab.GetComponent<Renderer>().bounds;
         var wallBounds = m_wallPrefab.GetComponent<Renderer>().bounds;
 
-        //get FloorPrefab size★
+        //get FloorPrefab size
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
         Vector3 baseFloorSize = floorRenderer.bounds.size;
         baseFloorSize.x = 1;
@@ -243,8 +247,8 @@ public class CreatMap : MonoBehaviour
             case Wall.WallState.door:
                 wall.SetActive(isVisible);
 
-                //var renderer = wall.GetComponent<Renderer>();
-                //if (renderer != null) renderer.material.color = UnityEngine.Color.red;
+                var renderer = wall.GetComponent<Renderer>();
+                if (renderer != null) renderer.material.color = UnityEngine.Color.red;
                 break;
         }
     }
@@ -256,7 +260,7 @@ public class CreatMap : MonoBehaviour
     {
         if (m_mapClassData == null || m_mapClassData.roomDatas == null)
         {
-            Debug.LogWarning("T_Gene : RoomData が存在しない");
+            Debug.LogWarning("T_Gene : RoomData is nothing");
             return;
         }
 
@@ -273,13 +277,13 @@ public class CreatMap : MonoBehaviour
             {
                 case AreaType.None:
 
-                    break; //何もしない
+                    break; //nothing
 
 
                 case AreaType.Summon:
                     {
-                        var poses = RandomChoosePosition(room, 3); 
-                        foreach(var position in poses)
+                        var poses = RandomChoosePosition(room, 3);
+                        foreach (var position in poses)
                         {
                             if (IsForbiddenPos(position)) continue;
 
@@ -332,10 +336,10 @@ public class CreatMap : MonoBehaviour
     {
         var floorState = m_mapClass.GetFloor(pos.x, pos.y).State;
         if (pos == GetStartPos()) return true;
-        if (pos == GetGoalPos())  return true;
+        if (pos == GetGoalPos()) return true;
         //if(floorState == Floor.FloorState.blocked)
         //                          return true;
-                                  return false;
+        return false;
     }
 
     private void GenerateTreasures()
@@ -397,7 +401,6 @@ public class CreatMap : MonoBehaviour
             Vector2Int pos = copy[number];
             poses.Add(pos);
             copy.Remove(pos);
-            Debug.Log(pos + "★★★★★★★");
         }
         return poses;
     }
@@ -422,39 +425,23 @@ public class CreatMap : MonoBehaviour
 
 
         return new Vector3(
-            origin.position.x + gridPos.x * floorSize.x, 
-            0.5f, 
+            origin.position.x + gridPos.x * floorSize.x,
+            0.5f,
             origin.position.z + gridPos.y * floorSize.z);
-     }
-    /// <summary>
-    /// ここから下はデバッグ用でPlayer関係の処理追加
-    /// </summary>
+    }
 
     private void SpawnPlayer()
     {
-        if (m_player == null)
-        {
-            Debug.LogError("CreatMap : Playerが設定されていません");
-            return;
-        }
-
         Vector3 spawnPos = GridToWorld(GetStartPos());
         spawnPos.y = 0.5f;
 
         m_playerController = Instantiate(m_player, spawnPos, Quaternion.identity);
         m_playerController.name = "Player";
 
-        //カメラにPlayerを追従させる
         if (m_camera != null)
         {
             m_camera.SetTarget(m_playerController.transform);
         }
-        else
-        {
-            Debug.LogWarning("T_Gene : T_Cameraが設定されていません");
-        }
-
-        Debug.Log("Player spawned at (0,0)");
     }
 
 }
