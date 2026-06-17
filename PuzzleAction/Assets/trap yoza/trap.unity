@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ManagerCall
   m_ItemManager: {fileID: 1830866655}
-  m_ItemName: 1
+  m_ItemName: 0
   m_RoomSize: {x: 5, y: 5}
 --- !u!4 &795575313
 Transform:
