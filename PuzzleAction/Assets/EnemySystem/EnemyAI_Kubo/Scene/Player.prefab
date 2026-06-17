@@ -111,7 +111,7 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
   m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_position: {fileID: 11400000, guid: 1faf27f1155bf2747908be1dc70be376, type: 2}
+  m_position: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
 --- !u!54 &7311085719930065014
 Rigidbody:
   m_ObjectHideFlags: 0

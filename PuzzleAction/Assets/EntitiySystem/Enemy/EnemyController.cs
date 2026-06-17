@@ -113,7 +113,7 @@ public class EnemyController : Entity
                 Attack();
                 m_isCooldownEnd = false;
             }
-            return;
+            //return;
         }
 
         m_enemyBehaviour.Execute();
@@ -207,23 +207,23 @@ public class EnemyController : Entity
     {
         //HitCollider���g����
         //Attack Process
-        DamageData damage = new DamageData
-        {
-            Attack = (int)STR,
-            HitRate = 100f,
-            CriticalRate=CriticalRate,
-            CriticalDamage=CriticalDamage,
-            BreakRate=BreakRate,
-            Knockback=KnockBack,
-            Stun=Stun,
-            AttackDir=transform.forward,
-            Attacker=this,
-            AttackerSE=AttackSE,
-            AudioSource=AudioSource,
-        };
+        //DamageData damage = new DamageData
+        //{
+        //    Attack = (int)STR,
+        //    HitRate = 100f,
+        //    CriticalRate=CriticalRate,
+        //    CriticalDamage=CriticalDamage,
+        //    BreakRate=BreakRate,
+        //    Knockback=KnockBack,
+        //    Stun=Stun,
+        //    AttackDir=transform.forward,
+        //    Attacker=this,
+        //    AttackerSE=AttackSE,
+        //    AudioSource=AudioSource,
+        //};
 
-        m_hitCollider.AttackCollider(damage,Team,m_attackHitBox);
-        Debug.Log("HIT");
+        //m_hitCollider.AttackCollider(damage,Team,m_attackHitBox);
+        //Debug.Log("HIT");
     }
 }
 

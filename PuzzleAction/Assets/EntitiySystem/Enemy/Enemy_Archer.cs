@@ -14,6 +14,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 
     public void Execute()
     {
+
         if (m_controller.Target == null) return;
 
         float distance = Vector3.Distance(
@@ -21,8 +22,11 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
             m_controller.Target.Value
         );
 
+        Debug.Log($"distance:{distance} ,range:{m_controller.AttackRange}");
         if (distance <= m_controller.AttackRange)
         {
+            Debug.Log("Shot!!");
+
             m_controller.Stop();
 
             Vector3 dir = (m_controller.Target.Value - transform.position);
@@ -31,7 +35,6 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
             transform.rotation = Quaternion.LookRotation(dir);
 
             TryShoot(dir.normalized);
-            Debug.Log("Shot!!");
         }
         else
         {
