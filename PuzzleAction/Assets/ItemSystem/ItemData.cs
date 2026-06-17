@@ -17,7 +17,7 @@ public class ItemData //: ScriptableObject
     [SerializeField] private int maxStack;          //最大スタック数
     [SerializeField] private float dropRate;        //ドロップ率
     [SerializeField] private int itemGrade;         //アイテムのグレード（例：1=一般、2=レア、3=エピックなど）
-    [SerializeField] private GameObject dropPrefab; //ドロップアイテムのプレハブ
+    [SerializeField] private GameObject d_Prefab; //ドロップアイテムのプレハブ
     [SerializeField] private int dropsize;          //ドロップサイズ
 
 
@@ -29,7 +29,7 @@ public class ItemData //: ScriptableObject
     public float DropRate { get => dropRate; }// ドロップ率（例：0.1=10%の確率でドロップ）
     public int ItemGrade { get => itemGrade; }// アイテムのグレード（例：1=一般、2=レア、3=エピックなど）
     public GameObject Prefab { get => Prefab; }
-    public GameObject DropPrefab { get => dropPrefab; }
+    public GameObject D_Prefab { get => d_Prefab; }
     public int DropSize { get => dropsize; } // ドロップ確率の重み
 
 

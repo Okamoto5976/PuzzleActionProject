@@ -8,7 +8,6 @@ public class ItemDrop : MonoBehaviour
     float timeToReturn = 5f; // アイテムが自動的に戻るまでの時間
     DropPool pool; // アイテムを管理するドロッププールのクラス
     private GameObject prefab;
-    [SerializeField]public GameObject prefabPrefab; 
     //public event Action m_event;
     
     ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
@@ -39,7 +38,7 @@ public class ItemDrop : MonoBehaviour
         if (pool != null)
         {
             //Poolに返す処理
-            //pool.ReturnItem(item, prefab);
+            pool.ReturnItem( prefab);
         }
     }
 }
