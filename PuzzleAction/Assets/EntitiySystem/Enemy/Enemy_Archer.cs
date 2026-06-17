@@ -4,8 +4,6 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_controller;
 
-    //[SerializeField] private ItemManager m_itemManager;
-
     private float m_coolTime = 1.5f;
     private float m_lastFireTime;
 
@@ -18,12 +16,30 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
     {
         if (m_controller.Target == null) return;
 
-        Vector3 dir = (m_controller.Target.position - transform.position).normalized;
-        dir.y = 0f;
+        float distance = Vector3.Distance(
+            transform.position,
+            m_controller.Target.Value
+        );
 
-        transform.rotation = Quaternion.LookRotation(dir);
+        if (distance <= m_controller.AttackRange)
+        {
+            m_controller.Stop();
 
-        TryShoot(dir);
+            Vector3 dir = (m_controller.Target.Value - transform.position);
+            dir.y = 0f;
+
+            transform.rotation = Quaternion.LookRotation(dir);
+
+            TryShoot(dir.normalized);
+            Debug.Log("Shot!!");
+        }
+        else
+        {
+            m_controller.SetDestination(
+                m_controller.Target.Value,
+                m_controller.Speed
+            );
+        }
     }
 
     private void TryShoot(Vector3 dir)
@@ -33,15 +49,11 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 
         m_lastFireTime = Time.time;
 
-        Shoot(dir);
-    }
-
-    private void Shoot(Vector3 dir)
-    {
         m_controller.UseItem(dir);
     }
 
-    public void Stop(){
-
+    public void Stop()
+    {
+        m_controller.Stop();
     }
 }

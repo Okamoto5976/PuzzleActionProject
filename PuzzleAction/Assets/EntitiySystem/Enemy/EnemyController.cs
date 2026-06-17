@@ -1,11 +1,17 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : Entity
 {
+
+    [Header("EnemyType")]
+    [SerializeField] private EnemyAttacksType m_type;   
+
     [Header("Target")]
-    [SerializeField] private Transform m_target;
+    //Debug
+    [SerializeField] private Vector3Asset m_target;
 
     [Header("Range")]
     [SerializeField] private float m_findRange = 8f;
@@ -26,9 +32,10 @@ public class EnemyController : Entity
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
 
-    private bool m_isPreparing;
-    public Transform Target => m_target;
+    //private bool m_isPreparing;
+    public Vector3Asset Target => m_target;
     public NavMeshAgent Agent => m_agent;
+    public float AttackRange => m_attackRange;
     public Vector3 Forward => transform.forward;
 
     protected override void Awake()
@@ -36,6 +43,22 @@ public class EnemyController : Entity
         base.Awake();
 
         m_agent = GetComponent<NavMeshAgent>();
+
+        switch (m_type)
+        {
+            case EnemyAttacksType.Chase:
+                gameObject.AddComponent<Enemy_Chase>();
+                break;
+
+            case EnemyAttacksType.Rush:
+                gameObject.AddComponent<Enemy_Rush>();
+                break;
+
+            case EnemyAttacksType.Archer:
+                gameObject.AddComponent<Enemy_Archer>();
+                break;
+        }
+
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
 
         if (m_enemyBehaviour != null)
@@ -45,7 +68,9 @@ public class EnemyController : Entity
 
         m_agent.updateRotation = false;
         m_agent.updatePosition = true;
-    }
+
+        //m_agent.stoppingDistance = m_attackRange;
+    }   
 
     
     protected override void Update()
@@ -68,7 +93,7 @@ public class EnemyController : Entity
         //------------------------------------
 
 
-        float distance = Vector3.Distance(transform.position, m_target.transform.position);
+        float distance = Vector3.Distance(transform.position, m_target.Value);
 
         HandleRotation(distance);
 
@@ -167,7 +192,7 @@ public class EnemyController : Entity
         }
         else
         {
-            Vector3 dir = m_target.position - transform.position;
+            Vector3 dir = m_target.Value - transform.position;
             Rotate(dir);
         }
     }

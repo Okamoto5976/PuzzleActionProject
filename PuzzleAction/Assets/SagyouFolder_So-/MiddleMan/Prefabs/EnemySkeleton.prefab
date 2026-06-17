@@ -190,7 +190,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 528806279578718545}
-  - component: {fileID: 2131340806950030132}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
@@ -234,27 +233,16 @@ MonoBehaviour:
   m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
-  m_target: {fileID: 0}
-  m_findRange: 8
-  m_attackRange: 1.5
-  m_attackCooldown: 5
+  m_type: 2
+  m_target: {fileID: 11400000, guid: 1faf27f1155bf2747908be1dc70be376, type: 2}
+  m_findRange: 16
+  m_attackRange: 8
+  m_attackCooldown: 1
   m_hitCollider: {fileID: 0}
   m_attackHitBox:
     m_transform: {fileID: 0}
     m_radius: 0
   m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
---- !u!114 &2131340806950030132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
