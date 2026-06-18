@@ -169,7 +169,6 @@ MonoBehaviour:
   m_action: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_parent: {fileID: 694388302}
   m_mainCamera: {fileID: 218458766}
-  m_roomData: []
   m_difference: {x: 0, y: 0}
   m_origin: {x: 0, y: 0}
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
@@ -177,7 +176,7 @@ MonoBehaviour:
   m_enemyPieceMax: 3
   m_shopPieceMax: 3
   m_trapPieceMax: 10
-  m_debugCheck: 1
+  m_debugCheck: 0
   m_size: {x: 10, y: 10}
   m_DebugStartPos: {x: 0, y: 0}
   m_DebugEndPos: {x: 5, y: 5}

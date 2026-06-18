@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/MapSelectionPhase/Scene/Start.unity
+    guid: 15865350bb1dfe24fae48f565a524da2
+  - enabled: 1
+    path: Assets/MapSelectionPhase/Scene/MapSelectionPhase.unity
+    guid: d9dfefe8103b83a4180539406b87f87e
+  - enabled: 1
     path: Assets/MapPieceSystem/Scene/MapPieceSystem.unity
     guid: b23eda0b7be2bc846a0e972a714d6e63
   - enabled: 1
