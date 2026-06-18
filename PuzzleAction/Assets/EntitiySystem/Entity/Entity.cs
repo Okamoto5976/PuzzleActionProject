@@ -10,23 +10,23 @@ public enum TeamType
 abstract public class Entity : MonoBehaviour
 {
     //Entity Status
-    public float HP { get => m_status[StatusType.HP].Value; }
-    public float STR { get => m_status[StatusType.Strength].Value; }
-    public float KnockBack { get => m_status[StatusType.KnockBack].Value; }
-    public float DEF { get => m_status[StatusType.Defense].Value; }
-    public float Speed { get => m_status[StatusType.Speed].Value; }
-    public float DashSpeed { get => m_status[StatusType.DashSpeed].Value; }
-    public float CriticalRate { get => m_status[StatusType.CriticalRate].Value; }
-    public float CriticalDamage { get => m_status[StatusType.CriticalDamage].Value; }
-    public float DEX { get => m_status[StatusType.Dexterity].Value; }
-    public float AGI { get => m_status[StatusType.Agility].Value; }
-    public float Vision { get => m_status[StatusType.Vision].Value; }
-    public float BreakRate { get => m_status[StatusType.BreakRate].Value; }
-    public float Stun { get => m_status[StatusType.Stun].Value; }
-    public float PoisonRes { get => m_status[StatusType.PoisonRes].Value; }
-    public float StunRes { get => m_status[StatusType.StunRes].Value; }
-    public float SlowRes { get => m_status[StatusType.SlowRes].Value; }
-    public float BlindRes { get => m_status[StatusType.BlindRes].Value; }
+    public float HP => m_status[StatusType.HP].Value;
+    public float STR  => m_status[StatusType.Strength].Value; 
+    public float KnockBack => m_status[StatusType.KnockBack].Value;
+    public float DEF => m_status[StatusType.Defense].Value;
+    public float Speed => m_status[StatusType.Speed].Value;
+    public float DashSpeed => m_status[StatusType.DashSpeed].Value;
+    public float CriticalRate => m_status[StatusType.CriticalRate].Value;
+    public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
+    public float DEX => m_status[StatusType.Dexterity].Value;
+    public float AGI => m_status[StatusType.Agility].Value;
+    public float Vision => m_status[StatusType.Vision].Value;
+    public float BreakRate => m_status[StatusType.BreakRate].Value;
+    public float Stun => m_status[StatusType.Stun].Value;
+    public float PoisonRes => m_status[StatusType.PoisonRes].Value;
+    public float StunRes => m_status[StatusType.StunRes].Value;
+    public float SlowRes => m_status[StatusType.SlowRes].Value;
+    public float BlindRes => m_status[StatusType.BlindRes].Value;
 
     //���
     public enum EntityState

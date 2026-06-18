@@ -22,7 +22,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
             m_controller.Target.Value
         );
 
-        Debug.Log($"distance:{distance} ,range:{m_controller.AttackRange}");
+        //Debug.Log($"distance:{distance} ,range:{m_controller.AttackRange}");
         if (distance <= m_controller.AttackRange)
         {
             Debug.Log("Shot!!");
