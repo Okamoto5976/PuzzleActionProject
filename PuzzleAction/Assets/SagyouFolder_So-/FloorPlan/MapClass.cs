@@ -112,9 +112,9 @@ public class MapClass
             {
                 // get current Position on map
                 Vector2Int pos = origin + new Vector2Int(x, y);
-
                 bool isRoomFloorNotEmpty = room.GetFloor(x, y).State != Floor.FloorState.empty;
                 bool isMapFloorNotEmpty = GetFloor(pos.x, pos.y).State != Floor.FloorState.empty;
+
                 if (isRoomFloorNotEmpty && isMapFloorNotEmpty) return true;
             }
         }
@@ -182,7 +182,7 @@ public class MapClass
                 if (floor.ID == -1 || (floor.State == Floor.FloorState.empty || floor.State == Floor.FloorState.blocked))
                 {
                     floor.SetID(-1);
-                    if (floor.State != Floor.FloorState.empty || floor.State != Floor.FloorState.blocked)
+                    if (floor.State != Floor.FloorState.empty && floor.State != Floor.FloorState.blocked)
                     {
                         floor.SetState(Floor.FloorState.empty);
                     }

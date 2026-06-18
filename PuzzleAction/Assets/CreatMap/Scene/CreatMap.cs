@@ -20,32 +20,43 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private Vector3 m_floorScale = Vector3.one;
     [SerializeField] private Vector3 m_wallScale = Vector3.one;
 
+    [Header("TreasureBox")]
+    [SerializeField] private GameObject m_treasurePrefab;
+    [SerializeField] private int m_treasureCount = 3;
+    [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
 
-
-    [Header("Debug用")]
-    [SerializeField] private GameObject m_enemyPrefab; 
+    [Header("Debug")]
+    [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
     [SerializeField] private GameObject m_player;
     [SerializeField] private T_Camera m_camera;
     private GameObject m_playerController;
+
+
+    //--------------External API---------------
+    public List<GameObject> SouthWall => m_wallObjectsSouth;
+    public List<GameObject> WestWall => m_wallObjectsWest;
+
     private void Awake()
     {
         m_mapClass = m_mapClassData.MapClass;
         Debug.Log(m_mapClass.Size.ToString());
         m_size = m_mapClass.Size;
 
-        InitializeMap(); //受け取った情報元に初期化
+        InitializeMap();
 
-        UpdateObjects(); //マップの生成
+        UpdateObjects(); //GeneratMap
 
-        ProcessAreaTypes();
+        ProcessAreaTypes();//apply AreaType
+
+        GenerateTreasures();
 
         SpawnPlayer();
     }
     /// <summary>
-    /// MapClassの状態を3Dに反映
+    /// MapClass Convert 3D
     /// </summary>
     private void UpdateObjects()
     {
@@ -55,8 +66,10 @@ public class CreatMap : MonoBehaviour
             {
                 //FLOOR
                 var mapFloorIndex = x + y * m_mapClass.Size.x;
+                var floorState = m_mapClass.GetFloor(x, y).State;
                 m_floorObjects[mapFloorIndex].
-                    SetActive(m_mapClass.GetFloor(x, y).State != Floor.FloorState.empty);
+                    SetActive(floorState != Floor.FloorState.empty
+                           && floorState != Floor.FloorState.blocked);
 
                 //SOUTH WALL
                 var southWall = m_wallObjectsSouth[x + y * m_mapClass.Size.x];
@@ -78,14 +91,12 @@ public class CreatMap : MonoBehaviour
                     ApplyWallState(m_wallObjectsWest[(x + 1) + y * (m_mapClass.Size.x + 1)],
                                    m_mapClass.GetWall(x + 1, y, Wall.Side.West).State);
                 }
-          
             }
         }
         //m_mapClass.DebugPrintFloors();
     }
-
     /// <summary>
-    /// MapClassのサイズに基づいて3Dの見た目をすべて生成
+    /// Generate all 3D appearances based on the size of the MapClass
     /// </summary>
     private void InitializeMap()
     {
@@ -97,7 +108,7 @@ public class CreatMap : MonoBehaviour
         var floorBounds = m_floorPrefab.GetComponent<Renderer>().bounds;
         var wallBounds = m_wallPrefab.GetComponent<Renderer>().bounds;
 
-        //get FloorPrefab size★
+        //get FloorPrefab size
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
         Vector3 baseFloorSize = floorRenderer.bounds.size;
         baseFloorSize.x = 1;
@@ -150,8 +161,6 @@ public class CreatMap : MonoBehaviour
         Vector2 origin = new Vector2(
             -floorSize.x * 0.5f,
             -floorSize.z * 0.5f);
-
-
 
         // create floor map
         for (int y = 0; y < m_size.y; y++)
@@ -221,12 +230,11 @@ public class CreatMap : MonoBehaviour
     /// </summary>
     /// <param name="wallObj"></param>
     /// <param name="state"></param>
-    private void ApplyWallState(GameObject wall, Wall.WallState state)
+    private void ApplyWallState(GameObject wall, Wall.WallState wallState)
     {
+        bool isVisible = wallState == Wall.WallState.full;
 
-        bool isVisible = state == Wall.WallState.full;
-
-        switch (state)
+        switch (wallState)
         {
             case Wall.WallState.full:
                 wall.SetActive(isVisible);
@@ -239,8 +247,6 @@ public class CreatMap : MonoBehaviour
             case Wall.WallState.door:
                 wall.SetActive(isVisible);
 
-                //ここにdoorだった場合の処理追加
-                //現在は壁の色を赤色にしている
                 var renderer = wall.GetComponent<Renderer>();
                 if (renderer != null) renderer.material.color = UnityEngine.Color.red;
                 break;
@@ -254,39 +260,48 @@ public class CreatMap : MonoBehaviour
     {
         if (m_mapClassData == null || m_mapClassData.roomDatas == null)
         {
-            Debug.LogWarning("T_Gene : RoomData が存在しない");
+            Debug.LogWarning("T_Gene : RoomData is nothing");
             return;
         }
 
-        //ID順に処理
-        var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
-        Vector3 goalPos = GridToWorld(m_mapClassData.GoalPos);
+        Vector3 startPos = GridToWorld(GetStartPos());
+        Vector3 goalPos = GridToWorld(GetGoalPos());
+
         GameObject obj2 = Instantiate(m_goalPrefab, goalPos, Quaternion.identity);
+
+        var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
+
         foreach (var room in sortedRoomDatas)
         {
             switch (room.m_type)
             {
                 case AreaType.None:
-                    break; //何もしない
+
+                    break; //nothing
 
 
                 case AreaType.Summon:
                     {
-                        var poses = RandomChoosePosition(room, 3); //マップとそのマスにオブジェクトを何個生成させるか指定
-                        foreach(var position in poses)
+                        var poses = RandomChoosePosition(room, 3);
+                        foreach (var position in poses)
                         {
-                           Vector3 debugPos = GridToWorld(position); //Vector2Int を World座標変換
-                            //CallAreaSetを呼ぶ
+                            if (IsForbiddenPos(position)) continue;
+
+                            Vector3 debugPos = GridToWorld(position); //Vector2Int transformed into world coordinates
+                            //call CallAreaSet
                             GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
                         }
                         break;
                     }
-                //現在はDebug用にAreaTypeがNoneとEnemyしかないのでコメントアウトしている
+
+
                 case AreaType.Shop:
                     {
                         var poses = RandomChoosePosition(room, 1);
                         foreach (var position in poses)
                         {
+                            if (IsForbiddenPos(position)) continue;
+
                             Vector3 debugPos = GridToWorld(position);
                             GameObject obj = Instantiate(m_shopPrefab, debugPos, Quaternion.identity);
                         }
@@ -302,7 +317,81 @@ public class CreatMap : MonoBehaviour
         }
     }
 
-    private  List<Vector2Int> RandomChoosePosition(RoomData room, int count)
+    private Vector2Int GetStartPos()
+    {
+        return m_mapClassData.StartPos;
+    }
+
+    private Vector2Int GetGoalPos()
+    {
+        return m_mapClassData.GoalPos;
+    }
+
+    private Transform GetWorldOrigin()
+    {
+        return m_floorObjects[0].transform;
+    }
+
+    private bool IsForbiddenPos(Vector2Int pos)
+    {
+        var floorState = m_mapClass.GetFloor(pos.x, pos.y).State;
+        if (pos == GetStartPos()) return true;
+        if (pos == GetGoalPos()) return true;
+        //if(floorState == Floor.FloorState.blocked)
+        //                          return true;
+        return false;
+    }
+
+    private void GenerateTreasures()
+    {
+        //Potential treasure chest spawn locations
+        List<Vector2Int> candidates = new();
+
+        foreach (var room in m_mapClassData.roomDatas)
+        {
+            //reject other than None
+            if (room.m_type != AreaType.None) continue;
+            foreach (var pos in room.m_roomSizes)
+            {
+                if (IsForbiddenPos(pos)) continue;
+                candidates.Add(pos);
+
+            }
+
+        }
+
+        //return smallest value
+        int spawnCount = Mathf.Min(m_treasureCount, candidates.Count);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            //random select || Max roomSize
+            int index = Random.Range(0, candidates.Count);
+
+            Vector2Int gridPos = candidates[index];
+
+            //delete index candidates
+            candidates.RemoveAt(index);
+
+            Vector3 worldPos = GridToWorld(gridPos);
+
+            GameObject obj = Instantiate(m_treasurePrefab, worldPos, Quaternion.identity, transform);
+
+            bool isMimic = Random.value < m_mimicRate;
+
+            Treasure treasure = obj.GetComponent<Treasure>();
+            treasure.SetIsMimic(isMimic);
+        }
+    }
+
+
+    /// <summary>
+    /// random obtain the pos in the room
+    /// </summary>
+    /// <param name="room"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    private List<Vector2Int> RandomChoosePosition(RoomData room, int count)
     {
         List<Vector2Int> copy = new(room.m_roomSizes);
         List<Vector2Int> poses = new();
@@ -312,76 +401,47 @@ public class CreatMap : MonoBehaviour
             Vector2Int pos = copy[number];
             poses.Add(pos);
             copy.Remove(pos);
-            Debug.Log(pos + "★★★★★★★");
         }
         return poses;
     }
 
+    /// <summary>
+    /// Convert GridPos to WorldPos
+    /// </summary>
+    /// <param name="gridPos"></param>
+    /// <returns></returns>
     private Vector3 GridToWorld(Vector2Int gridPos)
     {
-        Transform floor00 = GetFloor00(); //0,0 の床の座標を取得
+        Transform origin = GetWorldOrigin(); //0, 0
 
         var floorRenderer = m_floorPrefab.GetComponent<Renderer>();
-        Vector3 baseSize = floorRenderer.bounds.size; //二倍
+        Vector3 baseSize = floorRenderer.bounds.size; //2x
 
         Vector3 floorSize = new Vector3(
             baseSize.x * m_floorScale.x,
             baseSize.y * m_floorScale.y,
             baseSize.z * m_floorScale.z
             );
+
+
         return new Vector3(
-            floor00.position.x + gridPos.x * floorSize.x,
-            floor00.position.y + floorSize.y + 1,
-            floor00.position.z + gridPos.y * floorSize.z);
+            origin.position.x + gridPos.x * floorSize.x,
+            0.5f,
+            origin.position.z + gridPos.y * floorSize.z);
     }
-    /// <summary>
-    /// ここから下はデバッグ用でPlayer関係の処理追加
-    /// </summary>
 
     private void SpawnPlayer()
     {
-        if (m_player == null)
-        {
-            Debug.LogError("T_Gene : Playerが設定されていません");
-            return;
-        }
-
-        Transform floor00 = GetFloor00();
-        if (floor00 == null) return;
-
-        Vector3 spawnPos = floor00.position + Vector3.up * 0.5f;
+        Vector3 spawnPos = GridToWorld(GetStartPos());
+        spawnPos.y = 0.5f;
 
         m_playerController = Instantiate(m_player, spawnPos, Quaternion.identity);
         m_playerController.name = "Player";
 
-        //var controller = m_playerController.GetComponent<PlayerController>();
-        //if (controller != null)
-        //{
-        //    controller.Initialize(this);
-        //}
-
-        //カメラにPlayerを追従させる
         if (m_camera != null)
         {
             m_camera.SetTarget(m_playerController.transform);
         }
-        else
-        {
-            Debug.LogWarning("T_Gene : T_Cameraが設定されていません");
-        }
-
-        Debug.Log("Player spawned at (0,0)");
     }
 
-    private Transform GetFloor00()
-    {
-        // (0,0) は最初に配置した Floor
-        // m_floorObjects は x + y*width で詰めているので index=0
-        if (m_floorObjects.Count == 0)
-        {
-            Debug.LogError("No floor objects found");
-            return null;
-        }
-        return m_floorObjects[0].transform;
-    }
 }

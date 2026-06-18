@@ -8,10 +8,12 @@ public class MapClassData : ScriptableObject
     private List<RoomData> m_roomDatas;
 
     private Vector2Int m_goalPos;
+    private Vector2Int m_startPos;
 
-    public MapClass MapClass { get => m_mapClass; }
-    public List<RoomData> roomDatas { get => m_roomDatas; }
-    public Vector2Int GoalPos { get =>  m_goalPos; }
+    public MapClass MapClass => m_mapClass;
+    public List<RoomData> roomDatas => m_roomDatas;
+    public Vector2Int GoalPos => m_goalPos;
+    public Vector2Int StartPos => m_startPos;
 
     public void SetMapClass(MapClass mapClass)
     {
@@ -26,5 +28,10 @@ public class MapClassData : ScriptableObject
     public void SetGoalPos(Vector2Int goalPos)
     {
         m_goalPos = goalPos;
+    }
+
+    public void SetStartPos(Vector2Int startPos)
+    {
+        m_startPos = startPos;
     }
 }
