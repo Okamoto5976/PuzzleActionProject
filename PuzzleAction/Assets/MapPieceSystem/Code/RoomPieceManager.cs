@@ -145,7 +145,6 @@ public class RoomPieceManager : MonoBehaviour
         roomPieceParent.SetAreaType(type);
         roomPieceParent.Init(this);
 
-        //後　AreaTypeを仮から変更
         switch (type)
         {
             case AreaType.None:
@@ -167,24 +166,23 @@ public class RoomPieceManager : MonoBehaviour
 
     public void ResetRoomPiece()
     {
-        //一回全てけす
-        //見た目、　UIを右にスライド
-        //20こ　表示
+        //all delete
+        //UIPanel right slide
+        //show 20piece
     }
 
     private void ShowRoomObject()
     {
-        //queueから取る
+        //get from queue
         RoomPieceParent piece = m_pieces.Dequeue();
 
-        //座標をランダムにだし設置
+        //random
         float rectX = UnityEngine.Random.Range(-300f, 300f);
         float rectY = UnityEngine.Random.Range(-500f, 500f);
 
         RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
 
         rect.anchoredPosition = new Vector2(rectX, rectY);
-        //繰り返す
     }
 
     public void OnResetTransform(RoomPieceParent piece, Vector2 pos)

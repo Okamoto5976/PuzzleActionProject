@@ -108,7 +108,7 @@ public class BoardManager : MonoBehaviour
         (m_currentGlowRooms, m_recodeGlowRooms) = (m_recodeGlowRooms, m_currentGlowRooms);
     }
 
-    public void Generate(MapClass map)
+    public void Generate(MapClass map, Vector2Int startPos, Vector2Int endPos)
     {
         m_mapClass = map;
         Vector2Int size = map.Size;
@@ -122,13 +122,22 @@ public class BoardManager : MonoBehaviour
             {
                 var floor = m_mapClass.GetFloor(x, y);
                 //Debug.Log($"{floor.State}");
-
+                Vector2Int pos = new Vector2Int(x, y);
 
                 if (floor.State == Floor.FloorState.blocked) continue;
 
-
                 var obj = InstantiateGridMap();
                 GridObject gridObj = obj.GetComponent<GridObject>();
+
+                if(pos == startPos)
+                {
+                    gridObj.SetColor(Color.green);
+                }
+                else if(pos == endPos)
+                {
+                    gridObj.SetColor(Color.red);
+                }
+
 
                 gridObj.Initialize(this);
                 gridObj.SetPieceIndex(new Vector2Int(x, y));

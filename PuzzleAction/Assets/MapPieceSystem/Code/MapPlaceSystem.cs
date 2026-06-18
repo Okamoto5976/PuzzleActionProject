@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.PlayerSettings;
 
 //Use Map Generate
 [System.Serializable]
@@ -37,12 +36,12 @@ public class MapPlaceSystem : MonoBehaviour
 
     private Vector3 m_mouseWorldPos;
 
-    private GameObject m_roomPieceParentObj;//RoomPieceの親オブジェクト
+    private GameObject m_roomPieceParentObj;//bringing piece now
     private RectTransform m_roomPieceParentRect;
 
 
     //use GenerateMap MainSece, PlaceRoomDatas
-    [SerializeField] private List<RoomData> m_roomData = new();
+    private List<RoomData> m_roomData = new();
 
    
     //Use Place Room--------------------------
@@ -51,7 +50,7 @@ public class MapPlaceSystem : MonoBehaviour
 
     public Room HaveRoom => m_room;
 
-    [SerializeField] private Vector2Int m_difference; //マウスとpieceのオリジンの差分（マウス座標が左下よりVector2Int多いときm_origin - m_difference）
+    [SerializeField] private Vector2Int m_difference;
     [SerializeField] private Vector2Int m_origin;
 
     public Vector2Int Origin { get => m_origin - m_difference; }
@@ -98,6 +97,10 @@ public class MapPlaceSystem : MonoBehaviour
     [SerializeField] private Vector2Int m_DebugStartPos;
     [SerializeField] private Vector2Int m_DebugEndPos;
 
+    [Header("Shop Reset")]
+    //[SerializeField] private EventBusAsset 
+    [SerializeField] private List<InstanceCounter> m_instanceCounterList;
+
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
@@ -117,24 +120,7 @@ public class MapPlaceSystem : MonoBehaviour
             m_startPos = m_mapClassData.StartPos;
             m_endPos = m_mapClassData.GoalPos;
         }
-        m_boardManager.Generate(m_mapClass);
-        //m_build.Generate(m_size);
-
-        //for(int i = 0; i < m_createRoomNumber; i++)
-        //{
-        //    Room room = CreateRoom();
-        //m_rooms.Enqueue(room);
-        //    m_build.GenerateRoomObject(room);
-        //}
-
-        //goalPos設定
-
-
-        //goalPosをDataに渡す
-        m_mapClassData.SetGoalPos(m_endPos);
-
-        //m_room = m_rooms.Dequeue();//本当はシーンでクリックによって取得
-        //Debug.Log(m_room.Size);
+        m_boardManager.Generate(m_mapClass, m_startPos, m_endPos);
     }
 
     private void InitializeMapGrid()
@@ -370,8 +356,6 @@ public class MapPlaceSystem : MonoBehaviour
         m_origin = new Vector2Int(x, z);
     }
 
-
-
     private void PlaceRoom(AreaType type)
     {
         m_mapClass.PlaceRoom(m_room, m_origin - m_difference);
@@ -513,7 +497,6 @@ public class MapPlaceSystem : MonoBehaviour
                 {
                     Vector2Int neighbor = new Vector2Int(x, y) + dir;
 
-                    //範囲外
                     if (neighbor.x < 0 || neighbor.y < 0 || neighbor.x >= m_size.x || neighbor.y >= m_size.y)
                         continue;
 
@@ -618,8 +601,7 @@ public class MapPlaceSystem : MonoBehaviour
     private List<List<int>> m_pathList;
 
 
-    //[SerializeField] private EventBusAsset 
-    [SerializeField] private List<InstanceCounter> m_instanceCounterList;
+
     
     //Call by Button
     public void OnClickDFS()
@@ -684,8 +666,6 @@ public class MapPlaceSystem : MonoBehaviour
             OnDFS(next, goal, copy);
         }
     }
-
-
 
     public bool GenerateDoor()
     {

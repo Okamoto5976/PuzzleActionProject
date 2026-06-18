@@ -28,7 +28,6 @@ public class RoomPieceParent : MonoBehaviour
         m_rect = GetComponent<RectTransform>();
     }
 
-    //‰Šú‰»@q‚ÉIsPlace‚Ìbool‚ğ‚½‚¹‚é
     public void Init(RoomPieceManager manager)
     {
         m_pieces = GetComponentsInChildren<RoomPiece>();

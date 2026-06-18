@@ -60,6 +60,11 @@ public class GridObject : MonoBehaviour
         }  
     }
 
+    public void SetColor(Color color)
+    {
+        m_ren.material.color = color;
+    }
+
     //frome call mapsystem
     public void OnPlaceFloor(Room room, AreaType type, Vector2Int origin, RoomPieceParent piece)
     {
