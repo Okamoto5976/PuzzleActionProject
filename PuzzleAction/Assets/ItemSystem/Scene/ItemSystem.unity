@@ -726,7 +726,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adc6beef49d0f74ca608147e2fdc720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPool
-  prefab: {fileID: 4752866384152218059, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
+  prefab: {fileID: 0}
+  poolItem:
+    id: 0
+    name: 
+    prefab: {fileID: 0}
+    initialCount: 5
+  ItemList: []
+  Items: []
+  maxSize: 0
+  DefaultCapacity: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
