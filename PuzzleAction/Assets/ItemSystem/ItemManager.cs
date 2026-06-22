@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 
@@ -9,24 +10,24 @@ public class ItemManager : MonoBehaviour
     public List<Item> DropList = new();
     public List<Item> ShopList = new();
     //private int nextId; //次のIDを管理する変数
-    DropPool pool;
+    DropPool pools;
     //リスト初期化
-    public List<Item> ItemList = new List<Item>();
+    public List<Item> ItemList = new();
 
     //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
     {
         return ItemList.Find(x => x.Id == id);
     }
-   
-   
+
+
     //public void ItemUse(int id/*, Entity entity*/)  // Entity
     //{
     //    //見つけたアイテムを使用する
     //    Item item = LookForID(id);
     //    if (item != null)
     //    {
-            
+
     //    }
     //    else
     //    {
@@ -34,14 +35,12 @@ public class ItemManager : MonoBehaviour
     //    }
 
     //}
-    public void RandomDropItem(ItemRecieveData r_data , List drop)
+    public void RandomDropItem(ItemRecieveData r_data)
     {
 
-        //DropList = DropEnemy;
+        DropList =  EnemyDropList;
         int dropIndex = Random.Range(0, DropList.Count);
-        Item item = LookForID(dropIndex);
-        pool.ItemDrop(dropIndex, r_data);
-
+        pools.ItemDrop(dropIndex, r_data);
         //return DropList[dropIndex];
         Debug.Log($"{dropIndex}をドロップしました。");
         DropList.Clear();
