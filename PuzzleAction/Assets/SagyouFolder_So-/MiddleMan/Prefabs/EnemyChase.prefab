@@ -189,12 +189,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5192190198220617858}
+  - component: {fileID: 3605610462895004749}
   - component: {fileID: 528806279578718545}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
   m_Layer: 0
-  m_Name: EnemySkeleton
+  m_Name: EnemyChase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,6 +218,18 @@ Transform:
   - {fileID: 4137929383140127322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3605610462895004749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01029622e44ea404ea3914965708a3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DummyEnemyScript
 --- !u!114 &528806279578718545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,7 +246,7 @@ MonoBehaviour:
   m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
-  m_type: 2
+  m_type: 0
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 16
   m_attackRange: 8

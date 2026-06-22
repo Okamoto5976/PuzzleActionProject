@@ -19,11 +19,16 @@ public class TrapBase : Entity
 
     //Receive orientation
 
+    private ReturnObjectToPool rotp;
+
+
     protected override void Awake()
     {
         base.Awake();
         //Fix the rotation
         m_rb.constraints = RigidbodyConstraints.FreezeRotation;
+        rotp = GetComponent<ReturnObjectToPool>();
+
     }
     public void SetDirection(Vector3 direction)
     {

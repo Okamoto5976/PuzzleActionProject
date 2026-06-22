@@ -256,6 +256,9 @@ public class CreatMap : MonoBehaviour
     /// <summary>
     /// AreaType èàóùñ{ëÃ
     /// </summary>
+    /// 
+    [SerializeField] private Middleman_Enemy m_pool;
+
     private void ProcessAreaTypes()
     {
         if (m_mapClassData == null || m_mapClassData.roomDatas == null)
@@ -289,7 +292,11 @@ public class CreatMap : MonoBehaviour
 
                             Vector3 debugPos = GridToWorld(position); //Vector2Int transformed into world coordinates
                             //call CallAreaSet
-                            GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
+                            //GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
+                            DummyEnemyScript obj = m_pool.GetEnemy(Enum_EnemyType.Archer);
+                            if(obj == null) continue;
+                            obj.gameObject.transform.position = debugPos;
+                            obj.gameObject.SetActive(true);
                         }
                         break;
                     }

@@ -30,15 +30,15 @@ public class DummyEnemyScript : MonoBehaviour
     void Update()
     {
         if (!isEnabled) return;
-        velocity += gravity;
+        //velocity += gravity;
 
-        if (transform.position.y > 0)
-        {
-            transform.Translate(0, -velocity, 0);
-        }
-        else
-        {
-            rotp.ReturnToPool();
-        }
+        //if (transform.position.y > 0)
+        //{
+        //    transform.Translate(0, -velocity, 0);
+        //}
+        //else
+        //{
+        //    rotp.ReturnToPool();
+        //}
     }
 }
