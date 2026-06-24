@@ -42,6 +42,6 @@ public class ArrowItemTest : MonoBehaviour
         data.Range = 10f;
 
         //‰Šú‰»
-        arrow.Initialize( data );
+        //arrow.Initialize( data );
     }
 }

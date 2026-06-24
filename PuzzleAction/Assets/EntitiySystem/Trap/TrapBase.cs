@@ -2,54 +2,79 @@ using UnityEngine;
 
 public class TrapBase : Entity
 {
+    [Header("TrapData")]
+    [SerializeField]
+    protected TrapData m_trapdata;
+
     //direction
     protected Vector3 m_direction;
 
     //startPosition
     protected Vector3 m_startPosition;
 
-    //user entity
+    //owner
     protected Entity m_owner;
 
     //range
-    protected float m_range = 10f;
+    protected float m_range;
 
     //basevalue
     protected float m_basevalue;
 
-    //Receive orientation
-
     protected override void Awake()
     {
         base.Awake();
-        //Fix the rotation
-        m_rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        m_rb.constraints =
+            RigidbodyConstraints.FreezeRotation;
     }
-    public void SetDirection(Vector3 direction)
+
+    protected virtual void Setup()
     {
-        m_direction = direction.normalized;
+        m_startPosition =
+            transform.position;
+
+        m_range =
+            m_trapdata.range;
+    }
+
+    
+    public virtual void Init(
+        Entity owner,
+        Vector3 dir,
+        int baseValue)
+    {
+        m_owner = owner;
+
+        m_direction =
+            dir.normalized;
+
+        transform.rotation =
+            Quaternion.LookRotation(
+                m_direction);
+
+        m_basevalue =
+            baseValue;
+
+        Setup();
     }
 
     protected override void FixedUpdate()
     {
-        //movement
-        m_moveDir = m_direction;
+        m_moveDir =
+            m_direction;
 
-        //Entitymovement
         base.FixedUpdate();
 
-        //range
         CheckRange();
     }
 
-    //range
     private void CheckRange()
     {
         float distance =
-          Vector3.Distance(
-              m_owner.transform.position,
-              transform.position
-              );
+            Vector3.Distance(
+                m_startPosition,
+                transform.position);
 
         if (distance >= m_range)
         {
@@ -57,31 +82,33 @@ public class TrapBase : Entity
         }
     }
 
-    //Hit
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(
+        Collider other)
     {
-        Debug.Log($"Arrow Hit : {other.name}");
-        //layer check
+        Entity target =
+            other.GetComponent<Entity>();
 
-        Entity target = other.GetComponent<Entity>();
-        if(target == null)
-        {
+        if (target == null)
             return;
+
+        if (target.Team ==
+            TeamType.Nature)
+            return;
+
+        if (m_owner != null)
+        {
+            if (target.Team ==
+                m_owner.Team)
+                return;
         }
 
-        //if nature can takeDamage , this return delete
-        if (target.Team == TeamType.Nature) return;
+        // target.TakeDamage(
+        //     STR + m_basevalue);
 
-        if(target.Team == m_owner.Team)
-        {
-            return;
-        }
-
-        //target.TakeDamage(STR + m_basevalue);
-        Debug.Log(other.name + "Hit");
+        Debug.Log(
+            $"{other.name} Hit");
 
         Destroy(gameObject);
-        //���poolreturn;
     }
 }
 

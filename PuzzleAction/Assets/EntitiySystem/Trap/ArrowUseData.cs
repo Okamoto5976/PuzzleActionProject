@@ -14,12 +14,12 @@ public struct ArrowUseData
     //”ÍˆÍ
     public float Range;
 
-    public static implicit operator TrapUseData(ArrowUseData rus)
-    {
-        var tud = new TrapUseData();
-        tud.Owner = rus.Owner;
-        tud.Position = rus.Position;
-        tud.Direction = rus.Direction;
-        return tud;
-    }
+//    public static implicit operator TrapUseData(ArrowUseData rus)
+//    {
+//        var tud = new TrapUseData();
+//        tud.Owner = rus.Owner;
+//        tud.Position = rus.Position;
+//        tud.Direction = rus.Direction;
+//        return tud;
+//    }
 }
