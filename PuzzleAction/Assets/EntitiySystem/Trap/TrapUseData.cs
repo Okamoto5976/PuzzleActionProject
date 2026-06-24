@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public struct TrapUseData 
+public struct TrapUseData
 {
     public GameObject Owner;
 

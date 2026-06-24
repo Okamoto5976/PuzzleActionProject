@@ -33,6 +33,7 @@ public class RockItemTest :
         //出現位置
         data.Position =
             transform.position;
+
         //使用方向
         data.Direction =
             transform.forward;
@@ -42,6 +43,6 @@ public class RockItemTest :
             10f;
 
         //初期化
-        rock.Initialize(data);
+        //rock.Initialize(data);
     }
 }
