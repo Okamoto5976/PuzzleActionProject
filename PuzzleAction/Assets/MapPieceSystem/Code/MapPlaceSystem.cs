@@ -209,7 +209,7 @@ public class MapPlaceSystem : MonoBehaviour
                                 m_shopPieceCount++;
 
                                 break;
-                            case AreaType.Damage:
+                            case AreaType.Trap:
                                 if(m_trapPieceMax <= m_trapPieceCount)
                                 {
                                     RoomCountLimitError();
@@ -283,7 +283,7 @@ public class MapPlaceSystem : MonoBehaviour
                             m_shopPieceCount--;
 
                             break;
-                        case AreaType.Damage:
+                        case AreaType.Trap:
                             m_trapPieceCount--;
 
                             break;
@@ -645,7 +645,7 @@ public class MapPlaceSystem : MonoBehaviour
             counter.ResetCount();
         }
 
-        SceneManager.LoadScene("CreatMap");
+        SceneManager.LoadScene("CreateMap");
     }
 
     private void OnDFS(int current, int goal, List<int> visited)

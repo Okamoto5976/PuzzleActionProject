@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-public class CreatMap : MonoBehaviour
+public class CreateMap : MonoBehaviour
 {
     [Header("Map")]
     private MapClass m_mapClass = new MapClass(0, 0);
@@ -318,6 +318,7 @@ public class CreatMap : MonoBehaviour
 
 
                 case AreaType.Trap:
+
 
                     break;
             }

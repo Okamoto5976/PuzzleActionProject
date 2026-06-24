@@ -155,7 +155,7 @@ public class RoomPieceManager : MonoBehaviour
             case AreaType.Shop:
                 roomPieceParent.SetColor(Color.green);
                 break;
-            case AreaType.Damage:
+            case AreaType.Trap:
                 roomPieceParent.SetColor(Color.cyan);
 
                 break;

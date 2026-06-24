@@ -113,7 +113,7 @@ public class GridObject : MonoBehaviour
             case AreaType.Shop:
                 color = Color.green;
                 break;
-            case AreaType.Damage:
+            case AreaType.Trap:
                 color = Color.blue;
                 break;
         }
