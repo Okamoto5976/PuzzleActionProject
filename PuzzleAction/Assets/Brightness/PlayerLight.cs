@@ -8,11 +8,11 @@ public class PlayerLight : MonoBehaviour
     [SerializeField] private CustomPlayerLight m_playerLightController;
 
     [Header("Brightness")]
-    [Range(0f, 20f)]
+    [Range(0f, 100f)]
     [SerializeField] private float m_intensity = 5;
 
     [Header("Distance")]
-    [Range(1f, 50f)]
+    [Range(1f, 100f)]
     [SerializeField] private float m_range = 10f;
 
     [Header("Light Spread")]
