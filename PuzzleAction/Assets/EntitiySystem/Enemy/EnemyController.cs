@@ -28,6 +28,7 @@ public class EnemyController : Entity
 
     [Header("Debug")]
     [SerializeField] private ArrowTrap m_arrowPrefab;
+    [SerializeField] private Item m_item;
 
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;

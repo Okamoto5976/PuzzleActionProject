@@ -181,8 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
+  EnemyDropList: []
+  DropList: []
+  ShopList: []
   ItemList:
-  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 0}
 --- !u!4 &223453914
 Transform:
   m_ObjectHideFlags: 0

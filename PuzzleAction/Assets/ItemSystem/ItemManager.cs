@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 
@@ -21,20 +19,20 @@ public class ItemManager : MonoBehaviour
     }
 
 
-    //public void ItemUse(int id/*, Entity entity*/)  // Entity
-    //{
-    //    //見つけたアイテムを使用する
-    //    Item item = LookForID(id);
-    //    if (item != null)
-    //    {
+    public void ItemUse(int id/*, Entity entity*/)  // Entity
+    {
+        //見つけたアイテムを使用する
+        Item item = LookForID(id);
+        if (item != null)
+        {
 
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
-    //    }
+        }
+        else
+        {
+            Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
+        }
+    }
 
-    //}
     public void RandomDropItem(ItemRecieveData r_data)
     {
 
@@ -67,26 +65,3 @@ public class ItemManager : MonoBehaviour
 
 
 }
-
-
-
-
-//public void GetItemData(ItemData data) //座標やエンティティ自身
-//{
-//    switch (data.ItemType)
-//    {
-//        case ItemData.Itemtype.Value:
-//            //Value type List
-//            LookForID(data.ItemID, ValueList);
-//            break;
-//        case ItemData.Itemtype.Collider:
-//            //Collider type List
-//            LookForID(data.ItemID, ColliderList);
-//            break;
-//        case ItemData.Itemtype.Other:
-//            //Other type List
-//            LookForID(data.ItemID, OtherList);
-//            break;
-//        default:
-//            break;
-//    }
