@@ -23,7 +23,7 @@ public class TrapBase : Entity
 
     //Receive orientation
 
-    private ReturnObjectToPool rotp;
+    private ReturnObjectToPool m_returnObjPool;
 
 
     protected override void Awake()
@@ -31,7 +31,7 @@ public class TrapBase : Entity
         base.Awake();
         //Fix the rotation
         m_rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rotp = GetComponent<ReturnObjectToPool>();
+        m_returnObjPool = GetComponent<ReturnObjectToPool>();
 
     }
 

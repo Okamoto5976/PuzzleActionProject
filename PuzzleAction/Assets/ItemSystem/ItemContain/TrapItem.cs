@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "SpecialItem", menuName = "Scriptable Objects/Datas/SpecialItem")]
+[CreateAssetMenu(fileName = "SpecialItem", menuName = "Scriptable Objects/Datas/TrapItem")]
 public class TrapItem : Item
 {
     [SerializeField] private float trapValue;
@@ -23,8 +23,9 @@ public class TrapItem : Item
         //EntityTrap.SetbaseValue(data.baseValue)                Trap‘¤‚ÅTrap‚ÌUŒ‚—Í{baseValue
         //obj‚ÌEntity‚ÉmoveDir‚ª‚ ‚é‚©‚çdata‚Ìdir‚ğ“ü‚ê‚é
         //var entity = TrapPrefab.GetComponent<Entity>();
+        TrapPrefab.Init(data.entity, data.dir, (int)data.baseValue);
         TrapPrefab.gameObject.transform.position = data.pos;
-        TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
+        //TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
         //entity.moveDir = data.dir;
     }
 }

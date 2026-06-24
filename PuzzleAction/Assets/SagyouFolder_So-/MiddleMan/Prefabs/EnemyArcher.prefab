@@ -255,7 +255,8 @@ MonoBehaviour:
   m_attackHitBox:
     m_transform: {fileID: 0}
     m_radius: 0
-  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
+  m_itemManager: {fileID: 8792753798218549323, guid: 22890c8174779ea40bd5276661d842fc, type: 3}
+  m_item: {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0

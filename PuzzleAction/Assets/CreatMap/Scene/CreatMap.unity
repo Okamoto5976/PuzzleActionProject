@@ -4735,6 +4735,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8792753798218549323, guid: 22890c8174779ea40bd5276661d842fc, type: 3}
+      propertyPath: m_middleman_trap
+      value: 
+      objectReference: {fileID: 435115610}
     - target: {fileID: 9178806806649853344, guid: 22890c8174779ea40bd5276661d842fc, type: 3}
       propertyPath: m_Name
       value: ItemManager
