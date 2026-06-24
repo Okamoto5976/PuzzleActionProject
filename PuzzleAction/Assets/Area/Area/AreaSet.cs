@@ -3,7 +3,7 @@ using UnityEngine;
 public enum AreaType
 {
     None,
-    Damage,
+    Trap,
     Summon,
     Normal,
     Shop,

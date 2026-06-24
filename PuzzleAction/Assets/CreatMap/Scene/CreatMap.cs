@@ -317,7 +317,7 @@ public class CreatMap : MonoBehaviour
                     }
 
 
-                case AreaType.Damage:
+                case AreaType.Trap:
 
                     break;
             }
