@@ -21,7 +21,7 @@ abstract public class Item : ScriptableObject
     public ItemData Data => m_data;
 
     //ID@ŒöŠJ
-
+public float Value => m_value;
     public void RecieveData(int id, ItemRecieveData data) //Entity‚ğˆø”‚É
     {
 

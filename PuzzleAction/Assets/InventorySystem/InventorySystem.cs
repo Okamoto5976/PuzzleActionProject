@@ -36,10 +36,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject hotbarPanel;
 
     [SerializeField] private SaveData saveData;
-
-    //ItemManager‰¼------------------------------------------
     [SerializeField] private ItemManager itemManager;
-    //-------------------------------------------------------
 
     private void Awake()
     {
