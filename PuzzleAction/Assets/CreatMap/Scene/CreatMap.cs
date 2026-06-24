@@ -293,7 +293,6 @@ public class CreatMap : MonoBehaviour
                             Vector3 debugPos = GridToWorld(position); //Vector2Int transformed into world coordinates
                             //call CallAreaSet
                             //GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
-                            //Ç±Ç±ÇÃëÄçÏÉàÉUÇ†Ç†Ç†Ç†Ç†Ç†Ç†Ç†Ç†Ç†
                             DummyEnemyScript obj = m_pool.GetEnemy(Enum_EnemyType.Archer);
                             if(obj == null) continue;
                             obj.gameObject.transform.position = debugPos;
