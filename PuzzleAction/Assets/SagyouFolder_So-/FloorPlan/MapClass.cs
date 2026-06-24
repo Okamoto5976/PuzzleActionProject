@@ -190,7 +190,7 @@ public class MapClass
 
                 if (x == 0)
                 {
-                    wallWest.SetState((Wall.WallState)floor.State);
+                    wallWest.SetState((Wall.WallState)(floor.State == Floor.FloorState.blocked ? Floor.FloorState.empty : floor.State));
                 }
                 else
                 {
@@ -206,7 +206,7 @@ public class MapClass
 
                 if (y == 0)
                 {
-                    wallSouth.SetState((Wall.WallState)floor.State);
+                    wallSouth.SetState((Wall.WallState)(floor.State == Floor.FloorState.blocked ? Floor.FloorState.empty : floor.State));
                 }
                 else
                 {

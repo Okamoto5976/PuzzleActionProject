@@ -152,6 +152,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         m_mapClassData.SetGoalPos(definition.goalPos);
         m_mapClassData.SetStartPos(definition.startPos);
+        map.UpdateFloors();
         m_mapClassData.SetMapClass(map);
     }
     #endregion

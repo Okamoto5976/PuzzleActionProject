@@ -200,7 +200,7 @@ public class CreatMap : MonoBehaviour
                 {
                     var nWall = m_wallObjectsSouth[x + y * m_size.x + m_size.x];
                     nWall.transform.SetPositionAndRotation(
-                        floorPosition + new Vector3(0, wallBounds.extents.y, floorBounds.extents.z + 0.5f),
+                        floorPosition + new Vector3(0, wallBounds.extents.y * m_wallScale.y, floorSize.z * 0.5f),
                         Quaternion.Euler(0, 180, 0)
                     );
                     nWall.transform.localScale = wallSize;
@@ -212,7 +212,7 @@ public class CreatMap : MonoBehaviour
                 {
                     var eWall = m_wallObjectsWest[x + y * (m_size.x + 1) + 1];
                     eWall.transform.SetPositionAndRotation(
-                        floorPosition + new Vector3(floorBounds.extents.x + 0.5f, wallBounds.extents.y, 0),
+                        floorPosition + new Vector3(floorSize.x * 0.5f, wallBounds.extents.y * m_wallScale.y, 0),
                         Quaternion.Euler(0, -90, 0)
                     );
                     eWall.transform.localScale = wallSize;
