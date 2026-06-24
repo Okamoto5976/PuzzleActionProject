@@ -18,6 +18,8 @@ abstract public class Item : ScriptableObject
     public int Id => m_data.ItemID;
     public ItemData Data => m_data;
 
+    public int itemId;
+    public string itemName;
     //ID�@���J
 
     public void RecieveData(int id, ItemRecieveData data) //Entity��������

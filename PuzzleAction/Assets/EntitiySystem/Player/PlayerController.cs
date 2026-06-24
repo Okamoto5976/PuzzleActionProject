@@ -80,7 +80,7 @@ public class PlayerController : Entity
         //ダッシュ判定（押している間）
         m_isDashing = m_dashAction.action.IsPressed();
 
-        //m_speed = m_isDashing ? m_dashSpeed : m_normalSpeed;
+        m_currentMoveSpeed = m_isDashing ? DashSpeed : Speed;
     }
 
 }

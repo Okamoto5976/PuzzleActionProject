@@ -2,56 +2,45 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    Item item; // アイテムのクラス
-    float radius = 3f; // アイテムを拾うための半径
-    float timeToReturn = 5f; // アイテムが自動的に戻るまでの時間
-    dropPool pool; // アイテムを管理するドロッププールのクラス
-    private GameObject prefab;
+    [SerializeField] private float timeToReturn = 5f;
 
-    //public event Action m_event;
-    //void Update()
-    //{
-    //    if(Vector3.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position) <= radius)
-    //    {
-    //        AddToInventory();
-    //    }
-    //}
+    private Item item;              // このドロップが持っているアイテム
+    private dropPool pool;          // 戻す先のプール
+    private GameObject prefab;      // どのプレハブのプールに戻すか
 
-    //void AddToInventory()
-    //{
-    //    //InventoryManager .Instance.AddItem(item);
-    //    Destroy(gameObject);
-    //}
-    ////playerの座標か
-    //自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
-    private void ItemGet(Collider other)
+    // dropPool から呼ばれる初期化
+    public void Setup(Item itemData, dropPool dropPool, GameObject sourcePrefab)
     {
-        if (Vector3.Distance(transform.position, other.transform.position) <= radius)
-        {
-            if (pool == null)
-            {
-                Debug.LogError("Pool is not assigned.");
-                return;
-            }
-            if (other.CompareTag("Player"))
-            {
-                //Add.itemData;
-                Return();
-            }
-        }
+        item = itemData;
+        pool = dropPool;
+        prefab = sourcePrefab;
+
+        CancelInvoke();
+        Invoke(nameof(ReturnToPool), timeToReturn);
     }
 
-    public void Initialize()
+    private void OnTriggerEnter(Collider other)
     {
-        Invoke(nameof(Return), timeToReturn); // timeToReturn秒後にReturnメソッドを呼び出す
+        Entity entity = other.GetComponent<Entity>();
+        if (entity == null) return;
+
+        bool added = entity.ReceiveItem(item);
+        if (!added) return; // インベントリがいっぱい等なら拾わない
+
+        ReturnToPool();
     }
-    private void Return()
+
+    private void ReturnToPool()
     {
+        CancelInvoke();
 
         if (pool != null)
         {
-            //Poolに返す処理
-            pool.ReturnItem(item, prefab);
+            pool.ReturnItem(gameObject, prefab);
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 }

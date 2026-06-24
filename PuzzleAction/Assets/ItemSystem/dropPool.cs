@@ -8,8 +8,8 @@ public class dropPool : MonoBehaviour
     [System.Serializable]
     public class PoolItem
     {
-        public string Enemeadrop; // 敵のデータクラス 
-        public List<Item> ItemdropList; // アイテムのデータクラス
+        public string enemyDropName; // 敵のデータクラス 
+        public List<Item> ItemDropList; // アイテムのデータクラス
         public GameObject prefab;
         public int poolSize = 5;
         [Range(0f, 1f)]
@@ -43,7 +43,7 @@ public class dropPool : MonoBehaviour
      
     }
     // アイテムのドロップ
-    public void DropItem(Vector3 position) // アイテムを取得してドロップ
+    public void DropItem(string ebemyName,Vector3 position) // アイテムを取得してドロップ
     {
         List<PoolItem> candidates = new List<PoolItem>();
 
@@ -51,11 +51,12 @@ public class dropPool : MonoBehaviour
         {
             if (config.poolSize <= 0) continue; // プールサイズが0以下の場合はスキップ
 
+            if (Random.value <= config.dropChance)
+            {
+                candidates.Add(config);
+            }
         }
-        if (Random.value <= config.dropChance)
-        {
-            candidates.Add(config);
-        }
+       
    
         if (candidates.Count == 0) return;
 
@@ -78,8 +79,7 @@ public class dropPool : MonoBehaviour
     public void ReturnItem(GameObject item,GameObject prefab)
     {
         item.SetActive(false); // アイテムを非アクティブにする
-        pools[prefab].Enqueue(item);
-        pools[item].Enqueue(prefab); // アイテムをプールに戻す
+        //pools[item].Enqueue(prefab); // アイテムをプールに戻す
     }
 
     internal void ReturnItem(Item item, GameObject prefab)
