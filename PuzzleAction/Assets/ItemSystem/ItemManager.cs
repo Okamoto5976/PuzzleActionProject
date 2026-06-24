@@ -1,48 +1,70 @@
+using NUnit.Framework;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+
 
 public class ItemManager : MonoBehaviour
 {
-
-  
-    //[SerializeField] private EntityData entityprefab;
-
-    private int nextId; //次のIDを管理する変数
-    
-
+    public List<Item> EnemyDropList = new();
+    public List<Item> DropList = new();
+    public List<Item> ShopList = new();
+    //private int nextId; //次のIDを管理する変数
+    DropPool pools;
     //リスト初期化
-    public List<Item> ItemList = new List<Item>();
- 
+    public List<Item> ItemList = new();
 
- /*   //Listの中からIDと同じアイテムを探す
+    //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
     {
         return ItemList.Find(x => x.Id == id);
     }
-    public void ItemUse(int id , Entity entity)  // Entity
-    {
-        //見つけたアイテムを使用する
-        Item item = LookForID(id);
-        if (item != null)
-        {
-            //item.RecieveData(id, );
-        }
-        else
-        {
-            Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
-        }
 
-    }*/
+
+    //public void ItemUse(int id/*, Entity entity*/)  // Entity
+    //{
+    //    //見つけたアイテムを使用する
+    //    Item item = LookForID(id);
+    //    if (item != null)
+    //    {
+
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
+    //    }
+
+    //}
+    public void RandomDropItem(ItemRecieveData r_data)
+    {
+
+        DropList =  EnemyDropList;
+        int dropIndex = Random.Range(0, DropList.Count);
+        pools.ItemDrop(dropIndex, r_data);
+        //return DropList[dropIndex];
+        Debug.Log($"{dropIndex}をドロップしました。");
+        DropList.Clear();
+    }
+
+  
+
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
     {
-        int index = Random.Range(0, ItemList.Count);
-        return ItemList[index];
+        int index = Random.Range(0, ItemList.Count); //アイテムを抽選する
+        return ItemList[index]; // アイテムを渡す
 
     }
     //アイテムのエフェクトを呼び出す
-   
+
+    public Item RandomShopItem()
+    {
+        int ShopIndex= Random.Range(0, ShopList.Count);
+        return ShopList[ShopIndex];
+    }
+
+
 
 }
 

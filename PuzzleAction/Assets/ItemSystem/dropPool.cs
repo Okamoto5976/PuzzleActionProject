@@ -1,91 +1,96 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
+//using static UnityEditor.PlayerSettings;
 
 
 
-public class dropPool : MonoBehaviour
+public class PoolItem
 {
-    [System.Serializable]
-    public class PoolItem
-    {
-        public string Enemeadrop; // 敵のデータクラス 
-        public List<Item> ItemdropList; // アイテムのデータクラス
-        public GameObject prefab;
-        public int poolSize = 5;
-        [Range(0f, 1f)]
-        public float dropChance = 0.5f;
-    }
-
-
-    //ItemData itemData; // アイテムのデータクラス
-    //public List<Item> PoolItem = new List<Item>();
-    public List<PoolItem> itemConfigs;
-    private Dictionary<GameObject, Queue<GameObject>> pools;
-    private Queue<GameObject> pool = new Queue<GameObject>(); // アイテムのプール
-    private PoolItem config;
-
-
-    // アイテムのドロップ率とドロップサイズを考慮してアイテムをドロップするクラス
-    private void Awake()
-    {
-        pools = new Dictionary<GameObject, Queue<GameObject>>();
-        foreach (var config in itemConfigs)
-        {
-            Queue<GameObject> poolQueue = new Queue<GameObject>(); //
-            for (int i = 0; i < config.poolSize; i++)
-            {
-                GameObject obj = Instantiate(config.prefab);   // アイテムのプレハブから新しいアイテムを生成
-                obj.SetActive(false); // アイテムを非アクティブにする
-                poolQueue.Enqueue(obj); // プールにアイテムを追加
-            }
-            pools[config.prefab] = poolQueue; // プールを辞書に追加
-        }
-     
-    }
-    // アイテムのドロップ
-    public void DropItem(Vector3 position) // アイテムを取得してドロップ
-    {
-        List<PoolItem> candidates = new List<PoolItem>();
-
-        foreach (var config in itemConfigs)
-        {
-            if (config.poolSize <= 0) continue; // プールサイズが0以下の場合はスキップ
-
-        }
-        if (Random.value <= config.dropChance)
-        {
-            candidates.Add(config);
-        }
-   
-        if (candidates.Count == 0) return;
-
-        PoolItem selected = candidates[Random.Range(0, candidates.Count)];
-
-        if (pools[selected.prefab].Count > 0) // プールにアイテムがある場合
-        {
-            GameObject item = pools[selected.prefab].Dequeue(); // プールからアイテムを取り出す
-            item.transform.position = position; // アイテムの位置を設定
-            item.SetActive(true); // アイテムをアクティブにしてドロップ
-        }
-        else
-        {
-            GameObject item = Instantiate(selected.prefab, position, Quaternion.identity); // プールにアイテムがない場合は新しく生成
-        }
- 
-            Debug.Log("アイテムをドロップしました。"); // ドロップしたことをログに出力
-          //return ; // ドロップしたアイテムを返す
-    }
-    public void ReturnItem(GameObject item,GameObject prefab)
-    {
-        item.SetActive(false); // アイテムを非アクティブにする
-        pools[prefab].Enqueue(item);
-        pools[item].Enqueue(prefab); // アイテムをプールに戻す
-    }
-
-    internal void ReturnItem(Item item, GameObject prefab)
-    {
-        throw new System.NotImplementedException();
-    }
+    public int id;
+    public string name;
+    public GameObject prefab;
+    public int initialCount = 5;
 }
 
+public class DropPool : MonoBehaviour
+{
+    public GameObject prefab;
+    //public PoolItem poolItem;
+    [SerializeField]
+    private List<PoolItem> ItemList = new();
+    public PoolItem[] Items;
+    //Dictionary<int, ObjectPool<GameObject>> pools;
+    private ObjectPool<GameObject> pool;
+    public int maxSize;
+    public int DefaultCapacity;
+    //初期設定
+    private void Awake() => pool = new ObjectPool<GameObject>(
 
+            CreateItem,       // 生成時
+            ItemGet,   // Get 時
+            ReturnItem, // Release 時
+            collectionCheck:true,        // 重複返却などの安全チェック
+            defaultCapacity: DefaultCapacity,
+            maxSize: maxSize
+        );
+    //pools = new Dictionary<string,Queue<GameObject>>();
+
+
+
+    private GameObject CreateItem()
+    {
+        GameObject obj = Instantiate(prefab);
+        obj.SetActive(false);
+        return obj;
+    }
+
+    private void ItemGet(GameObject obj)
+    {
+        obj.SetActive(true);
+    }
+    public void ReturnItem(GameObject obj)
+    {
+        obj.SetActive(false); // アイテムを非アクティブにする
+        //pools[].Dequeue();
+        //pool[item].Enqueue(prefab); // アイテムをプールに戻す
+    }
+
+
+
+    public void Get()
+    {
+        
+        foreach(var item in ItemList)
+        {
+            for(int i =0; i < item.initialCount; i++)
+            {
+                var obj = Instantiate(item.prefab);
+                obj.SetActive(false);
+                //queue.Enqueue(obj);
+            }
+ 
+           
+        }
+        //return;
+    }
+
+
+    public void ItemDrop(int Index, ItemRecieveData r_data )
+    {
+        GameObject obj= pool.Get();
+        obj.transform.position = r_data.pos;
+        obj.transform.rotation=Quaternion.Euler(r_data.dir);   
+        object value = Instantiate(prefab, r_data.pos, Quaternion.Euler(r_data.dir));
+
+
+    }
+
+
+
+
+
+
+
+
+}

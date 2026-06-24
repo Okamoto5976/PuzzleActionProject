@@ -1,154 +1,194 @@
+using Mono.Cecil;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuffItem", menuName = "Scriptable Objects/Datas/BuffItem")]
 public class BuffItem : Item 
 {
-    //Entity entity; //Entity‚ğéŒ¾
+    //Entity entity; //Entityï¿½ï¿½éŒ¾
     public enum BuffType
     {
-        AttackUp, //UŒ‚—Íã¸
-        DefenseUp, //–hŒä—Íã¸
-        SpeedUp, //‘¬“xã¸
-        AttackDown, //UŒ‚—ÍŒ¸­
-        DefenseDown, //–hŒä—ÍŒ¸­
-        SpeedDown, //‘¬“xŒ¸­
-        // ‘¼‚Ìƒoƒt‚Ìí—Ş‚ğ’Ç‰Á
+        AttackUp, //ï¿½Uï¿½ï¿½ï¿½Íã¸
+        DefenseUp, //ï¿½hï¿½ï¿½Íã¸
+        SpeedUp, //ï¿½ï¿½ï¿½xï¿½ã¸
+        AttackDown, //ï¿½Uï¿½ï¿½ï¿½ÍŒï¿½ï¿½ï¿½
+        DefenseDown, //ï¿½hï¿½ï¿½ÍŒï¿½ï¿½ï¿½
+        SpeedDown, //ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½Ìƒoï¿½tï¿½Ìï¿½Ş‚ï¿½Ç‰ï¿½
     }
     public enum BUffEffectType 
     {
-        active, //g—p‚µ‚½‚Æ‚«‚ÉŒø‰Ê‚ª”­“®‚·‚éƒ^ƒCƒv
-        passive, //í‚ÉŒø‰Ê‚ª”­“®‚µ‚Ä‚¢‚éƒ^ƒCƒv
+        active, //ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉŒï¿½ï¿½Ê‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½v
+        passive, //ï¿½ï¿½ÉŒï¿½ï¿½Ê‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½^ï¿½Cï¿½v
     }
     public enum BuffTimeType
     {
-        Temporary, //ˆê“I‚Èƒoƒt
-        Permanent  //‰i‘±“I‚Èƒoƒt
+        Temporary, //ï¿½êï¿½Iï¿½Èƒoï¿½t
+        Permanent  //ï¿½iï¿½ï¿½ï¿½Iï¿½Èƒoï¿½t
     }
     
-    [SerializeField] private float buffDuration; //ƒoƒtŒø‰ÊŠÔ
-    [SerializeField] private BuffType buffType; //ƒoƒt‚Ìí—Ş
-    [SerializeField] private BUffEffectType buffEffectType; //ƒoƒt‚ÌŒø‰Êƒ^ƒCƒv
+    [SerializeField] private float buffDuration; //ï¿½oï¿½tï¿½ï¿½ï¿½Êï¿½ï¿½ï¿½
+    [SerializeField] private BuffType buffType; //ï¿½oï¿½tï¿½Ìï¿½ï¿½
+    [SerializeField] private BUffEffectType buffEffectType; //ï¿½oï¿½tï¿½ÌŒï¿½ï¿½Êƒ^ï¿½Cï¿½v
     //Entity entity;
     public List <Item> Buffdata = new List<Item>();
     public override void Activation(float value, ItemRecieveData data)
     {
-        //ˆÈ‰º‚ÍŒø‰ÊŠÔƒAƒCƒeƒ€‚Ì˜b
-        //ó‚¯‚Æ‚Á‚½Entity‚É—^‚¦‚éˆ—
-        //data.Entity.BuffSet‚Á‚Ä‚¢‚¤‚Ì‚ğ—pˆÓ‚³‚ê‚Ä‚¢‚é
-        //‚»‚±‚ÉbuffType‚Æm_value‚ğ—^‚¦‚ê‚Î‚æ‚¢
-        //modifier‚É‚Ü‚Æ‚ß‚éim_value‚ÆbuffType‚ğ“ü‚ê‚éj
-        //Œø‰ÊŠÔ‚Ì‚ ‚é‚à‚Ì‚Íduration‚ª•K—v
-        //modifiers = new EventModifiers(buffType, value, buffDuration); //EventModifiers‚ÉbuffType‚Ævalue‚ÆbuffDuration‚ğ“n‚·
-        //Entity entity = data.entity; //Entity‚ğdata‚©‚çæ“¾
-        //ƒoƒtˆ—
+        //ï¿½È‰ï¿½ï¿½ÍŒï¿½ï¿½Êï¿½ï¿½ÔƒAï¿½Cï¿½eï¿½ï¿½ï¿½Ì˜b
+        //ï¿½ó‚¯‚Æ‚ï¿½ï¿½ï¿½Entityï¿½É—^ï¿½ï¿½ï¿½éˆï¿½ï¿½
+        //data.Entity.BuffSetï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½pï¿½Ó‚ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½buffTypeï¿½ï¿½m_valueï¿½ï¿½^ï¿½ï¿½ï¿½ï¿½Î‚æ‚¢
+        //modifierï¿½É‚Ü‚Æ‚ß‚ï¿½im_valueï¿½ï¿½buffTypeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½j
+        //ï¿½ï¿½ï¿½Êï¿½ï¿½Ô‚Ì‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½durationï¿½ï¿½ï¿½Kï¿½v
+        //modifiers = new EventModifiers(buffType, value, buffDuration); //EventModifiersï¿½ï¿½buffTypeï¿½ï¿½valueï¿½ï¿½buffDurationï¿½ï¿½nï¿½ï¿½
+        //Entity entity = data.entity; //Entityï¿½ï¿½dataï¿½ï¿½ï¿½ï¿½æ“¾
+        //StatusModifier statusModifier;
+        //ï¿½oï¿½tï¿½ï¿½ï¿½ï¿½
         if (buffEffectType == BUffEffectType.active)
         {
 
-            if (buffDuration <= 0) //buffDuration‚ª0ˆÈ‰º‚Ìê‡‚Íˆ—‚ğ”²‚¯‚é
+            if (buffDuration <= 0) //buffDurationï¿½ï¿½0ï¿½È‰ï¿½ï¿½Ìê‡ï¿½Íï¿½ï¿½ï¿½ï¿½ğ”²‚ï¿½ï¿½ï¿½
             {
-                Debug.LogWarning("ƒoƒt‚ÌŒø‰ÊŠÔ‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+                Debug.LogWarning("ï¿½oï¿½tï¿½ÌŒï¿½ï¿½Êï¿½ï¿½Ô‚ï¿½ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
                 
                 return;
             }
-            //entity.BuffSet(buffType, value, buffDuration); //Entity‚ÌBuffSet‚ÉbuffType‚Ævalue‚ÆbuffDuration‚ğ“n‚·
+            //entity.BuffSet(buffType, value, buffDuration); //Entityï¿½ï¿½BuffSetï¿½ï¿½buffTypeï¿½ï¿½valueï¿½ï¿½buffDurationï¿½ï¿½nï¿½ï¿½
             switch (buffType)
             {
                 case BuffType.AttackUp:
-                    ////UŒ‚—Íã¸‚Ìˆ—
-                    //data.entity.BuffSet(value); //UŒ‚—Í‚ğã¸‚³‚¹‚éˆ—
-                    //Buffdata.Add(this); //Buffdata‚É‚±‚ÌBuffItem‚ğ’Ç‰Á
+                    ////ï¿½Uï¿½ï¿½ï¿½Íã¸ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value); //ï¿½Uï¿½ï¿½ï¿½Í‚ï¿½ï¿½ã¸ï¿½ï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½
+                    //Buffdata.Add(this); //Buffdataï¿½É‚ï¿½ï¿½ï¿½BuffItemï¿½ï¿½Ç‰ï¿½
+                    //statusModifier = new()    // ï¿½ï¿½ï¿½Ê‚ÌÚ×‚ï¿½İ’ï¿½
+                    //{
+                    //    m_statType = StatusType.Strength,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
                     break;
-                    //case BuffType.DefenseUp:
-                    //    //–hŒä—Íã¸‚Ìˆ—
-                    //    data.entity.BuffSet(value);
-                    //    Buffdata.Add(this); //Buffdata‚É‚±‚ÌBuffItem‚ğ’Ç‰Á
-                    //    break;
-                    //case BuffType.SpeedUp:
-                    //    //‘¬“xã¸‚Ìˆ—
-                    //    data.entity.BuffSet(value);
-                    //    Buffdata.Add(this); //Buffdata‚É‚±‚ÌBuffItem‚ğ’Ç‰Á
-                    //    break;
-                    //case BuffType.AttackDown:
-                    //    //UŒ‚—ÍŒ¸­‚Ìˆ—
-                    //    data.entity.BuffSet(value);
-                    //    Buffdata.Add(this);
-                    //    break;
-                    //case BuffType.DefenseDown:
-                    //    //–hŒä—ÍŒ¸­‚Ìˆ—
-                    //    data.entity.BuffSet(value);
-                    //    Buffdata.Add(this);
-                    //    break;
-                    //case BuffType.SpeedDown:
-                    //    //‘¬“xŒ¸­‚Ìˆ—
-                    //    data.entity.BuffSet(value);
-                    //    Buffdata.Add(this);
-                    //    break;
-                    //default:
-                    //    //‚»‚Ì‘¼‚Ìƒoƒt‚Ìˆ—
-                    //    Debug.LogWarning("–¢’è‹`‚Ìƒoƒtƒ^ƒCƒv‚Å‚·");
-                    //    break;
+                case BuffType.DefenseUp:
+                    ////ï¿½hï¿½ï¿½Íã¸ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value);
+                    //Buffdata.Add(this); //Buffdataï¿½É‚ï¿½ï¿½ï¿½BuffItemï¿½ï¿½Ç‰ï¿½
+                    //statusModifier = new()
+                    //{
+                    //    m_statType = StatusType.Defense,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
+                    break;
+                case BuffType.SpeedUp:
+                    ////ï¿½ï¿½ï¿½xï¿½ã¸ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value);
+                    //Buffdata.Add(this); //Buffdataï¿½É‚ï¿½ï¿½ï¿½BuffItemï¿½ï¿½Ç‰ï¿½
+                    //statusModifier = new()
+                    //{
+                    //    m_statType = StatusType.Speed,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
+                    break;
+                case BuffType.AttackDown:
+                    ////ï¿½Uï¿½ï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value);
+                    //Buffdata.Add(this);
+                    //statusModifier = new()
+                    //{
+                    //    m_statType = StatusType.Strength,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
+                    break;
+                case BuffType.DefenseDown:
+                    ////ï¿½hï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value);
+                    //Buffdata.Add(this);
+                    //statusModifier = new()
+                    //{
+                    //    m_statType = StatusType.Defense,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
+                    break;
+                case BuffType.SpeedDown:
+                    ////ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+                    ////data.entity.BuffSet(value);
+                    //Buffdata.Add(this);
+                    //statusModifier = new()
+                    //{
+                    //    m_statType = StatusType.Speed,
+                    //    m_value = value,
+                    //    m_modType = ModifierType.Add
+                    //};
+                    break;
+                default:
+                    //ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Ìƒoï¿½tï¿½Ìï¿½ï¿½ï¿½
+                    Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½`ï¿½Ìƒoï¿½tï¿½^ï¿½Cï¿½vï¿½Å‚ï¿½");
+                    break;
             }
-            while (buffDuration > 0) //buffDuration‚ª0‚É‚È‚é‚Ü‚Åƒ‹[ƒv
+            //data.entity.AddBuff(statusModifier, buffDuration);
+
+            while (buffDuration > 0) //buffDurationï¿½ï¿½0ï¿½É‚È‚ï¿½Ü‚Åƒï¿½ï¿½[ï¿½v
             {
-                buffDuration = Time.deltaTime; //buffDuration‚ğŒ¸‚ç‚·
-                                               //ƒoƒt‚ÌŒø‰Ê‚ğˆÛ‚·‚éˆ—
-                if ( buffDuration <= 0) //buffDuration‚ª0ˆÈ‰º‚É‚È‚Á‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+                buffDuration = Time.deltaTime; //buffDurationï¿½ï¿½ï¿½ï¿½ï¿½ç‚·
+                                               //ï¿½oï¿½tï¿½ÌŒï¿½ï¿½Ê‚ï¿½ï¿½Ûï¿½ï¿½ï¿½ï¿½éˆï¿½ï¿½
+                if ( buffDuration <= 0) //buffDurationï¿½ï¿½0ï¿½È‰ï¿½ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½çƒ‹ï¿½[ï¿½vï¿½ğ”²‚ï¿½ï¿½ï¿½
                 {
-                //    data.entity.BaseValueReset(value); //Entity‚ÌBaseValue‚ğŒ³‚É–ß‚·ˆ—
-                    Buffdata.Remove(this); //Buffdata‚©‚ç‚±‚ÌBuffItem‚ğíœ
+                //    data.entity.BaseValueReset(value); //Entityï¿½ï¿½BaseValueï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½ï¿½ï¿½ï¿½ï¿½
+                    Buffdata.Remove(this); //Buffdataï¿½ï¿½ï¿½ç‚±ï¿½ï¿½BuffItemï¿½ï¿½ï¿½íœ
                 }
 
             }
             //if (HP == 0)
             //{
-            //    //HP‚ª0‚É‚È‚Á‚½‚Æ‚«‚Ìˆ—
+            //    //HPï¿½ï¿½0ï¿½É‚È‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½
             //    data.Entity.BuffSet();
-            //    BaseValueReset(entity); //Entity‚ÌBaseValue‚ğŒ³‚É–ß‚·ˆ—
+            //    BaseValueReset(entity); //Entityï¿½ï¿½BaseValueï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½ï¿½ï¿½ï¿½ï¿½
             //}
 
         }
         //else if(buffEffectType == BUffEffectType.passive)
         //{
-        //    //ƒpƒbƒVƒu‚Ìˆ—
-        //     entity = data.entity; //Entity‚ğdata‚©‚çæ“¾
-        //    entity.BuffSet(buffType, value, buffDuration); //Entity‚ÌBuffSet‚ÉbuffType‚Ævalue‚ÆbuffDuration‚ğ“n‚·
+        //    //ï¿½pï¿½bï¿½Vï¿½uï¿½Ìï¿½ï¿½ï¿½
+        //     entity = data.entity; //Entityï¿½ï¿½dataï¿½ï¿½ï¿½ï¿½æ“¾
+        //    entity.BuffSet(buffType, value, buffDuration); //Entityï¿½ï¿½BuffSetï¿½ï¿½buffTypeï¿½ï¿½valueï¿½ï¿½buffDurationï¿½ï¿½nï¿½ï¿½
         //     switch (buffType)
         //    {
         //        case BuffType.AttackUp:
-        //            //UŒ‚—Íã¸‚Ìˆ—
+        //            //ï¿½Uï¿½ï¿½ï¿½Íã¸ï¿½Ìï¿½ï¿½ï¿½
 
         //            break;
         //        case BuffType.DefenseUp:
-        //            //–hŒä—Íã¸‚Ìˆ—
+        //            //ï¿½hï¿½ï¿½Íã¸ï¿½Ìï¿½ï¿½ï¿½
 
         //            break;
         //        case BuffType.SpeedUp:
-        //            //‘¬“xã¸‚Ìˆ—
+        //            //ï¿½ï¿½ï¿½xï¿½ã¸ï¿½Ìï¿½ï¿½ï¿½
         //            break;
         //        case BuffType.AttackDown:
-        //            //UŒ‚—ÍŒ¸­‚Ìˆ—
+        //            //ï¿½Uï¿½ï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
         //            break;
         //        case BuffType.DefenseDown:
-        //            //–hŒä—ÍŒ¸­‚Ìˆ—
+        //            //ï¿½hï¿½ï¿½ÍŒï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
         //            break;
         //        case BuffType.SpeedDown:
-        //            //‘¬“xŒ¸­‚Ìˆ—
+        //            //ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
         //            break;
         //        default:
-        //            //‚»‚Ì‘¼‚Ìƒoƒt‚Ìˆ—
-        //            Debug.LogWarning("–¢’è‹`‚Ìƒoƒtƒ^ƒCƒv‚Å‚·");
+        //            //ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Ìƒoï¿½tï¿½Ìï¿½ï¿½ï¿½
+        //            Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½`ï¿½Ìƒoï¿½tï¿½^ï¿½Cï¿½vï¿½Å‚ï¿½");
         //        break;
         //    }
 
     }
-        //ˆÈ‰º‚ÍƒpƒbƒVƒu‚Ì˜b
-        //ƒpƒbƒVƒu‘¤‚ÅEntity‚Ìƒoƒt‚Ì’Ç‰Á‚Æ‰ğœ‚ğs‚¤
+        //ï¿½È‰ï¿½ï¿½Íƒpï¿½bï¿½Vï¿½uï¿½Ì˜b
+        //ï¿½pï¿½bï¿½Vï¿½uï¿½ï¿½ï¿½ï¿½Entityï¿½Ìƒoï¿½tï¿½Ì’Ç‰ï¿½ï¿½Æ‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
        
 
-        //ƒpƒbƒVƒuƒAƒCƒeƒ€‚ÍŒã‰ñ‚µ
+        //ï¿½pï¿½bï¿½Vï¿½uï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÍŒï¿½ï¿½
 
 
-        //Debug.Log($"g—p‚µ‚Ä{buffDuration}•bŠÔA{buffType}‚ª{value}ã¸‚µ‚½");
+        //Debug.Log($"ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½{buffDuration}ï¿½bï¿½ÔA{buffType}ï¿½ï¿½{value}ï¿½ã¸ï¿½ï¿½ï¿½ï¿½");
        
     //}
 

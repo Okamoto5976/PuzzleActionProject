@@ -12,18 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f726c9c063d2476499ea60ae518873b7, type: 3}
   m_Name: SpecialItem
   m_EditorClassIdentifier: Assembly-CSharp::SpecialItem
+  m_value: 0
   m_data:
     itemID: 0
     itemName: 
     itemIcon: {fileID: 0}
+    itemprefab: {fileID: 4752866384152218059, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
     description: 
-    itemValue: 0
     maxStack: 0
+    dropRate: 0
+    itemGrade: 0
+    dropPrefab: {fileID: 0}
+    dropsize: 0
   ItemName:
     itemID: 9
     itemName: 
     itemIcon: {fileID: 0}
+    itemprefab: {fileID: 0}
     description: 
-    itemValue: 0
     maxStack: 0
+    dropRate: 0
+    itemGrade: 0
+    dropPrefab: {fileID: 0}
+    dropsize: 0
   specialEffectDuration: 0
