@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 public class CreatMap : MonoBehaviour
 {
     [Header("Map")]
@@ -26,7 +27,6 @@ public class CreatMap : MonoBehaviour
     [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
 
     [Header("Debug")]
-    [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
@@ -257,7 +257,7 @@ public class CreatMap : MonoBehaviour
     /// AreaType èàóùñ{ëÃ
     /// </summary>
     /// 
-    [SerializeField] private Middleman_Enemy m_pool;
+    [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     private void ProcessAreaTypes()
     {
@@ -286,19 +286,23 @@ public class CreatMap : MonoBehaviour
                 case AreaType.Summon:
                     {
                         var poses = RandomChoosePosition(room, 3);
+                        List<Vector3> worldposition = new();
                         foreach (var position in poses)
                         {
                             if (IsForbiddenPos(position)) continue;
 
-                            Vector3 debugPos = GridToWorld(position); //Vector2Int transformed into world coordinates
-                            //call CallAreaSet
-                            //GameObject obj = Instantiate(m_enemyPrefab, debugPos, Quaternion.identity);
-                            DummyEnemyScript obj = m_pool.GetEnemy(Enum_EnemyType.Archer);
-                            if(obj == null) continue;
-                            obj.gameObject.transform.position = debugPos;
-                            obj.gameObject.SetActive(true);
+                            Vector3 worldPos = GridToWorld(position);
+                            worldposition.Add(worldPos);
                         }
-                        break;
+                        if(m_enemySpawner!= null)
+                        {
+                            m_enemySpawner.SpawnEnemiesAtPositions(worldposition);
+                        }
+                        else
+                        {
+                            Debug.LogError("CreatMap: NO Poolinstallationpulling");
+                        }
+                            break;
                     }
 
 
