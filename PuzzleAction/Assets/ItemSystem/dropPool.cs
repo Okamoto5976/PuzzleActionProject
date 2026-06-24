@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 //using static UnityEditor.PlayerSettings;
 
 
-[System.Serializable]
+
 public class PoolItem
 {
     public int id;
@@ -16,7 +16,7 @@ public class PoolItem
 public class DropPool : MonoBehaviour
 {
     public GameObject prefab;
-    public PoolItem poolItem;
+    //public PoolItem poolItem;
     [SerializeField]
     private List<PoolItem> ItemList = new();
     public PoolItem[] Items;
@@ -58,7 +58,7 @@ public class DropPool : MonoBehaviour
 
 
 
-    public void GetItem()
+    public void Get()
     {
         
         foreach(var item in ItemList)
@@ -80,8 +80,8 @@ public class DropPool : MonoBehaviour
     {
         GameObject obj= pool.Get();
         obj.transform.position = r_data.pos;
-         obj.transform.rotation=Quaternion.Euler(r_data.dir);   
-       //object value = Instantiate(prefab, r_data.pos, Quaternion.Euler(r_data.dir));
+        obj.transform.rotation=Quaternion.Euler(r_data.dir);   
+        object value = Instantiate(prefab, r_data.pos, Quaternion.Euler(r_data.dir));
 
 
     }

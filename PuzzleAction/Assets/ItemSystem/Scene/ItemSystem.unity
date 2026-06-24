@@ -727,14 +727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPool
   prefab: {fileID: 0}
-  poolItem:
-    id: 0
-    name: 
-    prefab: {fileID: 0}
-    initialCount: 5
-  ItemList: []
-  Items: []
-  maxSize: 0
+  maxSize: 3
   DefaultCapacity: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
