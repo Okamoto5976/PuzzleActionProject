@@ -9,6 +9,9 @@ public class ItemManager : MonoBehaviour
     public List<Item> ShopList = new();
     //private int nextId; //次のIDを管理する変数
     DropPool pools;
+
+    [SerializeField] private Middleman_Trap m_middleman_trap;
+
     //リスト初期化
     public List<Item> ItemList = new();
 
@@ -31,6 +34,20 @@ public class ItemManager : MonoBehaviour
         {
             Debug.LogWarning($"ID{id}のアイテムは見つかりませんでした。");
         }
+    }
+
+    public void OnUseItem(Item item, ItemRecieveData data)
+    {
+        if(item.Type == Item.ItemEffectType.Trap)
+        {
+            TrapItem trap = (TrapItem)item;
+
+            TrapBase obj = m_middleman_trap.GetTrap(trap.EnumTrap);
+
+            trap.SetTrap(obj);
+        }
+
+        item.RecieveData(data);
     }
 
     public void RandomDropItem(ItemRecieveData r_data)

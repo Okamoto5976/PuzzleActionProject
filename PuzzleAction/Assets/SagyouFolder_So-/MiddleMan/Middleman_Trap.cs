@@ -12,7 +12,7 @@ public class Middleman_Trap : MonoBehaviour
 
     [SerializeField] private List<TrapDict> trapPools;
 
-    public TrapBase GetEnemy(Enum_TrapType trapType)
+    public TrapBase GetTrap(Enum_TrapType trapType)
     {
         var pool = trapPools.Find(x => x.type == trapType).pool;
         if (pool == null)

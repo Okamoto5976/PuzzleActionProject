@@ -27,7 +27,8 @@ public class EnemyController : Entity
     [SerializeField] private AttackHitBox m_attackHitBox;
 
     [Header("Debug")]
-    [SerializeField] private ArrowTrap m_arrowPrefab;
+    //[SerializeField] private ArrowTrap m_arrowPrefab;
+    [SerializeField] private ItemManager m_itemManager;
     [SerializeField] private Item m_item;
 
     private NavMeshAgent m_agent;
@@ -156,12 +157,21 @@ public class EnemyController : Entity
 
     public void UseItem(Vector3 dir)
     {
-        ArrowTrap arrow = Instantiate(
-            m_arrowPrefab
-        );
+        //ArrowTrap arrow = Instantiate(
+        //    m_arrowPrefab
+        //);
+        ItemRecieveData data = new ItemRecieveData
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = dir
+        };
 
-        arrow.Init(this, dir, 5);
-        arrow.transform.position = transform.position;
+        m_itemManager.OnUseItem(m_item ,data);
+
+        //arrow.Init(this, dir, 5);
+        //arrow.transform.position = transform.position;
     }
     //-----common-----
     public void Stop()

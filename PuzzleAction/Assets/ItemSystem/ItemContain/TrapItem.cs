@@ -3,11 +3,18 @@ using UnityEngine;
 public class TrapItem : Item
 {
     [SerializeField] private float trapValue;
-    //trapType
-    //{arrow,gas
 
     //pool‚©‚ç‚à‚ç‚Á‚½obj“ü‚ê‚é •Ï”
-    public GameObject TrapPrefab;
+    public TrapBase TrapPrefab;
+
+    [SerializeField] private Enum_TrapType m_enumTrap;
+
+    public Enum_TrapType EnumTrap => m_enumTrap;
+
+    public void SetTrap(TrapBase obj)
+    {
+        TrapPrefab = obj;
+    }
 
     public override void Activation(float value, ItemRecieveData data)
     {
@@ -16,8 +23,8 @@ public class TrapItem : Item
         //EntityTrap.SetbaseValue(data.baseValue)                Trap‘¤‚ÅTrap‚ÌUŒ‚—Í{baseValue
         //obj‚ÌEntity‚ÉmoveDir‚ª‚ ‚é‚©‚çdata‚Ìdir‚ğ“ü‚ê‚é
         //var entity = TrapPrefab.GetComponent<Entity>();
-        TrapPrefab.transform.position = data.pos;
-        TrapPrefab.transform.rotation = Quaternion.LookRotation(data.dir);
+        TrapPrefab.gameObject.transform.position = data.pos;
+        TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
         //entity.moveDir = data.dir;
     }
 }
