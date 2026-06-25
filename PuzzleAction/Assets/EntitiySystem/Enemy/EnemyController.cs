@@ -28,7 +28,7 @@ public class EnemyController : Entity
 
     [Header("Debug")]
     //[SerializeField] private ArrowTrap m_arrowPrefab;
-    private ItemManager m_itemManager;
+    [SerializeField] private ItemManager m_itemManager;
     [SerializeField] private Item m_item;
 
     private NavMeshAgent m_agent;
@@ -45,8 +45,6 @@ public class EnemyController : Entity
         base.Awake();
 
         m_agent = GetComponent<NavMeshAgent>();
-
-        m_itemManager = FindAnyObjectByType<ItemManager>();
 
         switch (m_type)
         {

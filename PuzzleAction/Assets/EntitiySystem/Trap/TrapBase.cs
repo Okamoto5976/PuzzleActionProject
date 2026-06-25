@@ -38,7 +38,7 @@ public class TrapBase : Entity
     protected virtual void Setup()
     {
         m_startPosition =
-            m_owner.transform.position;
+            transform.position;
 
         m_range =
             m_trapdata.range;
@@ -84,14 +84,7 @@ public class TrapBase : Entity
 
         if (distance >= m_range)
         {
-            //Destroy(gameObject);
-            if(m_returnObjPool == null)
-            {
-                m_returnObjPool = GetComponent<ReturnObjectToPool>();
-
-            }
-            m_returnObjPool.ReturnToPool();
-
+            Destroy(gameObject);
         }
     }
 
@@ -121,7 +114,7 @@ public class TrapBase : Entity
         Debug.Log(
             $"{other.name} Hit");
 
-        //Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
 
