@@ -25,6 +25,7 @@ public class TrapItem : Item
         //var entity = TrapPrefab.GetComponent<Entity>();
         TrapPrefab.Init(data.entity, data.dir, (int)data.baseValue);
         TrapPrefab.gameObject.transform.position = data.pos;
+        TrapPrefab.gameObject.SetActive(true);
         //TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
         //entity.moveDir = data.dir;
     }
