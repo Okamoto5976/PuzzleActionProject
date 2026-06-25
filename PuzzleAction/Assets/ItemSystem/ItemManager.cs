@@ -40,11 +40,15 @@ public class ItemManager : MonoBehaviour
     {
         if(item.Type == Item.ItemEffectType.Trap)
         {
-            TrapItem trap = (TrapItem)item;
+            //TrapItem trap = (TrapItem)item;
 
-            TrapBase obj = m_middleman_trap.GetTrap(trap.EnumTrap);
+            if(item is TrapItem trap)
+            {
+                Debug.Log(trap.EnumTrap);
+                TrapBase obj = m_middleman_trap.GetTrap(trap.EnumTrap);
 
-            trap.SetTrap(obj);
+                trap.SetTrap(obj);
+            }
         }
 
         item.RecieveData(data);
