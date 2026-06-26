@@ -252,6 +252,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6496707495587817873, guid: 81738e8f01d912049aa974330f451583, type: 3}
+      propertyPath: m_shopUI
+      value: 
+      objectReference: {fileID: 1585637270}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1289,6 +1293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1157772389}
   - component: {fileID: 1157772388}
+  - component: {fileID: 1157772392}
   - component: {fileID: 1157772391}
   m_Layer: 0
   m_Name: GenerateMap
@@ -1323,6 +1328,7 @@ MonoBehaviour:
   m_shopPrefab: {fileID: 108477365344056919, guid: 238c23917d1b3c84f8ea84a10bd3f0c6, type: 3}
   m_player: {fileID: 4551359788576524226, guid: c62fffd111f074a429d03a70e360e198, type: 3}
   m_camera: {fileID: 1957982647}
+  m_debugMapPlaceSystem: {fileID: 1157772392}
   m_pool: {fileID: 776241687}
 --- !u!4 &1157772389
 Transform:
@@ -1389,6 +1395,40 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1157772392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157772387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1732028a6ddd7684bae35ddc93422d9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebugMapPlaceSystem
+  m_size: {x: 10, y: 10}
+  m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
+  m_instanceCounterList: []
+  m_rooms:
+  - m_type: 0
+    m_originPos: {x: 0, y: 0}
+  - m_type: 4
+    m_originPos: {x: 3, y: 0}
+  - m_type: 1
+    m_originPos: {x: 6, y: 0}
+  - m_type: 2
+    m_originPos: {x: 0, y: 3}
+  - m_type: 0
+    m_originPos: {x: 3, y: 3}
+  - m_type: 2
+    m_originPos: {x: 6, y: 3}
+  - m_type: 1
+    m_originPos: {x: 0, y: 6}
+  - m_type: 4
+    m_originPos: {x: 3, y: 6}
+  - m_type: 0
+    m_originPos: {x: 6, y: 6}
 --- !u!1 &1214272746
 GameObject:
   m_ObjectHideFlags: 0

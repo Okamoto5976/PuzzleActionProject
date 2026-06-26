@@ -34,6 +34,8 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private T_Camera m_camera;
     private GameObject m_playerController;
 
+    [SerializeField] private DebugMapPlaceSystem m_debugMapPlaceSystem;
+
 
     //--------------External API---------------
     public List<GameObject> SouthWall => m_wallObjectsSouth;
@@ -42,6 +44,20 @@ public class CreatMap : MonoBehaviour
     private void Awake()
     {
         m_mapClass = m_mapClassData.MapClass;
+        if (m_mapClass == null)
+        {
+            Debug.Log("DebugMapPlaceSystem On");
+
+            if(m_debugMapPlaceSystem.DebugMapGenerate())
+            {
+                m_mapClass = m_mapClassData.MapClass;
+                if (m_mapClass != null) Debug.Log("mapClass in");
+            }
+            else
+            {
+                return;
+            }
+        }
         Debug.Log(m_mapClass.Size.ToString());
         m_size = m_mapClass.Size;
 
