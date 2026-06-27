@@ -1326,7 +1326,7 @@ MonoBehaviour:
   m_enemyPrefab: {fileID: 6967910656285339947, guid: 59b38f39fa30e544e8d023b1b509859b, type: 3}
   m_goalPrefab: {fileID: 5194691441477144992, guid: 229eb1421400af142857a25dec6c438c, type: 3}
   m_shopPrefab: {fileID: 108477365344056919, guid: 238c23917d1b3c84f8ea84a10bd3f0c6, type: 3}
-  m_player: {fileID: 4551359788576524226, guid: c62fffd111f074a429d03a70e360e198, type: 3}
+  m_player: {fileID: 1501914875296179412, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
   m_camera: {fileID: 1957982647}
   m_debugMapPlaceSystem: {fileID: 1157772392}
   m_pool: {fileID: 776241687}
@@ -4600,9 +4600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cb8c74604637041bd47be14e8cd966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
-  m_target: {fileID: 0}
-  m_offset: {x: 0, y: 8, z: -8}
-  m_followSpeed: 0
 --- !u!114 &1957982647
 MonoBehaviour:
   m_ObjectHideFlags: 0
