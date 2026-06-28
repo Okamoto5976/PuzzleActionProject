@@ -55,6 +55,7 @@ public class Goods : MonoBehaviour,
     // Set Data
     public void SetData(ShopItem shopItem)
     {
+        Debug.Log("setData");
         m_data = shopItem.data;
         m_icon.sprite = m_data.Data.ItemIcon;
         m_priceText.text = m_data.Data.Price.ToString() + " $";

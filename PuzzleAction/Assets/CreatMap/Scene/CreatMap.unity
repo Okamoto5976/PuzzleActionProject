@@ -4263,7 +4263,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4151098947707785000, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7174138788086197111, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
       propertyPath: m_Name
@@ -4600,6 +4600,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84cb8c74604637041bd47be14e8cd966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
+  m_target: {fileID: 0}
+  m_offset: {x: 0, y: 8, z: -8}
+  m_followSpeed: 0
 --- !u!114 &1957982647
 MonoBehaviour:
   m_ObjectHideFlags: 0
