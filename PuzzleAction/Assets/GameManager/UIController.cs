@@ -92,7 +92,7 @@ public class UIController : MonoBehaviour
 
     private void ShopUI(bool isbool)
     {
-        m_shopUI.SetActive(isbool);
+        //m_shopUI.SetActive(isbool);
     }
 
     private void InventoryUI(bool isbool)
