@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    ItemData data;
-    Item item; // アイテムのクラス
+
     float radius = 3f; // アイテムを拾うための半径
     float timeToReturn = 5f; // アイテムが自動的に戻るまでの時間
     DropPool pool; // アイテムを管理するドロッププールのクラス
@@ -38,7 +37,7 @@ public class ItemDrop : MonoBehaviour
         if (pool != null)
         {
             //Poolに返す処理
-            pool.ReturnItem( prefab);
+            pool.ReturnItem(prefab);
         }
     }
 }

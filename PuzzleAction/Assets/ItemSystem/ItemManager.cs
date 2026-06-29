@@ -1,17 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class ItemManager : MonoBehaviour
 {
     public List<Item> EnemyDropList = new();
     public List<Item> DropList = new();
     public List<Item> ShopList = new();
     //private int nextId; //次のIDを管理する変数
-    DropPool pools;
-
     [SerializeField] private Middleman_Trap m_middleman_trap;
-
+    DropPool I_pool;
     //リスト初期化
     public List<Item> ItemList = new();
 
@@ -51,14 +48,15 @@ public class ItemManager : MonoBehaviour
         item.RecieveData(data);
     }
 
-    public void RandomDropItem(ItemRecieveData r_data)
+    public void RandomDropItem(ItemRecieveData r_data , List<ItemData> Items)
     {
-
         DropList =  EnemyDropList;
-        int dropIndex = Random.Range(0, DropList.Count);
-        pools.ItemDrop(dropIndex, r_data);
+        int dropIndex =Random.Range(0, DropList.Count);
+        ItemData SelectidItem = Items[dropIndex];
+        int Pickupid = SelectidItem.ItemID;
+        I_pool.ItemDrop(Pickupid, r_data);
         //return DropList[dropIndex];
-        Debug.Log($"{dropIndex}をドロップしました。");
+        Debug.Log($"{SelectidItem.ItemName}をドロップしました。");
         DropList.Clear();
     }
 
