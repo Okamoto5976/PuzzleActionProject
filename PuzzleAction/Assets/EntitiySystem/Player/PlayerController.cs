@@ -5,15 +5,15 @@ public class PlayerController : Entity
 {
     [Header("InputSystem")]
     [SerializeField] private InputActionReference m_moveAction;
-    [SerializeField] private InputActionReference m_dashAction;
+    [SerializeField] private InputActionReference m_evasionAction;
 
     [SerializeField] private Vector3Asset m_position;
 
-    [Header("Dash")]
-    [SerializeField] private float m_dashDuration = 0.2f;
+    [Header("Evasion")]
+    [SerializeField] private float m_evasionDuration = 0.2f;
 
-    private bool m_isDashing;
-    private float m_dashTimer;
+    private bool m_isEvaing;
+    private float m_evasionTimer;
 
     protected override void Awake()
     {
@@ -23,23 +23,23 @@ public class PlayerController : Entity
     private void OnEnable()
     {
         m_moveAction.action.Enable();
-        m_dashAction.action.Enable();
+        m_evasionAction.action.Enable();
 
-        m_dashAction.action.performed += OnDashPerformed;
+        m_evasionAction.action.performed += OnEvasionPerformed;
     }
 
     private void OnDisable()
     {
-        m_dashAction.action.performed -= OnDashPerformed;
+        m_evasionAction.action.performed -= OnEvasionPerformed;
 
         m_moveAction.action.Disable();
-        m_dashAction.action.Disable();
+        m_evasionAction.action.Disable();
     }
 
-    private void OnDashPerformed(InputAction.CallbackContext context)
+    private void OnEvasionPerformed(InputAction.CallbackContext context)
     {
-        m_isDashing = true;
-        m_dashTimer = m_dashDuration;
+        m_isEvaing = true;
+        m_evasionTimer = m_evasionDuration;
     }
 
     protected override void FixedUpdate()
@@ -68,17 +68,17 @@ public class PlayerController : Entity
         }
 
         // ダッシュ時間管理
-        if (m_isDashing)
+        if (m_isEvaing)
         {
-            m_dashTimer -= Time.deltaTime;
+            m_evasionTimer -= Time.deltaTime;
 
-            if (m_dashTimer <= 0f)
+            if (m_evasionTimer <= 0f)
             {
-                m_isDashing = false;
+                m_isEvaing = false;
             }
         }
 
         // 速度切り替え
-        m_currentMoveSpeed = m_isDashing ? DashSpeed : Speed;
+        m_currentMoveSpeed = m_isEvaing ? EvasionSpeed : Speed;
     }
 }

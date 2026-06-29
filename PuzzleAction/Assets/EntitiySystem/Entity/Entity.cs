@@ -15,7 +15,7 @@ abstract public class Entity : MonoBehaviour
     public float KnockBack => m_status[StatusType.KnockBack].Value;
     public float DEF => m_status[StatusType.Defense].Value;
     public float Speed => m_status[StatusType.Speed].Value;
-    public float DashSpeed => m_status[StatusType.DashSpeed].Value;
+    public float EvasionSpeed => m_status[StatusType.DashSpeed].Value;
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float DEX => m_status[StatusType.Dexterity].Value;

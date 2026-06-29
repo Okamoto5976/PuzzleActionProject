@@ -248,7 +248,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.026666665
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 9aa4221aa2d0a6441b9a424c8caaa923, type: 2}
   m_BuildHeightMesh: 0
@@ -653,19 +653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91392f36235ec794d9f29bf51e2ab9e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyContllor
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
-  m_team: 1
-  m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
-  m_target: {fileID: 1909587332}
-  m_findRange: 8
-  m_attackRange: 5
-  m_attackCooldown: 1.5
-  m_hitCollider: {fileID: 1838854062}
-  m_attackHitBox:
-    m_transform: {fileID: 544160406}
-    m_radius: 1
-  m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
 --- !u!54 &1838854056
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -980,11 +967,10 @@ GameObject:
   - component: {fileID: 1909587330}
   - component: {fileID: 1909587329}
   - component: {fileID: 1909587335}
-  - component: {fileID: 1909587334}
-  - component: {fileID: 1909587333}
   - component: {fileID: 1909587336}
   - component: {fileID: 1909587337}
   - component: {fileID: 1909587338}
+  - component: {fileID: 1909587339}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1088,36 +1074,6 @@ Transform:
   - {fileID: 1292368805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1909587333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909587328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d12c3344507e9bc42afd8a5d74572381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
---- !u!114 &1909587334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1909587328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bce176f5c5593f4fb24e52ec3b9b70b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
-  m_team: 0
-  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
-  m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_dashAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!54 &1909587335
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1158,7 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowItemTest
   m_arrowPrefab: {fileID: 7277797425382834796, guid: 6ae0f0a12f0375e44b50f281c9bad54b, type: 3}
-  m_owner: {fileID: 1909587334}
+  m_owner: {fileID: 0}
 --- !u!114 &1909587337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1189,6 +1145,26 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 544160406}
     m_radius: 1
+--- !u!114 &1909587339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909587328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2e1a9e2623a024e925b52eec850d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 0
+  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_evasionAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_position: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
+  m_evasionDuration: 0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
