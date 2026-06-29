@@ -1328,7 +1328,7 @@ MonoBehaviour:
   m_player: {fileID: 1501914875296179412, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
   m_camera: {fileID: 1957982647}
   m_debugMapPlaceSystem: {fileID: 1157772392}
-  m_pool: {fileID: 776241687}
+  m_enemySpawner: {fileID: 1483867179}
 --- !u!4 &1157772389
 Transform:
   m_ObjectHideFlags: 0
