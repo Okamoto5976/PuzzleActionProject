@@ -244,12 +244,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1574153966163765474, guid: 81738e8f01d912049aa974330f451583, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2150844225768722695, guid: 81738e8f01d912049aa974330f451583, type: 3}
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 2494166478713779757, guid: 81738e8f01d912049aa974330f451583, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5867560514602977076, guid: 81738e8f01d912049aa974330f451583, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6496707495587817873, guid: 81738e8f01d912049aa974330f451583, type: 3}
@@ -903,6 +911,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 5631065701186784443, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
+      propertyPath: m_saveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
     - target: {fileID: 6963138091109847363, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
       propertyPath: m_infoText
       value: 
@@ -936,6 +948,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1921030410}
     - target: {fileID: 7111745429829692275, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
+      propertyPath: saveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
+    - target: {fileID: 7111745429829692275, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
       propertyPath: activePanel
       value: 
       objectReference: {fileID: 1921030344}
@@ -943,6 +959,10 @@ PrefabInstance:
       propertyPath: hotbarPanel
       value: 
       objectReference: {fileID: 1921030347}
+    - target: {fileID: 7111745429829692275, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
+      propertyPath: itemManager
+      value: 
+      objectReference: {fileID: 681700649319570257}
     - target: {fileID: 7111745429829692275, guid: 5f666858392ce824fad2f625fcd59963, type: 3}
       propertyPath: passivePanel
       value: 
@@ -1526,6 +1546,52 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.26577, y: 0, z: 11.08082}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1272142994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1272142996}
+  - component: {fileID: 1272142995}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1272142995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272142994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbaeb2d7d767e641ab3b4e2b7114297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+  m_saveData: {fileID: 0}
+  m_inventorySystem: {fileID: 0}
+--- !u!4 &1272142996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272142994}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 440.3386, y: -0.00005, z: 116.8927}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4850,3 +4916,4 @@ SceneRoots:
   - {fileID: 776241688}
   - {fileID: 435115611}
   - {fileID: 1483867180}
+  - {fileID: 1272142996}

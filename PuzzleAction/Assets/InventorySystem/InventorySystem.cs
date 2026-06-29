@@ -34,6 +34,11 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject activePanel;
     [SerializeField] private GameObject passivePanel;
     [SerializeField] private GameObject hotbarPanel;
+
+    [SerializeField] private SaveData saveData;
+    [SerializeField] private ItemManager itemManager;
+    [SerializeField] private SaveManager m_saveManager;
+
     private void Awake()
     {
         activeSlots = activePanel.GetComponentsInChildren<SlotUI>(true);
@@ -53,8 +58,9 @@ public class InventorySystem : MonoBehaviour
         {
             hotbars[i] = -1;
         }
+        m_saveManager.LoadFromJson();
     }
-    [SerializeField] private Data data;
+    //[SerializeField] private Data data;
 
     //private void Update()
     //{
@@ -73,7 +79,16 @@ public class InventorySystem : MonoBehaviour
 
     public void OnItem(Data data, int count)
     {
-        AddItem(data, count);
+        if (AddItem(data, count))
+        {
+           
+        }
+    }
+    public void Save()
+    {
+        SaveInventory();
+        m_saveManager.SaveToJson();
+        Debug.Log("セーブしました");
     }
 
     public bool AddItem(Data data, int count)
@@ -134,44 +149,7 @@ public class InventorySystem : MonoBehaviour
         return true;
     }
 
-    //ソート　アイテム削除後などに
-    private void InventorySort()
-    {
-        //List<ItemBox> list = new List<ItemBox>();
 
-        //for(int y = 0; y < m_height; ++y)
-        //{
-        //    for(int x = 0; x < m_width;  ++x)
-        //    {
-        //        if(inventory[x, y] != null)
-        //        {
-        //            list.Add(inventory[x, y]);
-        //        }
-        //    }
-        //}
-
-        //for (int y = 0;y < m_height; ++y)
-        //{
-        //    for (int x = 0; x < m_width; ++x)
-        //    {
-        //        inventory[x, y] = null;
-        //    }
-        //}
-
-        //int index = 0;
-
-        //for (int y = 0; y<m_height; ++y)
-        //{
-        //    for (int x = 0; x<m_width; ++x)
-        //    {
-        //        if (index < list.Count)
-        //        {
-        //            inventory[x, y] = list[index];
-        //            index++;
-        //        }
-        //    }
-        //}
-    }
 
     public void UpdateUI()
     {
@@ -352,4 +330,118 @@ for (int i = 0; i < hotbars.Length; i++)
         //UseItem();ホットバーのアイテムを
     }
 
-}
+    //SaveDataを渡す処理
+    public void SaveInventory()
+    {
+        saveData.activeItems.Clear();
+        saveData.passiveItems.Clear();
+
+        foreach (ItemBox item in activeInventory)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            saveItem.id = item.data.ID;
+            saveItem.count = item.count;
+
+            saveData.activeItems.Add(saveItem);
+        }
+
+        foreach (ItemBox item in passiveInventory)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            saveItem.id = item.data.ID;
+            saveItem.count = item.count;
+
+            saveData.passiveItems.Add(saveItem);
+        }
+
+        Debug.Log("=== Active ===");
+
+        foreach (SaveItemData item in saveData.activeItems)
+        {
+            Debug.Log($"ID:{item.id} Count:{item.count}");
+        }
+
+        Debug.Log("=== Passive ===");
+
+        foreach (SaveItemData item in saveData.passiveItems)
+        {
+            Debug.Log($"ID:{item.id} Count:{item.count}");
+        }
+    }
+
+    public void LoadInventory()
+    {
+        activeInventory.Clear();
+        passiveInventory.Clear();
+
+        foreach (SaveItemData saveItem in saveData.activeItems)
+        {
+            Debug.Log($"ロード中 ID:{saveItem.id}");
+
+            Data data = itemManager.GetItem(saveItem.id);
+
+            if (data != null)
+            {
+                Debug.Log($"取得成功 {data.ItemName}");
+
+                activeInventory.Add(
+                    new ItemBox(data, saveItem.count)
+                );
+            }
+        }
+
+        foreach (SaveItemData saveItem in saveData.passiveItems)
+        {
+            Data data = itemManager.GetItem(saveItem.id);
+
+            if (data != null)
+            {
+                passiveInventory.Add(
+                    new ItemBox(data, saveItem.count)
+                );
+            }
+        }
+
+        UpdateUI();
+    }
+
+    //ソート　アイテム削除後などに
+    private void InventorySort()
+    {
+        //List<ItemBox> list = new List<ItemBox>();
+
+        //for(int y = 0; y < m_height; ++y)
+        //{
+        //    for(int x = 0; x < m_width;  ++x)
+        //    {
+        //        if(inventory[x, y] != null)
+        //        {
+        //            list.Add(inventory[x, y]);
+        //        }
+        //    }
+        //}
+
+        //for (int y = 0;y < m_height; ++y)
+        //{
+        //    for (int x = 0; x < m_width; ++x)
+        //    {
+        //        inventory[x, y] = null;
+        //    }
+        //}
+
+        //int index = 0;
+
+        //for (int y = 0; y<m_height; ++y)
+        //{
+        //    for (int x = 0; x<m_width; ++x)
+        //    {
+        //        if (index < list.Count)
+        //        {
+        //            inventory[x, y] = list[index];
+        //            index++;
+        //        }
+        //    }
+        //}
+    }}

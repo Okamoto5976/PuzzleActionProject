@@ -16,6 +16,13 @@ public class ItemManager : MonoBehaviour
     public List<Item> ItemList = new();
 
     //List‚Ì’†‚©‚çID‚Æ“¯‚¶ƒAƒCƒeƒ€‚ð’T‚·
+    public Data GetItem(int id)
+    {
+        Data data = null;
+
+        return data;
+    }
+
     private Item LookForID(int id)
     {
         return ItemList.Find(x => x.Id == id);
