@@ -12,7 +12,7 @@ public class RoomPieceManager : MonoBehaviour
     private Queue<RoomPieceParent> m_pieces = new();
 
     [SerializeField] private int m_pieceAmount = 20;
-    [SerializeField] private int m_poolPieceAmount = 100;
+    //[SerializeField] private int m_poolPieceAmount = 100;
 
     //[SerializeField] private int m_normalRoomGenerate = 40;
     //[SerializeField] private int m_enemyRoomGenerate = 20;

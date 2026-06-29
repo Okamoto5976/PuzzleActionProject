@@ -7,7 +7,7 @@ public class Timer : MonoBehaviour
     [SerializeField] private float waitTime = 5f;  //‰½•b‚Å”­“®
     private float timer = 0f;
     private bool isAction = false;
-    private bool isFirst = true;
+    //private bool isFirst = true;
     void Start()
     {
      //m_messageManager.ShowByState(State.Welcome);

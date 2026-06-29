@@ -9,7 +9,7 @@ public class Spawn : MonoBehaviour
     [SerializeField] private string m_objectKey = "SummonedObject";//Objectñº
     private Transform m_spawnPosition;
 
-    private bool m_Spawned = false;      //SpawnÇµÇΩÇ©Ç«Ç§Ç©
+    //private bool m_Spawned = false;      //SpawnÇµÇΩÇ©Ç«Ç§Ç©
 
     private void Awake()
     {
@@ -42,7 +42,7 @@ public class Spawn : MonoBehaviour
 
         obj.transform.position = spawnPosition;
 
-        m_Spawned = true;
+        //m_Spawned = true;
         //enm enemyScript = obj.GetComponent<enm>();
         //if (enemyScript != null)
         //{
@@ -57,7 +57,7 @@ public class Spawn : MonoBehaviour
     [ContextMenu("èâä˙âª")]
     public void ResetSpawn()
     {
-        m_Spawned = false;
+        //m_Spawned = false;
 
         //è¡Ç∑
         //enm[] enemies = Object.FindObjectsByType<enm>(FindObjectsSortMode.None);

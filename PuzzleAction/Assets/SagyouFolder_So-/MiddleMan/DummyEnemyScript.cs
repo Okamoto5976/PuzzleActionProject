@@ -4,8 +4,8 @@ public class DummyEnemyScript : MonoBehaviour
 {
 
     bool isEnabled = false;
-    float velocity = 0;
-    float gravity = 0.001f;
+    //float velocity = 0;
+    //float gravity = 0.001f;
 
     private ReturnObjectToPool rotp;
 
@@ -18,7 +18,7 @@ public class DummyEnemyScript : MonoBehaviour
     private void OnEnable()
     {
         isEnabled = true;
-        velocity = 0;
+        //velocity = 0;
     }
 
     private void OnDisable()
