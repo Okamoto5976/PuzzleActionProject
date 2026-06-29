@@ -24,13 +24,13 @@ public class DropPool : MonoBehaviour
     private ObjectPool<GameObject> pool;
     public int maxSize;
     public int DefaultCapacity;
-    //‰Šúİ’è
+    //ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
     private void Awake() => pool = new ObjectPool<GameObject>(
 
-            CreateItem,       // ¶¬
-            ItemGet,   // Get 
-            ReturnItem, // Release 
-            collectionCheck:true,        // d•¡•Ô‹p‚È‚Ç‚ÌˆÀ‘Sƒ`ƒFƒbƒN
+            CreateItem,       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            ItemGet,   // Get ï¿½ï¿½
+            ReturnItem, // Release ï¿½ï¿½
+            collectionCheck:true,        // ï¿½dï¿½ï¿½ï¿½Ô‹pï¿½È‚Ç‚Ìˆï¿½ï¿½Sï¿½`ï¿½Fï¿½bï¿½N
             defaultCapacity: DefaultCapacity,
             maxSize: maxSize
         );
@@ -51,9 +51,9 @@ public class DropPool : MonoBehaviour
     }
     public void ReturnItem(GameObject obj)
     {
-        obj.SetActive(false); // ƒAƒCƒeƒ€‚ğ”ñƒAƒNƒeƒBƒu‚É‚·‚é
+        obj.SetActive(false); // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½Nï¿½eï¿½Bï¿½uï¿½É‚ï¿½ï¿½ï¿½
         //pools[].Dequeue();
-        //pool[item].Enqueue(prefab); // ƒAƒCƒeƒ€‚ğƒv[ƒ‹‚É–ß‚·
+        //pool[item].Enqueue(prefab); // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½vï¿½[ï¿½ï¿½ï¿½É–ß‚ï¿½
     }
 
 

@@ -3,14 +3,14 @@ using UnityEngine;
 public class ItemDrop : MonoBehaviour
 {
     ItemData data;
-    Item item; // ƒAƒCƒeƒ€‚ÌƒNƒ‰ƒX
-    float radius = 3f; // ƒAƒCƒeƒ€‚ğE‚¤‚½‚ß‚Ì”¼Œa
-    float timeToReturn = 5f; // ƒAƒCƒeƒ€‚ª©“®“I‚É–ß‚é‚Ü‚Å‚ÌŠÔ
-    DropPool pool; // ƒAƒCƒeƒ€‚ğŠÇ—‚·‚éƒhƒƒbƒvƒv[ƒ‹‚ÌƒNƒ‰ƒX
+    Item item; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ÌƒNï¿½ï¿½ï¿½X
+    float radius = 3f; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ß‚Ì”ï¿½ï¿½a
+    float timeToReturn = 5f; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½É–ß‚ï¿½Ü‚Å‚Ìï¿½ï¿½ï¿½
+    DropPool pool; // ï¿½Aï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½ï¿½Ç—ï¿½ï¿½ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½bï¿½vï¿½vï¿½[ï¿½ï¿½ï¿½ÌƒNï¿½ï¿½ï¿½X
     private GameObject prefab;
     //public event Action m_event;
     
-    ////player‚ÌÀ•W‚ª©g‚Ì”¼Œa‚Rm‚¢‚È‚¢‚É@ƒvƒŒƒCƒ„[‚ª“ü‚Á‚½‚ç@ƒvƒŒƒCƒ„[‚ÉƒAƒCƒeƒ€‚ğ“n‚·B
+    ////playerï¿½Ìï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Ì”ï¿½ï¿½aï¿½Rmï¿½ï¿½ï¿½È‚ï¿½ï¿½É@ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÉƒAï¿½Cï¿½eï¿½ï¿½ï¿½ï¿½nï¿½ï¿½ï¿½B
     private void ItemGet(Collider other)
     {
         if (Vector3.Distance(transform.position, other.transform.position) <= radius)
@@ -28,16 +28,24 @@ public class ItemDrop : MonoBehaviour
         }
     }
 
-    public void Initialize()
+    private void OnTriggerEnter(Collider other)
     {
-        Invoke(nameof(Return), timeToReturn); // timeToReturn•bŒã‚ÉReturnƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·
+        Entity entity = other.GetComponent<Entity>();
+        if (entity == null) return;
+
+        bool added = entity.ReceiveItem(item);
+        if (!added) return; // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï‚ï¿½ï¿½ï¿½ï¿½È‚ï¿½Eï¿½ï¿½È‚ï¿½
+
+        ReturnToPool();
     }
-    private void Return()
+
+    private void ReturnToPool()
     {
+        CancelInvoke();
 
         if (pool != null)
         {
-            //Pool‚É•Ô‚·ˆ—
+            //Poolï¿½É•Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½
             pool.ReturnItem( prefab);
         }
     }
