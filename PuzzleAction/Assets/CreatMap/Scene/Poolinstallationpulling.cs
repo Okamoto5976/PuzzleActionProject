@@ -7,9 +7,9 @@ public class Poolinstallationpulling : MonoBehaviour
 
     private List<Enum_EnemyType> m_enemyTypes = new()
     {
-        //Enum_EnemyType.Chase,
-        Enum_EnemyType.Archer,
-        //Enum_EnemyType.Rush,
+       Enum_EnemyType.Archer,
+       Enum_EnemyType.Chase,
+       Enum_EnemyType.Rush,
     };
 
     /// <summary>
@@ -28,6 +28,17 @@ public class Poolinstallationpulling : MonoBehaviour
             //random selection
             int roulette = Random.Range(0, m_enemyTypes.Count);
             Enum_EnemyType selectedType = m_enemyTypes[roulette];
+
+            //***
+            if(m_pool.gameObject != null)
+            {
+                m_pool.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+
+                foreach(Transform child in m_pool.transform)
+                {
+                    child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+                }
+            }
 
             //Pool acquisition
             DummyEnemyScript enemy = m_pool.GetEnemy(selectedType);

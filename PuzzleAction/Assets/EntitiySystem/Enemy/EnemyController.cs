@@ -7,7 +7,7 @@ public class EnemyController : Entity
 {
 
     [Header("EnemyType")]
-    [SerializeField] private EnemyAttacksType m_type;   
+    [SerializeField] private Enum_EnemyType m_type;   
 
     [Header("Target")]
     //Debug
@@ -46,15 +46,15 @@ public class EnemyController : Entity
 
         switch (m_type)
         {
-            case EnemyAttacksType.Chase:
+            case Enum_EnemyType.Chase:
                 gameObject.AddComponent<Enemy_Chase>();
                 break;
 
-            case EnemyAttacksType.Rush:
+            case Enum_EnemyType.Rush:
                 gameObject.AddComponent<Enemy_Rush>();
                 break;
 
-            case EnemyAttacksType.Archer:
+            case Enum_EnemyType.Archer:
                 gameObject.AddComponent<Enemy_Archer>();
                 break;
         }

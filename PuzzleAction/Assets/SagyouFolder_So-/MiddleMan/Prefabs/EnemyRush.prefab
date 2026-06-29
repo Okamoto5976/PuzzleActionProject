@@ -248,8 +248,8 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
   m_type: 1
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_findRange: 16
-  m_attackRange: 8
+  m_findRange: 8
+  m_attackRange: 1
   m_attackCooldown: 1
   m_hitCollider: {fileID: 0}
   m_attackHitBox:
