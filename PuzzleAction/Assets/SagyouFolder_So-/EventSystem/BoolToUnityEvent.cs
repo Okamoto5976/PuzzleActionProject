@@ -19,6 +19,5 @@ public class BoolToUnityEvent : MonoBehaviour
     private void DoEvent(bool state)
     {
         m_unityEvent.Invoke(state);
-        Debug.Log("Invoked", this);
     }
 }
