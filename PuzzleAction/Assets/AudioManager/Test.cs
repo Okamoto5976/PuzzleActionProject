@@ -1,13 +1,42 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField] private AudioEventSO audioEvent;
-    [SerializeField] private AudioData audioData;
+    public AudioEventSO audioEvent;
 
-    public void Play()
+    public AudioClip bgm1;
+    public AudioClip bgm2;
+
+    // 同じBGM（ループテスト）
+    public void PlaySameBGM()
     {
-        audioEvent.Raise(audioData);
+        audioEvent.Raise(new AudioData
+        {
+            audioClip = bgm1,
+            clipVolume = 1f,
+            isLoop = true
+        });
+    }
+
+    // 別BGM（切替テスト）
+    public void ChangeBGM()
+    {
+        audioEvent.Raise(new AudioData
+        {
+            audioClip = bgm2,
+            clipVolume = 1f,
+            isLoop = true
+        });
+    }
+
+    // SEテスト
+    public void PlaySE(AudioClip se)
+    {
+        audioEvent.Raise(new AudioData
+        {
+            audioClip = se,
+            clipVolume = 1f,
+            isLoop = false
+        });
     }
 }

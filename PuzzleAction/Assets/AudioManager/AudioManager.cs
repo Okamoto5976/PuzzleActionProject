@@ -1,19 +1,29 @@
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private AudioEventSO audioEvent;
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioFader audioFader;
-    [SerializeField] private AudioClip BGM;
+    private static AudioManager instance;
 
-   
+    [SerializeField] private AudioEventSO audioEvent;
+    [SerializeField] private AudioSource BGMSource;
+    [SerializeField] private AudioSource SESource;
+
+    [SerializeField] private AudioFader audioFader;
+
    // private Coroutine bgmFadeCoroutine;
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        //Singleton
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        audioFader.audioSource = BGMSource;
     }
     private void OnEnable()
     {
@@ -26,52 +36,22 @@ public class AudioManager : MonoBehaviour
     //EventSOÇ©ÇÁìnÇ≥ÇÍÇΩAudioClipÇçƒê∂Ç∑ÇÈ
     private void PlayAudio(AudioData data)
     {
-
-        SetTransform(data);
-        SetVolume(data);
-        PlayClip(data);
-        //HandleLifeTime(data);
-    }
-
-    private void SetTransform(AudioData data)
-    {
-        audioSource.transform.position = data.position;
-        audioSource.transform.rotation = data.rotation;
-    }
-    private void SetVolume(AudioData data)
-    {
-        audioSource.volume = data.clipVolume;
-    }
-    private void PlayClip(AudioData data)
-    {
-        audioSource.loop = false;
-        audioSource.clip = null;
-        audioSource.volume = data.clipVolume;
-        //audioSource.loop = data.isLoop;
         if (data.isLoop)
         {
-            audioSource.loop = true;
-            audioSource.clip = data.audioClip;
-            audioSource.Play();
+            PlayBGM(data);
+
         }
         else
         {
-            audioSource.PlayOneShot(data.audioClip, data.clipVolume);
+            PlaySE(data);
         }
     }
-
-    public void FeadOut()
+    private void PlayBGM(AudioData data)
     {
-        audioFader.FadeOutAndPlay(BGM, 0.8f);
+       audioFader.FadeOutAndPlay(data.audioClip, data.clipVolume);
     }
-       // audioSource.PlayOneShot(data.audioClip, data.clipVolume);
-       // if (data.isLoop)
-      //  audioSource.loop = true;
-        //else
-        //    audioSource.loop = false;
-   // private void HandleLifeTime(AudioData data)
-   // {
-   //     // if (data.lifeTime > 0f)
-   //     //éwíËïbêîçƒê∂Ç≥ÇπÇÈ  
-   // }
+    private void PlaySE(AudioData data)
+    {
+        SESource.PlayOneShot(data.audioClip, data.clipVolume);
+    }
 }
