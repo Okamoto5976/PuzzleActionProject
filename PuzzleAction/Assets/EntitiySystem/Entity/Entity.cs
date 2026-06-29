@@ -47,7 +47,6 @@ abstract public class Entity : MonoBehaviour
 
     protected EntityBuffSystem m_buffSystem;
 
-    protected Inventory m_inventory;
     //SE
     [SerializeField] 
     protected AudioClip m_attackSE;
@@ -82,7 +81,6 @@ abstract public class Entity : MonoBehaviour
 
     protected float m_stunTime;
 
-    protected float m_currentMoveSpeed;
 
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
@@ -98,7 +96,6 @@ abstract public class Entity : MonoBehaviour
         m_audioSource=GetComponent<AudioSource>();
 
         m_buffSystem=GetComponent<EntityBuffSystem>();
-        m_inventory = GetComponent<Inventory>();
 
         if (m_data == null) return;
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
@@ -118,8 +115,6 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
         m_status.Add(StatusType.BlindRes, new EntityStatus(m_data.BlindRes));
-
-        m_currentMoveSpeed = Speed;
     }
 
     private void Start()
@@ -145,8 +140,6 @@ abstract public class Entity : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         if (m_isStun) return;
-        if (m_canMove) return;
-        
         OnMove(m_moveDir);
 
     }
@@ -181,8 +174,8 @@ abstract public class Entity : MonoBehaviour
 
         m_velocity = m_rb.linearVelocity;
 
-        m_velocity.x = dir.x * m_currentMoveSpeed;
-        m_velocity.z = dir.z * m_currentMoveSpeed;
+        m_velocity.x = dir.x * Speed;
+        m_velocity.z = dir.z * Speed;
 
         m_rb.linearVelocity = m_velocity;
 
@@ -228,13 +221,6 @@ abstract public class Entity : MonoBehaviour
 
         //�͂�������
         m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
-    }
-    public virtual bool ReceiveItem(Item item)
-    {
-        if (item == null) return false;
-        if(m_inventory==null) return false;
-
-        return m_inventory.AddItem(item.itemId);
     }
 }
 //public bool IsEnemy(Entity other)
