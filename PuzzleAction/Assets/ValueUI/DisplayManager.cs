@@ -4,10 +4,11 @@ using UnityEngine;
 public class DisplayManager : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private HPUI hpUI;      
+    [SerializeField] private HPUI hpUI;
+    [SerializeField] private PlayerHPUI playerHPUI;
     [SerializeField] private TMP_Text hpText;
-    [SerializeField] private Mniy moneyUI;  
-    [SerializeField] private sufor scoreUI;  
+    [SerializeField] private MoneyUI moneyUI;  
+    [SerializeField] private ScoreUI scoreUI;  
 
     [Header("HP Setting")]
     [SerializeField] private int maxHP = 100;
@@ -35,6 +36,11 @@ public class DisplayManager : MonoBehaviour
         m_currentHP = Mathf.Max(0, m_currentHP - damage);
        
         if (hpUI != null) hpUI.UpdateHPBar(m_currentHP, maxHP);
+        
+        if (playerHPUI != null)
+        {
+            playerHPUI.UpdateHP(m_currentHP, maxHP);
+        }
     }
 
     // Ç®ã‡ÇëùÇ‚Ç∑
@@ -58,6 +64,7 @@ public class DisplayManager : MonoBehaviour
     private void UpdateAllUI()
     {
         if (hpUI != null) hpUI.UpdateHPBar(m_currentHP, maxHP);
+        if (playerHPUI != null) playerHPUI.UpdateHP(m_currentHP, maxHP);
         if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
         if (scoreUI != null) scoreUI.UpdateScoreDisplay(m_score);
     }

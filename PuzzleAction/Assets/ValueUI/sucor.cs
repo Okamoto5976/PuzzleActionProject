@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class sufor : MonoBehaviour
+public class ScoreUI : MonoBehaviour
 {
     private TMP_Text scoreText;
 

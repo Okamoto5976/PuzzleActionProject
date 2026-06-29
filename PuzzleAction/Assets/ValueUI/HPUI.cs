@@ -3,42 +3,42 @@ using UnityEngine.UI;
 
 public class HPUI : MonoBehaviour
 {
-    [SerializeField] private Slider HP_Fill;
+    [SerializeField] private Slider m_HPFill;
 
-    // カメラ参照のキャッシュ（動作を軽くするため）
-    private Transform _mainCameraTransform;
+    //Entityの頭上に表示する場合使う
+    private Transform m_mainCameraTransform;
 
     private void Awake()
     {
         // 最初にカメラの場所を覚えておく
-        if (Camera.main != null)
-        {
-            _mainCameraTransform = Camera.main.transform;
-        }
+        //if (Camera.main != null)
+        //{
+        //    m_mainCameraTransform = Camera.main.transform;
+        //}
 
         
-        if (HP_Fill == null)
+        if (m_HPFill == null)
         {
-            HP_Fill = GetComponentInChildren<Slider>();
+            m_HPFill = GetComponentInChildren<Slider>();
         }
     }
 
     public void UpdateHPBar(int currentHP, int maxHP)
     {
-        if (HP_Fill != null)
+        if (m_HPFill != null)
         {
-            HP_Fill.maxValue = maxHP;
-            HP_Fill.value = currentHP;
+            m_HPFill.maxValue = maxHP;
+            m_HPFill.value = currentHP;
         }
     }
 
-    // ビルボード処理（カメラの方向を向く）
-    private void LateUpdate()
-    {
-        if (_mainCameraTransform != null)
-        {
-            transform.LookAt(_mainCameraTransform);
-            transform.Rotate(0, 180, 0);
-        }
-    }
+    //ビルボード処理（カメラの方向を向く）
+    //private void LateUpdate()
+    //{
+    //    if (m_mainCameraTransform != null)
+    //    {
+    //        transform.LookAt(m_mainCameraTransform);
+    //        transform.Rotate(0, 180, 0);
+    //    }
+    //}
 }

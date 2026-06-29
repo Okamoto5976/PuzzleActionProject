@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class Mniy : MonoBehaviour
+public class MoneyUI : MonoBehaviour
 {
     private TMP_Text moneyText;
 
