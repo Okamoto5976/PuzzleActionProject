@@ -34,13 +34,7 @@ public class HealItem : Item
         //‰ñ•œˆ—
 
         Debug.Log($"g—p‚µ‚ÄHP‚ª{value}‰ñ•œ‚µ‚½");
-        //StatusModifier statusModifier = new()
-        //{
-        //    m_statType = StatusType.HP,
-        //    m_value = value,
-        //    m_modType = ModifierType.Add
-        //};
-        //data.entity.AddBuff(statusModifier, buffDuration);
+      
     }
 
 
