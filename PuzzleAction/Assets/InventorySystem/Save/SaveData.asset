@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a923cbaec2bbda643a3ad2393fd39706, type: 3}
+  m_Script: {fileID: 11500000, guid: c4eb0394565dd3f428bcc703e6ac70e7, type: 3}
   m_Name: SaveData
   m_EditorClassIdentifier: Assembly-CSharp::SaveData
   activeItems: []

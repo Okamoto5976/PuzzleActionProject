@@ -37,6 +37,7 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] private SaveData saveData;
     [SerializeField] private ItemManager itemManager;
+    [SerializeField] private SaveManager m_saveManager;
 
     private void Awake()
     {
@@ -57,9 +58,9 @@ public class InventorySystem : MonoBehaviour
         {
             hotbars[i] = -1;
         }
-        LoadInventory();
+        m_saveManager.LoadFromJson();
     }
-    [SerializeField] private Data data;
+    //[SerializeField] private Data data;
 
     //private void Update()
     //{
@@ -78,9 +79,16 @@ public class InventorySystem : MonoBehaviour
 
     public void OnItem(Data data, int count)
     {
-        AddItem(data, count);
-
+        if (AddItem(data, count))
+        {
+            Save();
+        }
+    }
+    private void Save()
+    {
         SaveInventory();
+        m_saveManager.SaveToJson();
+        Debug.Log("ÉZÅ[ÉuÇµÇ‹ÇµÇΩ");
     }
 
     public bool AddItem(Data data, int count)

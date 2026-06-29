@@ -853,6 +853,7 @@ GameObject:
   - component: {fileID: 164305083}
   - component: {fileID: 164305084}
   - component: {fileID: 164305085}
+  - component: {fileID: 164305086}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -941,9 +942,9 @@ MonoBehaviour:
   activePanel: {fileID: 1054141423}
   passivePanel: {fileID: 1825235589}
   hotbarPanel: {fileID: 1037506225}
-  saveData: {fileID: 11400000, guid: a943842f6e42f2b4abb10095378035fc, type: 2}
+  saveData: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
   itemManager: {fileID: 1667849960}
-  data: {fileID: 11400000, guid: c725378c0f7d45c40ab3ddfd0273e263, type: 2}
+  m_saveManager: {fileID: 164305086}
   hotbars: 000000000100000002000000
 --- !u!4 &164305082
 Transform:
@@ -1012,6 +1013,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
   m_prefabImage: {fileID: 5823884530150696137, guid: 9a0961411245af146814803b7314ba11, type: 3}
   m_Parent: {fileID: 1054141423}
+--- !u!114 &164305086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164305080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbaeb2d7d767e641ab3b4e2b7114297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+  m_saveData: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
+  m_inventorySystem: {fileID: 164305081}
 --- !u!1001 &185186843
 PrefabInstance:
   m_ObjectHideFlags: 0
