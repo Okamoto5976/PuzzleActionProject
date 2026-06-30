@@ -17,5 +17,6 @@ public class ResultTEST : MonoBehaviour
             m_ScoreText.text = "Score: " + score.ToString();
         }
     }
+    //score
 }
 
