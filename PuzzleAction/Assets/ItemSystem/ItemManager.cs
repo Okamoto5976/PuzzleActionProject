@@ -5,9 +5,9 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
 
-    public List <Data> DropList=new();
+    public List <Item> DropList=new();
     public List<Item> ShopList = new();
-    public List<Data> ItemList = new();
+    public List<Item> ItemList = new();
     //プレイヤーが使えるアイテム
     public List<Data> PlayerItems = new();
     //敵専用アイテム
