@@ -4580,8 +4580,8 @@ GameObject:
   - component: {fileID: 1957982643}
   - component: {fileID: 1957982642}
   - component: {fileID: 1957982645}
-  - component: {fileID: 1957982646}
   - component: {fileID: 1957982647}
+  - component: {fileID: 1957982648}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4707,21 +4707,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &1957982646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957982641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84cb8c74604637041bd47be14e8cd966, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::T_Camera
-  m_target: {fileID: 0}
-  m_offset: {x: 0, y: 8, z: -8}
-  m_followSpeed: 0
 --- !u!114 &1957982647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4737,6 +4722,21 @@ MonoBehaviour:
   m_target: {fileID: 6101576487352509601, guid: c62fffd111f074a429d03a70e360e198, type: 3}
   m_offset: {x: 0, y: 8, z: -8}
   m_followSpeed: 0
+--- !u!114 &1957982648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957982641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f19899dfa754b944a8f5d0d131ad531, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Transparent
+  m_player: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
+  m_fadeSpeed: 5
+  m_createMap: {fileID: 1157772388}
 --- !u!1001 &2080925605
 PrefabInstance:
   m_ObjectHideFlags: 0
