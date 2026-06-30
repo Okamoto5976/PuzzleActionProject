@@ -12,6 +12,7 @@ public class PlayerController : Entity
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
 
+
     private bool m_isEvaing;
     private float m_evasionTimer;
 
@@ -57,7 +58,41 @@ public class PlayerController : Entity
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
-        // 移動方向に向く
+        //移動時の左右反転
+        
+        if(input.x>0.1f)
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+        else if(input.x<-0.1f)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        /*
+        移動時の左右奥手前反転
+        if(input.x>0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+        }
+        else if(input.x>-0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+
+        }
+        else if (input.y > 0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else if (input.y > -0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+        }
+        */
+
+        /*
+        移動方向に向く
         if (m_moveDir.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
@@ -66,6 +101,7 @@ public class PlayerController : Entity
                 targetRot,
                 Time.deltaTime * 10f);
         }
+        */
 
         // ダッシュ時間管理
         if (m_isEvaing)
