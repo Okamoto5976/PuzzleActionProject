@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
-public class NewMonoBehaviourScript : MonoBehaviour
+public class UI_System : MonoBehaviour
 {
 
     [SerializeField] private Image hpfill;
@@ -20,12 +20,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
         UpdateHP();
 
     }
-    public void TakeDamage(int damage)
-    {
-        if (damage <= 0) return;
+    //public void TakeDamage(int damage)
+    //{
+    //    if (damage <= 0) return;
 
-        currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
-    }
+    //    currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+    //}
     private void UpdateHP()
     {
         if (hpfill != null)
