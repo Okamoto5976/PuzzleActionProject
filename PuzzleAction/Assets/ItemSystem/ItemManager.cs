@@ -1,16 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ItemManager : MonoBehaviour
 {
-    public List<Item> EnemyDropList = new();
-    public List<Item> DropList = new();
+
+    public List <Data> DropList=new();
     public List<Item> ShopList = new();
+    public List<Data> ItemList = new();
+    //プレイヤーが使えるアイテム
+    public List<Data> PlayerItems = new();
+    //敵専用アイテム
+    public List<Data> EnemyItems = new();
     //private int nextId; //次のIDを管理する変数
     [SerializeField] private Middleman_Trap m_middleman_trap;
-    DropPool I_pool;
+    //DropPool I_pool;
     //リスト初期化
-    public List<Item> ItemList = new();
+    [Header("Debug")]
+    [SerializeField] private DropItem m_dropItem;
 
     //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
@@ -48,20 +55,18 @@ public class ItemManager : MonoBehaviour
         item.RecieveData(data);
     }
 
-    public void RandomDropItem(ItemRecieveData r_data , List<ItemData> Items)
+    
+
+    public void DropItemSetData(Vector3 pos)
     {
-        DropList =  EnemyDropList;
-        int dropIndex =Random.Range(0, DropList.Count);
-        ItemData SelectidItem = Items[dropIndex];
-        int Pickupid = SelectidItem.ItemID;
-        I_pool.ItemDrop(Pickupid, r_data);
-        //return DropList[dropIndex];
-        Debug.Log($"{SelectidItem.ItemName}をドロップしました。");
-        DropList.Clear();
+        //get object"DropItem" from pool        
+        //set itemData in DropItem
+        int index = Random.Range(0, PlayerItems.Count);
+        Data data = PlayerItems[index];
+        m_dropItem.Initialize(data);
+        //set pos DropItem Position
+        m_dropItem.gameObject.transform.position = pos;
     }
-
-  
-
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
@@ -77,7 +82,5 @@ public class ItemManager : MonoBehaviour
         int ShopIndex= Random.Range(0, ShopList.Count);
         return ShopList[ShopIndex];
     }
-
-
 
 }
