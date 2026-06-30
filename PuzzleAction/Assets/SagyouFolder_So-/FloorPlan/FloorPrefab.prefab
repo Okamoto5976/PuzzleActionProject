@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8316418691464772739}
   - component: {fileID: 7309672523023657605}
   - component: {fileID: 5159004520765613872}
+  - component: {fileID: -3969209808602014884}
   m_Layer: 0
   m_Name: FloorPrefab
   m_TagString: Untagged
@@ -112,3 +113,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.0000002, z: 6.123235e-17}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-3969209808602014884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026624835377288137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab590cc529a4694ab678092fa2626fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloorMat
+  m_textures:
+  - {fileID: 2800000, guid: f8b4d8dbdf758e5438f991c67a6f5980, type: 3}
+  - {fileID: 2800000, guid: ecde9c3e3848d764ebdff3165ee1b9d0, type: 3}
+  - {fileID: 2800000, guid: 207cf381ef28d6640bb558aca8c4b1cf, type: 3}
+  - {fileID: 2800000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
+  - {fileID: 2800000, guid: 32c9703d0f6a1184797fd5fc0bfd2523, type: 3}
