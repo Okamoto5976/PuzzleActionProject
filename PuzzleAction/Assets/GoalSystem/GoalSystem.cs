@@ -4,26 +4,17 @@ using UnityEngine;
 public class GoalSystem : MonoBehaviour
 {
     //[SerializeField] private GameManager gameManager;
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform m_player;
     [Header("State")]
-    [SerializeField] private bool keyDoor;
-    [SerializeField] private bool hasKey;//å„ÅXRuntimeDatabool
-    [SerializeField] private float goalRadius;
-
-    //Player position runtime
-    private void Update()
-    {
-        if(HitGoal(transform.position, player.position))
-        {
-            OnGoal();
-        }
-    }
+    [SerializeField] private bool m_keyDoor;
+    [SerializeField] private bool m_hasKey;//å„ÅXRuntimeDatabool
+    [SerializeField] private float m_goalRadius;
 
     public void OnGoal()
     {
-        if (keyDoor)
+        if (m_keyDoor)
         {
-            if (!hasKey)
+            if (!m_hasKey)
             {
                 Debug.Log("Can't goal");
                 return;
@@ -35,22 +26,12 @@ public class GoalSystem : MonoBehaviour
         }
 
         Debug.Log("Goal");
-        this.enabled = false;
+        //this.enabled = false;
         //gameManager.Clear();
     }
 
     public void SetValue(bool value)
     {
-        keyDoor = value;
-    }
-
-    private bool HitGoal(Vector2 goalPos, Vector2 playerPos)
-    {
-        float distance = Vector2.Distance(goalPos, playerPos);
-        if (distance < goalRadius)
-        {
-            return true;
-        }
-        return false;
+        m_keyDoor = value;
     }
 }
