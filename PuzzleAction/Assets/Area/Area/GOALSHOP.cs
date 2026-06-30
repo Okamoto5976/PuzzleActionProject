@@ -9,13 +9,14 @@ using UnityEngine.InputSystem;
 public class GOALSHOP : MonoBehaviour
 {
     [SerializeField] private AreaType m_type;
+    [SerializeField] private float m_InteractDistance = 3.0f;//PlayerŒŸ’m”ÍˆÍ
+    private Transform m_playerTransform;
 
+    [Header("Shop")]
     [SerializeField] private InstanceCounter _shopInstanceCounter;
     private int _shopId;
 
 
-    private Transform m_playerTransform;
-    [SerializeField] private float m_InteractDistance = 3.0f;//PlayerŒŸ’m”ÍˆÍ
     [SerializeField] private IntEventSO m_showShopId;
     [SerializeField] private BoolEventSO m_showShopUI;
 
