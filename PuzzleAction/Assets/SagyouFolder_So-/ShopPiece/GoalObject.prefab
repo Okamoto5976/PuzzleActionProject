@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5138214788266927095}
   - component: {fileID: 9152211452362989901}
+  - component: {fileID: -2008794933750629119}
   m_Layer: 0
   m_Name: GoalObject
   m_TagString: Untagged
@@ -51,6 +52,22 @@ MonoBehaviour:
   m_showShopId: {fileID: 0}
   m_showShopUI: {fileID: 0}
   m_areaObject: []
+  m_goalSystem: {fileID: -2008794933750629119}
+--- !u!114 &-2008794933750629119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8961092045085098247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9767ca76c47deac45b579c1e269505f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoalSystem
+  m_gameManager: {fileID: 8423059627622995165, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
+  m_keyDoor: 0
+  m_hasKey: 0
 --- !u!1 &9007098225965162734
 GameObject:
   m_ObjectHideFlags: 0

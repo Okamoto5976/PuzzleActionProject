@@ -1,14 +1,15 @@
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class GoalSystem : MonoBehaviour
 {
-    //[SerializeField] private GameManager gameManager;
-    [SerializeField] private Transform m_player;
+    [SerializeField] private GameManager m_gameManager;
+    //[SerializeField] private Vector3Asset m_playerPos;
     [Header("State")]
     [SerializeField] private bool m_keyDoor;
     [SerializeField] private bool m_hasKey;//å„ÅXRuntimeDatabool
-    [SerializeField] private float m_goalRadius;
+    //[SerializeField] private float m_goalRadius;
+
+    private bool m_isClear = false;
 
     public void OnGoal()
     {
@@ -25,9 +26,12 @@ public class GoalSystem : MonoBehaviour
             }
         }
 
-        Debug.Log("Goal");
         //this.enabled = false;
-        //gameManager.Clear();
+        if (m_isClear) return;
+        Debug.Log("Goal");
+
+        m_isClear = true;
+        m_gameManager.GameClear();
     }
 
     public void SetValue(bool value)

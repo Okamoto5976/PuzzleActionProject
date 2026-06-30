@@ -22,10 +22,17 @@ public class GOALSHOP : MonoBehaviour
 
     [SerializeField] private GameObject[] m_areaObject;
 
+    [Header("Goal")]
+    [SerializeField] private GoalSystem m_goalSystem;
+
     private bool m_active = false;
     private void Awake()
     {
-        _shopId = _shopInstanceCounter.Register();
+        if(m_type == AreaType.Shop)
+        {
+            _shopId = _shopInstanceCounter.Register();
+
+        }
     }
 
 
@@ -87,6 +94,7 @@ public class GOALSHOP : MonoBehaviour
             case AreaType.Goal:
                 Debug.Log("ゴールおめ");
                 //AreaTypeがGoalだった時の処理追加（Goalの起動）
+                m_goalSystem.OnGoal();
                 //gameManager GoalUI true
                 break;
         }

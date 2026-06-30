@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -21,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BoolEventSO m_optionUIEvent;
     [SerializeField] private BoolEventSO m_inventoryUIEvent;
     [SerializeField] private BoolEventSO m_shopUIEvent;
+
+    [SerializeField] private EventSO m_gameOverEvent;
+    [SerializeField] private EventSO m_gameClearEvent;
 
     private bool m_isGameOver = false;
     
@@ -61,9 +63,9 @@ public class GameManager : MonoBehaviour
 
     public void GameClear()
     {
-        if(!m_isGameOver) return;
+        if(m_isGameOver) return;
 
-        m_isGameOver = true;
+        //m_isGameOver = true;
 
         //クリア階層記録　
         m_clearCount.Add(1);
@@ -71,6 +73,10 @@ public class GameManager : MonoBehaviour
 
         //リザルト表示、関数を呼ぶ
         m_gameClearUIEvent.Raise(true);
+
+        //for example
+        //player do not move, state change, save, result
+        m_gameClearEvent.Raise();
     }
 
     //ゲームオーバー
