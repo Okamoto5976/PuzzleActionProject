@@ -1346,8 +1346,8 @@ MonoBehaviour:
   m_floorPrefab: {fileID: 8026624835377288137, guid: 6d36cf678cfb86442b0fc2f465d21d46, type: 3}
   m_wallPrefab: {fileID: 3648684842657275054, guid: 3462c65f45e5c5746b23c17027318b13, type: 3}
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
-  m_floorScale: {x: 5, y: 1, z: 5}
-  m_wallScale: {x: 5, y: 1, z: 1}
+  m_floorScale: {x: 10, y: 1, z: 10}
+  m_wallScale: {x: 10, y: 1, z: 1}
   m_treasurePrefab: {fileID: 9146456669176997747, guid: e0ad02a83d3aeee4a8ad85de958324a4, type: 3}
   m_treasureCount: 3
   m_mimicRate: 0.2

@@ -126,8 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorMat
   m_textures:
-  - {fileID: 2800000, guid: f8b4d8dbdf758e5438f991c67a6f5980, type: 3}
-  - {fileID: 2800000, guid: ecde9c3e3848d764ebdff3165ee1b9d0, type: 3}
-  - {fileID: 2800000, guid: 207cf381ef28d6640bb558aca8c4b1cf, type: 3}
-  - {fileID: 2800000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
-  - {fileID: 2800000, guid: 32c9703d0f6a1184797fd5fc0bfd2523, type: 3}
+  - {fileID: 2800000, guid: c98ad3dd1c528a24183317e400aeb779, type: 3}
+  - {fileID: 2800000, guid: de1cd4a7066fc0e4cb010a89e5c39d8d, type: 3}
