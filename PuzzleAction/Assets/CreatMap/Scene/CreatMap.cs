@@ -16,6 +16,8 @@ public class CreatMap : MonoBehaviour
     private List<GameObject> m_wallObjectsWest = new();
 
     [SerializeField] private MapClassData m_mapClassData;
+    [Header("Ref")]
+    [SerializeField] private ObjectConsolidation m_ocl;
 
     [Header("Scale Setthings")]
     [SerializeField] private Vector3 m_floorScale = Vector3.one;
