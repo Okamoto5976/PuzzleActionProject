@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8845973713216219996}
   - component: {fileID: 8423059627622995165}
+  - component: {fileID: 8379971941369495119}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -54,3 +55,20 @@ MonoBehaviour:
   m_optionUIEvent: {fileID: 11400000, guid: 3f9c06e01c5d4764795d24fa6e5c7271, type: 2}
   m_inventoryUIEvent: {fileID: 11400000, guid: 1aaa309a75dd3474694da85d72dcca78, type: 2}
   m_shopUIEvent: {fileID: 11400000, guid: 92e3bcd4ccde4a44bb97d6a2e05a062b, type: 2}
+  m_gameOverEvent: {fileID: 0}
+  m_gameClearEvent: {fileID: 0}
+  m_sceneEvent: {fileID: 11400000, guid: f36914501f8c0794181e6831ceed798d, type: 2}
+  m_mapPhaseScene: {fileID: 102900000, guid: d9dfefe8103b83a4180539406b87f87e, type: 3}
+--- !u!114 &8379971941369495119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4632534447666530108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98203cce991ac53449b3b5f857b0d2a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneMover
+  m_sceneEventScript: {fileID: 11400000, guid: f36914501f8c0794181e6831ceed798d, type: 2}

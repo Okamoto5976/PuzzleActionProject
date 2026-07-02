@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EventSO m_gameOverEvent;
     [SerializeField] private EventSO m_gameClearEvent;
 
+
+    [SerializeField] private SceneEventScript m_sceneEvent;
+
+    [SerializeField] private SceneAsset m_mapPhaseScene;
+
     private bool m_isGameOver = false;
     
     void Start()
@@ -72,10 +77,17 @@ public class GameManager : MonoBehaviour
         Debug.Log($"クリア回数：{m_clearCount.Value}");
 
         //リザルト表示、関数を呼ぶ
-        m_gameClearUIEvent.Raise(true);
+        if(m_clearCount.Value % 5 == 0)
+        {
+            m_gameClearUIEvent.Raise(true);
+
+        }
+
+        m_sceneEvent.TriggerEvent(m_mapPhaseScene);
 
         //for example
         //player do not move, state change, save, result
+        if(m_gameClearEvent == null) return;
         m_gameClearEvent.Raise();
     }
 
