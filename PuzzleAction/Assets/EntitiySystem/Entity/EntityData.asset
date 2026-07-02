@@ -16,8 +16,8 @@ MonoBehaviour:
   m_str: 0
   m_knockBack: 0
   m_def: 0
-  m_speed: 5
-  m_dashSpeed: 20
+  m_speed: 10
+  m_dashSpeed: 30
   m_criticalRate: 0
   m_criticalDamage: 0
   m_dex: 0

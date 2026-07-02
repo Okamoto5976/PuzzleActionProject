@@ -101,6 +101,8 @@ public class MapPlaceSystem : MonoBehaviour
     //[SerializeField] private EventBusAsset 
     [SerializeField] private List<InstanceCounter> m_instanceCounterList;
 
+    [SerializeField] private ClearCount m_clearCount;
+
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();

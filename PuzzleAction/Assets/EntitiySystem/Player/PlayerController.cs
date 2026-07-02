@@ -80,11 +80,11 @@ public class PlayerController : Entity
         
         if(input.x>0.1f)
         {
-            transform.localScale = new Vector3(1,1,1);
+            transform.localScale = new Vector3(2,2,2);
         }
         else if(input.x<-0.1f)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-2, 2, 2);
         }
 
         /*
