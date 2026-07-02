@@ -25,6 +25,7 @@ public class Gas_Trap : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        if (!enabled) return;
         // タイマーのタイミングがちょうど来たらダメージを計算する
         if (m_Timer >= m_DamageInterval)
         {
@@ -47,6 +48,7 @@ public class Gas_Trap : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!enabled) return;
         BoxCollider box=GetComponent<BoxCollider>();
         if (box != null) 
         {

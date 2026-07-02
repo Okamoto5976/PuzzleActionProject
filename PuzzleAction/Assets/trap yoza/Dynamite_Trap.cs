@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
+
 
 public class Dynamite_Trap : MonoBehaviour
 {
+
     private Vector3 m_Center;
     private float m_Radius;
     private int m_DamageAmount;
@@ -15,6 +16,7 @@ public class Dynamite_Trap : MonoBehaviour
     ///<summary>
     ///アイテム側から呼ぶ初期化
     /// </summary>
+    
     public void Init(Vector3 pos, float radius, float power)
     {
         m_Center = pos;
@@ -39,6 +41,7 @@ public class Dynamite_Trap : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
+        if(!enabled) return;
         //すでに起爆なら何もしない
         if (m_IsTriggered) return;
         karitesuto target=other.GetComponent<karitesuto>();
@@ -88,6 +91,7 @@ public class Dynamite_Trap : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!enabled) return;
         Gizmos.color = m_IsTriggered?Color.yellow:Color.red;
 
         float visualRadius = m_Radius>0f?m_Radius:5f;

@@ -16,12 +16,14 @@ public class Swamp_Trap : MonoBehaviour
     /// </summary>
     public void Init(Vector3 pos,float radius,float slowMultiplier)
     {
+
         m_Slow = slowMultiplier;
         transform.position = pos;
     }
     
     private void OnTriggerEnter(Collider other)
     {
+        if (!enabled) return;
         karitesuto target = other.GetComponent<karitesuto>();
         if (target != null && target.m_MyTeam != TrapTeam.Nature)
         {
@@ -59,6 +61,7 @@ public class Swamp_Trap : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
+        if (!enabled) return;
         BoxCollider box = GetComponent<BoxCollider>();
         if (box != null)
         {
