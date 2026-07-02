@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public enum Type
+{
+    PlayerItem,
+    EnemyItem
+}
 
 [System.Serializable]
 public class ItemData
@@ -13,7 +18,7 @@ public class ItemData
     [SerializeField] private int itemGrade;         //Rarity
     [SerializeField] private ItemType itemType;
     [SerializeField, Min(0)] private int price;
-
+    [SerializeField] private Type Type;
 
     public int ItemID { get => itemID; }
     public string ItemName { get => itemName; }
@@ -26,6 +31,7 @@ public class ItemData
     public int Price => price;
     public bool IsShopCompatible => price > 0;
 
+    public Type type { get => Type; }
 }
 
 
