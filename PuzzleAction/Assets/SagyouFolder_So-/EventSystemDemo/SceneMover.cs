@@ -16,8 +16,8 @@ public class SceneMover : MonoBehaviour
         m_sceneEventScript.OnSceneEvent -= MoveSceneTo;
     }
 
-    public void MoveSceneTo(SceneAsset sceneAsset)
+    public void MoveSceneTo(StaticSceneAsset sceneAsset)
     {
-        Debug.Log($"SCENEMOVER >> moving to {sceneAsset.SceneName}");
+        Debug.Log($"SCENEMOVER >> moving to {sceneAsset.Value}");
     }
 }

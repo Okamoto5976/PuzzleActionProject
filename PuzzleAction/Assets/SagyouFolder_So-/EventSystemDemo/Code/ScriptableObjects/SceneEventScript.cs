@@ -4,9 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SceneEventScript", menuName = "Scriptable Objects/SceneEventScript")]
 public class SceneEventScript : ScriptableObject
 {
-    public event Action<SceneAsset> OnSceneEvent;
+    public event Action<StaticSceneAsset> OnSceneEvent;
 
-    public void TriggerEvent(SceneAsset sceneAsset)
+    public void TriggerEvent(StaticSceneAsset sceneAsset)
     {
         OnSceneEvent?.Invoke(sceneAsset);
     }

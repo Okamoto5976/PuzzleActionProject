@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private SceneEventScript m_sceneEvent;
 
-    [SerializeField] private SceneAsset m_mapPhaseScene;
+    [SerializeField] private StaticSceneAsset m_mapPhaseScene;
 
     private bool m_isGameOver = false;
     
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
         //for example
         //player do not move, state change, save, result
-        if(m_gameClearEvent == null) return;
+        if (m_gameClearEvent == null) return;
         m_gameClearEvent.Raise();
     }
 

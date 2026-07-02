@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d04c87550528cc40950fa490d7aae9f, type: 3}
-  m_Name: TitleScene
+  m_Name: MapSelectionPhase
   m_EditorClassIdentifier: Assembly-CSharp::SceneAsset
-  value: Start
-  sceneAsset: {fileID: 102900000, guid: 15865350bb1dfe24fae48f565a524da2, type: 3}
+  value: MapSelectionPhase
+  sceneAsset: {fileID: 102900000, guid: d9dfefe8103b83a4180539406b87f87e, type: 3}
