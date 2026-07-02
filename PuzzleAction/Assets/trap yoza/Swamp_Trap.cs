@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swamp_Trap : Entity
+public class Swamp_Trap : MonoBehaviour
 {
     private Vector3 m_Center;
     private float m_Radius;
@@ -9,21 +9,23 @@ public class Swamp_Trap : Entity
 
    
     // 現在沼の中で減速しているオブジェクト記録
-    private List<Entity> m_SlowedTargets = new List<Entity>();
+    private List<karitesuto> m_SlowedTargets = new List<karitesuto>();
 
     ///<summary>
     ///アイテム側から呼ぶ初期化
     /// </summary>
     public void Init(Vector3 pos,float radius,float slowMultiplier)
     {
+
         m_Slow = slowMultiplier;
         transform.position = pos;
     }
     
     private void OnTriggerEnter(Collider other)
     {
-        Entity target = other.GetComponent<Entity>();
-        if (target != null && target.Team ==TeamType.Nature)
+        if (!enabled) return;
+        karitesuto target = other.GetComponent<karitesuto>();
+        if (target != null && target.m_MyTeam != TrapTeam.Nature)
         {
             if (!m_SlowedTargets.Contains(target))
             {
@@ -36,7 +38,7 @@ public class Swamp_Trap : Entity
    
     private void OnTriggerExit(Collider other)
     {
-        Entity target = other.GetComponent<Entity>();
+        karitesuto target = other.GetComponent<karitesuto>();
         if (target != null && m_SlowedTargets.Contains(target))
         {
             Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が四角い沼から出た！速度を戻します");
@@ -49,15 +51,17 @@ public class Swamp_Trap : Entity
         // 罠が途中で消えるときに、減速していた敵の速度をちゃんと安全に戻してあげる処理
         foreach (var target in m_SlowedTargets)
         {
-            if (target == null)
+            if (target != null)
             {
-                return;
                 // 速度を戻す処理
             }
         }
+        m_SlowedTargets.Clear();
+        gameObject.SetActive(false);
     }
     private void OnDrawGizmosSelected()
     {
+        if (!enabled) return;
         BoxCollider box = GetComponent<BoxCollider>();
         if (box != null)
         {

@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class Dynamite_Trap : Entity
+
+public class Dynamite_Trap : MonoBehaviour
 {
+
     private Vector3 m_Center;
     private float m_Radius;
     private int m_DamageAmount;
@@ -12,11 +13,10 @@ public class Dynamite_Trap : Entity
     private float m_Timer = 0f;
     private bool m_IsTriggered = false;//起爆スイッチが入ったか
 
-    private Entity m_dinamite;
-
     ///<summary>
     ///アイテム側から呼ぶ初期化
     /// </summary>
+    
     public void Init(Vector3 pos, float radius, float power)
     {
         m_Center = pos;
@@ -25,10 +25,8 @@ public class Dynamite_Trap : Entity
 
         transform.position = pos;
     }
-    protected override void Update()
+    void Update()
     {
-        base.Update();
-
         if (m_IsTriggered)
         {
             m_Timer += Time.deltaTime;
@@ -43,19 +41,18 @@ public class Dynamite_Trap : Entity
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
+        if(!enabled) return;
         //すでに起爆なら何もしない
         if (m_IsTriggered) return;
-        Entity target = other.GetComponent<Entity>();
-        if (target == null)
+        karitesuto target=other.GetComponent<karitesuto>();
+        if (target != null)
         {
-            return;
+            if(target.m_MyTeam!=TrapTeam.Nature)
+            {
+                Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name}({target.m_MyTeam})がダイナマイトに触れた！");
+                TriggerExplosion();
+            }
         }
-        if (target.Team == TeamType.Nature)
-        {
-            return;
-            //Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name}({target.m_MyTeam})がダイナマイトに触れた！");
-        }
-        TriggerExplosion();
     }
     /// <summary>
     /// 起爆スイッチ　ポチー
@@ -71,38 +68,34 @@ public class Dynamite_Trap : Entity
     /// 爆発処理
     /// </summary>
     private void Explosion()
-   {
+    {
         Debug.Log("[DYNAMITE]💥ドォーーーン！！！爆破！");
 
-        // シーン内のすべてのターゲット検索
-        Entity[] allTargets = Object.FindObjectsByType<Entity>(FindObjectsSortMode.None);
-        foreach (var target in allTargets)
+        //シーン内のすべてのターゲット検索
+        karitesuto[] allTargets = Object.FindObjectsByType<karitesuto>(FindObjectsSortMode.None);
+        foreach (var traget in allTargets)
         {
-            if (target == null || target == this) continue; // 自分自身（ダイナマイト）は除外
-
-            float distance = Vector3.Distance(m_Center, target.transform.position);
+            if (traget == null) continue;
+            float distance = Vector3.Distance(m_Center, traget.transform.position);
 
             if (distance <= m_Radius)
             {
-                // 自分と同じチームにはダメージを与えない（フレンドリーファイアなしの場合）
-                if (target.Team == this.Team) continue;
-
-                // 敵チームにダメージを与える
-                //target.TakeDamage(m_DamageAmount);
-                Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name} に {m_DamageAmount} の爆発ダメージ！");
+                if (traget.m_MyTeam != TrapTeam.Nature)
+                {
+                    Debug.Log($"[DYNAMITE]→{traget.gameObject.name}({traget.m_MyTeam})に{m_DamageAmount}の爆発ダメージ!");
+                }
             }
         }
-
-        // 自分自身を消去
         Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = m_IsTriggered ? Color.yellow : Color.red;
+        if (!enabled) return;
+        Gizmos.color = m_IsTriggered?Color.yellow:Color.red;
 
-        float visualRadius = m_Radius > 0f ? m_Radius : 5f;
-        Gizmos.DrawWireSphere(transform.position, visualRadius);
+        float visualRadius = m_Radius>0f?m_Radius:5f;
+        Gizmos.DrawWireSphere(transform.position,visualRadius);
     }
 
     //private void OnDrawGizmos()

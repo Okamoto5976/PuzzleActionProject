@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Gas_Trap : Entity
+public class Gas_Trap : MonoBehaviour
 {
     private Vector3 m_Center;
     private float m_Radius;
@@ -17,35 +17,38 @@ public class Gas_Trap : Entity
     {
         m_DamageAmount = damage;
         transform.position = pos;
+        m_Timer = 0f;
     }
-    protected override void Update()
+    void Update()
     {
-        base.Update();
         m_Timer += Time.deltaTime;
     }
     private void OnTriggerStay(Collider other)
     {
+        if (!enabled) return;
         // タイマーのタイミングがちょうど来たらダメージを計算する
         if (m_Timer >= m_DamageInterval)
         {
-            Entity target = other.GetComponent<Entity>();
-            if (target != null)
+            karitesuto target = other.GetComponent<karitesuto>();
+            if (target != null && target.m_MyTeam != TrapTeam.Nature)
             {
-                // Nature（自然・中立）チーム以外ならダメージ！
-                if (target.Team ==TeamType.Nature)
-                {
-                    m_Timer = 0;
-                    Debug.Log($"[GAS_BOX] {target.gameObject.name} ({target.Team}) に四角いエリア内で {m_DamageAmount} ダメージ！");
+                m_Timer = 0;
+                Debug.Log($"[GAS_BOX] {target.gameObject.name} ({target.m_MyTeam}) に四角いエリア内で {m_DamageAmount} ダメージ！");
 
-                    // target.GetComponent<HPスクリプト>().ReduceHP(m_DamageAmount);
-                }
+                // target.GetComponent<HPスクリプト>().ReduceHP(m_DamageAmount);
+
             }
         }
     }
-
+    public void ReleaseToPool()
+    {
+        m_Timer = 0f;
+        gameObject.SetActive(false);
+    }
 
     private void OnDrawGizmosSelected()
     {
+        if (!enabled) return;
         BoxCollider box=GetComponent<BoxCollider>();
         if (box != null) 
         {

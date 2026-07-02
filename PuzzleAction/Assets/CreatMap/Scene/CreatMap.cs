@@ -16,6 +16,9 @@ public class CreatMap : MonoBehaviour
     private List<GameObject> m_wallObjectsWest = new();
 
     [SerializeField] private MapClassData m_mapClassData;
+    [Header("Ref")]
+    [SerializeField] private ObjectConsolidation m_ocl;
+    [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     [Header("Scale Setthings")]
     [SerializeField] private Vector3 m_floorScale = Vector3.one;
@@ -35,7 +38,6 @@ public class CreatMap : MonoBehaviour
     private GameObject m_playerController;
 
     [SerializeField] private DebugMapPlaceSystem m_debugMapPlaceSystem;
-
 
     //--------------External API---------------
     public List<GameObject> SouthWall => m_wallObjectsSouth;
@@ -273,7 +275,7 @@ public class CreatMap : MonoBehaviour
     /// AreaType èàóùñ{ëÃ
     /// </summary>
     /// 
-    [SerializeField] private Poolinstallationpulling m_enemySpawner;
+    
 
     private void ProcessAreaTypes()
     {
@@ -339,6 +341,13 @@ public class CreatMap : MonoBehaviour
 
                 case AreaType.Damage:
 
+                    Enum_TrapType trapType = GetRandomAreaTrap();
+                    foreach(var gridPos in room.m_roomSizes)
+                    {
+                        Vector3 worldPos = GridToWorld(gridPos);
+                        Vector2 size = new Vector2(m_floorScale.x, m_floorScale.y);
+                        m_ocl.DeployTrap(worldPos, trapType, size);
+                    }
                     break;
             }
         }
@@ -411,7 +420,19 @@ public class CreatMap : MonoBehaviour
         }
     }
 
+    //readonly
+    private readonly Enum_TrapType[] m_areaTrapType =
+    {
+        Enum_TrapType.Gas,
+        Enum_TrapType.Swamp,
+        Enum_TrapType.Dynamite,
+    };
 
+    private Enum_TrapType GetRandomAreaTrap()
+    {
+        int index = Random.Range(0, m_areaTrapType.Length);
+        return m_areaTrapType[index];
+    }
     /// <summary>
     /// random obtain the pos in the room
     /// </summary>

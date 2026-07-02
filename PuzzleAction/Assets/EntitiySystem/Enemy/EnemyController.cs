@@ -222,19 +222,19 @@ public class EnemyController : Entity
         //{
         //    Attack = (int)STR,
         //    HitRate = 100f,
-        //    CriticalRate=CriticalRate,
-        //    CriticalDamage=CriticalDamage,
-        //    BreakRate=BreakRate,
-        //    Knockback=KnockBack,
-        //    Stun=Stun,
-        //    AttackDir=transform.forward,
-        //    Attacker=this,
-        //    AttackerSE=AttackSE,
-        //    AudioSource=AudioSource,
+        //    CriticalRate = CriticalRate,
+        //    CriticalDamage = CriticalDamage,
+        //    BreakRate = BreakRate,
+        //    Knockback = KnockBack,
+        //    Stun = Stun,
+        //    AttackDir = transform.forward,
+        //    Attacker = this,
+        //    AttackerSE = AttackSE,
+        //    AudioSource = AudioSource,
         //};
 
-        //m_hitCollider.AttackCollider(damage,Team,m_attackHitBox);
-        //Debug.Log("HIT");
+        //m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        Debug.Log("HIT");
     }
 }
 
