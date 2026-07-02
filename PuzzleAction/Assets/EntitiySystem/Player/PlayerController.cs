@@ -1,8 +1,21 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerController : Entity
 {
+    public enum Passive
+    {
+        PriceDown,
+        
+    }
+
+    public class PassiveModifier
+    {
+        public Passive m_passive;
+    }
+
     [Header("InputSystem")]
     [SerializeField] private InputActionReference m_moveAction;
     [SerializeField] private InputActionReference m_evasionAction;
@@ -12,9 +25,14 @@ public class PlayerController : Entity
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
 
+    private List<PassiveModifier> m_modifiers = new();
 
     private bool m_isEvaing;
     private float m_evasionTimer;
+
+    //---------passive bool---------------
+
+    //private bool 
 
     protected override void Awake()
     {

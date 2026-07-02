@@ -9,7 +9,7 @@ public enum ModifierType
 public class StatusModifier
 {
     public StatusType m_statType;
-
+    
     public float m_value;
     public ModifierType m_modType;
 

@@ -147,6 +147,9 @@ abstract public class Entity : MonoBehaviour
         if (m_isStun) return;
         if (m_canMove) return;
         
+        //Entitystateがdead時に動けなく
+        if(m_currentState==EntityState.Dead) return;   
+
         OnMove(m_moveDir);
 
     }
