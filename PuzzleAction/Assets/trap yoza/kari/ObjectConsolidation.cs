@@ -4,10 +4,6 @@ using UnityEngine;
 public class ObjectConsolidation : MonoBehaviour
 {
     public Middleman_Trap m_middleman_Trap;
-    [Header("四角い部屋の敷き詰め設定")]
-    [Tooltip("部屋の横幅(x)と置く幅(z)のサイズ")]
-    [SerializeField] public Vector2 m_RoomSize = new Vector2(0f, 0f);
-    [SerializeField]private Enum_TrapType m_testTraptype= Enum_TrapType.Gas;
     /// <summary>
     /// 座標と配置したい罠の列挙型を受け取って、プールからセットアップします。
     /// 複数配置 関数をループ等で複数回呼び出し

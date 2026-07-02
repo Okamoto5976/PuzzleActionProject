@@ -18,11 +18,8 @@ public class Poolinstallationpulling : MonoBehaviour
     /// </summary>
     public void SpawnEnemiesAtPositions(List<Vector3> spawnPositions)
     {
-        if (m_pool == null)
-        {
-            Debug.LogWarning("Poolinstallationpullingê›íËÇ≥ÇÍÇƒÇ»Ç¢");
-            return;
-        }
+        if (m_pool == null) return;
+
         foreach (Vector3 pos in spawnPositions)
         {
             //random selection
