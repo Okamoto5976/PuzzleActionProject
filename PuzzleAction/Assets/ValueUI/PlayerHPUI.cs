@@ -6,7 +6,7 @@ public class PlayerHPUI : MonoBehaviour
 {
     [Header("Reference")]
     //å„Ç≈ê›íËÇ∑ÇÈ
-    [SerializeField] private PlayerHP m_playerHP; 
+    private EntityHP m_playerHP; 
 
     [Header("PlayerHP UI")]
    // [SerializeField] private Slider m_HPSlider;
@@ -17,6 +17,11 @@ public class PlayerHPUI : MonoBehaviour
     [Header("Slider Speed")]
     [SerializeField] private float m_BackSpeed = 0.5f;
 
+    private void Awake()
+    {
+        m_playerHP = FindAnyObjectByType<EntityHP>();
+    }
+
     private void Update()
     { 
         if (m_playerHP == null)
@@ -26,6 +31,8 @@ public class PlayerHPUI : MonoBehaviour
         int currentHP = m_playerHP.CurrentHP;
 
         float hoRate = (float)currentHP / maxHP;
+
+        Debug.Log(hoRate);
 
         if(m_FrontHPImage != null)
         {

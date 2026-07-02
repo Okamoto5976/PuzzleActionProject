@@ -6,7 +6,7 @@ abstract public class EntityHP : MonoBehaviour
 
     private AudioSource m_audioSource;
 
-    private int m_currentHP;
+    [SerializeField] private int m_currentHP;
     public int CurrentHP { get => m_currentHP;}
 
     //’Ç‰Á‚µ‚½•”•ª

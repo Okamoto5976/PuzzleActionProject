@@ -30,7 +30,7 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
-    [SerializeField] private GameObject m_player;
+    [SerializeField] private Transform m_player;
     [SerializeField] private T_Camera m_camera;
     private GameObject m_playerController;
 
@@ -461,8 +461,9 @@ public class CreatMap : MonoBehaviour
     {
         Vector3 spawnPos = GridToWorld(GetStartPos());
         spawnPos.y = 0.5f;
+        m_player.transform.position = spawnPos;
 
-        m_playerController = Instantiate(m_player, spawnPos, Quaternion.identity);
+        m_playerController = m_player.gameObject;
         m_playerController.name = "Player";
 
         if (m_camera != null)

@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        m_sceneEvent.TriggerEvent(m_mapPhaseScene);
+        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
 
         //for example
         //player do not move, state change, save, result
