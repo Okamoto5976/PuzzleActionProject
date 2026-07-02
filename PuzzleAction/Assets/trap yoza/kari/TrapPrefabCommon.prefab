@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4256992636955795086}
   - component: {fileID: 4647375063158796096}
   - component: {fileID: 2253621262538542288}
+  - component: {fileID: 8979340953182465924}
   m_Layer: 0
   m_Name: TrapPrefabCommon
   m_TagString: Untagged
@@ -93,3 +94,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dynamite_Trap
   m_ExplosionDelay: 3
+--- !u!114 &8979340953182465924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440963077577206919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bd4f8f382aa94418ea8f13a51c1649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectConsolidation
+  m_middleman_Trap: {fileID: 0}
