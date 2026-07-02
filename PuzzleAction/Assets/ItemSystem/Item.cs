@@ -15,8 +15,10 @@ abstract public class Item : ScriptableObject
 {
     public enum ItemEffectType
     {
+        Heal,
         Trap,
-        Buff
+        Buff,
+        Other
     }
 
     [SerializeField] private float m_value;

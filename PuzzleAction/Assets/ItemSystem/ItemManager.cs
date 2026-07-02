@@ -17,7 +17,8 @@ public class ItemManager : MonoBehaviour
     //DropPool I_pool;
     //リスト初期化
     [Header("Debug")]
-    [SerializeField] private DropItem m_dropItem;
+    [SerializeField]private DropItem m_dropItem;
+    [SerializeField] private List<DropItem> DropItems = new();
 
     //Listの中からIDと同じアイテムを探す
     private Item LookForID(int id)
@@ -55,17 +56,22 @@ public class ItemManager : MonoBehaviour
         item.RecieveData(data);
     }
 
-    
+
 
     public void DropItemSetData(Vector3 pos)
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
+
         int index = Random.Range(0, PlayerItems.Count);
         Data data = PlayerItems[index];
+        //int dropIndex = Random.Range(0, DropItems.Count);
+        //DropItem m_dropItem = DropItems[dropIndex];
         m_dropItem.Initialize(data);
         //set pos DropItem Position
         m_dropItem.gameObject.transform.position = pos;
+
+
     }
 
     //ランダムにアイテムを渡す
@@ -82,5 +88,11 @@ public class ItemManager : MonoBehaviour
         int ShopIndex= Random.Range(0, ShopList.Count);
         return ShopList[ShopIndex];
     }
-
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            DropItemSetData(new Vector3(0, 1, 0));
+        }
+    }
 }
