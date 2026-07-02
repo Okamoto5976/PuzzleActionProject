@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Net;
 
 public class ResultManager : MonoBehaviour
 {
@@ -10,15 +9,15 @@ public class ResultManager : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI textMeshPro;
         [SerializeField] private string text;
-        [SerializeField] private bool animationEnabled;
+        [SerializeField] private bool isAnimation;
 
         public readonly TextMeshProUGUI TextMeshPro => textMeshPro;
         public readonly string Text => text;
-        public readonly bool AnimationEnabled => animationEnabled;
+        public readonly bool IsAnimation => isAnimation;
 
         public void SetAnimEnabled(bool value)
         {
-            animationEnabled = value;
+            isAnimation = value;
         }
     }
 
@@ -60,7 +59,7 @@ public class ResultManager : MonoBehaviour
         for (int i = 0; i < m_textElements.Count; i++)
         {
             if (int.TryParse(m_textElements[i].Text, out int num)) continue;
-            if (m_textElements[i].AnimationEnabled) m_textElements[i].SetAnimEnabled(false);
+            if (m_textElements[i].IsAnimation) m_textElements[i].SetAnimEnabled(false);
         }
 
         SetText();
@@ -71,58 +70,77 @@ public class ResultManager : MonoBehaviour
         TimerCountUp();
     }
 
-
+    // Call at the start.
     private void SetText()
     {
-        m_textElements[(int)TextContent.ClearFloor].TextMeshPro.text = m_textElements[(int)TextContent.ClearFloor].Text.Replace(":value:", m_floor.ToString());
-        m_textElements[(int)TextContent.ClearTime].TextMeshPro.text = m_textElements[(int)TextContent.ClearTime].Text.Replace(":value:", m_clearTime.ToString());
-        m_textElements[(int)TextContent.KillCount].TextMeshPro.text = m_textElements[(int)TextContent.KillCount].Text.Replace(":value:", m_killCount.ToString());
+        m_textElements[(int)TextContent.ClearFloor].TextMeshPro.text = m_textElements[(int)TextContent.ClearFloor].Text.Replace(":value:", 0.ToString());
+        m_textElements[(int)TextContent.ClearTime].TextMeshPro.text = m_textElements[(int)TextContent.ClearTime].Text.Replace(":value:", ConvCrearTime(0));
+        m_textElements[(int)TextContent.KillCount].TextMeshPro.text = m_textElements[(int)TextContent.KillCount].Text.Replace(":value:", 0.ToString());
     }
 
+    // The number is gradually increasing.
     private void CountUp(int _index, int _count, int _timer)
     {
-        Debug.Log($"_index: {_index}, _count: {_count}, _timer: {_timer}");
-
-        if (m_textElements[_index].AnimationEnabled == false) return;
-
         int _progressNum = _timer * _count / m_countUpTime;
         if (_timer == m_countUpTime) _progressNum = _count;
-        m_textElements[_index].TextMeshPro.text = m_textElements[(int)TextContent.ClearFloor].Text.Replace(":value:", _progressNum.ToString());
+        m_textElements[_index].TextMeshPro.text = m_textElements[_index].Text.Replace(":value:", _progressNum.ToString());
+    }
+
+    // time only.
+    private void CountUpClearTime(int _index, int _count, int _timer)
+    {
+        int _progressNum = _timer * _count / m_countUpTime;
+        if (_timer == m_countUpTime) _progressNum = _count;
+        m_textElements[_index].TextMeshPro.text = m_textElements[_index].Text.Replace(":value:", ConvCrearTime(_progressNum));
     }
 
     private void TimerCountUp()
     {
         if (m_textTimerIndex < m_textElements.Count)
         {
-            if (m_textElements[m_textTimerIndex].AnimationEnabled == false)
+            if (m_textElements[m_textTimerIndex].IsAnimation == false)
             {
                 m_countUpTimers[m_textTimerIndex] = m_countUpTime;
+                SetCountNumber();
             }
 
             if (m_countUpTimers[m_textTimerIndex] < m_countUpTime)
             {
                 m_countUpTimers[m_textTimerIndex]++;
-
-                switch (m_textTimerIndex)
-                {
-                    case (int)TextContent.ClearFloor:
-                        CountUp(m_textTimerIndex, m_floor, m_countUpTimers[m_textTimerIndex]);
-                        break;
-
-                    case (int)TextContent.ClearTime:
-                        CountUp(m_textTimerIndex, m_clearTime, m_countUpTimers[m_textTimerIndex]);
-                        break;
-
-                    case (int)TextContent.KillCount:
-                        CountUp(m_textTimerIndex, m_killCount, m_countUpTimers[m_textTimerIndex]);
-                        break;
-                }
+                SetCountNumber();
             }
             else
             {
                 m_textTimerIndex++;
             }
         }
+    }
+
+    private void SetCountNumber()
+    {
+        switch (m_textTimerIndex)
+        {
+            case (int)TextContent.ClearFloor:
+                CountUp(m_textTimerIndex, m_floor, m_countUpTimers[m_textTimerIndex]);
+                break;
+
+            case (int)TextContent.ClearTime:
+                CountUpClearTime(m_textTimerIndex, m_clearTime, m_countUpTimers[m_textTimerIndex]);
+                break;
+
+            case (int)TextContent.KillCount:
+                CountUp(m_textTimerIndex, m_killCount, m_countUpTimers[m_textTimerIndex]);
+                break;
+        }
+    }
+
+    private string ConvCrearTime(int _time)
+    {
+        int hour = _time / (MPH * SPM);
+        int minute = (_time / SPM) % MPH;
+        int second = _time % SPM;
+        string _timeText = hour.ToString().PadLeft(2, '0') + "h " + minute.ToString().PadLeft(2, '0') + "m " + second.ToString().PadLeft(2, '0') + "s";
+        return _timeText;
     }
 
     // button

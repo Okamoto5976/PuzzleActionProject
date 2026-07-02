@@ -320,8 +320,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResultManager
   m_decimalPlaces: 0
   m_resultDisplayInterval: 5
-  m_countUpTime: 120
-  m_floor: 0
+  m_countUpTime: 60
+  m_floor: 555
   m_clearTime: 205
   m_killCount: 9876
   m_textTimerIndex: 0
@@ -329,13 +329,13 @@ MonoBehaviour:
   m_textElements:
   - textMeshPro: {fileID: 824411560}
     text: Cleared the :value:th floor.
-    animationEnabled: 0
+    isAnimation: 0
   - textMeshPro: {fileID: 285428426}
     text: 'Clear time : :value: '
-    animationEnabled: 1
+    isAnimation: 1
   - textMeshPro: {fileID: 1659655471}
     text: 'KillCount : :value: '
-    animationEnabled: 1
+    isAnimation: 1
 --- !u!1 &250448562
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,8 +607,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 135.17}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 4.3, y: 123.8}
+  m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &290001162
 GameObject:
@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 328707047}
   - component: {fileID: 328707046}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button_Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +829,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 328707047}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 170720733}
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: ButtonNext
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &328707047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1142,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 175.9}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &982788259
 GameObject:
@@ -1282,7 +1294,7 @@ GameObject:
   - component: {fileID: 1387685737}
   - component: {fileID: 1387685736}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1351,7 +1363,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1387685737}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 170720733}
+        m_TargetAssemblyTypeName: ResultManager, Assembly-CSharp
+        m_MethodName: ButtonTitle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1387685737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1661,8 +1685,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 101.39}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: 0, y: 58.39}
+  m_SizeDelta: {x: 713, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1777911628
 GameObject:
