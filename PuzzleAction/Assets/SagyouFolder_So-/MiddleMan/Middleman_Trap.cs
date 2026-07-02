@@ -15,6 +15,7 @@ public class Middleman_Trap : MonoBehaviour
     public TrapBase GetTrap(Enum_TrapType trapType)
     {
         var pool = trapPools.Find(x => x.type == trapType).pool;
+
         if (pool == null)
         {
             Debug.LogError("Missing Pool or Key", this);

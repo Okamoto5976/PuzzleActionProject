@@ -19,7 +19,7 @@ public class ObjectConsolidation : MonoBehaviour
 
         string repuestName = trapType.ToString();
         //get pool object
-        var spwanedTrap = m_middleman_Trap.GetTrap(trapType);
+        TrapBase spwanedTrap = m_middleman_Trap.GetTrap(trapType);
 
         if (spwanedTrap != null)
         {

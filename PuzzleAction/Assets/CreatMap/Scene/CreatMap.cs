@@ -17,7 +17,7 @@ public class CreatMap : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
     [Header("Ref")]
-    [SerializeField] private ObjectConsolidation m_ocl;
+    [SerializeField] private ObjectConsolidation1 m_ocl;
     [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     [Header("Scale Setthings")]
@@ -340,15 +340,20 @@ public class CreatMap : MonoBehaviour
 
 
                 case AreaType.Damage:
-
-                    Enum_TrapType trapType = GetRandomAreaTrap();
-                    foreach(var gridPos in room.m_roomSizes)
                     {
-                        Vector3 worldPos = GridToWorld(gridPos);
-                        Vector2 size = new Vector2(m_floorScale.x, m_floorScale.y);
-                        m_ocl.DeployTrap(worldPos, trapType, size);
+                        Enum_TrapType trapType = GetRandomAreaTrap();
+                        List<Vector3> worldposition = new();
+                        foreach (var position in room.m_roomSizes)
+                        {
+                            if (IsForbiddenPos(position)) continue;
+
+                            worldposition.Add(GridToWorld(position));
+                        }
+                            Vector2 size = new Vector2(m_floorScale.x, m_floorScale.z);
+                            m_ocl.DeployTrap(worldposition, trapType, size);
+                        
+                        break;
                     }
-                    break;
             }
         }
     }
