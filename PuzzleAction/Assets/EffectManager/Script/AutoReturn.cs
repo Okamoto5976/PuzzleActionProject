@@ -1,21 +1,22 @@
 using UnityEngine;
-using UnityEngine.Pool;
-using UnityEngine.UIElements.Experimental;
 
 public class AutoReturn : MonoBehaviour
 {
-    private float m_lifeTime;
-    private EffectPoolManager m_pool;
+    private EffectManager m_manager;
 
-    public void Initialize(EffectPoolManager pool,float time)
+    public void Initialize(
+        EffectManager manager,
+        float lifeTime)
     {
-        m_lifeTime = time;
-        m_pool = pool;
+        m_manager = manager;
 
-        Invoke(nameof(Return), m_lifeTime);
+        CancelInvoke();
+
+        Invoke(nameof(Return), lifeTime);
     }
+
     private void Return()
     {
-        //指定したオブジェクトをpoolに戻す
+        m_manager.ReturnPool(gameObject);
     }
 }

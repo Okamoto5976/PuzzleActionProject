@@ -1,31 +1,49 @@
-using Unity.Mathematics;
 using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
-    [SerializeField] private EffectEventDataSO m_effectEventDataSO;
+    [SerializeField]
+    private EffectPoolManager m_effectPoolManager;
 
+    [SerializeField]
+    private EffectData[] m_effectDatas;
 
-    [SerializeField] private EffectPoolManager m_effectPoolManager;
-
-    private void OnEnable()
+    public void PlayEffect(int index, Vector3 position)
     {
-        m_effectEventDataSO.Register(SetEffect);
+        if (index < 0 || index >= m_effectDatas.Length)
+            return;
+
+        EffectData data = m_effectDatas[index];
+
+        GameObject obj =
+            m_effectPoolManager.Get(data.EffectPrefab);
+
+        obj.transform.SetPositionAndRotation(
+            position,
+            Quaternion.identity);
+
+        ParticleSystem particle =
+            obj.GetComponent<ParticleSystem>();
+
+        if (particle != null)
+        {
+            particle.Clear();
+            particle.Play();
+        }
+
+        AutoReturn autoReturn =
+            obj.GetComponent<AutoReturn>();
+
+        if (autoReturn != null)
+        {
+            autoReturn.Initialize(
+                this,
+                data.Duration);
+        }
     }
-    private void OnDisable()
+
+    public void ReturnPool(GameObject obj)
     {
-        m_effectEventDataSO.Unregister(SetEffect);
-    }
-    public void SetEffect(Effect _data)
-    {
-        if (_data.m_effectPrefab == null) return;
-
-        Vector3 position = _data.m_effectPos;
-        Quaternion rotation = _data.m_effectRot;
-
-        //var effectÇ…poolÇ©ÇÁÇŸÇµÇ¢effectèÓïÒÇí«â¡Ç∑ÇÈ
-
-
-        //effect.GetComponent<AutoReturn>().Initialize(m_effectPoolManager,effect.m_lifeTime);
+        m_effectPoolManager.Return(obj);
     }
 }
