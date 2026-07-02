@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            Debug.Log("何かキー押された");
             //GameOver();
         }
         //ゲームオーバー後に止める

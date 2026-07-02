@@ -32,7 +32,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     {
         if (m_isRunning)
         {
-            m_controller.Move(m_dir, m_controller.DashSpeed);
+            m_controller.Move(m_dir, m_controller.EvasionSpeed);
 
             if (Vector3.Distance(transform.position, m_targetPos) < 0.5f)
             {

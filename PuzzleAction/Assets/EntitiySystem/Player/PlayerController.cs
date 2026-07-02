@@ -1,19 +1,38 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public class PlayerController : Entity
 {
+    public enum Passive
+    {
+        PriceDown,
+        
+    }
+
+    public class PassiveModifier
+    {
+        public Passive m_passive;
+    }
+
     [Header("InputSystem")]
     [SerializeField] private InputActionReference m_moveAction;
-    [SerializeField] private InputActionReference m_dashAction;
+    [SerializeField] private InputActionReference m_evasionAction;
 
     [SerializeField] private Vector3Asset m_position;
 
-    [Header("Dash")]
-    [SerializeField] private float m_dashDuration = 0.2f;
+    [Header("Evasion")]
+    [SerializeField] private float m_evasionDuration = 0.2f;
 
-    private bool m_isDashing;
-    private float m_dashTimer;
+    private List<PassiveModifier> m_modifiers = new();
+
+    private bool m_isEvaing;
+    private float m_evasionTimer;
+
+    //---------passive bool---------------
+
+    //private bool 
 
     protected override void Awake()
     {
@@ -23,23 +42,23 @@ public class PlayerController : Entity
     private void OnEnable()
     {
         m_moveAction.action.Enable();
-        m_dashAction.action.Enable();
+        m_evasionAction.action.Enable();
 
-        m_dashAction.action.performed += OnDashPerformed;
+        m_evasionAction.action.performed += OnEvasionPerformed;
     }
 
     private void OnDisable()
     {
-        m_dashAction.action.performed -= OnDashPerformed;
+        m_evasionAction.action.performed -= OnEvasionPerformed;
 
         m_moveAction.action.Disable();
-        m_dashAction.action.Disable();
+        m_evasionAction.action.Disable();
     }
 
-    private void OnDashPerformed(InputAction.CallbackContext context)
+    private void OnEvasionPerformed(InputAction.CallbackContext context)
     {
-        m_isDashing = true;
-        m_dashTimer = m_dashDuration;
+        m_isEvaing = true;
+        m_evasionTimer = m_evasionDuration;
     }
 
     protected override void FixedUpdate()
@@ -57,7 +76,41 @@ public class PlayerController : Entity
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
-        // 移動方向に向く
+        //移動時の左右反転
+        
+        if(input.x>0.1f)
+        {
+            transform.localScale = new Vector3(1,1,1);
+        }
+        else if(input.x<-0.1f)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        /*
+        移動時の左右奥手前反転
+        if(input.x>0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+        }
+        else if(input.x>-0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+
+        }
+        else if (input.y > 0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else if (input.y > -0.1f)
+        {
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+        }
+        */
+
+        /*
+        移動方向に向く
         if (m_moveDir.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
@@ -66,19 +119,20 @@ public class PlayerController : Entity
                 targetRot,
                 Time.deltaTime * 10f);
         }
+        */
 
         // ダッシュ時間管理
-        if (m_isDashing)
+        if (m_isEvaing)
         {
-            m_dashTimer -= Time.deltaTime;
+            m_evasionTimer -= Time.deltaTime;
 
-            if (m_dashTimer <= 0f)
+            if (m_evasionTimer <= 0f)
             {
-                m_isDashing = false;
+                m_isEvaing = false;
             }
         }
 
         // 速度切り替え
-        m_currentMoveSpeed = m_isDashing ? DashSpeed : Speed;
+        m_currentMoveSpeed = m_isEvaing ? EvasionSpeed : Speed;
     }
 }
