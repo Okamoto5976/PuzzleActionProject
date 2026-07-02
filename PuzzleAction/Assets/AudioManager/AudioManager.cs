@@ -1,5 +1,6 @@
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
@@ -9,6 +10,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioEventSO audioEvent;
     [SerializeField] private AudioSource BGMSource;
     [SerializeField] private AudioSource SESource;
+    [SerializeField] private AudioMixer m_audioMix;
+    [SerializeField] private Slider m_BGMSlider;
+    [SerializeField] private Slider m_SESlider;
 
     [SerializeField] private AudioFader audioFader;
 
@@ -33,6 +37,25 @@ public class AudioManager : MonoBehaviour
     {
         audioEvent.Unregister(PlayAudio);
     }
+    private void Start()
+    {
+        m_audioMix.GetFloat("BGM", out float bgmVolume);
+        m_BGMSlider.value = bgmVolume;
+
+        m_audioMix.GetFloat("SE", out float seVolume);
+        m_SESlider.value = seVolume;
+    }
+
+    public void SetBGM(float volume)
+    {
+        m_audioMix.SetFloat("BGM", volume);
+    }
+
+    public void SetSE(float volume)
+    {
+        m_audioMix.SetFloat("SE", volume);
+    }
+
     //EventSOÇ©ÇÁìnÇ≥ÇÍÇΩAudioClipÇçƒê∂Ç∑ÇÈ
     private void PlayAudio(AudioData data)
     {
@@ -46,6 +69,7 @@ public class AudioManager : MonoBehaviour
             PlaySE(data);
         }
     }
+
     private void PlayBGM(AudioData data)
     {
        audioFader.FadeOutAndPlay(data.audioClip, data.clipVolume);
