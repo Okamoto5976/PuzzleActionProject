@@ -30,7 +30,7 @@ public class BuffItem : Item
     [SerializeField] private BuffType buffType; //�o�t�̎��
     [SerializeField] private BUffEffectType buffEffectType; //�o�t�̌��ʃ^�C�v
     //Entity entity;
-    public List <Item> Buffdata = new List<Item>();
+    public List <Item> Buffdata = new ();
     public override void Activation(float value, ItemRecieveData data)
     {
         //�ȉ��͌��ʎ��ԃA�C�e���̘b

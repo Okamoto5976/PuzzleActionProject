@@ -509,7 +509,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 515084452}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
@@ -521,6 +521,13 @@ MonoBehaviour:
   - {fileID: 0}
   ShopList: []
   ItemList: []
+  DropRateList:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   PlayerItems:
   - {fileID: 0}
   EnemyItems:
@@ -656,6 +663,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431a31e016f519d40821f3d818ba7a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropItem
+--- !u!1 &1047900314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1047900316}
+  - component: {fileID: 1047900315}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1047900315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047900314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53b96e574137944428c2ca01f980ba89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandomTest
+  Items:
+  - Name: {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+    DropRate: {fileID: 0}
+    rarity: 0
+    weight: 0
+  - Name: {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
+    DropRate: {fileID: 0}
+    rarity: 0
+    weight: 2
+  - Name: {fileID: 0}
+    DropRate: {fileID: 0}
+    rarity: 0
+    weight: 0
+  - Name: {fileID: 11400000, guid: 86558c8220f7ee44e8d5f0b0627c00e6, type: 2}
+    DropRate: {fileID: 0}
+    rarity: 0
+    weight: 3
+  Nomal: 60
+  Rara: 30
+  SparRara: 10
+--- !u!4 &1047900316
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047900314}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.36517, y: -1.34712, z: 4.13092}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1172904784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -963,3 +1034,4 @@ SceneRoots:
   - {fileID: 1974095777}
   - {fileID: 564349909}
   - {fileID: 254188961}
+  - {fileID: 1047900316}
