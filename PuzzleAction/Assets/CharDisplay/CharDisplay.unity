@@ -561,6 +561,7 @@ MonoBehaviour:
   m_messageText: {fileID: 1771083635}
   m_audioSource: {fileID: 1771083637}
   m_audioClip: {fileID: 8300000, guid: b15ba316fe8840949b07f49076415f39, type: 3}
+  m_pitch: 3
 --- !u!114 &1771083635
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class TextDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_messageText;
     [SerializeField] private AudioSource m_audioSource;
     [SerializeField] private AudioClip m_audioClip;
+    [SerializeField] private float m_pitch = 1.0f;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class TextDisplay : MonoBehaviour
             m_messageText.text += c;
             if (m_audioClip != null)
             {
+                m_audioSource.pitch = m_pitch;
                 m_audioSource.PlayOneShot(m_audioClip);
             }
 
