@@ -122,7 +122,7 @@ abstract public class Entity : MonoBehaviour
         m_currentMoveSpeed = Speed;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         
 

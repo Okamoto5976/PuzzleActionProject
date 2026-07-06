@@ -143,7 +143,7 @@ public class Test : MonoBehaviour
     {
         if (m_index == -1) return;
 
-        inventorySystem.UseItem(m_index);
+        //inventorySystem.UseItem(m_index);
 
         m_hotbarActionPanel.SetActive(false);
     }
@@ -194,17 +194,17 @@ public class Test : MonoBehaviour
 
     public void OnUseHotbar1()
     {
-        inventorySystem.Use(0);
+        //inventorySystem.Use(0);
     }
 
     public void OnUseHotbar2()
     {
-        inventorySystem.Use(1);
+        //inventorySystem.Use(1);
     }
 
     public void OnUseHotbar3()
     {
-        inventorySystem.Use(2);
+        //inventorySystem.Use(2);
     }
 
     //private void Update()

@@ -47,9 +47,9 @@ public class InventorySystem : MonoBehaviour
 
         hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>(true);
 
-        Debug.Log("Active Slots : " + activeSlots.Length);
-        Debug.Log("Passive Slots : " + passiveSlots.Length);
-        Debug.Log("Hotbar Slots : " + hotbarSlots.Length);
+        //Debug.Log("Active Slots : " + activeSlots.Length);
+        //Debug.Log("Passive Slots : " + passiveSlots.Length);
+        //Debug.Log("Hotbar Slots : " + hotbarSlots.Length);
     }
 
     private void Start()
@@ -257,7 +257,7 @@ for (int i = 0; i < hotbars.Length; i++)
     }
 
     // 使用
-    public void UseItem(int index)
+    public void UseItem(int index, ItemRecieveData data)
     {
         if (index >= activeInventory.Count) return;
 
@@ -266,6 +266,7 @@ for (int i = 0; i < hotbars.Length; i++)
         item.count--;
 
         Debug.Log(item.data.ItemName + " を使用");
+        //ItemManager
 
         // 0以下なら削除
         if (item.count <= 0)
@@ -304,12 +305,12 @@ for (int i = 0; i < hotbars.Length; i++)
     }
 
     //使用
-    public void Use(int hotberNumber)
+    public void Use(int hotberNumber, ItemRecieveData data)
     {
         int index = hotbars[hotberNumber];
         if (index < 0) return;
 
-        UseItem(index);
+        UseItem(index, data);
     }
 
 
