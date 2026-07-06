@@ -45,7 +45,7 @@ public class UIController : MonoBehaviour
         m_gameOverUI.SetActive(false);
         m_menuUI.SetActive(false);
         m_optionUI.SetActive(false);
-        m_shopUI.SetActive(false);
+        //m_shopUI.SetActive(false);
         m_inventoryUI.SetActive(false);
         m_gameClearUI.SetActive(false);
     }

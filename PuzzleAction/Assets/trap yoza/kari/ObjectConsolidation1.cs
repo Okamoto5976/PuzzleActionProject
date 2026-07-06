@@ -6,17 +6,29 @@ public class ObjectConsolidation1 : MonoBehaviour
     [SerializeField]
     private Middleman_Trap m_middleman_Trap;
 
-    [Header("罠の所有者（仮でプレイヤー等のEntityをインスペクターでセットしてください）")]
+    //[Header("罠の所有者（仮でプレイヤー等のEntityをインスペクターでセットしてください）")]
     [SerializeField] private Entity m_TrapOwner;
 
     public void DeployTrap(List<Vector3> spawnPos, Enum_TrapType trapType, Vector2 scale)
     {
+        if (m_middleman_Trap.gameObject != null)
+        {
+            m_middleman_Trap.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+
+            foreach (Transform child in m_middleman_Trap.transform)
+            {
+                child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+            }
+        }
+
         if (m_middleman_Trap == null) return;
 
 
         foreach (Vector3 pos in spawnPos)
         {
+            Debug.Log("trap" + trapType);
             TrapBase trap = m_middleman_Trap.GetTrap(trapType);
+            Debug.Log("trap" + trap);
 
             if (trap == null)
             {

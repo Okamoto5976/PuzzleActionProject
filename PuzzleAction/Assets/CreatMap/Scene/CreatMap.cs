@@ -17,7 +17,7 @@ public class CreatMap : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
     [Header("Ref")]
-    [SerializeField] private ObjectConsolidation m_ocl;
+    [SerializeField] private ObjectConsolidation1 m_ocl;
     [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     [Header("Scale Setthings")]
