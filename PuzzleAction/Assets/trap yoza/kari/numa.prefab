@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3622298716019010601}
   - component: {fileID: 6514627292463535112}
   - component: {fileID: 1931516938173031011}
+  - component: {fileID: 8180342303953439774}
   m_Layer: 0
   m_Name: numa
   m_TagString: Untagged
@@ -66,3 +67,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3fcfd29f6841f4e9e136d0ef81a9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Swamp_Trap
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 0
+  m_data: {fileID: 0}
+  m_trapdata: {fileID: 11400000, guid: a179d8b723891d142bc0ef208cab3555, type: 2}
+--- !u!54 &8180342303953439774
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4574407748689759281}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

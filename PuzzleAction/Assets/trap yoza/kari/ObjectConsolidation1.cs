@@ -6,26 +6,17 @@ public class ObjectConsolidation1 : MonoBehaviour
     [SerializeField]
     private Middleman_Trap m_middleman_Trap;
 
+    [Header("罠の所有者（仮でプレイヤー等のEntityをインスペクターでセットしてください）")]
+    [SerializeField] private Entity m_TrapOwner;
+
     public void DeployTrap(List<Vector3> spawnPos, Enum_TrapType trapType, Vector2 scale)
     {
         if (m_middleman_Trap == null) return;
 
-        if (m_middleman_Trap.gameObject != null)
-        {
-            m_middleman_Trap.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
-
-            foreach (Transform child in m_middleman_Trap.transform)
-            {
-                child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
-            }
-        }
 
         foreach (Vector3 pos in spawnPos)
         {
-
-            Debug.Log(trapType);
             TrapBase trap = m_middleman_Trap.GetTrap(trapType);
-            Debug.Log(trap);
 
             if (trap == null)
             {
@@ -34,35 +25,23 @@ public class ObjectConsolidation1 : MonoBehaviour
             }
 
             trap.transform.position = pos;
-            if(trap != null)
+
+            BoxCollider box = trap.GetComponent<BoxCollider>();
+            if (box != null)
             {
-                BoxCollider box = trap.GetComponent<BoxCollider>();
-                Gas_Trap gas = trap.GetComponent<Gas_Trap>();
-                Swamp_Trap swamp = trap.GetComponent<Swamp_Trap>();
-                Dynamite_Trap dynamite = trap.GetComponent<Dynamite_Trap>();
-
-                switch(trapType)
+                if (trapType == Enum_TrapType.Gas || trapType == Enum_TrapType.Swamp)
                 {
-                    case Enum_TrapType.Gas:
-                        box.size = new Vector3(scale.x, box.size.y, scale.y);
-                        gas.Init(pos, 1f, 1);
-                        break;
-
-                    case Enum_TrapType.Swamp:
-                        box.size = new Vector3(scale.x, box.size.y, scale.y);
-                        swamp.Init(pos, 1f, 1);
-                        break;
-
-                    case Enum_TrapType.Dynamite:
-                        box.size = Vector3.one;
-                        dynamite.Init(pos, 1f, 1);
-                        break;
+                    box.size = new Vector3(scale.x, box.size.y, scale.y);
+                }
+                else
+                {
+                    box.size = Vector3.one;
                 }
             }
-            trap.gameObject.SetActive(true);
 
-            Debug.Log($"Trap Spawn : {trapType}");
+            trap.Init(m_TrapOwner, Vector3.forward, 1);
+
+            trap.gameObject.SetActive(true);
         }
     }
-
 }
