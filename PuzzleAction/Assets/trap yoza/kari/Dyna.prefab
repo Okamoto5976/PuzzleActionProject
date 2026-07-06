@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1465111920557476121}
   - component: {fileID: 1288153900421120325}
   - component: {fileID: 74107977654017426}
+  - component: {fileID: 8988422936948150200}
   m_Layer: 0
   m_Name: Dyna
   m_TagString: Untagged
@@ -66,4 +67,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38c83a312c54b34c8d9bb0089751fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dynamite_Trap
-  m_ExplosionDelay: 3
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 0
+  m_data: {fileID: 0}
+  m_trapdata: {fileID: 11400000, guid: 5a6159b9ee2dc8c4e8b15fb1e7098253, type: 2}
+--- !u!54 &8988422936948150200
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897296333762648534}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
