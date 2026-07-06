@@ -4811,7 +4811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f53c12ffb562741bac5f5d01865638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
-  m_target: {fileID: 6101576487352509601, guid: c62fffd111f074a429d03a70e360e198, type: 3}
+  m_target: {fileID: 721869216}
   m_offset: {x: 0, y: 8, z: -8}
   m_followSpeed: 0
 --- !u!114 &1957982648
@@ -4958,12 +4958,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  EnemyDropList: []
   DropList: []
   ShopList: []
-  m_middleman_trap: {fileID: 435115610}
   ItemList:
   - {fileID: 0}
+  PlayerItems: []
+  EnemyItems: []
+  m_middleman_trap: {fileID: 435115610}
+  m_dropItem: {fileID: 0}
+  DropItems: []
 --- !u!1 &869878583074309818
 GameObject:
   m_ObjectHideFlags: 0
@@ -5075,7 +5078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7715865427276522527, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

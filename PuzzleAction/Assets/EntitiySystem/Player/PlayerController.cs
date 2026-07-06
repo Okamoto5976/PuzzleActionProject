@@ -234,6 +234,6 @@ public class PlayerController : Entity
             dir = transform.forward
         };
 
-        m_inventorySystem.Use(m_hotberIndex , data);
+        //m_inventorySystem.Use(m_hotberIndex , data);
     }
 }

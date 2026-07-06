@@ -23,6 +23,11 @@ public class TrapItem : Item
         //EntityTrap.SetbaseValue(data.baseValue)                Trap‘¤‚ÅTrap‚ÌUŒ‚—Í{baseValue
         //obj‚ÌEntity‚ÉmoveDir‚ª‚ ‚é‚©‚çdata‚Ìdir‚ğ“ü‚ê‚é
         //var entity = TrapPrefab.GetComponent<Entity>();
+        if(TrapPrefab == null)
+        {
+            Debug.Log("null!!");
+            return;
+        }
         TrapPrefab.Init(data.entity, data.dir, (int)data.baseValue);
         TrapPrefab.gameObject.transform.position = data.pos;
         TrapPrefab.gameObject.SetActive(true);

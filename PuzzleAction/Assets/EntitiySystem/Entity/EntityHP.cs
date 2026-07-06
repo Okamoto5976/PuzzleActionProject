@@ -73,7 +73,7 @@ abstract public class EntityHP : MonoBehaviour
             isCritical = true;
         }
 
-        int damage = 0;
+        float damage = 0;
 
         //Break
         if(isBreak)
@@ -91,7 +91,7 @@ abstract public class EntityHP : MonoBehaviour
             }
         }
 
-            m_currentHP -= damage;
+            m_currentHP -= (int)damage;
 
         m_currentHP = Mathf.Max( m_currentHP, 0 );
 
@@ -132,9 +132,9 @@ abstract public class EntityHP : MonoBehaviour
 
 
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
-        m_currentHP = Mathf.Min(m_currentHP + amount, (int)m_entity.HP);
+        //m_currentHP = Mathf.Min(m_currentHP + amount, m_entity.HP);
     }
 
     protected abstract void Die();

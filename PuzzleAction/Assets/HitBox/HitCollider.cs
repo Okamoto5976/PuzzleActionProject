@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public enum AttackType
 {
-None, 
-Recovery,
-Fire
+    None, 
+    Recovery,
+    Fire
 }
 
 public class DamageResult

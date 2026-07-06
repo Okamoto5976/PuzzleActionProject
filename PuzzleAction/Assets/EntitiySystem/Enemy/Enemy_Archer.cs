@@ -25,7 +25,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
         //Debug.Log($"distance:{distance} ,range:{m_controller.AttackRange}");
         if (distance <= m_controller.AttackRange)
         {
-            Debug.Log("Shot!!");
+            //Debug.Log("Shot!!");
 
             m_controller.Stop();
 

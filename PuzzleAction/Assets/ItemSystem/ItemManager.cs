@@ -34,7 +34,7 @@ public class ItemManager : MonoBehaviour
     }
 
 
-    public void ItemUse(int id/*, Entity entity*/)  // Entity
+    public void ItemUse(int id, Entity entity)  // Entity
     {
         //見つけたアイテムを使用する
         Item item = LookForID(id);
@@ -55,6 +55,11 @@ public class ItemManager : MonoBehaviour
             if (item is TrapItem trap)
             {
                 TrapBase obj = m_middleman_trap.GetTrap(trap.EnumTrap);
+
+                if (obj == null)
+                {
+                    Debug.Log("object Null!!");
+                }
 
                 trap.SetTrap(obj);
             }
@@ -99,7 +104,7 @@ public class ItemManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            DropItemSetData(new Vector3(0, 1, 0));
+            //DropItemSetData(new Vector3(0, 1, 0));
         }
     }
 }

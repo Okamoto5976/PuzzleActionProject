@@ -346,7 +346,7 @@ public class CreatMap : MonoBehaviour
                     {
                         Vector3 worldPos = GridToWorld(gridPos);
                         Vector2 size = new Vector2(m_floorScale.x, m_floorScale.y);
-                        m_ocl.DeployTrap(worldPos, trapType, size);
+                        //m_ocl.DeployTrap(worldPos, trapType, size);
                     }
                     break;
             }

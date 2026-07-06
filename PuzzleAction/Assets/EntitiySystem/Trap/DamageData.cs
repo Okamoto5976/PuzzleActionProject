@@ -1,7 +1,7 @@
 using UnityEngine;
 public class DamageData
 {
-    public int Attack;//
+    public float Attack;//
     public AttackType AttackType;
     public float HitRate = 100f;//
     public float CriticalRate;//

@@ -32,7 +32,7 @@ public class PlayerHPUI : MonoBehaviour
 
         float hoRate = (float)currentHP / maxHP;
 
-        Debug.Log(hoRate);
+        //Debug.Log(hoRate);
 
         if(m_FrontHPImage != null)
         {

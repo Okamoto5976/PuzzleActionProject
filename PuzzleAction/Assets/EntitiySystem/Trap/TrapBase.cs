@@ -21,6 +21,8 @@ public class TrapBase : Entity
     //basevalue
     protected float m_basevalue;
 
+    private DamageData m_data;
+
     //Receive orientation
 
     private ReturnObjectToPool m_returnObjPool;
@@ -62,6 +64,22 @@ public class TrapBase : Entity
         m_basevalue =
             baseValue;
 
+        m_data = new DamageData
+        {
+            Attack = STR + m_basevalue,
+            AttackType = AttackType.None,
+            //HitRate
+            CriticalRate = owner.CriticalRate,
+            CriticalDamage = owner.CriticalDamage,
+            BreakRate = owner.BreakRate,
+            Knockback = owner.KnockBack,
+            Stun = owner.Stun,
+            //Duration
+            AttackDir = dir,
+            //SE
+
+        };
+
         Setup();
     }
 
@@ -97,7 +115,7 @@ public class TrapBase : Entity
         Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
@@ -113,13 +131,18 @@ public class TrapBase : Entity
                 return;
         }
 
-        // target.TakeDamage(
-        //     STR + m_basevalue);
+        target.TakeDamage(m_data);
 
         Debug.Log(
             $"{other.name} Hit");
 
         //Destroy(gameObject);
+        if (m_returnObjPool == null)
+        {
+            m_returnObjPool = GetComponent<ReturnObjectToPool>();
+
+        }
+        m_returnObjPool?.ReturnToPool();
     }
 }
 

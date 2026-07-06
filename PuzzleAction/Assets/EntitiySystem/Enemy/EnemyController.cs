@@ -234,7 +234,7 @@ public class EnemyController : Entity
         //};
 
         //m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("HIT");
+        //Debug.Log("HIT");
     }
 }
 
