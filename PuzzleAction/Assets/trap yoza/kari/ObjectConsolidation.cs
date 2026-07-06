@@ -1,4 +1,12 @@
 ﻿using System;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+using System.Collections.Generic;
+>>>>>>> parent of c921b40 (Merge remote-tracking branch 'origin/keisyou' into EnemySystem07_MainBranch)
+=======
+using System.Collections.Generic;
+>>>>>>> parent of c921b40 (Merge remote-tracking branch 'origin/keisyou' into EnemySystem07_MainBranch)
 using UnityEngine;
 
 public class ObjectConsolidation : MonoBehaviour
@@ -88,7 +96,5 @@ public class ObjectConsolidation : MonoBehaviour
         }
         Debug.Log($"[DEBUG] 画面上のすべての共通トラップ（{allTraps.Length}個）を片付けました。");
     }
-
-   
 }
 
