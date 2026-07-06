@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1219892567917766518}
   - component: {fileID: 3296101865674393594}
   - component: {fileID: 3822451185766655126}
+  - component: {fileID: 2689182094028526295}
   m_Layer: 0
   m_Name: gas
   m_TagString: Untagged
@@ -66,3 +67,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c76627ff980297446b07352ddd88404f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gas_Trap
+  m_attackSE: {fileID: 0}
+  m_damageSE: {fileID: 0}
+  m_team: 0
+  m_data: {fileID: 0}
+  m_trapdata: {fileID: 11400000, guid: 42199da7c23f3c64ab604241beea3e72, type: 2}
+--- !u!54 &2689182094028526295
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389996727671295936}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

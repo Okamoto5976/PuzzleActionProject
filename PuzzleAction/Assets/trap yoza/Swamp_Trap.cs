@@ -1,73 +1,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swamp_Trap : MonoBehaviour
+public class Swamp_Trap : TrapBase
 {
-    private Vector3 m_Center;
-    private float m_Radius;
-    private float m_Slow;
+    private List<Entity> m_SlowedTargets = new List<Entity>();
 
-   
-    // 現在沼の中で減速しているオブジェクト記録
-    private List<karitesuto> m_SlowedTargets = new List<karitesuto>();
-
-    ///<summary>
-    ///アイテム側から呼ぶ初期化
-    /// </summary>
-    public void Init(Vector3 pos,float radius,float slowMultiplier)
+    protected override void Setup()
     {
+        if (m_owner != null)
+        {
+            m_startPosition = m_owner.transform.position;
+        }
+        else
+        {
+            m_startPosition = transform.position;
+        }
 
-        m_Slow = slowMultiplier;
-        transform.position = pos;
+        m_range = 9999f; 
     }
-    
+
+    protected override void FixedUpdate()
+    {
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!enabled) return;
-        karitesuto target = other.GetComponent<karitesuto>();
-        if (target != null && target.m_MyTeam != TrapTeam.Nature)
+
+        Entity target = other.GetComponent<Entity>();
+        if (target == null) return;
+
+        if (target.Team == TeamType.Nature) return;
+        if (m_owner != null && target.Team == m_owner.Team) return;
+
+        if (!m_SlowedTargets.Contains(target))
         {
-            if (!m_SlowedTargets.Contains(target))
-            {
-                m_SlowedTargets.Add(target);
-                Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が四角い沼に入った！速度を -{m_Slow} 倍にします");
-            }
+            m_SlowedTargets.Add(target);
+            Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が沼に入った（ここに減速処理を追加可能）");
         }
     }
 
-   
     private void OnTriggerExit(Collider other)
     {
-        karitesuto target = other.GetComponent<karitesuto>();
+        Entity target = other.GetComponent<Entity>();
         if (target != null && m_SlowedTargets.Contains(target))
         {
-            Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が四角い沼から出た！速度を戻します");
             m_SlowedTargets.Remove(target);
+            Debug.Log($"[SWAMP_BOX] {target.gameObject.name} が沼から脱出した");
         }
-    }
-
-    private void OnDestroy()
-    {
-        // 罠が途中で消えるときに、減速していた敵の速度をちゃんと安全に戻してあげる処理
-        foreach (var target in m_SlowedTargets)
-        {
-            if (target != null)
-            {
-                // 速度を戻す処理
-            }
-        }
-        m_SlowedTargets.Clear();
-        gameObject.SetActive(false);
     }
     private void OnDrawGizmosSelected()
     {
-        if (!enabled) return;
         BoxCollider box = GetComponent<BoxCollider>();
         if (box != null)
         {
-            Gizmos.color = new Color(0.5f, 0.25f, 0f); // 茶色っぽい線
-            Gizmos.DrawWireCube(transform.position + box.center, box.size);
+            Gizmos.color = Color.green;
+            Vector3 size = new Vector3(
+                box.size.x * transform.lossyScale.x,
+                box.size.y * transform.lossyScale.y,
+                box.size.z * transform.lossyScale.z
+            );
+            Vector3 center = transform.position + transform.TransformDirection(box.center);
+            Gizmos.DrawWireCube(center, size);
         }
     }
-}  
+    
+}
 
