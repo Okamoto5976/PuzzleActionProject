@@ -1,81 +1,60 @@
-Ôªøusing UnityEngine;
+using Unity.VisualScripting;
+using UnityEngine;
 
-public class Gas_Trap : TrapBase
+
+public class Gas_Trap : MonoBehaviour
 {
+    private Vector3 m_Center;
+    private float m_Radius;
+    private int m_DamageAmount;
+
     private float m_DamageInterval = 1.0f;
     private float m_Timer;
-
-    protected override void Setup()
+   
+    ///<summary>
+    ///ÉAÉCÉeÉÄë§Ç©ÇÁåƒÇ‘èâä˙âª
+    /// </summary>
+    public void Init(Vector3 pos, float radius, int damage)
     {
-        if (m_owner != null)
-        {
-            m_startPosition = m_owner.transform.position;
-        }
-        else
-        {
-            m_startPosition = transform.position; 
-        }
-
-        if (m_trapdata != null)
-        {
-            m_range = m_trapdata.range;
-        }
-        else
-        {
-            m_range = 9999f;
-        }
-
-        
-        m_range = 9999f;
+        m_DamageAmount = damage;
+        transform.position = pos;
         m_Timer = 0f;
     }
-
-    protected override void FixedUpdate()
+    void Update()
     {
         m_Timer += Time.deltaTime;
     }
-
     private void OnTriggerStay(Collider other)
     {
         if (!enabled) return;
-
+        // É^ÉCÉ}Å[ÇÃÉ^ÉCÉ~ÉìÉOÇ™ÇøÇÂÇ§Ç«óàÇΩÇÁÉ_ÉÅÅ[ÉWÇåvéZÇ∑ÇÈ
         if (m_Timer >= m_DamageInterval)
         {
-            Entity target = other.GetComponent<Entity>();
-            if (target == null) return;
+            karitesuto target = other.GetComponent<karitesuto>();
+            if (target != null && target.m_MyTeam != TrapTeam.Nature)
+            {
+                m_Timer = 0;
+                Debug.Log($"[GAS_BOX] {target.gameObject.name} ({target.m_MyTeam}) Ç…éläpÇ¢ÉGÉäÉAì‡Ç≈ {m_DamageAmount} É_ÉÅÅ[ÉWÅI");
 
-            if (target.Team == TeamType.Nature) return;
-            if (m_owner != null && target.Team == m_owner.Team) return;
+                // target.GetComponent<HPÉXÉNÉäÉvÉg>().ReduceHP(m_DamageAmount);
 
-            m_Timer = 0;
-
-            float finalDamage = (m_trapdata != null) ? m_trapdata.damage : 1;
-            Debug.Log($"[GAS_BOX] {target.gameObject.name} „Å´ {finalDamage} „ÉÄ„É°„Éº„Ç∏Âà§ÂÆöÔºÅ");
-
-            // HPÊ∏õÂ∞ë
-            /*
-            DamageData data = new DamageData();
-            data.Attack = (int)finalDamage;
-            data.HitRate = 100f;
-            data.AttackDir = (target.transform.position - transform.position).normalized;
-            data.Attacker = m_owner;
-            target.TakeDamage(data);
-            */
+            }
         }
     }
+    public void ReleaseToPool()
+    {
+        m_Timer = 0f;
+        gameObject.SetActive(false);
+    }
+
     private void OnDrawGizmosSelected()
     {
-        BoxCollider box = GetComponent<BoxCollider>();
-        if (box != null)
+        if (!enabled) return;
+        BoxCollider box=GetComponent<BoxCollider>();
+        if (box != null) 
         {
             Gizmos.color = Color.green;
-            Vector3 size = new Vector3(
-                box.size.x * transform.lossyScale.x,
-                box.size.y * transform.lossyScale.y,
-                box.size.z * transform.lossyScale.z
-            );
-            Vector3 center = transform.position + transform.TransformDirection(box.center);
-            Gizmos.DrawWireCube(center, size);
+            Gizmos.DrawWireCube(transform.position + box.center, box.size);
         }
     }
 }
