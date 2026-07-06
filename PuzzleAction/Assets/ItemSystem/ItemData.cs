@@ -13,7 +13,7 @@ public class ItemData
     [SerializeField] private string itemName;       
     [SerializeField] private Sprite itemIcon;         
     [SerializeField] private string description;    
-    [SerializeField] private int maxStack;          
+    [SerializeField] private int maxStack = 99;          
     [SerializeField] private float dropRate;        
     [SerializeField] private int itemGrade;         //Rarity
     [SerializeField] private ItemType itemType;

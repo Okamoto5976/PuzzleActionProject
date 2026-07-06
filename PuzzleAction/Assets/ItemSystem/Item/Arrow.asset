@@ -15,15 +15,15 @@ MonoBehaviour:
   m_value: 2
   m_type: 1
   m_data:
-    itemID: 0
-    itemName: 
-    itemIcon: {fileID: 0}
+    itemID: 1
+    itemName: arrow is strong
+    itemIcon: {fileID: 21300000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
     description: 
-    maxStack: 0
+    maxStack: 99
     dropRate: 0
     itemGrade: 0
     itemType: 0
-    price: 0
+    price: 100
     Type: 0
   trapValue: 0
   TrapPrefab: {fileID: 0}

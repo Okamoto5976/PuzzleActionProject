@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 6186335976659372128}
   - component: {fileID: 292732359283115402}
   - component: {fileID: -8794102270786672288}
+  - component: {fileID: 8049973323928560549}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -193,10 +194,9 @@ MonoBehaviour:
   m_damageSE: {fileID: 0}
   m_team: 0
   m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
-  m_moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_evasionAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_position: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_evasionDuration: 0.2
+  m_inventorySystem: {fileID: 0}
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +210,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   m_currentHP: 0
+--- !u!114 &8049973323928560549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501914875296179412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityBuffSystem
 --- !u!1 &2753646007902922138
 GameObject:
   m_ObjectHideFlags: 0

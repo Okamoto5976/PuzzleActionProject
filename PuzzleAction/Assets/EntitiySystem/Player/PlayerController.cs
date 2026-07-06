@@ -46,7 +46,7 @@ public class PlayerController : Entity
     //private float m_evasionTimer;
 
 
-    private int m_hotberIndex = 1;
+    private int m_hotberIndex = 0;
 
     //---------passive bool---------------
 
@@ -233,7 +233,7 @@ public class PlayerController : Entity
             pos = transform.position,
             dir = transform.forward
         };
-
-        //m_inventorySystem.Use(m_hotberIndex , data);
+        Debug.Log(m_hotberIndex);
+        m_inventorySystem.Use(m_hotberIndex , data);
     }
 }

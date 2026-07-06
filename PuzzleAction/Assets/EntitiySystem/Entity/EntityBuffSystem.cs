@@ -14,7 +14,7 @@ public class EntityBuffSystem : MonoBehaviour
 {
     private Entity m_Entity;
 
-    private List<BuffInstance> m_buffs;
+    private List<BuffInstance> m_buffs = new();
 
     private void Awake()
     {
@@ -39,6 +39,8 @@ public class EntityBuffSystem : MonoBehaviour
 
     private void Update()
     {
+        if (m_buffs == null) return;
+
         for(int i = m_buffs.Count - 1; i >= 0; i--)
         {
             var buff = m_buffs[i];
@@ -56,7 +58,7 @@ public class EntityBuffSystem : MonoBehaviour
 
     public void RemoveBuff(BuffInstance buff)
     {
-        //buff.m_status.RemoveModifier(buff.m_modifier);
+        buff.m_status.RemoveModifier(buff.m_modifier);
     }
 }
 

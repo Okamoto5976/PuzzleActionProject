@@ -5,8 +5,8 @@ public class Test : MonoBehaviour
 {
     [SerializeField] private InventorySystem inventorySystem;
 
-    [SerializeField] private Data m_posion;
-    [SerializeField] private Data m_dog;
+    [SerializeField] private Item m_posion;
+    [SerializeField] private Item m_dog;
 
     [SerializeField] private bool m_istrigger;
 
@@ -81,7 +81,7 @@ public class Test : MonoBehaviour
         }
         m_hotbarActionPanel.SetActive(true);
     }
-    public void ShowItemInfo(Data data)
+    public void ShowItemInfo(Item data)
     {
         Debug.Log(data);
 

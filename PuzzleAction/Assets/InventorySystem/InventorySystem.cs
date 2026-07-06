@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class ItemBox
 {
-    public Data data;
+    public Item data;
     public int count;
 
-    public ItemBox(Data data, int count)
+    public ItemBox(Item data, int count)
     {
         this.data = data;
         this.count = count;
@@ -39,6 +39,8 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private SaveManager m_saveManager;
 
+    private ItemManager m_itemManager;
+
     private void Awake()
     {
         activeSlots = activePanel.GetComponentsInChildren<SlotUI>(true);
@@ -46,6 +48,8 @@ public class InventorySystem : MonoBehaviour
         passiveSlots = passivePanel.GetComponentsInChildren<SlotUI>(true);
 
         hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>(true);
+
+        m_itemManager = FindAnyObjectByType<ItemManager>();
 
         //Debug.Log("Active Slots : " + activeSlots.Length);
         //Debug.Log("Passive Slots : " + passiveSlots.Length);
@@ -77,7 +81,7 @@ public class InventorySystem : MonoBehaviour
     //    }
     //}
 
-    public void OnItem(Data data, int count)
+    public void OnItem(Item data, int count)
     {
         if (AddItem(data, count))
         {
@@ -91,7 +95,7 @@ public class InventorySystem : MonoBehaviour
         Debug.Log("セーブしました");
     }
 
-    public bool AddItem(Data data, int count)
+    public bool AddItem(Item data, int count)
     {
        // Activeアイテム
        if (data.ItemType == ItemType.Active)
@@ -106,7 +110,7 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
-    private bool AddActiveItem(Data data, int count)
+    private bool AddActiveItem(Item data, int count)
     {
         //同じアイテムを探す
         foreach (ItemBox item in activeInventory)
@@ -134,7 +138,7 @@ public class InventorySystem : MonoBehaviour
         return true;
     }
 
-    private bool AddPassiveItem(Data data, int count)
+    private bool AddPassiveItem(Item data, int count)
     {
         // Passiveはスタックしない
         if (passiveInventory.Count >= 30)
@@ -267,6 +271,7 @@ for (int i = 0; i < hotbars.Length; i++)
 
         Debug.Log(item.data.ItemName + " を使用");
         //ItemManager
+        m_itemManager.OnUseItem(item.data, data);
 
         // 0以下なら削除
         if (item.count <= 0)
@@ -381,7 +386,7 @@ for (int i = 0; i < hotbars.Length; i++)
         {
             Debug.Log($"ロード中 ID:{saveItem.id}");
 
-            Data data = itemManager.GetItem(saveItem.id);
+            Item data = itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {
@@ -395,7 +400,7 @@ for (int i = 0; i < hotbars.Length; i++)
 
         foreach (SaveItemData saveItem in saveData.passiveItems)
         {
-            Data data = itemManager.GetItem(saveItem.id);
+            Item data = itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {

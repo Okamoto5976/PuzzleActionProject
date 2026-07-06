@@ -9,7 +9,7 @@ public class DropItem : MonoBehaviour
     //private GameObject prefab;
     //public event Action m_event;
 
-    private Data m_itemData;
+    private Item m_itemData;
 
     ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
     //private void ItemGet(Collider other)
@@ -42,14 +42,14 @@ public class DropItem : MonoBehaviour
         Return();
     }
 
-    public void Initialize(Data data = null)
+    public void Initialize(Item data = null)
     {
         Invoke(nameof(Return), m_timeToReturn); // timeToReturn秒後にReturnメソッドを呼び出す
         if (data == null) return;
         SetItemData(data);
     }
 
-    private void SetItemData(Data data)
+    private void SetItemData(Item data)
     {
         m_itemData = data;
     }

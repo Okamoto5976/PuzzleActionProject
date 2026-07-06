@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Rate
 {
-    public Data Name;
-    public Data DropRate;
-    public Data ItemGrad;
+    public Item Name;
+    public Item DropRate;
+    public Item ItemGrad;
 }
 
 public class RandomTest : MonoBehaviour
@@ -30,7 +30,7 @@ public class RandomTest : MonoBehaviour
     string[] column;
     int rollNum = 0;
     int lotteryType = 0;
-    public Data data;
+    public Item data;
     private void Start()
     {
         //raw;

@@ -9,9 +9,9 @@ public class ItemManager : MonoBehaviour
     public List<Item> ShopList = new();
     public List<Item> ItemList = new();
     //プレイヤーが使えるアイテム
-    public List<Data> PlayerItems = new();
+    public List<Item> PlayerItems = new();
     //敵専用アイテム
-    public List<Data> EnemyItems = new();
+    public List<Item> EnemyItems = new();
     //private int nextId; //次のIDを管理する変数
     [SerializeField] private Middleman_Trap m_middleman_trap;
     //DropPool I_pool;
@@ -21,16 +21,16 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private List<DropItem> DropItems = new();
 
     //Listの中からIDと同じアイテムを探す
-    public Data GetItem(int id)
+    public Item GetItem(int id)
     {
-        Data data = null;
+        Item data = null;
 
         return data;
     }
 
     private Item LookForID(int id)
     {
-        return ItemList.Find(x => x.Id == id);
+        return ItemList.Find(x => x.ID == id);
     }
 
 
@@ -50,6 +50,8 @@ public class ItemManager : MonoBehaviour
 
     public void OnUseItem(Item item, ItemRecieveData data)
     {
+        Debug.Log("OnUseItem");
+
         if(item.Type == Item.ItemEffectType.Trap)
         {
             if (item is TrapItem trap)
@@ -76,7 +78,7 @@ public class ItemManager : MonoBehaviour
         //set itemData in DropItem
 
         int index = Random.Range(0, PlayerItems.Count);
-        Data data = PlayerItems[index];
+        Item data = PlayerItems[index];
         //int dropIndex = Random.Range(0, DropItems.Count);
         //DropItem m_dropItem = DropItems[dropIndex];
         m_dropItem.Initialize(data);

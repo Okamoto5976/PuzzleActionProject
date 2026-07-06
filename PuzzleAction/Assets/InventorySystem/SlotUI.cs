@@ -14,7 +14,7 @@ public class SlotUI : MonoBehaviour
 
     [SerializeField] private TMP_Text m_countText;
 
-    private Data m_data;
+    private Item m_data;
 
     public void SetItem(ItemBox item, int index)
     {

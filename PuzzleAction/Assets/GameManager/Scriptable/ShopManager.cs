@@ -12,7 +12,7 @@ public struct ShopInventory {
 [System.Serializable]
 public struct ShopItem
 {
-    public Data data;
+    public Item data;
     public bool IsSold;
 
     public void BuyItem()
@@ -51,8 +51,8 @@ public struct ShopItem
     [SerializeField] private InfoText m_infoTextPrefab;
     [SerializeField] private InventorySystem m_inventorySystem;
 
-    private List<Data> m_passiveItems;
-    private List<Data> m_activeItems;
+    private List<Item> m_passiveItems;
+    private List<Item> m_activeItems;
 
     [SerializeField] private List<ShopInventory> m_shopInventories;
 

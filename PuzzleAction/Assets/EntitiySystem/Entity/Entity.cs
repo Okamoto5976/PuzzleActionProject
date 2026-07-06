@@ -237,7 +237,7 @@ abstract public class Entity : MonoBehaviour
         if (item == null) return false;
         if(m_inventory==null) return false;
 
-        return m_inventory.AddItem(item.Id);
+        return m_inventory.AddItem(item.ID);
     }
 }
 //public bool IsEnemy(Entity other)

@@ -18,7 +18,7 @@ public class Goods : MonoBehaviour,
     private bool m_soldOn = false;
 
     //‰¼@ItemData‚É•ÏX
-    private Data m_data;
+    private Item m_data;
 
     private ShopManager m_shopManager;
 

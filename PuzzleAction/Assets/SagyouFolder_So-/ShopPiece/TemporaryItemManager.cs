@@ -6,11 +6,11 @@ public class TemporaryItemManager : MonoBehaviour
 {
     [SerializeField] private EventBusAsset m_onGenerateShopInventory;
 
-    [SerializeField] private List<Data> m_masterItemDatas;
+    [SerializeField] private List<Item> m_masterItemDatas;
 
-    public List<Data> MasterItemDatas => m_masterItemDatas;
+    public List<Item> MasterItemDatas => m_masterItemDatas;
 
-    public List<Data> GetShopItems()
+    public List<Item> GetShopItems()
     {
         return m_masterItemDatas
             .Where(x => x.Data.IsShopCompatible)

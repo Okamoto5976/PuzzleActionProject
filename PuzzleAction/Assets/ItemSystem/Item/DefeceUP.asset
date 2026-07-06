@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85161e8912546ac4b80e1aafaa5e44ec, type: 3}
   m_Name: DefeceUP
   m_EditorClassIdentifier: Assembly-CSharp::BuffItem
-  m_value: 0
+  m_value: 50
+  m_type: 2
   m_data:
-    itemID: 4
+    itemID: 3
     itemName: DefenceUpPorthion
-    itemIcon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    itemprefab: {fileID: 4752866384152218059, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
+    itemIcon: {fileID: 21300000, guid: 3960c70ce2b6f6d418cbda673fd12796, type: 3}
     description: 
-    maxStack: 5
+    maxStack: 99
     dropRate: 0
     itemGrade: 0
-    dropPrefab: {fileID: 0}
-    dropsize: 0
-  buffDuration: 20
-  buffType: 1
-  buffEffectType: 0
-  Buffdata: []
+    itemType: 0
+    price: 100
+    Type: 0
+  m_buffDuration: 60
+  m_buffType: 1
+  m_buffEffectType: 0
+  m_statusType: 3
+  m_modifierType: 0

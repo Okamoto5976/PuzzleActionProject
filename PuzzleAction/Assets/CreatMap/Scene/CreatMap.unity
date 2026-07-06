@@ -160,6 +160,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: m_inventorySystem
+      value: 
+      objectReference: {fileID: 1128147158}
     - target: {fileID: 1501914875296179412, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1626,16 +1630,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TemporaryItemManager
   m_onGenerateShopInventory: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
   m_masterItemDatas:
-  - {fileID: 11400000, guid: 86558c8220f7ee44e8d5f0b0627c00e6, type: 2}
-  - {fileID: 11400000, guid: 666433084fc0be848a3f2ee5bc68046a, type: 2}
-  - {fileID: 11400000, guid: dfe6e5d9371b56c408d71b768694dd0d, type: 2}
-  - {fileID: 11400000, guid: 38e25d40207fb534ab28f249a315d570, type: 2}
-  - {fileID: 11400000, guid: b52ebfab427c8d947854956f35e9f556, type: 2}
-  - {fileID: 11400000, guid: 84644c912c92eb44fa9a89a931bc97f4, type: 2}
-  - {fileID: 11400000, guid: 6f8e95e437acca04d9b8e889aeaa66d1, type: 2}
-  - {fileID: 11400000, guid: 7daa7073a9a122c48813c15bacb0f476, type: 2}
-  - {fileID: 11400000, guid: 377c8aadfe7bcac42a4d360c07a2b466, type: 2}
-  - {fileID: 11400000, guid: 8b4399b54a9ab0741815e7fd0a2f84a3, type: 2}
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
+  - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
+  - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
+  - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
+  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
 --- !u!4 &1251004858
 Transform:
   m_ObjectHideFlags: 0
