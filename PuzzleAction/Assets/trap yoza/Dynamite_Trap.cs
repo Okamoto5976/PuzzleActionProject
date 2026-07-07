@@ -1,107 +1,56 @@
 ﻿using UnityEngine;
 
-
-public class Dynamite_Trap : MonoBehaviour
+public class Dynamite_Trap : TrapBase
 {
-
-    private Vector3 m_Center;
-    private float m_Radius;
-    private int m_DamageAmount;
-
-    [Header("起動から爆発までの時間")]
-    [SerializeField] private float m_ExplosionDelay = 3.0f;
-    private float m_Timer = 0f;
-    private bool m_IsTriggered = false;//起爆スイッチが入ったか
-
-    ///<summary>
-    ///アイテム側から呼ぶ初期化
-    /// </summary>
-    
-    public void Init(Vector3 pos, float radius, float power)
+    protected override void Setup()
     {
-        m_Center = pos;
-        m_Radius = radius;
-        m_DamageAmount = (int)power;
-
-        transform.position = pos;
-    }
-    void Update()
-    {
-        if (m_IsTriggered)
+        if (m_owner != null)
         {
-            m_Timer += Time.deltaTime;
-            if (m_Timer >= m_ExplosionDelay)
-            {
-                Explosion();//ドカン！！！
-            }
+            m_startPosition = m_owner.transform.position;
+        }
+        else
+        {
+            m_startPosition = transform.position;
+        }
+
+        if (m_trapdata != null)
+        {
+            m_range = m_trapdata.range;
+        }
+        else
+        {
+            m_range = 9999f; 
         }
     }
-    /// <summary>
-    /// テスト用　触れたら起爆にしたほうが攻撃したら起爆に近いと思ったから どっちも触れてはいる(消す)
-    /// </summary>
+
+    protected override void FixedUpdate()
+    {
+        // 移動処理をキャンセル
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(!enabled) return;
-        //すでに起爆なら何もしない
-        if (m_IsTriggered) return;
-        karitesuto target=other.GetComponent<karitesuto>();
-        if (target != null)
+        if (!enabled) return;
+
+        Entity target = other.GetComponent<Entity>();
+        if (target != null && target.Team != TeamType.Nature)
         {
-            if(target.m_MyTeam!=TrapTeam.Nature)
-            {
-                Debug.Log($"[DYNAMITE] ➔ {target.gameObject.name}({target.m_MyTeam})がダイナマイトに触れた！");
-                TriggerExplosion();
-            }
+            if (m_owner != null && target.Team == m_owner.Team) return;
+
+            Debug.Log($"[DYNAMITE] {target.gameObject.name} が踏んだ！爆発！");
+
+            // プールに戻す（あっちのTrapBaseに備わっているプール返却処理を呼ぶ）
+            gameObject.SetActive(false);
         }
     }
-    /// <summary>
-    /// 起爆スイッチ　ポチー
-    /// </summary>
-    public void TriggerExplosion()
-    {
-        if (m_IsTriggered) return;
-
-        m_IsTriggered = true;
-        Debug.Log($"[DYMAITTE]{gameObject.name}がダメージをウケた！{m_ExplosionDelay}秒後に爆発");
-    }
-    /// <summary>
-    /// 爆発処理
-    /// </summary>
-    private void Explosion()
-    {
-        Debug.Log("[DYNAMITE]💥ドォーーーン！！！爆破！");
-
-        //シーン内のすべてのターゲット検索
-        karitesuto[] allTargets = Object.FindObjectsByType<karitesuto>(FindObjectsSortMode.None);
-        foreach (var traget in allTargets)
-        {
-            if (traget == null) continue;
-            float distance = Vector3.Distance(m_Center, traget.transform.position);
-
-            if (distance <= m_Radius)
-            {
-                if (traget.m_MyTeam != TrapTeam.Nature)
-                {
-                    Debug.Log($"[DYNAMITE]→{traget.gameObject.name}({traget.m_MyTeam})に{m_DamageAmount}の爆発ダメージ!");
-                }
-            }
-        }
-        Destroy(gameObject);
-    }
-
     private void OnDrawGizmosSelected()
     {
-        if (!enabled) return;
-        Gizmos.color = m_IsTriggered?Color.yellow:Color.red;
-
-        float visualRadius = m_Radius>0f?m_Radius:5f;
-        Gizmos.DrawWireSphere(transform.position,visualRadius);
+        BoxCollider box = GetComponent<BoxCollider>();
+        if (box != null)
+        {
+            Gizmos.color = Color.green;
+            Vector3 center = transform.position + transform.TransformDirection(box.center);
+            Gizmos.DrawWireCube(center, box.size);
+        }
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = m_IsTriggered ? Color.yellow : Color.red;
-    //    float visualRadius = m_Radius > 0f ? m_Radius : 5f;
-    //    Gizmos.DrawWireSphere(transform.position, visualRadius);
-    //}
-}   //
+}   

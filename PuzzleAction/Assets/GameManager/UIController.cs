@@ -52,21 +52,21 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        // ESC‚Åƒƒjƒ…[
+        // ESCï¿½Åƒï¿½ï¿½jï¿½ï¿½ï¿½[
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isMenuOpen = !isMenuOpen;
 
             m_menuUIEvent.Raise(isMenuOpen);
 
-            // ƒƒjƒ…[•Â‚¶‚½‚çƒIƒvƒVƒ‡ƒ“‚à•Â‚¶‚é
+            // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½
             if (!isMenuOpen)
             {
                 m_optionUIEvent.Raise(false);
             }
         }
 
-        // TAB‚ÅƒCƒ“ƒxƒ“ƒgƒŠ
+        // TABï¿½ÅƒCï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             isInventoryOpen = !isInventoryOpen;
@@ -105,26 +105,26 @@ public class UIController : MonoBehaviour
         m_gameClearUI.SetActive(isShow);
     }
 
-    // ƒVƒ‡ƒbƒvŠJ‚­
+    // ï¿½Vï¿½ï¿½ï¿½bï¿½vï¿½Jï¿½ï¿½
     public void OnShopUI()
     {
         m_shopUIEvent.Raise(true);
     }
 
-    // ƒCƒ“ƒxƒ“ƒgƒŠŠJ‚­
+    // ï¿½Cï¿½ï¿½ï¿½xï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Jï¿½ï¿½
     public void OnInventoryUI()
     {
         m_inventoryUIEvent.Raise(true);
     }
 
-    // ƒIƒvƒVƒ‡ƒ“ŠJ‚­
+    // ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½
     public void OpenOption()
     {
         m_menuUI.SetActive(false);
         m_optionUI.SetActive(true);
     }
 
-    // ƒƒjƒ…[‚É–ß‚é
+    // ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½É–ß‚ï¿½
     public void BackMenu()
     {
         m_optionUI.SetActive(false);

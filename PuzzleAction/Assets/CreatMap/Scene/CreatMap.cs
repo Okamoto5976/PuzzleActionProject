@@ -17,7 +17,7 @@ public class CreatMap : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
     [Header("Ref")]
-    [SerializeField] private ObjectConsolidation m_ocl;
+    [SerializeField] private ObjectConsolidation1 m_ocl;
     [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     [Header("Scale Setthings")]
@@ -133,12 +133,12 @@ public class CreatMap : MonoBehaviour
         baseFloorSize.y = 1;
         baseFloorSize.z = 1;
 
-        //Debug.Log($"{baseFloorSize} ššššššššššš");
+        //Debug.Log($"{baseFloorSize} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         Vector3 floorSize = new Vector3(
             baseFloorSize.x * m_floorScale.x,
             baseFloorSize.y * m_floorScale.z,
             baseFloorSize.z * m_floorScale.z);
-        //get FloorPrefab sizeš
+        //get FloorPrefab sizeï¿½ï¿½
         var wallRenderer = m_wallPrefab.GetComponent<Renderer>();
         Vector3 baseWallSize = wallRenderer.bounds.size;
         Vector3 wallSize = new Vector3(
@@ -174,7 +174,7 @@ public class CreatMap : MonoBehaviour
             m_wallObjectsWest.Add(w);
         }
 
-        // set origin š
+        // set origin ï¿½ï¿½
         //Vector2 origin = -floorBounds.extents;
         Vector2 origin = new Vector2(
             -floorSize.x * 0.5f,
@@ -189,7 +189,7 @@ public class CreatMap : MonoBehaviour
 
                 // create floor
                 var floor = m_floorObjects[x + y * m_size.x];
-                Vector3 floorPosition = new(origin.x + x * floorSize.x, 0, origin.y + y * floorSize.z);@//š
+                Vector3 floorPosition = new(origin.x + x * floorSize.x, 0, origin.y + y * floorSize.z);ï¿½@//ï¿½ï¿½
                 floor.transform.position = floorPosition;
                 floor.transform.localScale = floorSize;
                 floor.name = name + ")";
@@ -272,7 +272,7 @@ public class CreatMap : MonoBehaviour
     }
 
     /// <summary>
-    /// AreaType ˆ—–{‘Ì
+    /// AreaType ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½
     /// </summary>
     /// 
     
@@ -340,15 +340,20 @@ public class CreatMap : MonoBehaviour
 
 
                 case AreaType.Damage:
-
-                    Enum_TrapType trapType = GetRandomAreaTrap();
-                    foreach(var gridPos in room.m_roomSizes)
                     {
-                        Vector3 worldPos = GridToWorld(gridPos);
-                        Vector2 size = new Vector2(m_floorScale.x, m_floorScale.y);
-                        //m_ocl.DeployTrap(worldPos, trapType, size);
+                        Enum_TrapType trapType = GetRandomAreaTrap();
+                        List<Vector3> worldposition = new();
+                        foreach (var position in room.m_roomSizes)
+                        {
+                            if (IsForbiddenPos(position)) continue;
+
+                            worldposition.Add(GridToWorld(position));
+                        }
+                            Vector2 size = new Vector2(m_floorScale.x, m_floorScale.z);
+                            m_ocl.DeployTrap(worldposition, trapType, size);
+                        
+                        break;
                     }
-                    break;
             }
         }
     }
