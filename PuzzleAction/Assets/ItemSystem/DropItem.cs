@@ -62,7 +62,7 @@ public class DropItem : MonoBehaviour
         //    //Pool‚É•Ô‚·ˆ—
         //    pool.ReturnItem(prefab);
         //}
-        Debug.Log("Return");
+        //Debug.Log("Return");
         //return pool
     }
 }

@@ -11,6 +11,8 @@ public enum ItemType
 public class Data : Item
 {
     public int ID => m_data.ItemID;
+    public Grade grade => m_data.ItemGrade;
+    public float Rate => m_data.DropRate;
     public string ItemName => m_data.ItemName;
     public string info => m_data.Description;
     public Sprite icon => m_data.ItemIcon;

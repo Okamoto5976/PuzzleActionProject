@@ -9,21 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9216a225e497ee45905973de58a1361, type: 3}
+  m_Script: {fileID: 11500000, guid: be6e804747448504090eb3b9794ca480, type: 3}
   m_Name: Arrow
-  m_EditorClassIdentifier: Assembly-CSharp::TrapItem
-  m_value: 2
-  m_type: 0
+  m_EditorClassIdentifier: Assembly-CSharp::Data
+  m_value: 0
+  m_type: 1
   m_data:
     itemID: 0
-    itemName: 
+    itemName: Arrow
     itemIcon: {fileID: 0}
     description: 
     maxStack: 0
-    dropRate: 0
+    dropRate: 20
     itemGrade: 0
     itemType: 0
     price: 0
-  trapValue: 0
-  TrapPrefab: {fileID: 0}
-  m_enumTrap: 0
+    type: 0
