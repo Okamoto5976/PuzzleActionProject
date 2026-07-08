@@ -335,17 +335,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &1228153191 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6647856782984371037, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-  m_PrefabInstance: {fileID: 3202809284712386498}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e30b690d702d38c4e9c997f0928327dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuUI
 --- !u!1 &1556693549
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,16 +462,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!1 &1657086001 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3573474587166616909, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-  m_PrefabInstance: {fileID: 3202809284712386498}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2117556625 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3246868586156816132, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-  m_PrefabInstance: {fileID: 3202809284712386498}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3202809284712386498
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -491,14 +470,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2292873461544004709, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1228153191}
-    - target: {fileID: 2292873461544004709, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitSesssion
-      objectReference: {fileID: 0}
     - target: {fileID: 2389595870147974992, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -583,42 +554,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5828850472709358566, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1228153191}
-    - target: {fileID: 5828850472709358566, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TransitionTitle
-      objectReference: {fileID: 0}
-    - target: {fileID: 6263396852397955636, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1228153191}
-    - target: {fileID: 6263396852397955636, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TransitionOption
-      objectReference: {fileID: 0}
-    - target: {fileID: 6416666998579117480, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1228153191}
-    - target: {fileID: 6416666998579117480, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TransitionGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 6647856782984371037, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: m_scene.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6647856782984371037, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: 'm_scene.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2117556625}
-    - target: {fileID: 6647856782984371037, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
-      propertyPath: 'm_scene.Array.data[1]'
-      value: 
-      objectReference: {fileID: 1657086001}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
