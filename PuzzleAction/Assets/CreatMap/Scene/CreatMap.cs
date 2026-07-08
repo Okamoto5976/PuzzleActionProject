@@ -17,7 +17,7 @@ public class CreatMap : MonoBehaviour
 
     [SerializeField] private MapClassData m_mapClassData;
     [Header("Ref")]
-    [SerializeField] private ObjectConsolidation1 m_ocl;
+    [SerializeField] private ObjectConsolidation m_ocl;
     [SerializeField] private Poolinstallationpulling m_enemySpawner;
 
     [Header("Scale Setthings")]
@@ -189,7 +189,7 @@ public class CreatMap : MonoBehaviour
 
                 // create floor
                 var floor = m_floorObjects[x + y * m_size.x];
-                Vector3 floorPosition = new(origin.x + x * floorSize.x, 0, origin.y + y * floorSize.z);�@//��
+                Vector3 floorPosition = new(origin.x + x * floorSize.x, 0, origin.y + y * floorSize.z);
                 floor.transform.position = floorPosition;
                 floor.transform.localScale = floorSize;
                 floor.name = name + ")";
@@ -351,7 +351,7 @@ public class CreatMap : MonoBehaviour
                         }
                             Vector2 size = new Vector2(m_floorScale.x, m_floorScale.z);
                             m_ocl.DeployTrap(worldposition, trapType, size);
-                        
+
                         break;
                     }
             }

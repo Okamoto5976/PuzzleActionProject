@@ -69,8 +69,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gas_Trap
   m_attackSE: {fileID: 0}
   m_damageSE: {fileID: 0}
-  m_team: 0
-  m_data: {fileID: 0}
+  m_team: 2
+  m_data: {fileID: 11400000, guid: fa617aaf14f0bcd41b53a5c2c51b811c, type: 2}
   m_trapdata: {fileID: 11400000, guid: 42199da7c23f3c64ab604241beea3e72, type: 2}
 --- !u!54 &2689182094028526295
 Rigidbody:

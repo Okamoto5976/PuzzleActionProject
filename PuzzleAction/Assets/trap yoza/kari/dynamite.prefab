@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4574407748689759281
+--- !u!1 &8897296333762648534
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3622298716019010601}
-  - component: {fileID: 6514627292463535112}
-  - component: {fileID: 1931516938173031011}
-  - component: {fileID: 8180342303953439774}
+  - component: {fileID: 1465111920557476121}
+  - component: {fileID: 1288153900421120325}
+  - component: {fileID: 74107977654017426}
+  - component: {fileID: 8988422936948150200}
   m_Layer: 0
-  m_Name: numa
+  m_Name: dynamite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3622298716019010601
+--- !u!4 &1465111920557476121
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4574407748689759281}
+  m_GameObject: {fileID: 8897296333762648534}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,13 +34,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6514627292463535112
+--- !u!65 &1288153900421120325
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4574407748689759281}
+  m_GameObject: {fileID: 8897296333762648534}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -55,30 +55,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1931516938173031011
+--- !u!114 &74107977654017426
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4574407748689759281}
+  m_GameObject: {fileID: 8897296333762648534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3fcfd29f6841f4e9e136d0ef81a9bd, type: 3}
+  m_Script: {fileID: 11500000, guid: e38c83a312c54b34c8d9bb0089751fd0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Swamp_Trap
+  m_EditorClassIdentifier: Assembly-CSharp::Dynamite_Trap
   m_attackSE: {fileID: 0}
   m_damageSE: {fileID: 0}
-  m_team: 0
-  m_data: {fileID: 0}
-  m_trapdata: {fileID: 11400000, guid: a179d8b723891d142bc0ef208cab3555, type: 2}
---- !u!54 &8180342303953439774
+  m_team: 2
+  m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_trapdata: {fileID: 11400000, guid: 5a6159b9ee2dc8c4e8b15fb1e7098253, type: 2}
+--- !u!54 &8988422936948150200
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4574407748689759281}
+  m_GameObject: {fileID: 8897296333762648534}
   serializedVersion: 5
   m_Mass: 1
   m_LinearDamping: 0

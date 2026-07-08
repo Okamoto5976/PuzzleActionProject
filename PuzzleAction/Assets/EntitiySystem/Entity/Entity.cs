@@ -67,7 +67,7 @@ abstract public class Entity : MonoBehaviour
     [SerializeField] protected TeamType m_team;
     public TeamType Team => m_team;
 
-    [SerializeField] private EntityData m_data;
+    [SerializeField] protected EntityData m_data;
 
     //�Q�[���I�[�o�[�ȂǃC�x���g�� �ړ��L�[����
     protected bool m_canMove;

@@ -21,7 +21,7 @@ public class TrapBase : Entity
     //basevalue
     protected float m_basevalue;
 
-    private DamageData m_data;
+    private DamageData m_damageData;
 
     //Receive orientation
 
@@ -64,8 +64,9 @@ public class TrapBase : Entity
         m_basevalue =
             baseValue;
 
-        m_data = new DamageData
+        m_damageData = new DamageData
         {
+
             Attack = STR + m_basevalue,
             AttackType = AttackType.None,
             //HitRate
@@ -131,7 +132,7 @@ public class TrapBase : Entity
                 return;
         }
 
-        target.TakeDamage(m_data);
+        target.TakeDamage(m_damageData);
 
         Debug.Log(
             $"{other.name} Hit");
