@@ -6,23 +6,20 @@ public class DirectionMarker : MonoBehaviour
     private Transform m_player;
 
     [SerializeField]
-    private Transform m_arrow;
+    private float m_height = 0.02f;
 
     private void LateUpdate()
     {
         if (m_player == null)
             return;
 
-        // プレイヤーの位置へ追従
-        transform.position =
-            m_player.position +
-            Vector3.up * 0.02f;
+        // プレイヤーの足元に追従
+        transform.position = m_player.position + Vector3.up * m_height;
 
-        // 矢印だけ回転
-        m_arrow.rotation =
-            Quaternion.Euler(
-                90f,
-                m_player.eulerAngles.y,
-                0f);
+        // プレイヤーの向きに合わせる
+        transform.rotation = Quaternion.Euler(
+            0f,
+            m_player.eulerAngles.y,
+            0f);
     }
 }
