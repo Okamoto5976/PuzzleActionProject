@@ -157,9 +157,6 @@ public class EnemyController : Entity
 
     public void UseItem(Vector3 dir)
     {
-        //ArrowTrap arrow = Instantiate(
-        //    m_arrowPrefab
-        //);
         ItemRecieveData data = new ItemRecieveData
         {
             entity = this,
@@ -170,8 +167,6 @@ public class EnemyController : Entity
 
         m_itemManager.OnUseItem(m_item ,data);
 
-        //arrow.Init(this, dir, 5);
-        //arrow.transform.position = transform.position;
     }
     //-----common-----
     public void Stop()
