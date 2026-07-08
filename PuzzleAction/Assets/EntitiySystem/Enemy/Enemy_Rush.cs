@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using System.Collections;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -7,19 +8,21 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     private EnemyController m_controller;
 
     private Vector3 m_dir;
-    private Vector3 m_targetPos; //save value
+    private Vector3 m_targetPos;
 
     private bool m_isRunning;
     private bool m_preparing;
-    
+
     private LineRenderer m_line;
+
+    private Coroutine m_rushCoroutine;
 
     public Vector3 CurrentDirection => m_dir;
     public bool IsRunning => m_isRunning;
 
     private void Awake()
     {
-        m_line = GetComponent<LineRenderer>();  
+        m_line = GetComponent<LineRenderer>();
         m_line.enabled = false;
     }
 
@@ -30,14 +33,19 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 
     public void Execute()
     {
+        if (m_controller.Target == null) return;
+
         if (m_isRunning)
         {
             m_controller.Move(m_dir, m_controller.EvasionSpeed);
 
-            if (Vector3.Distance(transform.position, m_targetPos) < 0.5f)
+            Vector3 toTarget =m_targetPos -transform.position;
+
+            if (Vector3.Dot(toTarget, m_dir) <= 0f)
             {
                 Stop();
             }
+
             return;
         }
 
@@ -47,9 +55,11 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
             return;
         }
 
-        StartCoroutine(Rush());
+        if (m_rushCoroutine == null)
+        {
+            m_rushCoroutine = StartCoroutine(Rush());
+        }
     }
-
 
     IEnumerator Rush()
     {
@@ -58,7 +68,8 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         m_targetPos = m_controller.Target.Value;
 
         m_dir = (m_targetPos - transform.position).normalized;
-        m_dir.y = 0;
+
+        m_dir.y = 0f;
 
         m_line.enabled = true;
 
@@ -70,11 +81,12 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         m_line.enabled = false;
 
         yield return new WaitForSeconds(10f);
+
+        m_rushCoroutine = null;
     }
+
     private void DrawLine()
     {
-        if (m_controller.Target == null) return;
-
         m_line.positionCount = 2;
 
         m_line.SetPosition(0, transform.position);
@@ -84,10 +96,15 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 
     public void Stop()
     {
+        if (m_rushCoroutine != null)
+        {
+            StopCoroutine(m_rushCoroutine);
+            m_rushCoroutine = null;
+        }
+
         m_isRunning = false;
         m_preparing = false;
 
         m_line.enabled = false;
     }
-
 }

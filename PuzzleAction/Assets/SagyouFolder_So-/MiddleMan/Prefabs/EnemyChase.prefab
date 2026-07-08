@@ -250,10 +250,9 @@ MonoBehaviour:
   m_findRange: 8
   m_attackRange: 1
   m_attackCooldown: 1
-  m_hitCollider: {fileID: 0}
   m_attackHitBox:
-    m_transform: {fileID: 0}
-    m_radius: 0
+    m_transform: {fileID: 5192190198220617858}
+    m_radius: 1
   m_item: {fileID: 0}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
