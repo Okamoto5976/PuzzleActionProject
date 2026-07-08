@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class MoneyUi : MonoBehaviour
+public class GameManagerMoneyUI : MonoBehaviour
 {
     [SerializeField] private Money moneyManager;
     [SerializeField] private TextMeshProUGUI moneyText;

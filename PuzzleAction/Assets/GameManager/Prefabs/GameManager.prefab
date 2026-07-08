@@ -58,7 +58,7 @@ MonoBehaviour:
   m_gameOverEvent: {fileID: 0}
   m_gameClearEvent: {fileID: 0}
   m_sceneEvent: {fileID: 11400000, guid: f36914501f8c0794181e6831ceed798d, type: 2}
-  m_mapPhaseScene: {fileID: 102900000, guid: d9dfefe8103b83a4180539406b87f87e, type: 3}
+  m_mapPhaseScene: {fileID: 11400000, guid: 8a9d9297257ddd349993156abe1ce1a1, type: 2}
 --- !u!114 &8379971941369495119
 MonoBehaviour:
   m_ObjectHideFlags: 0

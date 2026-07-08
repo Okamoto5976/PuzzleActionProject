@@ -30,7 +30,7 @@ public struct ShopItem
 
     //private List<Data> t_itemDataList = new();
 
-    [SerializeField] private ClearCount m_currentLevel;
+    [SerializeField] private IntRunTime m_currentLevel;
     [SerializeField] private TemporaryItemManager m_temporaryItemManager;
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;

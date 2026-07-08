@@ -920,10 +920,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8423059627622995165, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
-      propertyPath: m_mapPhaseScene
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a9d9297257ddd349993156abe1ce1a1, type: 2}
     - target: {fileID: 8845973713216219996, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 12.71593
@@ -2000,8 +1996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbaeb2d7d767e641ab3b4e2b7114297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveManager
-  m_saveData: {fileID: 0}
-  m_inventorySystem: {fileID: 0}
+  m_saveData: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
+  m_inventorySystem: {fileID: 1128147158}
 --- !u!4 &1272142996
 Transform:
   m_ObjectHideFlags: 0
@@ -2011,7 +2007,7 @@ Transform:
   m_GameObject: {fileID: 1272142994}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 440.3386, y: -0.00005, z: 116.8927}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5593,6 +5589,10 @@ PrefabInstance:
     - target: {fileID: 6110719711311382389, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6591543693613818236, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7715865427276522527, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
       propertyPath: m_Name

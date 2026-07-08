@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TimeManager timemanager;
 
     [Header("Clear")]
-    [SerializeField] private ClearCount m_clearCount;
+    [SerializeField] private IntRunTime m_clearCount;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         //m_isGameOver = true;
 
         //クリア階層記録　
-        m_clearCount.Add(1);
+        m_clearCount.AddValue(1);
         Debug.Log($"クリア回数：{m_clearCount.Value}");
 
         //リザルト表示、関数を呼ぶ
@@ -106,6 +106,8 @@ public class GameManager : MonoBehaviour
         //SceneMove Tile
 
         m_gameOverUIEvent.Raise(true);
+
+        //titel or restart
     }
 
 }

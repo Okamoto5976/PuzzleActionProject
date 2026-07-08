@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class MoneyUI : MonoBehaviour
 {
-    private TMP_Text moneyText;
+    [SerializeField] private TMP_Text moneyText;
 
     private void Awake()
     {
         // 最初にコンポーネントを取得
-        moneyText = GetComponent<TMP_Text>();
+        //moneyText = GetComponent<TMP_Text>();
     }
 
     /// <summary>
