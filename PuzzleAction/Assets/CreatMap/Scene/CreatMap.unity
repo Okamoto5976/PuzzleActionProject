@@ -5367,7 +5367,7 @@ PrefabInstance:
     - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_currentLevel
       value: 
-      objectReference: {fileID: 11400000, guid: 5941a506a3cc5f04ca2734ec88234660, type: 2}
+      objectReference: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
     - target: {fileID: 6648567177140233388, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_infoTextPrefab
       value: 

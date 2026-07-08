@@ -45,7 +45,8 @@ public struct ShopItem
     [SerializeField] private TextMeshProUGUI m_moneyText;
 
     //‰¼@Money‚ÌDataSO‚ğ‚Â
-    [SerializeField] private int m_money;
+    [SerializeField] private IntRunTime m_moneyDataSO;
+    private int m_money;
 
     //InfoText Prefab
     [SerializeField] private InfoText m_infoTextPrefab;
@@ -63,6 +64,8 @@ public struct ShopItem
     //‰¼@Initialize‚ÅŒÄ‚Ô
     private void Awake()
     {
+        m_money = m_moneyDataSO.Value;
+
         m_infoTextPrefab.gameObject.SetActive(false);
         m_moneyText.text = "money :" + m_money.ToString();
 
