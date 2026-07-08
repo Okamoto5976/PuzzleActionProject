@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9216a225e497ee45905973de58a1361, type: 3}
+  m_Name: Rock
+  m_EditorClassIdentifier: Assembly-CSharp::TrapItem
+  m_value: 0
+  m_type: 0
+  m_data:
+    itemID: 0
+    itemName: 
+    itemIcon: {fileID: 0}
+    description: 
+    maxStack: 99
+    dropRate: 0
+    itemGrade: 0
+    itemType: 0
+    price: 0
+    Type: 0
+  trapValue: 0
+  TrapPrefab: {fileID: 0}
+  m_enumTrap: 0
