@@ -1,17 +1,14 @@
 using System;
-using System.Diagnostics.Tracing;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [System.Serializable]
 public struct Effect
 {
-    public GameObject m_effectPrefab;
-    public Vector3 m_effectPos;
-    public Quaternion m_effectRot;
+    public EffectData effectData;
+    public Vector3 effectPos;
+    public Quaternion effectRot;
 
-    public float m_lifeTime;
+    //public float m_lifeTime;
 }
 
 [CreateAssetMenu(fileName = "EffectEventDataSO", menuName = "Scriptable Objects/EffectEventDataSO")]

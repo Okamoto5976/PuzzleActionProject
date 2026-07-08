@@ -3,24 +3,42 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour
 {
     [SerializeField]
-    private EffectPoolManager m_effectPoolManager;
+    private Middleman_Effect m_effectPool;
 
-    [SerializeField]
-    private EffectData[] m_effectDatas;
+    //[SerializeField]
+    //private EffectData[] m_effectDatas;
 
-    public void PlayEffect(int index, Vector3 position)
+    [SerializeField] EffectEventDataSO m_effectEventSO;
+
+    private void OnEnable()
     {
-        if (index < 0 || index >= m_effectDatas.Length)
-            return;
+        m_effectEventSO.Register(PlayEffect);
+    }
 
-        EffectData data = m_effectDatas[index];
+    private void OnDisable()
+    {
+        m_effectEventSO.Unregister(PlayEffect);
+    }
 
-        GameObject obj =
-            m_effectPoolManager.Get(data.EffectPrefab);
+    public void PlayEffect(Effect data)
+    {
+        //if (index < 0 || index >= m_effectDatas.Length)
+        //    return;
+
+        //Enum_EffectType type = Enum_EffectType.Hit;
+
+        //EffectData data = m_effectDatas[index];
+
+        //GameObject obj =
+        //    m_effectPool.Get(data.EffectPrefab);
+
+        EffectObj obj = m_effectPool.GetEffect(data.effectData.Type);
 
         obj.transform.SetPositionAndRotation(
-            position,
-            Quaternion.identity);
+            data.effectPos,
+            data.effectRot);
+
+        obj.gameObject.SetActive(true);
 
         ParticleSystem particle =
             obj.GetComponent<ParticleSystem>();
@@ -31,19 +49,22 @@ public class EffectManager : MonoBehaviour
             particle.Play();
         }
 
-        AutoReturn autoReturn =
-            obj.GetComponent<AutoReturn>();
+        obj.Initialize(data.effectData.Duration);
 
-        if (autoReturn != null)
-        {
-            autoReturn.Initialize(
-                this,
-                data.Duration);
-        }
+
+        //AutoReturn autoReturn =
+        //    obj.GetComponent<AutoReturn>();
+
+        //if (autoReturn != null)
+        //{
+        //    autoReturn.Initialize(
+        //        this,
+        //        data.Duration);
+        //}
     }
 
-    public void ReturnPool(GameObject obj)
-    {
-        m_effectPoolManager.Return(obj);
-    }
+    //public void ReturnPool(GameObject obj)
+    //{
+    //    m_effectPool.Return(obj);
+    //}
 }
