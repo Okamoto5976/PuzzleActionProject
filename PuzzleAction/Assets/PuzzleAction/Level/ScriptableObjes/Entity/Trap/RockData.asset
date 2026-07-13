@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RockData
   m_EditorClassIdentifier: Assembly-CSharp::RockData
   Speed: 5
+  range: 30
   damage: 20
-  range: 10
