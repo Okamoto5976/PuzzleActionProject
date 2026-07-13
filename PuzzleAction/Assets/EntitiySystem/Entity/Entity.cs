@@ -42,7 +42,7 @@ abstract public class Entity : MonoBehaviour
 
     //component
     protected Rigidbody m_rb;
-    //protected Animator m_anim;
+    protected Animator m_anim;
     protected EntityHP m_entityHP;
 
     protected EntityBuffSystem m_buffSystem;
@@ -94,6 +94,7 @@ abstract public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        m_anim = GetComponentInChildren<Animator>();
         m_entityHP = GetComponent<EntityHP>();
         m_audioSource=GetComponent<AudioSource>();
 

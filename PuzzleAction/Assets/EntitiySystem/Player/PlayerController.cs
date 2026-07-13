@@ -76,13 +76,22 @@ public class PlayerController : Entity
         Vector2 input = m_moveAction.action.ReadValue<Vector2>();
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
-        //ˆÚ“®Žž‚Ì¶‰E”½“]
-        
-        if(input.x>0.1f)
+        if(input.x != 0f ||  input.y != 0f)
         {
-            transform.localScale = new Vector3(2,2,2);
+            m_anim.SetBool("Run", true);
         }
-        else if(input.x<-0.1f)
+        else
+        {
+            m_anim.SetBool("Run", false);
+        }
+
+        //ˆÚ“®Žž‚Ì¶‰E”½“]
+
+        if (input.x > 0.1f)
+        {
+            transform.localScale = new Vector3(2, 2, 2);
+        }
+        else if (input.x < -0.1f)
         {
             transform.localScale = new Vector3(-2, 2, 2);
         }
