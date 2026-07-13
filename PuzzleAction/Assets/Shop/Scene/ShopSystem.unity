@@ -148,11 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc51282e7a5d804186198730622b627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
-  m_currentLevel: {fileID: 0}
-  m_temporaryItemManager: {fileID: 0}
-  m_onGenerateShopInventories: {fileID: 0}
-  m_shopCount: {fileID: 0}
-  m_shopIdEvent: {fileID: 0}
+  m_currentLevel: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
+  m_temporaryItemManager: {fileID: 1276386045}
+  m_onGenerateShopInventories: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
+  m_shopCount: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
+  m_shopIdEvent: {fileID: 11400000, guid: 5eebf7a62372b904b91ac504c2d6f6e9, type: 2}
   m_goodsPrefab:
   - {fileID: 573661937}
   - {fileID: 1866028384}
@@ -161,7 +161,7 @@ MonoBehaviour:
   - {fileID: 1360420704}
   - {fileID: 318051730}
   m_moneyText: {fileID: 1877500332}
-  m_moneyDataSO: {fileID: 0}
+  m_moneyDataSO: {fileID: 11400000, guid: 23497dd6b185c9a4cbceb0b78cf42061, type: 2}
   m_infoTextPrefab: {fileID: 2798160629299818821}
   m_inventorySystem: {fileID: 0}
   m_shopInventories: []
@@ -272,11 +272,131 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9176152510228260273, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 560284200190739217, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 36772550}
   m_SourcePrefab: {fileID: 100100000, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
+--- !u!114 &36772547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9176152510228260273, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
+  m_PrefabInstance: {fileID: 36772546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!1 &36772548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 560284200190739217, guid: c76689d20a9bd6f40b23503a3495f96f, type: 3}
+  m_PrefabInstance: {fileID: 36772546}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &36772550
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36772548}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &40579908
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +596,7 @@ MonoBehaviour:
   m_inventory: {fileID: 1712733897}
   m_itemId: 1
   m_speechBubble: {fileID: 801678118}
-  m_messageManager: {fileID: 1162773484}
+  m_messageManager: {fileID: 0}
   m_timer: {fileID: 1469426882}
 --- !u!114 &86882427
 MonoBehaviour:
@@ -2002,7 +2122,7 @@ MonoBehaviour:
   m_inventory: {fileID: 1712733897}
   m_itemId: 5
   m_speechBubble: {fileID: 801678118}
-  m_messageManager: {fileID: 1162773484}
+  m_messageManager: {fileID: 0}
   m_timer: {fileID: 1469426882}
 --- !u!1 &635923904
 GameObject:
@@ -2820,7 +2940,7 @@ MonoBehaviour:
   m_inventory: {fileID: 1712733897}
   m_itemId: 2
   m_speechBubble: {fileID: 801678118}
-  m_messageManager: {fileID: 1162773484}
+  m_messageManager: {fileID: 0}
   m_timer: {fileID: 1469426882}
 --- !u!114 &1025797059
 MonoBehaviour:
@@ -2967,7 +3087,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1162773485}
-  - component: {fileID: 1162773484}
+  - component: {fileID: 1162773486}
+  - component: {fileID: 1162773487}
   m_Layer: 0
   m_Name: MessageManager
   m_TagString: Untagged
@@ -2975,18 +3096,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1162773484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1162773483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6c5babb4057e6544a23af8eafdbecb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MessageManager
 --- !u!4 &1162773485
 Transform:
   m_ObjectHideFlags: 0
@@ -3002,6 +3111,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1162773486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162773483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52bbe6e89be8a9349ba4cd291daf53be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MessageManager
+  m_messages: []
+  m_speakerText: {fileID: 0}
+  m_speechParent: {fileID: 36772548}
+  m_button: {fileID: 0}
+--- !u!114 &1162773487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162773483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0168f8116f1e01945a5e79848d803ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TextDisplay_02
+  m_messageText: {fileID: 36772547}
+  m_audioSource: {fileID: 36772550}
+  m_audioClip: {fileID: 8300000, guid: b15ba316fe8840949b07f49076415f39, type: 3}
+  m_pitch: 1
 --- !u!1 &1190609352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,8 +3429,61 @@ MonoBehaviour:
   m_inventory: {fileID: 1712733897}
   m_itemId: 3
   m_speechBubble: {fileID: 801678118}
-  m_messageManager: {fileID: 1162773484}
+  m_messageManager: {fileID: 0}
   m_timer: {fileID: 1469426882}
+--- !u!1 &1276386044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1276386046}
+  - component: {fileID: 1276386045}
+  m_Layer: 0
+  m_Name: TemporaryItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1276386045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276386044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2806fc0b786c534ea3ddffc9e3f6ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TemporaryItemManager
+  m_onGenerateShopInventory: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
+  m_masterItemDatas:
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
+  - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
+  - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
+  - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
+  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
+--- !u!4 &1276386046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276386044}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.26577, y: 0, z: 11.08082}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1277907570 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8760234483950188809, guid: 196aa87d38410d14390ee5c3df4010ea, type: 3}
@@ -3634,6 +3828,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6731c0cce4dcb640aef1eb11d6c3a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
+  m_messageManager: {fileID: 0}
+  waitTime: 5
 --- !u!4 &1469426883
 Transform:
   m_ObjectHideFlags: 0
@@ -4502,7 +4698,7 @@ MonoBehaviour:
   m_inventory: {fileID: 1712733897}
   m_itemId: 4
   m_speechBubble: {fileID: 801678118}
-  m_messageManager: {fileID: 1162773484}
+  m_messageManager: {fileID: 0}
   m_timer: {fileID: 1469426882}
 --- !u!1 &2009581007
 GameObject:
@@ -4921,3 +5117,4 @@ SceneRoots:
   - {fileID: 1469426883}
   - {fileID: 36079957}
   - {fileID: 36772546}
+  - {fileID: 1276386046}

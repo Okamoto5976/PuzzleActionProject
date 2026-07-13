@@ -6,16 +6,35 @@ using Unity.VisualScripting;
 public class MessageManager : MonoBehaviour
 {
     [SerializeField] private MessageSO[] m_messages;
-    [SerializeField] private TextMeshProUGUI m_messageText;
     [SerializeField] private TextMeshProUGUI m_speakerText;
     [SerializeField] private GameObject m_speechParent ;
     [SerializeField] private UnityEngine.UI.Button m_button;
     private int m_index = 0;
+    private TextDisplay_02 m_textDisplay;
 
-    void Start()
+    private void Awake()
+    {
+        if (m_textDisplay == null)
+        {
+            m_textDisplay = GetComponent<TextDisplay_02>();
+
+        }
+    }
+
+   private  void Start()
     {
         m_speechParent.SetActive(true);
-        m_button.onClick.AddListener(ShowCloseMessage);
+        if (m_button != null)
+        {
+            m_button.onClick.AddListener(ShowCloseMessage);
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TestMessage();
+        }
     }
 
     //通常会話再生（Noneのみ）
@@ -74,8 +93,12 @@ public class MessageManager : MonoBehaviour
     {
         //吹き出しを表示
         m_speechParent.SetActive(true);
-        //メッセージ作成
-        m_messageText.text = itemName + "wo" + count + "Buy";
+        string message = itemName + "を" + count + "個購入しました。";
+        if(m_textDisplay != null)
+        {
+            m_textDisplay.ShowMessageGradually(message);
+        }
+
         if (m_speakerText != null)
         {
             m_speakerText.text = "Shop";
@@ -92,7 +115,11 @@ public class MessageManager : MonoBehaviour
         //        list.Add(data);
         //    }
         //}
-        if (list.Count == 0) return;
+        if (list.Count == 0)
+        {
+            Debug.Log("ランダムメッセージがありません");
+            return;
+        }
 
         int rand = Random.Range(0, list.Count);
         m_speechParent.SetActive(true);
@@ -115,19 +142,45 @@ public class MessageManager : MonoBehaviour
         }
     }
 
-
     void Show(MessageSO data)
     {
-        m_messageText.text = data.message;
+        if (m_textDisplay != null)
+        {
+        m_textDisplay.ShowMessageGradually(data.message);
+        }
 
         if (m_speakerText != null)
+        {
             m_speakerText.text = data.speaker;
+        }
     }
 
     void EndMessage()
     {
         m_speechParent.SetActive(false);
-        m_messageText.text = "";
-        if (m_speakerText != null) m_speakerText.text = "";
+        if (m_textDisplay != null)
+        {
+            m_textDisplay.ShowMessage("");
+        }
+
+        if (m_speakerText != null)
+        {
+            m_speakerText.text = "";
     }
+}
+    private void TestMessage()
+    {
+        m_speechParent.SetActive(true);
+
+        if (m_textDisplay != null)
+        {
+            m_textDisplay.ShowMessageGradually("テストメッセージです");
+        }
+
+        if (m_speakerText != null)
+        {
+            m_speakerText.text = "NPC";
+        }
+    }
+
 }
