@@ -13,13 +13,13 @@ public class DirectionMarker : MonoBehaviour
         if (m_player == null)
             return;
 
-        // プレイヤーの足元に追従
+        //Follows the player's feet.
         transform.position = m_player.position + Vector3.up * m_height;
 
-        // プレイヤーの向きに合わせる
+        //Align with the player's orientation.
         transform.rotation = Quaternion.Euler(
             0f,
-            m_player.eulerAngles.y,
+            m_player.eulerAngles.y + 180f,
             0f);
     }
 }
