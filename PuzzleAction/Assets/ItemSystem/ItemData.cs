@@ -7,9 +7,10 @@ public enum Type
 }
 public enum Grade
 {
-    Nomal,
+    Comon,
+    UnComon,
     Rara,
-    SparRara
+    Legend
 }
 [System.Serializable]
 public class ItemData

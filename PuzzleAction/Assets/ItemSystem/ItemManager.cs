@@ -92,9 +92,11 @@ public class ItemManager : MonoBehaviour
     }
 
     [Header("”roŠm—¦")]
-    [Range(0, 100)] public float Nomal = 60f;
-    [Range(0, 100)] public float Rara = 30f;
-    [Range(0, 100)] public float SparRara = 10f;
+
+    [Range(0, 100)] public float Comon = 50f;
+    [Range(0, 100)] public float UnComon =30f;
+    [Range(0, 100)] public float Rara = 15f;
+    [Range(0, 100)] public float Legend = 5f;
 
     public Data DrowItem(List <Data>items)
     {
@@ -118,20 +120,23 @@ public class ItemManager : MonoBehaviour
 
         float rand = Random.Range(0f, 100f);
 
-        if (rand < Nomal)
-            return Grade.Nomal;
+        if (rand < Comon)
+            return Grade.Comon;
 
-        rand -= Nomal;
+        rand -= Comon;
+
+        if(rand < UnComon)
+            return Grade.UnComon;
 
         if (rand < Rara)
             return Grade.Rara;
 
         rand -= Rara;
 
-        if (rand < SparRara)
-            return Grade.SparRara;
+        if (rand < Legend)
+            return Grade.Legend;
 
-        return Grade.SparRara;
+        return Grade.Legend;
     }
     //public Data DrowItem2(List <Data>items)
     //{
