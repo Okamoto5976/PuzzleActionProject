@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
@@ -118,27 +117,22 @@ public class PlayerController : Entity
 
         m_position.SetValue(transform.position);
 
+
+        m_isActive = m_input.IsActive;
+        m_isEvasion = m_input.IsEvasion;
+        m_isPrevious = m_input.IsPrevious;
+        m_isNext = m_input.IsNext;
+
         InputMove();
 
-        if(input.x != 0f ||  input.y != 0f)
+        InputHotber();
+
+        if (m_isActive)
         {
-            m_anim.SetBool("Run", true);
-        }
-        else
-        {
-            m_anim.SetBool("Run", false);
+            OnUseItem();
         }
 
-        //�ړ����̍��E���]
-
-        if (input.x > 0.1f)
-        {
-            transform.localScale = new Vector3(2, 2, 2);
-        }
-        else if (input.x < -0.1f)
-        {
-            transform.localScale = new Vector3(-2, 2, 2);
-        }
+       
 
         /*
         �ړ����̍��E����O���]
@@ -194,6 +188,15 @@ public class PlayerController : Entity
         // �ړ�����
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
+
+        if (input.x != 0f || input.y != 0f)
+        {
+            m_anim.SetBool("Run", true);
+        }
+        else
+        {
+            m_anim.SetBool("Run", false);
+        }
 
         //�ړ����̍��E���]
 
