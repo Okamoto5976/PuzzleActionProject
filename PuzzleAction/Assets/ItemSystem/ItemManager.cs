@@ -66,21 +66,32 @@ public class ItemManager : MonoBehaviour
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
-        Data data = DrowItem2(PlayerItems);
-        Debug.Log($"{data.name}({data.grade})"); 
+        Data data = DrowItem(PlayerItems);
+        Debug.Log($"{data.name}({data.grade})がドロップした");
         //int index = Random.Range(0, PlayerItems.Count);
         //Data data = PlayerItems[index];
+        foreach (var obj in DropItems)
+        {
+            if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
+            {
+                DropItem m_dropIndex = obj;
+                m_dropIndex.Initialize(data);
+                //obj.Initialize(data);
+                //set pos DropItem Position
+                m_dropIndex.gameObject.transform.position = pos;
+            }
 
-        int dropIndex = Random.Range(0, DropItems.Count);
-        DropItem m_dropItem = DropItems[dropIndex];
-        m_dropItem.Initialize(data);
-        //set pos DropItem Position
+        }
+        //int dropIndex = Random.Range(0, DropItems.Count);
+        //DropItem m_dropItem = DropItems[dropIndex];
+        //m_dropItem.Initialize(data);
+        ////set pos DropItem Position
         //m_dropItem.gameObject.transform.position = pos;
 
 
     }
 
-    [Header("")]
+    [Header("排出確率")]
     [Range(0, 100)] public float Nomal = 60f;
     [Range(0, 100)] public float Rara = 30f;
     [Range(0, 100)] public float SparRara = 10f;
@@ -100,8 +111,6 @@ public class ItemManager : MonoBehaviour
         int index = Random.Range(0, candidates.Count);
         //candidates.Clear();
         return candidates[index];
-        
-
     }
 
     private Grade GetRandomRarity()
@@ -124,53 +133,45 @@ public class ItemManager : MonoBehaviour
 
         return Grade.SparRara;
     }
-    public Data DrowItem2(List <Data>items)
-    {
-        float totalWeight = 0;
+    //public Data DrowItem2(List <Data>items)
+    //{
+    //    float totalWeight = 0;
 
-        foreach (var item in items)
-        {
-            totalWeight += item.Rate;
-        }
+    //    foreach (var item in items)
+    //    {
+    //        totalWeight += item.Rate;
+    //    }
 
-        float randomValue = Random.Range(0, totalWeight);
+    //    float randomValue = Random.Range(0, totalWeight);
 
-        foreach (var item in items)
-        {
-            if (randomValue < item.Rate)
-            {
-                return item;
-            }
+    //    foreach (var item in items)
+    //    {
+    //        if (randomValue < item.Rate)
+    //        {
+    //            return item;
+    //        }
 
-            randomValue -= item.Rate;
-        }
+    //        randomValue -= item.Rate;
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 //ランダムにアイテムを渡す
 public Item RandomGetItem()
     {
-        
+        Data data = DrowItem(DropList);
         int index = Random.Range(0, ItemList.Count); //アイテムを抽選する
         return ItemList[index]; // アイテムを渡す
 
     }
     //アイテムのエフェクトを呼び出す
 
-    public void RandomShopItem()
+    public Item RandomShopItem()
     {
         Data data = DrowItem(ShopList);
-        //int ShopIndex = Random.Range(0, ShopList.Count);
-        return ;// ShopList[ShopIndex];
+        int ShopIndex = Random.Range(0, ShopList.Count);
+        return data;  //ShopList[ShopIndex];
     }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Data data=　DrowItem2(PlayerItems);
-           
-             DropItemSetData(new Vector3(0, 1, 0));
-        }
-    }
+  
 
 }
