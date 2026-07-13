@@ -120,21 +120,28 @@ public class PlayerController : Entity
 
         InputMove();
 
-        m_isActive = m_input.IsActive;
-        m_isEvasion = m_input.IsEvasion;
-        m_isPrevious = m_input.IsPrevious;
-        m_isNext = m_input.IsNext;
-
-        InputHotber();
-
-        if(m_isActive)
+        if(input.x != 0f ||  input.y != 0f)
         {
-            OnUseItem();
+            m_anim.SetBool("Run", true);
+        }
+        else
+        {
+            m_anim.SetBool("Run", false);
+        }
 
+        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ï¿½ï¿½]
+
+        if (input.x > 0.1f)
+        {
+            transform.localScale = new Vector3(2, 2, 2);
+        }
+        else if (input.x < -0.1f)
+        {
+            transform.localScale = new Vector3(-2, 2, 2);
         }
 
         /*
-        ˆÚ“®Žž‚Ì¶‰E‰œŽè‘O”½“]
+        ï¿½Ú“ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½]
         if(input.x>0.1f)
         {
             transform.rotation = Quaternion.Euler(0f, 90f, 0f);
@@ -156,7 +163,7 @@ public class PlayerController : Entity
         */
 
         /*
-        ˆÚ“®•ûŒü‚ÉŒü‚­
+        ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÉŒï¿½ï¿½ï¿½
         if (m_moveDir.sqrMagnitude > 0.0001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
@@ -167,7 +174,7 @@ public class PlayerController : Entity
         }
         */
 
-        // ƒ_ƒbƒVƒ…ŽžŠÔŠÇ—
+        // ï¿½_ï¿½bï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÔŠÇ—ï¿½
         //if (m_isEvasion)
         //{
         //    m_evasionTimer -= Time.deltaTime;
@@ -178,17 +185,17 @@ public class PlayerController : Entity
         //    }
         //}
 
-        // ‘¬“xØ‚è‘Ö‚¦
+        // ï¿½ï¿½ï¿½xï¿½Ø‚ï¿½Ö‚ï¿½
         m_currentMoveSpeed = m_isEvasion ? EvasionSpeed : Speed;
     }
 
     private void InputMove()
     {
-        // ˆÚ“®“ü—Í
+        // ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
-        //ˆÚ“®Žž‚Ì¶‰E”½“]
+        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Eï¿½ï¿½ï¿½]
 
         if (input.x > 0.1f)
         {
