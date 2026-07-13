@@ -629,7 +629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  Drop: []
   DropList: []
   ShopList: []
   ItemList: []
@@ -655,9 +654,10 @@ MonoBehaviour:
   - {fileID: 1129856702}
   - {fileID: 482020428}
   - {fileID: 304365464}
-  Nomal: 60
+  Comon: 50
+  UnComon: 30
   Rara: 30
-  SparRara: 10
+  Legend: 5
 --- !u!4 &515084454
 Transform:
   m_ObjectHideFlags: 0

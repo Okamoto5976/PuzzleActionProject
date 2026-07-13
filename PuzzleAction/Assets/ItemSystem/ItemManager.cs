@@ -75,18 +75,12 @@ public class ItemManager : MonoBehaviour
             {
                 DropItem m_dropIndex = obj;
                 m_dropIndex.Initialize(data);
-                //obj.Initialize(data);
                 //set pos DropItem Position
                 m_dropIndex.gameObject.transform.position = pos;
             }
 
         }
-        //int dropIndex = Random.Range(0, DropItems.Count);
-        //DropItem m_dropItem = DropItems[dropIndex];
-        //m_dropItem.Initialize(data);
-        ////set pos DropItem Position
-        //m_dropItem.gameObject.transform.position = pos;
-
+        
 
     }
 
@@ -176,6 +170,12 @@ public Item RandomGetItem()
         //int ShopIndex = Random.Range(0, ShopList.Count);
         return data;  //ShopList[ShopIndex];
     }
-  
+  public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DropItemSetData(new Vector3(0,1,0));
+        }
+    }
 
 }
