@@ -474,6 +474,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2671203667477789170, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3573474587166616909, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4463656483753704271, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -553,6 +561,22 @@ PrefabInstance:
     - target: {fileID: 4463656483753704271, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164760257924870904, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563823631048305309, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621546003685476830, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818218196175402463, guid: 15c8b7b1acd4f8144afa4ac5235845fe, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
