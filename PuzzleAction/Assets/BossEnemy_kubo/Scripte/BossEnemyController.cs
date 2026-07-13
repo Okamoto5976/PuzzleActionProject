@@ -38,7 +38,6 @@ public class BossEnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public float AttackRange => m_attackRange;
     public Vector3 Forward => transform.forward;
-
     public bool IsAttacking => m_isAttacking;
 
     protected override void Awake()
@@ -59,6 +58,7 @@ public class BossEnemyController : Entity
             //    break;
 
             case Enum_BossType.Golem:
+
                 gameObject.AddComponent<Boss_Golem>();
                 break;
 

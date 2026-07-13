@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: Assembly-CSharp::TrapItem
   m_value: 0
-  m_type: 0
+  m_type: 1
   m_data:
     itemID: 0
     itemName: 
@@ -24,7 +24,7 @@ MonoBehaviour:
     itemGrade: 0
     itemType: 0
     price: 0
-    Type: 0
+    Type: 1
   trapValue: 0
   TrapPrefab: {fileID: 0}
-  m_enumTrap: 0
+  m_enumTrap: 4

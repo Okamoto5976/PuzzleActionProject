@@ -16,7 +16,7 @@ public class EnemyController : Entity
     [SerializeField] private float m_attackRange = 1.5f;
 
     [Header("Attack")]
-    [SerializeField] private float m_attackCooldown = 5f;
+    [SerializeField] private float m_attackCooldown = 1f;
     private float m_attackCooldownDuration;
     private bool m_isCooldownEnd = true;
 
@@ -43,21 +43,28 @@ public class EnemyController : Entity
 
         m_agent = GetComponent<NavMeshAgent>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
-        m_hitCollider = FindAnyObjectByType<HitCollider>();
 
         switch (m_type)
         {
             case Enum_EnemyType.Chase:
-                gameObject.AddComponent<Enemy_Chase>();
-                break;
+                {
+                    gameObject.AddComponent<Enemy_Chase>();
+                    m_hitCollider = GetComponent<HitCollider>();
+                    break;
+                }
 
             case Enum_EnemyType.Rush:
-                gameObject.AddComponent<Enemy_Rush>();
-                break;
+                {
+                    gameObject.AddComponent<Enemy_Rush>();
+                    m_hitCollider = GetComponent<HitCollider>();
+                    break;
+                }
 
             case Enum_EnemyType.Archer:
-                gameObject.AddComponent<Enemy_Archer>();
-                break;
+                {
+                    gameObject.AddComponent<Enemy_Archer>();
+                    break;
+                }
         }
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
@@ -75,12 +82,11 @@ public class EnemyController : Entity
     {
         base.Update();
 
-        if (m_target == null)
-            return;
+        if (m_target == null) return;
 
         HandleCooldown();
 
-        float distance =Vector3.Distance(transform.position, m_target.Value);
+        float distance = Vector3.Distance(transform.position, m_target.Value);
 
         HandleRotation(distance);
 
@@ -90,7 +96,9 @@ public class EnemyController : Entity
             return;
         }
 
-        if (m_type != Enum_EnemyType.Archer)
+        //Debug.Log($"distance = {distance} " + $" attackRange = {m_attackRange}");
+
+        if (m_type == Enum_EnemyType.Chase)
         {
             if (distance <= m_attackRange)
             {
@@ -135,7 +143,7 @@ public class EnemyController : Entity
         m_agent.Move(dir * m_agent.speed * Time.deltaTime);
     }
 
-    public void SetDestination( Vector3 targetPos, float speed)
+    public void SetDestination(Vector3 targetPos, float speed)
     {
         m_agent.isStopped = false;
 
@@ -149,12 +157,12 @@ public class EnemyController : Entity
     public void UseItem(Vector3 dir)
     {
         ItemRecieveData data = new ItemRecieveData
-            {
-                entity = this,
-                baseValue = STR,
-                pos = transform.position,
-                dir = dir
-            };
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = dir
+        };
 
         m_itemManager.OnUseItem(m_item, data);
     }
@@ -162,9 +170,8 @@ public class EnemyController : Entity
     public void Attack()
     {
 
-        Debug.Log("HIT!!!!!!!!!!!!!!!");
-        if (m_hitCollider == null)
-            return;
+
+        if (m_hitCollider == null) return;
 
         DamageData damage =
             new DamageData
@@ -183,7 +190,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : hit");
+        Debug.Log("EnemyController : HIT!!!!!");
     }
 
     public void Stop()
@@ -197,7 +204,7 @@ public class EnemyController : Entity
 
         if (dir == Vector3.zero) return;
 
-        transform.rotation =Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(dir),10f * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
     }
 
     private void HandleRotation(float distance)

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
@@ -12,6 +13,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 
     private bool m_isRunning;
     private bool m_preparing;
+    private bool m_hasHit;
 
     private LineRenderer m_line;
 
@@ -61,6 +63,40 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!m_isRunning) return;
+
+        if (m_hasHit) return;
+
+        Entity entity = other.GetComponentInParent<Entity>();
+
+        if (entity.Team == m_controller.Team) 
+            return;
+
+        DamageData damage =
+            new DamageData
+            {
+                Attack = (int)m_controller.STR,
+                HitRate = 100f,
+                CriticalRate = m_controller.CriticalRate,
+                CriticalDamage = m_controller.CriticalDamage,
+                BreakRate = m_controller.BreakRate,
+                Knockback = m_controller.KnockBack,
+                Stun = m_controller.Stun,
+                AttackDir = m_dir,
+                Attacker = m_controller,
+                AttackerSE = m_controller.AttackSE,
+                AudioSource = m_controller.AudioSource
+            };
+
+        entity.TakeDamage(damage);
+
+        m_hasHit = true;
+
+        Stop();
+    }
+
     IEnumerator Rush()
     {
         m_preparing = true;
@@ -77,6 +113,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 
         m_preparing = false;
         m_isRunning = true;
+        m_hasHit = false;
 
         m_line.enabled = false;
 
