@@ -150,6 +150,8 @@ public class Test : MonoBehaviour
 
     public void SetIndex(int index, bool isPassive)
     {
+        Debug.Log($"SetIndex : {index}");
+
         m_index = index;
         m_isPassive = isPassive;
     }
@@ -173,6 +175,7 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber1()
     {
+        Debug.Log($"Hotbar1 index = {m_index}");
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(0, m_index);
@@ -180,6 +183,8 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber2()
     {
+        Debug.Log($"Hotbar2 index = {m_index}");
+
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(1, m_index);
@@ -187,6 +192,8 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber3()
     {
+        Debug.Log($"Hotbar3 index = {m_index}");
+
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(2, m_index);

@@ -157,6 +157,9 @@ public class InventorySystem : MonoBehaviour
 
     public void UpdateUI()
     {
+        Debug.Log("UpdateUI");
+        Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
+
         // Active inventory
         for (int i = 0; i < activeSlots.Length; i++)
         {
@@ -307,6 +310,11 @@ for (int i = 0; i < hotbars.Length; i++)
         hotbars[hotberNumber] = index;
 
         hotbarSlots[hotberNumber].SetItem(activeInventory[index], index);
+
+        //’Ç‰Á
+        Debug.Log($"AddHotber : Slot={hotberNumber}, Index={index}");
+        Debug.Log($"hotbars =[{ hotbars[0]}, { hotbars[1]}, { hotbars[2]}]");
+
     }
 
     //Žg—p
