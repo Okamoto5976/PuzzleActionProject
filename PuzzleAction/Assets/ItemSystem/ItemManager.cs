@@ -6,16 +6,15 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-    public List<Data> Drop = new();
     public List<Data> DropList = new();
     public List<Data> ShopList = new();
     public List<Data> ItemList = new();
     public List<float> DropRateList = new();
-    //プレイヤーが使えるアイテム
+    //プレイヤー専用アイテム player-only item
     public List<Data> PlayerItems = new();
-    //敵専用アイテム
+    //敵専用アイテム Enemy-only item
     public List<Data> EnemyItems = new();
-    //private int nextId; //次のIDを管理する変数
+
     [SerializeField] private Middleman_Trap m_middleman_trap;
     //DropPool I_pool;
     //リスト初期化
@@ -166,7 +165,7 @@ public Item RandomGetItem()
     {
         Data data = DrowItem(DropList);
         int index = Random.Range(0, ItemList.Count); //アイテムを抽選する
-        return ItemList[index]; // アイテムを渡す
+        return data; //ItemList[index]; // アイテムを渡す
 
     }
     //アイテムのエフェクトを呼び出す
@@ -174,7 +173,7 @@ public Item RandomGetItem()
     public Item RandomShopItem()
     {
         Data data = DrowItem(ShopList);
-        int ShopIndex = Random.Range(0, ShopList.Count);
+        //int ShopIndex = Random.Range(0, ShopList.Count);
         return data;  //ShopList[ShopIndex];
     }
   
