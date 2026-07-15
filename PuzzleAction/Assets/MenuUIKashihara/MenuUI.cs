@@ -11,6 +11,8 @@ public class MenuUI : MonoBehaviour
         [NonSerialized] Count
     }
 
+    public bool IsOption { get; private set; }
+
     [Header("MenuScene")]
     [SerializeField] private GameObject[] m_scene;
 
@@ -18,12 +20,21 @@ public class MenuUI : MonoBehaviour
     {
         m_scene[(int)Scene.Option].SetActive(false);
         m_scene[(int)Scene.Title].SetActive(true);
+        IsOption = false;
     }
 
     public void TransitionOption()
     {
         m_scene[(int)Scene.Title].SetActive(false);
         m_scene[(int)Scene.Option].SetActive(true);
+        IsOption = true;
+    }
+
+    public void Back()
+    {
+        Debug.Log("Back");
+        if (IsOption) IsOption = false;
+
     }
 
     //impossible
@@ -36,6 +47,12 @@ public class MenuUI : MonoBehaviour
         //}
         //m_scene[(int)scene].SetActive(true);
     //}
+
+    public void CloseOption()
+    {
+        IsOption = false;
+    }
+
 
     public void TransitionGame()
     {
