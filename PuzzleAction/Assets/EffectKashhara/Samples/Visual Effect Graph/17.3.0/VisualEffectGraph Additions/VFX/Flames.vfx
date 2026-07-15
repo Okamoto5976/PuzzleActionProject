@@ -82,6 +82,7 @@ MonoBehaviour:
   m_SubOutputs:
   - {fileID: 8926484042661614540}
   - {fileID: 8926484042661615472}
+  useBaseColorMap: 3
   colorMapping: 1
   uvMode: 1
   flipbookLayout: 0
@@ -225,11 +226,11 @@ MonoBehaviour:
   stickyNoteInfos: []
   categories:
   - name: Emission
-    collapsed: 0
+    collapsed: 1
   - name: Velocity and Forces
-    collapsed: 0
+    collapsed: 1
   - name: Color
-    collapsed: 0
+    collapsed: 1
   - name: Size And Angle
     collapsed: 0
   - name: Texture
@@ -238,8 +239,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: -125
     y: -154
-    width: 1279
-    height: 2284
+    width: 1278
+    height: 2252
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -323,22 +324,6 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Lifetime
-    path: Lifetime
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 3
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
   - name: Effect Bounds
     path: 
     tooltip: 
@@ -417,6 +402,22 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
+  - name: Lifetime
+    path: Lifetime
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 3
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
   - name: Velocity and Forces
     path: 
     tooltip: 
@@ -428,37 +429,6 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: 
       m_SerializableObject: 
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Up Vector
-    path: 
-    tooltip: 
-    space: 0
-    spaceable: 1
-    sheetType: 
-    realType: DirectionType
-    defaultValue:
-      m_Type:
-        m_SerializableType: 
-      m_SerializableObject: 
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 1
-  - name: direction
-    path: Up Vector_direction
-    tooltip: The normalized direction.
-    space: -1
-    spaceable: 0
-    sheetType: m_Vector3f
-    realType: Vector3
-    defaultValue:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.0,"y":1.0,"z":0.0}'
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -480,6 +450,37 @@ MonoBehaviour:
     descendantCount: 1
   - name: direction
     path: Wind Direction_direction
+    tooltip: The normalized direction.
+    space: -1
+    spaceable: 0
+    sheetType: m_Vector3f
+    realType: Vector3
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":0.0,"y":1.0,"z":0.0}'
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Up Vector
+    path: 
+    tooltip: 
+    space: 0
+    spaceable: 1
+    sheetType: 
+    realType: DirectionType
+    defaultValue:
+      m_Type:
+        m_SerializableType: 
+      m_SerializableObject: 
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 1
+  - name: direction
+    path: Up Vector_direction
     tooltip: The normalized direction.
     space: -1
     spaceable: 0
@@ -541,22 +542,6 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Smokiness
-    path: Smokiness
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
   - name: Color Over Life
     path: Color Over Life
     tooltip: 
@@ -569,6 +554,22 @@ MonoBehaviour:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"colorKeys":[{"color":{"r":33.89674758911133,"g":33.89674758911133,"b":33.89674758911133,"a":1.0},"time":0.0},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.09117265790700913},{"alpha":0.9577465057373047,"time":0.7764706015586853},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Smokiness
+    path: Smokiness
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 1
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -651,6 +652,22 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
+  - name: Use Flipbook
+    path: Use Flipbook
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Bool
+    realType: Boolean
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: True
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
   - name: Texture
     path: Texture
     tooltip: 
@@ -667,38 +684,6 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
-  - name: Pivot
-    path: Pivot
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Vector3f
-    realType: Vector3
-    defaultValue:
-      m_Type:
-        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.0,"y":-0.38999998569488528,"z":0.0}'
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Exposure Weight
-    path: Exposure Weight
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
   - name: Soft Particle Fade Distance
     path: Soft Particle Fade Distance
     tooltip: 
@@ -711,22 +696,6 @@ MonoBehaviour:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
       m_SerializableObject: 0.2
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: Use Flipbook
-    path: Use Flipbook
-    tooltip: 
-    space: -1
-    spaceable: 0
-    sheetType: m_Bool
-    realType: Boolean
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: True
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -763,8 +732,40 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
+  - name: Exposure Weight
+    path: Exposure Weight
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
+  - name: Pivot
+    path: Pivot
+    tooltip: 
+    space: -1
+    spaceable: 0
+    sheetType: m_Vector3f
+    realType: Vector3
+    defaultValue:
+      m_Type:
+        m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"x":0.0,"y":-0.38999998569488528,"z":0.0}'
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
   m_ImportDependencies: []
-  m_GraphVersion: 18
+  m_GraphVersion: 19
   m_ResourceVersion: 1
   m_SubgraphDependencies:
   - {fileID: 5371698748595113096, guid: a2130c5e66415864eb87d77596ecb008, type: 3}
@@ -1211,10 +1212,6 @@ VisualEffectResource:
     m_RendererSettings:
       motionVectorGenerationMode: 0
       shadowCastingMode: 0
-      rayTracingMode: 0
-      receiveShadows: 0
-      reflectionProbeUsage: 0
-      lightProbeUsage: 0
     m_CullingFlags: 3
     m_UpdateMode: 0
     m_PreWarmDeltaTime: 0.05
@@ -1299,14 +1296,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UIIgnoredErrors: []
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661614684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1381,9 +1370,9 @@ MonoBehaviour:
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
-  m_UIPosition: {x: 410, y: 1375}
+  m_UIPosition: {x: 424, y: 1189}
   m_UICollapsed: 0
-  m_UISuperCollapsed: 1
+  m_UISuperCollapsed: 0
   m_InputSlots:
   - {fileID: 8926484042661614757}
   - {fileID: 8926484042661614761}
@@ -2382,7 +2371,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615260}
   m_ExposedName: Effect Bounds
   m_Exposed: 1
-  m_Order: 10
+  m_Order: 1
   m_Category: Emission
   m_Min:
     m_Type:
@@ -2735,7 +2724,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615270}
   m_ExposedName: Initial Position
   m_Exposed: 1
-  m_Order: 15
+  m_Order: 2
   m_Category: Emission
   m_Min:
     m_Type:
@@ -2952,7 +2941,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615276}
   m_ExposedName: Initial Size
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 3
   m_Category: Size And Angle
   m_Min:
     m_Type:
@@ -3033,7 +3022,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615278}
   m_ExposedName: Lifetime
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 4
   m_Category: Emission
   m_Min:
     m_Type:
@@ -3114,7 +3103,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615280}
   m_ExposedName: Use Flipbook
   m_Exposed: 1
-  m_Order: 17
+  m_Order: 5
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3133,7 +3122,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615280}
       inputSlot: {fileID: 8926484042661614757}
-    position: {x: 232, y: 1342.6666}
+    position: {x: 131, y: 1305}
     expandedSlots: []
     expanded: 0
     supecollapsed: 1
@@ -3206,14 +3195,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615282}
   m_ExposedName: Fire Colors
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 6
   m_Category: Color
   m_Min:
     m_Type:
@@ -3294,7 +3283,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615284}
   m_ExposedName: Texture
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 7
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3375,7 +3364,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615286}
   m_ExposedName: Soft Particle Fade Distance
   m_Exposed: 1
-  m_Order: 16
+  m_Order: 8
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3392,7 +3381,7 @@ MonoBehaviour:
   m_Nodes:
   - m_Id: 0
     linkedSlots: []
-    position: {x: 359.33334, y: 1404.6666}
+    position: {x: 334, y: 1404}
     expandedSlots: []
     expanded: 0
     supecollapsed: 1
@@ -3453,7 +3442,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615288}
   m_ExposedName: Flipbook Size
   m_Exposed: 1
-  m_Order: 18
+  m_Order: 9
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3482,7 +3471,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615288}
       inputSlot: {fileID: 8926484042661614761}
-    position: {x: 223.33333, y: 1407.3333}
+    position: {x: 167, y: 1361}
     expandedSlots: []
     expanded: 0
     supecollapsed: 1
@@ -3614,7 +3603,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615340}
   m_ExposedName: Wind Direction
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 10
   m_Category: Velocity and Forces
   m_Min:
     m_Type:
@@ -3831,7 +3820,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615346}
   m_ExposedName: Flipbook Animation Speed
   m_Exposed: 1
-  m_Order: 19
+  m_Order: 11
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3912,7 +3901,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615351}
   m_ExposedName: Exposure Weight
   m_Exposed: 1
-  m_Order: 11
+  m_Order: 12
   m_Category: Texture
   m_Min:
     m_Type:
@@ -3977,14 +3966,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615361}
   m_ExposedName: Color Over Life
   m_Exposed: 1
-  m_Order: 12
+  m_Order: 13
   m_Category: Color
   m_Min:
     m_Type:
@@ -4058,14 +4047,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615363}
   m_ExposedName: Smokiness
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 14
   m_Category: Color
   m_Min:
     m_Type:
@@ -4146,7 +4135,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615365}
   m_ExposedName: Pivot
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 15
   m_Category: Texture
   m_Min:
     m_Type:
@@ -4329,7 +4318,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615370}
   m_ExposedName: Width Scale
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 16
   m_Category: Size And Angle
   m_Min:
     m_Type:
@@ -4410,7 +4399,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615372}
   m_ExposedName: Size Scale over Life
   m_Exposed: 1
-  m_Order: 13
+  m_Order: 17
   m_Category: Size And Angle
   m_Min:
     m_Type:
@@ -4826,14 +4815,14 @@ MonoBehaviour:
   m_Parent: {fileID: 114350483966674976}
   m_Children: []
   m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 0
+  m_UICollapsed: 1
   m_UISuperCollapsed: 0
   m_InputSlots: []
   m_OutputSlots:
   - {fileID: 8926484042661615395}
   m_ExposedName: Up Vector
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 18
   m_Category: Velocity and Forces
   m_Min:
     m_Type:
@@ -5187,7 +5176,7 @@ MonoBehaviour:
   - {fileID: 8926484042661615408}
   m_ExposedName: Wind Drag Intensity
   m_Exposed: 1
-  m_Order: 14
+  m_Order: 19
   m_Category: Velocity and Forces
   m_Min:
     m_Type:
