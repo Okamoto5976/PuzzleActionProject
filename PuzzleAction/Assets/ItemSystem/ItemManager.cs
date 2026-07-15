@@ -77,14 +77,14 @@ public class ItemManager : MonoBehaviour
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
-        //Data data = DrowItem(PlayerItems)
-        int index = Random.Range(0, PlayerItems.Count);
-        Item data = PlayerItems[index];
-        //int dropIndex = Random.Range(0, DropItems.Count);
-        //DropItem m_dropItem = DropItems[dropIndex];
-        m_dropItem.Initialize(data);
-        //set pos DropItem Position
-        m_dropItem.gameObject.transform.position = pos;
+        Item data = DrowItem(PlayerItems);
+        //int index = Random.Range(0, PlayerItems.Count);
+        //Item data = PlayerItems[index];
+        ////int dropIndex = Random.Range(0, DropItems.Count);
+        ////DropItem m_dropItem = DropItems[dropIndex];
+        //m_dropItem.Initialize(data);
+        ////set pos DropItem Position
+        //m_dropItem.gameObject.transform.position = pos;
 
         foreach (var obj in DropItems)
         {
@@ -105,22 +105,38 @@ public class ItemManager : MonoBehaviour
     [Range(0, 100)] public float UnComon = 30f;
     [Range(0, 100)] public float Rara = 15f;
     [Range(0, 100)] public float Legend = 5f;
-
+    GachaEngine gachaEngine;
     public Item DrowItem(List<Item> items)
     {
-        Grade grade = GetRandomRarity();
-        List<Item> candidates = items.FindAll(Data => Data.grade == grade);
+        RarityEnumAsset rarity = gachaEngine.Collapse();
+        List<Item> candidates = items.FindAll(Data => Data == rarity);
 
         if (candidates.Count == 0)
         {
-            Debug.Log($"{grade}のアイテムがありません。再抽選します。");
+            Debug.Log($"{rarity}のアイテムがありません。再抽選します。");
             return DrowItem(items);
         }
 
         int index = Random.Range(0, candidates.Count);
-        //candidates.Clear();
         return candidates[index];
+        //candidates.Clear();
+        
     }
+    //public Item DrowItem(List<Item> items)
+    //{
+    //    Grade grade = GetRandomRarity();
+    //    List<Item> candidates = items.FindAll(Data => Data.grade == grade);
+
+    //    if (candidates.Count == 0)
+    //    {
+    //        Debug.Log($"{grade}のアイテムがありません。再抽選します。");
+    //        return DrowItem(items);
+    //    }
+
+    //    int index = Random.Range(0, candidates.Count);
+    //    //candidates.Clear();
+    //    return candidates[index];
+    //}
 
     private Grade GetRandomRarity()
     {
@@ -164,7 +180,7 @@ public class ItemManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            //DropItemSetData(new Vector3(0, 1, 0));
+            DropItemSetData(new Vector3(0, 1, 0));
         }
     }
 }

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9216a225e497ee45905973de58a1361, type: 3}
-  m_Name: Arrow
+  m_Name: Dynamite
   m_EditorClassIdentifier: Assembly-CSharp::TrapItem
   m_value: 2
   m_type: 1
   m_data:
     itemID: 1
-    itemName: arrow is strong
+    itemName: Dynamite is strong
     itemIcon: {fileID: 21300000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
     description: 
     maxStack: 99
@@ -27,4 +27,4 @@ MonoBehaviour:
     itemGrade: 0
   trapValue: 0
   TrapPrefab: {fileID: 0}
-  m_enumTrap: 0
+  m_enumTrap: 3
