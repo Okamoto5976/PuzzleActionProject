@@ -170,12 +170,4 @@ public Item RandomGetItem()
         //int ShopIndex = Random.Range(0, ShopList.Count);
         return data;  //ShopList[ShopIndex];
     }
-  public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            DropItemSetData(new Vector3(0,1,0));
-        }
-    }
-
 }
