@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boss_Golem_EntityData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 0
-  m_str: 10
+  m_str: 1
   m_knockBack: 0
   m_def: 0
   m_speed: 10

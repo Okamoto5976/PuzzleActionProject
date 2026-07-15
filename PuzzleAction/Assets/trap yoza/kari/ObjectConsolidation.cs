@@ -25,13 +25,13 @@ public class ObjectConsolidation : MonoBehaviour
 
         foreach (Vector3 pos in spawnPos)
         {
-            Debug.Log("trap" + trapType);
+            //Debug.Log("trap" + trapType);
             TrapBase trap = m_middleman_Trap.GetTrap(trapType);
-            Debug.Log("trap" + trap);
+            //Debug.Log("trap" + trap);
 
             if (trap == null)
             {
-                Debug.LogError($"Trap Not Found : {trapType}");
+               // Debug.LogError($"Trap Not Found : {trapType}");
                 return;
             }
 

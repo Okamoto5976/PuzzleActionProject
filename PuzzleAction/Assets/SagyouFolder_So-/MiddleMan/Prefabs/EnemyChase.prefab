@@ -193,6 +193,8 @@ GameObject:
   - component: {fileID: 528806279578718545}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
+  - component: {fileID: 6548486075970649895}
+  - component: {fileID: 2305522660549753405}
   m_Layer: 0
   m_Name: EnemyChase
   m_TagString: Untagged
@@ -248,12 +250,11 @@ MonoBehaviour:
   m_type: 2
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
-  m_attackRange: 1
+  m_attackRange: 2
   m_attackCooldown: 1
-  m_hitCollider: {fileID: 0}
   m_attackHitBox:
-    m_transform: {fileID: 0}
-    m_radius: 0
+    m_transform: {fileID: 5192190198220617858}
+    m_radius: 1
   m_item: {fileID: 0}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
@@ -304,3 +305,43 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6548486075970649895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
+  m_isViewCollider: 1
+  m_isVisible: 1
+  hitBoxes:
+  - m_transform: {fileID: 5192190198220617858}
+    m_radius: 1
+--- !u!136 &2305522660549753405
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}

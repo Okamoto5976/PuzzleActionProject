@@ -17,10 +17,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 
         if (m_controller.Target == null) return;
 
-        float distance = Vector3.Distance(
-            transform.position,
-            m_controller.Target.Value
-        );
+        float distance = Vector3.Distance(transform.position, m_controller.Target.Value);
 
         //Debug.Log($"distance:{distance} ,range:{m_controller.AttackRange}");
         if (distance <= m_controller.AttackRange)
@@ -38,10 +35,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
         }
         else
         {
-            m_controller.SetDestination(
-                m_controller.Target.Value,
-                m_controller.Speed
-            );
+            m_controller.SetDestination(m_controller.Target.Value, m_controller.Speed);
         }
     }
 
@@ -55,8 +49,5 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
         m_controller.UseItem(dir);
     }
 
-    public void Stop()
-    {
-        m_controller.Stop();
-    }
+    public void Stop()=> m_controller.Stop();
 }

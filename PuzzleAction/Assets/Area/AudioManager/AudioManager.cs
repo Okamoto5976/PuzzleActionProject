@@ -39,10 +39,10 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         m_audioMix.GetFloat("BGM", out float bgmVolume);
-        m_BGMSlider.value = bgmVolume;
+        //m_BGMSlider.value = bgmVolume;
 
         m_audioMix.GetFloat("SE", out float seVolume);
-        m_SESlider.value = seVolume;
+        //m_SESlider.value = seVolume;
     }
 
     public void SetBGM(float volume)
