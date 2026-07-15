@@ -1,4 +1,6 @@
 
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -65,6 +67,12 @@ public class EnemyController : Entity
                     gameObject.AddComponent<Enemy_Archer>();
                     break;
                 }
+            case Enum_EnemyType.Mimic:
+                {
+                    gameObject.AddComponent<Enemy_Mimic>();
+                    m_hitCollider = GetComponent<HitCollider>();
+                    break;
+                }
         }
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
@@ -76,6 +84,7 @@ public class EnemyController : Entity
 
         m_agent.updateRotation = false;
         m_agent.updatePosition = true;
+
     }
 
     protected override void Update()
@@ -98,7 +107,7 @@ public class EnemyController : Entity
 
         //Debug.Log($"distance = {distance} " + $" attackRange = {m_attackRange}");
 
-        if (m_type == Enum_EnemyType.Chase)
+        if (m_type == Enum_EnemyType.Chase || m_type == Enum_EnemyType.Mimic)
         {
             if (distance <= m_attackRange)
             {
@@ -169,7 +178,10 @@ public class EnemyController : Entity
 
     public void Attack()
     {
+        Debug.Log("Attack Start");
 
+        Debug.Log(m_hitCollider);
+        Debug.Log(m_attackHitBox);
 
         if (m_hitCollider == null) return;
 
