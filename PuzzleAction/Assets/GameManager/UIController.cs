@@ -8,16 +8,18 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject m_gameOverUI;
     [SerializeField] private GameObject m_gameClearUI;
     [SerializeField] private GameObject m_menuUI;
+    //[SerializeField] private MenuUI m_menuUIObj;
+
     [SerializeField] private GameObject m_shopUI;
     [SerializeField] private GameObject m_inventoryUI;
 
-    //[Header("Event")]
-    //[SerializeField] private BoolEventSO m_gameOverUIEvent;
+    [Header("Event")]
+    [SerializeField] private BoolEventSO m_gameClearUIEvent;
+    [SerializeField] private BoolEventSO m_gameOverUIEvent;
     //[SerializeField] private BoolEventSO m_menuUIEvent;
     //[SerializeField] private BoolEventSO m_optionUIEvent;
     //[SerializeField] private BoolEventSO m_shopUIEvent;
     //[SerializeField] private BoolEventSO m_inventoryUIEvent;
-    //[SerializeField] private BoolEventSO m_gameClearUIEvent;
 
     private bool m_isMenu = false;
     private bool m_isInventory = false;
@@ -25,24 +27,25 @@ public class UIController : MonoBehaviour
 
     private void OnEnable()
     {
+        m_gameClearUIEvent.Register(OnShowGameClearUI);
+        m_gameOverUIEvent.Register(OnShowGameOverUI);
 
 
         //m_menuUIEvent.Register(MenuUI);
-        //m_gameOverUIEvent.Register(GameOverUI);
         //m_optionUIEvent.Register(OptionUI);
         //m_shopUIEvent.Register(ShopUI);
         //m_inventoryUIEvent.Register(InventoryUI);
-        //m_gameClearUIEvent.Register(ShowGameClearUI);
     }
 
     private void OnDisable()
     {
-        //m_gameOverUIEvent.Unregister(GameOverUI);
+        m_gameClearUIEvent.Unregister(OnShowGameClearUI);
+        m_gameOverUIEvent.Unregister(OnShowGameOverUI);
+
         //m_menuUIEvent.Unregister(MenuUI);
         //m_optionUIEvent.Unregister(OptionUI);
         //m_shopUIEvent.Unregister(ShopUI);
         //m_inventoryUIEvent.Unregister(InventoryUI);
-        //m_gameClearUIEvent.Unregister(ShowGameClearUI);
 
         m_action.Disable();
 
@@ -97,6 +100,7 @@ public class UIController : MonoBehaviour
         if(!m_isMenu)
         {
             OnShowMenuUI(true);
+            //m_menuUIObj.TransitionTitle();
             Time.timeScale = 0f;
 
         }

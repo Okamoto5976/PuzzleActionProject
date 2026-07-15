@@ -9,6 +9,7 @@ public enum AreaType
     Shop,
     Goal,
     NotImplemented,
+    Boss,
 }
 
 public class AreaSet : MonoBehaviour

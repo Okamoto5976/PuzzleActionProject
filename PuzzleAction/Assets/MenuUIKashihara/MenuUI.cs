@@ -13,8 +13,14 @@ public class MenuUI : MonoBehaviour
 
     public bool IsOption { get; private set; }
 
+
     [Header("MenuScene")]
     [SerializeField] private GameObject[] m_scene;
+
+    private void OnEnable()
+    {
+        TransitionTitle();
+    }
 
     public void TransitionTitle()
     {
@@ -33,25 +39,22 @@ public class MenuUI : MonoBehaviour
     public void Back()
     {
         Debug.Log("Back");
-        if (IsOption) IsOption = false;
-
+        gameObject.SetActive(false);
+        Time.timeScale = 1.0f;
     }
+
+   
 
     //impossible
     //public void Transition(Scene scene)
     //{
-        //for (int i = 0; i < (int)Scene.Count; i++)
-        //{
-        //    if (i == (int)scene) continue;
-        //    m_scene[i].SetActive(false);
-        //}
-        //m_scene[(int)scene].SetActive(true);
+    //for (int i = 0; i < (int)Scene.Count; i++)
+    //{
+    //    if (i == (int)scene) continue;
+    //    m_scene[i].SetActive(false);
     //}
-
-    public void CloseOption()
-    {
-        IsOption = false;
-    }
+    //m_scene[(int)scene].SetActive(true);
+    //}
 
 
     public void TransitionGame()

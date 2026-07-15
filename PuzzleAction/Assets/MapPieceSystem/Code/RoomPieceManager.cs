@@ -19,6 +19,8 @@ public class RoomPieceManager : MonoBehaviour
     //[SerializeField] private int m_shopRoomGenerate = 20;
     //[SerializeField] private int m_trapRoomGenerate = 20;
 
+    [SerializeField] private IntRunTime m_level;
+
     public void Awake()
     {
         for(int i = 0; i < m_pieceAmount; i++)
@@ -27,6 +29,14 @@ public class RoomPieceManager : MonoBehaviour
             RoomPieceParent piece= GenerateRoomObject(room);
             //m_pieces.Enqueue(piece);
         }
+
+        if(m_level.Value % 5 == 0)
+        {
+            Room bossroom = CreateBossRoom();
+            RoomPieceParent bossPiece = GenerateBossRoomObject(bossroom);
+        }
+       
+        
     }
 
     #region ƒ‹[ƒ€ì¬
@@ -101,6 +111,27 @@ public class RoomPieceManager : MonoBehaviour
 
         return room;
     }
+
+    private Room CreateBossRoom()
+    {
+        int num = UnityEngine.Random.Range(0, 6);
+
+        Room room = new(new(), new(0, 0));
+
+        if (num == 0)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,
+                }, new(2, 2)
+                );
+        }
+
+        return room;
+    }
+
     #endregion
 
 
@@ -160,6 +191,51 @@ public class RoomPieceManager : MonoBehaviour
 
                 break;
         }
+
+        return roomPieceParent;
+    }
+
+    public RoomPieceParent GenerateBossRoomObject(Room room)
+    {
+        GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
+
+        float rectX = UnityEngine.Random.Range(-300f, 300f);
+        float rectY = UnityEngine.Random.Range(-500f, 500f);
+
+        RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
+
+        rect.anchoredPosition = new Vector2(rectX, rectY);
+
+        for (int y = 0; y < room.Size.y; y++)
+        {
+            for (int x = 0; x < room.Size.x; x++)
+            {
+                int roomIndex = x + y * room.Size.x;
+                if (room.Floors[roomIndex].State == Floor.FloorState.empty) continue;
+                var floor = Instantiate(m_roomPiece, parentObj.transform);
+                var FloorRect = floor.GetComponent<RectTransform>();
+
+
+                FloorRect.anchoredPosition = new Vector2(
+                    x * 50f,
+                    y * 50f
+                );
+
+                var roomPiece = floor.GetComponent<RoomPiece>();
+                roomPiece.SetIndex(new Vector2Int(x, y));
+            }
+        }
+
+        var roomPieceParent = parentObj.GetComponent<RoomPieceParent>();
+        roomPieceParent.SetRoom(room);
+
+        //SetAreatype
+        AreaType type = AreaType.Boss;
+
+        roomPieceParent.SetAreaType(type);
+        roomPieceParent.Init(this);
+
+        roomPieceParent.SetColor(Color.magenta);
 
         return roomPieceParent;
     }

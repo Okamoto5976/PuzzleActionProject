@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneMover : MonoBehaviour
 {
@@ -19,5 +20,6 @@ public class SceneMover : MonoBehaviour
     public void MoveSceneTo(StaticSceneAsset sceneAsset)
     {
         Debug.Log($"SCENEMOVER >> moving to {sceneAsset.Value}");
+        SceneManager.LoadScene(sceneAsset.Value);
     }
 }

@@ -16,14 +16,13 @@ public class GameManager : MonoBehaviour
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_gameClearUIEvent;
-    [SerializeField] private BoolEventSO m_menuUIEvent;
-    [SerializeField] private BoolEventSO m_optionUIEvent;
-    [SerializeField] private BoolEventSO m_inventoryUIEvent;
-    [SerializeField] private BoolEventSO m_shopUIEvent;
+    //[SerializeField] private BoolEventSO m_menuUIEvent;
+    //[SerializeField] private BoolEventSO m_optionUIEvent;
+    //[SerializeField] private BoolEventSO m_inventoryUIEvent;
+    //[SerializeField] private BoolEventSO m_shopUIEvent;
 
     [SerializeField] private EventSO m_gameOverEvent;
     [SerializeField] private EventSO m_gameClearEvent;
-
 
     [SerializeField] private SceneEventScript m_sceneEvent;
 
@@ -75,10 +74,14 @@ public class GameManager : MonoBehaviour
         m_clearCount.AddValue(1);
         Debug.Log($"クリア回数：{m_clearCount.Value}");
 
+
+
         //リザルト表示、関数を呼ぶ
-        if(m_clearCount.Value % 5 == 0)
+        if (m_clearCount.Value % 5 == 0)
         {
             m_gameClearUIEvent.Raise(true);
+            m_gameClearEvent.Raise();
+            return;
 
         }
 
@@ -86,8 +89,13 @@ public class GameManager : MonoBehaviour
 
         //for example
         //player do not move, state change, save, result
-        if (m_gameClearEvent == null) return;
-        m_gameClearEvent.Raise();
+        if (m_gameClearEvent != null)
+        {
+            m_gameClearEvent.Raise();
+
+        }
+
+        m_sceneEvent.TriggerEvent(m_mapPhaseScene);
     }
 
     //ゲームオーバー
