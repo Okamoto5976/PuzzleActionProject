@@ -9,7 +9,6 @@ abstract public class EntityHP : MonoBehaviour
     [SerializeField] private int m_currentHP;
     public int CurrentHP { get => m_currentHP;}
 
-    //’Ç‰Á‚µ‚½•”•ª
     public int MaxHP => (int)m_entity.HP;
 
     private void Awake()

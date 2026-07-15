@@ -27,6 +27,9 @@ public class PlayerController : Entity
 
     private List<PassiveModifier> m_modifiers = new();
 
+    //’Ç‰Á‚µ‚½•”•ª
+    public Vector3 MoveDirection => m_moveDir;
+
     private bool m_isEvaing;
     private float m_evasionTimer;
 

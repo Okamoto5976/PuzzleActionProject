@@ -20,14 +20,9 @@ public class PlayerTest : MonoBehaviour
         {
             moveDir.Normalize();
 
-            // プレイヤー移動
             transform.position +=
                 moveDir * m_moveSpeed * Time.deltaTime;
 
-            // プレイヤーを入力方向へ向ける
-            transform.rotation = Quaternion.LookRotation(moveDir);
-
-            // 矢印も同じ方向へ向ける
             m_arrow.rotation =
                 Quaternion.LookRotation(moveDir) *
                 Quaternion.Euler(90f, 0f, 0f);
