@@ -6,6 +6,14 @@ public enum Type
     EnemyItem
 }
 
+public enum Grade
+{
+    Comon,
+    UnComon,
+    Rara,
+    Legend
+}
+
 [System.Serializable]
 public class ItemData
 {
@@ -15,10 +23,11 @@ public class ItemData
     [SerializeField] private string description;    
     [SerializeField] private int maxStack = 99;          
     [SerializeField] private float dropRate;        
-    [SerializeField] private int itemGrade;         //Rarity
+    //[SerializeField] private int itemGrade;         //Rarity
     [SerializeField] private ItemType itemType;
     [SerializeField, Min(0)] private int price;
     [SerializeField] private Type Type;
+    [SerializeField] private Grade itemGrade;
 
     public int ItemID { get => itemID; }
     public string ItemName { get => itemName; }
@@ -26,12 +35,13 @@ public class ItemData
     public string Description { get => description; }
     public int MaxStack { get => maxStack; }
     public float DropRate { get => dropRate; }
-    public int ItemGrade { get => itemGrade; }
+    //public int ItemGrade { get => itemGrade; }
     public ItemType ItemType => itemType;
     public int Price => price;
     public bool IsShopCompatible => price > 0;
 
     public Type type { get => Type; }
+    public Grade ItemGrade { get => itemGrade; }
 }
 
 
