@@ -36,6 +36,7 @@ public class Goods : MonoBehaviour,
     /// <param name="id"></param>
     public void Init(ShopManager shopManager, int id)
     {
+        Debug.Log("a");
         InjectShopManager(shopManager);
         m_slotId = id;
     }
