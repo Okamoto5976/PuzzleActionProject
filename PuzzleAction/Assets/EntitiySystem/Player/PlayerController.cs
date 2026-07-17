@@ -43,6 +43,11 @@ public class PlayerController : Entity
     [Header("InventorySystem")]
     [SerializeField] private InventorySystem m_inventorySystem;
 
+    public Vector3 MoveDirection => m_moveDir;
+
+    private bool m_isEvaing;
+    private float m_evasionTimer;
+
     //private bool m_isEvaing;
     //private float m_evasionTimer;
 
