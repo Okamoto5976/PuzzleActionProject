@@ -1,14 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using JetBrains.Annotations;
+using Unity.Burst.Intrinsics;
 
-
+public class RarityGet
+{
+    public string m_floar;
+    public GachaEngine sortedRarities;
+}
 public class ItemManager : MonoBehaviour
 {
 
-    public List <Item> DropList=new();
+    //public List <Item> DropList=new();
+    //public List<float> DropRateList = new();
     public List<Item> ShopList = new();
     public List<Item> ItemList = new();
-    public List<float> DropRateList = new();
+    [SerializeField]public List<GachaEngine> RarityList=new();
     //プレイヤーが使えるアイテム
     public List<Item> PlayerItems = new();
     //敵専用アイテム
@@ -71,96 +79,93 @@ public class ItemManager : MonoBehaviour
         item.RecieveData(data);
     }
 
-
+    GachaEngine gachaEngine;
 
     public void DropItemSetData(Vector3 pos)
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
-        Item data = DrowItem(PlayerItems);
+        //Grade rarity = GetGrade();
+        //Item data=DrowItem(rarity);
         //int index = Random.Range(0, PlayerItems.Count);
-        //Item data = PlayerItems[index];
-        ////int dropIndex = Random.Range(0, DropItems.Count);
-        ////DropItem m_dropItem = DropItems[dropIndex];
-        //m_dropItem.Initialize(data);
-        ////set pos DropItem Position
-        //m_dropItem.gameObject.transform.position = pos;
+        
 
-        foreach (var obj in DropItems)
-        {
-            if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
-            {
-                DropItem m_dropIndex = obj;
-                m_dropIndex.Initialize(data);
-                //set pos DropItem Position
-                m_dropIndex.gameObject.transform.position = pos;
-            }
+        //foreach (var obj in DropItems)
+        //{
+        //    if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        DropItem m_dropIndex = obj;
+        //        m_dropIndex.Initialize(data);
+        //        //set pos DropItem Position
+        //        m_dropIndex.gameObject.transform.position = pos;
+        //    }
 
-        }
+        //}
     }
 
-    [Header("排出確率")]
-
-    [Range(0, 100)] public float Comon = 50f;
-    [Range(0, 100)] public float UnComon = 30f;
-    [Range(0, 100)] public float Rara = 15f;
-    [Range(0, 100)] public float Legend = 5f;
-    GachaEngine gachaEngine;
-    public Item DrowItem(List<Item> items)
+    //GachaEngine gachaEngine;
+    public Item DrowItem(Grade rarity)
     {
-        RarityEnumAsset rarity = gachaEngine.Collapse();
-        List<Item> candidates = items.FindAll(Data => Data == rarity);
-
-        if (candidates.Count == 0)
-        {
-            Debug.Log($"{rarity}のアイテムがありません。再抽選します。");
-            return DrowItem(items);
-        }
-
+        
+        //rarity = Item.GetRarity();
+        List<Item> candidates = PlayerItems.FindAll(x => x.grade == rarity);
+        //Item item = PlayerItems.Find(x => x.grade==rarity);
         int index = Random.Range(0, candidates.Count);
-        return candidates[index];
+        return candidates[index] ;
+        //rarity = gachaEngine.Collapse();
         //candidates.Clear();
         
     }
-    //public Item DrowItem(List<Item> items)
+
+
+    //private Grade GetRandomRarity()
     //{
-    //    Grade grade = GetRandomRarity();
-    //    List<Item> candidates = items.FindAll(Data => Data.grade == grade);
 
-    //    if (candidates.Count == 0)
-    //    {
-    //        Debug.Log($"{grade}のアイテムがありません。再抽選します。");
-    //        return DrowItem(items);
-    //    }
+    //    float rand = Random.Range(0f, 100f);
 
-    //    int index = Random.Range(0, candidates.Count);
-    //    //candidates.Clear();
-    //    return candidates[index];
+    //    if (rand < Comon)
+    //        return Grade.Comon;
+
+    //    rand -= Comon;
+
+    //    if (rand < UnComon)
+    //        return Grade.UnComon;
+
+    //    if (rand < Rara)
+    //        return Grade.Rara;
+
+    //    rand -= Rara;
+
+    //    if (rand < Legend)
+    //        return Grade.Legend;
+
+    //    return Grade.Legend;
     //}
 
-    private Grade GetRandomRarity()
-    {
+    //public Item GetGrade()
+    //{
+        //if (gachaEngine.Weigth)
 
-        float rand = Random.Range(0f, 100f);
+        //    gachaEngine.Collapse();
+        // //= gachaEngine.Collapse();
+        //if ()
+        //{
 
-        if (rand < Comon)
-            return Grade.Comon;
+        //}
+        //else if()
+        //{
 
-        rand -= Comon;
+        //}
+        //else if()
+        //{
 
-        if (rand < UnComon)
-            return Grade.UnComon;
+        //}
+        //else
+        //{
 
-        if (rand < Rara)
-            return Grade.Rara;
-
-        rand -= Rara;
-
-        if (rand < Legend)
-            return Grade.Legend;
-
-        return Grade.Legend;
-    }
+        //}
+        //return  rarity;
+    //}
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
