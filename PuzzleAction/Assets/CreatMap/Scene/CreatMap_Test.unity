@@ -1601,6 +1601,8 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_ocl: {fileID: 1248939889}
   m_enemySpawner: {fileID: 1483867179}
+  m_navMeshPlane: {fileID: 679047475}
+  m_navMeshSurface: {fileID: 679047476}
   m_floorScale: {x: 10, y: 1, z: 10}
   m_wallScale: {x: 10, y: 3, z: 1}
   m_treasureParent: {fileID: 211008499}
@@ -5345,11 +5347,16 @@ MonoBehaviour:
   ShopList: []
   ItemList:
   - {fileID: 0}
+  DropRateList: []
   PlayerItems: []
   EnemyItems: []
   m_middleman_trap: {fileID: 435115610}
   m_dropItem: {fileID: 0}
   DropItems: []
+  Comon: 50
+  UnComon: 30
+  Rara: 15
+  Legend: 5
 --- !u!1001 &707318817300154054
 PrefabInstance:
   m_ObjectHideFlags: 0

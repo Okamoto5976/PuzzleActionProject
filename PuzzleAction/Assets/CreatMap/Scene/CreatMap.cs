@@ -5,7 +5,8 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 public class CreatMap : MonoBehaviour
 {
-    [Header("Map")]
+
+    [Header("========== MAP ==========")]
     private MapClass m_mapClass = new MapClass(0, 0);
     [SerializeField] private Vector2Int m_size;
     [SerializeField] private GameObject m_floorPrefab;
@@ -14,24 +15,33 @@ public class CreatMap : MonoBehaviour
     private List<GameObject> m_floorObjects = new();
     private List<GameObject> m_wallObjectsSouth = new();
     private List<GameObject> m_wallObjectsWest = new();
-
     [SerializeField] private MapClassData m_mapClassData;
-    [Header("Ref")]
+    [Space(10)]
+
+    [Header("========== REFERENCE ==========")]
     [SerializeField] private ObjectConsolidation m_ocl;
     [SerializeField] private Poolinstallationpulling m_enemySpawner;
+    [Space(10)]
 
-    [Header("Scale Setthings")]
+    [Header("========== NAVMESH ==========")]
+    [SerializeField] private Transform m_navMeshPlane;
+    [SerializeField] private NavMeshSurface m_navMeshSurface;
+    [Space(10)]
+
+    [Header("========== SCALE SETTEINGTH ==========")]
     [SerializeField] private Vector3 m_floorScale = Vector3.one;
     [SerializeField] private Vector3 m_wallScale = Vector3.one;
+    [Space(10)]
 
-    [Header("TreasureBox")]
+    [Header("========== TREASURE ==========")]
     [SerializeField] private GameObject m_treasureParent;
     [SerializeField] private GameObject m_mimicPrefab;
     [SerializeField] private GameObject m_treasurePrefab;
     [SerializeField] private int m_treasureCount = 3;
     [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
+    [Space(10)]
 
-    [Header("Debug")]
+    [Header("========== DEBUG ==========")]
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
@@ -67,13 +77,16 @@ public class CreatMap : MonoBehaviour
 
         InitializeMap();
 
+        SetupNavMeshPlane();
+
         UpdateObjects(); //GeneratMap
 
         ProcessAreaTypes();//apply AreaType
 
-        GenerateTreasures();
+        GenerateTreasures(); //Treasure
 
-        SpawnPlayer();
+        SpawnPlayer(); //Player
+
     }
     /// <summary>
     /// MapClass Convert 3D
@@ -273,11 +286,50 @@ public class CreatMap : MonoBehaviour
         }
     }
 
+    private void SetupNavMeshPlane()
+    {
+        if (m_navMeshPlane == null)
+            return;
+
+        Renderer floorRenderer = m_floorPrefab.GetComponent<Renderer>();
+
+        Vector3 floorSize = new Vector3(
+            floorRenderer.bounds.size.x * m_floorScale.x,
+            floorRenderer.bounds.size.y * m_floorScale.y,
+            floorRenderer.bounds.size.z * m_floorScale.z
+        );
+
+        float mapWidth =
+            m_size.x * floorSize.x;
+
+        float mapHeight =
+            m_size.y * floorSize.z;
+
+
+        Vector3 center = new Vector3(
+            -floorSize.x * 0.5f + mapWidth * 0.5f,
+            0f,
+            -floorSize.z * 0.5f + mapHeight * 0.5f
+        );
+
+        m_navMeshPlane.position = center;
+
+        // Unity Plane は 10x10
+        m_navMeshPlane.localScale = new Vector3(
+            mapWidth / 10f,
+            1f,
+            mapHeight / 10f
+        );
+
+        if (m_navMeshSurface != null)
+        {
+            m_navMeshSurface.BuildNavMesh();
+        }
+    }
     /// <summary>
-    /// AreaType �����{��
+    /// AreaType 
     /// </summary>
     /// 
-    
 
     private void ProcessAreaTypes()
     {
