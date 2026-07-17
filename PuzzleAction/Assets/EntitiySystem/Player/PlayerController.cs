@@ -226,6 +226,8 @@ public class PlayerController : Entity
 
     private void OnUseItem()
     {
+        return;
+
         ItemRecieveData data = new ItemRecieveData
         {
             entity = this,
