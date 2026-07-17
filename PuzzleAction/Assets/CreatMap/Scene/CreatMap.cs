@@ -25,6 +25,8 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private Vector3 m_wallScale = Vector3.one;
 
     [Header("TreasureBox")]
+    [SerializeField] private GameObject m_treasureParent;
+    [SerializeField] private GameObject m_mimicPrefab;
     [SerializeField] private GameObject m_treasurePrefab;
     [SerializeField] private int m_treasureCount = 3;
     [SerializeField, Range(0, 1)] private float m_mimicRate = 0.2f;
@@ -416,12 +418,19 @@ public class CreatMap : MonoBehaviour
 
             Vector3 worldPos = GridToWorld(gridPos);
 
-            GameObject obj = Instantiate(m_treasurePrefab, worldPos, Quaternion.identity, transform);
-
             bool isMimic = Random.value < m_mimicRate;
 
-            Treasure treasure = obj.GetComponent<Treasure>();
-            treasure.SetIsMimic(isMimic);
+            if(isMimic)
+            {
+                Instantiate(m_mimicPrefab, worldPos, Quaternion.identity, m_treasureParent.transform);
+                Debug.Log("Spawn Mimic");
+            }
+            else
+            {
+                Instantiate(m_treasurePrefab, worldPos, Quaternion.identity, m_treasureParent.transform);
+                Debug.Log("Spawn Treasurebox");
+            }
+
         }
     }
 

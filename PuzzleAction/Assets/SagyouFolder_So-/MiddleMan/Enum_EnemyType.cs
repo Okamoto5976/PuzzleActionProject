@@ -5,5 +5,6 @@ public enum Enum_EnemyType
 {
     Archer,
     Rush,
-    Chase
+    Chase, 
+    Mimic
 }
