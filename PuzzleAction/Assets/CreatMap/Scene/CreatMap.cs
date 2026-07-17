@@ -559,4 +559,35 @@ public class CreatMap : MonoBehaviour
         }
     }
 
+    //�ǉ�
+    private void GenerateMapObjects()
+    {
+        List<Vector2Int> candidates = new();
+        foreach (var room in m_mapClassData.roomDatas)
+        {
+            if (room.m_type != AreaType.None) continue;
+            foreach (var pos in room.m_roomSizes)
+            {
+                if (IsForbiddenPos(pos)) continue;
+                candidates.Add(pos);
+            }
+        }
+        int spawnCount = Mathf.Min(5, candidates.Count);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            int index = Random.Range(0, candidates.Count);
+            Vector2Int griPos = candidates[index];
+            candidates.RemoveAt(index);
+
+            Vector3 worldPos = GridToWorld(griPos);
+            worldPos.y = 0.5f;
+
+            if (MapObjectManager.Instance != null)
+            {
+                MapObjectManager.Instance.SpawnObject(worldPos);
+            }
+        }
+    }
+    //
 }
