@@ -2,7 +2,7 @@ using UnityEngine;
 
 abstract public class EntityHP : MonoBehaviour
 {
-    private Entity m_entity;
+    protected Entity m_entity;
 
     private AudioSource m_audioSource;
 

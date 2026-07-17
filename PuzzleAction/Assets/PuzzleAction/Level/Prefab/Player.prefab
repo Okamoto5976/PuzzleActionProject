@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirectionMarker
   m_player: {fileID: 5968134673738187912}
+  m_arrow: {fileID: 0}
   m_height: 0.02
 --- !u!1 &665925072150456027
 GameObject:
@@ -264,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirectionMarker
   m_player: {fileID: 5968134673738187912}
+  m_arrow: {fileID: 0}
   m_height: 0.02
 --- !u!1 &1501914875296179412
 GameObject:
@@ -365,6 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   m_currentHP: 0
   m_blood: {fileID: 7711612278638627893}
+  m_playerDeadEvent: {fileID: 11400000, guid: fc782fd3afb53c84997fbfd9f631bf13, type: 2}
 --- !u!114 &8049973323928560549
 MonoBehaviour:
   m_ObjectHideFlags: 0

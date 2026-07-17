@@ -4,14 +4,14 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    private static AudioManager instance;
+    public static AudioManager instance;
 
     [SerializeField] private AudioEventSO audioEvent;
     [SerializeField] private AudioSource BGMSource;
     [SerializeField] private AudioSource SESource;
     [SerializeField] private AudioMixer m_audioMix;
-    [SerializeField] private Slider m_BGMSlider;
-    [SerializeField] private Slider m_SESlider;
+    [SerializeField] private FloatRunTime m_bgmVolume;
+    [SerializeField] private FloatRunTime m_seVolume;
 
     [SerializeField] private AudioFader audioFader;
 
@@ -38,21 +38,25 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        m_audioMix.GetFloat("BGM", out float bgmVolume);
+
+        //m_audioMix.GetFloat("BGM", out float bgmVolume);
         //m_BGMSlider.value = bgmVolume;
 
-        m_audioMix.GetFloat("SE", out float seVolume);
+        //m_audioMix.GetFloat("SE", out float seVolume);
         //m_SESlider.value = seVolume;
     }
+
 
     public void SetBGM(float volume)
     {
         m_audioMix.SetFloat("BGM", volume);
+        m_bgmVolume.SetValue(volume);
     }
 
     public void SetSE(float volume)
     {
         m_audioMix.SetFloat("SE", volume);
+        m_seVolume.SetValue(volume);
     }
 
     //EventSOÇ©ÇÁìnÇ≥ÇÍÇΩAudioClipÇçƒê∂Ç∑ÇÈ

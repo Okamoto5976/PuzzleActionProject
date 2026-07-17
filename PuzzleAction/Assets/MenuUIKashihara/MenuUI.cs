@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuUI : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class MenuUI : MonoBehaviour
 
     public bool IsOption { get; private set; }
 
+    [SerializeField] private Slider m_bgmSlider;
+    [SerializeField] private Slider m_seSlider;
+
+    [SerializeField] private FloatRunTime m_bgmVolume;
+    [SerializeField] private FloatRunTime m_seVolume;
+
+
 
     [Header("MenuScene")]
     [SerializeField] private GameObject[] m_scene;
@@ -20,6 +28,12 @@ public class MenuUI : MonoBehaviour
     private void OnEnable()
     {
         TransitionTitle();
+    }
+
+    private void Start()
+    {
+        m_bgmSlider.value = m_bgmVolume.Value;
+        m_seSlider.value = m_seVolume.Value;
     }
 
     public void TransitionTitle()
@@ -65,5 +79,15 @@ public class MenuUI : MonoBehaviour
     public void ExitSesssion()
     {
         Debug.Log("Exit");
+    }
+
+    public void SetBGMVolume(float value)
+    {
+        AudioManager.instance.SetBGM(value);
+    }
+
+    public void SetSEVolume(float value)
+    {
+        AudioManager.instance.SetSE(value);
     }
 }

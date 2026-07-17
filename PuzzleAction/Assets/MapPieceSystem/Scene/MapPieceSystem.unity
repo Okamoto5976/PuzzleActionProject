@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0d9baf96eccbe14788be09d0ffd81de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapPlaceSystem
-  m_action: {fileID: 1120369429361536294, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_action: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_parent: {fileID: 694388302}
   m_mainCamera: {fileID: 218458766}
   m_difference: {x: 0, y: 0}
@@ -176,12 +176,12 @@ MonoBehaviour:
   m_enemyPieceMax: 3
   m_shopPieceMax: 3
   m_trapPieceMax: 10
-  m_debugCheck: 1
+  m_debugCheck: 0
   m_size: {x: 10, y: 10}
   m_DebugStartPos: {x: 0, y: 0}
   m_DebugEndPos: {x: 5, y: 5}
   m_instanceCounterList: []
-  m_clearCount: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
+  m_level: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
 --- !u!114 &50533902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_roomPieceParent: {fileID: 3621389001753909684, guid: 25bd27e716aa7ac4695448e183184818, type: 3}
   m_roomPiece: {fileID: 7110370001246736035, guid: 79fef458a04c8654d8e4144e06e29400, type: 3}
   m_pieceAmount: 20
-  m_level: {fileID: 0}
+  m_level: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
 --- !u!114 &50533904
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "IntRunTime", menuName = "Scriptable Objects/IntRunTime")]
+[CreateAssetMenu(fileName = "IntRunTime", menuName = "Scriptable Objects/RunTimes/IntRunTime")]
 public class IntRunTime : ScriptableObject
 {
     [SerializeField] private int m_value;

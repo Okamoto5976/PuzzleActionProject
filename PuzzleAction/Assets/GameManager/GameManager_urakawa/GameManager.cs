@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_gameClearUIEvent;
+
+    [SerializeField] private EventSO m_playerDeadEvent;
     //[SerializeField] private BoolEventSO m_menuUIEvent;
     //[SerializeField] private BoolEventSO m_optionUIEvent;
     //[SerializeField] private BoolEventSO m_inventoryUIEvent;
@@ -35,12 +37,23 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    private void OnEnable()
+    {
+        m_playerDeadEvent.Register(OnPlayerDead);
+    }
+
+    private void OnDisable()
+    {
+        m_playerDeadEvent.Unregister(OnPlayerDead);
+
+    }
+
     void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            //GameOver();
-        }
+        //if (Input.anyKeyDown)
+        //{
+        //    //GameOver();
+        //}
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
@@ -109,7 +122,10 @@ public class GameManager : MonoBehaviour
 
         //Time.timeScale = 0f;
 
-        //プレイヤーの処理
+        //UIを表示させない
+
+        
+
         //Sceneリセット　ゲームリセット
         //SceneMove Tile
 

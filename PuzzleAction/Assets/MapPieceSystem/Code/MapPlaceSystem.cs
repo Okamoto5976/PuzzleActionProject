@@ -101,7 +101,7 @@ public class MapPlaceSystem : MonoBehaviour
     //[SerializeField] private EventBusAsset 
     [SerializeField] private List<InstanceCounter> m_instanceCounterList;
 
-    [SerializeField] private IntRunTime m_clearCount;
+    [SerializeField] private IntRunTime m_level;
 
     private void Awake()
     {
