@@ -35,6 +35,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;
     [SerializeField] private IntEventSO m_shopIdEvent;
+    [SerializeField] private MessageManager m_messageManager;
 
 
     [SerializeField] private List<Goods> m_goodsPrefab;
@@ -191,6 +192,8 @@ public class ShopManager : MonoBehaviour
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
         //textManager start
         _currentShopId = id;
+
+        m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Welcome);
     }
 
     private void SetDatasToSlotsFromInventory(ShopInventory shopInventory)
@@ -228,6 +231,8 @@ public class ShopManager : MonoBehaviour
         if (data.Data.Price > m_money)
         {
             Debug.Log("you do not have money");
+
+            m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.NoMoney);
             return false;
         }
         else
@@ -245,6 +250,8 @@ public class ShopManager : MonoBehaviour
             item.IsSold = true;
             m_shopInventories[_currentShopId].inventory[slotId] = item;
             Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+
+            m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Buy);
 
             return true;
         }

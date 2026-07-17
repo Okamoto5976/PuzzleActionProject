@@ -19,9 +19,9 @@ MonoBehaviour:
     m_messageType: 1
   - m_messages: katta
     m_messageType: 2
-  - m_messages: 
-    m_messageType: 0
-  - m_messages: 
-    m_messageType: 0
-  - m_messages: 
-    m_messageType: 0
+  - m_messages: No Maney
+    m_messageType: 3
+  - m_messages: Inventory Full
+    m_messageType: 4
+  - m_messages: Good night
+    m_messageType: 5
