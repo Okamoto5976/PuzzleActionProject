@@ -7,6 +7,7 @@ public class InputProvider
 
     private Vector2 m_move;
     private bool m_active;
+    private bool m_activeRelease;
 
     private bool m_isEvasion;
     private bool m_isPrevious;
@@ -18,6 +19,7 @@ public class InputProvider
 
         m_action.Player.Move.performed += OnMove;
         m_action.Player.Move.canceled += OnMove;
+        m_action.Player.Attack.canceled += OnActiveRelease;
 
         m_action.Player.Attack.performed += OnActive;
         m_action.Player.Sprint.performed += OnEvasion;
@@ -48,6 +50,11 @@ public class InputProvider
     private void OnActive(InputAction.CallbackContext context)
     {
         m_active = true;
+    }
+
+    private void OnActiveRelease(InputAction.CallbackContext context)
+    {
+        m_activeRelease = true;
     }
 
     private void OnEvasion(InputAction.CallbackContext context)
@@ -117,4 +124,23 @@ public class InputProvider
             return result;
         }
     }
+
+    public bool IsActiveHold
+    {
+        get
+        {
+            return m_action.Player.Attack.IsPressed();
+        }
+    }
+
+    public bool IsActiveRelease
+    {
+        get
+        {
+            bool result = m_activeRelease;
+            m_activeRelease = false;
+            return result;
+        }
+    }
+
 }

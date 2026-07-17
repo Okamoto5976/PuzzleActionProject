@@ -310,12 +310,28 @@ for (int i = 0; i < hotbars.Length; i++)
     }
 
     //Žg—p
-    public void Use(int hotberNumber, ItemRecieveData data)
+    public void UsePressed(int hotbarNumber, ItemRecieveData data)
     {
-        int index = hotbars[hotberNumber];
+        int index = hotbars[hotbarNumber];
         if (index < 0) return;
 
-        UseItem(index, data);
+        Debug.Log("Pressed");
+    }
+
+    public void UseHold(int hotbarNumber, ItemRecieveData data)
+    {
+        int index = hotbars[hotbarNumber];
+        if (index < 0) return;
+
+        Debug.Log("Hold");
+    }
+
+    public void UseRelease(int hotbarNumber, ItemRecieveData data)
+    {
+        int index = hotbars[hotbarNumber];
+        if (index < 0) return;
+
+        Debug.Log("Release");
     }
 
 

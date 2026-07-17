@@ -48,9 +48,15 @@ abstract public class Item : ScriptableObject
 
     public void RecieveData(ItemRecieveData data)
     {
-        
         Activation(m_value, data);
     }
+
+    public virtual void Press(ItemRecieveData data) { }
+
+    public virtual void Hold(ItemRecieveData data) { }
+
+    public virtual void Release(ItemRecieveData data) { }
+
 
     public virtual void Activation(float value, ItemRecieveData data) { }
     

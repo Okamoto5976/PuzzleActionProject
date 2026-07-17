@@ -7,7 +7,7 @@ public class PlayerController : Entity
     public enum Passive
     {
         PriceDown,
-        
+
     }
 
     public class PassiveModifier
@@ -21,6 +21,8 @@ public class PlayerController : Entity
     private Vector2 m_move;
 
     private bool m_isActive;
+    private bool m_isActiveHold;
+    private bool m_isActiveRelease;
     private bool m_isEvasion;
     private bool m_isPrevious;
     private bool m_isNext;
@@ -59,9 +61,9 @@ public class PlayerController : Entity
     protected override void Start()
     {
         base.Start();
-
+        
         m_input = new InputProvider();
-
+        
         m_input.Enable();
     }
 
@@ -97,7 +99,7 @@ public class PlayerController : Entity
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        
+
     }
 
     private void OnEvasionPerformed(InputAction.CallbackContext context)
@@ -119,7 +121,8 @@ public class PlayerController : Entity
 
 
         m_isActive = m_input.IsActive;
-        m_isEvasion = m_input.IsEvasion;
+        m_isActiveHold = m_input.IsActiveHold;
+        m_isActiveRelease = m_input.IsActiveRelease; m_isEvasion = m_input.IsEvasion;
         m_isPrevious = m_input.IsPrevious;
         m_isNext = m_input.IsNext;
 
@@ -129,10 +132,20 @@ public class PlayerController : Entity
 
         if (m_isActive)
         {
-            OnUseItem();
+            OnUseItemPressed();
         }
 
-       
+        if (m_isActiveHold)
+        {
+            OnUseItemHold();
+        }
+
+        if (m_isActiveRelease)
+        {
+            OnUseItemRelease();
+        }
+
+
 
         /*
         �ړ����̍��E����O���]
@@ -212,18 +225,19 @@ public class PlayerController : Entity
 
     private void InputHotber()
     {
-        if(m_isPrevious)
+        if (m_isPrevious)
         {
             m_hotberIndex--;
 
-            if(m_hotberIndex <= -1)
+            if (m_hotberIndex <= -1)
             {
                 m_hotberIndex = 2;
             }
         }
 
-        if(m_isNext)
+        if (m_isNext)
         {
+
             m_hotberIndex++;
 
             if (m_hotberIndex >= 3)
@@ -234,7 +248,7 @@ public class PlayerController : Entity
     }
 
 
-    private void OnUseItem()
+    /*private void OnUseItem()
     {
         ItemRecieveData data = new ItemRecieveData
         {
@@ -245,5 +259,35 @@ public class PlayerController : Entity
         };
         Debug.Log(m_hotberIndex);
         m_inventorySystem.Use(m_hotberIndex , data);
+    }*/
+    private ItemRecieveData CreateItemData()
+    {
+        return new ItemRecieveData
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = transform.forward
+        };
+    }
+    private void OnUseItemPressed()
+    {
+        //ItemRecieveData data = CreateItemData();
+        Debug.Log("Pressed");
+         //m_inventorySystem.UsePressed(m_hotberIndex, data);
+    }
+
+    private void OnUseItemHold()
+    {
+        //ItemRecieveData data = CreateItemData();
+        Debug.Log("Hold");
+         //m_inventorySystem.UseHold(m_hotberIndex, data);
+    }
+
+    private void OnUseItemRelease()
+    {
+        //ItemRecieveData data = CreateItemData();
+        Debug.Log("Release");
+         //m_inventorySystem.UseRelease(m_hotberIndex, data);
     }
 }
