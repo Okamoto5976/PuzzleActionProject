@@ -11,6 +11,13 @@ public class Enemy_Chase : MonoBehaviour, IEnemyBehaviour
     public void Execute()
     {
         if (m_enemyController.Target == null) return;
+        float distance = Vector3.Distance(transform.position, m_enemyController.Target.Value);
+        if(distance <= m_enemyController.AttackRange)
+        {
+            m_enemyController.Stop();
+            m_enemyController.TryAttack();
+            return;
+        }
         m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
     }
 

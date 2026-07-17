@@ -1,147 +1,167 @@
 using UnityEngine;
-using UnityEngine.AI;
 using System.Collections;
-using Unity.VisualScripting;
 
 [RequireComponent(typeof(LineRenderer))]
 public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_controller;
 
-    private Vector3 m_dir;
-    private Vector3 m_targetPos;
+    private enum Enum_RushState
+    {
+        Prepare,
+        Rush
+    }
+    private Enum_RushState m_state;
 
-    private bool m_isRunning;
-    private bool m_preparing;
+    private float m_prepareTime = 1f;
+
+    private Vector3 m_targetPos;
+    private Vector3 m_dir;
+
     private bool m_hasHit;
 
-    private LineRenderer m_line;
+    private LineRenderer m_lineRenderer;
+    private Coroutine m_prepareCoroutine;
 
-    private Coroutine m_rushCoroutine;
-
+    public bool IsRunning => m_state == Enum_RushState.Rush;
     public Vector3 CurrentDirection => m_dir;
-    public bool IsRunning => m_isRunning;
 
     private void Awake()
     {
-        m_line = GetComponent<LineRenderer>();
-        m_line.enabled = false;
+        m_lineRenderer = GetComponent<LineRenderer>();
+        m_lineRenderer.enabled = false;
     }
 
     public void Initialized(EnemyController controller)
     {
         m_controller = controller;
+        StartPrepare();
     }
-
     public void Execute()
     {
-        if (m_controller.Target == null) return;
 
-        if (m_isRunning)
+        if (m_controller.Target == null)
         {
-            m_controller.Move(m_dir, m_controller.EvasionSpeed);
-
-            Vector3 toTarget =m_targetPos -transform.position;
-
-            if (Vector3.Dot(toTarget, m_dir) <= 0f)
-            {
-                Stop();
-            }
-
+            m_lineRenderer.enabled = false;
             return;
         }
 
-        if (m_preparing)
+        float distance = Vector3.Distance(transform.position, m_controller.Target.Value);
+        if (distance > m_controller.FindRange)
         {
-            DrawLine();
+            m_lineRenderer.enabled = false;
             return;
         }
-
-        if (m_rushCoroutine == null)
+        switch (m_state)
         {
-            m_rushCoroutine = StartCoroutine(Rush());
+            case Enum_RushState.Prepare:
+                UpdatePrepare();
+                break;
+
+            case Enum_RushState.Rush:
+                UpdateRush();
+                break;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    // ====================Prepare
+    private void UpdatePrepare()
     {
-        if (!m_isRunning) return;
+        Vector3 dir = m_controller.Target.Value - transform.position;
+        dir.y = 0f;
 
-        if (m_hasHit) return;
-
-        Entity entity = other.GetComponentInParent<Entity>();
-
-        if (entity.Team == m_controller.Team) 
-            return;
-
-        DamageData damage =
-            new DamageData
-            {
-                Attack = (int)m_controller.STR,
-                HitRate = 100f,
-                CriticalRate = m_controller.CriticalRate,
-                CriticalDamage = m_controller.CriticalDamage,
-                BreakRate = m_controller.BreakRate,
-                Knockback = m_controller.KnockBack,
-                Stun = m_controller.Stun,
-                AttackDir = m_dir,
-                Attacker = m_controller,
-                AttackerSE = m_controller.AttackSE,
-                AudioSource = m_controller.AudioSource
-            };
-
-        entity.TakeDamage(damage);
-
-        m_hasHit = true;
-
-        Stop();
+        if (dir.sqrMagnitude > 0.01f)
+        {
+            transform.rotation = Quaternion.LookRotation(dir);
+        }
+        DrawLine();
     }
 
-    IEnumerator Rush()
+    private IEnumerator PrepareRush()
     {
-        m_preparing = true;
+        if (m_controller.Target == null)
+        {
+            m_prepareCoroutine = null;
+            yield break;
+        }
 
-        m_targetPos = m_controller.Target.Value;
+        m_state = Enum_RushState.Prepare;
 
-        m_dir = (m_targetPos - transform.position).normalized;
-
-        m_dir.y = 0f;
-
-        m_line.enabled = true;
-
-        yield return new WaitForSeconds(5f);
-
-        m_preparing = false;
-        m_isRunning = true;
         m_hasHit = false;
 
-        m_line.enabled = false;
+        m_lineRenderer.enabled = true;
 
-        yield return new WaitForSeconds(10f);
+        float timer = 0f;
 
-        m_rushCoroutine = null;
-    }
-
-    private void DrawLine()
-    {
-        m_line.positionCount = 2;
-
-        m_line.SetPosition(0, transform.position);
-
-        m_line.SetPosition(1, m_targetPos);
-    }
-
-    public void Stop()
-    {
-        if (m_rushCoroutine != null)
+        while (timer < m_prepareTime)
         {
-            StopCoroutine(m_rushCoroutine);
-            m_rushCoroutine = null;
+            timer += Time.deltaTime;
+            yield return null;
         }
 
-        m_isRunning = false;
-        m_preparing = false;
+        m_targetPos = m_controller.Target.Value;
+        m_dir = m_targetPos - transform.position;
+        m_dir.y = 0f;
+        m_dir.Normalize();
 
-        m_line.enabled = false;
+        transform.rotation = Quaternion.LookRotation(m_dir);
+        m_lineRenderer.enabled = false;
+        m_state = Enum_RushState.Rush;
+        m_prepareCoroutine = null;
+    }
+
+    // ==================Rush
+    private void UpdateRush()
+    {
+        transform.rotation = Quaternion.LookRotation(m_dir);
+
+        m_controller.Move(m_dir, m_controller.EvasionSpeed);
+
+        float distanceToPlayer = Vector3.Distance(transform.position, m_controller.Target.Value);
+        if (distanceToPlayer <= m_controller.AttackRange)
+        {
+            if (!m_hasHit)
+            {
+                m_controller.TryAttack();
+                m_hasHit = true;
+                Stop();
+                return;
+            }
+        }
+
+        Vector3 toTarget = m_targetPos - transform.position;
+        if (Vector3.Dot(toTarget, m_dir) <= 0f)
+        {
+            Stop();
+        }
+    }
+    // ====================Visual
+    private void DrawLine()
+    {
+        m_lineRenderer.positionCount = 2;
+        m_lineRenderer.useWorldSpace = true;
+
+        m_lineRenderer.SetPosition(0, transform.position + Vector3.up * 0.5f);
+
+        m_lineRenderer.SetPosition(1, m_controller.Target.Value + Vector3.up * 0.5f);
+    }
+    private void StartPrepare()
+    {
+        if (m_prepareCoroutine != null) return;
+
+        m_prepareCoroutine = StartCoroutine(PrepareRush());
+    }
+    public void Stop()
+    {
+        if (m_prepareCoroutine != null)
+        {
+            StopCoroutine(m_prepareCoroutine);
+            m_prepareCoroutine = null;
+        }
+
+        m_lineRenderer.enabled = false;
+        m_controller.Stop();
+        m_state = Enum_RushState.Prepare;
+        StartPrepare();
     }
 }

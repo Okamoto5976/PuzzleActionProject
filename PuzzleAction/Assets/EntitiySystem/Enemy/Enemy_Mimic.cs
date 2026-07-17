@@ -4,15 +4,11 @@ public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_enemyController;
 
-    [SerializeField] private float m_awakeRange = 3f;
+    private float m_awakeRange = 3f;
 
     private bool m_isAwakened = false;
 
-    public void Initialized(EnemyController controller)
-    {
-        m_enemyController = controller;
-    }
-
+    public void Initialized(EnemyController controller) => m_enemyController = controller;
     public void Execute()
     {
         if (m_enemyController.Target == null) return;
@@ -30,9 +26,13 @@ public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
             }
             return;
         }
-
-        //chase player
-        m_enemyController.SetDestination(m_enemyController.Target.Value,m_enemyController.EvasionSpeed); //EvasionSpeed = DashSpeed
+        if(distance <= m_enemyController.AttackRange)
+        {
+            m_enemyController.Stop();
+            m_enemyController.TryAttack();
+            return;
+        }
+        m_enemyController.SetDestination(m_enemyController.Target.Value,m_enemyController.EvasionSpeed);
     }
 
     public void Stop()
