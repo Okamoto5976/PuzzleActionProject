@@ -52,6 +52,7 @@ public class CreatMap : MonoBehaviour
     private GameObject m_playerController;
 
     [SerializeField] private DebugMapPlaceSystem m_debugMapPlaceSystem;
+    [SerializeField] private InstanceCounter m_instanceCounter;
 
     //--------------External API---------------
     public List<GameObject> SouthWall => m_wallObjectsSouth;
@@ -63,6 +64,8 @@ public class CreatMap : MonoBehaviour
         if (m_mapClass == null)
         {
             Debug.Log("DebugMapPlaceSystem On");
+
+            m_instanceCounter.ResetCount();
 
             if(m_debugMapPlaceSystem.DebugMapGenerate())
             {

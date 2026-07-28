@@ -14,7 +14,7 @@ public class GOALSHOP : MonoBehaviour
 
     [Header("Shop")]
     [SerializeField] private InstanceCounter _shopInstanceCounter;
-    private int _shopId;
+    [SerializeField] private int _shopId;
 
 
     [SerializeField] private IntEventSO m_showShopId;
