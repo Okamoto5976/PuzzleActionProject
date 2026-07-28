@@ -8,11 +8,14 @@ public class PlayerHP : EntityHP
 
     public override void TakeDamage(DamageData data)
     {
+        if(m_entity.CurrentState == Entity.EntityState.Dead)return;
+
         base.TakeDamage(data);
 
         m_blood.Play();
     }
 
+    [ContextMenu("PlayerDead")]
     protected override void Die()
     {
         Debug.Log("ゲームオーバー");

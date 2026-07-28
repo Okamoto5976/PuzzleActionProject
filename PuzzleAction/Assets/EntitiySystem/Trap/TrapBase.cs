@@ -84,12 +84,12 @@ public class TrapBase : Entity
         Setup();
     }
 
-    protected override void FixedUpdate()
+    private void FixedUpdate()
     {
         m_moveDir =
             m_direction;
 
-        base.FixedUpdate();
+        CallMove();
 
         CheckRange();
     }

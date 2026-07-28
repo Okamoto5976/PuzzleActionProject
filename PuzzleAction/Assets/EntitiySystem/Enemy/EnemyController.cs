@@ -87,9 +87,9 @@ public class EnemyController : Entity
 
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        OnUpdateFlag();
 
         if (m_target == null) return;
 

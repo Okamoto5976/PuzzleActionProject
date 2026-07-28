@@ -30,7 +30,7 @@ public class Gas_Trap : TrapBase
         m_Timer = 0f;
     }
 
-    protected override void FixedUpdate()
+    private void FixedUpdate()
     {
         m_Timer += Time.deltaTime;
     }

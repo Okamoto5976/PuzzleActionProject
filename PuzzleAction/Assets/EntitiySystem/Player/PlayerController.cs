@@ -113,14 +113,16 @@ public class PlayerController : Entity
         //m_evasionTimer = m_evasionDuration;
     }
 
-    protected override void FixedUpdate()
+    private void FixedUpdate()
     {
-        base.FixedUpdate();
+        CallMove();
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        if(m_currentState == EntityState.Dead) return;
+
+        OnUpdateFlag();
 
         m_position.SetValue(transform.position);
 
