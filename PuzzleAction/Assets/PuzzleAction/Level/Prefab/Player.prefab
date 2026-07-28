@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b01a258c0a79a341be61d40369d4382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirectionMarker
-  m_player: {fileID: 5968134673738187912}
+  m_player: {fileID: 0}
   m_arrow: {fileID: 0}
   m_height: 0.02
 --- !u!1 &665925072150456027
@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b01a258c0a79a341be61d40369d4382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DirectionMarker
-  m_player: {fileID: 5968134673738187912}
+  m_player: {fileID: 0}
   m_arrow: {fileID: 0}
   m_height: 0.02
 --- !u!1 &1501914875296179412

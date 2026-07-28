@@ -152,30 +152,30 @@ public class MessageManager : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            MessageDisplay(Enum_ShopMessageType.Welcome);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    MessageDisplay(Enum_ShopMessageType.Welcome);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            MessageDisplay(Enum_ShopMessageType.Buy);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    MessageDisplay(Enum_ShopMessageType.Buy);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            MessageDisplay(Enum_ShopMessageType.NoMoney);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    MessageDisplay(Enum_ShopMessageType.NoMoney);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            MessageDisplay(Enum_ShopMessageType.InventoryFull);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    MessageDisplay(Enum_ShopMessageType.InventoryFull);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            MessageDisplay(Enum_ShopMessageType.SeeYou);
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha5))
+        //{
+        //    MessageDisplay(Enum_ShopMessageType.SeeYou);
+        //}
     }
 #endif
 }

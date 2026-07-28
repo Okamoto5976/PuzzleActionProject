@@ -2395,7 +2395,7 @@ PrefabInstance:
     - target: {fileID: 1665766470575446034, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1081129786}
     - target: {fileID: 1665766470575446034, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnMoveItemHotber1
@@ -2919,7 +2919,7 @@ PrefabInstance:
     - target: {fileID: 4458272618223492467, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1081129786}
     - target: {fileID: 4458272618223492467, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnMoveItemHotber2
@@ -3427,7 +3427,7 @@ PrefabInstance:
     - target: {fileID: 7005135488896003606, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1081129786}
     - target: {fileID: 7005135488896003606, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnMoveItemHotber3
