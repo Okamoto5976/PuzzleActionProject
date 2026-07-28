@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f89bb5e77b048940a46f8371a5be63e, type: 3}
   m_Name: Level
   m_EditorClassIdentifier: Assembly-CSharp::IntRunTime
-  m_value: 1
+  m_value: 3

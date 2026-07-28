@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class MainGameManager : MonoBehaviour
 {
     [SerializeField] private IntRunTime m_scoreRuntime;
     [SerializeField] private IntRunTime m_moneyRuntime;
     [SerializeField] private TimeManager timemanager;
 
     [Header("Clear")]
-    [SerializeField] private IntRunTime m_clearCount;
+    [SerializeField] private IntRunTime m_level;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
@@ -50,10 +50,13 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //if (Input.anyKeyDown)
-        //{
-        //    //GameOver();
-        //}
+    
+
+        if (Keyboard.current.mKey.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene("MapSelectionPhase");
+
+        }
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
@@ -84,13 +87,14 @@ public class GameManager : MonoBehaviour
         //m_isGameOver = true;
 
         //クリア階層記録　
-        m_clearCount.AddValue(1);
-        Debug.Log($"クリア回数：{m_clearCount.Value}");
+        m_level.AddValue(1);
+        Debug.Log($"クリア回数：{m_level.Value}");
+        Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
 
 
 
         //リザルト表示、関数を呼ぶ
-        if (m_clearCount.Value % 5 == 0)
+        if (m_level.Value % 5 == 0)
         {
             m_gameClearUIEvent.Raise(true);
             m_gameClearEvent.Raise();
@@ -107,6 +111,8 @@ public class GameManager : MonoBehaviour
             m_gameClearEvent.Raise();
 
         }
+
+        //return;
 
         m_sceneEvent.TriggerEvent(m_mapPhaseScene);
     }

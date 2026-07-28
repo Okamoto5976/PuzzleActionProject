@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GoalSystem : MonoBehaviour
 {
-    [SerializeField] private GameManager m_gameManager;
+    private MainGameManager m_mainGameManager;
     //[SerializeField] private Vector3Asset m_playerPos;
     [Header("State")]
     [SerializeField] private bool m_keyDoor;
@@ -10,6 +10,11 @@ public class GoalSystem : MonoBehaviour
     //[SerializeField] private float m_goalRadius;
 
     private bool m_isClear = false;
+
+    public void Initialize(MainGameManager gameManager)
+    {
+        m_mainGameManager = gameManager;
+    }
 
     public void OnGoal()
     {
@@ -31,7 +36,7 @@ public class GoalSystem : MonoBehaviour
         Debug.Log("Goal");
 
         m_isClear = true;
-        m_gameManager.GameClear();
+        m_mainGameManager.GameClear();
     }
 
     public void SetValue(bool value)
