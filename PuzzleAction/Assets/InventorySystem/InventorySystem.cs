@@ -479,6 +479,8 @@ public class InventorySystem : MonoBehaviour
     private void OnUpdateMainHotber()
     {
 
+
+        return;
         Debug.Log("===== OnUpdateMainHotber START =====");
 
         //int count = Mathf.Min(

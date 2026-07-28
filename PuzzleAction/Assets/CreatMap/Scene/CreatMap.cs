@@ -53,6 +53,7 @@ public class CreatMap : MonoBehaviour
 
     [SerializeField] private DebugMapPlaceSystem m_debugMapPlaceSystem;
     [SerializeField] private InstanceCounter m_instanceCounter;
+    [SerializeField] private IntRunTime m_money;
 
     //--------------External API---------------
     public List<GameObject> SouthWall => m_wallObjectsSouth;
@@ -66,6 +67,7 @@ public class CreatMap : MonoBehaviour
             Debug.Log("DebugMapPlaceSystem On");
 
             m_instanceCounter.ResetCount();
+            m_money.AddValue(5000);
 
             if(m_debugMapPlaceSystem.DebugMapGenerate())
             {
