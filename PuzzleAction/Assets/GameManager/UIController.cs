@@ -11,7 +11,8 @@ public class UIController : MonoBehaviour
     //[SerializeField] private MenuUI m_menuUIObj;
 
     [SerializeField] private GameObject m_shopUI;
-    [SerializeField] private GameObject m_inventoryUI;
+    //[SerializeField] private GameObject m_inventoryUI;
+    [SerializeField] private BoolEventSO m_inventoryEvent;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameClearUIEvent;
@@ -65,7 +66,7 @@ public class UIController : MonoBehaviour
         m_menuUI.SetActive(false);
         //m_optionUI.SetActive(false);
         if(m_shopUI != null) m_shopUI.SetActive(false);
-        m_inventoryUI.SetActive(false);
+        //m_inventoryUI.SetActive(false);
         m_gameClearUI.SetActive(false);
     }
 
@@ -117,11 +118,17 @@ public class UIController : MonoBehaviour
     {
         if(!m_isInventory)
         {
-            OnShowInventoryUI(true);
+            //OnShowInventoryUI(true);
+            m_inventoryEvent.RaiseEvent(true);
+            m_isInventory = true;
         }
         else
         {
-            OnShowInventoryUI(false);
+            //OnShowInventoryUI(false);
+            m_inventoryEvent.RaiseEvent(false);
+            m_isInventory = false;
+
+
         }
     }
 
@@ -156,12 +163,12 @@ public class UIController : MonoBehaviour
         //m_shopUI.SetActive(isbool);
     }
 
-    public void OnShowInventoryUI(bool isbool)
-    {
-        if (m_inventoryUI == null) return;
+    //public void OnShowInventoryUI(bool isbool)
+    //{
+    //    if (m_inventoryUI == null) return;
 
-        m_isInventory = isbool;
+    //    m_isInventory = isbool;
 
-        m_inventoryUI.SetActive(isbool);
-    }
+    //    m_inventoryUI.SetActive(isbool);
+    //}
 }

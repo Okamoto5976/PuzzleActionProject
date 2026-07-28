@@ -45,6 +45,8 @@ public class Test : MonoBehaviour
 
     public void SetInventoryVisibility(bool state)
     {
+        Debug.Log($"call SetInventory{state}");
+
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
