@@ -42,6 +42,8 @@ public class CreatMap : MonoBehaviour
     [Space(10)]
 
     [Header("========== DEBUG ==========")]
+    [SerializeField] private MainGameManager m_mainGameManager;
+
     [SerializeField] private GameObject m_goalPrefab;
     [SerializeField] private GameObject m_shopPrefab;
 
@@ -342,7 +344,12 @@ public class CreatMap : MonoBehaviour
         Vector3 startPos = GridToWorld(GetStartPos());
         Vector3 goalPos = GridToWorld(GetGoalPos());
 
+        
+
         GameObject obj2 = Instantiate(m_goalPrefab, goalPos, Quaternion.identity);
+
+        GoalSystem component = obj2.GetComponent<GoalSystem>();
+        component.Initialize(m_mainGameManager);
 
         var sortedRoomDatas = new List<RoomData>(m_mapClassData.roomDatas);
 

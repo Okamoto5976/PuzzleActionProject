@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9767ca76c47deac45b579c1e269505f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalSystem
-  m_gameManager: {fileID: 8423059627622995165, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
+  m_gameManager: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
   m_keyDoor: 0
   m_hasKey: 0
 --- !u!1 &9007098225965162734

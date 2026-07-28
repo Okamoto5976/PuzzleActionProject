@@ -15,7 +15,10 @@ public class IntRunTime : ScriptableObject
 
     public void AddValue(int value)
     {
+        Debug.Log("Add Level");
         m_value += value;
+        Debug.Log($"{name} : {m_value}  InstanceID={GetInstanceID()}");
+
     }
 
     public void SubtractValue(int value)

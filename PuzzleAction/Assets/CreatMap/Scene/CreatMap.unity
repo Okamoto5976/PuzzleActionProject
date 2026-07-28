@@ -844,7 +844,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4632534447666530108, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
       propertyPath: m_Name
-      value: GameManager
+      value: MainGameManager
       objectReference: {fileID: 0}
     - target: {fileID: 8845973713216219996, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1613,6 +1613,7 @@ MonoBehaviour:
   m_treasurePrefab: {fileID: 9146456669176997747, guid: e0ad02a83d3aeee4a8ad85de958324a4, type: 3}
   m_treasureCount: 3
   m_mimicRate: 0.2
+  m_mainGameManager: {fileID: 1502505463}
   m_goalPrefab: {fileID: 8961092045085098247, guid: 1822f757cecfb9a47aeaf4d1490964c9, type: 3}
   m_shopPrefab: {fileID: 108477365344056919, guid: 238c23917d1b3c84f8ea84a10bd3f0c6, type: 3}
   m_player: {fileID: 721869216}
@@ -2067,6 +2068,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1502505463 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
+  m_PrefabInstance: {fileID: 731786847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6c74359338f2646b97a59604d9acf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainGameManager
 --- !u!1001 &1503697132
 PrefabInstance:
   m_ObjectHideFlags: 0

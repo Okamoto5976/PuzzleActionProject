@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8845973713216219996}
-  - component: {fileID: 8423059627622995165}
+  - component: {fileID: 1832269287731389094}
   - component: {fileID: 8379971941369495119}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: MainGameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8423059627622995165
+--- !u!114 &1832269287731389094
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,17 +42,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4632534447666530108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 023a7cf8650c16e4aa0621dd3fd14202, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a6c74359338f2646b97a59604d9acf0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  m_EditorClassIdentifier: Assembly-CSharp::MainGameManager
   m_scoreRuntime: {fileID: 11400000, guid: b55efe0ffafbc8d408c6c25dae6a587b, type: 2}
   m_moneyRuntime: {fileID: 11400000, guid: 23497dd6b185c9a4cbceb0b78cf42061, type: 2}
   timemanager: {fileID: 11400000, guid: 6a8e62ac3a1888246b228fd13fd5ba24, type: 2}
-  m_clearCount: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
+  m_level: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
   m_gameOverUIEvent: {fileID: 11400000, guid: 7eeab09825dd6ab49a9d42adf6296453, type: 2}
   m_gameClearUIEvent: {fileID: 11400000, guid: 3dd5848ad79728a4799baf40dbccfc10, type: 2}
   m_playerDeadEvent: {fileID: 11400000, guid: fc782fd3afb53c84997fbfd9f631bf13, type: 2}
-  m_gameOverEvent: {fileID: 0}
+  m_gameOverEvent: {fileID: 11400000, guid: 7b9fcada903bee746a42d53843aec35a, type: 2}
   m_gameClearEvent: {fileID: 0}
   m_sceneEvent: {fileID: 11400000, guid: f36914501f8c0794181e6831ceed798d, type: 2}
   m_mapPhaseScene: {fileID: 11400000, guid: 8a0300ef84486ea4ebd62972bb0c0968, type: 2}
