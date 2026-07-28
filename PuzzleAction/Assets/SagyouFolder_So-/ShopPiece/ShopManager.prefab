@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3493031914107269825
+--- !u!1 &3893617370082607165
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1057260082979436323}
-  - component: {fileID: 6648567177140233388}
+  - component: {fileID: 8572210406886215595}
+  - component: {fileID: 7162781306950593183}
+  - component: {fileID: 9117976298007419242}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -17,41 +18,72 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1057260082979436323
+--- !u!4 &8572210406886215595
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493031914107269825}
+  m_GameObject: {fileID: 3893617370082607165}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 823.99023, y: 366.25153, z: 64.131}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.000030517578, y: 28.274506, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6648567177140233388
+--- !u!114 &7162781306950593183
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3493031914107269825}
+  m_GameObject: {fileID: 3893617370082607165}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acc51282e7a5d804186198730622b627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
-  t_itemData:
-  - {fileID: 11400000, guid: 86558c8220f7ee44e8d5f0b0627c00e6, type: 2}
-  - {fileID: 11400000, guid: 666433084fc0be848a3f2ee5bc68046a, type: 2}
-  - {fileID: 11400000, guid: b52ebfab427c8d947854956f35e9f556, type: 2}
-  - {fileID: 11400000, guid: dfe6e5d9371b56c408d71b768694dd0d, type: 2}
-  - {fileID: 11400000, guid: 38e25d40207fb534ab28f249a315d570, type: 2}
-  m_itemNumber: 6
-  m_goodsPrefab: []
+  m_currentLevel: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
+  m_temporaryItemManager: {fileID: 9117976298007419242}
+  m_onGenerateShopInventories: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
+  m_shopCount: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
+  m_shopIdEvent: {fileID: 11400000, guid: 5eebf7a62372b904b91ac504c2d6f6e9, type: 2}
+  m_messageManager: {fileID: 0}
+  m_goodsPrefab:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_moneyText: {fileID: 0}
-  m_money: 1000
+  m_moneyDataSO: {fileID: 11400000, guid: 23497dd6b185c9a4cbceb0b78cf42061, type: 2}
   m_infoTextPrefab: {fileID: 0}
+  m_inventorySystem: {fileID: 0}
+  m_shopInventories: []
+  m_isDebug: 1
+  m_ShopUI: {fileID: 0}
+  m_shopId: 1
+--- !u!114 &9117976298007419242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893617370082607165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2806fc0b786c534ea3ddffc9e3f6ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TemporaryItemManager
+  m_onGenerateShopInventory: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
+  m_masterItemDatas:
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
+  - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
+  - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
+  - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
+  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
