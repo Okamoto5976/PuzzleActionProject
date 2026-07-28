@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7246569952165554978}
   - component: {fileID: 5631065701186784443}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: InventoryManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Test
   inventorySystem: {fileID: 7111745429829692275}
-  m_posion: {fileID: 11400000, guid: 95253c96720d3524bbfe98942950b24e, type: 2}
+  m_posion: {fileID: 0}
   m_dog: {fileID: 11400000, guid: c725378c0f7d45c40ab3ddfd0273e263, type: 2}
   m_istrigger: 1
   m_trashButton: {fileID: 0}
