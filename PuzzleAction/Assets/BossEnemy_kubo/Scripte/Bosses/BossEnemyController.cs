@@ -75,9 +75,11 @@ public class BossEnemyController : Entity
         m_agent.updatePosition = true;
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        
+
+        OnUpdateFlag();
 
         if (m_target == null) return;
 

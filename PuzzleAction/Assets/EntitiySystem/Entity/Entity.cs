@@ -143,26 +143,27 @@ abstract public class Entity : MonoBehaviour
         }
         m_buffSystem.AddBuff(modifier,duration);
     }
-    protected virtual void FixedUpdate()
+
+    //call FixidUpdate----------------------------------------------------
+    protected virtual void CallMove()
     {
         if (m_isStun) return;
         if (m_canMove) return;
-        
-        //Entitystateがdead時に動けなく
-        if(m_currentState==EntityState.Dead) return;   
+
+        //Entitystate = dead  do not move
+        if (m_currentState == EntityState.Dead) return;
 
         OnMove(m_moveDir);
-
     }
 
-    protected virtual void Update()
+    //call Update-------------------------------------------------------
+    protected virtual void OnUpdateFlag()
     {
-
-        if(m_isStun)
+        if (m_isStun)
         {
             m_stunTime -= Time.deltaTime;
 
-            if(m_stunTime <= 0)
+            if (m_stunTime <= 0)
             {
                 m_isStun = false;
 
@@ -170,8 +171,9 @@ abstract public class Entity : MonoBehaviour
             }
         }
     }
+    //----------------------------------------------------------------------
 
-    protected void OnMove(Vector3 dir)
+    private void OnMove(Vector3 dir)
     {
         //Vector3 velocity = new Vector3(dir.x * speed, m_rb.linearVelocity.y, dir.z * speed);
 
@@ -181,6 +183,7 @@ abstract public class Entity : MonoBehaviour
         //        velocity * Time.fixedDeltaTime
 
         //    );
+
         dir = dir.normalized; //�����I�Ƀx�N�g����1��
 
         m_velocity = m_rb.linearVelocity;
@@ -203,34 +206,33 @@ abstract public class Entity : MonoBehaviour
         m_entityHP.TakeDamage(data);
     }
 
-    //��ԕύX�p
     public void ChangeState(EntityState newState)
     {
         m_currentState = newState;
+    }
+
+    public void KillEntity()
+    {
+        m_currentState = EntityState.Dead;
+        m_canMove = false;
     }
 
     public void SetCanMove(bool value) => m_canMove = value;
     public void SetIsStun(bool value) => m_isStun = value;
     public void SetIsInvincible(bool value) => m_isInvincible = value;
 
-    //�m�b�N�o�b�N�̏���
-    //EntityState��ύX
     public virtual void ApplyKnockBack(Vector3 direction,float power,float stunTime)
     {
-        //���G�Ȃ疳���ɂ������ꍇ
         if (m_isInvincible) return;
 
         ChangeState(EntityState.Damage);
 
-        //�X�^�����
         m_isStun = true;
         m_stunTime = stunTime;
         direction.y = 0;
 
-        //���̑��x�����Z�b�g
         m_rb.linearVelocity = Vector3.zero;
 
-        //�͂�������
         m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
     }
     public virtual bool ReceiveItem(Item item)
@@ -253,8 +255,6 @@ abstract public class Entity : MonoBehaviour
 //    return true;
 
 
-//�ǉ���������
-//����ɍU���������邩�ǂ���
 //public virtual bool CanHit(Entity other)
 //{
 //    if (other == null)
@@ -262,7 +262,6 @@ abstract public class Entity : MonoBehaviour
 //        return false;
 //    }
 
-//    // ���`�[������
 //    if (Team == other.Team)
 //    {
 //        return false;

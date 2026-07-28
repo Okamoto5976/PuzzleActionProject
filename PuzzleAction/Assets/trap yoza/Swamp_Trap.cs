@@ -19,7 +19,7 @@ public class Swamp_Trap : TrapBase
         m_range = 9999f; 
     }
 
-    protected override void FixedUpdate()
+    private void FixedUpdate()
     {
     }
 

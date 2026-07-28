@@ -23,10 +23,6 @@ public class Dynamite_Trap : TrapBase
         }
     }
 
-    protected override void FixedUpdate()
-    {
-        // 移動処理をキャンセル
-    }
 
     private void OnTriggerEnter(Collider other)
     {
