@@ -22,7 +22,7 @@ public struct ShopItem
 }
 
 
-    public class ShopManager : MonoBehaviour
+public class ShopManager : MonoBehaviour
 {
     [Header("TestItemDataManager")]
     //[SerializeField] private List<Data> t_itemData;
@@ -31,10 +31,11 @@ public struct ShopItem
     //private List<Data> t_itemDataList = new();
 
     [SerializeField] private IntRunTime m_currentLevel;
-    [SerializeField] private TemporaryItemManager m_temporaryItemManager;
+    [SerializeField] private TemporaryItemManager m_temporaryItemManager;   
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;
     [SerializeField] private IntEventSO m_shopIdEvent;
+    [SerializeField] private MessageManager m_messageManager;
 
 
     [SerializeField] private List<Goods> m_goodsPrefab;
@@ -60,6 +61,25 @@ public struct ShopItem
 
     private int ShopCount => m_shopCount.Count;
     private int _currentShopId = 0;
+
+    //========Debug===============
+    [Header("Debug")]
+    [SerializeField] private bool m_isDebug;
+    [SerializeField] private GameObject m_ShopUI;
+    [SerializeField] private int m_shopId = 1;
+
+    [ContextMenu("Debug.Start")]
+    public void DebugStart()
+    {
+        if(m_ShopUI == null)
+        {
+            Debug.LogError("Debug Serialize ShopUI not found");
+            return;
+        }
+
+        m_ShopUI.SetActive(true);
+        m_shopIdEvent.Raise(m_shopId);
+    }
 
     //âºÅ@InitializeÇ≈åƒÇ‘
     private void Awake()
@@ -114,6 +134,16 @@ public struct ShopItem
     /// </summary>
     private void InitializeShops()
     {
+        if(m_isDebug)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                m_shopInventories.Add(GenerateShopInventory(1, 1));
+            }
+
+            return;
+        }
+
         for (int i = 0; i < ShopCount; i++)
         {
             m_shopInventories.Add(GenerateShopInventory(1, 1));
@@ -160,7 +190,10 @@ public struct ShopItem
     private void SetDatasToSlots(int id)
     {
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
+        //textManager start
         _currentShopId = id;
+
+        m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Welcome);
     }
 
     private void SetDatasToSlotsFromInventory(ShopInventory shopInventory)
@@ -198,6 +231,8 @@ public struct ShopItem
         if (data.Data.Price > m_money)
         {
             Debug.Log("you do not have money");
+
+            m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.NoMoney);
             return false;
         }
         else
@@ -215,6 +250,8 @@ public struct ShopItem
             item.IsSold = true;
             m_shopInventories[_currentShopId].inventory[slotId] = item;
             Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+
+            m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Buy);
 
             return true;
         }
