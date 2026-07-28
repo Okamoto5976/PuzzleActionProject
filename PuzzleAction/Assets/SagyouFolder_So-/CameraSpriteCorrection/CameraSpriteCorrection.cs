@@ -2,8 +2,8 @@ using UnityEngine;
 
 /// <summary>
 /// Created by: So-
+/// Correct sprite rotation by Camera angle, does not compensate y rotation
 /// </summary>
-
 public class CameraSpriteCorrection : MonoBehaviour
 {
     [SerializeField] private Camera _targetCamera;
