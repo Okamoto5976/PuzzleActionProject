@@ -26,15 +26,15 @@ public class Timer : MonoBehaviour
         if (timer >= waitTime)
         {
             timer = 0f;
-            ShowRandomTalk();
+            //ShowRandomTalk();
         }
     }
     public void NotifyAction()
     {
         isAction = true;
     }
-    void ShowRandomTalk()
-    {
-        m_messageManager.ShowRandomNoneMessage();
-    }
+    //void ShowRandomTalk()
+    //{
+    //    m_messageManager.ShowRandomNoneMessage();
+    //}
 }

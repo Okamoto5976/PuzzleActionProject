@@ -1,133 +1,181 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using TMPro;
-using UnityEngine.Audio;
-using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class MessageManager : MonoBehaviour
 {
-    [SerializeField] private MessageSO[] m_messages;
-    [SerializeField] private TextMeshProUGUI m_messageText;
+    [Header("Message SO")]
+    [SerializeField] private MessageSO_Shop m_messages;
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI m_speakerText;
-    [SerializeField] private GameObject m_speechParent ;
-    [SerializeField] private UnityEngine.UI.Button m_button;
-    private int m_index = 0;
-
-    void Start()
+    [SerializeField] private GameObject m_speechParent;
+    [SerializeField] private Button m_closeButton;
+    private TextDisplay_02 m_textDisplay;
+    private void Awake()
     {
-        m_speechParent.SetActive(true);
-        m_button.onClick.AddListener(ShowCloseMessage);
+        m_textDisplay = GetComponent<TextDisplay_02>();
     }
-
-    //通常会話再生（Noneのみ）
-    public void StartSequence()
+    private void Start()
     {
-        m_index = 0;
-        m_speechParent.SetActive(true);
-        ShowNextNoneMessage();
-    }
-    public void ShowWelcome()
-    {
-        //foreach (var data in m_messages)
+        if (m_speechParent != null)
+        {
+            m_speechParent.SetActive(false);
+        }
+        //if (m_closeButton != null)
         //{
-        //    if (data.state_ == State.None)
-        //    {
-        //        m_speechParent.SetActive(true);
-        //        Show(data);
-        //        return;
-        //    }
+        //    m_closeButton.onClick.AddListener(CloseMessage);
         //}
     }
-    //Noneだけ順番表示
-    public void ShowNextNoneMessage()
+
+    public void MessageDisplay(Enum_ShopMessageType type)
     {
-        //while (m_index < m_messages.Length)
-        //{
-        //    MessageSO data = m_messages[m_index];
-        //    m_index++;
+        MessageList message = GetMessage(type);
 
-        //    if (data.state_ == State.None)
-        //    {
-        //        Show(data);
-        //        return;
-        //    }
-        //}
+        if (message == null)
+        {
+            Debug.LogWarning($"{type} のメッセージが見つかりません");
+            return;
+        }
+        switch (message.m_messageType)
+        {
+            case Enum_ShopMessageType.Welcome:
+                Debug.Log("入店");
+                break;
 
-        EndMessage();
+            case Enum_ShopMessageType.Buy:
+                Debug.Log("購入成功");
+                break;
+
+            case Enum_ShopMessageType.NoMoney:
+                Debug.Log("お金不足");
+                break;
+
+            case Enum_ShopMessageType.InventoryFull:
+                Debug.Log("インベントリ満タン");
+                break;
+
+            case Enum_ShopMessageType.SeeYou:
+                Debug.Log("退店");
+                break;
+
+            default:
+                Debug.Log("通常会話");
+                break;
+        }
+
+        ShowMessage(message.m_messages);
+    }
+    public void MessageDisplayRandom(Enum_ShopMessageType type)
+    {
+        List<MessageList> candidates = new();
+
+        foreach (MessageList message in m_messages.m_messageList)
+        {
+            if (message.m_messageType == type)
+            {
+                candidates.Add(message);
+            }
+        }
+        if (candidates.Count == 0)
+        {
+            Debug.LogWarning($"{type} のメッセージがありません");
+            return;
+        }
+        MessageList randomMessage = candidates[Random.Range(0, candidates.Count)];
+        ShowMessage(randomMessage.m_messages);
     }
 
-    //条件メッセージ表示
-    public void ShowByState(State state)
-    {
-        //foreach (var data in m_messages)
-        //{
-        //    if (data.state_ == state)
-        //    {
-        //        m_speechParent.SetActive(true);
-        //        Show(data);
-        //        return;
-        //    }
-        //}
-
-        Debug.Log("該当するメッセージなし: " + state);
-    }
+    /// <summary>
+    /// 購入専用メッセージ
+    /// </summary>
     public void ShowBuyMessage(string itemName, int count)
     {
-        //吹き出しを表示
-        m_speechParent.SetActive(true);
-        //メッセージ作成
-        m_messageText.text = itemName + "wo" + count + "Buy";
+        string message = $"{itemName}を{count}個購入しました。";
+
+        ShowMessage(message);
+    }
+
+    /// <summary>
+    /// 共通メッセージ表示処理
+    /// </summary>
+    private void ShowMessage(string message)
+    {
+        if (m_speechParent != null)
+        {
+            m_speechParent.SetActive(true);
+        }
+
         if (m_speakerText != null)
         {
             m_speakerText.text = "Shop";
         }
-    }
-    public void ShowRandomNoneMessage()
-    {
-        var list = new
-        System.Collections.Generic.List<MessageSO>();
-        //foreach (var data in m_messages)
-        //{
-        //    if (data.state_ == State.None)
-        //    {
-        //        list.Add(data);
-        //    }
-        //}
-        if (list.Count == 0) return;
 
-        int rand = Random.Range(0, list.Count);
-        m_speechParent.SetActive(true);
-        Show(list[rand]);
-    }
-    public void ShowCloseMessage()
-     {
-
-        m_speechParent.SetActive(true);
-        while (m_index < m_messages.Length)
+        if (m_textDisplay != null)
         {
-            MessageSO data = m_messages[m_index];
-            m_index++;
-
-            //if (data.state_ == State.SeeYou)
-            //{
-            //    Show(data);
-            //    return;
-            //}
+            m_textDisplay.ShowMessageGradually(message);
         }
     }
 
-
-    void Show(MessageSO data)
+    /// <summary>
+    /// メッセージを閉じる
+    /// </summary>
+    public void CloseMessage()
     {
-        m_messageText.text = data.message;
+        if (m_speechParent != null)
+        {
+            m_speechParent.SetActive(false);
+        }
 
         if (m_speakerText != null)
-            m_speakerText.text = data.speaker;
+        {
+            m_speakerText.text = "";
+        }
+
+        if (m_textDisplay != null)
+        {
+            m_textDisplay.ShowMessage("");
+        }
+    }
+    private MessageList GetMessage(Enum_ShopMessageType type)
+    {
+        foreach (MessageList message in m_messages.m_messageList)
+        {
+            if (message.m_messageType == type)
+            {
+                return message;
+            }
+        }
+        return null;
     }
 
-    void EndMessage()
+#if UNITY_EDITOR
+    private void Update()
     {
-        m_speechParent.SetActive(false);
-        m_messageText.text = "";
-        if (m_speakerText != null) m_speakerText.text = "";
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            MessageDisplay(Enum_ShopMessageType.Welcome);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            MessageDisplay(Enum_ShopMessageType.Buy);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            MessageDisplay(Enum_ShopMessageType.NoMoney);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            MessageDisplay(Enum_ShopMessageType.InventoryFull);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            MessageDisplay(Enum_ShopMessageType.SeeYou);
+        }
     }
+#endif
 }
