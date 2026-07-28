@@ -1,5 +1,8 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine.UI;
+using UnityEngine;
 
 public class ItemBox
 {
@@ -39,6 +42,8 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private ItemManager itemManager;
     [SerializeField] private SaveManager m_saveManager;
 
+    [SerializeField] private List<Image> mainHotbarImages;
+
     private ItemManager m_itemManager;
 
     private void Awake()
@@ -50,10 +55,6 @@ public class InventorySystem : MonoBehaviour
         hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>(true);
 
         m_itemManager = FindAnyObjectByType<ItemManager>();
-
-        //Debug.Log("Active Slots : " + activeSlots.Length);
-        //Debug.Log("Passive Slots : " + passiveSlots.Length);
-        //Debug.Log("Hotbar Slots : " + hotbarSlots.Length);
     }
 
     private void Start()
@@ -115,7 +116,7 @@ public class InventorySystem : MonoBehaviour
         //同じアイテムを探す
         foreach (ItemBox item in activeInventory)
         {
-            if (item.data == data)
+            if (item != null && item.data == data)
             {
                 item.count += count;
 
@@ -157,10 +158,30 @@ public class InventorySystem : MonoBehaviour
 
     public void UpdateUI()
     {
+        Debug.Log("===== UpdateUI =====");
+        Debug.Log($"UpdateUi Start = [{hotbars[0]},{hotbars[1]}, {hotbars[2]}]");
+
+        if (hotbars[0] == 0)
+        {
+            Debug.LogWarning("hotbars[0] became 0 !");
+            Debug.Log(System.Environment.StackTrace);
+        }
+
+        Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
+
+        for (int i = 0; i < activeInventory.Count; i++) 
+        {
+            if (activeInventory[i] != null)
+            {
+                Debug.Log($"{i} : {activeInventory[i].data.ItemName}");
+            }
+        }
+        //Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
+
         // Active inventory
         for (int i = 0; i < activeSlots.Length; i++)
         {
-            if (i >= activeInventory.Count)
+            if (i >= activeInventory.Count || activeInventory[i] == null)
             {
                 activeSlots[i].Clear();
             }
@@ -183,29 +204,32 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-// Hotbar
-for (int i = 0; i < hotbars.Length; i++)
-{
-    int index = hotbars[i];
+        // Hotbar
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            int index = hotbars[i];
+            Debug.Log($"Hotbar Check i={i} index={index}");
 
-    // 空なら消す
-    if (index < 0)
-    {
-        hotbarSlots[i].Clear();
-        continue;
-    }
+            // 空なら消す
+            if (index < 0)
+            {
+                Debug.Log($"Hotbar[{i}] Clear");
+                hotbarSlots[i].Clear();
+                continue;
+            }
 
-    // インデックス範囲外
-    if (index >= activeInventory.Count)
-    {
-        hotbarSlots[i].Clear();
-        hotbarClear(i);
-        continue;
-    }
+            // インデックス範囲外
+            if (index >= activeInventory.Count || activeInventory[index] == null)
+            {
+                hotbarSlots[i].Clear();
+                hotbarClear(i);
+                continue;
+            }
 
-    // 表示更新
-    hotbarSlots[i].SetItem(activeInventory[index], index);
-}
+            // 表示更新
+            hotbarSlots[i].SetItem(activeInventory[index], index);
+        }
+        OnUpdateMainHotber();
     }
 
     public void RemoveActiveItem(int index)
@@ -218,10 +242,17 @@ for (int i = 0; i < hotbars.Length; i++)
         // 0以下なら完全削除
         if (item.count <= 0)
         {
-            activeInventory.RemoveAt(index);
-        }
+            activeInventory[index] = null;
+            for (int i = 0; i < hotbars.Length; i++)
+            {
+                if (hotbars[i] == index)
+                {
+                    hotbarClear(i);
+                }
+            }
 
-        UpdateUI();
+            UpdateUI();
+        }
     }
 
     public void RemovePassiveItem(int index)
@@ -237,20 +268,12 @@ for (int i = 0; i < hotbars.Length; i++)
     //削除
     public void RemoveItem(int index)
     {
-        if (index >= activeInventory.Count) return;
+        if (index < 0 || index >= activeInventory.Count) return;
 
-        activeInventory.RemoveAt(index);
+        activeInventory[index] = null;
 
         for (int i = 0; i < hotbars.Length; i++)
         {
-            if (hotbars[i] < index) continue;
-
-            if (hotbars[i] > index)
-            {
-                hotbars[i]--;
-                continue;
-            }
-
             if (hotbars[i] == index)
             {
                 hotbarClear(i);
@@ -270,8 +293,28 @@ for (int i = 0; i < hotbars.Length; i++)
         item.count--;
 
         Debug.Log(item.data.ItemName + " を使用");
+
+        //m_itemManager.OnUseItem(item.data, data);
         //ItemManager
+        //if(m_itemManager == null)
+        //{
+        //    Debug.Log("ItemManager ねえよ");
+        //}
+        
+        //if(item.data == null)
+        //{
+        //    Debug.Log("item data ねえよ");
+
+        //}
+
+        //if (data == null)
+        //{
+        //    Debug.Log("data ねえよ");
+
+        //}
+
         m_itemManager.OnUseItem(item.data, data);
+
 
         // 0以下なら削除
         if (item.count <= 0)
@@ -286,7 +329,7 @@ for (int i = 0; i < hotbars.Length; i++)
     //hotber
 
     //public int[] hotbares = new int[3];
-    public int[]hotbars = new int[3];
+    private int[] hotbars = new int[] { -1, -1, -1 };
 
 
     //ホットバーに追加
@@ -303,10 +346,12 @@ for (int i = 0; i < hotbars.Length; i++)
             hotbarSlots[hotberNumber].Clear();
             return;
         }
-
+        Debug.Log($"AddHotber called : {hotberNumber}, {index}");
         hotbars[hotberNumber] = index;
 
         hotbarSlots[hotberNumber].SetItem(activeInventory[index], index);
+
+        UpdateUI();
     }
 
     //使用
@@ -338,6 +383,7 @@ for (int i = 0; i < hotbars.Length; i++)
     //インベントリ削除時クリア
     public void hotbarClear(int hotbarNumber)
     {
+        Debug.Log($"hotbarClear called : {hotbarNumber}");
         hotbars[hotbarNumber] = -1;
     }
 
@@ -395,6 +441,7 @@ for (int i = 0; i < hotbars.Length; i++)
 
     public void LoadInventory()
     {
+        Debug.Log($"LoadInventory = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
         activeInventory.Clear();
         passiveInventory.Clear();
 
@@ -427,6 +474,71 @@ for (int i = 0; i < hotbars.Length; i++)
         }
 
         UpdateUI();
+    }
+
+    private void OnUpdateMainHotber()
+    {
+
+        Debug.Log("===== OnUpdateMainHotber START =====");
+
+        //int count = Mathf.Min(
+        //    hotbars.Length,
+        //    mainHotbarImages.Length
+        //);
+
+        int count = hotbars.Length;
+
+        Debug.Log(count);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (mainHotbarImages[i] == null)
+            {
+                Debug.Log("なにもない");
+            }
+
+            Image hotbarImage = mainHotbarImages[i];
+
+            if (hotbarImage == null)
+            {
+                continue;
+            }
+
+            if (hotbars[i] == -1)
+            {
+                hotbarImage.sprite = null;
+                //hotbarImage.enabled = false;
+                continue;
+            }
+
+            int inventoryIndex = hotbars[i];
+
+            if (inventoryIndex < 0 ||
+                inventoryIndex >= activeInventory.Count)
+            {
+                hotbarImage.sprite = null;
+                //hotbarImage.enabled = false;
+                continue;
+            }
+
+            ItemBox item = activeInventory[inventoryIndex];
+
+            if (item == null || item.data == null)
+            {
+                hotbarImage.sprite = null;
+                //hotbarImage.enabled = false;
+                continue;
+            }
+
+            hotbarImage.sprite = item.data.icon;
+            //hotbarImage.enabled = true;
+
+            Debug.Log(
+                $"MainHotbar[{i}]に " +
+                $"{item.data.ItemName} のImageを更新"
+            );
+        }
+        Debug.Log("===== OnUpdateMainHotber END =====");
     }
 
     //ソート　アイテム削除後などに
@@ -466,4 +578,5 @@ for (int i = 0; i < hotbars.Length; i++)
         //        }
         //    }
         //}
-    }}
+    }
+}
