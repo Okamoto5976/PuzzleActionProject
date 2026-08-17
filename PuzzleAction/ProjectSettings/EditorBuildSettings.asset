@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/CreatMap/Scene/CreatMap.unity
     guid: 9b8c8537db254d040ab5a8ce334f09b9
+  - enabled: 1
+    path: Assets/PuzzleAction/Level/Scene/SceneA.unity
+    guid: db16dd27af9f713489db5fb51d1d5992
+  - enabled: 1
+    path: Assets/PuzzleAction/Level/Scene/SceneB.unity
+    guid: 7ab882288f6f57f459a39acbbfbbf6a0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

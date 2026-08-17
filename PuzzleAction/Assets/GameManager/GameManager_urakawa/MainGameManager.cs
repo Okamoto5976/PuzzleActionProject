@@ -86,6 +86,18 @@ public class MainGameManager : MonoBehaviour
 
         //m_isGameOver = true;
 
+        //リザルト表示、関数を呼ぶ
+        if (m_level.Value % 5 == 0)
+        {
+            m_gameClearUIEvent.Raise(true);
+            m_gameClearEvent.Raise();
+
+            m_level.AddValue(1);
+            
+            return;
+
+        }
+
         //クリア階層記録　
         m_level.AddValue(1);
         Debug.Log($"クリア回数：{m_level.Value}");
@@ -93,14 +105,7 @@ public class MainGameManager : MonoBehaviour
 
 
 
-        //リザルト表示、関数を呼ぶ
-        if (m_level.Value % 5 == 0)
-        {
-            m_gameClearUIEvent.Raise(true);
-            m_gameClearEvent.Raise();
-            return;
-
-        }
+        
 
         //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
 
