@@ -705,6 +705,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 790069eb4d6817e49a9b0e48e639a8e3, type: 2}
   m_cube: {fileID: 2233033608084261278, guid: fbca5d76fd660ba4eb157c86f56c6d89, type: 3}
   m_camera: {fileID: 1489306959}
+  m_levelSO: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
 --- !u!1 &2125702354
 GameObject:
   m_ObjectHideFlags: 0

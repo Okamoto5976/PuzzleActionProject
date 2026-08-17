@@ -331,6 +331,8 @@ public class InventorySystem : MonoBehaviour
     //public int[] hotbares = new int[3];
     private int[] hotbars = new int[] { -1, -1, -1 };
 
+    [SerializeField] private DisplayManager m_displayManager;
+
 
     //ホットバーに追加
     public void AddHotber(int hotberNumber, int index)
@@ -350,6 +352,7 @@ public class InventorySystem : MonoBehaviour
         hotbars[hotberNumber] = index;
 
         hotbarSlots[hotberNumber].SetItem(activeInventory[index], index);
+        m_displayManager.SetHotberImage(hotberNumber, activeInventory[index].data.icon);
 
         UpdateUI();
     }

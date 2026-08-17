@@ -10,8 +10,8 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private IntRunTime m_moneyRuntime;
     [SerializeField] private TimeManager timemanager;
 
-    [Header("Clear")]
-    [SerializeField] private IntRunTime m_level;
+    //[Header("Clear")]
+    //[SerializeField] private IntRunTime m_level;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
@@ -87,21 +87,21 @@ public class MainGameManager : MonoBehaviour
         //m_isGameOver = true;
 
         //リザルト表示、関数を呼ぶ
-        if (m_level.Value % 5 == 0)
-        {
-            m_gameClearUIEvent.Raise(true);
-            m_gameClearEvent.Raise();
+        //if (m_level.Value % 5 == 0)
+        //{
+        //    m_gameClearUIEvent.Raise(true);
+        //    m_gameClearEvent.Raise();
 
-            m_level.AddValue(1);
+        //    //m_level.AddValue(1);
             
-            return;
+        //    return;
 
-        }
+        //}
 
         //クリア階層記録　
-        m_level.AddValue(1);
-        Debug.Log($"クリア回数：{m_level.Value}");
-        Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
+        //m_level.AddValue(1);
+        //Debug.Log($"クリア回数：{m_level.Value}");
+        //Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
 
 
 

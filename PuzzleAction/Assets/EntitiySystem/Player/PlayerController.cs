@@ -43,6 +43,8 @@ public class PlayerController : Entity
     [Header("InventorySystem")]
     [SerializeField] private InventorySystem m_inventorySystem;
 
+    [SerializeField] private DisplayManager m_displayManager;
+
     public Vector3 MoveDirection => m_moveDir;
 
     private bool m_isEvaing;
@@ -52,7 +54,7 @@ public class PlayerController : Entity
     //private float m_evasionTimer;
 
 
-    private int m_hotberIndex = 0;
+    [SerializeField] private int m_hotberIndex = 0;
 
     //---------passive bool---------------
 
@@ -252,6 +254,8 @@ public class PlayerController : Entity
                 m_hotberIndex = 0;
             }
         }
+
+        m_displayManager.SetIndex(m_hotberIndex);
     }
 
 

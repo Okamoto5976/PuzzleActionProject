@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class DisplayManager : MonoBehaviour
 {
@@ -26,12 +28,17 @@ public class DisplayManager : MonoBehaviour
     private int m_level;
     [SerializeField] private IntRunTime m_levelDataSO;
 
-
+    [SerializeField] private TMP_Text m_testHotberIndexText;
 
     private void Start()
     {
         //m_currentHP = maxHP;
         m_level = m_levelDataSO.Value;
+
+        //for (int i = 0; i < m_images.Count; i++)
+        //{
+        //    m_images[i].material.SetFloat("_Alpha", 0f);
+        //}
 
         if (levelUI != null) levelUI.UpdateScoreDisplay(m_level);
 
@@ -43,6 +50,25 @@ public class DisplayManager : MonoBehaviour
 
         if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
         //UpdateAllUI();
+    }
+
+    [SerializeField] private List<Image> m_images;
+
+    public void SetHotberImage(int index, Sprite image)
+    {
+        m_images[index].sprite = image;
+    }
+
+    public void SetIndex(int index)
+    {
+        m_testHotberIndexText.text = index.ToString();
+
+        //for(int i = 0;  i < m_images.Count; i++)
+        //{
+        //    m_images[i].material.SetFloat("_Alpha", 0f);
+        //}
+
+        //m_images[index].material.SetFloat("_Alpha", 1f);
     }
 
     //public void UpdatePlayerHP(int currenHP, int maxHP)

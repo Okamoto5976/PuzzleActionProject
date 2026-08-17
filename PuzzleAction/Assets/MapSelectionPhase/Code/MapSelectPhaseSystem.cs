@@ -22,6 +22,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
     private int m_selectedIndex = -1;
 
+    [SerializeField] private IntRunTime m_levelSO;
+
 
     private void Start()
     {
