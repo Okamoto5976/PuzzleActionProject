@@ -26,6 +26,7 @@ public class Test : MonoBehaviour
 
     [SerializeField] private GameObject m_hotbarPanel;
 
+    [SerializeField] private GameObject m_Panel;
 
     private void Start()
     {
@@ -40,6 +41,8 @@ public class Test : MonoBehaviour
         m_passivepanel.SetActive(false);
         m_hotbarPanel.SetActive(false);
 
+        m_Panel.SetActive(false);
+
        // m_infoPanel.SetActive(false);
     }
 
@@ -50,6 +53,8 @@ public class Test : MonoBehaviour
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
+
+        m_Panel.SetActive(state);
 
         if (!state)
         {

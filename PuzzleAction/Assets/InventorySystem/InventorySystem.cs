@@ -64,6 +64,8 @@ public class InventorySystem : MonoBehaviour
             hotbars[i] = -1;
         }
         m_saveManager.LoadFromJson();
+
+        UpdateUI();
     }
     //[SerializeField] private Data data;
 

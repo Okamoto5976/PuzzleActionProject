@@ -146,12 +146,12 @@ public class PlayerController : Entity
 
         if (m_isActiveHold)
         {
-            OnUseItemHold();
+            //OnUseItemHold();
         }
 
         if (m_isActiveRelease)
         {
-            OnUseItemRelease();
+            //OnUseItemRelease();
         }
 
 
@@ -285,22 +285,23 @@ public class PlayerController : Entity
     }
     private void OnUseItemPressed()
     {
-        //ItemRecieveData data = CreateItemData();
+        ItemRecieveData data = CreateItemData();
         Debug.Log("Pressed");
+        m_inventorySystem.UseItem(m_hotberIndex, data);
          //m_inventorySystem.UsePressed(m_hotberIndex, data);
     }
 
     private void OnUseItemHold()
     {
-        //ItemRecieveData data = CreateItemData();
+        ItemRecieveData data = CreateItemData();
         Debug.Log("Hold");
-         //m_inventorySystem.UseHold(m_hotberIndex, data);
+         m_inventorySystem.UseHold(m_hotberIndex, data);
     }
 
     private void OnUseItemRelease()
     {
-        //ItemRecieveData data = CreateItemData();
+        ItemRecieveData data = CreateItemData();
         Debug.Log("Release");
-         //m_inventorySystem.UseRelease(m_hotberIndex, data);
+         m_inventorySystem.UseRelease(m_hotberIndex, data);
     }
 }
