@@ -56,6 +56,8 @@ public class PlayerController : Entity
 
     [SerializeField] private int m_hotberIndex = 0;
 
+    private bool m_isUsingArrow = false;
+    private bool m_isUsingSetItem = false;
     //---------passive bool---------------
 
     //private bool 
@@ -137,7 +139,6 @@ public class PlayerController : Entity
 
         InputMove();
 
-        InputHotber();
 
         if (m_isActive)
         {
@@ -151,9 +152,10 @@ public class PlayerController : Entity
 
         if (m_isActiveRelease)
         {
-            //OnUseItemRelease();
+            OnUseItemRelease();
         }
 
+        InputHotber();
 
 
         /*
@@ -234,6 +236,11 @@ public class PlayerController : Entity
 
     private void InputHotber()
     {
+        //player use Arrow etc... not change hotber Item
+        if (m_isUsingArrow) return;
+
+        if (m_isUsingSetItem) return;
+
         if (m_isPrevious)
         {
             m_hotberIndex--;
@@ -285,23 +292,46 @@ public class PlayerController : Entity
     }
     private void OnUseItemPressed()
     {
-        ItemRecieveData data = CreateItemData();
         Debug.Log("Pressed");
-        m_inventorySystem.UseItem(m_hotberIndex, data);
-         //m_inventorySystem.UsePressed(m_hotberIndex, data);
+
+        if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Arrow))
+        {
+            m_isUsingArrow = true;
+            //start to pull the bow 
+        }
+        else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Set))
+        {
+
+        }
+        else
+        {
+            ItemRecieveData data = CreateItemData();
+
+            m_inventorySystem.UsePressed(m_hotberIndex, data);
+
+        }
+
     }
 
     private void OnUseItemHold()
     {
-        ItemRecieveData data = CreateItemData();
         Debug.Log("Hold");
-         m_inventorySystem.UseHold(m_hotberIndex, data);
     }
 
     private void OnUseItemRelease()
     {
-        ItemRecieveData data = CreateItemData();
         Debug.Log("Release");
-         m_inventorySystem.UseRelease(m_hotberIndex, data);
+
+        if(m_isUsingArrow)
+        {
+            m_isUsingArrow = false;
+
+            ItemRecieveData data = CreateItemData();
+            m_inventorySystem.UseRelease(m_hotberIndex, data);
+
+
+        }
+
+        
     }
 }

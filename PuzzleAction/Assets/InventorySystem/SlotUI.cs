@@ -38,8 +38,8 @@ public class SlotUI : MonoBehaviour
 
     public void Clear()
     {
-        Debug.Log($"{gameObject.name} Clear");
-        Debug.Log(System.Environment.StackTrace);
+        //Debug.Log($"{gameObject.name} Clear");
+        //Debug.Log(System.Environment.StackTrace);
         m_icon.enabled = false;
 
         if (m_countText != null)

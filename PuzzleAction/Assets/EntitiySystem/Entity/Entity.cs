@@ -206,6 +206,14 @@ abstract public class Entity : MonoBehaviour
         m_entityHP.TakeDamage(data);
     }
 
+    public virtual void HealHP(float value)
+    {
+        if (m_entityHP == null) return;
+
+
+        m_entityHP.Heal(value);
+    }
+
     public void ChangeState(EntityState newState)
     {
         m_currentState = newState;

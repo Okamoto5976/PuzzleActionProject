@@ -40,6 +40,7 @@ abstract public class Item : ScriptableObject
     public bool stackable => m_data.MaxStack > 1;
 
     public ItemType ItemType => m_data.ItemType;
+    public ItemUseType ItemUseType => m_data.ItemUseType;
 
     public ItemEffectType Type => m_type;
 

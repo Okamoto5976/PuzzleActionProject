@@ -14,6 +14,15 @@ public enum Grade
     Legend
 }
 
+//when player use item, check this type. if arrow , player pull the bow animation
+public enum ItemUseType
+{ 
+    None,
+    Arrow,
+    Set,
+}
+
+
 [System.Serializable]
 public class ItemData
 {
@@ -25,6 +34,7 @@ public class ItemData
     [SerializeField] private float dropRate;        
     //[SerializeField] private int itemGrade;         //Rarity
     [SerializeField] private ItemType itemType;
+    [SerializeField] private ItemUseType m_itemUseType;
     [SerializeField, Min(0)] private int price;
     [SerializeField] private Type Type;
     [SerializeField] private Grade itemGrade;
@@ -37,6 +47,7 @@ public class ItemData
     public float DropRate { get => dropRate; }
     //public int ItemGrade { get => itemGrade; }
     public ItemType ItemType => itemType;
+    public ItemUseType ItemUseType => m_itemUseType;
     public int Price => price;
     public bool IsShopCompatible => price > 0;
 

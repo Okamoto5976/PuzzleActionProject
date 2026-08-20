@@ -285,10 +285,14 @@ public class InventorySystem : MonoBehaviour
         UpdateUI();
     }
 
+
+
     // 使用
-    public void UseItem(int index, ItemRecieveData data)
+    private void UseItem(int index, ItemRecieveData data)
     {
-        if (index >= activeInventory.Count) return;
+        if (index < 0 || index >= activeInventory.Count) return;
+
+        if (activeInventory[index] == null) return;
 
         ItemBox item = activeInventory[index];
 
@@ -359,29 +363,46 @@ public class InventorySystem : MonoBehaviour
         UpdateUI();
     }
 
+    public bool IsCheckCurrentItem(int hotbarNumber, ItemUseType type)
+    {
+        int index = hotbars[hotbarNumber];
+
+        if (index < 0 || index >= activeInventory.Count) return false;
+
+        if (activeInventory[index] == null) return false;
+
+        ItemBox item = activeInventory[index];
+
+        return item.data.ItemUseType == type;
+
+    }
+
     //使用
     public void UsePressed(int hotbarNumber, ItemRecieveData data)
     {
         int index = hotbars[hotbarNumber];
-        if (index < 0) return;
+        if (index < 0 || index >= activeInventory.Count) return;
 
-        Debug.Log("Pressed");
+        UseItem(index, data);
     }
 
-    public void UseHold(int hotbarNumber, ItemRecieveData data)
-    {
-        int index = hotbars[hotbarNumber];
-        if (index < 0) return;
+    //public void UseHold(int hotbarNumber, ItemRecieveData data)
+    //{
+    //    int index = hotbars[hotbarNumber];
+    //    if (index < 0) return;
 
-        Debug.Log("Hold");
-    }
+    //    UseItem(index, data);
+
+    //}
 
     public void UseRelease(int hotbarNumber, ItemRecieveData data)
     {
         int index = hotbars[hotbarNumber];
-        if (index < 0) return;
+        if (index < 0 || index >= activeInventory.Count) return;
 
-        Debug.Log("Release");
+
+        UseItem(index, data);
+
     }
 
 
@@ -389,6 +410,9 @@ public class InventorySystem : MonoBehaviour
     public void hotbarClear(int hotbarNumber)
     {
         Debug.Log($"hotbarClear called : {hotbarNumber}");
+
+        m_displayManager.ResetHotberImage(hotbarNumber);
+
         hotbars[hotbarNumber] = -1;
     }
 

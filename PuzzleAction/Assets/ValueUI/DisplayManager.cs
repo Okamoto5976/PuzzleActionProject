@@ -59,6 +59,11 @@ public class DisplayManager : MonoBehaviour
         m_images[index].sprite = image;
     }
 
+    public void ResetHotberImage(int index)
+    {
+        m_images[index].sprite = null;
+    }
+
     public void SetIndex(int index)
     {
         m_testHotberIndexText.text = index.ToString();
