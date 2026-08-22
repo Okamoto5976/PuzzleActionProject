@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
 {
-    [SerializeField] private IntRunTime m_scoreRuntime;
-    [SerializeField] private IntRunTime m_moneyRuntime;
+    //[SerializeField] private IntRunTime m_scoreRuntime;
+    //[SerializeField] private IntRunTime m_moneyRuntime;
     [SerializeField] private TimeManager timemanager;
 
     //[Header("Clear")]
@@ -30,11 +30,18 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private StaticSceneAsset m_mapPhaseScene;
 
+    [SerializeField] private InventorySystem m_inventorySystem;
+
     private bool m_isGameOver = false;
     
     void Start()
     {
         Time.timeScale = 1f;
+
+        if(!GameManager.Instance.ModifyMoney(5000))
+        {
+            Debug.LogError("ModifyMoney over ");
+        }
     }
 
     private void OnEnable()
@@ -83,6 +90,8 @@ public class MainGameManager : MonoBehaviour
     public void GameClear()
     {
         if(m_isGameOver) return;
+
+        m_inventorySystem.Save();
 
         //m_isGameOver = true;
 

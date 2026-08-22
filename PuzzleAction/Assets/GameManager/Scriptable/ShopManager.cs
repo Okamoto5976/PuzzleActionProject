@@ -46,8 +46,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_moneyText;
 
     //仮　MoneyのDataSOを持つ
-    [SerializeField] private IntRunTime m_moneyDataSO;
-    private int m_money;
+    //[SerializeField] private IntRunTime m_moneyDataSO;
+    //private int m_money;
 
     //InfoText Prefab
     [SerializeField] private InfoText m_infoTextPrefab;
@@ -84,10 +84,10 @@ public class ShopManager : MonoBehaviour
     //仮　Initializeで呼ぶ
     private void Awake()
     {
-        m_money = m_moneyDataSO.Value;
+        //m_money = m_moneyDataSO.Value;
 
         m_infoTextPrefab.gameObject.SetActive(false);
-        m_moneyText.text = "money :" + m_money.ToString();
+        //m_moneyText.text = "money :" + m_money.ToString();
 
         InitSlots();
         InitializeSellableItems();
@@ -189,11 +189,19 @@ public class ShopManager : MonoBehaviour
 
     private void SetDatasToSlots(int id)
     {
+        SetShopText();
+
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
         //textManager start
         _currentShopId = id;
 
         m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Welcome);
+    }
+
+    private void SetShopText()
+    {
+        m_moneyText.text = "money :" + GameManager.Instance.Money.ToString();
+
     }
 
     private void SetDatasToSlotsFromInventory(ShopInventory shopInventory)
@@ -227,8 +235,11 @@ public class ShopManager : MonoBehaviour
     {
         Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
         var data = m_shopInventories[_currentShopId].inventory[slotId].data;
+
+        int money = GameManager.Instance.Money;
+
         //少ない　購入出来ない場合
-        if (data.Data.Price > m_money)
+        if (data.Data.Price > money)
         {
             Debug.Log("you do not have money");
 
@@ -239,9 +250,14 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log("you purchase item");
 
-            m_money -= data.Data.Price;
+            int value = -(data.Data.Price);
 
-            m_moneyText.text = "money :" + m_money.ToString();//再び最新を表示
+            if(!GameManager.Instance.ModifyMoney(value))
+            {
+                Debug.LogError("Modify over");
+            }
+
+            m_moneyText.text = "money :" + GameManager.Instance.Money.ToString();//再び最新を表示
 
             //InventoryManagerにItemを渡す
             m_inventorySystem.AddItem(data, 1);

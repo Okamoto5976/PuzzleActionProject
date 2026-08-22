@@ -19,7 +19,9 @@ public class DisplayManager : MonoBehaviour
 
     [Header("Money")]
     private int m_money;
-    [SerializeField] private IntRunTime m_moneyDataSO;
+    //[SerializeField] private IntRunTime m_moneyDataSO;
+
+    private int m_lastMoney = -1;
 
     [Header("Score")]
     private int m_score;
@@ -46,7 +48,12 @@ public class DisplayManager : MonoBehaviour
 
     private void Update()
     {
-        m_money = m_moneyDataSO.Value;
+        m_money = GameManager.Instance.Money;
+
+        //To stop it from updating every time
+        if (m_money == m_lastMoney) return;
+
+        m_lastMoney = m_money;
 
         if (moneyUI != null) moneyUI.UpdateMoneyDisplay(m_money);
         //UpdateAllUI();

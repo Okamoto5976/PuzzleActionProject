@@ -4,6 +4,8 @@ public class Dynamite_Trap : TrapBase
 {
     protected override void Setup()
     {
+
+        Debug.Log($"dynamite Setup");
         if (m_owner != null)
         {
             m_startPosition = m_owner.transform.position;
