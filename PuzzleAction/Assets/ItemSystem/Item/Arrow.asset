@@ -17,7 +17,7 @@ MonoBehaviour:
   m_data:
     itemID: 1
     itemName: arrow is strong
-    itemIcon: {fileID: 21300000, guid: 5d531cf13353ff844bcda3038c5c3570, type: 3}
+    itemIcon: {fileID: 21300000, guid: 79b566b0097c3464f98aae5d78b90658, type: 3}
     description: 
     maxStack: 99
     dropRate: 0

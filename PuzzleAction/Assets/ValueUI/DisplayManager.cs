@@ -59,28 +59,32 @@ public class DisplayManager : MonoBehaviour
         //UpdateAllUI();
     }
 
-    [SerializeField] private List<Image> m_images;
+    [SerializeField] private List<Image> m_frames;
+    [SerializeField] private List<Image> m_itemImages;
+
+    //UI Mask
+    [SerializeField] private Sprite m_defaultImage;
 
     public void SetHotberImage(int index, Sprite image)
     {
-        m_images[index].sprite = image;
+        m_itemImages[index].sprite = image;
     }
 
     public void ResetHotberImage(int index)
     {
-        m_images[index].sprite = null;
+        m_itemImages[index].sprite = m_defaultImage;
     }
 
     public void SetIndex(int index)
     {
         m_testHotberIndexText.text = index.ToString();
 
-        //for(int i = 0;  i < m_images.Count; i++)
-        //{
-        //    m_images[i].material.SetFloat("_Alpha", 0f);
-        //}
+        for (int i = 0; i < m_frames.Count; i++)
+        {
+            m_frames[i].material.SetFloat("_Alpha", 0f);
+        }
 
-        //m_images[index].material.SetFloat("_Alpha", 1f);
+        m_frames[index].material.SetFloat("_Alpha", 1f);
     }
 
     //public void UpdatePlayerHP(int currenHP, int maxHP)
