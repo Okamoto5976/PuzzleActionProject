@@ -28,14 +28,14 @@ public class DisplayManager : MonoBehaviour
 
     [Header("Level")]
     private int m_level;
-    [SerializeField] private IntRunTime m_levelDataSO;
+    //[SerializeField] private IntRunTime m_levelDataSO;
 
     [SerializeField] private TMP_Text m_testHotberIndexText;
 
     private void Start()
     {
         //m_currentHP = maxHP;
-        m_level = m_levelDataSO.Value;
+        m_level = GameManager.Instance.Level;
 
         //for (int i = 0; i < m_images.Count; i++)
         //{

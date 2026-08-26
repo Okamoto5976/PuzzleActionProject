@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviour
     {
         if(Instance != null)
         {
-            Destroy(Instance);
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
+        m_level = 1;
     }
 
     [SerializeField] private int m_level;

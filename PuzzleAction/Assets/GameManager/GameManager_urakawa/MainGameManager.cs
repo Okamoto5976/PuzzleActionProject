@@ -102,12 +102,13 @@ public class MainGameManager : MonoBehaviour
         //    m_gameClearEvent.Raise();
 
         //    //m_level.AddValue(1);
-            
+
         //    return;
 
         //}
 
         //クリア階層記録　
+        GameManager.Instance.AddLevel(1);
         //m_level.AddValue(1);
         //Debug.Log($"クリア回数：{m_level.Value}");
         //Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
