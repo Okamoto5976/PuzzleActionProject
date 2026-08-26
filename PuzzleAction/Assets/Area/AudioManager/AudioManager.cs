@@ -49,13 +49,17 @@ public class AudioManager : MonoBehaviour
 
     public void SetBGM(float volume)
     {
-        m_audioMix.SetFloat("BGM", volume);
+        float db = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
+
+        m_audioMix.SetFloat("BGM", db);
         m_bgmVolume.SetValue(volume);
     }
 
     public void SetSE(float volume)
     {
-        m_audioMix.SetFloat("SE", volume);
+        float db = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
+
+        m_audioMix.SetFloat("SE", db);
         m_seVolume.SetValue(volume);
     }
 
