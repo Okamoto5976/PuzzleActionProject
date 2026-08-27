@@ -58,6 +58,12 @@ public class PlayerController : Entity
 
     private bool m_isUsingArrow = false;
     private bool m_isUsingSetItem = false;
+
+    //--------player foward -----------------
+    [SerializeField] private GameObject m_playerDirObject;
+
+    public Vector3 Forward => m_playerDirObject.transform.forward;
+
     //---------passive bool---------------
 
     //private bool 
@@ -213,6 +219,12 @@ public class PlayerController : Entity
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
+        if(!m_isUsingSetItem)
+        {
+
+        }
+        OnRotatePlayerDirObject(m_moveDir);
+
         if (input.x != 0f || input.y != 0f)
         {
             m_anim.SetBool("Run", true);
@@ -287,7 +299,7 @@ public class PlayerController : Entity
             entity = this,
             baseValue = STR,
             pos = transform.position,
-            dir = transform.forward
+            dir = Forward
         };
     }
     private void OnUseItemPressed()
@@ -333,5 +345,35 @@ public class PlayerController : Entity
         }
 
         
+    }
+
+    private void OnReticle()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        Plane plane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
+
+        if(plane.Raycast(ray, out float distance))
+        {
+            Vector3 mousePos = ray.GetPoint(distance);
+
+            Vector3 dir = mousePos - transform.position;
+            dir.y = 0f;
+
+            OnRotatePlayerDirObject(dir);
+
+        }
+
+    }
+
+    //this method is to rotate playerDirObject(arrowDir) 
+    private void OnRotatePlayerDirObject(Vector3 moveDir)
+    {
+        //The arrow rotates only when there is input
+        if (moveDir.sqrMagnitude > 0.01f)
+        {
+            m_playerDirObject.transform.rotation =
+                Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
+        }
     }
 }
