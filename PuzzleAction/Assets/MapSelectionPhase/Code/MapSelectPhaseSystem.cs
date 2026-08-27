@@ -182,6 +182,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
             return;
         }
 
-        SceneManager.LoadScene("MapPieceSystem");
+        //SceneManager.LoadScene("MapPieceSystem");
+
+        LoadManager.m_instance.LoadScene("MapPieceSystem");
     }
 }

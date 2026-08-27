@@ -59,11 +59,11 @@ public class MainGameManager : MonoBehaviour
     {
     
 
-        if (Keyboard.current.mKey.wasPressedThisFrame)
-        {
-            SceneManager.LoadScene("MapSelectionPhase");
+        //if (Keyboard.current.mKey.wasPressedThisFrame)
+        //{
+        //    SceneManager.LoadScene("MapSelectionPhase");
 
-        }
+        //}
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
@@ -129,7 +129,9 @@ public class MainGameManager : MonoBehaviour
 
         //return;
 
-        m_sceneEvent.TriggerEvent(m_mapPhaseScene);
+        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
+
+        LoadManager.m_instance.LoadScene("MapSelectionPhase");
     }
 
     //ゲームオーバー
