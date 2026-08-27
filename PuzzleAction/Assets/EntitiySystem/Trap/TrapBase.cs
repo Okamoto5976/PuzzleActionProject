@@ -1,13 +1,23 @@
 using UnityEngine;
 
-public class TrapBase : Entity
+public class TrapBase : MonoBehaviour
 {
+    //component
+    protected Rigidbody m_rb;
+    protected Animator m_anim;
+
+    [SerializeField] protected TeamType m_team;
+    public TeamType Team => m_team;
+
     [Header("TrapData")]
     [SerializeField]
     protected TrapData m_trapdata;
 
     //direction
     protected Vector3 m_direction;
+
+    protected float m_str;
+    protected float m_speed;
 
     //startPosition
     protected Vector3 m_startPosition;
@@ -27,17 +37,18 @@ public class TrapBase : Entity
 
     private ReturnObjectToPool m_returnObjPool;
 
+    protected Vector3 m_moveDir;
+    protected Vector3 m_velocity;
 
-    protected override void Awake()
+
+    private void Awake()
     {
-        base.Awake();
-        //Fix the rotation
-        m_rb.constraints = RigidbodyConstraints.FreezeRotation;
+        m_rb = GetComponent<Rigidbody>();
         m_returnObjPool = GetComponent<ReturnObjectToPool>();
 
     }
 
-    protected virtual void Setup()
+    private void Setup()
     {
         m_startPosition =
             m_owner.transform.position;
@@ -67,7 +78,7 @@ public class TrapBase : Entity
         m_damageData = new DamageData
         {
 
-            Attack = STR + m_basevalue,
+            Attack = m_str + m_basevalue,
             AttackType = AttackType.None,
             //HitRate
             CriticalRate = owner.CriticalRate,
@@ -84,15 +95,37 @@ public class TrapBase : Entity
         Setup();
     }
 
-    private void FixedUpdate()
+    //private void FixedUpdate()
+    //{
+    //    m_moveDir =
+    //        m_direction;
+
+    //    CallMove();
+
+    //    CheckRange();
+    //}
+
+    protected void OnMove(Vector3 dir)
     {
-        m_moveDir =
-            m_direction;
 
-        CallMove();
+        dir = dir.normalized;
 
-        CheckRange();
+        m_velocity = m_rb.linearVelocity;
+
+        m_velocity.x = dir.x * m_speed;
+        m_velocity.z = dir.z * m_speed;
+
+        m_rb.linearVelocity = m_velocity;
+
     }
+
+    protected void OnAddForce(Vector3 dir, float power)
+    {
+        dir = dir.normalized;
+
+        m_rb.AddForce(dir * power, ForceMode.Impulse);
+    }
+
 
     private void CheckRange()
     {
