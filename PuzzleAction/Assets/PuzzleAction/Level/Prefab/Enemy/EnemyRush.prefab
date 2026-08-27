@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
   - component: {fileID: -9200685379070060709}
-  - component: {fileID: 6803143338585843670}
+  - component: {fileID: 8836355652535874919}
   m_Layer: 0
   m_Name: EnemyRush
   m_TagString: Untagged
@@ -428,12 +428,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 0
-  m_isVisible: 0
+  m_isViewCollider: 1
+  m_isVisible: 1
   hitBoxes:
   - m_transform: {fileID: 5192190198220617858}
     m_radius: 1
---- !u!136 &6803143338585843670
+--- !u!136 &8836355652535874919
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,6 +1,4 @@
-
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,23 +7,18 @@ public class EnemyController : Entity
 {
     [Header("EnemyType")]
     [SerializeField] private Enum_EnemyType m_type;
-
     [Header("Target")]
     [SerializeField] private Vector3Asset m_target;
-
     [Header("Range")]
     [SerializeField] private float m_findRange = 8f;
     [SerializeField] private float m_attackRange = 1.5f;
-
     [Header("Attack")]
     [SerializeField] private float m_attackCooldown = 1f;
     private float m_attackCooldownDuration;
     private bool m_isCooldownEnd = true;
-
     [Header("Ref")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
-
     [Header("Debug")]
     [SerializeField] private Item m_item;
 
@@ -33,15 +26,25 @@ public class EnemyController : Entity
 
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
+    private Vector3 m_spawnPosition;
 
+    //===== API =====
+
+    public float AttackRange => m_attackRange;
+    public float FindRange => m_findRange;
+    public bool IsCooldownReady => m_isCooldownEnd;
+    public Vector3 Forward => transform.forward;
+    public Vector3 SpawnPosition => m_spawnPosition;
     public Vector3Asset Target => m_target;
     public NavMeshAgent Agent => m_agent;
-    public float AttackRange => m_attackRange;
-    public Vector3 Forward => transform.forward;
+    public AttackHitBox AttackHitBox => m_attackHitBox;
+    public HitCollider HitCollider => m_hitCollider;
 
     protected override void Awake()
     {
         base.Awake();
+
+        m_spawnPosition = transform.position;
 
         m_agent = GetComponent<NavMeshAgent>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
@@ -67,6 +70,7 @@ public class EnemyController : Entity
                     gameObject.AddComponent<Enemy_Archer>();
                     break;
                 }
+
             case Enum_EnemyType.Mimic:
                 {
                     gameObject.AddComponent<Enemy_Mimic>();
@@ -84,7 +88,6 @@ public class EnemyController : Entity
 
         m_agent.updateRotation = false;
         m_agent.updatePosition = true;
-
     }
 
     private void Update()
@@ -105,24 +108,19 @@ public class EnemyController : Entity
             return;
         }
 
-        //Debug.Log($"distance = {distance} " + $" attackRange = {m_attackRange}");
+        //if (m_type == Enum_EnemyType.Chase || m_type == Enum_EnemyType.Mimic)
+        //{
+        //    if (distance <= m_attackRange)
+        //    {
+        //        StopAll();
 
-        if (m_type == Enum_EnemyType.Chase || m_type == Enum_EnemyType.Mimic)
-        {
-            if (distance <= m_attackRange)
-            {
-                StopAll();
-                if (m_isCooldownEnd)
-                {
-                    Attack();
-                    m_isCooldownEnd = false;
-                }
-                return;
-            }
-        }
+        //        TryAttack();
+
+        //        return;
+        //    }
+        //}
         m_enemyBehaviour.Execute();
     }
-
     private void HandleCooldown()
     {
         if (m_isCooldownEnd) return;
@@ -135,6 +133,27 @@ public class EnemyController : Entity
             m_isCooldownEnd = true;
         }
     }
+    public void ConsumeCooldown()
+    {
+        m_isCooldownEnd = false;
+        m_attackCooldownDuration = 0f;
+    }
+    public bool TryAttack()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        Attack();
+        ConsumeCooldown();
+        return true;
+    }
+    public bool TryUseCooldown()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        ConsumeCooldown();
+
+        return true;
+    }
 
     public void Move(Vector3 dir, float speed)
     {
@@ -146,10 +165,12 @@ public class EnemyController : Entity
 
         m_agent.isStopped = false;
         m_agent.speed = speed;
+
         m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+
         m_agent.avoidancePriority = 50;
 
-        m_agent.Move(dir * m_agent.speed * Time.deltaTime);
+        m_agent.Move(dir * speed * Time.deltaTime);
     }
 
     public void SetDestination(Vector3 targetPos, float speed)
@@ -166,27 +187,28 @@ public class EnemyController : Entity
     public void UseItem(Vector3 dir)
     {
         ItemRecieveData data = new ItemRecieveData
-        {
-            entity = this,
-            baseValue = STR,
-            pos = transform.position,
-            dir = dir
-        };
+            {
+                entity = this,
+                baseValue = STR,
+                pos = transform.position,
+                dir = dir
+            };
 
         m_itemManager.OnUseItem(m_item, data);
     }
 
+
     public void Attack()
     {
-        Debug.Log("Attack Start");
+        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
+        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
+        Debug.Log(m_attackHitBox.m_transform.position);
+        Debug.Log(m_attackHitBox.m_radius);
 
-        Debug.Log(m_hitCollider);
-        Debug.Log(m_attackHitBox);
 
         if (m_hitCollider == null) return;
 
-        DamageData damage =
-            new DamageData
+        DamageData damage = new DamageData
             {
                 Attack = (int)STR,
                 HitRate = 100f,
@@ -198,13 +220,13 @@ public class EnemyController : Entity
                 AttackDir = transform.forward,
                 Attacker = this,
                 AttackerSE = AttackSE,
-                AudioSource = AudioSource,
+                AudioSource = AudioSource
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : HIT!!!!!");
+        Debug.Log("EnemyController : HIT");
     }
-
+    //common
     public void Stop()
     {
         m_agent.isStopped = true;
@@ -223,7 +245,7 @@ public class EnemyController : Entity
     {
         if (distance > m_findRange) return;
 
-        var rush = m_enemyBehaviour as Enemy_Rush;
+        Enemy_Rush rush = m_enemyBehaviour as Enemy_Rush;
 
         if (rush != null && rush.IsRunning)
         {
@@ -235,7 +257,6 @@ public class EnemyController : Entity
             Rotate(dir);
         }
     }
-
     private void StopAll()
     {
         m_enemyBehaviour?.Stop();
