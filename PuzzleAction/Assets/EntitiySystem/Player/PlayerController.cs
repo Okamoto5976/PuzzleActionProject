@@ -62,6 +62,8 @@ public class PlayerController : Entity
     //--------player foward -----------------
     [SerializeField] private GameObject m_playerDirObject;
 
+    [SerializeField] private RectTransform m_reticle;
+
     public Vector3 Forward => m_playerDirObject.transform.forward;
 
     //---------passive bool---------------
@@ -153,7 +155,7 @@ public class PlayerController : Entity
 
         if (m_isActiveHold)
         {
-            //OnUseItemHold();
+            OnUseItemHold();
         }
 
         if (m_isActiveRelease)
@@ -221,9 +223,10 @@ public class PlayerController : Entity
 
         if(!m_isUsingSetItem)
         {
+            OnRotatePlayerDirObject(m_moveDir);
 
         }
-        OnRotatePlayerDirObject(m_moveDir);
+
 
         if (input.x != 0f || input.y != 0f)
         {
@@ -309,7 +312,10 @@ public class PlayerController : Entity
         if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Arrow))
         {
             m_isUsingArrow = true;
-            //start to pull the bow 
+            //start to pull the bow
+            
+
+
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Set))
         {
@@ -328,6 +334,9 @@ public class PlayerController : Entity
     private void OnUseItemHold()
     {
         Debug.Log("Hold");
+
+        OnReticle();
+
     }
 
     private void OnUseItemRelease()
@@ -349,6 +358,10 @@ public class PlayerController : Entity
 
     private void OnReticle()
     {
+        Debug.Log("reticle");
+
+        m_reticle.position = Input.mousePosition;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         Plane plane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));

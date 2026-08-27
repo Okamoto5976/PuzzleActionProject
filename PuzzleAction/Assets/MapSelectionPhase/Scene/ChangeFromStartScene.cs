@@ -12,7 +12,9 @@ public class ChangeFromStartScene : MonoBehaviour
     {
         m_level.SetValue(1);
 
-        StartCoroutine(ChangeSceneDelay(scene));
+        //StartCoroutine(ChangeSceneDelay(scene));
+        LoadManager.m_instance.LoadScene(scene);
+
     }
 
     private IEnumerator ChangeSceneDelay(string scene)

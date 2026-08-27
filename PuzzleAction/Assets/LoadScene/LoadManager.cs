@@ -8,12 +8,12 @@ public class LoadManager : MonoBehaviour
 
     void Awake()
     {
-     if (m_instance == null)
+        if (m_instance == null)
         {
             m_instance = this;
             DontDestroyOnLoad(gameObject);
         }
-     else
+        else
         {
             Destroy(gameObject);
         }
