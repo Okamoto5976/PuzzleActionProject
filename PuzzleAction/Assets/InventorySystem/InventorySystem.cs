@@ -160,22 +160,22 @@ public class InventorySystem : MonoBehaviour
 
     public void UpdateUI()
     {
-        Debug.Log("===== UpdateUI =====");
-        Debug.Log($"UpdateUi Start = [{hotbars[0]},{hotbars[1]}, {hotbars[2]}]");
+        //Debug.Log("===== UpdateUI =====");
+        //Debug.Log($"UpdateUi Start = [{hotbars[0]},{hotbars[1]}, {hotbars[2]}]");
 
         if (hotbars[0] == 0)
         {
-            Debug.LogWarning("hotbars[0] became 0 !");
-            Debug.Log(System.Environment.StackTrace);
+            //Debug.LogWarning("hotbars[0] became 0 !");
+            //Debug.Log(System.Environment.StackTrace);
         }
 
-        Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
+        //Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
 
         for (int i = 0; i < activeInventory.Count; i++) 
         {
             if (activeInventory[i] != null)
             {
-                Debug.Log($"{i} : {activeInventory[i].data.ItemName}");
+                //Debug.Log($"{i} : {activeInventory[i].data.ItemName}");
             }
         }
         //Debug.Log($"hotbars = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
@@ -210,12 +210,12 @@ public class InventorySystem : MonoBehaviour
         for (int i = 0; i < hotbars.Length; i++)
         {
             int index = hotbars[i];
-            Debug.Log($"Hotbar Check i={i} index={index}");
+            //Debug.Log($"Hotbar Check i={i} index={index}");
 
             // 空なら消す
             if (index < 0)
             {
-                Debug.Log($"Hotbar[{i}] Clear");
+                //Debug.Log($"Hotbar[{i}] Clear");
                 hotbarSlots[i].Clear();
                 continue;
             }
@@ -409,7 +409,7 @@ public class InventorySystem : MonoBehaviour
     //インベントリ削除時クリア
     public void hotbarClear(int hotbarNumber)
     {
-        Debug.Log($"hotbarClear called : {hotbarNumber}");
+        //Debug.Log($"hotbarClear called : {hotbarNumber}");
 
         m_displayManager.ResetHotberImage(hotbarNumber);
 

@@ -18,6 +18,7 @@ public class BuffItem : Item
     [Header("Buff Reference")]
     
     [SerializeField] private float m_buffDuration;
+    [SerializeField] private BuffID m_buffID;
     [SerializeField] private BuffType m_buffType;
     [SerializeField] private ItemType m_buffEffectType;
 
@@ -46,7 +47,7 @@ public class BuffItem : Item
             };
 
             Debug.Log("buff add to entity");
-            data.entity.AddBuff(modifier, m_buffDuration);
+            data.entity.AddBuff(modifier, m_buffID, m_buffDuration);
         }
     }
 }

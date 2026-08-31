@@ -116,6 +116,9 @@ public class GridObject : MonoBehaviour
             case AreaType.Damage:
                 color = Color.blue;
                 break;
+            case AreaType.Boss:
+                color = Color.magenta;
+                break;
         }
         m_floor.SetColor(color);
     }

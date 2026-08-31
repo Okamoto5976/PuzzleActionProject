@@ -19,9 +19,9 @@ public class RoomPieceManager : MonoBehaviour
     //[SerializeField] private int m_shopRoomGenerate = 20;
     //[SerializeField] private int m_trapRoomGenerate = 20;
 
-    [SerializeField] private IntRunTime m_level;
+    //[SerializeField] private IntRunTime m_level;
 
-    public void Awake()
+    public void Start()
     {
         for(int i = 0; i < m_pieceAmount; i++)
         {
@@ -30,7 +30,7 @@ public class RoomPieceManager : MonoBehaviour
             //m_pieces.Enqueue(piece);
         }
 
-        if(m_level.Value % 5 == 0)
+        if(GameManager.Instance.Level % 5 == 0)
         {
             Room bossroom = CreateBossRoom();
             RoomPieceParent bossPiece = GenerateBossRoomObject(bossroom);
@@ -114,20 +114,17 @@ public class RoomPieceManager : MonoBehaviour
 
     private Room CreateBossRoom()
     {
-        int num = UnityEngine.Random.Range(0, 6);
-
         Room room = new(new(), new(0, 0));
 
-        if (num == 0)
-        {
-            room = new(
-                new()
-                {
+
+        room = new(
+            new()
+            {
                     Floor.FloorState.full,Floor.FloorState.full,
                     Floor.FloorState.full,Floor.FloorState.full,
-                }, new(2, 2)
-                );
-        }
+            }, new(2, 2)
+            );
+
 
         return room;
     }

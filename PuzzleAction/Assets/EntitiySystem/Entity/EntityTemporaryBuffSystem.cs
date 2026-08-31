@@ -1,35 +1,58 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class BuffInstance
+public class TemporaryBuffInstance
 {
     public float m_duration;
 
     public EntityStatus m_status;//Entity‚ÌStatus
 
     public StatusModifier m_modifier;
+
+    public BuffID m_buffID;
 }
 
-public class EntityBuffSystem : MonoBehaviour
+public class EntityTemporaryBuffSystem : MonoBehaviour
 {
     private Entity m_Entity;
 
-    private List<BuffInstance> m_buffs = new();
+    private List<TemporaryBuffInstance> m_buffs = new();
 
     private void Awake()
     {
         m_Entity = GetComponent<Entity>();
     }
 
-    public void AddBuff(StatusModifier modifier, float duration)
+    public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
+        TemporaryBuffInstance existing = m_buffs.Find(x => x.m_buffID == buffID);
+        
+        if(existing != null)
+        {
+            if(existing.m_modifier.m_value < modifier.m_value)
+            {
+                existing.m_modifier.m_value = modifier.m_value;
+            }
+            
+            if(existing.m_duration < duration)
+            {
+                existing.m_duration = duration;
+
+            }
+
+
+            return;
+        }
+        
+
         EntityStatus status = m_Entity.GetStatus(modifier.m_statType);
 
-        BuffInstance instance = new BuffInstance
+        TemporaryBuffInstance instance = new TemporaryBuffInstance
         {
             m_duration = duration,
             m_status = status,
             m_modifier = modifier,
+            m_buffID = buffID,
         };
 
         m_buffs.Add(instance);
@@ -56,7 +79,7 @@ public class EntityBuffSystem : MonoBehaviour
         }
     }
 
-    public void RemoveBuff(BuffInstance buff)
+    public void RemoveBuff(TemporaryBuffInstance buff)
     {
         buff.m_status.RemoveModifier(buff.m_modifier);
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public enum ModifierType
 {
     Add,
+    Subtract,
     Multiply
 }
 
@@ -13,7 +14,7 @@ public class StatusModifier
     public float m_value;
     public ModifierType m_modType;
 
-    public object m_source;
+    public object m_source;//passiveItem
 }
 
 public class EntityStatus
@@ -27,6 +28,7 @@ public class EntityStatus
         get
         {
             float add = 0;
+            float subtract = 0;
             float multiply = 1;
 
             foreach(var modifier in m_modifiers)
@@ -36,13 +38,16 @@ public class EntityStatus
                     case ModifierType.Add:
                         add += modifier.m_value;
                         break;
+                    case ModifierType.Subtract:
+                        subtract += modifier.m_value;
+                        break;
                     case ModifierType.Multiply:
                         multiply += modifier.m_value;
                         break;
                 }
             }
 
-            return (m_baseValue + add) * multiply;
+            return (m_baseValue + add - subtract) * multiply;
         }
     }
 

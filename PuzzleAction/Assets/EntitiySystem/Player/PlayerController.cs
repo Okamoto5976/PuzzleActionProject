@@ -212,7 +212,7 @@ public class PlayerController : Entity
         //}
 
         // ���x�؂�ւ�
-        m_currentMoveSpeed = m_isEvasion ? EvasionSpeed : Speed;
+        //m_currentMoveSpeed = m_isEvasion ? EvasionSpeed : Speed;
     }
 
     private void InputMove()
@@ -307,7 +307,7 @@ public class PlayerController : Entity
     }
     private void OnUseItemPressed()
     {
-        Debug.Log("Pressed");
+        //Debug.Log("Pressed");
 
         if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Arrow))
         {
@@ -333,7 +333,7 @@ public class PlayerController : Entity
 
     private void OnUseItemHold()
     {
-        Debug.Log("Hold");
+        //Debug.Log("Hold");
 
         OnReticle();
 
@@ -341,7 +341,7 @@ public class PlayerController : Entity
 
     private void OnUseItemRelease()
     {
-        Debug.Log("Release");
+        //Debug.Log("Release");
 
         if(m_isUsingArrow)
         {
@@ -358,7 +358,7 @@ public class PlayerController : Entity
 
     private void OnReticle()
     {
-        Debug.Log("reticle");
+        //Debug.Log("reticle");
 
         m_reticle.position = Input.mousePosition;
 

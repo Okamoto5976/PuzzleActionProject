@@ -1738,7 +1738,7 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_instanceCounterList: []
   m_rooms:
-  - m_type: 1
+  - m_type: 2
     m_originPos: {x: 0, y: 0}
   - m_type: 4
     m_originPos: {x: 3, y: 0}

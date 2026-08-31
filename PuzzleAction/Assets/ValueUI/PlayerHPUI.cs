@@ -12,7 +12,7 @@ public class PlayerHPUI : MonoBehaviour
    // [SerializeField] private Slider m_HPSlider;
     [SerializeField] private Image m_FrontHPImage;
     [SerializeField] private Image m_BackHPImage;
-    [SerializeField] private TMP_Text m_HPText;
+    //[SerializeField] private TMP_Text m_HPText;
 
     [Header("Slider Speed")]
     [SerializeField] private float m_BackSpeed = 0.5f;
@@ -48,9 +48,9 @@ public class PlayerHPUI : MonoBehaviour
                 );
         }
 
-        if (m_HPText != null)
-        {
-            m_HPText.text = $"{m_playerHP.CurrentHP} / {m_playerHP.MaxHP}";
-        }
+        //if (m_HPText != null)
+        //{
+        //    m_HPText.text = $"{m_playerHP.CurrentHP} / {m_playerHP.MaxHP}";
+        //}
     }
 }

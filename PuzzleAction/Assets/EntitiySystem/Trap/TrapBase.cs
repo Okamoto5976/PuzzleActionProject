@@ -1,6 +1,7 @@
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
-public class TrapBase : MonoBehaviour
+public abstract class TrapBase : MonoBehaviour
 {
     //component
     protected Rigidbody m_rb;
@@ -14,10 +15,11 @@ public class TrapBase : MonoBehaviour
     protected TrapData m_trapdata;
 
     //direction
-    protected Vector3 m_direction;
+    protected Vector3 m_dir;
 
-    protected float m_str;
-    protected float m_speed;
+    [SerializeField] protected float m_str;
+    [SerializeField] protected float m_speed;
+    [SerializeField] protected AttackType m_attackType;
 
     //startPosition
     protected Vector3 m_startPosition;
@@ -26,18 +28,15 @@ public class TrapBase : MonoBehaviour
     protected Entity m_owner;
 
     //range
-    protected float m_range;
+    protected float m_destroyRange;
 
     //basevalue
-    protected float m_basevalue;
-
-    private DamageData m_damageData;
+    protected DamageData m_damageData;
 
     //Receive orientation
 
-    private ReturnObjectToPool m_returnObjPool;
+    protected ReturnObjectToPool m_returnObjPool;
 
-    protected Vector3 m_moveDir;
     protected Vector3 m_velocity;
 
 
@@ -48,38 +47,37 @@ public class TrapBase : MonoBehaviour
 
     }
 
-    private void Setup()
-    {
-        m_startPosition =
-            m_owner.transform.position;
+    protected abstract void SetUp();
 
-        m_range =
-            m_trapdata.range;
-    }
+    //m_startPosition =
+    //    m_owner.transform.position;
 
-    
-    public virtual void Init(
+    //m_range =
+    //    m_trapdata.range;
+
+    protected abstract void OnHit();
+
+    //call when use item
+    public void Init(
         Entity owner,
         Vector3 dir,
         int baseValue)
     {
         m_owner = owner;
 
-        m_direction =
+        m_dir =
             dir.normalized;
 
         transform.rotation =
             Quaternion.LookRotation(
-                m_direction);
+                m_dir);
 
-        m_basevalue =
-            baseValue;
 
         m_damageData = new DamageData
         {
 
-            Attack = m_str + m_basevalue,
-            AttackType = AttackType.None,
+            Attack = m_str + baseValue,
+            AttackType = m_attackType,
             //HitRate
             CriticalRate = owner.CriticalRate,
             CriticalDamage = owner.CriticalDamage,
@@ -92,7 +90,24 @@ public class TrapBase : MonoBehaviour
 
         };
 
-        Setup();
+        SetUp();
+    }
+
+    protected DamageData SetDamageData()
+    {
+        DamageData data = new DamageData
+        {
+
+            Attack = m_str,
+            AttackType = m_attackType,
+            //HitRate
+
+            //Duration
+            //SE
+
+        };
+
+        return data;
     }
 
     //private void FixedUpdate()
@@ -123,61 +138,54 @@ public class TrapBase : MonoBehaviour
     {
         dir = dir.normalized;
 
+
+        Debug.Log($"Before : {m_rb.linearVelocity}");
+
         m_rb.AddForce(dir * power, ForceMode.Impulse);
+
+        Debug.Log($"After : {m_rb.linearVelocity}");
     }
 
 
-    private void CheckRange()
+    protected void CheckRange()
     {
+        if (m_destroyRange == 0) return;
+
         float distance =
             Vector3.Distance(
                 m_startPosition,
                 transform.position);
 
-        if (distance >= m_range)
+        if (distance >= m_destroyRange)
         {
-            if (m_returnObjPool == null)
-            {
-                m_returnObjPool = GetComponent<ReturnObjectToPool>();
-
-            }
-            m_returnObjPool.ReturnToPool();
+            OnReturnPool();
         }
     }
 
-    private void OnTriggerEnter(
-        Collider other)
+    protected void CheckDeadLine()
     {
-        Entity target =
-            other.GetComponentInParent<Entity>();
-
-        if (target == null)
-            return;
-
-        if (target.Team ==
-            TeamType.Nature)
-            return;
-
-        if (m_owner != null)
+        if (transform.position.y < -20f)
         {
-            if (target.Team ==
-                m_owner.Team)
-                return;
+            OnReturnPool();
         }
+    }
 
-        target.TakeDamage(m_damageData);
-
-        Debug.Log(
-            $"{other.name} Hit");
-
-        //Destroy(gameObject);
+    protected void OnReturnPool()
+    {
         if (m_returnObjPool == null)
         {
             m_returnObjPool = GetComponent<ReturnObjectToPool>();
 
         }
-        m_returnObjPool?.ReturnToPool();
+        m_returnObjPool.ReturnToPool();
     }
+
+    protected virtual void OnTriggerEnter(
+        Collider other)
+    {
+
+    }
+
 }
 
 

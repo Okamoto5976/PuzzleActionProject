@@ -76,6 +76,8 @@ public class MapPlaceSystem : MonoBehaviour
     private int m_shopPieceCount;
     [SerializeField] private int m_trapPieceMax;
     private int m_trapPieceCount;
+    [SerializeField] private int m_bossPieceMax;
+    private int m_bossPieceCount;
 
     //error all connect roomcheck
     private HashSet<int> m_allRoomID;
@@ -101,7 +103,7 @@ public class MapPlaceSystem : MonoBehaviour
     //[SerializeField] private EventBusAsset 
     [SerializeField] private List<InstanceCounter> m_instanceCounterList;
 
-    [SerializeField] private IntRunTime m_level;
+    //[SerializeField] private IntRunTime m_level;
 
     private void Awake()
     {
@@ -219,7 +221,15 @@ public class MapPlaceSystem : MonoBehaviour
                                     return;
                                 }
                                 m_trapPieceCount++;
+                                break;
+                            case AreaType.Boss:
+                                if (m_bossPieceMax <= m_bossPieceCount)
+                                {
+                                    RoomCountLimitError();
 
+                                    return;
+                                }
+                                m_bossPieceCount++;
                                 break;
                         }
                         m_gridObj.OnPlaceFloor(
@@ -289,6 +299,10 @@ public class MapPlaceSystem : MonoBehaviour
                             m_trapPieceCount--;
 
                             break;
+                        case AreaType.Boss:
+                            m_bossPieceCount--;
+
+                            break;
                     }
 
                     Debug.Log("Call remove");
@@ -338,7 +352,7 @@ public class MapPlaceSystem : MonoBehaviour
     private void RoomCountLimitError()
     {
         //errorcheck is not connect to start form end
-        Debug.Log("error: not connect to start from end");
+        Debug.Log("error: count over");
         m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.CountOver);
     }
 
@@ -617,10 +631,21 @@ public class MapPlaceSystem : MonoBehaviour
             return;
         }
 
-        foreach (var placeId in m_graph.Keys)
+        if(GameManager.Instance.Level % 5 == 0)
         {
-            
+            if(m_bossPieceCount <= 0)
+            {
+                Debug.Log("error: not place boss piece");
+                m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.BossArea);
+
+                return;
+            }
         }
+
+        //foreach (var placeId in m_graph.Keys)
+        //{
+            
+        //}
 
         //Get startId
         int startID = m_mapClass.GetFloorID(m_startPos.x, m_startPos.y);

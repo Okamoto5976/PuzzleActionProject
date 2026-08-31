@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        m_level = 1;
+        //m_level = 1;
     }
 
     [SerializeField] private int m_level;

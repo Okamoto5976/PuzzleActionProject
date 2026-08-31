@@ -45,7 +45,7 @@ abstract public class Entity : MonoBehaviour
     protected Animator m_anim;
     protected EntityHP m_entityHP;
 
-    protected EntityBuffSystem m_buffSystem;
+    protected EntityTemporaryBuffSystem m_buffSystem;
 
     protected Inventory m_inventory;
     //SE
@@ -69,11 +69,8 @@ abstract public class Entity : MonoBehaviour
 
     [SerializeField] protected EntityData m_data;
 
-    //�Q�[���I�[�o�[�ȂǃC�x���g�� �ړ��L�[����
     protected bool m_canMove;
-    //�m�b�N�o�b�N����X�^�����@�����Ȃ��t���O�i���Ԍo�߂ŉ񕜁j
     protected bool m_isStun;
-    //���G���@�_���[�W���@�����
     protected bool m_isInvincible;
 
     public bool CanMove { get => m_canMove; }
@@ -82,7 +79,10 @@ abstract public class Entity : MonoBehaviour
 
     protected float m_stunTime;
 
-    protected float m_currentMoveSpeed;
+    //--------buff-------------------
+    
+
+    //protected float m_currentMoveSpeed;
 
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
@@ -98,7 +98,7 @@ abstract public class Entity : MonoBehaviour
         m_entityHP = GetComponent<EntityHP>();
         m_audioSource=GetComponent<AudioSource>();
 
-        m_buffSystem=GetComponent<EntityBuffSystem>();
+        m_buffSystem=GetComponent<EntityTemporaryBuffSystem>();
         m_inventory = GetComponent<Inventory>();
 
         if (m_data == null) return;
@@ -120,7 +120,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
         m_status.Add(StatusType.BlindRes, new EntityStatus(m_data.BlindRes));
 
-        m_currentMoveSpeed = Speed;
+        //m_currentMoveSpeed = Speed;
     }
 
     protected virtual void Start()
@@ -135,13 +135,16 @@ abstract public class Entity : MonoBehaviour
         return m_status[type];
     }
 
-    public void AddBuff(StatusModifier modifier,float duration)
+    public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
         if(m_buffSystem==null)
         {
             return;
         }
-        m_buffSystem.AddBuff(modifier,duration);
+
+        Debug.Log(buffID);
+
+        m_buffSystem.AddBuff(modifier, buffID, duration);
     }
 
     //call FixidUpdate----------------------------------------------------
@@ -188,8 +191,8 @@ abstract public class Entity : MonoBehaviour
 
         m_velocity = m_rb.linearVelocity;
 
-        m_velocity.x = dir.x * m_currentMoveSpeed;
-        m_velocity.z = dir.z * m_currentMoveSpeed;
+        m_velocity.x = dir.x * Speed;
+        m_velocity.z = dir.z * Speed;
 
         m_rb.linearVelocity = m_velocity;
 
@@ -243,6 +246,7 @@ abstract public class Entity : MonoBehaviour
 
         m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
     }
+
     public virtual bool ReceiveItem(Item item)
     {
         if (item == null) return false;
@@ -250,6 +254,7 @@ abstract public class Entity : MonoBehaviour
 
         return m_inventory.AddItem(item.ID);
     }
+
 }
 //public bool IsEnemy(Entity other)
 //{
