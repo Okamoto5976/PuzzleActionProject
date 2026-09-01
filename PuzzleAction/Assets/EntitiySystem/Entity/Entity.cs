@@ -18,15 +18,12 @@ abstract public class Entity : MonoBehaviour
     public float EvasionSpeed => m_status[StatusType.DashSpeed].Value;
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
-    public float DEX => m_status[StatusType.Dexterity].Value;
     public float AGI => m_status[StatusType.Agility].Value;
-    public float Vision => m_status[StatusType.Vision].Value;
     public float BreakRate => m_status[StatusType.BreakRate].Value;
     public float Stun => m_status[StatusType.Stun].Value;
     public float PoisonRes => m_status[StatusType.PoisonRes].Value;
     public float StunRes => m_status[StatusType.StunRes].Value;
     public float SlowRes => m_status[StatusType.SlowRes].Value;
-    public float BlindRes => m_status[StatusType.BlindRes].Value;
 
     //���
     public enum EntityState
@@ -110,15 +107,12 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.DashSpeed, new EntityStatus(m_data.DashSpeed));
         m_status.Add(StatusType.CriticalRate, new EntityStatus(m_data.CriticalRate));
         m_status.Add(StatusType.CriticalDamage, new EntityStatus(m_data.CriticalDamage));
-        m_status.Add(StatusType.Dexterity, new EntityStatus(m_data.DEX));
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
-        m_status.Add(StatusType.Vision, new EntityStatus(m_data.Vision));
         m_status.Add(StatusType.BreakRate, new EntityStatus(m_data.BreakRate));
         m_status.Add(StatusType.Stun, new EntityStatus(m_data.Stun));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
-        m_status.Add(StatusType.BlindRes, new EntityStatus(m_data.BlindRes));
 
         //m_currentMoveSpeed = Speed;
     }

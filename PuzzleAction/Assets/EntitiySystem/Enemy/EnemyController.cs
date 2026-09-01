@@ -211,7 +211,6 @@ public class EnemyController : Entity
         DamageData damage = new DamageData
             {
                 Attack = (int)STR,
-                HitRate = 100f,
                 CriticalRate = CriticalRate,
                 CriticalDamage = CriticalDamage,
                 BreakRate = BreakRate,

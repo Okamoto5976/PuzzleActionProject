@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class GasTrap : TrapBase
 {
-    private float m_DamageInterval = 1.0f;
+    //private float m_DamageInterval = 1.0f;
     private float m_timer;
 
     private List<Entity> m_targets = new List<Entity>();

@@ -28,7 +28,6 @@ public class InheritanceTrap : Entity
         DamageData data = new DamageData();
 
         data.Attack = m_damage;
-        data.HitRate = 100f;
 
         data.Knockback = 0f;
         data.Stun = 0f;

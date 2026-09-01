@@ -49,16 +49,16 @@ abstract public class EntityHP : MonoBehaviour
             }
         }
 
-        float hitRate =
-            data.HitRate - m_entity.DEX;
+        //float hitRate =
+        //    data.HitRate - m_entity.DEX;
 
-        hitRate = Mathf.Clamp(hitRate, 0, 100);
+        //hitRate = Mathf.Clamp(hitRate, 0, 100);
 
-        if(Random.Range(0f,100f)>hitRate)
-        {
-            Debug.Log("Miss");
-            return;
-        }
+        //if(Random.Range(0f,100f)>hitRate)
+        //{
+        //    Debug.Log("Miss");
+        //    return;
+        //}
 
         bool isBreak = false;
 

@@ -110,7 +110,6 @@ public class BossGolemAttack : MonoBehaviour
             new DamageData
             {
                 Attack = (int)m_controller.STR,
-                HitRate = 100,
                 CriticalRate = m_controller.CriticalRate,
                 CriticalDamage = m_controller.CriticalDamage,
                 BreakRate = m_controller.BreakRate,
