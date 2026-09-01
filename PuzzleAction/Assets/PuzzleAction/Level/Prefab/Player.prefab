@@ -165,7 +165,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2bcf43666dc2d0943b3ab841dda944fc, type: 2}
+  - {fileID: 2100000, guid: c430c6a0ca42ef4468eccf6c34ea2356, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: 292732359283115402}
   - component: {fileID: -8794102270786672288}
   - component: {fileID: 8049973323928560549}
+  - component: {fileID: 5761074183309458794}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -339,6 +340,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityBuffSystem
+--- !u!114 &5761074183309458794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501914875296179412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5f079b52bcfab448c47e1c6ae52638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityLightReceiver
+  m_testLight: {fileID: 0}
+  m_renderer: {fileID: 3676967130022225026}
 --- !u!1 &2753646007902922138
 GameObject:
   m_ObjectHideFlags: 0
