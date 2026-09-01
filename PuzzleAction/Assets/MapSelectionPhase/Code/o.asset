@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e1236798c313c944bb31225f8b57ed1, type: 3}
-  m_Name: normal
+  m_Name: o
   m_EditorClassIdentifier: Assembly-CSharp::MapSettingSO
-  mapName: normal
+  mapName: o
   size: {x: 10, y: 10}
   startPos: {x: 0, y: 0}
-  goalPos: {x: 9, y: 9}
+  goalPos: {x: 8, y: 8}
   mapShape: '1111111111
 
     1111111111
 
     1111111111
 
-    1111111111
+    1110000111
 
-    1111111111
+    1110000111
 
-    1111111111
+    1110000111
 
-    1111111111
+    1110000111
 
     1111111111
 
