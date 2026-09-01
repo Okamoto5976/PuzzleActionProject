@@ -8,6 +8,7 @@ public enum StatusType
     Defense,
     Speed,
     DashSpeed,
+    Slow,
     CriticalRate, 
     CriticalDamage,
     Agility,  //Enemy
@@ -27,6 +28,7 @@ public class EntityData : ScriptableObject
     [SerializeField] private float m_def;
     [SerializeField] private float m_speed;
     [SerializeField] private float m_dashSpeed;
+    [SerializeField] private float m_slow;
     [SerializeField] private float m_criticalRate;
     [SerializeField] private float m_criticalDamage;
     [SerializeField] private float m_agi;
@@ -44,6 +46,7 @@ public class EntityData : ScriptableObject
     public float DEF { get => m_def; }
     public float Speed { get => m_speed; }
     public float DashSpeed { get => m_dashSpeed; }
+    public float Slow { get => m_slow; }
     public float CriticalRate { get => m_criticalRate; }
     public float CriticalDamage { get => m_criticalDamage; }
     public float AGI { get => m_agi; }

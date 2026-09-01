@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -100,17 +99,17 @@ public class InventorySystem : MonoBehaviour
 
     public bool AddItem(Item data, int count)
     {
-       // Activeアイテム
-       if (data.ItemType == ItemType.Active)
+        // Activeアイテム
+        if (data.ItemType == ItemType.Active)
         {
             return AddActiveItem(data, count);
         }
-
-        // Passiveアイテム
-        else
+        else// Passiveアイテム
         {
             return AddPassiveItem(data, count);
         }
+
+
     }
 
     private bool AddActiveItem(Item data, int count)

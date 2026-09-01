@@ -16,6 +16,7 @@ abstract public class Entity : MonoBehaviour
     public float DEF => m_status[StatusType.Defense].Value;
     public float Speed => m_status[StatusType.Speed].Value;
     public float EvasionSpeed => m_status[StatusType.DashSpeed].Value;
+    public float Slow => m_status[StatusType.Slow].Value;
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float AGI => m_status[StatusType.Agility].Value;
@@ -105,6 +106,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Defense, new EntityStatus(m_data.DEF));
         m_status.Add(StatusType.Speed, new EntityStatus(m_data.Speed));
         m_status.Add(StatusType.DashSpeed, new EntityStatus(m_data.DashSpeed));
+        m_status.Add(StatusType.Slow, new EntityStatus(m_data.Slow));
         m_status.Add(StatusType.CriticalRate, new EntityStatus(m_data.CriticalRate));
         m_status.Add(StatusType.CriticalDamage, new EntityStatus(m_data.CriticalDamage));
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
@@ -185,8 +187,13 @@ abstract public class Entity : MonoBehaviour
 
         m_velocity = m_rb.linearVelocity;
 
-        m_velocity.x = dir.x * Speed;
-        m_velocity.z = dir.z * Speed;
+        float slowMultiplier = 1f - Slow * (1f - SlowRes);
+        slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
+
+        float finalSpeed = Speed * slowMultiplier;
+
+        m_velocity.x = dir.x * finalSpeed;
+        m_velocity.z = dir.z * finalSpeed;
 
         m_rb.linearVelocity = m_velocity;
 

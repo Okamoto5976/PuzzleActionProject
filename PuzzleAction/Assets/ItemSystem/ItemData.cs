@@ -17,7 +17,7 @@ public enum Grade
 //when player use item, check this type. if arrow , player pull the bow animation
 public enum ItemUseType
 { 
-    None,
+    Instant,
     Arrow,
     Set,
 }

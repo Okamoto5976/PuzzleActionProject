@@ -11,6 +11,8 @@ public class DropItem : MonoBehaviour
 
     private Item m_itemData;
 
+    public Item ItemData => m_itemData;
+
     ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
     //private void ItemGet(Collider other)
     //{
