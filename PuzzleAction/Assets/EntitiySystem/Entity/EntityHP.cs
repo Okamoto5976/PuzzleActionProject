@@ -11,6 +11,8 @@ abstract public class EntityHP : MonoBehaviour
 
     public int MaxHP => (int)m_entity.HP;
 
+    [SerializeField] private DamageParticleController m_damageParticleController;
+
     private void Awake()
     {
         m_entity = GetComponent<Entity>();
@@ -91,6 +93,12 @@ abstract public class EntityHP : MonoBehaviour
         }
 
             m_currentHP -= (int)damage;
+
+        if (m_damageParticleController != null)
+        {
+            Debug.Log("damage particle");
+            m_damageParticleController.DoDamageParticle((uint)damage);
+        }
 
         m_currentHP = Mathf.Max( m_currentHP, 0 );
 
