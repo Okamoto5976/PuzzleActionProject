@@ -187,12 +187,12 @@ public class EnemyController : Entity
     public void UseItem(Vector3 dir)
     {
         ItemRecieveData data = new ItemRecieveData
-            {
-                entity = this,
-                baseValue = STR,
-                pos = transform.position,
-                dir = dir
-            };
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = dir
+        };
 
         m_itemManager.OnUseItem(m_item, data);
     }
@@ -200,8 +200,8 @@ public class EnemyController : Entity
 
     public void Attack()
     {
-        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
+        Debug.DrawLine(transform.position, m_attackHitBox.m_transform.position, Color.red, 2f);
+        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position, m_target.Value));
         Debug.Log(m_attackHitBox.m_transform.position);
         Debug.Log(m_attackHitBox.m_radius);
 
@@ -209,18 +209,18 @@ public class EnemyController : Entity
         if (m_hitCollider == null) return;
 
         DamageData damage = new DamageData
-            {
-                Attack = (int)STR,
-                CriticalRate = CriticalRate,
-                CriticalDamage = CriticalDamage,
-                BreakRate = BreakRate,
-                Knockback = KnockBack,
-                Stun = Stun,
-                AttackDir = transform.forward,
-                Attacker = this,
-                AttackerSE = AttackSE,
-                AudioSource = AudioSource
-            };
+        {
+            Attack = (int)STR,
+            CriticalRate = CriticalRate,
+            CriticalDamage = CriticalDamage,
+            BreakRate = BreakRate,
+            Knockback = KnockBack,
+            Stun = Stun,
+            AttackDir = transform.forward,
+            Attacker = this,
+            AttackerSE = AttackSE,
+            AudioSource = AudioSource
+        };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : HIT");
