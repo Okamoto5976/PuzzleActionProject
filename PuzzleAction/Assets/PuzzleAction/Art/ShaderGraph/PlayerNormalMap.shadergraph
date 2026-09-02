@@ -1726,9 +1726,9 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 0.2476860135793686,
-        "g": 0.41441330313682558,
-        "b": 0.43396228551864626,
+        "r": 0.1261570006608963,
+        "g": 0.25640448927879336,
+        "b": 0.33018869161605837,
         "a": 1.0
     },
     "isMainColor": false,
@@ -3442,7 +3442,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.5,
+    "m_Value": 0.4399999976158142,
     "m_FloatType": 1,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -4035,9 +4035,9 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 8.0,
-        "g": 7.028317928314209,
-        "b": 1.7882351875305176,
+        "r": 9.068456649780274,
+        "g": 3.9424636363983156,
+        "b": 1.4115995168685914,
         "a": 1.0
     },
     "isMainColor": false,
@@ -4784,8 +4784,8 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "x": 1.0,
-        "y": 0.20000000298023225,
+        "x": -0.6600000262260437,
+        "y": 1.9700000286102296,
         "z": 0.0,
         "w": 0.0
     }
