@@ -30,6 +30,7 @@ public class EnemySpearController
         this.preAttackDuration = preAttackDuration;
         this.postAttackDuration = postAttackDuration;
         time = 0;
+        enemyController.SetIsInvincible(true);
     }
 
     public void DoSpearStates()
@@ -53,6 +54,7 @@ public class EnemySpearController
         if (DistanceToTarget <= enemyController.AttackRange)
         {
             SetState(SpearStates.Ready);
+            enemyController.SetIsInvincible(true);
             return;
         }
 
@@ -61,14 +63,17 @@ public class EnemySpearController
 
     private void DoReady()
     {
+        enemyController.Stop();
         if (DistanceToTarget > enemyController.AttackRange)
         {
             SetState(SpearStates.Chasing);
+            enemyController.SetIsInvincible(true);
             return;
         }
         if (enemyController.IsCooldownReady)
         {
             SetState(SpearStates.Attack);
+            enemyController.SetIsInvincible(false);
             //enemyController.SetEnableRotation(false)
         }
     }
@@ -83,6 +88,7 @@ public class EnemySpearController
         if (time >= preAttackDuration + postAttackDuration)
         {
             SetState(SpearStates.Ready);
+            enemyController.SetIsInvincible(true);
             //enemyController.SetEnableRotation(true)
         }
     }

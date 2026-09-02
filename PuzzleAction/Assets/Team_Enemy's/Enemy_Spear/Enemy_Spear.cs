@@ -8,7 +8,7 @@ public class Enemy_Spear : MonoBehaviour, IEnemyBehaviour
     private EnemySpearController m_enemySpearController = new();
 
     [SerializeField] private float preAttackDuration = 0.75f;
-    [SerializeField] private float postAttackDuration = 1.25f;
+    [SerializeField] private float postAttackDuration = 3f;
 
 
     public void Initialized(EnemyController enemyController)

@@ -44,7 +44,7 @@ public class HitCollider : MonoBehaviour
 
     private Coroutine m_viewCoroutine;
     
-    public void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
+    public virtual void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
         // ヒットした判定のセット
         //HashSet<Entity> hitSet = new();
