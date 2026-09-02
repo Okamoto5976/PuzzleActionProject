@@ -6,9 +6,9 @@ public class Enemy_Worm : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_enemyController;
     private EnemyWormController m_wormController = new();
-    [SerializeField] private float m_detectDistance;
-    [SerializeField] private float m_attackAnimationTime;
-    [SerializeField] private float m_attackAnimationCooldown;
+    [SerializeField] private float m_detectDistance = 5;
+    [SerializeField] private float m_attackAnimationTime = 2;
+    [SerializeField] private float m_attackAnimationCooldown = 1;
 
 
     public void Initialized(EnemyController enemyController)

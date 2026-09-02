@@ -62,7 +62,7 @@ public class EnemyWormController
 
     private void DoTrigger()
     {
-        if (time >= attackAnimationTime)
+        if (time >= attackAnimationTime && !hasAttacked)
         {
             enemyController.Attack();
             hasAttacked = true;
