@@ -12,6 +12,11 @@ public class SaveManager : MonoBehaviour
 
     }
 
+    public void SetSaveData(SaveData saveData)
+    {
+        m_saveData = saveData;
+    }
+
     public void SaveToJson()
     {
         //JSON—p‚Ì” ‚ğì‚é
