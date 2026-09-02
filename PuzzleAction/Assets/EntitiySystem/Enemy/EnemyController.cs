@@ -77,6 +77,30 @@ public class EnemyController : Entity
                     m_hitCollider = GetComponent<HitCollider>();
                     break;
                 }
+
+            case Enum_EnemyType.Slime_Blue:
+                {
+                    //slime_blue scrite
+                    break;
+                }
+
+            case Enum_EnemyType.Slime_Red:
+                {
+                    //slime_red scripte
+                    break;
+                }
+
+            case Enum_EnemyType.Oak:
+                {
+                    //Oak scripte
+                    break;
+                }
+
+                case Enum_EnemyType.Explosion:
+                {
+                    //explosion scripte
+                    break;
+                }
         }
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
@@ -121,23 +145,6 @@ public class EnemyController : Entity
         //}
         m_enemyBehaviour.Execute();
     }
-    private void HandleCooldown()
-    {
-        if (m_isCooldownEnd) return;
-
-        m_attackCooldownDuration += Time.deltaTime;
-
-        if (m_attackCooldownDuration >= m_attackCooldown)
-        {
-            m_attackCooldownDuration = 0f;
-            m_isCooldownEnd = true;
-        }
-    }
-    public void ConsumeCooldown()
-    {
-        m_isCooldownEnd = false;
-        m_attackCooldownDuration = 0f;
-    }
     public bool TryAttack()
     {
         if (!m_isCooldownEnd) return false;
@@ -146,58 +153,6 @@ public class EnemyController : Entity
         ConsumeCooldown();
         return true;
     }
-    public bool TryUseCooldown()
-    {
-        if (!m_isCooldownEnd) return false;
-
-        ConsumeCooldown();
-
-        return true;
-    }
-
-    public void Move(Vector3 dir, float speed)
-    {
-        if (dir == Vector3.zero)
-        {
-            Stop();
-            return;
-        }
-
-        m_agent.isStopped = false;
-        m_agent.speed = speed;
-
-        m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-
-        m_agent.avoidancePriority = 50;
-
-        m_agent.Move(dir * speed * Time.deltaTime);
-    }
-
-    public void SetDestination(Vector3 targetPos, float speed)
-    {
-        m_agent.isStopped = false;
-
-        m_agent.speed = speed;
-        m_agent.acceleration = speed * 2.5f;
-        m_agent.stoppingDistance = m_attackRange;
-
-        m_agent.SetDestination(targetPos);
-    }
-
-    public void UseItem(Vector3 dir)
-    {
-        ItemRecieveData data = new ItemRecieveData
-            {
-                entity = this,
-                baseValue = STR,
-                pos = transform.position,
-                dir = dir
-            };
-
-        m_itemManager.OnUseItem(m_item, data);
-    }
-
-
     public void Attack()
     {
         Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
@@ -225,12 +180,81 @@ public class EnemyController : Entity
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : HIT");
     }
+    public bool TryUseCooldown()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        ConsumeCooldown();
+
+        return true;
+    }
+    public void ConsumeCooldown()
+    {
+        m_isCooldownEnd = false;
+        m_attackCooldownDuration = 0f;
+    }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        if (dir == Vector3.zero)
+        {
+            Stop();
+            return;
+        }
+
+        m_agent.isStopped = false;
+        m_agent.speed = speed;
+
+        m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+
+        m_agent.avoidancePriority = 50;
+
+        m_agent.Move(dir * speed * Time.deltaTime);
+    }
+    public void SetDestination(Vector3 targetPos, float speed)
+    {
+        m_agent.isStopped = false;
+
+        m_agent.speed = speed;
+        m_agent.acceleration = speed * 2.5f;
+        m_agent.stoppingDistance = m_attackRange;
+
+        m_agent.SetDestination(targetPos);
+    }
+    public void UseItem(Vector3 dir)
+    {
+        ItemRecieveData data = new ItemRecieveData
+            {
+                entity = this,
+                baseValue = STR,
+                pos = transform.position,
+                dir = dir
+            };
+
+        m_itemManager.OnUseItem(m_item, data);
+    }
+    public void SetInvincible()
+    {
+
+    }
+
     //common
     public void Stop()
     {
         m_agent.isStopped = true;
     }
+    private void HandleCooldown()
+    {
+        if (m_isCooldownEnd) return;
 
+        m_attackCooldownDuration += Time.deltaTime;
+
+        if (m_attackCooldownDuration >= m_attackCooldown)
+        {
+            m_attackCooldownDuration = 0f;
+            m_isCooldownEnd = true;
+        }
+    }
     private void Rotate(Vector3 dir)
     {
         dir.y = 0f;
