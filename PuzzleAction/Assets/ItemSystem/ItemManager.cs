@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
 
-    public List <Item> DropList=new();
+    //public List <Item> DropList=new();
     public List<Item> ShopList = new();
     public List<Item> ItemList = new();
     public List<float> DropRateList = new();
@@ -24,7 +24,7 @@ public class ItemManager : MonoBehaviour
     //List‚Ì’†‚©‚çID‚Æ“¯‚¶ƒAƒCƒeƒ€‚ð’T‚·
     public Item GetItem(int id)
     {
-        Item data = null;
+        Item data = ItemList.Find(x=>x.ID == id);
 
         return data;
     }

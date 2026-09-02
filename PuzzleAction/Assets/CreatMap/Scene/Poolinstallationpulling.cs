@@ -38,7 +38,7 @@ public class Poolinstallationpulling : MonoBehaviour
             }
 
             //Pool acquisition
-            DummyEnemyScript enemy = m_pool.GetEnemy(selectedType);
+            EnemyController enemy = m_pool.GetEnemy(selectedType);
 
             if (enemy == null)
             {

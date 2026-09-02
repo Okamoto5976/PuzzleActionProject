@@ -4855,10 +4855,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  DropList: []
   ShopList: []
   ItemList:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
+  - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
+  - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
+  - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
+  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
   DropRateList: []
   PlayerItems: []
   EnemyItems: []

@@ -12,7 +12,7 @@ public class Middleman_Enemy : MonoBehaviour
 
     [SerializeField] private List<EnemyDict> enemyPools;
 
-    public DummyEnemyScript GetEnemy(Enum_EnemyType enemyType)
+    public EnemyController GetEnemy(Enum_EnemyType enemyType)
     {
         var pool = enemyPools.Find(x => x.type == enemyType).pool;
         if (pool == null)
