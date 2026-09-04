@@ -51,7 +51,7 @@ public class ItemManager : MonoBehaviour
 
     public void OnUseItem(Item item, ItemRecieveData data)
     {
-        Debug.Log("OnUseItem");
+        //Debug.Log("OnUseItem");
 
         if(item.Type == Item.ItemEffectType.Trap)
         {

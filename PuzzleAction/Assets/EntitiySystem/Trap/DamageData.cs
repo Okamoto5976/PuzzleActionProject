@@ -11,7 +11,7 @@ public class DamageData
     public float Duration;
     public Vector3 AttackDir;//
     public Entity Attacker;//
-    public AudioClip AttackerSE;//
-    public AudioSource AudioSource;
+    //public AudioClip AttackerSE;//
+    //public AudioSource AudioSource;
     //public DamageType DamageType;
 }
