@@ -33,8 +33,8 @@ public class HitCollider : MonoBehaviour
         
     }
 
-    [SerializeField] private bool m_isViewCollider;
-    [SerializeField] private bool m_isVisible;
+    [SerializeField] protected bool m_isViewCollider;
+    [SerializeField] protected bool m_isVisible;
 
     
     [SerializeField] private AttackHitBox[] hitBoxes;   // “–‚½‚è”»’è
@@ -42,7 +42,7 @@ public class HitCollider : MonoBehaviour
     //[SerializeField] private EffectDataSO m_overrideEffect;
     //[SerializeField] private AudioDataSO m_overrideAudio;
 
-    private Coroutine m_viewCoroutine;
+    protected Coroutine m_viewCoroutine;
     
     public virtual void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
