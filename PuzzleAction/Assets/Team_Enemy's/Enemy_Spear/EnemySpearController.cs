@@ -70,7 +70,7 @@ public class EnemySpearController
         {
             SetState(SpearStates.Attack);
             enemyController.SetIsInvincible(false);
-            //enemyController.SetEnableRotation(false)
+            enemyController.SetEnableRotation(false);
         }
     }
 
@@ -85,7 +85,7 @@ public class EnemySpearController
         {
             SetState(SpearStates.Ready);
             enemyController.SetIsInvincible(true);
-            //enemyController.SetEnableRotation(true)
+            enemyController.SetEnableRotation(true);
         }
     }
 

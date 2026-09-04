@@ -14,7 +14,7 @@ public class BoxHitbox : HitCollider
 
     public override void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
-        Collider[] hits = Physics.OverlapBox((transform.rotation * m_BoxCollider.center) + transform.position, m_BoxCollider.bounds.extents, transform.rotation);
+        Collider[] hits = Physics.OverlapBox((transform.rotation * m_BoxCollider.center) + transform.position, m_BoxCollider.bounds.extents / 2, transform.rotation);
 
 
         foreach (var hit in hits)
