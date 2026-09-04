@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342922bb313123b41a3f64b058de4fae, type: 3}
   m_Name: EnemyRarityTable
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRarityTable
-  enemies: []
+  enemies:
+  - enemyType: 2
+    rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+  - enemyType: 1
+    rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
+  - enemyType: 0
+    rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}

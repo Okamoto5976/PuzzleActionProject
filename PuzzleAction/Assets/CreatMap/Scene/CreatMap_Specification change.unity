@@ -1933,7 +1933,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntitySpawner
   m_player: {fileID: 721869216}
   m_camera: {fileID: 1957982647}
-  m_enemySpawner: {fileID: 1483867179}
+  m_enemyPool: {fileID: 776241687}
+  m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
+  m_enemyRarityTable: {fileID: 11400000, guid: 8863df1261d216d40b7043a8e2841409, type: 2}
   m_ocl: {fileID: 1248939889}
   m_goalPrefab: {fileID: 8961092045085098247, guid: 1822f757cecfb9a47aeaf4d1490964c9, type: 3}
   m_mainGameManager: {fileID: 1832269288191839481}
@@ -4754,7 +4756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
   m_target: {fileID: 721869216}
-  m_offset: {x: 0, y: 8, z: -8}
+  m_offset: {x: 0, y: 8, z: -12}
   m_followSpeed: 0
 --- !u!114 &1957982648
 MonoBehaviour:
