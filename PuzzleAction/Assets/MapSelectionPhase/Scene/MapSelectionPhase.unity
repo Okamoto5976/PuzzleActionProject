@@ -897,6 +897,7 @@ MonoBehaviour:
   m_tilePrefab: {fileID: 4078036842766913395, guid: a5a07a4e2c0691c4bbdaf88e5bdcb7c2, type: 3}
   m_maxPreviewWidth: 500
   m_previewSpacing: 100
+  m_mapPieceSystem: {fileID: 11400000, guid: e146380b9990c5746a4d09a816b1ddd5, type: 2}
 --- !u!1 &2125702354
 GameObject:
   m_ObjectHideFlags: 0

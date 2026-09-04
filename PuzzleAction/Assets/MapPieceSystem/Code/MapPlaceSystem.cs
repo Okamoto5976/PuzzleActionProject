@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -98,6 +99,8 @@ public class MapPlaceSystem : MonoBehaviour
 
     [SerializeField] private Vector2Int m_DebugStartPos;
     [SerializeField] private Vector2Int m_DebugEndPos;
+
+    [SerializeField] private StaticSceneAsset m_creatScene;
 
     [Header("Shop Reset")]
     //[SerializeField] private EventBusAsset 
@@ -673,7 +676,7 @@ public class MapPlaceSystem : MonoBehaviour
         }
 
         //SceneManager.LoadScene("CreatMap");
-        LoadManager.m_instance.LoadScene("CreatMap");
+        LoadManager.m_instance.LoadScene(m_creatScene.Value);
     }
 
     private void OnDFS(int current, int goal, List<int> visited)

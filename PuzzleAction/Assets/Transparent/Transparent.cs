@@ -7,7 +7,7 @@ public class Transparent : MonoBehaviour
 {
     [SerializeField] private Vector3Asset m_player;
     [SerializeField] private float m_fadeSpeed = 5f;
-    [SerializeField] private CreatMap m_createMap;
+    [SerializeField] private MapGeneration m_mapGeneration;
 
     private List<Renderer> m_allWalls = new();
     private HashSet<Renderer> m_currentHits = new();
@@ -21,9 +21,12 @@ public class Transparent : MonoBehaviour
 
     private void Start()
     {
-        if (m_createMap == null) return;
+        if (m_mapGeneration == null)
+        {
+            Debug.LogWarning("Transparent : MapGeneration dose not exist");
+        }
 
-        foreach (GameObject wallObj in m_createMap.SouthWall)
+        foreach (GameObject wallObj in m_mapGeneration.SouthWall)
         {
             if (wallObj == null) continue;
 
