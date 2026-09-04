@@ -8,6 +8,9 @@ public class Transparent : MonoBehaviour
     [SerializeField] private Vector3Asset m_player;
     [SerializeField] private float m_fadeSpeed = 5f;
     [SerializeField] private MapGeneration m_mapGeneration;
+    [SerializeField] private CreatMap m_createMap;
+    [SerializeField] private SpriteRenderer m_playerSpriteRenderer;
+    [SerializeField] private float m_wallHeight;
 
     private List<Renderer> m_allWalls = new();
     private HashSet<Renderer> m_currentHits = new();
@@ -51,9 +54,20 @@ public class Transparent : MonoBehaviour
         float minZ = Mathf.Min(cameraZ, playerZ);
         float maxZ = Mathf.Max(cameraZ, playerZ);
 
+        float xRot = transform.rotation.eulerAngles.x;
+        float fov = m_camera.fieldOfView;
+        float nRot = xRot - (fov / 2);
+        float cameraY = m_camera.transform.position.y;
+        float tan = Mathf.Tan(nRot * Mathf.Deg2Rad);
+        float cameraShadow = cameraY / tan;
+        float cameraRatio = cameraY / cameraShadow;
+
+        bool isWallInBetween = false;
+
         foreach (Renderer wall in m_allWalls)
         {
             if (wall == null) continue;
+            if (!wall.isVisible) continue;
 
             float wallZ = wall.bounds.center.z;
 
@@ -67,12 +81,22 @@ public class Transparent : MonoBehaviour
                 continue;
             }
 
+            float distanceToWall = Mathf.Abs(cameraZ - wallZ);
+            float remainingWallShadow = Mathf.Abs(cameraShadow - distanceToWall);
+            float wallRatio = m_wallHeight / remainingWallShadow;
+            if (wallRatio <= cameraRatio) continue;
+
+
+
             SetAlphaSmooth(wall, 0.3f);
             m_currentHits.Add(wall);
+            isWallInBetween = true;
 
             foreach (Renderer otherWall in m_allWalls)
             {
                 if (otherWall == null) continue;
+                if (!wall.isVisible) continue;
+                if (wall == otherWall) continue;
 
                 float otherZ = otherWall.bounds.center.z;
 
@@ -92,6 +116,20 @@ public class Transparent : MonoBehaviour
             {
                 SetAlphaSmooth(wall, 1f);
             }
+        }
+
+        if (isWallInBetween)
+        {
+            m_playerSpriteRenderer.sortingOrder = -1;
+            string text = "";
+            foreach (var wall in m_currentHits)
+            {
+                text += wall.name + ",";
+            }
+            Debug.LogWarning(text);
+        } else
+        {
+            m_playerSpriteRenderer.sortingOrder = 1;
         }
     }
 
