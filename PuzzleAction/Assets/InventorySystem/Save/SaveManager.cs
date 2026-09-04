@@ -12,11 +12,6 @@ public class SaveManager : MonoBehaviour
 
     }
 
-    public void SetSaveData(SaveData saveData)
-    {
-        m_saveData = saveData;
-    }
-
     public void SaveToJson()
     {
         //JSON用の箱を作る
@@ -35,6 +30,23 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(path, json);
 
         Debug.Log("保存完了：" + path);
+    }
+
+    public void ClearSaveData()
+    {
+        // SaveDataの中身を削除
+        m_saveData.activeItems.Clear();
+        m_saveData.passiveItems.Clear();
+
+        // セーブファイルを削除
+        string path = Application.persistentDataPath + "/save.json";
+
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
+        Debug.Log("SaveDataを削除しました");
     }
 
     public void LoadFromJson()
