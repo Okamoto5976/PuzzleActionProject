@@ -21,7 +21,7 @@ public class EnemyWormController
 
     public void Initialize(EnemyController enemyController, Transform transform, float detectDistance, float attackAnimationTime, float attackAnimationCooldown)
     {
-        state = WormState.Relocate;
+        state = WormState.Standby;
         this.enemyController = enemyController;
         this.transform = transform;
         this.detectDistance = detectDistance;
@@ -42,8 +42,8 @@ public class EnemyWormController
 
     private void DoRelocate()
     {
-        //var position = enemyController.GetRandomPosition();
-        //enemyController.TeleportToPosition(position);
+        var position = enemyController.GetRandomPosition(30);
+        enemyController.TeleportToPosition(position);
         ChangeState(WormState.Standby);
     }
 
@@ -61,7 +61,7 @@ public class EnemyWormController
     }
 
     private void DoTrigger()
-    {
+    {   
         if (time >= attackAnimationTime && !hasAttacked)
         {
             enemyController.Attack();

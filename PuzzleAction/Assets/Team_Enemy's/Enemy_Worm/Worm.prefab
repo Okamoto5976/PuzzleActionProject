@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -9129642599269469809}
   - component: {fileID: 542936587695842741}
   - component: {fileID: 3164041415642601196}
+  - component: {fileID: -132694917962651984}
   m_Layer: 0
   m_Name: Worm
   m_TagString: Untagged
@@ -112,9 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   m_attackSE: {fileID: 0}
   m_damageSE: {fileID: 0}
-  m_team: 0
+  m_team: 1
   m_data: {fileID: 11400000, guid: 56e02a7d138b6a242862564a83551fe5, type: 2}
-  m_type: 4
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
   m_attackRange: 1.5
@@ -140,6 +140,21 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 2074712064826403026}
     m_radius: 5
+--- !u!114 &-132694917962651984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5494345452424192653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22231711d262151439620927233be11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Worm
+  m_detectDistance: 5
+  m_attackAnimationTime: 2
+  m_attackAnimationCooldown: 1
 --- !u!1001 &4723185114589990880
 PrefabInstance:
   m_ObjectHideFlags: 0
