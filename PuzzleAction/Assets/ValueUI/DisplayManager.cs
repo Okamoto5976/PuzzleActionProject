@@ -30,7 +30,7 @@ public class DisplayManager : MonoBehaviour
     private int m_level;
     //[SerializeField] private IntRunTime m_levelDataSO;
 
-    [SerializeField] private TMP_Text m_testHotberIndexText;
+    //[SerializeField] private TMP_Text m_testHotberIndexText;
 
     private void Start()
     {
@@ -77,7 +77,7 @@ public class DisplayManager : MonoBehaviour
 
     public void SetIndex(int index)
     {
-        m_testHotberIndexText.text = index.ToString();
+        //m_testHotberIndexText.text = index.ToString();
 
         for (int i = 0; i < m_frames.Count; i++)
         {

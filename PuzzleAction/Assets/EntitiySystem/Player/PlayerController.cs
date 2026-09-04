@@ -64,7 +64,10 @@ public class PlayerController : Entity
 
     [SerializeField] private RectTransform m_reticle;
 
+    //player forward
     public Vector3 Forward => m_playerDirObject.transform.forward;
+
+    private Vector3 m_arrowTemporaryForward;
 
     //---------passive bool---------------
 
@@ -78,7 +81,10 @@ public class PlayerController : Entity
     protected override void Start()
     {
         base.Start();
-        
+
+        m_reticle.gameObject.SetActive(false);
+
+
         m_input = new InputProvider();
         
         m_input.Enable();
@@ -295,14 +301,14 @@ public class PlayerController : Entity
         Debug.Log(m_hotberIndex);
         m_inventorySystem.Use(m_hotberIndex , data);
     }*/
-    private ItemRecieveData CreateItemData()
+    private ItemRecieveData CreateItemData(Vector3 forward)
     {
         return new ItemRecieveData
         {
             entity = this,
             baseValue = STR,
             pos = transform.position,
-            dir = Forward
+            dir = forward,
         };
     }
     private void OnUseItemPressed()
@@ -312,6 +318,8 @@ public class PlayerController : Entity
         if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Arrow))
         {
             m_isUsingArrow = true;
+
+            m_reticle.gameObject.SetActive(true);
             //start to pull the bow
             
 
@@ -323,7 +331,7 @@ public class PlayerController : Entity
         }
         else
         {
-            ItemRecieveData data = CreateItemData();
+            ItemRecieveData data = CreateItemData(Forward);
 
             m_inventorySystem.UsePressed(m_hotberIndex, data);
 
@@ -335,7 +343,13 @@ public class PlayerController : Entity
     {
         //Debug.Log("Hold");
 
-        OnReticle();
+        if(m_isUsingArrow)
+        {
+
+            OnReticle();
+
+        }
+
 
     }
 
@@ -345,9 +359,13 @@ public class PlayerController : Entity
 
         if(m_isUsingArrow)
         {
+
             m_isUsingArrow = false;
 
-            ItemRecieveData data = CreateItemData();
+            m_reticle.gameObject.SetActive(false);
+
+
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
 
@@ -375,6 +393,8 @@ public class PlayerController : Entity
 
             OnRotatePlayerDirObject(dir);
 
+            //temporary save, use when arrow pull
+            m_arrowTemporaryForward = Forward;
         }
 
     }
