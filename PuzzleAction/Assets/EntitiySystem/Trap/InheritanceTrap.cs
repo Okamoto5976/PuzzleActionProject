@@ -36,8 +36,6 @@ public class InheritanceTrap : Entity
         data.AttackDir = (target.transform.position - transform.position).normalized;
 
         data.Attacker = this;
-        data.AttackerSE = AttackSE;
-        data.AudioSource = AudioSource;
         //“–‚½‚é‚©
         //if(!CanHit(target))
         //{

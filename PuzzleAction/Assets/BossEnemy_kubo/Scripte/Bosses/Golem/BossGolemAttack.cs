@@ -116,9 +116,7 @@ public class BossGolemAttack : MonoBehaviour
                 Knockback = m_controller.KnockBack,
                 Stun = m_controller.Stun,
                 AttackDir = transform.forward,
-                Attacker = m_controller,
-                AttackerSE = m_controller.AttackSE,
-                AudioSource = m_controller.AudioSource
+                Attacker = m_controller
             };
 
         StompShockWave shockWave = Instantiate(m_shockWavePrefab,transform.position,Quaternion.identity);

@@ -217,9 +217,7 @@ public class EnemyController : Entity
                 Knockback = KnockBack,
                 Stun = Stun,
                 AttackDir = transform.forward,
-                Attacker = this,
-                AttackerSE = AttackSE,
-                AudioSource = AudioSource
+                Attacker = this
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);

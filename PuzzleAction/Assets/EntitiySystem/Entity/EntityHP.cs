@@ -41,14 +41,6 @@ abstract public class EntityHP : MonoBehaviour
                 break;
         }
 
-        if (data.AttackerSE != null)
-        {
-            if (data.AudioSource != null)
-            {
-                data.AudioSource.PlayOneShot(data.AttackerSE);
-            }
-        }
-
         //float hitRate =
         //    data.HitRate - m_entity.DEX;
 
