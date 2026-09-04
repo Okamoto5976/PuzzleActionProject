@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7536149573719372520}
   - component: {fileID: -2954304509094281346}
   - component: {fileID: 4413715628403061547}
+  - component: {fileID: -828540804980055697}
   m_Layer: 0
   m_Name: EnemyMimic
   m_TagString: Untagged
@@ -209,3 +210,15 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 5684922870896197467}
     m_radius: 1
+--- !u!114 &-828540804980055697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7553583667136533194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed558edf2d783e447b14a35f53cd88bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Mimic

@@ -5,8 +5,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : Entity
 {
-    [Header("EnemyType")]
-    [SerializeField] private Enum_EnemyType m_type;
     [Header("Target")]
     [SerializeField] private Vector3Asset m_target;
     [Header("Range")]
@@ -27,6 +25,8 @@ public class EnemyController : Entity
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
     private Vector3 m_spawnPosition;
+
+    private bool m_isRotating = true;
 
     //===== API =====
 
@@ -49,37 +49,10 @@ public class EnemyController : Entity
         m_agent = GetComponent<NavMeshAgent>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
 
-        switch (m_type)
-        {
-            case Enum_EnemyType.Chase:
-                {
-                    gameObject.AddComponent<Enemy_Chase>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
 
-            case Enum_EnemyType.Rush:
-                {
-                    gameObject.AddComponent<Enemy_Rush>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
-
-            case Enum_EnemyType.Archer:
-                {
-                    gameObject.AddComponent<Enemy_Archer>();
-                    break;
-                }
-
-            case Enum_EnemyType.Mimic:
-                {
-                    gameObject.AddComponent<Enemy_Mimic>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
-        }
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
+        m_hitCollider = GetComponent<HitCollider>();
 
         if (m_enemyBehaviour != null)
         {
@@ -121,23 +94,6 @@ public class EnemyController : Entity
         //}
         m_enemyBehaviour.Execute();
     }
-    private void HandleCooldown()
-    {
-        if (m_isCooldownEnd) return;
-
-        m_attackCooldownDuration += Time.deltaTime;
-
-        if (m_attackCooldownDuration >= m_attackCooldown)
-        {
-            m_attackCooldownDuration = 0f;
-            m_isCooldownEnd = true;
-        }
-    }
-    public void ConsumeCooldown()
-    {
-        m_isCooldownEnd = false;
-        m_attackCooldownDuration = 0f;
-    }
     public bool TryAttack()
     {
         if (!m_isCooldownEnd) return false;
@@ -146,58 +102,6 @@ public class EnemyController : Entity
         ConsumeCooldown();
         return true;
     }
-    public bool TryUseCooldown()
-    {
-        if (!m_isCooldownEnd) return false;
-
-        ConsumeCooldown();
-
-        return true;
-    }
-
-    public void Move(Vector3 dir, float speed)
-    {
-        if (dir == Vector3.zero)
-        {
-            Stop();
-            return;
-        }
-
-        m_agent.isStopped = false;
-        m_agent.speed = speed;
-
-        m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-
-        m_agent.avoidancePriority = 50;
-
-        m_agent.Move(dir * speed * Time.deltaTime);
-    }
-
-    public void SetDestination(Vector3 targetPos, float speed)
-    {
-        m_agent.isStopped = false;
-
-        m_agent.speed = speed;
-        m_agent.acceleration = speed * 2.5f;
-        m_agent.stoppingDistance = m_attackRange;
-
-        m_agent.SetDestination(targetPos);
-    }
-
-    public void UseItem(Vector3 dir)
-    {
-        ItemRecieveData data = new ItemRecieveData
-            {
-                entity = this,
-                baseValue = STR,
-                pos = transform.position,
-                dir = dir
-            };
-
-        m_itemManager.OnUseItem(m_item, data);
-    }
-
-
     public void Attack()
     {
         Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
@@ -225,12 +129,77 @@ public class EnemyController : Entity
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : HIT");
     }
+    public bool TryUseCooldown()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        ConsumeCooldown();
+
+        return true;
+    }
+    public void ConsumeCooldown()
+    {
+        m_isCooldownEnd = false;
+        m_attackCooldownDuration = 0f;
+    }
+
+    public void Move(Vector3 dir, float speed)
+    {
+        if (dir == Vector3.zero)
+        {
+            Stop();
+            return;
+        }
+
+        m_agent.isStopped = false;
+        m_agent.speed = speed;
+
+        m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+
+        m_agent.avoidancePriority = 50;
+
+        m_agent.Move(dir * speed * Time.deltaTime);
+    }
+    public void SetDestination(Vector3 targetPos, float speed)
+    {
+        m_agent.isStopped = false;
+
+        m_agent.speed = speed;
+        m_agent.acceleration = speed * 2.5f;
+        m_agent.stoppingDistance = m_attackRange;
+
+        m_agent.SetDestination(targetPos);
+    }
+    public void UseItem(Vector3 dir)
+    {
+        ItemRecieveData data = new ItemRecieveData
+            {
+                entity = this,
+                baseValue = STR,
+                pos = transform.position,
+                dir = dir
+            };
+
+        m_itemManager.OnUseItem(m_item, data);
+    }
+
     //common
     public void Stop()
     {
         m_agent.isStopped = true;
     }
+    private void HandleCooldown()
+    {
+        if (m_isCooldownEnd) return;
 
+        m_attackCooldownDuration += Time.deltaTime;
+
+        if (m_attackCooldownDuration >= m_attackCooldown)
+        {
+            m_attackCooldownDuration = 0f;
+            m_isCooldownEnd = true;
+        }
+    }
     private void Rotate(Vector3 dir)
     {
         dir.y = 0f;
@@ -242,6 +211,7 @@ public class EnemyController : Entity
 
     private void HandleRotation(float distance)
     {
+        if (!m_isRotating) return;
         if (distance > m_findRange) return;
 
         Enemy_Rush rush = m_enemyBehaviour as Enemy_Rush;
@@ -260,6 +230,36 @@ public class EnemyController : Entity
     {
         m_enemyBehaviour?.Stop();
         Stop();
+    }
+    public void SetEnableRotation(bool state)
+    {
+        m_isRotating = state;
+    }
+    public Vector2 GetRandomPosition(float range)
+    {
+        Vector2 result = Vector2.zero;
+
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result.x = hit.position.x;
+                result.y = hit.position.z;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public void TeleportToPosition(Vector2 position)
+    {
+        Vector3 origin = transform.position;
+        origin.x = position.x;
+        origin.y = position.y;
+        m_agent.Warp(origin);
     }
 }
 public interface IEnemyBehaviour
