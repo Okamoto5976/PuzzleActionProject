@@ -36,10 +36,6 @@ public class EnemySpearController
     public void DoSpearStates()
     {
         time += Time.deltaTime;
-        // idle: no target ( already implemented in controller
-        // chasing: target is too far away
-        // ready: target is in range
-        // attack: attacking target
         switch (state)
         {
             case SpearStates.Chasing: DoChasing();  break;
