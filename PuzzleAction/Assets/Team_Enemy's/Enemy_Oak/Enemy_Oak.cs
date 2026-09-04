@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 public class Enemy_Oak : MonoBehaviour, IEnemyBehaviour
 {
@@ -14,18 +13,7 @@ public class Enemy_Oak : MonoBehaviour, IEnemyBehaviour
         if (distance <= m_enemyController.AttackRange)
         {
             m_enemyController.Stop();
-
-            Vector3 dir = m_enemyController.Target.Value - transform.position;
-            dir.y = 0f;
-            if (dir != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(dir);
-            }
-
-            if (m_enemyController.TryUseCooldown())
-            {
-                m_enemyController.UseItem(dir.normalized);
-            }
+            m_enemyController.TryAttack();
             return;
         }
         m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);

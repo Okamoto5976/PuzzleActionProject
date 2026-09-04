@@ -239,7 +239,7 @@ public class EnemyController_Test : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : HIT");
+        Debug.Log("EnemyController_Test : HIT");
     }
     //common
     public void Stop()
@@ -277,11 +277,10 @@ public class EnemyController_Test : Entity
         m_enemyBehaviour?.Stop();
         Stop();
     }
-
-    public interface IEnemyBehaviour_Test
-    {
-        void Initialized(EnemyController_Test Controller);
-        void Execute();
-        void Stop();
-    }
+}
+public interface IEnemyBehaviour_Test
+{
+    void Initialized(EnemyController_Test Controller);
+    void Execute();
+    void Stop();
 }
