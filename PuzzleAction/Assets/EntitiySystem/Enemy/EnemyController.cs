@@ -237,11 +237,11 @@ public class EnemyController : Entity
     }
     public Vector2 GetRandomPosition(float range)
     {
-        Vector2 result = Vector2.zero;
+        Vector2 result = new(transform.position.x, transform.position.z);
 
-        for (int i = 0; i < 30; i++)
+        for (var i = range; i >= 0; i -= 1)
         {
-            Vector3 randomPoint = transform.position + Random.insideUnitSphere * range;
+            Vector3 randomPoint = transform.position + new Vector3(Random.value * range, 0, Random.value * range);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
             {
