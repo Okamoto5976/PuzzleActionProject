@@ -13,20 +13,18 @@ MonoBehaviour:
   m_Name: EntityData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 100
-  m_str: 0
+  m_str: 20
   m_knockBack: 0
-  m_def: 0
+  m_def: 5
   m_speed: 10
   m_dashSpeed: 30
-  m_criticalRate: 0
-  m_criticalDamage: 0
-  m_dex: 0
+  m_slow: 0
+  m_criticalRate: 10
+  m_criticalDamage: 10
   m_agi: 0
-  m_vision: 0
   m_breakRate: 0
   m_stun: 0
   m_recover: 0
-  m_poisonRes: 0
-  m_stunRes: 0
-  m_slowRes: 0
-  m_blindRes: 0
+  m_poisonRes: 1
+  m_stunRes: 1
+  m_slowRes: 0.5

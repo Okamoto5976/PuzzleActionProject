@@ -138,11 +138,9 @@ public abstract class TrapBase : MonoBehaviour
         dir = dir.normalized;
 
 
-        Debug.Log($"Before : {m_rb.linearVelocity}");
 
         m_rb.AddForce(dir * power, ForceMode.Impulse);
 
-        Debug.Log($"After : {m_rb.linearVelocity}");
     }
 
 

@@ -51,8 +51,8 @@ public class SwampTrap : TrapBase
         StatusModifier modifier = new StatusModifier()
         {
             m_statType = StatusType.Slow,
-            m_value = 1.5f,
-            m_modType = ModifierType.Multiply,
+            m_value = 0.5f,
+            m_modType = ModifierType.Add,
         };
 
         return modifier;

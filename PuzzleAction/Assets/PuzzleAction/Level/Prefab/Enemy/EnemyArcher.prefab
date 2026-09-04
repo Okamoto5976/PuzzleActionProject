@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 528806279578718545}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
+  - component: {fileID: 1954317226249978899}
   m_Layer: 0
   m_Name: EnemyArcher
   m_TagString: Untagged
@@ -215,6 +216,7 @@ Transform:
   m_Children:
   - {fileID: 597423740736988077}
   - {fileID: 4137929383140127322}
+  - {fileID: 5960715490201749086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3605610462895004749
@@ -250,7 +252,6 @@ MonoBehaviour:
   m_findRange: 16
   m_attackRange: 8
   m_attackCooldown: 1
-  m_hitCollider: {fileID: 0}
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
     m_radius: 1
@@ -304,3 +305,90 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1954317226249978899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
+  m_currentHP: 0
+  m_damageParticleController: {fileID: 3743955186553333981}
+--- !u!1001 &668045090109467308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5192190198220617858}
+    m_Modifications:
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Name
+      value: DamagePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.00445
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.26488
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+--- !u!114 &3743955186553333981 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4228998933530346097, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+  m_PrefabInstance: {fileID: 668045090109467308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17594eb4947af404db49af7c8efbaddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageParticleController
+--- !u!4 &5960715490201749086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+  m_PrefabInstance: {fileID: 668045090109467308}
+  m_PrefabAsset: {fileID: 0}

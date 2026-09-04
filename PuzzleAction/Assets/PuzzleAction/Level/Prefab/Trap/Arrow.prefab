@@ -281,7 +281,7 @@ MonoBehaviour:
   m_str: 0
   m_speed: 0
   m_attackType: 0
-  m_power: 10
+  m_power: 30
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192
