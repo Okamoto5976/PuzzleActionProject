@@ -5,8 +5,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : Entity
 {
-    [Header("EnemyType")]
-    [SerializeField] private Enum_EnemyType m_type;
     [Header("Target")]
     [SerializeField] private Vector3Asset m_target;
     [Header("Range")]
@@ -27,6 +25,8 @@ public class EnemyController : Entity
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
     private Vector3 m_spawnPosition;
+
+    private bool m_isRotating = true;
 
     //===== API =====
 
@@ -49,61 +49,10 @@ public class EnemyController : Entity
         m_agent = GetComponent<NavMeshAgent>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
 
-        switch (m_type)
-        {
-            case Enum_EnemyType.Chase:
-                {
-                    gameObject.AddComponent<Enemy_Chase>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
 
-            case Enum_EnemyType.Rush:
-                {
-                    gameObject.AddComponent<Enemy_Rush>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
-
-            case Enum_EnemyType.Archer:
-                {
-                    gameObject.AddComponent<Enemy_Archer>();
-                    break;
-                }
-
-            case Enum_EnemyType.Mimic:
-                {
-                    gameObject.AddComponent<Enemy_Mimic>();
-                    m_hitCollider = GetComponent<HitCollider>();
-                    break;
-                }
-
-            case Enum_EnemyType.Slime_Blue:
-                {
-                    //slime_blue scrite
-                    break;
-                }
-
-            case Enum_EnemyType.Slime_Red:
-                {
-                    //slime_red scripte
-                    break;
-                }
-
-            case Enum_EnemyType.Oak:
-                {
-                    //Oak scripte
-                    break;
-                }
-
-                case Enum_EnemyType.Explosion:
-                {
-                    //explosion scripte
-                    break;
-                }
-        }
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
+        m_hitCollider = GetComponent<HitCollider>();
 
         if (m_enemyBehaviour != null)
         {
@@ -233,10 +182,6 @@ public class EnemyController : Entity
 
         m_itemManager.OnUseItem(m_item, data);
     }
-    public void SetInvincible()
-    {
-
-    }
 
     //common
     public void Stop()
@@ -266,6 +211,7 @@ public class EnemyController : Entity
 
     private void HandleRotation(float distance)
     {
+        if (!m_isRotating) return;
         if (distance > m_findRange) return;
 
         Enemy_Rush rush = m_enemyBehaviour as Enemy_Rush;
@@ -284,6 +230,36 @@ public class EnemyController : Entity
     {
         m_enemyBehaviour?.Stop();
         Stop();
+    }
+    public void SetEnableRotation(bool state)
+    {
+        m_isRotating = state;
+    }
+    public Vector2 GetRandomPosition(float range)
+    {
+        Vector2 result = Vector2.zero;
+
+        for (int i = 0; i < 30; i++)
+        {
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                result.x = hit.position.x;
+                result.y = hit.position.z;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public void TeleportToPosition(Vector2 position)
+    {
+        Vector3 origin = transform.position;
+        origin.x = position.x;
+        origin.y = position.y;
+        m_agent.Warp(origin);
     }
 }
 public interface IEnemyBehaviour
