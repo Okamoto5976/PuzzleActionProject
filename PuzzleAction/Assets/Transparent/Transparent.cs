@@ -121,12 +121,6 @@ public class Transparent : MonoBehaviour
         if (isWallInBetween)
         {
             m_playerSpriteRenderer.sortingOrder = -1;
-            string text = "";
-            foreach (var wall in m_currentHits)
-            {
-                text += wall.name + ",";
-            }
-            Debug.LogWarning(text);
         } else
         {
             m_playerSpriteRenderer.sortingOrder = 1;
