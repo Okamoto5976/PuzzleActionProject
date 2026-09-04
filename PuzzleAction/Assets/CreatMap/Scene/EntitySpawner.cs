@@ -10,9 +10,12 @@ public class EntitySpawner : MonoBehaviour
     [Space(10)]
 
     [Header("========== Enemy ==========")]
-    [SerializeField] private Poolinstallationpulling m_enemySpawner;
+    [SerializeField] private Middleman_Enemy m_enemyPool;
     [Space(10)]
 
+    [Header("========== EnemyGacha ==========")]
+    [SerializeField] private GachaEngine m_enemyGachaEngine;
+    [SerializeField] private EnemyRarityTable m_enemyRarityTable;
     [Header("========== Trap ==========")]
     [SerializeField] private ObjectConsolidation m_ocl; //消す予定
     [Space(10)]
@@ -50,6 +53,8 @@ public class EntitySpawner : MonoBehaviour
         m_mapClassData = mapData;
         m_mapGeneration = mapGeneration;
 
+        InitializeEnemyPools();
+
         SpawnGoal();
 
         ProcessAreaTypes();
@@ -57,6 +62,14 @@ public class EntitySpawner : MonoBehaviour
         SpawnTreasures();
 
         SpawnPlayer();
+    }
+    private void InitializeEnemyPools()
+    {
+        if (m_enemyPool == null) return;
+        foreach(Transform child in m_enemyPool.transform)
+        {
+            child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+        }
     }
 
     public Vector2Int GetStartPos()
@@ -102,24 +115,63 @@ public class EntitySpawner : MonoBehaviour
     {
         var positions = ChooseRandomPosition(room, 3);
 
-        List<Vector3> worldPositions = new();
 
         foreach (var pos in positions)
         {
             if (IsForbiddenPos(pos))
                 continue;
 
-            worldPositions.Add(m_mapGeneration.GridToWorld(pos));
+            Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
+            SpawnEnemyByGacha(worldPositions);
         }
-        if (m_enemySpawner != null)
+
+    }
+
+    private void SpawnEnemyByGacha(Vector3 position)
+    {
+        if (m_enemyPool == null)
         {
-            m_enemySpawner.SpawnEnemiesAtPositions(worldPositions);
+            Debug.LogWarning("EnemyPool is null");
+            return;
         }
-        else
+        if (m_enemyGachaEngine == null)
         {
-            Debug.Log("EntitySpawner : No Poolinstallationpulling");
+            Debug.LogWarning("EnemyGachaEngine is null");
+            return;
         }
-        m_enemySpawner.SpawnEnemiesAtPositions(worldPositions);
+        if (m_enemyRarityTable == null)
+        {
+            Debug.LogWarning("EnemyRarityTable is null");
+            return;
+        }
+
+        //choose
+        RarityEnumAsset rarity = m_enemyGachaEngine.Collapse();
+        //get enemy
+        List<Enum_EnemyType> candidates = m_enemyRarityTable.GetEnemies(rarity);
+
+        if (candidates.Count == 0)
+        {
+            Debug.LogWarning($"No Enemy Found : {rarity.name}");
+            return;
+        }
+
+        // 同レアリティ内ランダム
+        Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
+        Debug.Log($"Selected Enemy : {selectedType}");
+        DummyEnemyScript enemy =m_enemyPool.GetEnemy(selectedType);
+
+
+        if (enemy == null)
+        {
+            Debug.LogWarning($"Pool Missing : {selectedType}");
+            return;
+        }
+
+        enemy.transform.position = position;
+        enemy.gameObject.SetActive(true);
+
+        Debug.Log($"Spawn Enemy [{selectedType}] Rarity [{rarity.name}]");
     }
 
     private void SpawnShop(RoomData room)
