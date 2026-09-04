@@ -102,7 +102,18 @@ abstract public class Entity : MonoBehaviour
         m_buffSystem=GetComponent<EntityTemporaryBuffSystem>();
         m_inventory = GetComponent<Inventory>();
 
-        if (m_data == null) return;
+        //SetState();
+
+        //m_currentMoveSpeed = Speed;
+    }
+
+    public void SetState()
+    {
+        if (m_data == null)
+        {
+            Debug.LogError("Not EntityData");
+            return;
+        }
         m_status.Add(StatusType.HP, new EntityStatus(m_data.HP));
         m_status.Add(StatusType.Strength, new EntityStatus(m_data.STR));
         m_status.Add(StatusType.KnockBack, new EntityStatus(m_data.KnockBack));
@@ -118,8 +129,6 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
-
-        //m_currentMoveSpeed = Speed;
     }
 
     protected virtual void Start()

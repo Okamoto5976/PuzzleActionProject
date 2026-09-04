@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d04c87550528cc40950fa490d7aae9f, type: 3}
   m_Name: CreateMap
   m_EditorClassIdentifier: Assembly-CSharp::StaticSceneAsset
-  value: CreatMap_Specification change
-  sceneAsset: {fileID: 102900000, guid: e9a710fde86f0a445828114382e8888e, type: 3}
+  value: CreatMap
+  sceneAsset: {fileID: 102900000, guid: 9b8c8537db254d040ab5a8ce334f09b9, type: 3}

@@ -159,7 +159,7 @@ public class EntitySpawner : MonoBehaviour
         // 同レアリティ内ランダム
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
         Debug.Log($"Selected Enemy : {selectedType}");
-        DummyEnemyScript enemy =m_enemyPool.GetEnemy(selectedType);
+        EnemyController enemy =m_enemyPool.GetEnemy(selectedType);
 
 
         if (enemy == null)
@@ -198,7 +198,8 @@ public class EntitySpawner : MonoBehaviour
         }
 
         Vector2 size = new Vector2(m_mapGeneration.FloorScale.x, m_mapGeneration.FloorScale.y);
-        m_ocl.DeployTrap(worldPositions, trapType, size);
+
+        //m_ocl.DeployTrap(worldPositions, trapType, size);
     }
 
     private void SpawnGoal()
