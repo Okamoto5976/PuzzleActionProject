@@ -18,13 +18,12 @@ MonoBehaviour:
   m_def: 5
   m_speed: 10
   m_dashSpeed: 30
-  m_slow: 0
   m_criticalRate: 10
   m_criticalDamage: 10
   m_agi: 0
   m_breakRate: 0
-  m_stun: 0
+  m_stun: 5
   m_recover: 0
-  m_poisonRes: 1
-  m_stunRes: 1
-  m_slowRes: 0.5
+  m_poisonRes: 0
+  m_stunRes: 0
+  m_slowRes: 0

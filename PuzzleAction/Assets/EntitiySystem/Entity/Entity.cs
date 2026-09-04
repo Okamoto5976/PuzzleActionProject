@@ -75,10 +75,13 @@ abstract public class Entity : MonoBehaviour
     public bool IsStun { get => m_isStun; }
     public bool IsInvincible {  get => m_isInvincible; }
 
-    protected float m_stunTime;
 
     //--------buff-------------------
-    
+    protected float m_stunTime;
+
+    protected float m_invincibleTime;
+
+
 
     //protected float m_currentMoveSpeed;
 
@@ -106,7 +109,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Defense, new EntityStatus(m_data.DEF));
         m_status.Add(StatusType.Speed, new EntityStatus(m_data.Speed));
         m_status.Add(StatusType.DashSpeed, new EntityStatus(m_data.DashSpeed));
-        m_status.Add(StatusType.Slow, new EntityStatus(m_data.Slow));
+        m_status.Add(StatusType.Slow, new EntityStatus(0f));
         m_status.Add(StatusType.CriticalRate, new EntityStatus(m_data.CriticalRate));
         m_status.Add(StatusType.CriticalDamage, new EntityStatus(m_data.CriticalDamage));
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
@@ -202,12 +205,29 @@ abstract public class Entity : MonoBehaviour
     //EntityをTakeDamageに
     public virtual void TakeDamage(DamageData data)//��XDamageData��DamageResult
     {
-        Debug.Log("TakeDamageよばれた");
+        //Debug.Log("TakeDamageよばれた");
         if (m_isInvincible) return;
 
         if (m_entityHP == null) return;
 
         m_entityHP.TakeDamage(data);
+    }
+
+    public void TakeBuff(BuffState state, float value)
+    {
+        switch(state)
+        {
+            case BuffState.Stun:
+
+                break;
+        }
+    }
+
+    private void TakeStun(float value)
+    {
+        m_stunTime = value;
+
+        SetIsStun(true);
     }
 
     public virtual void HealHP(float value)
@@ -239,7 +259,7 @@ abstract public class Entity : MonoBehaviour
 
         ChangeState(EntityState.Damage);
 
-        m_isStun = true;
+        SetIsStun(true);
         m_stunTime = stunTime;
         direction.y = 0;
 

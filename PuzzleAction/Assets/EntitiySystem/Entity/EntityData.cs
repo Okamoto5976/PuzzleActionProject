@@ -13,7 +13,7 @@ public enum StatusType
     CriticalDamage,
     Agility,  //Enemy
     BreakRate,
-    Stun,
+    Stun, //Enemy stun power
     PoisonRes,
     StunRes,
     SlowRes,
@@ -28,16 +28,15 @@ public class EntityData : ScriptableObject
     [SerializeField] private float m_def;
     [SerializeField] private float m_speed;
     [SerializeField] private float m_dashSpeed;
-    [SerializeField] private float m_slow;
-    [SerializeField] private float m_criticalRate;
+    [SerializeField,Range(0f,100f)] private float m_criticalRate;
     [SerializeField] private float m_criticalDamage;
     [SerializeField] private float m_agi;
-    [SerializeField] private float m_breakRate;
+    [SerializeField,Range(0f,100f)] private float m_breakRate;
     [SerializeField] private float m_stun;
-    [SerializeField] private float m_recover;
-    [SerializeField] private float m_poisonRes;
-    [SerializeField] private float m_stunRes;
-    [SerializeField] private float m_slowRes;
+    [SerializeField,Range(0f,1f)] private float m_recover;
+    [SerializeField,Range(0f,1f)] private float m_poisonRes;
+    [SerializeField,Range(0f,1f)] private float m_stunRes;
+    [SerializeField,Range(0f,1f)] private float m_slowRes;
 
 
     public float HP { get => m_hp; }
@@ -46,7 +45,6 @@ public class EntityData : ScriptableObject
     public float DEF { get => m_def; }
     public float Speed { get => m_speed; }
     public float DashSpeed { get => m_dashSpeed; }
-    public float Slow { get => m_slow; }
     public float CriticalRate { get => m_criticalRate; }
     public float CriticalDamage { get => m_criticalDamage; }
     public float AGI { get => m_agi; }
