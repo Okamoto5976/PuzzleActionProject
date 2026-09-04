@@ -12,6 +12,7 @@ public class InputProvider
     private bool m_isEvasion;
     private bool m_isPrevious;
     private bool m_isNext;
+    private bool m_isInteract;
 
     public InputProvider()//newÇ≥ÇÍÇΩÇ∆Ç´èâä˙âª
     {
@@ -25,9 +26,7 @@ public class InputProvider
         m_action.Player.Sprint.performed += OnEvasion;
         m_action.Player.Previous.performed += OnPrevious;
         m_action.Player.Next.performed += OnNext;
-        //m_action.Player.ActionLow.performed += OnSpecialLow;
-        //m_action.Player.ActionMiddle.performed += OnSpecialMiddle;
-        //m_action.Player.ActionHigh.performed += OnSpecialHigh;
+        m_action.Player.Interact.performed += OnInteract;
 
         m_action.Enable();
     }
@@ -72,6 +71,10 @@ public class InputProvider
         m_isNext= true;
     }
 
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        m_isInteract = true;
+    }
 
     public Vector2 Move
     {
@@ -143,4 +146,14 @@ public class InputProvider
         }
     }
 
+    public bool IsInteract
+    {
+        get
+        {
+            bool result = m_isInteract;
+            m_isInteract = false;
+
+            return result;
+        }
+    }
 }

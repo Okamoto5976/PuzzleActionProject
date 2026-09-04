@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GoalSystem : MonoBehaviour
+public class GoalSystem : MonoBehaviour, IInteractable
 {
     private MainGameManager m_mainGameManager;
     //[SerializeField] private Vector3Asset m_playerPos;
@@ -16,7 +16,7 @@ public class GoalSystem : MonoBehaviour
         m_mainGameManager = gameManager;
     }
 
-    public void OnGoal()
+    public void OnInteract(Entity entity)
     {
         if (m_keyDoor)
         {

@@ -26,6 +26,7 @@ public class PlayerController : Entity
     private bool m_isEvasion;
     private bool m_isPrevious;
     private bool m_isNext;
+    private bool m_isInteract;
 
     //[SerializeField] private InputActionReference m_moveAction;
     //[SerializeField] private InputActionReference m_evasionAction;
@@ -71,7 +72,10 @@ public class PlayerController : Entity
 
     //---------passive bool---------------
 
-    //private bool 
+    //InteractSystem
+    private InteractSystem m_interactSystem;
+    [SerializeField] private LayerMask m_interactLayer;
+
 
     protected override void Awake()
     {
@@ -83,7 +87,7 @@ public class PlayerController : Entity
         base.Start();
 
         m_reticle.gameObject.SetActive(false);
-
+        m_interactSystem = new();
 
         m_input = new InputProvider();
         
@@ -92,31 +96,12 @@ public class PlayerController : Entity
 
     private void OnEnable()
     {
-        //m_action = new InputSystem_Actions();
-
-
-        //m_moveAction.action.Enable();
-        //m_evasionAction.action.Enable();
-        //m_hotberOne.action.Enable();
-        //m_hotberTwo.action.Enable();
-        //m_hotberThree.action.Enable();
-
-
-        //m_evasionAction.action.performed += OnEvasionPerformed;
-        //m_hotberOne.action.performed += 
-
-        //m_action.Enable();
+        
     }
 
     private void OnDisable()
     {
-        //m_moveAction.action.Disable();
-        //m_evasionAction.action.Disable();
-        //m_hotberOne.action.Disable();
-        //m_hotberTwo.action.Disable();
-        //m_hotberThree.action.Disable();
 
-        //m_evasionAction.action.performed -= OnEvasionPerformed;
         m_input.Disable();
     }
 
@@ -150,6 +135,12 @@ public class PlayerController : Entity
         m_isActiveRelease = m_input.IsActiveRelease; m_isEvasion = m_input.IsEvasion;
         m_isPrevious = m_input.IsPrevious;
         m_isNext = m_input.IsNext;
+        m_isInteract = m_input.IsInteract;
+
+        if(m_isInteract)
+        {
+            OnInteract();
+        }
 
         InputMove();
 
@@ -172,40 +163,6 @@ public class PlayerController : Entity
         InputHotber();
 
 
-        /*
-        �ړ����̍��E����O���]
-        if(input.x>0.1f)
-        {
-            transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-        }
-        else if(input.x>-0.1f)
-        {
-            transform.rotation = Quaternion.Euler(0f, -90f, 0f);
-
-        }
-        else if (input.y > 0.1f)
-        {
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        }
-        else if (input.y > -0.1f)
-        {
-            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-
-        }
-        */
-
-        /*
-        �ړ������Ɍ���
-        if (m_moveDir.sqrMagnitude > 0.0001f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(m_moveDir);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRot,
-                Time.deltaTime * 10f);
-        }
-        */
-
         // �_�b�V�����ԊǗ�
         //if (m_isEvasion)
         //{
@@ -223,7 +180,6 @@ public class PlayerController : Entity
 
     private void InputMove()
     {
-        // �ړ�����
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
@@ -243,7 +199,6 @@ public class PlayerController : Entity
             m_anim.SetBool("Run", false);
         }
 
-        //�ړ����̍��E���]
 
         if (input.x > 0.1f)
         {
@@ -286,21 +241,6 @@ public class PlayerController : Entity
         m_displayManager.SetIndex(m_hotberIndex);
     }
 
-
-    /*private void OnUseItem()
-    {
-        return;
-
-        ItemRecieveData data = new ItemRecieveData
-        {
-            entity = this,
-            baseValue = STR,
-            pos = transform.position,
-            dir = transform.forward
-        };
-        Debug.Log(m_hotberIndex);
-        m_inventorySystem.Use(m_hotberIndex , data);
-    }*/
     private ItemRecieveData CreateItemData(Vector3 forward)
     {
         return new ItemRecieveData
@@ -345,12 +285,8 @@ public class PlayerController : Entity
 
         if(m_isUsingArrow)
         {
-
             OnReticle();
-
         }
-
-
     }
 
     private void OnUseItemRelease()
@@ -359,7 +295,6 @@ public class PlayerController : Entity
 
         if(m_isUsingArrow)
         {
-
             m_isUsingArrow = false;
 
             m_reticle.gameObject.SetActive(false);
@@ -368,10 +303,7 @@ public class PlayerController : Entity
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
-
         }
-
-        
     }
 
     private void OnReticle()
@@ -408,5 +340,10 @@ public class PlayerController : Entity
             m_playerDirObject.transform.rotation =
                 Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
         }
+    }
+
+    private void OnInteract()
+    {
+        m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
 }
