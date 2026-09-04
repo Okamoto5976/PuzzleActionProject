@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/MapPieceSystem/Scene/MapPieceSystem.unity
     guid: b23eda0b7be2bc846a0e972a714d6e63
   - enabled: 1
+    path: Assets/CreatMap_Specification change.unity
+    guid: e9a710fde86f0a445828114382e8888e
+  - enabled: 1
     path: Assets/CreatMap/Scene/CreatMap.unity
     guid: 9b8c8537db254d040ab5a8ce334f09b9
   - enabled: 1

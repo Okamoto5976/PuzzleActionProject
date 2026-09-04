@@ -17,6 +17,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
     [SerializeField] private float m_maxPreviewWidth = 250f;
     [SerializeField] private float m_previewSpacing = 100f;
 
+    [Header("Scene")]
+    [SerializeField] private StaticSceneAsset m_mapPieceSystem;
     private readonly List<MapSettingSO> m_selectedMaps = new();
     private readonly List<RectTransform> m_previews = new();
 
@@ -217,7 +219,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         //SceneManager.LoadScene("MapPieceSystem");
 
-        LoadManager.m_instance.LoadScene("MapPieceSystem");
+        LoadManager.m_instance.LoadScene(m_mapPieceSystem.Value);
     }
 
     #endregion
