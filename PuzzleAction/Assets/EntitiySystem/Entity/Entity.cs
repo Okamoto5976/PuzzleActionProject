@@ -102,7 +102,7 @@ abstract public class Entity : MonoBehaviour
         m_buffSystem=GetComponent<EntityTemporaryBuffSystem>();
         m_inventory = GetComponent<Inventory>();
 
-        //SetState();
+        SetState();
 
         //m_currentMoveSpeed = Speed;
     }
