@@ -21,6 +21,9 @@ public class EntityLightReceiver : MonoBehaviour
         Vector3 lightDirection =
             (transform.position - m_testLight.transform.position).normalized;
 
+        //ŒõŒ¹‚ÌˆÊ’u
+        Vector3 pos = m_testLight.transform.position;
+
         // ŒõŒ¹‚Ü‚Å‚Ì‹——£
         float distance =
             Vector3.Distance(transform.position, m_testLight.transform.position);
@@ -33,8 +36,8 @@ public class EntityLightReceiver : MonoBehaviour
         m_renderer.GetPropertyBlock(m_propertyBlock);
 
         m_propertyBlock.SetVector(
-            "_DirectionLight",
-            lightDirection
+            "_LightPosition",
+            pos
         );
 
         m_propertyBlock.SetColor(
