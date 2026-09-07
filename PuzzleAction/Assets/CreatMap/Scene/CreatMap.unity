@@ -480,6 +480,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1940521860}
     - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_itemManager
+      value: 
+      objectReference: {fileID: 681700649319570257}
+    - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_infoTextPrefab
       value: 
       objectReference: {fileID: 1940521861}
@@ -1448,6 +1452,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 74042322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &766113715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 766113717}
+  - component: {fileID: 766113716}
+  m_Layer: 0
+  m_Name: Explosion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &766113716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766113715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 284dd9700ab95d340b6f3497236275dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Enemy
+  m_prefab: {fileID: 6967910656285339947, guid: 20529b7b889df4b4682ecf2a8b48de76, type: 3}
+  m_poolCount: 20
+  m_forcePoolCount: 1
+--- !u!4 &766113717
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766113715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 776241688}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &776241686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1535,8 @@ MonoBehaviour:
     pool: {fileID: 1034517596}
   - type: 6
     pool: {fileID: 979544501}
+  - type: 2
+    pool: {fileID: 766113716}
 --- !u!4 &776241688
 Transform:
   m_ObjectHideFlags: 0
@@ -1500,6 +1553,7 @@ Transform:
   - {fileID: 1034517597}
   - {fileID: 979544502}
   - {fileID: 1214272748}
+  - {fileID: 766113717}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &966751217 stripped
