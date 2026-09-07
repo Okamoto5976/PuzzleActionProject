@@ -173,12 +173,12 @@ public class EnemyController : Entity
     public void UseItem(Vector3 dir)
     {
         ItemRecieveData data = new ItemRecieveData
-            {
-                entity = this,
-                baseValue = STR,
-                pos = transform.position,
-                dir = dir
-            };
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = dir
+        };
 
         m_itemManager.OnUseItem(m_item, data);
     }
