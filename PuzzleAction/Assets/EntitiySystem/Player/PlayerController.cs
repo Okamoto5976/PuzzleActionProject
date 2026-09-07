@@ -23,7 +23,6 @@ public class PlayerController : Entity
     private bool m_isActive;
     private bool m_isActiveHold;
     private bool m_isActiveRelease;
-    private bool m_isEvasion;
     private bool m_isPrevious;
     private bool m_isNext;
     private bool m_isInteract;
@@ -38,6 +37,7 @@ public class PlayerController : Entity
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
+    private float m_evasionTimer;
 
     private List<PassiveModifier> m_modifiers = new();
 
@@ -47,12 +47,6 @@ public class PlayerController : Entity
     [SerializeField] private DisplayManager m_displayManager;
 
     public Vector3 MoveDirection => m_moveDir;
-
-    private bool m_isEvaing;
-    private float m_evasionTimer;
-
-    //private bool m_isEvaing;
-    //private float m_evasionTimer;
 
 
     [SerializeField] private int m_hotberIndex = 0;
@@ -105,17 +99,6 @@ public class PlayerController : Entity
         m_input.Disable();
     }
 
-    private void OnMove(InputAction.CallbackContext context)
-    {
-
-    }
-
-    private void OnEvasionPerformed(InputAction.CallbackContext context)
-    {
-        //m_isEvaing = true;
-        //m_evasionTimer = m_evasionDuration;
-    }
-
     private void FixedUpdate()
     {
         CallMove();
@@ -132,7 +115,7 @@ public class PlayerController : Entity
 
         m_isActive = m_input.IsActive;
         m_isActiveHold = m_input.IsActiveHold;
-        m_isActiveRelease = m_input.IsActiveRelease; m_isEvasion = m_input.IsEvasion;
+        m_isActiveRelease = m_input.IsActiveRelease;
         m_isPrevious = m_input.IsPrevious;
         m_isNext = m_input.IsNext;
         m_isInteract = m_input.IsInteract;
@@ -142,7 +125,13 @@ public class PlayerController : Entity
             OnInteract();
         }
 
+        if (m_input.IsEvasion)
+        {
+            OnEvadeInput();
+        }
+
         InputMove();
+        DoEvading();
 
 
         if (m_isActive)
@@ -162,20 +151,32 @@ public class PlayerController : Entity
 
         InputHotber();
 
+    }
 
-        // �_�b�V�����ԊǗ�
-        //if (m_isEvasion)
-        //{
-        //    m_evasionTimer -= Time.deltaTime;
+    /// <summary>
+    /// written by so-
+    /// </summary>
+    private void OnEvadeInput()
+    {
+        if (IsEvading) return;
+        IsEvading = true;
+        m_evasionTimer = m_evasionDuration;
+        SetIsInvincible(true);
+    }
 
-        //    if (m_evasionTimer <= 0f)
-        //    {
-        //        m_isEvasion = false;
-        //    }
-        //}
+    /// <summary>
+    /// written by so-
+    /// </summary>
+    private void DoEvading()
+    {
+        if (!IsEvading) return;
 
-        // ���x�؂�ւ�
-        //m_currentMoveSpeed = m_isEvasion ? EvasionSpeed : Speed;
+        m_evasionTimer -= Time.deltaTime;
+
+        if (m_evasionTimer > 0f) return;
+
+        IsEvading = false;
+        SetIsInvincible(false);
     }
 
     private void InputMove()
