@@ -4,7 +4,15 @@ using UnityEngine;
 public enum Enum_EnemyType
 {
     Archer,
+    Chase,
+    Explosion,
+    Mimic,
+    Oak,
+    RunAway,
     Rush,
-    Chase, 
-    Mimic
+    Slime_Blue,
+    Slime_Red,
+    Spear,
+    Summoner,
+    Worm,
 }

@@ -1478,11 +1478,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_Enemy
   enemyPools:
-  - type: 2
+  - type: 1
     pool: {fileID: 1214272747}
   - type: 0
     pool: {fileID: 1034517596}
-  - type: 1
+  - type: 6
     pool: {fileID: 979544501}
 --- !u!4 &776241688
 Transform:
@@ -4751,9 +4751,7 @@ MonoBehaviour:
   m_player: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_fadeSpeed: 5
   m_mapGeneration: {fileID: 74042320}
-  m_createMap: {fileID: 74042321}
   m_playerSpriteRenderer: {fileID: 236226198}
-  m_wallHeight: 10
 --- !u!224 &1998194011 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6473270640396964738, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
