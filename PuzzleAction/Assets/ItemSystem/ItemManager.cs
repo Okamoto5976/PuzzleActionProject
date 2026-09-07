@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -154,11 +155,16 @@ public class ItemManager : MonoBehaviour
 
     }
     //アイテムのエフェクトを呼び出す
-
     public Item RandomShopItem()
     {
         int ShopIndex= Random.Range(0, ShopList.Count);
         return ShopList[ShopIndex];
+    }
+    public List<Item> GetShopItems()
+    {
+        return ItemList
+            .Where(x => x.Data.IsShopCompatible)
+            .ToList();
     }
     public void Update()
     {
