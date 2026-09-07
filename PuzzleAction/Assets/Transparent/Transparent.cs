@@ -8,9 +8,7 @@ public class Transparent : MonoBehaviour
     [SerializeField] private Vector3Asset m_player;
     [SerializeField] private float m_fadeSpeed = 5f;
     [SerializeField] private MapGeneration m_mapGeneration;
-    [SerializeField] private CreatMap m_createMap;
     [SerializeField] private SpriteRenderer m_playerSpriteRenderer;
-    [SerializeField] private float m_wallHeight;
 
     private List<Renderer> m_allWalls = new();
     private HashSet<Renderer> m_currentHits = new();
@@ -83,7 +81,7 @@ public class Transparent : MonoBehaviour
 
             float distanceToWall = Mathf.Abs(cameraZ - wallZ);
             float remainingWallShadow = Mathf.Abs(cameraShadow - distanceToWall);
-            float wallRatio = m_wallHeight / remainingWallShadow;
+            float wallRatio = m_mapGeneration.WallScale.y / remainingWallShadow;
             if (wallRatio <= cameraRatio) continue;
 
 

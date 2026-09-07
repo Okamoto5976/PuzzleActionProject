@@ -283,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntitySpawner
   m_player: {fileID: 721869216}
+  m_playerC: {fileID: 721869219}
   m_camera: {fileID: 1957982647}
   m_enemyPool: {fileID: 776241687}
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -457,6 +458,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+--- !u!212 &236226198 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3676967130022225026, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+  m_PrefabInstance: {fileID: 179334779}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &298762604
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4745,6 +4751,9 @@ MonoBehaviour:
   m_player: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_fadeSpeed: 5
   m_mapGeneration: {fileID: 74042320}
+  m_createMap: {fileID: 74042321}
+  m_playerSpriteRenderer: {fileID: 236226198}
+  m_wallHeight: 10
 --- !u!224 &1998194011 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6473270640396964738, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
