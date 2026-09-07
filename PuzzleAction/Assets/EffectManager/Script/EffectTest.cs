@@ -19,20 +19,20 @@ public class EffectTest : MonoBehaviour
 
     private void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            m_effect = new Effect
-            {
-                effectData = m_effectData,
-                effectPos = m_player.transform.position,
-                effectRot = Quaternion.identity
-            };
+        //if (Mouse.current.leftButton.wasPressedThisFrame)
+        //{
+        //    m_effect = new Effect
+        //    {
+        //        effectData = m_effectData,
+        //        effectPos = m_player.transform.position,
+        //        effectRot = Quaternion.identity
+        //    };
 
-            m_effectEventData.Raise(m_effect);
+        //    m_effectEventData.Raise(m_effect);
 
-            //m_effectManager.PlayEffect(
-            //    m_effectIndex,
-            //    Vector3.zero);
-        }
+        //    //m_effectManager.PlayEffect(
+        //    //    m_effectIndex,
+        //    //    Vector3.zero);
+        //}
     }
 }
