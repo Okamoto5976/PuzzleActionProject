@@ -128,7 +128,7 @@ public class InventorySystem : MonoBehaviour
         }
 
         // 空き無し
-        if (activeInventory.Count >= 30)
+        if (activeInventory.Count >= 15)
         {
             return false;
         }
@@ -143,7 +143,7 @@ public class InventorySystem : MonoBehaviour
     private bool AddPassiveItem(Item data, int count)
     {
         // Passiveはスタックしない
-        if (passiveInventory.Count >= 30)
+        if (passiveInventory.Count >= 5)
         {
             return false;
         }

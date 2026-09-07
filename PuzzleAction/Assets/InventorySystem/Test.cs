@@ -90,13 +90,22 @@ public class Test : MonoBehaviour
     }
     public void ShowItemInfo(Item data)
     {
-        Debug.Log(data);
+        Debug.Log("=== ShowItemInfo ===");
+        Debug.Log($"data = {data}");
+
+        if (data == null)
+        {
+            Debug.LogError("ShowItemInfoÇ…ìnÇ≥ÇÍÇΩdataÇ™NULLÅI");
+            return;
+        }
+
+        Debug.Log($"ñºëO = {data.ItemName}");
+        Debug.Log($"ê‡ñæ = {data.info}");
 
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
 
         m_nameText.text = data.ItemName;
-
         m_infoText.text = data.info;
     }
 
