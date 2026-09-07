@@ -12,6 +12,16 @@ public class T_Camera : MonoBehaviour
     [SerializeField] private float m_followSpeed = 0f; // 0 = ‘¦Žž’Ç]
 
 
+    public float Distance
+    {
+        get => m_distance;
+        set
+        {
+            m_distance = value;
+            CalculateOffset();
+        }
+    }
+
     private Vector3 m_offset;
 
     private void Awake()
@@ -24,7 +34,7 @@ public class T_Camera : MonoBehaviour
         CalculateOffset();
     }
 
-    public void CalculateOffset()
+    private void CalculateOffset()
     {
         m_offset = GetOffset(Mathf.Abs(m_distance), transform.rotation.eulerAngles.x);
     }
