@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EntitySpawner : MonoBehaviour
@@ -11,13 +10,17 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
-    [Space(10)]
-
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
+    [Space(10)]
+
     [Header("========== Trap ==========")]
-    [SerializeField] private ObjectConsolidation m_ocl; //è¡Ç∑ó\íË
+    [SerializeField] private Middleman_Trap m_trapPool;
+    [Header("========== TrapGacha ==========")]
+    [SerializeField] private GachaEngine m_trapGachaEngine;
+    [SerializeField] private TrapRarityTable m_trapRarityTable;
+    [SerializeField] private Entity m_trapOwner;   
     [Space(10)]
 
     [Header("========== Goal ==========")]
@@ -54,6 +57,7 @@ public class EntitySpawner : MonoBehaviour
         m_mapGeneration = mapGeneration;
 
         InitializeEnemyPools();
+        InitializeTrapPool();
 
         SpawnGoal();
 
@@ -67,6 +71,14 @@ public class EntitySpawner : MonoBehaviour
     {
         if (m_enemyPool == null) return;
         foreach(Transform child in m_enemyPool.transform)
+        {
+            child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
+        }
+    }
+    private void InitializeTrapPool()
+    {
+        if (m_trapPool == null) return;
+        foreach(Transform child in m_trapPool.transform)
         {
             child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
         }
@@ -188,7 +200,6 @@ public class EntitySpawner : MonoBehaviour
 
     private void SpawnTrap(RoomData room)
     {
-        Enum_TrapType trapType = GetRandomTrapType();
         List<Vector3> worldPositions = new();
         foreach (var pos in room.m_roomSizes)
         {
@@ -196,9 +207,58 @@ public class EntitySpawner : MonoBehaviour
 
             worldPositions.Add(m_mapGeneration.GridToWorld(pos));
         }
+        SpawnTrapByGacha(worldPositions);
+    }
 
-        Vector2 size = new Vector2(m_mapGeneration.FloorScale.x, m_mapGeneration.FloorScale.y);
-        m_ocl.DeployTrap(worldPositions, trapType, size);
+    private void SpawnTrapByGacha(List<Vector3> position)
+    {
+        if (m_trapPool == null)return;
+        if (m_trapGachaEngine == null)return;
+        if (m_trapRarityTable == null)return;
+
+        RarityEnumAsset rarity = m_trapGachaEngine.Collapse();
+        List<Enum_TrapType> candidates = m_trapRarityTable.GetTraps(rarity);
+
+        if (candidates.Count == 0)
+        {
+            Debug.LogWarning($"No Trap Found : {rarity.name}");
+            return;
+        }
+
+        Enum_TrapType selectedType = candidates[Random.Range(0, candidates.Count)];
+
+        //
+        foreach (Vector3 pos in position)
+        {
+
+            TrapBase trap = m_trapPool.GetTrap(selectedType);
+
+            if (trap == null)
+            {
+                Debug.LogWarning($"Trap Pool Missing : {selectedType}");
+                return;
+            }
+
+            trap.transform.position = pos;
+
+            BoxCollider box = trap.GetComponent<BoxCollider>();
+
+            if (box != null)
+            {
+                if (selectedType == Enum_TrapType.Gas || selectedType == Enum_TrapType.Swamp)
+                {
+                    box.size = new Vector3(m_mapGeneration.FloorScale.x, box.size.y, m_mapGeneration.FloorScale.z);
+                }
+                else
+                {
+                    box.size = Vector3.one;
+                }
+            }
+
+            trap.Init(m_trapOwner, Vector3.forward, 1);
+            trap.gameObject.SetActive(true);
+        }
+        Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");
     }
 
     private void SpawnGoal()

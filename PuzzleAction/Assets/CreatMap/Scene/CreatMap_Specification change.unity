@@ -1936,7 +1936,10 @@ MonoBehaviour:
   m_enemyPool: {fileID: 776241687}
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
   m_enemyRarityTable: {fileID: 11400000, guid: 8863df1261d216d40b7043a8e2841409, type: 2}
-  m_ocl: {fileID: 1248939889}
+  m_trapPool: {fileID: 435115610}
+  m_trapGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
+  m_trapRarityTable: {fileID: 11400000, guid: 6835daf62ca12e640b840a4847c4f5f3, type: 2}
+  m_trapOwner: {fileID: 721869219}
   m_goalPrefab: {fileID: 8961092045085098247, guid: 1822f757cecfb9a47aeaf4d1490964c9, type: 3}
   m_mainGameManager: {fileID: 1832269288191839481}
   m_shopPrefab: {fileID: 108477365344056919, guid: 238c23917d1b3c84f8ea84a10bd3f0c6, type: 3}
