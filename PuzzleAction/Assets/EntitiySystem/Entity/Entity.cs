@@ -70,20 +70,27 @@ abstract public class Entity : MonoBehaviour
     protected bool m_canMove;
     protected bool m_isStun;
     protected bool m_isInvincible;
+    protected bool m_isEvading;
+    protected Vector3 m_evadeDirection;
 
     public bool CanMove { get => m_canMove; }
     public bool IsStun { get => m_isStun; }
     public bool IsInvincible {  get => m_isInvincible; }
+    public bool IsEvading
+    {
+        get => m_isEvading;
+        set
+        {
+            m_isEvading = value;
+            m_evadeDirection = m_moveDir;
+        }
+    }
 
 
     //--------buff-------------------
     protected float m_stunTime;
 
     protected float m_invincibleTime;
-
-
-
-    //protected float m_currentMoveSpeed;
 
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
@@ -103,6 +110,8 @@ abstract public class Entity : MonoBehaviour
         m_inventory = GetComponent<Inventory>();
 
         SetState();
+
+        m_canMove = true;
 
         //m_currentMoveSpeed = Speed;
     }
@@ -159,12 +168,19 @@ abstract public class Entity : MonoBehaviour
     protected virtual void CallMove()
     {
         if (m_isStun) return;
-        if (m_canMove) return;
+        if (!m_canMove) return;
 
         //Entitystate = dead  do not move
         if (m_currentState == EntityState.Dead) return;
 
-        OnMove(m_moveDir);
+        if (m_isEvading)
+        {
+            OnEvade(m_evadeDirection);
+        }
+        else
+        {
+            OnMove(m_moveDir, Speed);
+        }
     }
 
     //call Update-------------------------------------------------------
@@ -184,7 +200,7 @@ abstract public class Entity : MonoBehaviour
     }
     //----------------------------------------------------------------------
 
-    private void OnMove(Vector3 dir)
+    private void OnMove(Vector3 dir, float baseSpeed)
     {
         //Vector3 velocity = new Vector3(dir.x * speed, m_rb.linearVelocity.y, dir.z * speed);
 
@@ -202,13 +218,21 @@ abstract public class Entity : MonoBehaviour
         float slowMultiplier = 1f - Slow * (1f - SlowRes);
         slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
 
-        float finalSpeed = Speed * slowMultiplier;
+        float finalSpeed = baseSpeed * slowMultiplier;
 
         m_velocity.x = dir.x * finalSpeed;
         m_velocity.z = dir.z * finalSpeed;
 
         m_rb.linearVelocity = m_velocity;
+    }
 
+
+    /// <summary>
+    /// written by so-
+    /// </summary>
+    private void OnEvade(Vector3 dir)
+    {
+        OnMove(dir, EvasionSpeed);
     }
 
     //EntityをTakeDamageに
