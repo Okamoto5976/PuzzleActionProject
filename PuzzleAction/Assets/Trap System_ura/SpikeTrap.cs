@@ -56,7 +56,7 @@ public class SpikeTrap : TrapBase
 
     protected override void OnHit()
     {
-        Debug.Log("針トラップが命中！");
+        
     }
 
 
