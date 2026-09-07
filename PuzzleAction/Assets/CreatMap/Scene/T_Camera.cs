@@ -23,6 +23,7 @@ public class T_Camera : MonoBehaviour
     }
 
     private Vector3 m_offset;
+    private float m_angle;
 
     private void Awake()
     {
@@ -36,7 +37,8 @@ public class T_Camera : MonoBehaviour
 
     private void CalculateOffset()
     {
-        m_offset = GetOffset(Mathf.Abs(m_distance), transform.rotation.eulerAngles.x);
+        m_angle = transform.rotation.eulerAngles.x;
+        m_offset = GetOffset(Mathf.Abs(m_distance), m_angle);
     }
     public void SetTarget(Transform target)
     {
@@ -57,6 +59,11 @@ public class T_Camera : MonoBehaviour
     private void DoCameraCorrection()
     {
         if (m_target == null) return;
+
+        if (transform.rotation.eulerAngles.x != m_angle)
+        {
+            CalculateOffset();
+        }
 
         Vector3 targetPos = m_target.position + m_offset;
 
