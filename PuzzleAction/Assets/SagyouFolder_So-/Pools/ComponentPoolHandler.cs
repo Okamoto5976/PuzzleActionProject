@@ -6,10 +6,10 @@ public class ComponentPoolHandler<T> : ObjectPoolManager where T : Component
 {
     protected List<T> m_objectComponent;
 
-    protected override void Awake()
+    public override void Initialize()
     {
         m_objectComponent = new();
-        base.Awake();
+        base.Initialize();
     }
 
     public T GetComponentFromPool()

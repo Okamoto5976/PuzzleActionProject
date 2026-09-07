@@ -12,6 +12,15 @@ public class Middleman_Trap : MonoBehaviour
 
     [SerializeField] private List<TrapDict> trapPools;
 
+    public void InitializePool()
+    {
+        foreach (var enemyPool in trapPools)
+        {
+            enemyPool.pool.Initialize();
+        }
+    }
+
+
     public TrapBase GetTrap(Enum_TrapType trapType)
     {
         var pool = trapPools.Find(x => x.type == trapType).pool;

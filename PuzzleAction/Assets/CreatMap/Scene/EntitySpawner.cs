@@ -73,18 +73,12 @@ public class EntitySpawner : MonoBehaviour
     private void InitializeEnemyPools()
     {
         if (m_enemyPool == null) return;
-        foreach(Transform child in m_enemyPool.transform)
-        {
-            child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
-        }
+        m_enemyPool.InitializePool();
     }
     private void InitializeTrapPool()
     {
         if (m_trapPool == null) return;
-        foreach(Transform child in m_trapPool.transform)
-        {
-            child.gameObject.SendMessage("Awake", SendMessageOptions.DontRequireReceiver);
-        }
+        m_trapPool.InitializePool();
     }
 
     public Vector2Int GetStartPos()

@@ -26,14 +26,10 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     public bool IsRunning => m_state == Enum_RushState.Rush;
     public Vector3 CurrentDirection => m_dir;
 
-    private void Awake()
+    public void Initialized(EnemyController controller)
     {
         m_lineRenderer = GetComponent<LineRenderer>();
         m_lineRenderer.enabled = false;
-    }
-
-    public void Initialized(EnemyController controller)
-    {
         m_controller = controller;
         StartPrepare();
     }
@@ -62,6 +58,11 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
                 UpdateRush();
                 break;
         }
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     // ====================Prepare

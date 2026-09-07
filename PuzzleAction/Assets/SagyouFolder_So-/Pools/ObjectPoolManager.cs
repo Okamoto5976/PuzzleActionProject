@@ -14,7 +14,7 @@ public class ObjectPoolManager : MonoBehaviour
 
     private Transform m_transform;
 
-    protected virtual void Awake()
+    public virtual void Initialize()
     {
         m_objectPool = new();
         m_inUseQue = new();
