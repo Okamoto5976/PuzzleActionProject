@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8572210406886215595}
   - component: {fileID: 7162781306950593183}
-  - component: {fileID: 9117976298007419242}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -46,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
   m_currentLevel: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
-  m_temporaryItemManager: {fileID: 9117976298007419242}
+  m_itemManager: {fileID: 0}
   m_onGenerateShopInventories: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
   m_shopCount: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
   m_shopIdEvent: {fileID: 11400000, guid: 5eebf7a62372b904b91ac504c2d6f6e9, type: 2}
@@ -59,31 +58,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_moneyText: {fileID: 0}
-  m_moneyDataSO: {fileID: 11400000, guid: 23497dd6b185c9a4cbceb0b78cf42061, type: 2}
   m_infoTextPrefab: {fileID: 0}
   m_inventorySystem: {fileID: 0}
   m_shopInventories: []
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1
---- !u!114 &9117976298007419242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3893617370082607165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2806fc0b786c534ea3ddffc9e3f6ca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TemporaryItemManager
-  m_onGenerateShopInventory: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
-  m_masterItemDatas:
-  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
-  - {fileID: 11400000, guid: 70904b00cfaf6c749bde26b085d77806, type: 2}
-  - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
-  - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
-  - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
-  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
-  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}

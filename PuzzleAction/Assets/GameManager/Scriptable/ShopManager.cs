@@ -31,7 +31,7 @@ public class ShopManager : MonoBehaviour
     //private List<Data> t_itemDataList = new();
 
     [SerializeField] private IntRunTime m_currentLevel;
-    [SerializeField] private TemporaryItemManager m_temporaryItemManager;   
+    [SerializeField] private ItemManager m_itemManager;   
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;
     [SerializeField] private IntEventSO m_shopIdEvent;
@@ -111,7 +111,7 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     private void InitializeSellableItems()
     {
-        var items = m_temporaryItemManager.GetShopItems();
+        var items = m_itemManager.GetShopItems();
         m_activeItems = items.Where(x => x.ItemType == ItemType.Active).ToList();
         m_passiveItems = items.Where(x => x.ItemType == ItemType.Passive).ToList();
 
