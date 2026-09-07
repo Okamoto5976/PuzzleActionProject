@@ -5,7 +5,7 @@ public class Poolinstallationpulling : MonoBehaviour
 {
     [SerializeField] private Middleman_Enemy m_pool;
 
-    [SerializeField] private List<Enum_EnemyType> m_enemyTypes = new()
+    private List<Enum_EnemyType> m_enemyTypes = new()
     {
        Enum_EnemyType.Archer,
        Enum_EnemyType.Chase,
