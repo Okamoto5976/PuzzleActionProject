@@ -312,6 +312,9 @@ MonoBehaviour:
   m_hotberIndex: 0
   m_playerDirObject: {fileID: 7214972691664052804}
   m_reticle: {fileID: 0}
+  m_interactLayer:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
   m_ObjectHideFlags: 0
