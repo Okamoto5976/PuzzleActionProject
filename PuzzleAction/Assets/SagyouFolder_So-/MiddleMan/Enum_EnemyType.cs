@@ -6,5 +6,9 @@ public enum Enum_EnemyType
     Archer,
     Rush,
     Chase, 
-    Mimic
+    Mimic, 
+    Slime_Blue, 
+    Slime_Red, 
+    Oak, 
+    Explosion
 }
