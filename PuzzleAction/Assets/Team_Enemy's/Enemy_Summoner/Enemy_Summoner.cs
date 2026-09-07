@@ -22,14 +22,13 @@ public class Enemy_Summoner : MonoBehaviour, IEnemyBehaviour
             Vector3 Radise = transform.position;
             float radius = Random.Range(0, m_enemyController.AttackRange);
             float angle =  Random.Range(0, 360);
-            //Vector3 Summon_pos =  angle * radius;
+            Vector3 Summon_pos = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
             if (m_enemyController.AttackRange > radius)
             {
                 //壁がある場合
                 //エネミーを召喚する処理
-
-
-
+                gameObject.transform.position = Summon_pos;
+                gameObject.SetActive(true);
             }
 
             return;
