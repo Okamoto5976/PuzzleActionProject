@@ -12,6 +12,10 @@ public class RoomPieceManager : MonoBehaviour
     private Queue<RoomPieceParent> m_pieces = new();
 
     [SerializeField] private int m_pieceAmount = 20;
+
+    //use random type when create piece
+    [SerializeField] private List<AreaType> m_randomAreaTypes = new();
+
     //[SerializeField] private int m_poolPieceAmount = 100;
 
     //[SerializeField] private int m_normalRoomGenerate = 40;
@@ -32,6 +36,7 @@ public class RoomPieceManager : MonoBehaviour
 
         if(GameManager.Instance.Level % 5 == 0)
         {
+            Debug.Log("a");
             Room bossroom = CreateBossRoom();
             RoomPieceParent bossPiece = GenerateBossRoomObject(bossroom);
         }
@@ -168,7 +173,8 @@ public class RoomPieceManager : MonoBehaviour
         roomPieceParent.SetRoom(room);
 
         //SetAreatype
-        AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
+        //AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
+        AreaType type = m_randomAreaTypes[Random.Range(0, m_randomAreaTypes.Count)];
 
         roomPieceParent.SetAreaType(type);
         roomPieceParent.Init(this);
