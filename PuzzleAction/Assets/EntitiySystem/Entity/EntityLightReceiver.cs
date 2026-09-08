@@ -17,27 +17,27 @@ public class EntityLightReceiver : MonoBehaviour
         if (m_testLight == null)
             return;
 
-        // ŒõŒ¹ ¨ Entity ‚Ì•ûŒü
-        Vector3 lightDirection =
-            (transform.position - m_testLight.transform.position).normalized;
+        //// ŒõŒ¹ ¨ Entity ‚Ì•ûŒü
+        //Vector3 lightDirection =
+        //    (transform.position - m_testLight.transform.position).normalized;
 
-        //ŒõŒ¹‚ÌˆÊ’u
-        Vector3 pos = m_testLight.transform.position;
+        ////ŒõŒ¹‚ÌˆÊ’u
+        //Vector3 pos = m_testLight.transform.position;
 
-        // ŒõŒ¹‚Ü‚Å‚Ì‹——£
-        float distance =
-            Vector3.Distance(transform.position, m_testLight.transform.position);
+        //// ŒõŒ¹‚Ü‚Å‚Ì‹——£
+        //float distance =
+        //    Vector3.Distance(transform.position, m_testLight.transform.position);
 
-        // Light‚Ì”ÍˆÍ‚É‚æ‚éŒ¸Š
-        float distanceFactor =
-            1f - Mathf.Clamp01(distance / m_testLight.range);
+        //// Light‚Ì”ÍˆÍ‚É‚æ‚éŒ¸Š
+        //float distanceFactor =
+        //    1f - Mathf.Clamp01(distance / m_testLight.range);
 
         // ShaderGraph‚Ö“n‚·
         m_renderer.GetPropertyBlock(m_propertyBlock);
 
         m_propertyBlock.SetVector(
             "_LightPosition",
-            pos
+            m_testLight.transform.position
         );
 
         m_propertyBlock.SetColor(
@@ -47,7 +47,12 @@ public class EntityLightReceiver : MonoBehaviour
 
         m_propertyBlock.SetFloat(
             "_Intensity",
-            m_testLight.intensity * distanceFactor
+            m_testLight.intensity
+        );
+
+        m_propertyBlock.SetFloat(
+            "_LightRange",
+            m_testLight.range
         );
 
         m_renderer.SetPropertyBlock(m_propertyBlock);
