@@ -314,7 +314,7 @@ MonoBehaviour:
   m_reticle: {fileID: 0}
   m_interactLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,4 +6,9 @@ public enum BuffID
     None,//Item(not Doubleèdï°), not buff icon, not seconds buff
     Speed,
     Slow,
+    Strength,
+    Defense,
+    CriticalRate,
+    CriticalDamage,
+    BreakRate,
 }

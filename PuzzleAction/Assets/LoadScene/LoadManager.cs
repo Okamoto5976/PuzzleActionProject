@@ -42,7 +42,7 @@ public class LoadManager : MonoBehaviour
         {
             if (operation.progress >= 0.9f)
             {
-                yield return new WaitForSeconds(3f);
+                //yield return new WaitForSeconds(3f);
                 operation.allowSceneActivation = true;
             }
             yield return null;

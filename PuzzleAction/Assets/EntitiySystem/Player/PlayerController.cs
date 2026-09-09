@@ -4,17 +4,6 @@ using System.Collections.Generic;
 
 public class PlayerController : Entity
 {
-    public enum Passive
-    {
-        PriceDown,
-
-    }
-
-    public class PassiveModifier
-    {
-        public Passive m_passive;
-    }
-
     [Header("InputSystem")]
     private InputProvider m_input;
 
@@ -39,7 +28,7 @@ public class PlayerController : Entity
     [SerializeField] private float m_evasionDuration = 0.2f;
     private float m_evasionTimer;
 
-    private List<PassiveModifier> m_modifiers = new();
+    //private List<PassiveModifier> m_modifiers = new();
 
     [Header("InventorySystem")]
     [SerializeField] private InventorySystem m_inventorySystem;
