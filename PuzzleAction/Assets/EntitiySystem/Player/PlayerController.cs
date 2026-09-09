@@ -26,6 +26,7 @@ public class PlayerController : Entity
     private bool m_isPrevious;
     private bool m_isNext;
     private bool m_isInteract;
+    private bool m_isGetDropItem;
 
     //[SerializeField] private InputActionReference m_moveAction;
     //[SerializeField] private InputActionReference m_evasionAction;
@@ -69,8 +70,9 @@ public class PlayerController : Entity
     //InteractSystem
     private InteractSystem m_interactSystem;
     [SerializeField] private LayerMask m_interactLayer;
-
-
+    [SerializeField] private LayerMask m_itemLayer;
+    [SerializeField] private TMPro.TMP_Text m_itemDescriptionText;
+    [SerializeField] private TMPro.TMP_Text m_messageText;
     protected override void Awake()
     {
         base.Awake();
@@ -119,6 +121,7 @@ public class PlayerController : Entity
         m_isPrevious = m_input.IsPrevious;
         m_isNext = m_input.IsNext;
         m_isInteract = m_input.IsInteract;
+        m_isGetDropItem = m_input.IsGetDropItem;
 
         if(m_isInteract)
         {
@@ -149,8 +152,14 @@ public class PlayerController : Entity
             OnUseItemRelease();
         }
 
+        if(m_isGetDropItem)
+        {
+            OnuseItemGet();
+        }
+
         InputHotber();
 
+        SearchItem();
     }
 
     /// <summary>
@@ -307,6 +316,25 @@ public class PlayerController : Entity
         }
     }
 
+    private void OnuseItemGet()
+    {
+        //Debug.Log("GetItem");
+        Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
+        
+        foreach(Collider hit in hits)
+        {
+            DropItem drop =hit.GetComponent<DropItem>();
+
+            if (drop == null) continue;
+
+            if(ReceiveItem(drop.ItemData))
+            {
+                drop.ItemGet();
+                break;
+            }
+        }
+    }
+
     private void OnReticle()
     {
         //Debug.Log("reticle");
@@ -346,5 +374,40 @@ public class PlayerController : Entity
     private void OnInteract()
     {
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
+    }
+    public virtual bool ReceiveItem(Item item)
+    {
+        if (item == null) return false;
+        if (m_inventorySystem == null) return false;
+
+        bool success = m_inventorySystem.AddItem(item, 1);
+
+        if (!success)
+        {
+            m_messageText.text = "ƒCƒ“ƒxƒ“ƒgƒŠ‚ª‚¢‚Á‚Ï‚¢‚Å‚·";
+        }
+        else
+        {
+            m_messageText.text = "";
+        }
+
+        return success;
+    }
+    private void SearchItem()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemLayer))
+        {
+            DropItem drop = hit.collider.GetComponent<DropItem>();
+
+            if (drop != null)
+            {
+                m_itemDescriptionText.text = drop.ItemData.info;
+                return;
+            }
+        }
+
+        m_itemDescriptionText.text = "";
     }
 }

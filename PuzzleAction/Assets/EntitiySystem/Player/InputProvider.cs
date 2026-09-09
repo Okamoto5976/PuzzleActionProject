@@ -13,6 +13,7 @@ public class InputProvider
     private bool m_isPrevious;
     private bool m_isNext;
     private bool m_isInteract;
+    private bool m_isGetDropItem;
 
     public InputProvider()//newÇ≥ÇÍÇΩÇ∆Ç´èâä˙âª
     {
@@ -74,6 +75,11 @@ public class InputProvider
     private void OnInteract(InputAction.CallbackContext context)
     {
         m_isInteract = true;
+    }
+
+    private void OnGetDropItem(InputAction.CallbackContext context)
+    {
+        m_isGetDropItem = true;
     }
 
     public Vector2 Move
@@ -156,4 +162,16 @@ public class InputProvider
             return result;
         }
     }
+
+    public bool IsGetDropItem
+    {
+        get
+        {
+            bool result = m_isGetDropItem;
+            m_isGetDropItem = false;
+
+            return result;
+        }
+    }
+
 }

@@ -64,7 +64,7 @@ abstract public class Entity : MonoBehaviour
 
     [SerializeField] protected TeamType m_team;
     public TeamType Team => m_team;
-
+    
     [SerializeField] protected EntityData m_data;
 
     protected bool m_canMove;
@@ -306,13 +306,13 @@ abstract public class Entity : MonoBehaviour
         m_rb.AddForce(direction.normalized*power,ForceMode.Impulse);
     }
 
-    public virtual bool ReceiveItem(Item item)
+    /*public virtual bool ReceiveItem(Item item)
     {
         if (item == null) return false;
         if(m_inventory==null) return false;
 
         return m_inventory.AddItem(item.ID);
-    }
+    }*/
 
 }
 //public bool IsEnemy(Entity other)
