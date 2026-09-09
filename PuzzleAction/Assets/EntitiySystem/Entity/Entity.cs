@@ -178,10 +178,6 @@ abstract public class Entity : MonoBehaviour
         m_buffSystem.AddBuff(modifier, buffID, duration);
     }
 
-    public void AddPassive()
-    {
-
-    }
 
     //call FixidUpdate----------------------------------------------------
     protected virtual void CallMove()

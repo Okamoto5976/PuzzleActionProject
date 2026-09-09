@@ -1,54 +1,100 @@
+using Mono.Cecil;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuffItem", menuName = "Scriptable Objects/Datas/BuffItem")]
 
 public class BuffItem : Item 
 {
-    
-    public enum BuffType
+
+    //public enum BuffType
+    //{
+    //    AttackUp, 
+    //    DefenseUp, 
+    //    SpeedUp,
+    //    AttackDown, 
+    //    DefenseDown, 
+    //    SpeedDown, 
+    //}
+
+    [System.Serializable]
+    public class BuffItemClass
     {
-        AttackUp, 
-        DefenseUp, 
-        SpeedUp,
-        AttackDown, 
-        DefenseDown, 
-        SpeedDown, 
+        public float m_value;
+        public StatusType m_statusType;//what status? HP, Strength
+        public ModifierType m_modifierType;//what mod? Add, Multiply
+
+        [Header("----Active Buff Setting ----")]
+        public float m_duration;
+        public BuffID m_buffID;
+
+
     }
 
     [Header("Buff Reference")]
-    
-    [SerializeField] private float m_buffDuration;
-    [SerializeField] private BuffID m_buffID;
-    [SerializeField] private BuffType m_buffType;
     [SerializeField] private ItemType m_buffEffectType;
 
-    [SerializeField] private StatusType m_statusType;
-    [SerializeField] private ModifierType m_modifierType;
+    [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
+
+    //[SerializeField] private BuffType m_buffType;
+
 
     //public List<Item> m_buffData = new List<Item>();
 
-    public override void Activation(float value, ItemRecieveData data)
+    //passive use----------------
+    private List<StatusModifier> m_modifiers = new();
+
+    [SerializeField] private Passive m_passiveType;
+
+    public override void Activation(ItemRecieveData data)
     {
         if (m_buffEffectType == ItemType.Active)
         {
 
-            if (m_buffDuration <= 0)
+            foreach(var buff in m_buffItemClass)
             {
+                if (buff.m_duration <= 0) continue;
 
-                return;
+                StatusModifier modifier = new StatusModifier()
+                {
+                    m_statType = buff.m_statusType,
+                    m_value = buff.m_value,
+                    m_modType = buff.m_modifierType
+                };
+
+                data.entity.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+
             }
 
-            //m_buffData.Add(this);
-            StatusModifier modifier = new StatusModifier()
-            {
-                m_statType = m_statusType,
-                m_value = value,
-                m_modType = m_modifierType
-            };
-
-            Debug.Log("buff add to entity");
-            data.entity.AddBuff(modifier, m_buffID, m_buffDuration);
+            //Debug.Log("buff add to entity");
         }
+    }
+
+    public override void AddPassive(PlayerController player)
+    {
+        
+
+        if(m_buffEffectType == ItemType.Passive)
+        {
+            foreach (var buff in m_buffItemClass)
+            {
+                StatusModifier modifier = new StatusModifier()
+                {
+                    m_statType = buff.m_statusType,
+                    m_value = buff.m_value,
+                    m_modType = buff.m_modifierType
+                };
+
+                m_modifiers.Add(modifier);
+
+            }
+
+            player.AddPassive(m_modifiers, m_passiveType);
+        }
+    }
+
+    public override void RemovePassive(PlayerController player)
+    {
+        player.RemovePassive(m_passiveType);
     }
 }
 

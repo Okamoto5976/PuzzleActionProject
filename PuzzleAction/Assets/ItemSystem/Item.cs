@@ -25,7 +25,7 @@ abstract public class Item : ScriptableObject
         Other
     }
 
-    [SerializeField] private float m_value;
+    //[SerializeField] private float m_value;
     [SerializeField] private ItemEffectType m_type;
     [SerializeField]protected ItemData m_data;
     //private dropPool pool;
@@ -49,7 +49,7 @@ abstract public class Item : ScriptableObject
 
     public void RecieveData(ItemRecieveData data)
     {
-        Activation(m_value, data);
+        Activation(data);
     }
 
     public virtual void Press(ItemRecieveData data) { }
@@ -59,7 +59,10 @@ abstract public class Item : ScriptableObject
     public virtual void Release(ItemRecieveData data) { }
 
 
-    public virtual void Activation(float value, ItemRecieveData data) { }
+    public virtual void Activation(ItemRecieveData data) { }
+
+    //passive effect, when use passive from inventory
+    public virtual void AddPassive(PlayerController player) { }
     
- 
+    public virtual void RemovePassive(PlayerController player) { }
 }

@@ -2,8 +2,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SpecialItem", menuName = "Scriptable Objects/Datas/TrapItem")]
 public class TrapItem : Item
 {
-    [SerializeField] private float trapValue;
-
     //poolからもらったobj入れる 変数
     public TrapBase TrapPrefab;
 
@@ -16,7 +14,7 @@ public class TrapItem : Item
         TrapPrefab = obj;
     }
 
-    public override void Activation(float value, ItemRecieveData data)
+    public override void Activation(ItemRecieveData data)
     {
         //data posにobjを置く dataに向きも入れる
         //objにEntity(Trap)がついている　Enityに dataのbaseValueを送る（コメントにする

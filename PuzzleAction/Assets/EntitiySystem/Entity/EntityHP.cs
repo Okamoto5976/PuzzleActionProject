@@ -128,7 +128,7 @@ abstract public class EntityHP : MonoBehaviour
 
     public void Heal(float amount)
     {
-        //m_currentHP = Mathf.Min(m_currentHP + amount, m_entity.HP);
+        m_currentHP = Mathf.Min(m_currentHP + Mathf.FloorToInt(amount), (int)m_entity.HP);
     }
 
     public void TakeBuffDamage(StatusType type, float damage)

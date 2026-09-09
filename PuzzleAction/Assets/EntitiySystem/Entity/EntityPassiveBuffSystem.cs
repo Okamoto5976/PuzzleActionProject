@@ -3,6 +3,7 @@ using UnityEngine;
 
 public enum Passive
 {
+    None,
     PriceDown,
     Glasses,
     SpeedShoes,

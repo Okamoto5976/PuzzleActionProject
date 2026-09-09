@@ -2252,7 +2252,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
   - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
   - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
-  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
+  - {fileID: 11400000, guid: 81dca3f2ebcbc914c9af6ffff21ffb8a, type: 2}
 --- !u!4 &1251004858
 Transform:
   m_ObjectHideFlags: 0
@@ -5136,7 +5136,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0450f360bb67dd84ba60c1e76e91c665, type: 2}
   - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
   - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
-  - {fileID: 11400000, guid: fbea8a8fcbd92a1448a939379c8b1447, type: 2}
+  - {fileID: 11400000, guid: 81dca3f2ebcbc914c9af6ffff21ffb8a, type: 2}
   - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
   DropRateList: []
   PlayerItems: []

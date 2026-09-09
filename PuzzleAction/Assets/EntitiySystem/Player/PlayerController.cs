@@ -65,6 +65,8 @@ public class PlayerController : Entity
     protected override void Awake()
     {
         base.Awake();
+
+        m_passiveSystem = GetComponent<EntityPassiveBuffSystem>();
     }
 
 
@@ -340,4 +342,13 @@ public class PlayerController : Entity
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
 
+    public void AddPassive(List<StatusModifier> modifiers, Passive type)
+    {
+        m_passiveSystem.AddPassive(modifiers, type);
+    }
+
+    public void RemovePassive(Passive type)
+    {
+        m_passiveSystem.RemoveBuff(type);
+    }
 }

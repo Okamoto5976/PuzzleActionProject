@@ -20,6 +20,7 @@ public enum ItemUseType
     Instant,
     Arrow,
     Set,
+    Passive
 }
 
 

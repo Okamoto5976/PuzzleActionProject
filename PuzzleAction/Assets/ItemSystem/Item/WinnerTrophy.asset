@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85161e8912546ac4b80e1aafaa5e44ec, type: 3}
+  m_Name: WinnerTrophy
+  m_EditorClassIdentifier: Assembly-CSharp::BuffItem
+  m_type: 2
+  m_data:
+    itemID: 7
+    itemName: WinnerTrophy
+    itemIcon: {fileID: 21300000, guid: ecde9c3e3848d764ebdff3165ee1b9d0, type: 3}
+    description: All Status UP
+    maxStack: 1
+    dropRate: 0
+    itemType: 1
+    m_itemUseType: 3
+    price: 100
+    Type: 0
+    itemGrade: 0
+  m_buffEffectType: 1
+  m_buffItemClass:
+  - m_value: 20
+    m_statusType: 1
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 20
+    m_statusType: 4
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 20
+    m_statusType: 3
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 100
+    m_statusType: 0
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 10
+    m_statusType: 6
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 0.1
+    m_statusType: 7
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 50
+    m_statusType: 9
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  m_passiveType: 5

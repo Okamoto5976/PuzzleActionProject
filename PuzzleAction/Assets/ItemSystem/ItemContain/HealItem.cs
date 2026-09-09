@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HealItem : Item
 {
-    [SerializeField] private float HealingInterval;
+    [SerializeField] private float m_value;
     //[SerializeField] private float HealTime;
 
 
-    public override void Activation(float value, ItemRecieveData data)
+    public override void Activation(ItemRecieveData data)
     {
 
-        data.entity.HealHP(value);
+        data.entity.HealHP(m_value);
 
 
         //if (HealTime > 0)
@@ -34,7 +34,7 @@ public class HealItem : Item
      
         //回復処理
 
-        Debug.Log($"使用してHPが{value}回復した");
+        //Debug.Log($"使用してHPが{m_value}回復した");
     }
 
    

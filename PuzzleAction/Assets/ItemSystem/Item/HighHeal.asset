@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f23a95e35638f4dae557af1b5fd769, type: 3}
   m_Name: HighHeal
   m_EditorClassIdentifier: Assembly-CSharp::HealItem
-  m_value: 0
   m_type: 0
   m_data:
     itemID: 5
@@ -21,9 +20,9 @@ MonoBehaviour:
     description: 
     maxStack: 99
     dropRate: 0
-    itemGrade: 0
     itemType: 0
+    m_itemUseType: 0
     price: 100
     Type: 0
-  HealingInterval: 0
-  HealTime: 0
+    itemGrade: 0
+  m_value: 50
