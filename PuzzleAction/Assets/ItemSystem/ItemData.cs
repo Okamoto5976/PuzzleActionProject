@@ -6,13 +6,13 @@ public enum Type
     EnemyItem
 }
 
-public enum Grade
-{
-    Comon,
-    UnComon,
-    Rara,
-    Legend
-}
+//public enum Grade
+//{
+//    Comon,
+//    UnComon,
+//    Rara,
+//    Legend
+//}
 
 //when player use item, check this type. if arrow , player pull the bow animation
 public enum ItemUseType
@@ -37,7 +37,7 @@ public class ItemData
     [SerializeField] private ItemUseType m_itemUseType;
     [SerializeField, Min(0)] private int price;
     [SerializeField] private Type Type;
-    [SerializeField] private Grade itemGrade;
+    //[SerializeField] private Grade itemGrade;
 
     public int ItemID { get => itemID; }
     public string ItemName { get => itemName; }
@@ -52,7 +52,7 @@ public class ItemData
     public bool IsShopCompatible => price > 0;
 
     public Type type { get => Type; }
-    public Grade ItemGrade { get => itemGrade; }
+    //public Grade ItemGrade { get => itemGrade; }
 }
 
 

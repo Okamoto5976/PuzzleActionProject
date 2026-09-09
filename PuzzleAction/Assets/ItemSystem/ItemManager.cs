@@ -10,6 +10,13 @@ public class ItemManager : MonoBehaviour
     public List<Item> ShopList = new();
     public List<Item> ItemList = new();
     public List<float> DropRateList = new();
+    //public struct ItemWithGrade
+    //{
+    //    public Item item;
+    //    public Grade grade;
+    //}
+    //ItemとGradeのList
+    //public List<ItemWithGrade> ItemWithGradeList = new();
     //プレイヤーが使えるアイテム
     public List<Item> PlayerItems = new();
     //敵専用アイテム
@@ -22,6 +29,7 @@ public class ItemManager : MonoBehaviour
     [SerializeField]private DropItem m_dropItem;
     [SerializeField] private List<DropItem> DropItems = new();
 
+    //GachaEngine.RarityWithWeight
     //Listの中からIDと同じアイテムを探す
     public Item GetItem(int id)
     {
@@ -74,22 +82,22 @@ public class ItemManager : MonoBehaviour
 
 
 
-    public void DropItemSetData(Vector3 pos)
+    public void DropItemSetData(Vector3 pos, ItemData data)
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
         //Data data = DrowItem(PlayerItems)
-        int index = Random.Range(0, PlayerItems.Count);
-        Item data = PlayerItems[index];
+        //int index = Random.Range(0, PlayerItems.Count);
+        //Item data = PlayerItems[index];
         //int dropIndex = Random.Range(0, DropItems.Count);
         //DropItem m_dropItem = DropItems[dropIndex];
-        m_dropItem.Initialize(data);
+        //m_dropItem.Initialize(data);
         //set pos DropItem Position
         m_dropItem.gameObject.transform.position = pos;
 
         foreach (var obj in DropItems)
         {
-            if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
+            //if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
             {
                 DropItem m_dropIndex = obj;
                 m_dropIndex.Initialize(data);
@@ -104,48 +112,59 @@ public class ItemManager : MonoBehaviour
 
     [Range(0, 100)] public float Comon = 50f;
     [Range(0, 100)] public float UnComon = 30f;
-    [Range(0, 100)] public float Rara = 15f;
+    [Range(0, 100)] public float Rare = 15f;
     [Range(0, 100)] public float Legend = 5f;
 
-    public Item DrowItem(List<Item> items)
-    {
-        Grade grade = GetRandomRarity();
-        List<Item> candidates = items.FindAll(Data => Data.grade == grade);
+    //仮-----------------------------------
+    List<ItemData> itemDatas = new();
+    //-------------------------------------
 
-        if (candidates.Count == 0)
-        {
-            Debug.Log($"{grade}のアイテムがありません。再抽選します。");
-            return DrowItem(items);
-        }
+    // Rarityの受け取り方法??
 
-        int index = Random.Range(0, candidates.Count);
-        //candidates.Clear();
-        return candidates[index];
-    }
+    //public Item DrowItem(GachaEngine.RarityWithWeight.Weight rarity)
+    //{
+    //    List<Item> candidates = itemDatas.FindAll(Data => rarity == rarity);
 
-    private Grade GetRandomRarity()
-    {
+    //    if (candidates.Count == 0)
+    //    {
+    //        Debug.Log($"{rarity}のアイテムがありません。");
+    //        return null;
+    //    }
 
-        float rand = Random.Range(0f, 100f);
+    //    int index = Random.Range(0, candidates.Count);
+    //    //candidates.Clear();
+    //    return candidates[index];
+    //}
 
-        if (rand < Comon)
-            return Grade.Comon;
 
-        rand -= Comon;
 
-        if (rand < UnComon)
-            return Grade.UnComon;
+    
 
-        if (rand < Rara)
-            return Grade.Rara;
+    //private Grade GetRandomRarity()
+    //{
 
-        rand -= Rara;
+    //    float rand = Random.Range(0f, 100f);
 
-        if (rand < Legend)
-            return Grade.Legend;
+    //    if (rand < Comon)
+    //        return Grade.Comon;
 
-        return Grade.Legend;
-    }
+    //    rand -= Comon;
+
+    //    if (rand < UnComon)
+    //        return Grade.UnComon;
+
+    //    rand -= UnComon;
+
+    //    if (rand < Rare)
+    //        return Grade.Rara;
+
+    //    rand -= Rare;
+
+    //    if (rand < Legend)
+    //        return Grade.Legend;
+
+    //    return Grade.Legend;
+    //}
 
     //ランダムにアイテムを渡す
     public Item RandomGetItem()
