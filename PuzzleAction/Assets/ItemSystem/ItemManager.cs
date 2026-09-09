@@ -72,6 +72,16 @@ public class ItemManager : MonoBehaviour
         item.RecieveData(data);
     }
 
+    public void OnAddPassive(Item item, PlayerController player)
+    {
+        item.AddPassive(player);
+    }
+
+    public void OnRemovePassive(Item item, PlayerController player)
+    {
+        item.RemovePassive(player);
+    }
+
 
 
     public void DropItemSetData(Vector3 pos)

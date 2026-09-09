@@ -21,7 +21,7 @@ public class PassiveStatus
 
 public class PassiveBuffInstance
 {
-    public List<PassiveStatus> m_modifier;
+    public List<PassiveStatus> m_modifier = new();
 
     public Passive m_passiveType;
 }

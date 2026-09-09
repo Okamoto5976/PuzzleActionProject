@@ -3568,6 +3568,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5562016793495321260, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
+      propertyPath: m_player
+      value: 
+      objectReference: {fileID: 721869219}
+    - target: {fileID: 5562016793495321260, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: itemManager
       value: 
       objectReference: {fileID: 681700649319570257}
@@ -3618,7 +3622,7 @@ PrefabInstance:
     - target: {fileID: 5771175436741231180, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1081129786}
     - target: {fileID: 5771175436741231180, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnRemoveItem
