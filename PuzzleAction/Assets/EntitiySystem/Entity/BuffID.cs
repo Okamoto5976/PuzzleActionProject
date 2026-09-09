@@ -14,6 +14,7 @@ public enum BuffID
     Poison,
     Gas,
     Burn,
+    Regenerate,
     Stun,
     Invincible
 }

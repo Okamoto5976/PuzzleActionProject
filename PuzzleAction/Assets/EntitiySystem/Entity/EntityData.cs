@@ -20,6 +20,7 @@ public enum StatusType
     Poison,
     Gas,
     Burn,
+    Regenerate,
     Stun,
     Invincible,
 }

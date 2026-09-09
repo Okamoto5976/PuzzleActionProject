@@ -26,7 +26,7 @@ public class DamageParticleController : MonoBehaviour
         {
             var randomInt = Random.Range(0, (int)maxValue);
             Debug.Log($"Firing Particle with value {randomInt}");
-            DoDamageParticle((uint)randomInt);
+            DoDamageParticle((uint)randomInt, DamageParticleType.Normal);
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -51,10 +51,39 @@ public class DamageParticleController : MonoBehaviour
         }
     }
 
-    public void DoDamageParticle(uint damage)
+    public void DoDamageParticle(uint damage, DamageParticleType type)
     {
         var customData = _particleSystems[_currentParticleSystemIndex].customData;
         customData.enabled = true;
+
+        var main = _particleSystems[_currentParticleSystemIndex].main;
+
+        switch (type)
+        { 
+            case DamageParticleType.Normal:
+                main.startColor = Color.red;
+                break;
+            case DamageParticleType.Critical:
+                main.startColor = Color.yellow;
+                break;
+            case DamageParticleType.Break:
+                main.startColor = Color.darkRed;
+                break;
+            case DamageParticleType.Gas:
+                main.startColor = Color.purple;
+                break;
+            case DamageParticleType.Poison:
+                main.startColor = Color.darkGreen;
+                break;
+            case DamageParticleType.Burn:
+                main.startColor = Color.orange;
+                break;
+            case DamageParticleType.Heal:
+                main.startColor = Color.lightGreen;
+                break;
+        }
+
+        
 
         int len = damage.ToString().Length;
         ParticleSystem.MinMaxCurve lengthData = new(len);

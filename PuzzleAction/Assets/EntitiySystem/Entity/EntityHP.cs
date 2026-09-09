@@ -72,6 +72,7 @@ abstract public class EntityHP : MonoBehaviour
         if(isBreak)
         {
             damage = 9999;
+
         }
         else
         {
@@ -86,13 +87,29 @@ abstract public class EntityHP : MonoBehaviour
 
             m_currentHP -= (int)damage;
 
-        if (m_damageParticleController != null)
+        if(isCritical)
         {
-            Debug.Log("damage particle");
-            m_damageParticleController.DoDamageParticle((uint)damage);
+            if (m_damageParticleController != null)
+            {
+                m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Critical);
+            }
+        }
+        else if(isBreak)
+        {
+            if (m_damageParticleController != null)
+            {
+                m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Break);
+            }
+        }
+        else
+        {
+            if (m_damageParticleController != null)
+            {
+                m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Normal);
+            }
         }
 
-        m_currentHP = Mathf.Max( m_currentHP, 0 );
+        m_currentHP = Mathf.Max(m_currentHP, 0);
 
         Debug.Log($"{gameObject.name} : {damage}damage");
 
@@ -128,6 +145,11 @@ abstract public class EntityHP : MonoBehaviour
 
     public void Heal(float amount)
     {
+        if (m_damageParticleController != null)
+        {
+            m_damageParticleController.DoDamageParticle((uint)amount, DamageParticleType.Heal);
+        }
+
         m_currentHP = Mathf.Min(m_currentHP + Mathf.FloorToInt(amount), (int)m_entity.HP);
     }
 
@@ -140,21 +162,21 @@ abstract public class EntityHP : MonoBehaviour
                 if (m_damageParticleController != null)
                 {
                     Debug.Log("damage particle");
-                    m_damageParticleController.DoDamageParticle((uint)damage);
+                    m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Gas);
                 }
                 break;
             case StatusType.Poison:
                 if (m_damageParticleController != null)
                 {
                     Debug.Log("damage particle");
-                    m_damageParticleController.DoDamageParticle((uint)damage);
+                    m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Poison);
                 }
                 break;
             case StatusType.Burn:
                 if (m_damageParticleController != null)
                 {
                     Debug.Log("damage particle");
-                    m_damageParticleController.DoDamageParticle((uint)damage);
+                    m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Burn);
                 }
                 break;
         }

@@ -28,6 +28,7 @@ abstract public class Entity : MonoBehaviour
     public float Poison => m_status[StatusType.Poison].Value;
     public float Gas => m_status[StatusType.Gas].Value;
     public float Burn => m_status[StatusType.Burn].Value;
+    public float Regenerate => m_status[StatusType.Regenerate].Value;
     public float Stun => m_status[StatusType.Stun].Value;
     public float Invincible => m_status[StatusType.Invincible].Value;
 
@@ -150,6 +151,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Poison, new EntityStatus(0f));
         m_status.Add(StatusType.Gas, new EntityStatus(0f));
         m_status.Add(StatusType.Burn, new EntityStatus(0f));
+        m_status.Add(StatusType.Regenerate, new EntityStatus(0f));
         m_status.Add(StatusType.Stun, new EntityStatus(0f));
         m_status.Add(StatusType.Invincible, new EntityStatus(0f));
     }
@@ -230,7 +232,7 @@ abstract public class Entity : MonoBehaviour
             {
                 //Damage
                 BuffTakeDamage(StatusType.Gas, Gas);
-                Debug.Log("Entity Gas Damage");
+                //Debug.Log("Entity Gas Damage");
             }
         }
 
@@ -239,6 +241,8 @@ abstract public class Entity : MonoBehaviour
             if (m_flagTime > 1f)
             {
                 //Damage
+                BuffTakeDamage(StatusType.Poison, Poison);
+
             }
         }
 
@@ -248,6 +252,16 @@ abstract public class Entity : MonoBehaviour
             if (m_flagTime > 1f)
             {
                 //Damage
+                BuffTakeDamage(StatusType.Burn, Burn);
+
+            }
+        }
+
+        if(Regenerate > 0f)
+        {
+            if(m_flagTime > 1f)
+            {
+                HealHP(Regenerate);
             }
         }
 
