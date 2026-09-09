@@ -61,6 +61,7 @@ MonoBehaviour:
   m_infoTextPrefab: {fileID: 0}
   m_inventorySystem: {fileID: 0}
   m_shopInventories: []
+  m_showShopUI: {fileID: 11400000, guid: 92e3bcd4ccde4a44bb97d6a2e05a062b, type: 2}
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1

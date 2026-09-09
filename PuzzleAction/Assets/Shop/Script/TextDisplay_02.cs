@@ -37,7 +37,7 @@ public class TextDisplay_02 : MonoBehaviour
                 m_audioSource.PlayOneShot(m_audioClip);
             }
 
-            yield return new WaitForSeconds(speed);
+            yield return new WaitForSecondsRealtime(speed);
         }
     }
 }

@@ -62,6 +62,8 @@ public class ShopManager : MonoBehaviour
     private int ShopCount => m_shopCount.Count;
     private int _currentShopId = 0;
 
+    [SerializeField] private BoolEventSO m_showShopUI;
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -285,5 +287,14 @@ public class ShopManager : MonoBehaviour
     {
         m_infoTextPrefab.Reset();
         m_infoTextPrefab.gameObject.SetActive(false);
+    }
+
+    public void OnClose()
+    {
+        m_showShopUI.Raise(false);
+        SetDatasToSlots(_currentShopId);
+
+        GameManager.Instance.OnStopTime(false);
+
     }
 }

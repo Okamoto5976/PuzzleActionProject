@@ -57,4 +57,15 @@ public class GameManager : MonoBehaviour
         m_money = value;
     }
 
+    public void OnStopTime(bool isStop)
+    {
+        if(isStop)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
 }

@@ -109,8 +109,8 @@ public class GOALSHOP : MonoBehaviour
                 Debug.Log("らっしゃい！");
                 //AreaTypeがShopだった時の処理追加（Shopの起動）
                 //gameManager ShopUI true
-                m_showShopId.Raise(_shopId);
-                m_showShopUI.Raise(m_active);
+                //m_showShopId.Raise(_shopId);
+                //m_showShopUI.Raise(m_active);
                 break;
 
             case AreaType.Goal:
