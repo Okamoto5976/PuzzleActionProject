@@ -11,6 +11,7 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
+    [Tooltip("1PieceÇ…âΩëÃèoÇÈÇ©"), SerializeField] private int m_spawnCount;
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
@@ -122,7 +123,7 @@ public class EntitySpawner : MonoBehaviour
 
     private void SpawnEnemy(RoomData room)
     {
-        var positions = ChooseRandomPosition(room, 3);
+        var positions = ChooseRandomPosition(room, m_spawnCount);
 
 
         foreach (var pos in positions)

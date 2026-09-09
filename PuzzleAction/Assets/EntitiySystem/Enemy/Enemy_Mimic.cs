@@ -32,7 +32,7 @@ public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
             m_enemyController.TryAttack();
             return;
         }
-        m_enemyController.SetDestination(m_enemyController.Target.Value,m_enemyController.EvasionSpeed);
+        m_enemyController.SetDestination(m_enemyController.Target.Value,m_enemyController.Speed);
     }
 
     public void Stop()

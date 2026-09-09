@@ -129,11 +129,18 @@ abstract public class EntityHP : MonoBehaviour
         //m_entity.KnockBack(value)
     }
 
-
-
     public void Heal(float amount)
     {
         //m_currentHP = Mathf.Min(m_currentHP + amount, m_entity.HP);
+    }
+
+    public void ResetHP()
+    {
+        if(m_entity == null)
+        {
+            m_entity = GetComponent<Entity>();
+        }
+        m_currentHP = (int)m_entity.HP;
     }
 
     protected abstract void Die();

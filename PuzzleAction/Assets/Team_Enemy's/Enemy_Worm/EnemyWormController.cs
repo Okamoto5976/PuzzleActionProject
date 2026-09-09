@@ -3,9 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyWormController
 {
-    private float detectDistance;
-    private float attackAnimationTime;
-    private float attackAnimationCooldown;
+    [SerializeField] private float detectDistance;
+    [SerializeField] private float attackAnimationTime;
+    [SerializeField] private float attackAnimationCooldown;
+    [SerializeField] private float randomRange;
     private Transform transform;
     private float time;
     private EnemyController enemyController;
@@ -19,14 +20,11 @@ public class EnemyWormController
 
     private WormState state;
 
-    public void Initialize(EnemyController enemyController, Transform transform, float detectDistance, float attackAnimationTime, float attackAnimationCooldown)
+    public void Initialize(EnemyController enemyController, Transform transform)
     {
         state = WormState.Standby;
         this.enemyController = enemyController;
         this.transform = transform;
-        this.detectDistance = detectDistance;
-        this.attackAnimationTime = attackAnimationTime;
-        this.attackAnimationCooldown = attackAnimationCooldown;
     }
 
     public void DoWormState()
@@ -42,7 +40,7 @@ public class EnemyWormController
 
     private void DoRelocate()
     {
-        var position = enemyController.GetRandomPosition(30);
+        var position = enemyController.GetRandomPosition(randomRange);
         enemyController.TeleportToPosition(position);
         ChangeState(WormState.Standby);
     }

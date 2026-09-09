@@ -16,17 +16,14 @@ MonoBehaviour:
   m_str: 10
   m_knockBack: 0
   m_def: 0
-  m_speed: 5
-  m_dashSpeed: 10
+  m_speed: 7
+  m_dashSpeed: 0
   m_criticalRate: 0
   m_criticalDamage: 0
-  m_dex: 0
   m_agi: 0
-  m_vision: 0
   m_breakRate: 0
   m_stun: 0
   m_recover: 0
   m_poisonRes: 0
   m_stunRes: 0
   m_slowRes: 0
-  m_blindRes: 0

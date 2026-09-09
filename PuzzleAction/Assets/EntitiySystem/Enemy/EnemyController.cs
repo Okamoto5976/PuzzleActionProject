@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,10 +17,10 @@ public class EnemyController : Entity
     [Header("Ref")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
-    [Header("Debug")]
-    [SerializeField] private Item m_item;
-
+    [Header("Item")]
+    [SerializeField] private Item m_attackItem;
     private ItemManager m_itemManager;
+    [NonSerialized]public ItemData m_dropItemData;
 
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
@@ -40,6 +40,7 @@ public class EnemyController : Entity
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
 
+    #region UNITY EVENT
     protected override void Awake()
     {
         base.Awake();
@@ -48,6 +49,10 @@ public class EnemyController : Entity
 
         m_agent = GetComponent<NavMeshAgent>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
+        if(m_itemManager == null)
+        {
+            Debug.LogWarning($"{this.name} : ItemManager Not Found");
+        }
 
 
 
@@ -94,6 +99,19 @@ public class EnemyController : Entity
         //}
         m_enemyBehaviour.Execute();
     }
+    private void OnEnable()
+    {
+        m_isCooldownEnd = true;
+        m_attackCooldownDuration = 0f;
+
+        if(m_entityHP is EnemyHP hp)
+        {
+            hp.ResetHP();
+        }
+    }
+    #endregion
+
+    #region ATTACK
     public bool TryAttack()
     {
         if (!m_isCooldownEnd) return false;
@@ -129,6 +147,18 @@ public class EnemyController : Entity
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : HIT");
     }
+    private void HandleCooldown()
+    {
+        if (m_isCooldownEnd) return;
+
+        m_attackCooldownDuration += Time.deltaTime;
+
+        if (m_attackCooldownDuration >= m_attackCooldown)
+        {
+            m_attackCooldownDuration = 0f;
+            m_isCooldownEnd = true;
+        }
+    }
     public bool TryUseCooldown()
     {
         if (!m_isCooldownEnd) return false;
@@ -142,7 +172,21 @@ public class EnemyController : Entity
         m_isCooldownEnd = false;
         m_attackCooldownDuration = 0f;
     }
+    public void UseItem(Vector3 dir)
+    {
+        ItemRecieveData data = new ItemRecieveData
+        {
+            entity = this,
+            baseValue = STR,
+            pos = transform.position,
+            dir = dir
+        };
 
+        m_itemManager.OnUseItem(m_attackItem, data);
+    }
+    #endregion
+
+    #region MOVE
     public void Move(Vector3 dir, float speed)
     {
         if (dir == Vector3.zero)
@@ -170,45 +214,6 @@ public class EnemyController : Entity
 
         m_agent.SetDestination(targetPos);
     }
-    public void UseItem(Vector3 dir)
-    {
-        ItemRecieveData data = new ItemRecieveData
-        {
-            entity = this,
-            baseValue = STR,
-            pos = transform.position,
-            dir = dir
-        };
-
-        m_itemManager.OnUseItem(m_item, data);
-    }
-
-    //common
-    public void Stop()
-    {
-        m_agent.isStopped = true;
-    }
-    private void HandleCooldown()
-    {
-        if (m_isCooldownEnd) return;
-
-        m_attackCooldownDuration += Time.deltaTime;
-
-        if (m_attackCooldownDuration >= m_attackCooldown)
-        {
-            m_attackCooldownDuration = 0f;
-            m_isCooldownEnd = true;
-        }
-    }
-    private void Rotate(Vector3 dir)
-    {
-        dir.y = 0f;
-
-        if (dir == Vector3.zero) return;
-
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
-    }
-
     private void HandleRotation(float distance)
     {
         if (!m_isRotating) return;
@@ -226,14 +231,27 @@ public class EnemyController : Entity
             Rotate(dir);
         }
     }
-    private void StopAll()
+    private void Rotate(Vector3 dir)
     {
-        m_enemyBehaviour?.Stop();
-        Stop();
+        dir.y = 0f;
+
+        if (dir == Vector3.zero) return;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
     }
     public void SetEnableRotation(bool state)
     {
         m_isRotating = state;
+    }
+
+    public void Stop()
+    {
+        m_agent.isStopped = true;
+    }
+    private void StopAll()
+    {
+        m_enemyBehaviour?.Stop();
+        Stop();
     }
     public Vector2 GetRandomPosition(float range)
     {
@@ -241,7 +259,7 @@ public class EnemyController : Entity
 
         for (var i = range; i >= 0; i -= 1)
         {
-            Vector3 randomPoint = transform.position + new Vector3(Random.value * range, 0, Random.value * range);
+            Vector3 randomPoint = transform.position + new Vector3((UnityEngine.Random.value * 2 - 1) * range, 0, (UnityEngine.Random.value * 2 - 1) * range);
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
             {
@@ -253,14 +271,65 @@ public class EnemyController : Entity
 
         return result;
     }
-
     public void TeleportToPosition(Vector2 position)
     {
         Vector3 origin = transform.position;
         origin.x = position.x;
-        origin.y = position.y;
+        origin.z = position.y;
         m_agent.Warp(origin);
     }
+    #endregion
+
+    #region DEAD 
+
+    public void OnDead(bool isDropItem = true)
+    {
+        if (isDropItem)
+        {
+            ItemDrop();
+        }
+
+        //ReturnPool();
+    }
+
+    public void ItemDrop()
+    {
+        //m_itemManager.ItemDropä÷êî(ItemData, transform.position)
+    }
+    public void ReturnPool()
+    {
+        ReturnObjectToPool pool = GetComponent<ReturnObjectToPool>();
+        if(pool == null)
+        {
+            Debug.LogWarning($"{this.name} : ReturnObjectToPool Not Found");
+        }
+        pool.ReturnToPool();
+    }
+    #endregion
+
+    #region ENEMY
+
+    public static EnemyController SpawnEnemy(Enum_EnemyType type, Vector3 position)
+    {
+        Middleman_Enemy pool = FindAnyObjectByType<Middleman_Enemy>();
+        if(pool == null)
+        {
+            Debug.LogWarning("Middleman_Enemy Not Found");
+            return null;
+        }
+        EnemyController enemy = pool.GetEnemy(type);
+        if(enemy == null)
+        {
+            Debug.LogWarning($"Pool Missing : {type}");
+            return null;
+        }
+
+        enemy.transform.position = position;
+        enemy.gameObject.SetActive(true);
+
+        return enemy;
+    }
+    #endregion
 }
 public interface IEnemyBehaviour
 {
