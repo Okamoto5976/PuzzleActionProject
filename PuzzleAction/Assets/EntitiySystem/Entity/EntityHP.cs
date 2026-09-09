@@ -124,16 +124,42 @@ abstract public class EntityHP : MonoBehaviour
 
     }
 
-    public void KnockBack(int value)
-    {
-        //m_entity.KnockBack(value)
-    }
-
 
 
     public void Heal(float amount)
     {
         //m_currentHP = Mathf.Min(m_currentHP + amount, m_entity.HP);
+    }
+
+    public void TakeBuffDamage(StatusType type, float damage)
+    {
+        //damage color
+        switch(type)
+        {
+            case StatusType.Gas:
+                if (m_damageParticleController != null)
+                {
+                    Debug.Log("damage particle");
+                    m_damageParticleController.DoDamageParticle((uint)damage);
+                }
+                break;
+            case StatusType.Poison:
+                if (m_damageParticleController != null)
+                {
+                    Debug.Log("damage particle");
+                    m_damageParticleController.DoDamageParticle((uint)damage);
+                }
+                break;
+            case StatusType.Burn:
+                if (m_damageParticleController != null)
+                {
+                    Debug.Log("damage particle");
+                    m_damageParticleController.DoDamageParticle((uint)damage);
+                }
+                break;
+        }
+
+        m_currentHP = Mathf.Max(1, m_currentHP - Mathf.FloorToInt(damage));
     }
 
     protected abstract void Die();

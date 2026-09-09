@@ -28,7 +28,7 @@ public class PlayerController : Entity
     [SerializeField] private float m_evasionDuration = 0.2f;
     private float m_evasionTimer;
 
-    //private List<PassiveModifier> m_modifiers = new();
+    private EntityPassiveBuffSystem m_passiveSystem;
 
     [Header("InventorySystem")]
     [SerializeField] private InventorySystem m_inventorySystem;
@@ -60,10 +60,13 @@ public class PlayerController : Entity
     [SerializeField] private LayerMask m_interactLayer;
 
 
+
+
     protected override void Awake()
     {
         base.Awake();
     }
+
 
     protected override void Start()
     {
@@ -336,4 +339,5 @@ public class PlayerController : Entity
     {
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
+
 }

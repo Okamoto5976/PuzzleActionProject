@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public enum BuffState
-{
-    Stun,
-    Invincible
-}
+//public enum BuffState
+//{
+//    Stun,
+//    Invincible
+//}

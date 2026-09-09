@@ -8,15 +8,20 @@ public enum StatusType
     Defense,
     Speed,
     DashSpeed,
-    Slow,
     CriticalRate, 
     CriticalDamage,
     Agility,  //Enemy
     BreakRate,
-    Stun, //Enemy stun power
+    StunPower, //Enemy stun power
     PoisonRes,
     StunRes,
     SlowRes,
+    Slow,
+    Poison,
+    Gas,
+    Burn,
+    Stun,
+    Invincible,
 }
 
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]

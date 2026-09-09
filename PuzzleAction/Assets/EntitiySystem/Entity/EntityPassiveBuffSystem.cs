@@ -11,16 +11,16 @@ public enum Passive
     LoserTrophy,
 }
 
-//public class PassiveModifier
-//{
-//    public Passive m_passive;
-//}
+public class PassiveStatus
+{
+    public EntityStatus m_status;
+
+    public StatusModifier m_modifier;
+}
 
 public class PassiveBuffInstance
 {
-    public EntityStatus m_status;//Entity‚ÌStatus
-
-    public List<StatusModifier> m_modifier;
+    public List<PassiveStatus> m_modifier;
 
     public Passive m_passiveType;
 }
@@ -37,7 +37,8 @@ public class EntityPassiveBuffSystem : MonoBehaviour
     }
 
 
-
+    //Item effect in modifiers list when add passive
+    //if you want delete passive, passiveType found from list
     public void AddPassive(List<StatusModifier> modifiers, Passive passiveType)
     {
         //PassiveBuffInstance existing = m_buffs.Find(x => x.m_buffID == passiveID);
@@ -59,24 +60,30 @@ public class EntityPassiveBuffSystem : MonoBehaviour
         //    return;
         //}
 
-        //foreach (var modifier in modifiers)
-        //{
-        //    EntityStatus status = m_player.GetStatus(modifier.m_statType);
-        //}
-
-        //PassiveBuffInstance instance = new PassiveBuffInstance
-        //{
-        //    m_status = status,
-        //    m_modifier = modifiers,
-        //    m_passiveType = passiveType,
-        //};
-
-        //m_passives.Add(instance);
-
-        //status.AddModifier(modifier);
+        PassiveBuffInstance instance = new();
+        instance.m_passiveType = passiveType;
 
 
+        foreach (var modifier in modifiers)
+        {
+            EntityStatus status = m_player.GetStatus(modifier.m_statType);
 
+            PassiveStatus passiveStatus = new();
+
+            passiveStatus.m_status = status;
+            passiveStatus.m_modifier = modifier;
+
+            instance.m_modifier.Add(passiveStatus);
+        }
+
+        
+
+        m_passives.Add(instance);
+
+        foreach(var modifier in instance.m_modifier)
+        {
+            modifier.m_status.AddModifier(modifier.m_modifier);
+        }
 
     }
 
@@ -109,7 +116,10 @@ public class EntityPassiveBuffSystem : MonoBehaviour
         {
             m_passives.Remove(instance);
 
-            //instance.m_status.RemoveModifier(instance.m_modifier);
+            foreach(var modifier in instance.m_modifier)
+            {
+                modifier.m_status.RemoveModifier(modifier.m_modifier);
+            }
         }
     }
 }

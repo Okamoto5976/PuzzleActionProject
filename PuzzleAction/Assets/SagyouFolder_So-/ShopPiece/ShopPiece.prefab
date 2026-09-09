@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3579140614421662214}
   - component: {fileID: 6529586090670464635}
   - component: {fileID: 5886942717142441439}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ShopPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 8428429954917733345}
   - component: {fileID: 637988748669714215}
   - component: {fileID: 3565192120273294337}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DisplayUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 723285094590721920}
   - component: {fileID: 2044340214736633005}
   - component: {fileID: 5610610031864435725}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 4550018700594065177}
   - component: {fileID: 1261761189220438059}
   - component: {fileID: 2362157975109629659}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5234,7 +5234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5600014724647067595}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5269,7 +5269,7 @@ GameObject:
   - component: {fileID: 1156563951072438964}
   - component: {fileID: 3111258464020984032}
   - component: {fileID: 3970163442044924544}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5415,6 +5415,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 02574f85ed7b7dd4d8dfb496002ed0c0, type: 3}
       propertyPath: m_Name
       value: Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 02574f85ed7b7dd4d8dfb496002ed0c0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

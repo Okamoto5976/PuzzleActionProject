@@ -11,4 +11,9 @@ public enum BuffID
     CriticalRate,
     CriticalDamage,
     BreakRate,
+    Poison,
+    Gas,
+    Burn,
+    Stun,
+    Invincible
 }

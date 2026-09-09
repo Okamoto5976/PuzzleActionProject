@@ -131,7 +131,7 @@ public class MapClass
     public void PlaceRoom(in Room room, in Vector2Int origin)
     {
         roomID++;
-        Debug.Log(roomID);
+        //Debug.Log(roomID);
         Rooms.Add(room);
 
         for (int y = 0; y < room.Size.y; y++)

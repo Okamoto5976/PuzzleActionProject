@@ -16,15 +16,20 @@ abstract public class Entity : MonoBehaviour
     public float DEF => m_status[StatusType.Defense].Value;
     public float Speed => m_status[StatusType.Speed].Value;
     public float EvasionSpeed => m_status[StatusType.DashSpeed].Value;
-    public float Slow => m_status[StatusType.Slow].Value;
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float AGI => m_status[StatusType.Agility].Value;
     public float BreakRate => m_status[StatusType.BreakRate].Value;
-    public float Stun => m_status[StatusType.Stun].Value;
+    public float StunPower => m_status[StatusType.StunPower].Value;
     public float PoisonRes => m_status[StatusType.PoisonRes].Value;
     public float StunRes => m_status[StatusType.StunRes].Value;
     public float SlowRes => m_status[StatusType.SlowRes].Value;
+    public float Slow => m_status[StatusType.Slow].Value;
+    public float Poison => m_status[StatusType.Poison].Value;
+    public float Gas => m_status[StatusType.Gas].Value;
+    public float Burn => m_status[StatusType.Burn].Value;
+    public float Stun => m_status[StatusType.Stun].Value;
+    public float Invincible => m_status[StatusType.Invincible].Value;
 
     //���
     public enum EntityState
@@ -88,11 +93,10 @@ abstract public class Entity : MonoBehaviour
 
 
     //--------buff-------------------
-    protected float m_stunTime;
-
-    protected float m_invincibleTime;
-
     protected Dictionary<StatusType, EntityStatus> m_status = new();
+
+    private float m_flagTime;
+    //--------------------------------------
 
     protected Vector3 m_moveDir;
     protected Vector3 m_velocity;
@@ -134,15 +138,20 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Defense, new EntityStatus(m_data.DEF));
         m_status.Add(StatusType.Speed, new EntityStatus(m_data.Speed));
         m_status.Add(StatusType.DashSpeed, new EntityStatus(m_data.DashSpeed));
-        m_status.Add(StatusType.Slow, new EntityStatus(0f));
         m_status.Add(StatusType.CriticalRate, new EntityStatus(m_data.CriticalRate));
         m_status.Add(StatusType.CriticalDamage, new EntityStatus(m_data.CriticalDamage));
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
         m_status.Add(StatusType.BreakRate, new EntityStatus(m_data.BreakRate));
-        m_status.Add(StatusType.Stun, new EntityStatus(m_data.Stun));
+        m_status.Add(StatusType.StunPower, new EntityStatus(m_data.Stun));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
+        m_status.Add(StatusType.Slow, new EntityStatus(0f));
+        m_status.Add(StatusType.Poison, new EntityStatus(0f));
+        m_status.Add(StatusType.Gas, new EntityStatus(0f));
+        m_status.Add(StatusType.Burn, new EntityStatus(0f));
+        m_status.Add(StatusType.Stun, new EntityStatus(0f));
+        m_status.Add(StatusType.Invincible, new EntityStatus(0f));
     }
 
     protected virtual void Start()
@@ -164,7 +173,7 @@ abstract public class Entity : MonoBehaviour
             return;
         }
 
-        Debug.Log(buffID);
+        //Debug.Log(buffID);
 
         m_buffSystem.AddBuff(modifier, buffID, duration);
     }
@@ -196,17 +205,61 @@ abstract public class Entity : MonoBehaviour
     //call Update-------------------------------------------------------
     protected virtual void OnUpdateFlag()
     {
-        if (m_isStun)
+        m_flagTime += Time.deltaTime;
+
+
+        if (Stun > 0f)
         {
-            m_stunTime -= Time.deltaTime;
+            //buff icon
+            SetIsStun(true);
+        }
+        else if(Stun <= 0f && IsStun)
+        {
+            SetIsStun(false);
 
-            if (m_stunTime <= 0)
+        }
+
+        if(Invincible > 0f)
+        {
+            SetIsInvincible(true);
+        }
+        else if(Invincible <= 0f && !IsInvincible)
+        {
+            SetIsInvincible(false);
+        }
+
+        if(Gas > 0f)
+        {
+            if (m_flagTime > 1f)
             {
-                m_isStun = false;
-
-                ChangeState(EntityState.Idle);
+                //Damage
+                BuffTakeDamage(StatusType.Gas, Gas);
+                Debug.Log("Entity Gas Damage");
             }
         }
+
+        if (Poison > 0f)
+        {
+            if (m_flagTime > 1f)
+            {
+                //Damage
+            }
+        }
+
+
+        if (Burn > 0f)
+        {
+            if (m_flagTime > 1f)
+            {
+                //Damage
+            }
+        }
+
+        if (m_flagTime > 1f)
+        {
+            m_flagTime = 0f;
+        }
+
     }
     //----------------------------------------------------------------------
 
@@ -256,22 +309,31 @@ abstract public class Entity : MonoBehaviour
         m_entityHP.TakeDamage(data);
     }
 
-    public void TakeBuff(BuffState state, float value)
+    protected virtual void BuffTakeDamage(StatusType type, float damage)
     {
-        switch(state)
-        {
-            case BuffState.Stun:
+        if (m_isInvincible) return;
 
-                break;
-        }
+        if (m_entityHP == null) return;
+
+        m_entityHP.TakeBuffDamage(type, damage);
     }
 
-    private void TakeStun(float value)
-    {
-        m_stunTime = value;
+    //public void TakeBuff(BuffState state, float value)
+    //{
+    //    switch(state)
+    //    {
+    //        case BuffState.Stun:
 
-        SetIsStun(true);
-    }
+    //            break;
+    //    }
+    //}
+
+    //private void TakeStun(float value)
+    //{
+    //    m_stunTime = value;
+
+    //    SetIsStun(true);
+    //}
 
     public virtual void HealHP(float value)
     {
@@ -303,7 +365,9 @@ abstract public class Entity : MonoBehaviour
         ChangeState(EntityState.Damage);
 
         SetIsStun(true);
-        m_stunTime = stunTime;
+        //m_stunTime = stunTime;
+        //Stun Add
+
         direction.y = 0;
 
         m_rb.linearVelocity = Vector3.zero;

@@ -42,15 +42,29 @@ public class GasTrap : TrapBase
     {
         m_timer += Time.deltaTime;
 
-        if(m_timer > 1f)
+        if (m_timer > 1f)
         {
             m_timer = 0f;
 
             for (int i = 0; i < m_targets.Count; i++)
             {
-                m_targets[i].TakeDamage(m_damageData);
+                var modifier = SetModifier();
+
+                m_targets[i].AddBuff(modifier, BuffID.Gas, 1.5f);
             }
         }
+    }
+
+    private StatusModifier SetModifier()
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = StatusType.Gas,
+            m_value = 1f,
+            m_modType = ModifierType.Add,
+        };
+
+        return modifier;
     }
 
     protected override void OnHit()
@@ -80,7 +94,7 @@ public class GasTrap : TrapBase
 
         //float finalDamage = (m_trapdata != null) ? m_trapdata.damage : 1;
 
-        if(!m_targets.Contains(target))
+        if (!m_targets.Contains(target))
         {
             m_targets.Add(target);
         }
