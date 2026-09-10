@@ -119,6 +119,8 @@ public class DisplayManager : MonoBehaviour
             buffIcon.SetData(instance, sprite);
             break;
         }
+
+        Debug.LogWarning("BuffIconImage Not enough");
     }
 
     //public void UpdatePlayerHP(int currenHP, int maxHP)

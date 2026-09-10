@@ -510,6 +510,9 @@ public class InventorySystem : MonoBehaviour
                 passiveInventory.Add(
                     new ItemBox(data, saveItem.count)
                 );
+
+                //passive add of player
+                m_itemManager.OnAddPassive(data, m_player);
             }
         }
 
