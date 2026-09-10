@@ -20,9 +20,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int m_level;
     [SerializeField] private int m_money;
 
+    private bool m_hasKey = false;
     //property
     public int Level => m_level;
     public int Money => m_money;
+    public bool HasKey => m_hasKey;
 
     public void AddLevel(int value)
     {
@@ -67,5 +69,17 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1f;
         }
+    }
+
+    //if kill boss
+    public void SetKey()
+    {
+        m_hasKey = true;
+    }
+
+    //Create Map before
+    public void ResetData()
+    {
+        m_hasKey = false;
     }
 }

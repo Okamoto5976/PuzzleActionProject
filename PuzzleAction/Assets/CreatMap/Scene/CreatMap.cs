@@ -14,6 +14,8 @@ public class CreatMap : MonoBehaviour
     private MapClass m_mapClass;
     private void Awake()
     {
+        GameManager.Instance.ResetData();
+
         MapClass mapClass = m_mapClassData.MapClass;
 
         if (mapClass == null)

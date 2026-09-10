@@ -6,10 +6,18 @@ public class GoalSystem : MonoBehaviour, IInteractable
     //[SerializeField] private Vector3Asset m_playerPos;
     [Header("State")]
     [SerializeField] private bool m_keyDoor;
-    [SerializeField] private bool m_hasKey;//å„ÅXRuntimeDatabool
+    //[SerializeField] private bool m_hasKey;//å„ÅXRuntimeDatabool
     //[SerializeField] private float m_goalRadius;
 
     private bool m_isClear = false;
+
+    private void Start()
+    {
+        if(GameManager.Instance.Level % 5 == 0)
+        {
+            m_keyDoor = true;
+        }
+    }
 
     public void Initialize(MainGameManager gameManager)
     {
@@ -20,7 +28,7 @@ public class GoalSystem : MonoBehaviour, IInteractable
     {
         if (m_keyDoor)
         {
-            if (!m_hasKey)
+            if (!GameManager.Instance.HasKey)
             {
                 Debug.Log("Can't goal");
                 return;

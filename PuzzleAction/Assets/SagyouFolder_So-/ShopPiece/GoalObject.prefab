@@ -264,7 +264,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5138214788266927095}
   - component: {fileID: -2008794933750629119}
-  - component: {fileID: 9152211452362989901}
   - component: {fileID: 6517547961787097232}
   m_Layer: 8
   m_Name: GoalObject
@@ -304,26 +303,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GoalSystem
   m_keyDoor: 0
   m_hasKey: 0
---- !u!114 &9152211452362989901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8961092045085098247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f1ffe809c29464ea0a4f953b473ddd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GOALSHOP
-  m_type: 5
-  m_InteractDistance: 3
-  _shopInstanceCounter: {fileID: 0}
-  _shopId: 0
-  m_showShopId: {fileID: 0}
-  m_showShopUI: {fileID: 0}
-  m_areaObject: []
-  m_goalSystem: {fileID: -2008794933750629119}
 --- !u!65 &6517547961787097232
 BoxCollider:
   m_ObjectHideFlags: 0
