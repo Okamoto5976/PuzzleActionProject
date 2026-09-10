@@ -10,7 +10,7 @@ public class DisplayManager : MonoBehaviour
     [SerializeField] private PlayerHPUI playerHPUI;
     //[SerializeField] private TMP_Text hpText;
     [SerializeField] private MoneyUI moneyUI;  
-    [SerializeField] private ScoreUI scoreUI;
+    //[SerializeField] private ScoreUI scoreUI;
     [SerializeField] private LevelUI levelUI;
 
     //[Header("HP Setting")]
@@ -23,8 +23,8 @@ public class DisplayManager : MonoBehaviour
 
     private int m_lastMoney = -1;
 
-    [Header("Score")]
-    private int m_score;
+    //[Header("Score")]
+    //private int m_score;
 
     [Header("Level")]
     private int m_level;
@@ -85,6 +85,40 @@ public class DisplayManager : MonoBehaviour
         }
 
         m_frames[index].material.SetFloat("_Alpha", 1f);
+    }
+
+
+    //-------buff icon-----------------------
+    [System.Serializable]
+    public class BuffIconClass
+    {
+        public BuffID m_buffID;
+        public Sprite m_sprite;
+    }
+
+    [SerializeField] private List<BuffIcon> m_buffIconList = new();
+
+    [SerializeField] private List<BuffIconClass> m_buffImageList = new();
+
+    public void AddBuff(TemporaryBuffInstance instance)
+    {
+        for(int i = 0;i < m_buffIconList.Count;i++)
+        {
+            var buffIcon = m_buffIconList[i];
+
+            if (buffIcon.IsActive) continue;
+
+            Sprite sprite = m_buffImageList.Find(x => x != null && x.m_buffID == instance.m_buffID).m_sprite;
+
+            if(sprite == null)
+            {
+                Debug.LogWarning("not found image");
+                break;
+            }
+
+            buffIcon.SetData(instance, sprite);
+            break;
+        }
     }
 
     //public void UpdatePlayerHP(int currenHP, int maxHP)

@@ -18,9 +18,20 @@ public class EntityTemporaryBuffSystem : MonoBehaviour
 
     private List<TemporaryBuffInstance> m_buffs = new();
 
+    //---Player process---------------
+    private DisplayManager m_displayManager;
+    private bool m_isPlayer = false;
+    //--------------------------------
+
     private void Awake()
     {
         m_Entity = GetComponent<Entity>();
+    }
+
+    public void SetPlayer(DisplayManager manager)
+    {
+        m_isPlayer = true;
+        m_displayManager = manager;
     }
 
     public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
@@ -58,6 +69,11 @@ public class EntityTemporaryBuffSystem : MonoBehaviour
         m_buffs.Add(instance);
 
         status.AddModifier(modifier);
+        
+        if(m_isPlayer)
+        {
+            m_displayManager.AddBuff(instance);
+        }
     }
 
     private void Update()

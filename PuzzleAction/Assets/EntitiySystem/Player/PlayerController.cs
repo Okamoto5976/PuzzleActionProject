@@ -66,6 +66,11 @@ public class PlayerController : Entity
     {
         base.Awake();
 
+        if(m_buffSystem != null)
+        {
+            m_buffSystem.SetPlayer(m_displayManager);
+        }
+
         m_passiveSystem = GetComponent<EntityPassiveBuffSystem>();
     }
 
