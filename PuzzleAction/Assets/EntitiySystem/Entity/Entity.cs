@@ -321,8 +321,6 @@ abstract public class Entity : MonoBehaviour
 
     protected virtual void BuffTakeDamage(StatusType type, float damage)
     {
-        if (m_isInvincible) return;
-
         if (m_entityHP == null) return;
 
         m_entityHP.TakeBuffDamage(type, damage);

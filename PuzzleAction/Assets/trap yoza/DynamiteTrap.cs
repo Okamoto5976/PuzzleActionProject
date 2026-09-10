@@ -20,7 +20,8 @@ public class DynamiteTrap : TrapBase
 
     protected override void OnHit()
     {
-        
+        OnReturnPool();
+
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -31,12 +32,16 @@ public class DynamiteTrap : TrapBase
 
         if (target != null && target.Team != TeamType.Nature)
         {
-            if (m_owner != null && target.Team == m_owner.Team) return;
+            //if (m_owner != null && target.Team == m_owner.Team) return;
 
-            Debug.Log($"[DYNAMITE] {target.gameObject.name} が踏んだ！爆発！");
+            //Debug.Log($"[DYNAMITE] {target.gameObject.name} が踏んだ！爆発！");
 
             // Cプールに戻す（あっちのTrapBaseに備わっているプール返却処理を呼ぶ）
-            gameObject.SetActive(false);
+            target.TakeDamage(m_damageData);
+
+            OnHit();
+
+            //gameObject.SetActive(false);
         }
     }
     private void OnDrawGizmosSelected()
