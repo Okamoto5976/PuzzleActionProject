@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,10 +11,17 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource BGMSource;
     [SerializeField] private AudioSource SESource;
     [SerializeField] private AudioMixer m_audioMix;
-    [SerializeField] private FloatRunTime m_bgmVolume;
-    [SerializeField] private FloatRunTime m_seVolume;
+    //[SerializeField] private FloatRunTime m_bgmVolume;
+    //[SerializeField] private FloatRunTime m_seVolume;
 
     [SerializeField] private AudioFader audioFader;
+
+    //--option save set--------------------
+    private OptionSaveManager m_optionSaveManager = new();
+    private float m_masterVolume;
+    private float m_bgmVolume;
+    private float m_seVolume;
+
 
    // private Coroutine bgmFadeCoroutine;
     private void Awake()
@@ -38,12 +46,31 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
+        var data = m_optionSaveManager.OnAudioLoad();
 
-        //m_audioMix.GetFloat("BGM", out float bgmVolume);
-        //m_BGMSlider.value = bgmVolume;
+        if (data != null)
+        {
+            SetMaster(data.m_masterVolume);
+            SetBGM(data.m_bgmVolume);
+            SetSE(data.m_seVolume);
+        }
+        else
+        {
+            SetMaster(0.8f);
+            SetBGM(0.8f);
+            SetSE(0.8f);
+        }
+    }
 
-        //m_audioMix.GetFloat("SE", out float seVolume);
-        //m_SESlider.value = seVolume;
+    public void SetMaster(float volume)
+    {
+        float db = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
+
+        m_audioMix.SetFloat("Master", db);
+        m_masterVolume = volume;
+        //m_bgmVolume.SetValue(volume);
+
+        OnSaveAudio();
     }
 
 
@@ -52,7 +79,11 @@ public class AudioManager : MonoBehaviour
         float db = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
 
         m_audioMix.SetFloat("BGM", db);
-        m_bgmVolume.SetValue(volume);
+        m_bgmVolume = volume;
+        //m_bgmVolume.SetValue(volume);
+
+        OnSaveAudio();
+
     }
 
     public void SetSE(float volume)
@@ -60,7 +91,23 @@ public class AudioManager : MonoBehaviour
         float db = Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20f;
 
         m_audioMix.SetFloat("SE", db);
-        m_seVolume.SetValue(volume);
+        m_seVolume = volume;
+        //m_seVolume.SetValue(volume);
+
+        OnSaveAudio();
+
+    }
+
+    public void OnSaveAudio()
+    {
+        AudioSaveData data = new()
+        {
+            m_masterVolume = m_masterVolume,
+            m_bgmVolume = m_bgmVolume,
+            m_seVolume = m_seVolume
+        };
+        
+        m_optionSaveManager.OnAudioSave(data);
     }
 
     //EventSOÇ©ÇÁìnÇ≥ÇÍÇΩAudioClipÇçƒê∂Ç∑ÇÈ

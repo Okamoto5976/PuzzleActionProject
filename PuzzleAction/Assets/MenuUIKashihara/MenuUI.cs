@@ -14,12 +14,15 @@ public class MenuUI : MonoBehaviour
 
     public bool IsOption { get; private set; }
 
+    [SerializeField] private Slider m_masterSlider;
     [SerializeField] private Slider m_bgmSlider;
     [SerializeField] private Slider m_seSlider;
 
-    [SerializeField] private FloatRunTime m_bgmVolume;
-    [SerializeField] private FloatRunTime m_seVolume;
+    //[SerializeField] private FloatRunTime m_bgmVolume;
+    //[SerializeField] private FloatRunTime m_seVolume;
 
+    //-----audio save set-------------
+    private OptionSaveManager m_optionSaveManager = new();
 
 
     [Header("MenuScene")]
@@ -32,8 +35,21 @@ public class MenuUI : MonoBehaviour
 
     private void Start()
     {
-        m_bgmSlider.value = m_bgmVolume.Value;
-        m_seSlider.value = m_seVolume.Value;
+        var data = m_optionSaveManager.OnAudioLoad();
+
+        if(data != null)
+        {
+            m_masterSlider.value = data.m_masterVolume;
+            m_bgmSlider.value = data.m_bgmVolume;
+            m_seSlider.value = data.m_seVolume;
+        }
+        else
+        {
+            m_masterSlider.value = 0.8f;
+            m_bgmSlider.value = 0.8f;
+            m_seSlider.value = 0.8f;
+        }
+
     }
 
     public void TransitionTitle()
@@ -79,6 +95,11 @@ public class MenuUI : MonoBehaviour
     public void ExitSesssion()
     {
         Debug.Log("Exit");
+    }
+
+    public void SetMasterVolume(float value)
+    {
+        AudioManager.instance.SetMaster(value);
     }
 
     public void SetBGMVolume(float value)

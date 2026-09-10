@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.IO;
 
-public class SaveManager : MonoBehaviour
+public class InventorySaveManager : MonoBehaviour
 {
     [SerializeField] private SaveData m_saveData;
 

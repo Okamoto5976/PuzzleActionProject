@@ -39,7 +39,7 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] private SaveData saveData;
     [SerializeField] private ItemManager itemManager;
-    [SerializeField] private SaveManager m_saveManager;
+    [SerializeField] private InventorySaveManager m_saveManager;
 
     [SerializeField] private List<Image> mainHotbarImages;
 

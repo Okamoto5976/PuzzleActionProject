@@ -990,7 +990,7 @@ GameObject:
   - component: {fileID: 5562016793495321260}
   - component: {fileID: 4160812885918689}
   - component: {fileID: 7778454511017329269}
-  - component: {fileID: 5824760489742572342}
+  - component: {fileID: 4478966605698698510}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1056,8 +1056,9 @@ MonoBehaviour:
   hotbarPanel: {fileID: 4232691192695798958}
   saveData: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
   itemManager: {fileID: 0}
-  m_saveManager: {fileID: 5824760489742572342}
+  m_saveManager: {fileID: 4478966605698698510}
   mainHotbarImages: []
+  m_player: {fileID: 0}
   m_displayManager: {fileID: 0}
 --- !u!114 &4160812885918689
 MonoBehaviour:
@@ -1098,7 +1099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
   m_prefabImage: {fileID: 5823884530150696137, guid: 9a0961411245af146814803b7314ba11, type: 3}
   m_Parent: {fileID: 8889914475735471142}
---- !u!114 &5824760489742572342
+--- !u!114 &4478966605698698510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1107,9 +1108,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2178402243949874906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecbaeb2d7d767e641ab3b4e2b7114297, type: 3}
+  m_Script: {fileID: 11500000, guid: c26a050f0140ee045a2efa9aa7266902, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySaveManager
   m_saveData: {fileID: 11400000, guid: 2a220be8c89194a4f9dadd06f52f14a9, type: 2}
   m_inventorySystem: {fileID: 5562016793495321260}
 --- !u!1 &2330767553188512729
