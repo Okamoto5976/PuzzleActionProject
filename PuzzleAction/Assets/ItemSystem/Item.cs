@@ -44,7 +44,7 @@ abstract public class Item : ScriptableObject
 
     public ItemEffectType Type => m_type;
 
-    public Grade grade => m_data.ItemGrade;
+    //public Grade grade => m_data.ItemGrade;
     //ID public
 
     public void RecieveData(ItemRecieveData data)
