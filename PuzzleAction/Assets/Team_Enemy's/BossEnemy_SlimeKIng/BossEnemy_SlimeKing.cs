@@ -1,66 +1,124 @@
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
-//[RequireComponent(typeof(BossSlimeKingeAttack))]
+public enum SlimeKingAttackType{
+    Attack,
+    Summon
+
+}
 public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
 {
-    //[Header("Attack Range")]
-    //[SerializeField] private float m_shortRange = 4f;
-    //[SerializeField] private float m_longRange = 12f;
+    [Header("Summon Setting")]
+    [SerializeField] private List<Enum_EnemyType> m_summonTypes = new();
+    [SerializeField] private float SlimeKingRange;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float findRange; 
+    private EnemyController m_enemyController;
 
     private BossEnemyController m_controller;
-    //public void Initialized(EnemyController enemyController) => m_enemyController = enemyController;
+    public void Initialized(EnemyController enemyController)
+    {
+        m_enemyController = enemyController;
+    }
     public void Execute()
     {
-        if (m_controller.Target == null) return;
-        float distance = Vector3.Distance(transform.position, m_controller.Target.Value);
-        //Attack
+        if (m_enemyController.Target == null) return;
+        float distance = Vector3.Distance(transform.position, m_enemyController.Target.Value);
+        SlimeKingAttackType attackType;
+        if (distance <= SlimeKingRange)
+        {
+            attackType = SlimeKingAttackType.Attack ;
+        }
+        else
+        {
+            attackType = SlimeKingAttackType.Summon;
+        }
+        m_controller.StartAttack();
 
-        //if(distance> BossEnemyController.m_AttackRange) 
-        //{
-        //  int timerCount=0;
-        //  if(timerCount < 20f)
-        //  {
-        //      if(distance <= m_shortRange)
-        //      {
-        //          BossEnemyController.tryAttack();
-        //      }
-        //     
-        //      else
-        //      {
-        //          BossEnemyController.Rush();
-        //      }
-        //  
-        //  }
-        //  else if(timerCount > 20f && Distance <= BossEnemyController.AttackRange)
-        //  {
-        //        for (int i = 0; i < 6; i++)
-        //      {
-        //              Vector3 Summon_pos = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+        m_enemyController.Stop();
+        switch (attackType)
+        {
+            case SlimeKingAttackType.Attack:
 
-        //壁がある場合
-        //          if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, radius))
-        //          {        
-        //              if(hit.collider == m_mapGeneration.SouthWall && Active(true))
-        //              {
-        //                  //壁がある場合は召喚位置を変更する
-        //                  //Summon_pos = 召喚者の位置から壁までの距離(Mathf.Max(召喚者の位置, hitした壁の位置) - Mathf.Min(召喚者の位置, hitした壁の位置))　＆＆　AttackRange内にSpawn
-        //                  //Summon_pos = m_enemyController.AttackRange > ( Mathf.Max(Radise,hit.collider)-Mathf.Min(Radise,hit.collider));
-        //               }
-        //           }
-        //  //Enum_EnemtType type;
-        //          int test = Random.Range(0, 2);// 0or1
-        //    if (test == 0)
-        //    {
-        //        //type = Enum_EnemtType.Enemy_Slime_Red;
-        //    }
-        //    else if (test == 1)
-        //    {
-        //        //type = Enum_EnemtType.Enemy_Slime_Blue;
-        //    }
-        //    //エネミーを召喚する処理
-        //    }
-        // }
-        //m_BossenemyController.SetDestination(m_BossenemyController.Target.Value, m_BossenemyController.Speed);
+                AttackRange(distance);
+                break;
+
+            case SlimeKingAttackType.Summon:
+
+                FindRange(distance);
+                break;
+         
+        }
     }
-    public void Stop() => m_controller.Stop();
+
+
+    private void SummonEnemies()
+    {
+        foreach (Enum_EnemyType enmeyType in m_summonTypes)
+        {
+            if (!TryGetSummonPosition(out Vector3 summonPos))
+            {
+                Debug.LogWarning("Summon Position Not Found");
+                continue;
+            }
+            //EnemyController enemy = EnemyController.SpawnEnemy(enemyType, summonPos);
+            //if (enemy == null) continue;
+        }
+    }
+    private bool TryGetSummonPosition(out Vector3 result)
+    {
+        result = transform.position;
+        const int maxTry = 10;
+        for (int i = 0; i < maxTry; i++)
+        {
+            float angle = Random.Range(0f, Mathf.PI * 2f);
+            float radius = Random.Range(1f, m_enemyController.AttackRange);
+            Vector3 candidate = transform.position + new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius);
+            if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+            {
+                continue;
+            }
+            candidate = hit.position;
+            Vector3 dir = candidate - transform.position;
+            float dist = dir.magnitude;
+
+            dir.Normalize();
+            if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, dist)) ;
+            {
+                continue;
+            }
+            result = candidate;
+            return true;
+        }
+        return false;
+    }
+    public void Stop()
+    {
+        m_enemyController.Stop();
+    }
+    public void AttackRange(float distance)
+    {
+        if (distance > m_enemyController.AttackRange)
+        {
+            m_enemyController.TryAttack();
+            Stop();
+            return;
+        }
+    }
+    public void FindRange(float distance)
+    {
+        if (distance > m_enemyController.FindRange)
+        {
+            m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
+            if (!m_enemyController.TryUseCooldown()) return;
+            SummonEnemies();
+        }
+    }
+  
+    
 }
+
+
+
