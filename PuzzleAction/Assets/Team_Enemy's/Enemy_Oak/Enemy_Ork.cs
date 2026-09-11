@@ -10,7 +10,7 @@ public class Enemy_Ork : MonoBehaviour, IEnemyBehaviour
     {
         if (m_enemyController.Target == null) return;
         float distance = Vector3.Distance(transform.position, m_enemyController.Target.Value);
-        if (distance <= m_enemyController.AttackRange)
+        if(distance <= m_enemyController.AttackRange)
         {
             m_enemyController.Stop();
             m_enemyController.TryAttack();

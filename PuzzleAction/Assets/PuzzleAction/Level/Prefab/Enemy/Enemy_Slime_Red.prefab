@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -892202173841469504}
   - component: {fileID: 2075910911787773953}
+  - component: {fileID: 4788660620938716877}
   m_Layer: 0
   m_Name: Enemy_Slime_Red
   m_TagString: Untagged
@@ -337,6 +338,29 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 5192190198220617858}
     m_radius: 3
+--- !u!136 &4788660620938716877
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1266941858842676192
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -190,11 +190,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 528806279578718545}
+  - component: {fileID: 9036534983232500468}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
-  - component: {fileID: -1927861824572852744}
-  - component: {fileID: 9036534983232500468}
   - component: {fileID: 7470603499713679253}
+  - component: {fileID: -1927861824572852744}
+  - component: {fileID: -3159821484888561539}
   m_Layer: 0
   m_Name: Enemy_Ork
   m_TagString: Untagged
@@ -238,12 +239,24 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: ec1a0ac7c56e3e74db74cb621da66b83, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
-  m_attackRange: 3
+  m_attackRange: 4
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 8
+    m_radius: 4
   m_attackItem: {fileID: 0}
+--- !u!114 &9036534983232500468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8fc3ff9212cfb40b9ba18ca6438f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Oak
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -293,33 +306,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-1927861824572852744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
-  m_currentHP: 0
-  m_damageParticleController: {fileID: 3109024123308804497}
-  m_isItemDrop: 0
---- !u!114 &9036534983232500468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d8fc3ff9212cfb40b9ba18ca6438f0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Oak
 --- !u!114 &7470603499713679253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +322,45 @@ MonoBehaviour:
   m_isVisible: 1
   hitBoxes:
   - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2.4
+    m_radius: 1.2
+--- !u!114 &-1927861824572852744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
+  m_currentHP: 0
+  m_damageParticleController: {fileID: 3109024123308804497}
+  m_isItemDrop: 0
+--- !u!136 &-3159821484888561539
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1266941858842676192
 PrefabInstance:
   m_ObjectHideFlags: 0

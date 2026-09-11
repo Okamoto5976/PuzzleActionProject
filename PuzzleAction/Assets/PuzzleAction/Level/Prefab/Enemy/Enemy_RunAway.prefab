@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 7709634229184462051}
   - component: {fileID: -6208613025751143186}
   - component: {fileID: -6878687357098537760}
+  - component: {fileID: 359080160195294053}
   m_Layer: 0
   m_Name: Enemy_RunAway
   m_TagString: Untagged
@@ -269,6 +270,29 @@ MonoBehaviour:
   hitBoxes:
   - m_transform: {fileID: 3042968806835571943}
     m_radius: 2
+--- !u!136 &359080160195294053
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213505366536643909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &4558927397495782449
 PrefabInstance:
   m_ObjectHideFlags: 0

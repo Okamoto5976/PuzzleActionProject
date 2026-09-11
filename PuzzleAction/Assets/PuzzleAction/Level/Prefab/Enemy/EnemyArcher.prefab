@@ -191,10 +191,11 @@ GameObject:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 528806279578718545}
   - component: {fileID: 4821778530584433029}
-  - component: {fileID: 7341675702321249772}
-  - component: {fileID: -1027978937202661744}
-  - component: {fileID: -1927861824572852744}
   - component: {fileID: -8210829372241536840}
+  - component: {fileID: -1927861824572852744}
+  - component: {fileID: -1027978937202661744}
+  - component: {fileID: 7341675702321249772}
+  - component: {fileID: 7159807491896077868}
   m_Layer: 0
   m_Name: EnemyArcher
   m_TagString: Untagged
@@ -256,28 +257,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
---- !u!195 &7341675702321249772
-NavMeshAgent:
+--- !u!114 &-8210829372241536840
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6967910656285339947}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
+  m_isViewCollider: 1
+  m_isVisible: 1
+  hitBoxes:
+  - m_transform: {fileID: 5192190198220617858}
+    m_radius: 2
+--- !u!114 &-1927861824572852744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
+  m_currentHP: 0
+  m_damageParticleController: {fileID: 3109024123308804497}
+  m_isItemDrop: 0
 --- !u!54 &-1027978937202661744
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,38 +316,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-1927861824572852744
-MonoBehaviour:
+--- !u!195 &7341675702321249772
+NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6967910656285339947}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
-  m_currentHP: 0
-  m_damageParticleController: {fileID: 3109024123308804497}
-  m_isItemDrop: 0
---- !u!114 &-8210829372241536840
-MonoBehaviour:
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!136 &7159807491896077868
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6967910656285339947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
-  m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1266941858842676192
 PrefabInstance:
   m_ObjectHideFlags: 0

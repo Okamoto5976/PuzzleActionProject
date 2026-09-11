@@ -12,10 +12,12 @@ public class EnemyHP : EntityHP
         // add score
         // item drop
         EnemyController enemy = GetComponent<EnemyController>();
-        if(enemy != null)
+        if(enemy == null)
         {
-            enemy.OnDead(m_isItemDrop);
+            Debug.Log($"{this.name} : EnemyController not found");
+            return;
         }
+        enemy.OnDead(m_isItemDrop);
         OnReturnPool();
     }
     private void OnReturnPool()

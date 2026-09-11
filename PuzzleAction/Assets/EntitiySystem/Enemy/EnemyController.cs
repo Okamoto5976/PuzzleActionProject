@@ -20,7 +20,16 @@ public class EnemyController : Entity
     [Header("Item")]
     [SerializeField] private Item m_attackItem;
     private ItemManager m_itemManager;
-    [NonSerialized]public ItemData m_dropItemData;
+
+    [Header("Drop")]
+    [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
+    [NonSerialized] public Item m_dropItem;
+    public Item DropItem
+    {
+        get => m_dropItem;
+        set => m_dropItem = value;
+    }
 
     private NavMeshAgent m_agent;
     private IEnemyBehaviour m_enemyBehaviour;
@@ -145,7 +154,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : HIT");
+        Debug.Log("EnemyController : Player Ç…HIT");
     }
     private void HandleCooldown()
     {
@@ -288,13 +297,13 @@ public class EnemyController : Entity
         {
             ItemDrop();
         }
-
         //ReturnPool();
     }
 
     public void ItemDrop()
     {
-        //m_itemManager.ItemDropä÷êî(ItemData, transform.position)
+        if (m_dropItem == null) return;
+        //m_itemManager.ItemDrop(m_itemDrop, transform.position)
     }
     public void ReturnPool()
     {

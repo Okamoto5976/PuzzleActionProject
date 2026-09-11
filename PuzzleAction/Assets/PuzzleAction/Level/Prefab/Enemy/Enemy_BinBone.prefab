@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 7341675702321249772}
+  - component: {fileID: 4454756479888953108}
   m_Layer: 0
   m_Name: Enemy_BinBone
   m_TagString: Untagged
@@ -337,6 +338,29 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &4454756479888953108
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1266941858842676192
 PrefabInstance:
   m_ObjectHideFlags: 0

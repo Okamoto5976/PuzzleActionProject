@@ -13,9 +13,29 @@ MonoBehaviour:
   m_Name: EnemyRarityTable
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRarityTable
   enemies:
+  - enemyType: 0
+    rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
+  - enemyType: 1
+    rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
   - enemyType: 2
+    rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+  - enemyType: 3
+    rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
+  - enemyType: 5
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
   - enemyType: 6
+    rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
+  - enemyType: 7
+    rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
+  - enemyType: 8
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
-  - enemyType: 1
+  - enemyType: 9
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+  - enemyType: 10
+    rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+  - enemyType: 11
+    rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
+  - enemyType: 12
+    rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
+  - enemyType: 12
+    rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}

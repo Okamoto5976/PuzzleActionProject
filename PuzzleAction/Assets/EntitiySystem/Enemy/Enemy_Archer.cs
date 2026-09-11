@@ -32,5 +32,5 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
         m_controller.SetDestination(m_controller.Target.Value, m_controller.Speed);
     }
 
-    public void Stop()=> m_controller.Stop();
+    public void Stop() => m_controller.Stop();
 }
