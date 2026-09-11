@@ -277,7 +277,7 @@ public class PlayerController : Entity
             }
         }
 
-        m_displayManager.SetIndex(m_hotberIndex);
+        //m_displayManager.SetIndex(m_hotberIndex);
     }
 
 

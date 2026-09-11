@@ -22,7 +22,7 @@ public class MapSettingSO : ScriptableObject
         }
     }
 #endif
-
+    
     public Vector2Int size;
     public Vector2Int startPos;
     public Vector2Int goalPos;
