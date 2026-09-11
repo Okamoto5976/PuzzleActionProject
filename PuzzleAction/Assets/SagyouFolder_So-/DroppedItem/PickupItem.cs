@@ -9,6 +9,9 @@ public class PickupItem : MonoBehaviour
     protected List<DroppedObject> m_pickedUpItems = new();
     private Transform m_transform;
 
+    /// <summary>
+    /// check if queue(list) has items
+    /// </summary>
     public bool HasQueue => m_pickedUpItems.Count > 0;
 
 
@@ -40,25 +43,18 @@ public class PickupItem : MonoBehaviour
             }
         }
     }
-    private void ForcePickUpItemsInRange(float pickUpRange, Vector3 position)
-    {
-        Collider[] hits = new Collider[m_maxColliderDetectCount];
-        Physics.OverlapSphereNonAlloc(position, pickUpRange, hits);
-        foreach (Collider hit in hits)
-        {
-            if (hit == null) continue;
-            if (hit.TryGetComponent(out DroppedObject droppedItem))
-            {
-                droppedItem.PickupItem(this);
-            }
-        }
-    }
 
+    /// <summary>
+    /// only called by droppedObject. DO NOT CALL OTHERWISE
+    /// </summary>
     public void DoPickupItem(DroppedObject item)
     {
         m_pickedUpItems.Add(item);
     }
 
+    /// <summary>
+    /// Get specific component from queue
+    /// </summary>
     public T GetObjectFromQueue<T>()
     {
         foreach (DroppedObject _object in m_pickedUpItems)
@@ -73,6 +69,9 @@ public class PickupItem : MonoBehaviour
         return default;
     }
 
+    /// <summary>
+    /// Check if queue has component
+    /// </summary>
     public bool QueueHasObject<T>() where T : DroppedObject
     {
         foreach (DroppedObject _object in m_pickedUpItems)

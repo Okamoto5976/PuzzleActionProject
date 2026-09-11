@@ -28,6 +28,10 @@ public class DroppedObject : MonoBehaviour
         m_returnObjectToPool = GetComponent<ReturnObjectToPool>();
     }
 
+    /// <summary>
+    /// call to pickup this item
+    /// </summary>
+    /// <param name="target"></param>
     public void PickupItem(PickupItem target)
     {
         if (IsPickedUp) return;
@@ -44,7 +48,7 @@ public class DroppedObject : MonoBehaviour
         StartCoroutine(GetPicked());
     }
 
-    public IEnumerator GetPicked()
+    private IEnumerator GetPicked()
     {
         float lerp = 0;
         while (lerp < 1)
@@ -58,6 +62,9 @@ public class DroppedObject : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// release the object to the pool
+    /// </summary>
     public void Release()
     {
         m_returnObjectToPool.ReturnToPool();

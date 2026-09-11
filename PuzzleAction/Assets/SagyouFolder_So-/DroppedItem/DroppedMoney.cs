@@ -9,6 +9,9 @@ public class DroppedMoney : DroppedObject
         amount = Random.Range(0, 100);
     }
 
+    /// <summary>
+    /// example function
+    /// </summary>
     public void PrintMoney()
     {
         Debug.Log($"MONEY :{amount}");

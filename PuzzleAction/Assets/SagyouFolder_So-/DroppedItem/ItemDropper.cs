@@ -6,6 +6,10 @@ public class ItemDropper : ComponentPoolHandler<DroppedObject>
     {
         Initialize();
     }
+
+    /// <summary>
+    /// Drop object at position
+    /// </summary>
     public void DropItemAtPosition(Vector3 position)
     {
         var obj = GetComponentFromPool();
