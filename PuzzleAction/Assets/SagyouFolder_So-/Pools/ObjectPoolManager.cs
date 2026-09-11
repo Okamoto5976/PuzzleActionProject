@@ -14,6 +14,8 @@ public class ObjectPoolManager : MonoBehaviour
 
     private Transform m_transform;
 
+    public int ObjectsInPool => m_objectPool.Count;
+
     public virtual void Initialize()
     {
         m_objectPool = new();
