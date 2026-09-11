@@ -71,7 +71,7 @@ public class BuffItem : Item
 
     public override void AddPassive(PlayerController player)
     {
-        
+        Debug.LogWarning("AddPassive in item");
 
         if(m_buffEffectType == ItemType.Passive)
         {
@@ -84,11 +84,18 @@ public class BuffItem : Item
                     m_modType = buff.m_modifierType
                 };
 
+
+                //Debug.Log(modifier.m_statType);
+
+                //Debug.Log(modifier.m_value);
+
+
                 m_modifiers.Add(modifier);
 
             }
 
             player.AddPassive(m_modifiers, m_passiveType);
+            m_modifiers.Clear();
         }
     }
 

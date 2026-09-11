@@ -252,6 +252,14 @@ public class ShopManager : MonoBehaviour
         {
             Debug.Log("you purchase item");
 
+            //InventoryManager‚ÉItem‚ğ“n‚·
+            if (!m_inventorySystem.AddItem(data, 1))
+            {
+                Debug.Log("you already have item max");
+                m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.InventoryFull);
+                return false;
+            }
+
             int value = -(data.Data.Price);
 
             if(!GameManager.Instance.ModifyMoney(value))
@@ -261,8 +269,6 @@ public class ShopManager : MonoBehaviour
 
             m_moneyText.text = "money :" + GameManager.Instance.Money.ToString();//Ä‚ÑÅV‚ğ•\¦
 
-            //InventoryManager‚ÉItem‚ğ“n‚·
-            m_inventorySystem.AddItem(data, 1);
 
             var item = m_shopInventories[_currentShopId].inventory[slotId];
             item.IsSold = true;

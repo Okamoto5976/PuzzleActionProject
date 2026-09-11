@@ -7,9 +7,12 @@ abstract public class EntityHP : MonoBehaviour
     private AudioSource m_audioSource;
 
     [SerializeField] private int m_currentHP;
+    [SerializeField] private int m_max;
     public int CurrentHP { get => m_currentHP;}
 
     public int MaxHP => (int)m_entity.HP;
+
+    
 
     [SerializeField] private DamageParticleController m_damageParticleController;
 
@@ -18,6 +21,11 @@ abstract public class EntityHP : MonoBehaviour
         m_entity = GetComponent<Entity>();
 
         m_audioSource=GetComponent<AudioSource>();
+    }
+
+    private void Update()
+    {
+        m_max = MaxHP;
     }
 
     private void Start()

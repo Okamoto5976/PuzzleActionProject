@@ -83,6 +83,11 @@ public class EntityPassiveBuffSystem : MonoBehaviour
 
         foreach(var modifier in instance.m_modifier)
         {
+            //Debug.Log(modifier.m_modifier.m_value);
+            //Debug.Log(modifier.m_modifier.m_statType);
+            //Debug.Log(modifier.m_modifier.m_modType);
+
+
             modifier.m_status.AddModifier(modifier.m_modifier);
         }
 

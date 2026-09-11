@@ -27,27 +27,27 @@ MonoBehaviour:
     itemGrade: 0
   m_buffEffectType: 1
   m_buffItemClass:
-  - m_value: 20
+  - m_value: 1
     m_statusType: 1
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
-  - m_value: 20
+  - m_value: 1
     m_statusType: 4
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
-  - m_value: 20
+  - m_value: 1
     m_statusType: 3
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
-  - m_value: 100
+  - m_value: 20
     m_statusType: 0
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
-  - m_value: 10
+  - m_value: 1
     m_statusType: 6
     m_modifierType: 0
     m_duration: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
-  - m_value: 50
+  - m_value: 1
     m_statusType: 9
     m_modifierType: 0
     m_duration: 0
