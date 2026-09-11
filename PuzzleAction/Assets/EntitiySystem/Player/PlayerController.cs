@@ -233,7 +233,7 @@ public class PlayerController : Entity
             }
         }
 
-        m_displayManager.SetIndex(m_hotberIndex);
+        //m_displayManager.SetIndex(m_hotberIndex);
     }
 
     private ItemRecieveData CreateItemData(Vector3 forward)
