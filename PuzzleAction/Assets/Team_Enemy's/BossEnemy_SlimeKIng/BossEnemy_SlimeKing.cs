@@ -17,24 +17,25 @@ public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
 
         //if(distance> BossEnemyController.m_AttackRange) 
         //{
-        //int timerCount=0;
-        //if(timerCount < 20f)
-        //{
-        //if(Distance <= m_shortRange)
-        //{
-        // BossEnemyController.tryAttack();
-        //}
-        //}
-        //else
-        //{
-        //   BossEnemyController.Rush();
-        //}
-        //m_BossenemyController.SetDestination(m_BossenemyController.Target.Value, m_BossenemyController.Speed);
-        //else if(timerCount > 20f && Distance <= BossEnemyController.AttackRange)
-        //{
-        //    for (int i = 0; i < 6; i++)
-        //    {
-        //          Vector3 Summon_pos = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
+        //  int timerCount=0;
+        //  if(timerCount < 20f)
+        //  {
+        //      if(distance <= m_shortRange)
+        //      {
+        //          BossEnemyController.tryAttack();
+        //      }
+        //     
+        //      else
+        //      {
+        //          BossEnemyController.Rush();
+        //      }
+        //  
+        //  }
+        //  else if(timerCount > 20f && Distance <= BossEnemyController.AttackRange)
+        //  {
+        //        for (int i = 0; i < 6; i++)
+        //      {
+        //              Vector3 Summon_pos = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0, Mathf.Sin(angle) * radius);
 
         //壁がある場合
         //          if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, radius))
@@ -46,8 +47,8 @@ public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
         //                  //Summon_pos = m_enemyController.AttackRange > ( Mathf.Max(Radise,hit.collider)-Mathf.Min(Radise,hit.collider));
         //               }
         //           }
-        //    //Enum_EnemtType type;
-        //    int test = Random.Range(0, 2);// 0or1
+        //  //Enum_EnemtType type;
+        //          int test = Random.Range(0, 2);// 0or1
         //    if (test == 0)
         //    {
         //        //type = Enum_EnemtType.Enemy_Slime_Red;
@@ -57,10 +58,9 @@ public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
         //        //type = Enum_EnemtType.Enemy_Slime_Blue;
         //    }
         //    //エネミーを召喚する処理
-        //    //m_enemyController.(type,Summon_pos);
         //    }
-        //}
-
+        // }
+        //m_BossenemyController.SetDestination(m_BossenemyController.Target.Value, m_BossenemyController.Speed);
     }
     public void Stop() => m_controller.Stop();
 }
