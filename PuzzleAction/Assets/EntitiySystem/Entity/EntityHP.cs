@@ -150,7 +150,6 @@ abstract public class EntityHP : MonoBehaviour
     }
 
 
-
     public void Heal(float amount)
     {
         if (m_damageParticleController != null)
@@ -190,6 +189,15 @@ abstract public class EntityHP : MonoBehaviour
         }
 
         m_currentHP = Mathf.Max(1, m_currentHP - Mathf.FloorToInt(damage));
+    }
+
+    public void ResetHP()
+    {
+        if(m_entity == null)
+        {
+            m_entity = GetComponent<Entity>();
+        }
+        m_currentHP = (int)m_entity.HP;
     }
 
     protected abstract void Die();

@@ -11,6 +11,7 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
+    [Tooltip("1PieceÇ…âΩëÃèoÇÈÇ©"), SerializeField] private int m_spawnCount;
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
@@ -34,13 +35,11 @@ public class EntitySpawner : MonoBehaviour
     [Space(10)]
 
     [Header("========== Treasure ==========")]
-    [SerializeField] private GameObject m_treasureParent;
-    [SerializeField] private GameObject m_treasurePrefab;
-    [SerializeField] private GameObject m_mimicPrefab;
+    [SerializeField] private Middleman_Treasure m_treasurePool;
+    [SerializeField] private GachaEngine m_treasureGachaEngine;
+    [SerializeField] private TreasureRarityTable m_treasureRarityTable;
 
     [SerializeField] private int m_treasureCount = 3;
-    [SerializeField, Range(0, 1)]
-    private float m_mimicRate = 0.2f;
 
     private MapClassData m_mapClassData;
     private MapGeneration m_mapGeneration;
@@ -52,6 +51,9 @@ public class EntitySpawner : MonoBehaviour
         Enum_TrapType.Dynamite
     };
 
+    [Header("========== Ref ==========")]
+    [SerializeField] private ItemManager m_itemManager;
+
     public void Generate(MapClassData mapData, MapGeneration mapGeneration)
     {
         m_mapClassData = mapData;
@@ -61,6 +63,7 @@ public class EntitySpawner : MonoBehaviour
 
         InitializeEnemyPools();
         InitializeTrapPool();
+        InitializeTreasurePool();
 
         SpawnGoal();
 
@@ -70,6 +73,7 @@ public class EntitySpawner : MonoBehaviour
 
         SpawnPlayer();
     }
+    #region INITIALIZE
     private void InitializeEnemyPools()
     {
         if (m_enemyPool == null) return;
@@ -80,6 +84,12 @@ public class EntitySpawner : MonoBehaviour
         if (m_trapPool == null) return;
         m_trapPool.InitializePool();
     }
+    private void InitializeTreasurePool()
+    {
+        if (m_treasurePool == null) return;
+        m_treasurePool.InitializePool();
+    }
+    #endregion
 
     public Vector2Int GetStartPos()
     {
@@ -122,13 +132,12 @@ public class EntitySpawner : MonoBehaviour
 
     private void SpawnEnemy(RoomData room)
     {
-        var positions = ChooseRandomPosition(room, 3);
+        var positions = ChooseRandomPosition(room, m_spawnCount);
 
 
         foreach (var pos in positions)
         {
-            if (IsForbiddenPos(pos))
-                continue;
+            if (IsForbiddenPos(pos)) continue;
 
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
             SpawnEnemyByGacha(worldPositions);
@@ -177,10 +186,37 @@ public class EntitySpawner : MonoBehaviour
             return;
         }
 
+        AssignDropItem(enemy);
+
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
 
         Debug.Log($"Spawn Enemy [{selectedType}] Rarity [{rarity.name}]");
+    }
+    private void AssignDropItem(EnemyController enemy)
+    {
+        if (enemy == null) return;
+
+        if (m_itemManager == null) 
+        {
+            Debug.Log("ItemManager is null");
+            return; 
+        }
+        if(enemy.ItemDropGachaEngine == null)
+        {
+            Debug.LogWarning($"{enemy.name} ItemDropGachaEngine missing");
+            return;
+        }
+
+        //Drop rates for each enemy
+        RarityEnumAsset rarity = enemy.ItemDropGachaEngine.Collapse();
+
+        // hoka tantou jissou yotei 
+        //Item item = m_itemManager.GetRandomItem(rarity);
+        Item item = null;
+        //set drop item 
+        enemy.DropItem = item;
+        Debug.Log($"{enemy.name} DropRarity = {rarity.name}");
     }
 
     private void SpawnShop(RoomData room)
@@ -320,22 +356,56 @@ public class EntitySpawner : MonoBehaviour
 
             //delete index candidates
             candidates.RemoveAt(index);
-           
-            Vector3 worldPos = m_mapGeneration.GridToWorld(pos);
 
-            bool isMimic = Random.value < m_mimicRate;
-
-            if(isMimic)
-            {
-                Instantiate(m_mimicPrefab, worldPos, Quaternion.identity, m_treasureParent.transform);
-                Debug.Log("Spawn Mimis");
-            }
-            else
-            {
-                Instantiate(m_treasurePrefab, worldPos, Quaternion.identity, m_treasureParent.transform);
-                Debug.Log("Spawn TreasureBox");
-            }
+            SpawnTreasureByGacha(m_mapGeneration.GridToWorld(pos));
         }
+    }
+    private void SpawnTreasureByGacha(Vector3 position)
+    {
+        if (m_treasureGachaEngine == null) return;
+
+        if (m_treasureRarityTable == null) return;
+
+        RarityEnumAsset rarity = m_treasureGachaEngine.Collapse();
+
+        List<Enum_TreasureType> candidates = m_treasureRarityTable.GetTreasures(rarity);
+
+        if (candidates.Count == 0)
+        {
+            Debug.LogWarning($"Treasure Not Found : {rarity.name}");
+            return;
+        }
+
+        Enum_TreasureType selectedType = candidates[Random.Range(0,candidates.Count)];
+
+        switch (selectedType)
+        {
+            case Enum_TreasureType.TreasureBox:
+                {
+                    //gete Pool 
+                    Treasure treasure = m_treasurePool.GetTreasure(Enum_TreasureType.TreasureBox);
+                    if (treasure == null)return;
+
+                    treasure.transform.position = position;
+                    treasure.gameObject.SetActive(true);
+
+                    break;
+                }
+
+            case Enum_TreasureType.Mimic:
+                {
+                    //get pool 
+                    EnemyController mimic = m_enemyPool.GetEnemy(Enum_EnemyType.Mimic);
+                    if (mimic == null)return;
+
+                    mimic.transform.position =position;
+                    mimic.gameObject.SetActive(true);
+
+                    break;
+                }
+        }
+
+        Debug.Log($"Spawn {selectedType} [{rarity.name}]");
     }
 
     private bool IsForbiddenPos(Vector2Int pos)

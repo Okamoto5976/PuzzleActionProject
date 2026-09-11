@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
 public class Enemy_Chase : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_enemyController;

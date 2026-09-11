@@ -18,19 +18,12 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
 
             if (m_enemyController.TryAttack())
             {
-                Die();
+                m_enemyController.ReturnPool();
             }
 
             return;
         }
         m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
     }
-
-    private void Die()
-    {
-        //pool‚É•ÏX‚·‚é
-        Destroy(gameObject);
-    }
-
     public void Stop() => m_enemyController.Stop();
 }

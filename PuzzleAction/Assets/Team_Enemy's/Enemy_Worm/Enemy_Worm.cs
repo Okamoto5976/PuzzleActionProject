@@ -5,16 +5,13 @@ using UnityEngine.AI;
 public class Enemy_Worm : MonoBehaviour, IEnemyBehaviour
 {
     private EnemyController m_enemyController;
-    private EnemyWormController m_wormController = new();
-    [SerializeField] private float m_detectDistance = 5;
-    [SerializeField] private float m_attackAnimationTime = 2;
-    [SerializeField] private float m_attackAnimationCooldown = 1;
+    [SerializeField] private EnemyWormController m_wormController = new();
 
 
     public void Initialized(EnemyController enemyController)
     {
         m_enemyController = enemyController;
-        m_wormController.Initialize(m_enemyController, transform, m_detectDistance, m_attackAnimationTime, m_attackAnimationCooldown);
+        m_wormController.Initialize(m_enemyController, transform);
     }
 
     /// <summary>
