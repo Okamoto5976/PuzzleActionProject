@@ -6,16 +6,13 @@ public class SpikeTrap : TrapBase
     [SerializeField]
     private Collider m_damageCollider;
 
-
     private bool m_isAttacking;
     private bool m_isActivated;
-
 
     protected override void SetUp()
     {
         // ‰Šú‰»
         m_damageCollider.enabled = false;
-
         m_isAttacking = false;
         m_isActivated = false;
     }

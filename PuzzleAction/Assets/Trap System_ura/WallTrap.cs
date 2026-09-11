@@ -13,7 +13,6 @@ public class WallTrap : TrapBase
 
     }
 
-
     public void Activate()
     {
         SpawnWall();

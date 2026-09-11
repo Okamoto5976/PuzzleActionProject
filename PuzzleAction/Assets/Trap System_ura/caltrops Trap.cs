@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CaltropTrap : TrapBase
@@ -8,7 +9,10 @@ public class CaltropTrap : TrapBase
     private float m_damageInterval = 1.0f;
 
 
-    private Entity m_target;
+    // 現在、まきびしの範囲内にいるEntity
+    private HashSet<Entity> m_targets =
+        new HashSet<Entity>();
+
 
     private Coroutine m_damageCoroutine;
 
@@ -16,9 +20,8 @@ public class CaltropTrap : TrapBase
     protected override void SetUp()
     {
         // 初期化
-        m_target = null;
+        m_targets.Clear();
 
-        // 前回のCoroutineが残っていた場合
         if (m_damageCoroutine != null)
         {
             StopCoroutine(m_damageCoroutine);
@@ -29,42 +32,44 @@ public class CaltropTrap : TrapBase
 
     protected override void OnHit()
     {
-        // TrapBaseの抽象メソッドなので
-        // 必要に応じてヒット時の処理を書く
+        // 継続ダメージなので、
+        // 特別なHit処理はここでは不要
     }
 
 
-    protected override void OnTriggerEnter(
-        Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
             other.GetComponent<Entity>();
 
         if (target == null)
             return;
+
 
         // 自分自身にはダメージを与えない
         if (target == m_owner)
             return;
 
-        // 同じチームなら無視
+
+        // 自分と同じTeamならダメージを与えない
         if (target.Team == m_team)
             return;
 
-        m_target = target;
 
-        // すでにダメージ処理中なら開始しない
+        // 対象を追加
+        m_targets.Add(target);
+
+
+        // Coroutineが動いていなければ開始
         if (m_damageCoroutine == null)
         {
             m_damageCoroutine =
-                StartCoroutine(
-                    DamageCoroutine());
+                StartCoroutine(DamageCoroutine());
         }
     }
 
 
-    private void OnTriggerExit(
-        Collider other)
+    private void OnTriggerExit(Collider other)
     {
         Entity target =
             other.GetComponent<Entity>();
@@ -72,8 +77,13 @@ public class CaltropTrap : TrapBase
         if (target == null)
             return;
 
-        // 今ダメージを与えている対象が離れた
-        if (target == m_target)
+
+        // 範囲から出たEntityを削除
+        m_targets.Remove(target);
+
+
+        // 誰もいなくなったら停止
+        if (m_targets.Count == 0)
         {
             StopDamage();
         }
@@ -82,16 +92,23 @@ public class CaltropTrap : TrapBase
 
     private IEnumerator DamageCoroutine()
     {
-        while (m_target != null)
+        while (m_targets.Count > 0)
         {
-            // ダメージ処理
-            m_target.TakeDamage(
-                m_damageData);
+            // 現在範囲内にいる全Entityにダメージ
+            foreach (Entity target in m_targets)
+            {
+                if (target == null)
+                    continue;
 
-            // 一定時間待つ
+                target.TakeDamage(m_damageData);
+            }
+
+
+            // 次のダメージまで待つ
             yield return new WaitForSeconds(
                 m_damageInterval);
         }
+
 
         m_damageCoroutine = null;
     }
@@ -101,18 +118,15 @@ public class CaltropTrap : TrapBase
     {
         if (m_damageCoroutine != null)
         {
-            StopCoroutine(
-                m_damageCoroutine);
-
+            StopCoroutine(m_damageCoroutine);
             m_damageCoroutine = null;
         }
-
-        m_target = null;
     }
 
 
     private void OnDisable()
     {
         StopDamage();
+        m_targets.Clear();
     }
 }
