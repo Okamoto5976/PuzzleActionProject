@@ -57,6 +57,7 @@ public class MenuUI : MonoBehaviour
         m_scene[(int)Scene.Option].SetActive(false);
         m_scene[(int)Scene.Title].SetActive(true);
         IsOption = false;
+
     }
 
     public void TransitionOption()
@@ -70,10 +71,12 @@ public class MenuUI : MonoBehaviour
     {
         Debug.Log("Back");
         gameObject.SetActive(false);
-        Time.timeScale = 1.0f;
+
+        GameManager.Instance.OnSetStop(false);
+
     }
 
-   
+
 
     //impossible
     //public void Transition(Scene scene)

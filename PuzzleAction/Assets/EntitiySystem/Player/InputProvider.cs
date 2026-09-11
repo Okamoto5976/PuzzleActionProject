@@ -76,6 +76,17 @@ public class InputProvider
         m_isInteract = true;
     }
 
+    public void OnInputClear()
+    {
+        Debug.LogWarning("InputClear");
+        m_active = false;
+        m_activeRelease = false;
+        m_isEvasion = false;
+        m_isPrevious = false;
+        m_isNext = false;
+        m_isInteract = false;
+    }
+
     public Vector2 Move
     {
         get

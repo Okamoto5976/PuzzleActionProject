@@ -26,6 +26,9 @@ public class UIController : MonoBehaviour
     private bool m_isInventory = false;
     //private bool isInventoryOpen = false;
 
+    //player input stop
+    [SerializeField] private BoolEventSO m_playerIgnoreInput;
+
     private void OnEnable()
     {
         m_gameClearUIEvent.Register(OnShowGameClearUI);
@@ -98,17 +101,21 @@ public class UIController : MonoBehaviour
     //if get key "EscapeKey"
     private void ToggleMenu(InputAction.CallbackContext context)
     {
-        if(!m_isMenu)
+
+        if (!m_isMenu)
         {
             OnShowMenuUI(true);
             //m_menuUIObj.TransitionTitle();
-            Time.timeScale = 0f;
+            GameManager.Instance.OnSetStop(true);
+            m_playerIgnoreInput.Raise(true);
 
         }
         else
         {
             OnShowMenuUI(false);
-            Time.timeScale = 1f;
+            GameManager.Instance.OnSetStop(false);
+            m_playerIgnoreInput.Raise(false);
+
 
         }
 
@@ -116,7 +123,10 @@ public class UIController : MonoBehaviour
 
     private void ToggleInventory(InputAction.CallbackContext callback)
     {
-        if(!m_isInventory)
+        if (GameManager.Instance.IsStop) return;
+        Debug.Log("Inventory");
+
+        if (!m_isInventory)
         {
             //OnShowInventoryUI(true);
             m_inventoryEvent.RaiseEvent(true);

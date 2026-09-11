@@ -56,6 +56,7 @@ MonoBehaviour:
   m_areaObject:
   - {fileID: 6695180576902504364}
   - {fileID: 4716879762198994344}
+  m_palyerCanInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
 --- !u!65 &5886942717142441439
 BoxCollider:
   m_ObjectHideFlags: 0

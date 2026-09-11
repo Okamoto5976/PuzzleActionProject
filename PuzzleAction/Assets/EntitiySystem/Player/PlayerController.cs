@@ -16,12 +16,6 @@ public class PlayerController : Entity
     private bool m_isNext;
     private bool m_isInteract;
 
-    //[SerializeField] private InputActionReference m_moveAction;
-    //[SerializeField] private InputActionReference m_evasionAction;
-    //[SerializeField] private InputActionReference m_hotberOne;
-    //[SerializeField] private InputActionReference m_hotberTwo;
-    //[SerializeField] private InputActionReference m_hotberThree;
-
     [SerializeField] private Vector3Asset m_position;
 
     [Header("Evasion")]
@@ -43,23 +37,22 @@ public class PlayerController : Entity
     private bool m_isUsingArrow = false;
     private bool m_isUsingSetItem = false;
 
+    //when open shop, can not Input
+    private bool m_ignoreInput = false;
+    [SerializeField] private BoolEventSO m_canInputEvent;
+
     //--------player foward -----------------
     [SerializeField] private GameObject m_playerDirObject;
 
     [SerializeField] private RectTransform m_reticle;
 
-    //player forward
     public Vector3 Forward => m_playerDirObject.transform.forward;
 
     private Vector3 m_arrowTemporaryForward;
 
-    //---------passive bool---------------
-
     //InteractSystem
     private InteractSystem m_interactSystem;
     [SerializeField] private LayerMask m_interactLayer;
-
-
 
 
     protected override void Awake()
@@ -89,11 +82,12 @@ public class PlayerController : Entity
 
     private void OnEnable()
     {
-        
+        m_canInputEvent.Register(SetCanInput);
     }
 
     private void OnDisable()
     {
+        m_canInputEvent.Unregister(SetCanInput);
 
         m_input.Disable();
     }
@@ -111,7 +105,8 @@ public class PlayerController : Entity
 
         m_position.SetValue(transform.position);
 
-
+        if (m_ignoreInput) return;
+             
         m_isActive = m_input.IsActive;
         m_isActiveHold = m_input.IsActiveHold;
         m_isActiveRelease = m_input.IsActiveRelease;
@@ -356,5 +351,15 @@ public class PlayerController : Entity
     public void RemovePassive(Passive type)
     {
         m_passiveSystem.RemoveBuff(type);
+    }
+
+    public void SetCanInput(bool ignoreInput)
+    {
+        m_ignoreInput = ignoreInput;
+
+        if(!ignoreInput)
+        {
+            m_input.OnInputClear();
+        }
     }
 }

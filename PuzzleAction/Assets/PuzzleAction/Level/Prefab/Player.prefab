@@ -311,6 +311,7 @@ MonoBehaviour:
   m_inventorySystem: {fileID: 0}
   m_displayManager: {fileID: 0}
   m_hotberIndex: 0
+  m_canInputEvent: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
   m_playerDirObject: {fileID: 7214972691664052804}
   m_reticle: {fileID: 0}
   m_interactLayer:
@@ -329,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHP
   m_currentHP: 0
+  m_max: 0
   m_damageParticleController: {fileID: 8834109383432628176}
   m_blood: {fileID: 7711612278638627893}
   m_playerDeadEvent: {fileID: 11400000, guid: fc782fd3afb53c84997fbfd9f631bf13, type: 2}

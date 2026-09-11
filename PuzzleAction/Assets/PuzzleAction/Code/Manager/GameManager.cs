@@ -21,10 +21,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int m_money;
 
     private bool m_hasKey = false;
+
+    private bool m_isStop = false;
     //property
     public int Level => m_level;
     public int Money => m_money;
     public bool HasKey => m_hasKey;
+    public bool IsStop => m_isStop;
 
     public void AddLevel(int value)
     {
@@ -59,14 +62,16 @@ public class GameManager : MonoBehaviour
         m_money = value;
     }
 
-    public void OnStopTime(bool isStop)
+    public void OnSetStop(bool isStop)
     {
         if(isStop)
         {
+            m_isStop = true;
             Time.timeScale = 0;
         }
         else
         {
+            m_isStop = false;
             Time.timeScale = 1f;
         }
     }

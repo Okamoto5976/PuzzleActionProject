@@ -58,6 +58,9 @@ public class PauseManager : MonoBehaviour
     // TAB
     private void ToggleInventory(InputAction.CallbackContext callback)
     {
+        //if (GameManager.Instance.IsShop) return;
+        Debug.Log("Inventory");
+
         isInventoryOpen = !isInventoryOpen;
 
         m_inventoryUIEvent.Raise(isInventoryOpen);

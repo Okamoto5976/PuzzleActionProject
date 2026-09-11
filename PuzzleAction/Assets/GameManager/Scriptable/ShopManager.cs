@@ -64,6 +64,8 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private BoolEventSO m_showShopUI;
 
+    [SerializeField] private BoolEventSO m_palyerIgnoreInput;
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -191,6 +193,7 @@ public class ShopManager : MonoBehaviour
 
     private void SetDatasToSlots(int id)
     {
+
         SetShopText();
 
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
@@ -295,12 +298,14 @@ public class ShopManager : MonoBehaviour
         m_infoTextPrefab.gameObject.SetActive(false);
     }
 
+
+
     public void OnClose()
     {
         m_showShopUI.Raise(false);
         SetDatasToSlots(_currentShopId);
 
-        GameManager.Instance.OnStopTime(false);
-
+        GameManager.Instance.OnSetStop(false);
+        m_palyerIgnoreInput.Raise(false);
     }
 }

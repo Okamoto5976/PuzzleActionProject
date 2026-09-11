@@ -65,3 +65,4 @@ MonoBehaviour:
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1
+  m_palyerIgnoreInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}

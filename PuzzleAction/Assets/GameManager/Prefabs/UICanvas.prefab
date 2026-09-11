@@ -1402,6 +1402,7 @@ MonoBehaviour:
   m_inventoryEvent: {fileID: 11400000, guid: 1aaa309a75dd3474694da85d72dcca78, type: 2}
   m_gameClearUIEvent: {fileID: 11400000, guid: 3dd5848ad79728a4799baf40dbccfc10, type: 2}
   m_gameOverUIEvent: {fileID: 11400000, guid: 7eeab09825dd6ab49a9d42adf6296453, type: 2}
+  m_playerIgnoreInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
 --- !u!114 &1016455214197741527
 MonoBehaviour:
   m_ObjectHideFlags: 0

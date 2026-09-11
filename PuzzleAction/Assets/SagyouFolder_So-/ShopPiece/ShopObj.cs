@@ -18,6 +18,8 @@ public class ShopObj : MonoBehaviour, IInteractable
 
     [SerializeField] private GameObject[] m_areaObject;
 
+    [SerializeField] private BoolEventSO m_palyerIgnoreInput;
+
     private void Awake()
     {
         _shopId = _shopInstanceCounter.Register();
@@ -39,6 +41,7 @@ public class ShopObj : MonoBehaviour, IInteractable
         m_showShopId.Raise(_shopId);
         m_showShopUI.Raise(true);
 
-        GameManager.Instance.OnStopTime(true);
+        GameManager.Instance.OnSetStop(true);
+        m_palyerIgnoreInput.Raise(true);
     }
 }
