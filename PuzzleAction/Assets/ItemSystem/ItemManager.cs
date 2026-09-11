@@ -5,18 +5,10 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
-
     //public List <Item> DropList=new();
     public List<Item> ShopList = new();
     public List<Item> ItemList = new();
     public List<float> DropRateList = new();
-    //public struct ItemWithGrade
-    //{
-    //    public Item item;
-    //    public Grade grade;
-    //}
-    //ItemとGradeのList
-    //public List<ItemWithGrade> ItemWithGradeList = new();
     //プレイヤーが使えるアイテム
     public List<Item> PlayerItems = new();
     //敵専用アイテム
@@ -26,14 +18,14 @@ public class ItemManager : MonoBehaviour
     //DropPool I_pool;
     //リスト初期化
     [Header("Debug")]
-    [SerializeField]private DropItem m_dropItem;
+    [SerializeField] private DropItem m_dropItem;
     [SerializeField] private List<DropItem> DropItems = new();
 
     //GachaEngine.RarityWithWeight
     //Listの中からIDと同じアイテムを探す
     public Item GetItem(int id)
     {
-        Item data = ItemList.Find(x=>x.ID == id);
+        Item data = ItemList.Find(x => x.ID == id);
 
         return data;
     }
@@ -62,7 +54,7 @@ public class ItemManager : MonoBehaviour
     {
         //Debug.Log("OnUseItem");
 
-        if(item.Type == Item.ItemEffectType.Trap)
+        if (item.Type == Item.ItemEffectType.Trap)
         {
             if (item is TrapItem trap)
             {
@@ -81,64 +73,71 @@ public class ItemManager : MonoBehaviour
     }
 
 
-
-    public void DropItemSetData(Vector3 pos, ItemData data)
+    [SerializeField] private ComponentPoolHandler_Item m_itemPool;
+    public void DropItemSetData(Vector3 pos, Item data)
     {
         //get object"DropItem" from pool        
         //set itemData in DropItem
-        //Data data = DrowItem(PlayerItems)
+        //Data data = DropItem(PlayerItems)
         //int index = Random.Range(0, PlayerItems.Count);
         //Item data = PlayerItems[index];
         //int dropIndex = Random.Range(0, DropItems.Count);
         //DropItem m_dropItem = DropItems[dropIndex];
         //m_dropItem.Initialize(data);
         //set pos DropItem Position
-        m_dropItem.gameObject.transform.position = pos;
+        DropItem obj = m_itemPool.GetComponentFromPool();
 
-        foreach (var obj in DropItems)
-        {
-            //if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
-            {
-                DropItem m_dropIndex = obj;
-                m_dropIndex.Initialize(data);
-                //set pos DropItem Position
-                m_dropIndex.gameObject.transform.position = pos;
-            }
+        obj.Initialize(data);
 
-        }
+        //m_dropItem.gameObject.transform.position = pos;
+        obj.gameObject.transform.position = pos;
+
+
+        //foreach (var obj in DropItems)
+        //{
+        //    if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        DropItem m_dropIndex = obj;
+        //        m_dropIndex.Initialize(data);
+        //        //set pos DropItem Position
+        //        m_dropIndex.gameObject.transform.position = pos;
+        //        //m_dropIndex.gameObject.SetActive(true);
+        //        //m_dropPool.ItemGet
+        //    }
+
+        //}
     }
 
-    [Header("排出確率")]
+    //[Header("排出確率")]
 
-    [Range(0, 100)] public float Comon = 50f;
-    [Range(0, 100)] public float UnComon = 30f;
-    [Range(0, 100)] public float Rare = 15f;
-    [Range(0, 100)] public float Legend = 5f;
-
-    //仮-----------------------------------
-    List<ItemData> itemDatas = new();
-    //-------------------------------------
-
-    // Rarityの受け取り方法??
-
-    //public Item DrowItem(GachaEngine.RarityWithWeight.Weight rarity)
-    //{
-    //    List<Item> candidates = itemDatas.FindAll(Data => rarity == rarity);
-
-    //    if (candidates.Count == 0)
-    //    {
-    //        Debug.Log($"{rarity}のアイテムがありません。");
-    //        return null;
-    //    }
-
-    //    int index = Random.Range(0, candidates.Count);
-    //    //candidates.Clear();
-    //    return candidates[index];
-    //}
+    //[Range(0, 100)] public float Comon = 50f;
+    //[Range(0, 100)] public float UnComon = 30f;
+    //[Range(0, 100)] public float Rare = 15f;
+    //[Range(0, 100)] public float Legend = 5f;
 
 
+    //仮(全アイテムが格納されたリスト)
+    [SerializeField] private List<Item> items = new();
 
-    
+
+    public Item DropItem(RarityEnumAsset rarity)
+    {
+        List<Item> candidates = items.FindAll(Item => Item.Data.Rarity == rarity);
+
+        if (candidates.Count == 0)
+        {
+            Debug.Log($"{rarity}のアイテムがありません。");
+            return null;
+        }
+
+        int index = Random.Range(0, candidates.Count);
+        //candidates.Clear();
+        return candidates[index];
+    }
+
+
+
+
 
     //private Grade GetRandomRarity()
     //{

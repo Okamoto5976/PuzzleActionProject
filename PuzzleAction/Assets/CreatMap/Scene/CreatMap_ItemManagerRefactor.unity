@@ -5107,8 +5107,9 @@ MonoBehaviour:
   DropItems: []
   Comon: 50
   UnComon: 30
-  Rara: 15
+  Rare: 15
   Legend: 5
+  itemDatas: []
 --- !u!1 &869878583074309818
 GameObject:
   m_ObjectHideFlags: 0
