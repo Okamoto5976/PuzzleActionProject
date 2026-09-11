@@ -28,7 +28,7 @@ public class InputProvider
         m_action.Player.Previous.performed += OnPrevious;
         m_action.Player.Next.performed += OnNext;
         m_action.Player.Interact.performed += OnInteract;
-
+        m_action.Player.GetDropItem.performed += OnGetDropItem;
         m_action.Enable();
     }
 
@@ -79,6 +79,7 @@ public class InputProvider
 
     private void OnGetDropItem(InputAction.CallbackContext context)
     {
+        Debug.Log("OnGetDropItem");
         m_isGetDropItem = true;
     }
 

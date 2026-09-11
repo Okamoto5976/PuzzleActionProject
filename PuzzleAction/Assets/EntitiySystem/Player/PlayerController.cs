@@ -88,6 +88,9 @@ public class PlayerController : Entity
         m_input = new InputProvider();
         
         m_input.Enable();
+
+        m_messageText.text = "";
+        m_itemDescriptionText.text = "";
     }
 
     private void OnEnable()
@@ -122,8 +125,12 @@ public class PlayerController : Entity
         m_isNext = m_input.IsNext;
         m_isInteract = m_input.IsInteract;
         m_isGetDropItem = m_input.IsGetDropItem;
-
-        if(m_isInteract)
+        if (m_isGetDropItem)
+        {
+            Debug.Log("PlayerController");
+            OnuseItemGet();
+        }
+        if (m_isInteract)
         {
             OnInteract();
         }
@@ -318,19 +325,33 @@ public class PlayerController : Entity
 
     private void OnuseItemGet()
     {
-        //Debug.Log("GetItem");
-        Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
-        
-        foreach(Collider hit in hits)
+        Collider[] hits = Physics.OverlapSphere(transform.position, 100f, m_itemLayer);
+
+        Debug.Log("Hit数 : " + hits.Length);
+
+        foreach (Collider hit in hits)
         {
-            DropItem drop =hit.GetComponent<DropItem>();
+            Debug.Log(hit.name);
 
-            if (drop == null) continue;
+            DropItem drop = hit.GetComponent<DropItem>();
 
-            if(ReceiveItem(drop.ItemData))
+            if (drop == null)
             {
+                Debug.Log("DropItemなし");
+                continue;
+            }
+
+            Debug.Log("DropItem発見");
+
+            if (ReceiveItem(drop.ItemData))
+            {
+                Debug.Log("アイテム追加成功");
                 drop.ItemGet();
                 break;
+            }
+            else
+            {
+                Debug.Log("アイテム追加失敗");
             }
         }
     }
@@ -377,22 +398,30 @@ public class PlayerController : Entity
     }
     public virtual bool ReceiveItem(Item item)
     {
-        if (item == null) return false;
-        if (m_inventorySystem == null) return false;
+        Debug.Log("ReceiveItem開始");
+
+        if (item == null)
+        {
+            Debug.Log("itemがnull");
+            return false;
+        }
+
+        if (m_inventorySystem == null)
+        {
+            Debug.Log("InventorySystemがnull");
+            return false;
+        }
+
+        Debug.Log("AddItemを呼びます");
 
         bool success = m_inventorySystem.AddItem(item, 1);
 
-        if (!success)
-        {
-            m_messageText.text = "インベントリがいっぱいです";
-        }
-        else
-        {
-            m_messageText.text = "";
-        }
+        Debug.Log("AddItem終了 : " + success);
 
         return success;
     }
+    private DropItem m_currentDropItem;
+    private Vector3 m_popupPosition;
     private void SearchItem()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -403,11 +432,18 @@ public class PlayerController : Entity
 
             if (drop != null)
             {
+                if (m_currentDropItem != drop)
+                {
+                    m_currentDropItem = drop;
+                    m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
+                }
+
+                m_itemDescriptionText.rectTransform.position = m_popupPosition;
                 m_itemDescriptionText.text = drop.ItemData.info;
                 return;
             }
         }
-
+        m_currentDropItem = null;
         m_itemDescriptionText.text = "";
     }
 }

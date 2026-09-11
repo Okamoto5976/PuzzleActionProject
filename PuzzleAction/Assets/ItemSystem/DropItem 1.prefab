@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1507705121183690295}
   - component: {fileID: 2573298225387490738}
   - component: {fileID: 4100244963879105111}
-  m_Layer: 0
+  - component: {fileID: -30835030778756755}
+  m_Layer: 9
   m_Name: DropItem 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431a31e016f519d40821f3d818ba7a58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropItem
-  m_timeToReturn: 5
+  m_timeToReturn: 30
 --- !u!54 &4100244963879105111
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -75,6 +76,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-30835030778756755
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973414102923213279}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6217450943760355097
 GameObject:
   m_ObjectHideFlags: 0
@@ -85,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 967168956980264904}
   - component: {fileID: 6222392426850108708}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4052668135508155962}
   - component: {fileID: 7727252269452802821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

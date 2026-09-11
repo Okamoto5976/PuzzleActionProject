@@ -18,14 +18,16 @@ MonoBehaviour:
     itemID: 2
     itemName: AttackUpPorthion
     itemIcon: {fileID: 21300000, guid: 0c752ef179f634948ac5b648f878b2e8, type: 3}
-    description: 
+    description: afdsafa
     maxStack: 99
     dropRate: 0
-    itemGrade: 0
     itemType: 0
+    m_itemUseType: 0
     price: 100
     Type: 0
+    itemGrade: 0
   m_buffDuration: 60
+  m_buffID: 0
   m_buffType: 0
   m_buffEffectType: 0
   m_statusType: 1

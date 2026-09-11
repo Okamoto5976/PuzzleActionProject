@@ -99,17 +99,15 @@ public class InventorySystem : MonoBehaviour
 
     public bool AddItem(Item data, int count)
     {
-        // Activeアイテム
+
         if (data.ItemType == ItemType.Active)
         {
             return AddActiveItem(data, count);
         }
-        else// Passiveアイテム
+        else
         {
             return AddPassiveItem(data, count);
         }
-
-
     }
 
     private bool AddActiveItem(Item data, int count)

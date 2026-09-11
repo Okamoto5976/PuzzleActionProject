@@ -46,6 +46,8 @@ public class DropItem : MonoBehaviour
 
     public void Initialize(Item data = null)
     {
+        Debug.Log("Initialize : " + data);
+
         Invoke(nameof(Return), m_timeToReturn); // timeToReturn秒後にReturnメソッドを呼び出す
         if (data == null) return;
         SetItemData(data);
@@ -65,6 +67,7 @@ public class DropItem : MonoBehaviour
         //    pool.ReturnItem(prefab);
         //}
         Debug.Log("Return");
+        Destroy(gameObject);
         //return pool
     }
 }
