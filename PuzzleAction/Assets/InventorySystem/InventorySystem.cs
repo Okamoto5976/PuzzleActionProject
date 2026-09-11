@@ -48,6 +48,8 @@ public class InventorySystem : MonoBehaviour
     //passive effect add player
     [SerializeField] private PlayerController m_player;
 
+    [SerializeField] private Vector3Asset m_playerPosition;
+
     private void Awake()
     {
         activeSlots = activePanel.GetComponentsInChildren<SlotUI>(true);
@@ -272,6 +274,10 @@ public class InventorySystem : MonoBehaviour
         //passive remove of player
         m_itemManager.OnRemovePassive(data.data, m_player);
 
+        // ItemDrop—p
+        // Vector3 position = m_playerPosition.Value;
+        // Item itemData = data.data;
+
         passiveInventory.RemoveAt(index);
 
         UpdateUI();
@@ -282,6 +288,10 @@ public class InventorySystem : MonoBehaviour
     public void RemoveItem(int index)
     {
         if (index < 0 || index >= activeInventory.Count) return;
+
+        // ItemDrop—p
+        // Vector3 position = m_playerPosition.Value;
+        // Item itemData = activeInventory[index].data;
 
         activeInventory[index] = null;
 
