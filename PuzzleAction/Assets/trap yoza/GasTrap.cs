@@ -8,7 +8,7 @@ public class GasTrap : TrapBase
 
     private List<Entity> m_targets = new List<Entity>();
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         //if (m_owner != null)
         //{
@@ -35,7 +35,7 @@ public class GasTrap : TrapBase
 
     private void Start()
     {
-        m_damageData = SetDamageData();
+        //m_damageData = SetDamageData();
     }
 
     private void Update()

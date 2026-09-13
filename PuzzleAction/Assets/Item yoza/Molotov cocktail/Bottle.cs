@@ -5,31 +5,62 @@ public class Bottle : TrapBase
     [Header("‰Š")]
     [SerializeField] private GameObject m_fireAreaPrefab;//‰Î
 
-    protected override void SetUp()
+    [SerializeField] private float m_power;
+
+    [SerializeField] private LayerMask m_hitLayers;
+
+    private bool m_isInitialized;
+
+    protected override void EntitySetUp()
     {
-        
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+        m_isInitialized = true;
     }
+
     protected override void OnHit()
     {
         SpawnFlame();
+        OnReturnPool();
+
     }
+
     private void FixedUpdate()
     {
-        OnMove(m_dir);
-        CheckRange();
-        CheckDeadLine();
+        if (!m_isInitialized)
+            return;
+
+        OnAddForce(m_dir, m_power);
+
+        m_isInitialized = false;
+        //CheckRange();
     }
+
+    private void Update()
+    {
+        CheckDeadLine();
+
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-        Entity target = other.GetComponent<Entity>();
-
-        if(target != null)
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
         {
-            if (target.Team == m_team) return;
+            OnHit();
+            return;
         }
-        SpawnFlame();
+
+        //Entity target = other.GetComponent<Entity>();
+
+        //if(target != null)
+        //{
+        //    if (target.Team == m_team) return;
+        //}
+
+        //OnHit();
+
     }
+
     private void SpawnFlame()
     {
         if(m_fireAreaPrefab != null)

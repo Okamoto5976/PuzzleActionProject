@@ -7,7 +7,7 @@ public class SwampTrap : TrapBase
 
     private float m_timer;
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         //if (m_owner != null)
         //{

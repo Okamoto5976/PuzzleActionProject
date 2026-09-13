@@ -146,7 +146,7 @@ public class EnemyController : Entity
                 CriticalDamage = CriticalDamage,
                 BreakRate = BreakRate,
                 Knockback = KnockBack,
-                Stun = Stun,
+                StunDuration = Stun,
                 AttackDir = transform.forward,
                 Attacker = this,
                 //AttackerSE = AttackSE,

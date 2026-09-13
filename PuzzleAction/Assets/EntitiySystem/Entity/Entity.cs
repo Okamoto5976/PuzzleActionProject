@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 public enum TeamType
 {
@@ -20,10 +21,12 @@ abstract public class Entity : MonoBehaviour
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float AGI => m_status[StatusType.Agility].Value;
     public float BreakRate => m_status[StatusType.BreakRate].Value;
-    public float StunPower => m_status[StatusType.StunPower].Value;
+    public float StunPower => m_status[StatusType.StunDuration].Value;
     public float PoisonRes => m_status[StatusType.PoisonRes].Value;
     public float StunRes => m_status[StatusType.StunRes].Value;
     public float SlowRes => m_status[StatusType.SlowRes].Value;
+    public float GasRes => m_status[StatusType.GasRes].Value;
+    public float BurnRes => m_status[StatusType.BurnRes].Value;
     public float Slow => m_status[StatusType.Slow].Value;
     public float Poison => m_status[StatusType.Poison].Value;
     public float Gas => m_status[StatusType.Gas].Value;
@@ -93,11 +96,11 @@ abstract public class Entity : MonoBehaviour
     }
 
 
-    //--------buff-------------------
+    //--------Status Buff-------------------
     protected Dictionary<StatusType, EntityStatus> m_status = new();
 
     private float m_flagTime;
-    //--------------------------------------
+    //-------buff---------------------------
 
     protected Vector3 m_moveDir;
     protected Vector3 m_velocity;
@@ -143,10 +146,12 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.CriticalDamage, new EntityStatus(m_data.CriticalDamage));
         m_status.Add(StatusType.Agility, new EntityStatus(m_data.AGI));
         m_status.Add(StatusType.BreakRate, new EntityStatus(m_data.BreakRate));
-        m_status.Add(StatusType.StunPower, new EntityStatus(m_data.Stun));
+        m_status.Add(StatusType.StunDuration, new EntityStatus(m_data.StunDuration));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
         m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
+        m_status.Add(StatusType.GasRes, new EntityStatus(m_data.GasRes));
+        m_status.Add(StatusType.BurnRes, new EntityStatus(m_data.BurnRes));
         m_status.Add(StatusType.Slow, new EntityStatus(0f));
         m_status.Add(StatusType.Poison, new EntityStatus(0f));
         m_status.Add(StatusType.Gas, new EntityStatus(0f));
@@ -180,6 +185,73 @@ abstract public class Entity : MonoBehaviour
         m_buffSystem.AddBuff(modifier, buffID, duration);
     }
 
+    public void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
+    {
+        if (m_buffSystem == null)
+        {
+            return;
+        }
+
+        float value;
+        float actualDuration;
+
+
+        switch (modifier.m_statType)
+        {
+            case StatusType.Poison:
+                value = modifier.m_value * (1f - PoisonRes);
+                actualDuration = duration * (1f - PoisonRes);
+                break;
+            case StatusType.Gas:
+                value = modifier.m_value * (1f - GasRes);
+                actualDuration = duration * (1f - GasRes);
+                break;
+            case StatusType.Burn:
+                value = modifier.m_value * (1f - BurnRes);
+                actualDuration = duration * (1f - BurnRes);
+                break;
+            default:
+                value = modifier.m_value;
+                actualDuration = duration;
+                break;
+        }
+
+        modifier.m_value = value;
+
+
+
+        //Debug.Log(buffID);
+
+        m_buffSystem.AddBuff(modifier, buffID, actualDuration);
+    }
+
+    public void AddControlEffectStun(float duration)
+    {
+        float actualDuration = duration * (1f - StunRes);
+
+        if (actualDuration <= 0f) return;
+
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = StatusType.Stun,
+            m_value = 1f,
+            m_modType = ModifierType.Add
+        };
+
+        m_buffSystem.AddBuff(modifier, BuffID.Stun, actualDuration);
+    }
+
+    public void ApplyInvincible(float duration)
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = StatusType.Invincible,
+            m_value = 1f,
+            m_modType = ModifierType.Add
+        };
+
+        m_buffSystem.AddBuff(modifier, BuffID.Invincible, duration);
+    }
 
     //call FixidUpdate----------------------------------------------------
     protected virtual void CallMove()
@@ -211,22 +283,22 @@ abstract public class Entity : MonoBehaviour
             //buff icon
             SetIsStun(true);
         }
-        else if(Stun <= 0f && IsStun)
+        else if (Stun <= 0f && IsStun)
         {
             SetIsStun(false);
 
         }
 
-        if(Invincible > 0f)
+        if (Invincible > 0f)
         {
             SetIsInvincible(true);
         }
-        else if(Invincible <= 0f && !IsInvincible)
+        else if (Invincible <= 0f && !IsInvincible)
         {
             SetIsInvincible(false);
         }
 
-        if(Gas > 0f)
+        if (Gas > 0f)
         {
             if (m_flagTime > 1f)
             {
@@ -366,15 +438,24 @@ abstract public class Entity : MonoBehaviour
     public void SetIsStun(bool value) => m_isStun = value;
     public void SetIsInvincible(bool value) => m_isInvincible = value;
 
-    public virtual void ApplyKnockBack(Vector3 direction,float power,float stunTime)
+    //call from EntityHP
+    public virtual void ApplyKnockBack(Vector3 direction,float power)
     {
         if (m_isInvincible) return;
 
-        ChangeState(EntityState.Damage);
+        //ChangeState(EntityState.Damage);
 
-        SetIsStun(true);
+        //SetIsStun(true);
         //m_stunTime = stunTime;
         //Stun Add
+        //StatusModifier modifier = new StatusModifier()
+        //{
+        //    m_statType = StatusType.Stun,
+        //    m_value = 1f,
+        //    m_modType = ModifierType.Add
+        //};
+
+        //AddBuff(modifier, BuffID.Stun, stunTime);
 
         direction.y = 0;
 

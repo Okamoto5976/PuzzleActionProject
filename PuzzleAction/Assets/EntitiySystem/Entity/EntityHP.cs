@@ -130,13 +130,15 @@ abstract public class EntityHP : MonoBehaviour
 
         float knockBackPower = Mathf.Max(data.Knockback - m_entity.DEF, 0);
 
-        float stunPower = Mathf.Max(data.Stun - m_entity.StunRes, 0);
+        //float stunPower = Mathf.Max(data.StunDuration - m_entity.StunRes, 0);
 
-        float stunTime=stunPower * 0.1f;
+        //float stunTime=stunPower * 0.1f;
+
+        m_entity.AddControlEffectStun(data.StunDuration);
 
         Vector3 dir = data.AttackDir.normalized;
 
-        m_entity.ApplyKnockBack(dir, knockBackPower,stunTime);
+        m_entity.ApplyKnockBack(dir, knockBackPower);
 
         if ( m_currentHP <= 0 ) 
         {

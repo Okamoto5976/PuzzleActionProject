@@ -26,7 +26,7 @@ public class TrapItem : Item
             Debug.Log("null!!");
             return;
         }
-        TrapPrefab.Init(data.entity, data.dir, (int)data.baseValue);
+        TrapPrefab.Init(data.entity, data.dir);
         TrapPrefab.gameObject.transform.position = data.pos;
         TrapPrefab.gameObject.SetActive(true);
         //TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);

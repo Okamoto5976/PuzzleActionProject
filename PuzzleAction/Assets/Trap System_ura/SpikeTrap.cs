@@ -9,7 +9,7 @@ public class SpikeTrap : TrapBase
     private bool m_isAttacking;
     private bool m_isActivated;
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         // ‰Šú‰»
         m_damageCollider.enabled = false;

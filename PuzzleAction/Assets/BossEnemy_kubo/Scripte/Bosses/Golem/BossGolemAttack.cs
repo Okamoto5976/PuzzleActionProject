@@ -114,7 +114,7 @@ public class BossGolemAttack : MonoBehaviour
                 CriticalDamage = m_controller.CriticalDamage,
                 BreakRate = m_controller.BreakRate,
                 Knockback = m_controller.KnockBack,
-                Stun = m_controller.Stun,
+                StunDuration = m_controller.Stun,
                 AttackDir = transform.forward,
                 Attacker = m_controller
             };

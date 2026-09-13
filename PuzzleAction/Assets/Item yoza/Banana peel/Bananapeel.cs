@@ -11,10 +11,11 @@ public class Bananapeel : TrapBase
 
     protected override void OnHit()
     {
-        
+        //ƒv[ƒ‹•Ô‹p
+        OnReturnPool();
     }
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         
 
@@ -25,19 +26,20 @@ public class Bananapeel : TrapBase
         //‘Šè‚Ì”»•Ê
         if (other.GetComponentInParent<Entity>()is { } victim)
         {
-            base.OnTriggerEnter(other);//ˆê‰
             //“]“|or€–S”½‰‚È‚µ
-            if (victim.IsStun || victim.CurrentState == Entity.EntityState.Dead) return;
+            //if (victim.IsStun || victim.CurrentState == Entity.EntityState.Dead) return;
             //ƒqƒbƒgˆ—
             OnHit();
-            Debug.Log("‚ ‚½‚Á‚½");
+            //Debug.Log("‚ ‚½‚Á‚½");
             //“]‚×
-            Vector3 slipDir = (victim.transform.position - transform.position).normalized;
-            victim.ApplyKnockBack(slipDir, MomentumFalling, stunTime);
+            //Vector3 slipDir = (victim.transform.position - transform.position).normalized;
+            //victim.ApplyKnockBack(slipDir, MomentumFalling, stunTime);
+
+            //stun effect
+
             //‚¯‚ÂƒAƒ^ƒbƒN(Á‚·‚¾‚ë‚¤‚È)
-            HipDrop(victim);
-            //ƒv[ƒ‹•Ô‹p
-            OnReturnPool();
+            //HipDrop(victim);
+            
         }
     }
     /// <summary>

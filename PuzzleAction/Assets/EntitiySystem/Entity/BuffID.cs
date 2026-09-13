@@ -5,6 +5,7 @@ public enum BuffID
 {
     Speed,
     Slow,
+    Water,
     Strength,
     Defense,
     CriticalRate,

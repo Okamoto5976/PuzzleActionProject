@@ -50,7 +50,7 @@ public class ObjectConsolidation : MonoBehaviour
                 }
             }
 
-            trap.Init(m_TrapOwner, Vector3.forward, 1);
+            trap.Init(m_TrapOwner, Vector3.forward);
 
             trap.gameObject.SetActive(true);
         }

@@ -10,7 +10,17 @@ public class NetTrap : TrapBase
     [SerializeField] private float m_angle = 60.0f;
     [SerializeField] private LayerMask m_targetLayer;
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
+    {
+
+    }
+
+    protected override void OnHit()
+    {
+        Activate();
+    }
+
+    protected override void OnTriggerEnter(Collider other)
     {
 
     }
@@ -58,8 +68,5 @@ public class NetTrap : TrapBase
         Debug.Log(target.name + " ‚ª " + m_stunTime + "•bƒXƒ^ƒ“I");
     }
 
-    protected override void OnHit()
-    {
-        Activate();
-    }
+
 }

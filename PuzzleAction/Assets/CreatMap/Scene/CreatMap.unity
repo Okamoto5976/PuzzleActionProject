@@ -5758,10 +5758,8 @@ MonoBehaviour:
   m_middleman_trap: {fileID: 435115610}
   m_dropItem: {fileID: 0}
   DropItems: []
-  Comon: 50
-  UnComon: 30
-  Rara: 15
-  Legend: 5
+  m_itemPool: {fileID: 0}
+  items: []
 --- !u!1 &869878583074309818
 GameObject:
   m_ObjectHideFlags: 0

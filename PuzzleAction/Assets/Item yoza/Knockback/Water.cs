@@ -1,28 +1,40 @@
 using UnityEngine;
 
-public class Watergun : TrapBase
+public class Water : TrapBase
 {
     [Header("WaterGun Settings")]
-    [SerializeField] private float m_Slowmoving = 3f;
+    [SerializeField] private float m_SlowTimer = 3f;
     [SerializeField] private float m_slowAmount = 0.3f;
-   protected override void SetUp()
+
+    protected override void EntitySetUp()
     {
         
     }
     protected override void OnHit()
     {
-        
+        OnReturnPool();
+
     }
+
     private void FixedUpdate()
     {
         OnMove(m_dir);
-        CheckRange();
+        //CheckRange();
+    }
+
+    private void Update()
+    {
         CheckDeadLine();
+
+    }
+
+    public override void TrapInit()
+    {
+        base.TrapInit();
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
 
         Entity target=other.GetComponent<Entity>();
         if (target == null) return;
@@ -31,10 +43,10 @@ public class Watergun : TrapBase
         if (target.Team == m_team) return;
 
         //0É_ÉÅ
-        DamageData damageData = SetDamageData();
-        damageData.Attack = 0f;
-        damageData.Attacker = m_owner;
-        target.TakeDamage(damageData);
+        //DamageData damageData = SetDamageData();
+        //damageData.Attack = 0f;
+        //damageData.Attacker = m_owner;
+        //target.TakeDamage(damageData);
 
         //ì›ë´ïtó^
         StatusModifier slowModifier = new StatusModifier
@@ -44,9 +56,9 @@ public class Watergun : TrapBase
             m_modType = ModifierType.Add
         };
            
-        target.AddBuff(slowModifier, BuffID.Slow, m_Slowmoving);
+        target.AddBuff(slowModifier, BuffID.Water, m_SlowTimer);
 
-        OnReturnPool();
+        OnHit();
     }
 
 }

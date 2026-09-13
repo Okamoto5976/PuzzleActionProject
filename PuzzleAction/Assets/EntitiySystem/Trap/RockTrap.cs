@@ -11,7 +11,7 @@ public class RockTrap : TrapBase
     //    }
     //}
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         if (m_rb != null)
         {

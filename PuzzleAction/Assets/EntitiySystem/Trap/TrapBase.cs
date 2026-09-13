@@ -1,12 +1,15 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ReturnObjectToPool))]
+[RequireComponent(typeof(Rigidbody))]
+
 public abstract class TrapBase : MonoBehaviour
 {
     //component
     protected Rigidbody m_rb;
     protected Animator m_anim;
 
-    [SerializeField] protected TeamType m_team;
+    protected TeamType m_team = TeamType.Nature;
     public TeamType Team => m_team;
 
     [Header("TrapData")]
@@ -46,7 +49,7 @@ public abstract class TrapBase : MonoBehaviour
 
     }
 
-    protected abstract void SetUp();
+    protected abstract void EntitySetUp();
 
     //m_startPosition =
     //    m_owner.transform.position;
@@ -56,13 +59,13 @@ public abstract class TrapBase : MonoBehaviour
 
     protected abstract void OnHit();
 
-    //call when use item
+    //call when entity use item 
     public void Init(
         Entity owner,
-        Vector3 dir,
-        int baseValue)
+        Vector3 dir)
     {
         m_owner = owner;
+        m_team = m_owner.Team;
 
         m_dir =
             dir.normalized;
@@ -71,43 +74,54 @@ public abstract class TrapBase : MonoBehaviour
             Quaternion.LookRotation(
                 m_dir);
 
+        //åpè≥êÊÇ≈
+        //m_damageData = new DamageData
+        //{
 
-        m_damageData = new DamageData
-        {
+        //    Attack = m_str + owner.STR,
+        //    AttackType = m_attackType,
+        //    //HitRate
+        //    CriticalRate = owner.CriticalRate,
+        //    CriticalDamage = owner.CriticalDamage,
+        //    BreakRate = owner.BreakRate,
+        //    Knockback = owner.KnockBack,
+        //    StunDuration = owner.Stun,
+        //    //Duration
+        //    AttackDir = dir,
+        //    //SE
 
-            Attack = m_str + baseValue,
-            AttackType = m_attackType,
-            //HitRate
-            CriticalRate = owner.CriticalRate,
-            CriticalDamage = owner.CriticalDamage,
-            BreakRate = owner.BreakRate,
-            Knockback = owner.KnockBack,
-            Stun = owner.Stun,
-            //Duration
-            AttackDir = dir,
-            //SE
+        //};
 
-        };
-
-        SetUp();
+        EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
     }
 
-    protected DamageData SetDamageData()
+    //use TrapArea
+    public virtual void TrapInit()
     {
-        DamageData data = new DamageData
-        {
+        m_owner = null;
 
-            Attack = m_str,
-            AttackType = m_attackType,
-            //HitRate
+        m_dir = Vector3.zero;
+        m_team = TeamType.Nature;
 
-            //Duration
-            //SE
 
-        };
-
-        return data;
     }
+
+    //protected DamageData SetDamageData()
+    //{
+    //    DamageData data = new DamageData
+    //    {
+
+    //        Attack = m_str,
+    //        AttackType = m_attackType,
+    //        //HitRate
+
+    //        //Duration
+    //        //SE
+
+    //    };
+
+    //    return data;
+    //}
 
     //private void FixedUpdate()
     //{

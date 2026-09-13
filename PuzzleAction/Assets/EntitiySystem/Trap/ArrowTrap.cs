@@ -18,8 +18,25 @@ public class ArrowTrap : TrapBase
         m_isInitialized = false;
     }
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
+        m_damageData = new DamageData
+        {
+
+            Attack = m_str + m_owner.STR,
+            AttackType = m_attackType,
+            //HitRate
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+            Knockback = m_owner.KnockBack,
+            StunDuration = m_owner.Stun,
+            //Duration
+            AttackDir = m_dir,
+            //SE
+
+        };
+
         //OnAddForce(m_dir, m_power);
         m_rb.linearVelocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
@@ -52,12 +69,15 @@ public class ArrowTrap : TrapBase
         //    TeamType.Nature)
         //    return;
 
-        if (m_owner != null)
-        {
-            if (target.Team ==
-                m_owner.Team)
-                return;
-        }
+        if (target.Team == m_team) return;
+
+
+        //if (m_owner != null)
+        //{
+        //    if (target.Team ==
+        //        m_owner.Team)
+        //        return;
+        //}
 
         target.TakeDamage(m_damageData);
 

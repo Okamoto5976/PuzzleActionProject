@@ -2,7 +2,7 @@
 
 public class DynamiteTrap : TrapBase
 {
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
 
         //Debug.Log($"dynamite Setup");

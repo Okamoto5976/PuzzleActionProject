@@ -17,7 +17,7 @@ public class CaltropTrap : TrapBase
     private Coroutine m_damageCoroutine;
 
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         // ‰Šú‰»
         m_targets.Clear();

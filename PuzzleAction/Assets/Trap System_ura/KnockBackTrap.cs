@@ -7,7 +7,7 @@ public class KnockBackTrap : TrapBase
     private float m_knockBackPower = 10f;
 
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         
     }
@@ -15,7 +15,7 @@ public class KnockBackTrap : TrapBase
 
     protected override void OnHit()
     {
-       
+       OnReturnPool();
     }
 
 

@@ -6,28 +6,39 @@ public class Bluffbomb : TrapBase
     [SerializeField] private float m_Range = 4f;
     [SerializeField] private float m_KnockbackPower = 15f;
 
-    [Header("Visual Effects")]
-    [SerializeField] private GameObject m_Effect;
+    //[Header("Visual Effects")]
+    //[SerializeField] private GameObject m_Effect;
 
     protected override void OnHit()
     {
         Explode();
     }
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
         
     }
 
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_damageData = new DamageData()
+        {
+            Knockback = m_KnockbackPower
+            //stun duration
+        };
+    }
+
     private void FixedUpdate()
     {
-        OnMove(m_dir);
-        CheckRange();
+        //OnMove(m_dir);
+        //CheckRange();
         CheckDeadLine();
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
+        //base.OnTriggerEnter(other);
 
         Entity target = other.GetComponent<Entity>();
 
@@ -41,10 +52,10 @@ public class Bluffbomb : TrapBase
 
     private void Explode()
     {
-        if (m_Effect != null)
-        {
-            Instantiate(m_Effect, transform.position, Quaternion.identity);
-        }
+        //if (m_Effect != null)
+        //{
+        //    Instantiate(m_Effect, transform.position, Quaternion.identity);
+        //}
         //”ÍˆÍ”»’è
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_Range);
 
@@ -63,7 +74,7 @@ public class Bluffbomb : TrapBase
                 knockbackDir = m_dir;
             }
 
-            target.ApplyKnockBack(knockbackDir.normalized, m_KnockbackPower,0f);
+            //target.ApplyKnockBack(knockbackDir.normalized, m_KnockbackPower,0f);
         }
             OnReturnPool();
     }

@@ -8,7 +8,7 @@ public class WallTrap : TrapBase
     [SerializeField] private float m_wallLifeTime = 5f;
 
 
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
 
     }
@@ -18,6 +18,10 @@ public class WallTrap : TrapBase
         SpawnWall();
     }
 
+    protected override void OnHit()
+    {
+        OnReturnPool();
+    }
 
     private void SpawnWall()
     {
@@ -34,8 +38,5 @@ public class WallTrap : TrapBase
         );
     }
 
-    protected override void OnHit()
-    {
-        
-    }
+   
 }

@@ -30,7 +30,7 @@ public class InheritanceTrap : Entity
         data.Attack = m_damage;
 
         data.Knockback = 0f;
-        data.Stun = 0f;
+        data.StunDuration = 0f;
         data.Duration = 0f;
 
         data.AttackDir = (target.transform.position - transform.position).normalized;

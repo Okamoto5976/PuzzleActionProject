@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Flame : TrapBase
 {
-    protected override void SetUp()
+    protected override void EntitySetUp()
     {
+
     }
     protected override void OnHit()
     {
+
     }
+
     [SerializeField] private float m_Sustainability = 10f;//éùë±
     [SerializeField] private float m_Damageinterval = 0.5f;//ä‘äu
     [SerializeField] private float m_Amountdamage = 5f;//ó 
 
-    private Entity m_owner;
     private TeamType m_Team;
     private float m_baseValue;
 
@@ -66,7 +68,7 @@ public class Flame : TrapBase
         target.TakeDamage(damageDate);
         }
     }
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
         if (target == null) return;
