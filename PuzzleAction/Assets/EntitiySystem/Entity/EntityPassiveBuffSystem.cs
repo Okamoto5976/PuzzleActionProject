@@ -4,12 +4,25 @@ using UnityEngine;
 public enum Passive
 {
     None,
-    PriceDown,
+    Coupon,
+    MembershipCard,
     Glasses,
-    SpeedShoes,
+    STR,
+    Speed,
+    HP,
+    CriDamage,
+    CriRate,
+    CriDamageOrCriRate,
+    Break,
+    Defence,
     SlowResShoes,
+    GasMask,
+    Poison,
+    Burn,
+    Stun,
     WinnerTrophy,
     LoserTrophy,
+    Poi,
 }
 
 public class PassiveStatus

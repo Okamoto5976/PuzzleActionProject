@@ -186,7 +186,6 @@ public class EnemyController : Entity
         ItemRecieveData data = new ItemRecieveData
         {
             entity = this,
-            baseValue = STR,
             pos = transform.position,
             dir = dir
         };

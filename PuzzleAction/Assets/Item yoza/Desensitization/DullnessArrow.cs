@@ -10,7 +10,7 @@ public class DullnessPoisnon : TrapBase
     [Header("低下率パラメーター")]
     [SerializeField] private float m_critRateReduction = 0.2f; // クリティカル率低下量
 
-    [SerializeField] private float m_power;
+    //[SerializeField] private float m_power;
 
     [SerializeField] private LayerMask m_hitLayers;
 

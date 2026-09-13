@@ -12,9 +12,9 @@ public abstract class TrapBase : MonoBehaviour
     protected TeamType m_team = TeamType.Nature;
     public TeamType Team => m_team;
 
-    [Header("TrapData")]
-    [SerializeField]
-    protected TrapData m_trapdata;
+    //[Header("TrapData")]
+    //[SerializeField]
+    //protected TrapData m_trapdata;
 
     //direction
     protected Vector3 m_dir;
@@ -22,6 +22,7 @@ public abstract class TrapBase : MonoBehaviour
     [SerializeField] protected float m_str;
     [SerializeField] protected float m_speed;
     [SerializeField] protected AttackType m_attackType;
+    protected float m_power;//use arrow
 
     //startPosition
     protected Vector3 m_startPosition;
@@ -94,6 +95,45 @@ public abstract class TrapBase : MonoBehaviour
 
         EntitySetUp();//—á@•b”‚ğİ’è‚µ@ŠÔŒo‰ß‚Å”š”j‚È‚Ç
     }
+
+    public void PullInit(
+        Entity owner,
+        Vector3 dir,
+        float power)
+    {
+        m_owner = owner;
+        m_team = m_owner.Team;
+
+        m_dir =
+            dir.normalized;
+
+        transform.rotation =
+            Quaternion.LookRotation(
+                m_dir);
+
+        m_power = power;
+
+        //Œp³æ‚Å
+        //m_damageData = new DamageData
+        //{
+
+        //    Attack = m_str + owner.STR,
+        //    AttackType = m_attackType,
+        //    //HitRate
+        //    CriticalRate = owner.CriticalRate,
+        //    CriticalDamage = owner.CriticalDamage,
+        //    BreakRate = owner.BreakRate,
+        //    Knockback = owner.KnockBack,
+        //    StunDuration = owner.Stun,
+        //    //Duration
+        //    AttackDir = dir,
+        //    //SE
+
+        //};
+
+        EntitySetUp();//—á@•b”‚ğİ’è‚µ@ŠÔŒo‰ß‚Å”š”j‚È‚Ç
+    }
+
 
     //use TrapArea
     public virtual void TrapInit()

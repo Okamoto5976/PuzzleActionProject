@@ -3,6 +3,7 @@ using UnityEngine;
 public struct ItemRecieveData
 {
     public Entity entity;
+    public float power;
     public Vector3 pos;
     public Vector3 dir;
     public Vector2 size;
@@ -21,6 +22,7 @@ abstract public class Item : ScriptableObject
         Heal,
         Trap,
         Buff,
+        Attack,
         Other
     }
 

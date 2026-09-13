@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class ArrowTrap : TrapBase
 {
-    [SerializeField] private float m_power;
-
     [SerializeField] private LayerMask m_hitLayers;
 
     private bool m_isInitialized;
+
+    [Header("BuffSetting")]
+    [SerializeField] private bool m_isBuff;
+
+    [SerializeField] private float m_duration = 1f;
+    [SerializeField] private StatusType m_statusType;
 
     private void FixedUpdate()
     {
@@ -47,6 +51,18 @@ public class ArrowTrap : TrapBase
     protected override void OnHit()
     {
         OnReturnPool();
+    }
+
+    private StatusModifier SetModifier()
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = StatusType.CriticalRate,
+            m_value = 20f,
+            m_modType = ModifierType.Subtract,
+        };
+
+        return modifier;
     }
 
 

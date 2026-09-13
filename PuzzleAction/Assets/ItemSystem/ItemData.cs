@@ -20,6 +20,7 @@ public enum ItemUseType
     Instant,
     Arrow,
     Set,
+    Attack,
     Passive
 }
 
@@ -32,7 +33,6 @@ public class ItemData
     [SerializeField] private Sprite itemIcon;         
     [SerializeField] private string description;    
     [SerializeField] private int maxStack = 99;          
-    [SerializeField] private float dropRate;
     //[SerializeField] private int itemGrade;         //Rarity
     [SerializeField] private RarityEnumAsset rarity;
     [SerializeField] private ItemType itemType;
@@ -46,7 +46,6 @@ public class ItemData
     public Sprite ItemIcon { get => itemIcon; }
     public string Description { get => description; }
     public int MaxStack { get => maxStack; }
-    public float DropRate { get => dropRate; }
     //public int ItemGrade { get => itemGrade; }
     public RarityEnumAsset Rarity { get => rarity; }
     public ItemType ItemType => itemType;

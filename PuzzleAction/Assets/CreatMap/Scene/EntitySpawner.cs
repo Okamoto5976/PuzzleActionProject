@@ -46,8 +46,8 @@ public class EntitySpawner : MonoBehaviour
 
     private readonly Enum_TrapType[] m_areaTrapType =
     {
-        Enum_TrapType.Gas,
-        Enum_TrapType.Swamp,
+        Enum_TrapType.GasArea,
+        Enum_TrapType.SwampArea,
         Enum_TrapType.Dynamite
     };
 
@@ -278,7 +278,7 @@ public class EntitySpawner : MonoBehaviour
 
             if (box != null)
             {
-                if (selectedType == Enum_TrapType.Gas || selectedType == Enum_TrapType.Swamp)
+                if (selectedType == Enum_TrapType.GasArea || selectedType == Enum_TrapType.SwampArea)
                 {
                     box.size = new Vector3(m_mapGeneration.FloorScale.x, box.size.y, m_mapGeneration.FloorScale.z);
                 }

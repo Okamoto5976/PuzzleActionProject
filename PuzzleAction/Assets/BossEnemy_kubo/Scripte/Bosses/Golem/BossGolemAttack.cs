@@ -53,7 +53,6 @@ public class BossGolemAttack : MonoBehaviour
 
         ItemRecieveData data =new ItemRecieveData();
         data.entity = m_controller;
-        data.baseValue = m_controller.STR;
         data.pos = pos;
         data.dir = dir;
         data.size = Vector2.one;

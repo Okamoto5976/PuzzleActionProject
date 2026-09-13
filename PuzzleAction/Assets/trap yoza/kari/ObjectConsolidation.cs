@@ -40,7 +40,7 @@ public class ObjectConsolidation : MonoBehaviour
             BoxCollider box = trap.GetComponent<BoxCollider>();
             if (box != null)
             {
-                if (trapType == Enum_TrapType.Gas || trapType == Enum_TrapType.Swamp)
+                if (trapType == Enum_TrapType.GasArea || trapType == Enum_TrapType.SwampArea)
                 {
                     box.size = new Vector3(scale.x, box.size.y, scale.y);
                 }

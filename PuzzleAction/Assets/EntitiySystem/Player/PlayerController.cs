@@ -36,6 +36,7 @@ public class PlayerController : Entity
 
     private bool m_isUsingArrow = false;
     private bool m_isUsingSetItem = false;
+    private bool m_isUsingAttackItem = false;
 
     //when open shop, can not Input
     private bool m_ignoreInput = false;
@@ -241,11 +242,22 @@ public class PlayerController : Entity
         return new ItemRecieveData
         {
             entity = this,
-            baseValue = STR,
             pos = transform.position,
             dir = forward,
         };
     }
+
+    private ItemRecieveData CreatePullItemData(Vector3 forward, float power)
+    {
+        return new ItemRecieveData
+        {
+            entity = this,
+            power = power,
+            pos = transform.position,
+            dir = forward,
+        };
+    }
+
     private void OnUseItemPressed()
     {
         //Debug.Log("Pressed");
@@ -254,6 +266,7 @@ public class PlayerController : Entity
         {
             m_isUsingArrow = true;
 
+            m_power = 0f;
             m_reticle.gameObject.SetActive(true);
             //start to pull the bow
             
@@ -263,6 +276,12 @@ public class PlayerController : Entity
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Set))
         {
 
+        }
+        else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
+        {
+            m_isUsingAttackItem = true;
+            m_power = 0f;
+            m_reticle.gameObject.SetActive(true);
         }
         else
         {
@@ -274,6 +293,8 @@ public class PlayerController : Entity
 
     }
 
+    private float m_power;
+
     private void OnUseItemHold()
     {
         //Debug.Log("Hold");
@@ -281,6 +302,14 @@ public class PlayerController : Entity
         if(m_isUsingArrow)
         {
             OnReticle();
+
+            m_power += Time.deltaTime;
+        }
+        else if(m_isUsingAttackItem)
+        {
+            OnReticle();
+
+            m_power += Time.deltaTime;
         }
     }
 
@@ -294,10 +323,22 @@ public class PlayerController : Entity
 
             m_reticle.gameObject.SetActive(false);
 
+            m_power = Mathf.Min(m_power, 4f);
 
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward);
+            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
+        }
+        else if(m_isUsingAttackItem)
+        {
+            m_isUsingAttackItem = false;
+
+            m_reticle.gameObject.SetActive(false);
+
+            m_power = Mathf.Min(m_power, 4f);
+
+            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
+            m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
     }
 

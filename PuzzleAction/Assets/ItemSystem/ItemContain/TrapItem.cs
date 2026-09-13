@@ -16,16 +16,26 @@ public class TrapItem : Item
 
     public override void Activation(ItemRecieveData data)
     {
+        if (TrapPrefab == null)
+        {
+            Debug.Log("null!!");
+            return;
+        }
+
+        if (data.power > 0f)
+        {
+            TrapPrefab.PullInit(data.entity, data.dir, data.power);
+            TrapPrefab.gameObject.transform.position = data.pos;
+            TrapPrefab.gameObject.SetActive(true);
+            return;
+        }
+        
         //data posにobjを置く dataに向きも入れる
         //objにEntity(Trap)がついている　Enityに dataのbaseValueを送る（コメントにする
         //EntityTrap.SetbaseValue(data.baseValue)                Trap側でTrapの攻撃力＋baseValue
         //objのEntityにmoveDirがあるからdataのdirを入れる
         //var entity = TrapPrefab.GetComponent<Entity>();
-        if(TrapPrefab == null)
-        {
-            Debug.Log("null!!");
-            return;
-        }
+        
         TrapPrefab.Init(data.entity, data.dir);
         TrapPrefab.gameObject.transform.position = data.pos;
         TrapPrefab.gameObject.SetActive(true);
