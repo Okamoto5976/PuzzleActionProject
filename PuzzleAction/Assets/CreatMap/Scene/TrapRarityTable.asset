@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TrapRarityTable
   m_EditorClassIdentifier: Assembly-CSharp::TrapRarityTable
   traps:
-  - trapType: 1
+  - trapType: 33
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
-  - trapType: 2
+  - trapType: 34
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
-  - trapType: 3
+  - trapType: 15
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}

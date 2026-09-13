@@ -38,7 +38,7 @@ public class SwampTrap : TrapBase
             {
                 var modifier = SetModifier();
 
-                m_SlowedTargets[i].AddBuff(modifier, BuffID.Slow, 1.5f);
+                m_SlowedTargets[i].AddBuff(modifier, BuffID.Swamp, 1.5f);
 
             }
         }
@@ -75,7 +75,7 @@ public class SwampTrap : TrapBase
             //Debug.Log($"[SWAMP_BOX] {target.gameObject.name} Ç™è¿Ç…ì¸Ç¡ÇΩÅiÇ±Ç±Ç…å∏ë¨èàóùÇí«â¡â¬î\Åj");
             var modifier = SetModifier();
 
-           target.AddBuff(modifier, BuffID.Slow, 1.5f);
+           target.AddBuff(modifier, BuffID.Swamp, 1.5f);
 
         }
     }

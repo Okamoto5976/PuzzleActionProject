@@ -62,14 +62,14 @@ abstract public class EntityHP : MonoBehaviour
 
         bool isBreak = false;
 
-        if(Random.Range(0f,100f)<=data.BreakRate)
+        if(Random.Range(0f,1f)<=data.BreakRate)
         {
             isBreak = true;
         }
 
         bool isCritical = false;
 
-        if(Random.Range(0f,100f)<=data.CriticalRate)
+        if(Random.Range(0f,1f)<=data.CriticalRate)
         {
             isCritical = true;
         }

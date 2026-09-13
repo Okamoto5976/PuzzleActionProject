@@ -24,7 +24,7 @@ abstract public class Entity : MonoBehaviour
     public float StunPower => m_status[StatusType.StunDuration].Value;
     public float PoisonRes => m_status[StatusType.PoisonRes].Value;
     public float StunRes => m_status[StatusType.StunRes].Value;
-    public float SlowRes => m_status[StatusType.SlowRes].Value;
+    public float SlowRes => m_status[StatusType.SwampRes].Value;
     public float GasRes => m_status[StatusType.GasRes].Value;
     public float BurnRes => m_status[StatusType.BurnRes].Value;
     public float Slow => m_status[StatusType.Slow].Value;
@@ -149,7 +149,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.StunDuration, new EntityStatus(m_data.StunDuration));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
-        m_status.Add(StatusType.SlowRes, new EntityStatus(m_data.SlowRes));
+        m_status.Add(StatusType.SwampRes, new EntityStatus(m_data.SlowRes));
         m_status.Add(StatusType.GasRes, new EntityStatus(m_data.GasRes));
         m_status.Add(StatusType.BurnRes, new EntityStatus(m_data.BurnRes));
         m_status.Add(StatusType.Slow, new EntityStatus(0f));

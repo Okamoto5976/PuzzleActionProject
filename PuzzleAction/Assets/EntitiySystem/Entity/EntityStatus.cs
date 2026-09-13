@@ -42,7 +42,7 @@ public class EntityStatus
                         subtract += modifier.m_value;
                         break;
                     case ModifierType.Multiply:
-                        multiply += modifier.m_value;
+                        multiply *= modifier.m_value;
                         break;
                 }
             }

@@ -121,6 +121,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
                     active
                     ? Color.white
                     : Color.clear;
+
+                Debug.Log(tile.color);
             }
         }
 

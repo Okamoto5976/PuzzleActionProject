@@ -1,23 +1,40 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ArrowTrap : TrapBase
 {
+    [SerializeField] private float m_rate = 1f;
+
     [SerializeField] private LayerMask m_hitLayers;
 
     private bool m_isInitialized;
 
-    [Header("BuffSetting")]
-    [SerializeField] private bool m_isBuff;
 
-    [SerializeField] private float m_duration = 1f;
-    [SerializeField] private StatusType m_statusType;
+    [System.Serializable]
+    public class BuffItemClass
+    {
+        public float m_value;
+        public StatusType m_statusType;//what status? HP, Strength
+        public ModifierType m_modifierType;//what mod? Add, Multiply
+
+        [Header("----Active Buff Setting ----")]
+        public float m_duration;
+        public BuffID m_buffID;
+
+
+    }
+
+    [Header("BuffSetting")]
+
+    [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
+
 
     private void FixedUpdate()
     {
         if (!m_isInitialized)
             return;
 
-        OnAddForce(m_dir, m_power);
+        OnAddForce(m_dir, m_power * 8);
 
         m_isInitialized = false;
     }
@@ -27,7 +44,7 @@ public class ArrowTrap : TrapBase
         m_damageData = new DamageData
         {
 
-            Attack = m_str + m_owner.STR,
+            Attack = m_owner.STR * m_rate,
             AttackType = m_attackType,
             //HitRate
             CriticalRate = m_owner.CriticalRate,
@@ -96,6 +113,26 @@ public class ArrowTrap : TrapBase
         //}
 
         target.TakeDamage(m_damageData);
+
+        if(m_buffItemClass.Count != 0)
+        {
+            foreach (var buff in m_buffItemClass)
+            {
+                if (buff.m_duration <= 0) continue;
+
+                StatusModifier modifier = new StatusModifier()
+                {
+                    m_statType = buff.m_statusType,
+                    m_value = buff.m_value,
+                    m_modType = buff.m_modifierType
+                };
+
+                target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+
+            }
+        }
+
+        
 
         //Debug.Log(
         //    $"{other.name} Hit");

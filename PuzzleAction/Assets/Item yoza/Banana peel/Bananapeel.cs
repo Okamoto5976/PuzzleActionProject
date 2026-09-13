@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class Bananapeel : TrapBase
 {
-    [SerializeField] private float stunTime = 2.0f;
+    //[SerializeField] private float stunTime = 2.0f;
     //“]“|K‚à‚¿•t‚­‚¾‚ë‚¤‚©‚ç‚»‚Ì‚¯‚Â‚ÌÕŒ‚(‚¨‚Ó‚´‚¯•Ê‚É‚¢‚ç‚ñƒKƒLS‚¾)
     [SerializeField] private float ButtRange = 1.5f;
     [SerializeField] private int Buttattack = 1;
-    [SerializeField] private float MomentumFalling = 2.0f;
+    //[SerializeField] private float MomentumFalling = 2.0f;
 
     protected override void OnHit()
     {

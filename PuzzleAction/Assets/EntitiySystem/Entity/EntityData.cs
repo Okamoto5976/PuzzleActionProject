@@ -15,13 +15,14 @@ public enum StatusType
     StunDuration, //Enemy stun power
     PoisonRes,
     StunRes,
-    SlowRes,
+    SwampRes,
     GasRes,
     BurnRes,
     Slow,
     Poison,
     Gas,
     Burn,
+    Swamp,
     Regenerate,
     Stun,
     Invincible

@@ -89,7 +89,7 @@ public class DullnessPoisnon : TrapBase
 
             var modifier = SetModifier();
 
-            victim.AddBuff(modifier, BuffID.CriticalRate, m_duration);
+            victim.AddBuff(modifier, BuffID.CRDown, m_duration);
 
             // 2. ダメージ適用処理（DamageData が必要な場合）
             if (m_damageData != null)

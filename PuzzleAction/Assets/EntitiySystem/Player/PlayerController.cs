@@ -234,7 +234,7 @@ public class PlayerController : Entity
             }
         }
 
-        //m_displayManager.SetIndex(m_hotberIndex);
+        m_displayManager.SetIndex(m_hotberIndex);
     }
 
     private ItemRecieveData CreateItemData(Vector3 forward)
@@ -275,7 +275,9 @@ public class PlayerController : Entity
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Set))
         {
-
+            m_isUsingSetItem = true;
+            m_power = 0f;
+            m_reticle.gameObject.SetActive(true);
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
         {
@@ -305,7 +307,11 @@ public class PlayerController : Entity
 
             m_power += Time.deltaTime;
         }
-        else if(m_isUsingAttackItem)
+        else if(m_isUsingSetItem)
+        {
+            OnReticle();
+        }
+        else if (m_isUsingAttackItem)
         {
             OnReticle();
 
@@ -323,19 +329,30 @@ public class PlayerController : Entity
 
             m_reticle.gameObject.SetActive(false);
 
-            m_power = Mathf.Min(m_power, 4f);
+            m_power = Mathf.Min(m_power, 3f);
 
             ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
         }
-        else if(m_isUsingAttackItem)
+        else if(m_isUsingSetItem)
+        {
+            m_isUsingSetItem = false;
+
+            m_reticle.gameObject.SetActive(false);
+
+            m_power = 5f;
+
+            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
+            m_inventorySystem.UseRelease(m_hotberIndex, data);
+        }
+        else if (m_isUsingAttackItem)
         {
             m_isUsingAttackItem = false;
 
             m_reticle.gameObject.SetActive(false);
 
-            m_power = Mathf.Min(m_power, 4f);
+            m_power = Mathf.Min(m_power, 3f);
 
             ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
@@ -386,6 +403,7 @@ public class PlayerController : Entity
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {
         //Debug.LogWarning(type);
+
         m_passiveSystem.AddPassive(modifiers, type);
     }
 

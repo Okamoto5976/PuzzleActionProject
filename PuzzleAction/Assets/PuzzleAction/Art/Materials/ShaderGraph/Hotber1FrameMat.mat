@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrameTex:
-        m_Texture: {fileID: 2800000, guid: 7fb7da7196c9cb24ead25dbb00fe0e0e, type: 3}
+        m_Texture: {fileID: 2800000, guid: d364178b8a7c9eb4b946e2c21099e02c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -128,7 +128,7 @@ Material:
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 13.584905, g: 0, b: 1.3429878, a: 1}
+    - _Color: {r: 0, g: 132.51765, b: 803.13727, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

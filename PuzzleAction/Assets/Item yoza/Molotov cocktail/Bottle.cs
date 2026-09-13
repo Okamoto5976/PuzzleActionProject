@@ -5,7 +5,7 @@ public class Bottle : TrapBase
     [Header("‰Š")]
     [SerializeField] private GameObject m_fireAreaPrefab;//‰Î
 
-    [SerializeField] private float m_power;
+    //[SerializeField] private float m_power;
 
     [SerializeField] private LayerMask m_hitLayers;
 
