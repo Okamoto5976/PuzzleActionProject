@@ -117,6 +117,11 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
                 bool active = map.IsActiveTile(x, y);
 
+                if (x == 0 && y == 0)
+                {
+                    Debug.LogWarning($"IsActiveTile(0, 0) = {active}");
+                }
+
                 tile.color =    
                     active
                     ? Color.white
@@ -125,6 +130,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
                 Debug.Log(tile.color);
             }
         }
+
+
 
         m_previews.Add(root);
     }
