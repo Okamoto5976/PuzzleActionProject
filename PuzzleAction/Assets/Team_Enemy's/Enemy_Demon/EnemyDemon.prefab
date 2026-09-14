@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 3605610462895004749}
   - component: {fileID: 528806279578718545}
+  - component: {fileID: 1386965129153338412}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 6548486075970649895}
@@ -256,6 +257,22 @@ MonoBehaviour:
     m_radius: 1
   m_attackItem: {fileID: 0}
   m_itemDropGachaEngine: {fileID: 0}
+--- !u!114 &1386965129153338412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b3993ae851f9e49a31181ad328dec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Demon
+  probabilityOfTakeStep: 75
+  nextActionDurationMin: 1
+  nextActionDurationMax: 5
+  stepPower: 1
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
