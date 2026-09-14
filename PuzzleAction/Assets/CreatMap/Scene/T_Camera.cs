@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class T_Camera : MonoBehaviour
@@ -11,6 +13,30 @@ public class T_Camera : MonoBehaviour
     [Header("Follow")]
     [SerializeField] private float m_followSpeed = 0f; // 0 = ‘¦Žž’Ç]
 
+    [SerializeField] private bool m_isShaking = false;
+    [SerializeField] private float m_shakeStrength = 0.1f;
+    [SerializeField] private float m_shakeSpeed = 0.05f;
+    private Vector3 m_shakeOffset = Vector3.zero;
+
+    private Coroutine m_shakeCoroutine;
+
+    public bool IsShaking
+    {
+        get => m_isShaking;
+        set => m_isShaking = value;
+    }
+
+    public float ShakeStrength
+    {
+        get => m_shakeStrength;
+        set => m_shakeStrength = value;
+    }
+
+    public float ShakeSpeed
+    {
+        get => m_shakeSpeed;
+        set => m_shakeSpeed = value;
+    }
 
     public float Distance
     {
@@ -28,6 +54,37 @@ public class T_Camera : MonoBehaviour
     private void Awake()
     {
         Initialize();
+    }
+
+    private void OnEnable()
+    {
+        StartShake();
+    }
+
+    private void StartShake()
+    {
+        if (m_shakeCoroutine != null)
+        {
+            StopCoroutine(m_shakeCoroutine);
+        }
+        StartCoroutine(DoShake());
+    }
+
+    private IEnumerator DoShake()
+    {
+        while (true)
+        {
+            m_shakeOffset = Random.onUnitCircle * m_shakeStrength;
+            yield return new WaitForSeconds(m_shakeSpeed);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (m_shakeCoroutine != null)
+        {
+            StopCoroutine(m_shakeCoroutine);
+        }
     }
 
     private void Initialize()
@@ -56,6 +113,13 @@ public class T_Camera : MonoBehaviour
         DoCameraCorrection();
     }
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        CalculateOffset();
+    }
+#endif
+
     private void DoCameraCorrection()
     {
         if (m_target == null) return;
@@ -66,6 +130,10 @@ public class T_Camera : MonoBehaviour
         }
 
         Vector3 targetPos = m_target.position + m_offset;
+        if (m_isShaking)
+        {
+            targetPos += m_shakeOffset;
+        }
 
         if (m_followSpeed <= 0f)
         {
