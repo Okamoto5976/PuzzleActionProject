@@ -38,13 +38,11 @@ public class WallTrap : TrapBase
     }
 
 
-    // TrapArea用
+     
     public override void TrapInit()
     {
         base.TrapInit();
-
-        // TrapAreaではownerがいないので
-        // Entityの情報は使用しない
+ 
         m_damageData = new DamageData
         {
             Attack = m_str,
@@ -56,7 +54,7 @@ public class WallTrap : TrapBase
             AttackDir = transform.forward
         };
 
-        // TrapAreaから呼ばれた場合
+         
         SpawnRock();
     }
 
@@ -84,19 +82,15 @@ public class WallTrap : TrapBase
 
     private void Spawn()
     {
-        // Trapの前方へ岩を移動
+         
         transform.position +=
             m_dir * m_spawnDistance;
-
-
-        // 発生した岩を前方へノックバック
+        
         OnAddForce(
             m_dir,
             m_knockBackPower
         );
-
-
-        // 一定時間後にPoolへ返す
+        
         m_returnCoroutine =
             StartCoroutine(ReturnAfterTime());
     }
@@ -112,6 +106,6 @@ public class WallTrap : TrapBase
 
     protected override void OnHit()
     {
-        // 岩が何かに当たったときの処理
+         
     }
 }

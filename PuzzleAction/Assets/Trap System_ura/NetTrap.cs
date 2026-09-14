@@ -37,8 +37,6 @@ public class NetTrap : TrapBase
        
         m_hitTargets.Clear();
 
-
-       
         m_damageData = new DamageData
         {
             Attack = m_str + m_owner.STR,
@@ -55,8 +53,6 @@ public class NetTrap : TrapBase
             AttackDir = m_dir
         };
 
-
-        
         m_rb.linearVelocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
 
@@ -79,28 +75,18 @@ public class NetTrap : TrapBase
         if (target == null)
             return;
 
-
-         
         if (target == m_owner)
             return;
 
-
-         
         if (target.Team == m_team)
             return;
-
-
-         
+        
         if (m_hitTargets.Contains(target))
             return;
 
-
          
         m_hitTargets.Add(target);
-
-
-        
-         
+             
         target.TakeDamage(m_damageData);
     }
 

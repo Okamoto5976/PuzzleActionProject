@@ -15,16 +15,13 @@ public class KnockBackTrap : TrapBase
 
         m_damageData = new DamageData
         {
-            // ダメージはなし
+             
             Attack = 0,
 
             AttackType = m_attackType,
-
-            // ノックバック
+            
             Knockback = m_owner.KnockBack,
-
-            // ノックバック方向
-            // 風の移動方向
+            
             AttackDir = m_dir
         };
     }
