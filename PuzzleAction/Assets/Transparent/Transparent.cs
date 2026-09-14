@@ -7,7 +7,6 @@ public class Transparent : MonoBehaviour
 {
     [SerializeField] private Vector3Asset m_player;
     [SerializeField] private float m_fadeSpeed = 5f;
-    [SerializeField] private float m_simulatedPlayerHeight = 1f;
     [SerializeField] private MapGeneration m_mapGeneration;
     [SerializeField] private SpriteRenderer m_playerSpriteRenderer;
 
