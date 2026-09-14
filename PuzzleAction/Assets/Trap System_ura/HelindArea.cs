@@ -66,7 +66,7 @@ public class HealingArea : MonoBehaviour
         {
             m_targets.Add(target);
 
-            // ƒGƒŠƒA‚É“ü‚Á‚½uŠÔ‚ÉRegenerate‚ğ•t—^
+             
             AddRegenerate(target);
         }
     }

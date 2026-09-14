@@ -6,14 +6,12 @@ public class SpikeTrap : TrapBase
     [Header("Trap")]
     [SerializeField]
     private float m_cooldown = 2.0f;
-
-     
+   
     private bool m_isActive = true;
-
 
     protected override void EntitySetUp()
     {
-         
+        
         m_damageData = new DamageData
         {
             Attack = m_str + m_owner.STR,
@@ -29,20 +27,39 @@ public class SpikeTrap : TrapBase
             AttackDir = m_dir
         };
 
-         
+        m_isActive = true;
+    }
+  
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_damageData = new DamageData
+        {
+            Attack = m_str,
+            AttackType = m_attackType,
+
+            CriticalRate = 0,
+            CriticalDamage = 0,
+            BreakRate = 0,
+
+            Knockback = 0,
+            StunDuration = 0,
+
+            AttackDir = Vector3.zero
+        };
+
         m_isActive = true;
     }
 
 
     protected override void OnTriggerEnter(Collider other)
     {
-         
         if (!m_isActive)
         {
             return;
         }
 
-         
         Entity entity = other.GetComponent<Entity>();
 
         if (entity == null)
@@ -50,39 +67,32 @@ public class SpikeTrap : TrapBase
             return;
         }
 
-         
         if (entity.Team == Team)
         {
             return;
         }
 
-        
         entity.TakeDamage(m_damageData);
 
-         
         OnHit();
 
-         
         m_isActive = false;
 
-         
         StartCoroutine(Cooldown());
     }
 
 
     private IEnumerator Cooldown()
     {
-         
         yield return new WaitForSeconds(m_cooldown);
 
-        
         m_isActive = true;
     }
 
 
     protected override void OnHit()
     {
-       
+        
     }
 }
 

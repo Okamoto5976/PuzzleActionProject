@@ -8,7 +8,7 @@ public class WallTrap : TrapBase
     [SerializeField] private float m_lifeTime = 5.0f;
 
     [Header("Spawn")]
-    [SerializeField] private float m_spawnDelay = 0.0f;
+    [SerializeField] private float m_spawnDelay = 1.0f;
 
     [Header("KnockBack")]
     [SerializeField] private float m_knockBackPower = 5.0f;
@@ -18,57 +18,18 @@ public class WallTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        // Œp³æ‚ÅDamageData‚ðÝ’è
-        m_damageData = new DamageData
-        {
-            Attack = m_str + m_owner.STR,
-            AttackType = m_attackType,
-
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-
-            Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.Stun,
-
-            AttackDir = m_dir
-        };
-
-        SpawnRock();
+       
     }
 
 
-     
+   
     public override void TrapInit()
     {
         base.TrapInit();
- 
-        m_damageData = new DamageData
-        {
-            Attack = m_str,
-            AttackType = m_attackType,
-
-            Knockback = 0,
-            StunDuration = 0,
-
-            AttackDir = transform.forward
-        };
-
          
-        SpawnRock();
-    }
+        m_dir = transform.forward;
 
-
-    private void SpawnRock()
-    {
-        if (m_spawnDelay > 0.0f)
-        {
-            StartCoroutine(SpawnDelay());
-        }
-        else
-        {
-            Spawn();
-        }
+        StartCoroutine(SpawnDelay());
     }
 
 
@@ -82,15 +43,16 @@ public class WallTrap : TrapBase
 
     private void Spawn()
     {
-         
+       
         transform.position +=
             m_dir * m_spawnDistance;
-        
+
+      
         OnAddForce(
             m_dir,
             m_knockBackPower
         );
-        
+
         m_returnCoroutine =
             StartCoroutine(ReturnAfterTime());
     }
@@ -106,6 +68,6 @@ public class WallTrap : TrapBase
 
     protected override void OnHit()
     {
-         
+        
     }
 }

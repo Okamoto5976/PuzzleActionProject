@@ -8,6 +8,23 @@ public class KnockBackTrap : TrapBase
 
     private float m_timer;
 
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+            AttackType = m_attackType,
+
+            Knockback = m_power,
+
+            AttackDir = m_dir
+        };
+    }
+
 
     protected override void EntitySetUp()
     {
@@ -15,13 +32,11 @@ public class KnockBackTrap : TrapBase
 
         m_damageData = new DamageData
         {
-             
             Attack = 0,
-
             AttackType = m_attackType,
-            
+
             Knockback = m_owner.KnockBack,
-            
+
             AttackDir = m_dir
         };
     }
@@ -29,10 +44,8 @@ public class KnockBackTrap : TrapBase
 
     private void FixedUpdate()
     {
-       
         OnMove(m_dir);
 
- 
         m_timer += Time.fixedDeltaTime;
 
         if (m_timer >= m_lifeTime)
@@ -44,7 +57,7 @@ public class KnockBackTrap : TrapBase
 
     protected override void OnHit()
     {
-       
+      
     }
 
 
@@ -56,7 +69,8 @@ public class KnockBackTrap : TrapBase
         if (target == null)
             return;
 
-        if (target == m_owner)
+        if (m_owner != null &&
+            target == m_owner)
             return;
 
 
@@ -66,9 +80,7 @@ public class KnockBackTrap : TrapBase
         if (entityHP == null)
             return;
 
-
         entityHP.TakeDamage(m_damageData);
-
 
         OnReturnPool();
     }
