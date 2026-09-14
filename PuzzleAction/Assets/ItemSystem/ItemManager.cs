@@ -1,18 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 
 public class ItemManager : MonoBehaviour
 {
     //public List <Item> DropList=new();
-    public List<Item> ShopList = new();
     public List<Item> ItemList = new();
-    public List<float> DropRateList = new();
-    //プレイヤーが使えるアイテム
-    public List<Item> PlayerItems = new();
-    //敵専用アイテム
-    public List<Item> EnemyItems = new();
     //private int nextId; //次のIDを管理する変数
     [SerializeField] private Middleman_Trap m_middleman_trap;
     //DropPool I_pool;
@@ -118,81 +111,104 @@ public class ItemManager : MonoBehaviour
         //}
     }
 
-    //[Header("排出確率")]
-
-    //[Range(0, 100)] public float Comon = 50f;
-    //[Range(0, 100)] public float UnComon = 30f;
-    //[Range(0, 100)] public float Rare = 15f;
-    //[Range(0, 100)] public float Legend = 5f;
-
-
-    //仮(全アイテムが格納されたリスト)
-    [SerializeField] private List<Item> items = new();
-
 
     public Item DropItem(RarityEnumAsset rarity)
     {
-        List<Item> candidates = items.FindAll(Item => Item.Data.Rarity == rarity);
+        List<Item> candidates = GetItemsByRarity(rarity);
 
         if (candidates.Count == 0)
         {
-            Debug.Log($"{rarity}のアイテムがありません。");
+            Debug.LogWarning($"{rarity}のアイテムがありません。");
             return null;
         }
-
-        int index = Random.Range(0, candidates.Count);
         //candidates.Clear();
-        return candidates[index];
+        return GetRandomItemFromList(candidates);
     }
 
-
-
-
-
-    //private Grade GetRandomRarity()
-    //{
-
-    //    float rand = Random.Range(0f, 100f);
-
-    //    if (rand < Comon)
-    //        return Grade.Comon;
-
-    //    rand -= Comon;
-
-    //    if (rand < UnComon)
-    //        return Grade.UnComon;
-
-    //    rand -= UnComon;
-
-    //    if (rand < Rare)
-    //        return Grade.Rara;
-
-    //    rand -= Rare;
-
-    //    if (rand < Legend)
-    //        return Grade.Legend;
-
-    //    return Grade.Legend;
-    //}
-
-    //ランダムにアイテムを渡す
-    public Item RandomGetItem()
+    private void LogRarityError(RarityEnumAsset rarity, List<Item> items)
     {
-        int index = Random.Range(0, ItemList.Count); //アイテムを抽選する
-        return ItemList[index]; // アイテムを渡す
-
+        string msg = $"Could not find item with rarity: {rarity}\n";
+        foreach (var item in items)
+        {
+            msg += $"{item.ItemName} : {item.Data.Rarity}\n";
+        }
+        Debug.LogWarning(msg, this);
     }
-    //アイテムのエフェクトを呼び出す
-    public Item RandomShopItem()
+    /// <summary>
+    /// Get a list of items with matching rarity
+    /// </summary>
+    /// <param name="rarity">Rarity to query</param>
+    /// <returns>List of items with matching rarity</returns>
+    public List<Item> GetItemsByRarity(RarityEnumAsset rarity)
     {
-        int ShopIndex= Random.Range(0, ShopList.Count);
-        return ShopList[ShopIndex];
+        var candidates = ItemList.FindAll(item => item.Data.Rarity == rarity);
+        if (candidates.Count == 0)
+        {
+            LogRarityError (rarity, ItemList);
+        }
+        return candidates;
     }
+    /// <summary>
+    /// Get a random item from items with matching rarity
+    /// </summary>
+    /// <param name="rarity">Rarity to query</param>
+    /// <param name="items">list of items</param>
+    /// <returns>a item with matching rarity</returns>
+    public Item GetRandomItemFromListByRarity(RarityEnumAsset rarity, List<Item> items)
+    {
+        var candidates = items.FindAll(x => x.Data.Rarity == rarity);
+        if (candidates.Count == 0)
+        {
+            LogRarityError(rarity, ItemList);
+        }
+        return GetRandomItemFromList(candidates);
+    }
+    /// <summary>
+    /// Get an item from list of items
+    /// </summary>
+    /// <param name="items">list of items</param>
+    /// <returns>a random item from list</returns>
+    public Item GetRandomItemFromList(List<Item> items)
+    {
+        if (items.Count == 0)
+        {
+            Debug.LogWarning("List is empty", this);
+        }
+        return items[Random.Range(0, items.Count)];
+    }
+
+    /// <summary>
+    /// Get a random item from global item list
+    /// </summary>
+    /// <returns>a random item from ItemList</returns>
+    public Item GetRandomItem()
+    {
+        return GetRandomItemFromList(ItemList);
+    }
+    /// <summary>
+    /// Get a list of items with IsShopCompatible
+    /// </summary>
+    /// <returns>a list of items with IsShopCompatible</returns>
     public List<Item> GetShopItems()
     {
-        return ItemList
-            .Where(x => x.Data.IsShopCompatible)
-            .ToList();
+        return ItemList.FindAll(x => x.Data.IsShopCompatible);
+    }
+    /// <summary>
+    /// Get a random item with IsShopCompatible
+    /// </summary>
+    /// <returns>a random item with IsShopCompatible</returns>
+    public Item GetRandomShopItem()
+    {
+        return GetRandomItemFromList(GetShopItems());
+    }
+    /// <summary>
+    /// Get a random item with IsShopCompatible and matching rarity
+    /// </summary>
+    /// <param name="rarity">rarity to query</param>
+    /// <returns>a random item with IsShopCompatible and matching rarity</returns>
+    public Item GetRandomShopItemByRarity(RarityEnumAsset rarity)
+    {
+        return GetRandomItemFromListByRarity(rarity, GetShopItems());
     }
     public void Update()
     {

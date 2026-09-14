@@ -28,6 +28,17 @@ public class GachaEngine : ScriptableObject
 
     private void OnValidate()
     {
+        ReValidate();
+    }
+
+    private void SetNewWeightTable (List<RarityWithWeight> weightTable)
+    {
+        rarities = weightTable;
+        ReValidate();
+    }
+
+    private void ReValidate()
+    {
         sortedRarities = rarities.OrderBy(x => x.Weight).ToList();
         totalRarityWeight = 0;
         rarityWeights = new int[sortedRarities.Count];
