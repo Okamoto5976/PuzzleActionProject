@@ -1,53 +1,92 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpikeTrap : TrapBase
 {
-    [Header("Damage")]
+    [Header("Trap")]
     [SerializeField]
-    private Collider m_damageCollider;
-
-    private bool m_isAttacking;
-    private bool m_isActivated;
+    private float m_cooldown = 2.0f;
+   
+    private bool m_isActive = true;
 
     protected override void EntitySetUp()
     {
-        // 初期化
-        m_damageCollider.enabled = false;
-        m_isAttacking = false;
-        m_isActivated = false;
+        
+        m_damageData = new DamageData
+        {
+            Attack = m_str + m_owner.STR,
+            AttackType = m_attackType,
+
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+
+            Knockback = m_owner.KnockBack,
+            StunDuration = m_owner.Stun,
+
+            AttackDir = m_dir
+        };
+
+        m_isActive = true;
+    }
+  
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_damageData = new DamageData
+        {
+            Attack = m_str,
+            AttackType = m_attackType,
+
+            CriticalRate = 0,
+            CriticalDamage = 0,
+            BreakRate = 0,
+
+            Knockback = 0,
+            StunDuration = 0,
+
+            AttackDir = Vector3.zero
+        };
+
+        m_isActive = true;
     }
 
 
-    // Playerを検知した時に呼ぶ
-    public void Activate()
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (m_isActivated)
+        if (!m_isActive)
         {
             return;
         }
 
-        m_isActivated = true;
-    }
+        Entity entity = other.GetComponent<Entity>();
 
-
-    // 針が攻撃可能な状態になった時に呼ぶ
-    public void StartDamage()
-    {
-        if (!m_isActivated)
+        if (entity == null)
         {
             return;
         }
 
-        m_isAttacking = true;
-        m_damageCollider.enabled = true;
+        if (entity.Team == Team)
+        {
+            return;
+        }
+
+        entity.TakeDamage(m_damageData);
+
+        OnHit();
+
+        m_isActive = false;
+
+        StartCoroutine(Cooldown());
     }
 
 
-    // 針が引っ込む時に呼ぶ
-    public void EndDamage()
+    private IEnumerator Cooldown()
     {
-        m_isAttacking = false;
-        m_damageCollider.enabled = false;
+        yield return new WaitForSeconds(m_cooldown);
+
+        m_isActive = true;
     }
 
 
@@ -55,36 +94,5 @@ public class SpikeTrap : TrapBase
     {
         
     }
-
-
-    protected override void OnTriggerEnter(
-        Collider other)
-    {
-        if (!m_isAttacking)
-        {
-            return;
-        }
-
-
-        Entity entity =
-            other.GetComponent<Entity>();
-
-        if (entity == null)
-        {
-            return;
-        }
-
-
-        // 設置者にはダメージを与えない
-        if (entity == m_owner)
-        {
-            return;
-        }
-
-
-        // TrapBaseのDamageDataを使用
-        entity.TakeDamage(m_damageData);
-
-        OnHit();
-    }
 }
+

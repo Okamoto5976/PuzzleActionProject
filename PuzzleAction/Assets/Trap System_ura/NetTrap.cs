@@ -1,72 +1,101 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NetTrap : TrapBase
 {
-    [Header("Stun")]
-    [SerializeField] private float m_stunTime = 2.0f;
+    [Header("Net Settings")]
+    [SerializeField]
+    private float m_stunDuration = 2.0f;
 
-    [Header("Detection")]
-    [SerializeField] private float m_range = 5.0f;
-    [SerializeField] private float m_angle = 60.0f;
-    [SerializeField] private LayerMask m_targetLayer;
+    [SerializeField]
+    private float m_speed = 10.0f;
+
+
+    
+    private List<Entity> m_hitTargets =
+        new List<Entity>();
+
+
+    private bool m_isInitialized;
+
+
+    private void FixedUpdate()
+    {
+        if (!m_isInitialized)
+            return;
+
+        
+        m_rb.linearVelocity =
+            m_dir * m_speed;
+
+        m_isInitialized = false;
+    }
+
 
     protected override void EntitySetUp()
     {
+       
+        m_hitTargets.Clear();
 
+        m_damageData = new DamageData
+        {
+            Attack = m_str + m_owner.STR,
+            AttackType = m_attackType,
+
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+            Knockback = m_owner.KnockBack,
+
+             
+            StunDuration = m_stunDuration,
+
+            AttackDir = m_dir
+        };
+
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+
+        m_isInitialized = true;
     }
+
 
     protected override void OnHit()
     {
-        Activate();
+        
+        OnReturnPool();
     }
+
 
     protected override void OnTriggerEnter(Collider other)
     {
+        Entity target =
+            other.GetComponentInParent<Entity>();
 
+        if (target == null)
+            return;
+
+        if (target == m_owner)
+            return;
+
+        if (target.Team == m_team)
+            return;
+        
+        if (m_hitTargets.Contains(target))
+            return;
+
+         
+        m_hitTargets.Add(target);
+             
+        target.TakeDamage(m_damageData);
     }
 
-    public void Activate()
+
+    private void OnDisable()
     {
-        // 周囲のColliderを取得
-        Collider[] targets = Physics.OverlapSphere(
-            transform.position,
-            m_range,
-            m_targetLayer
-        );
+         
+        m_hitTargets.Clear();
 
-        foreach (Collider target in targets)
-        {
-            Entity entity = target.GetComponentInParent<Entity>();
-
-            if (entity == null)
-                continue;
-
-            // 自分自身には当てない
-            if (entity == m_owner)
-                continue;
-
-            // 自分から敵への方向
-            Vector3 dir =
-                entity.transform.position - transform.position;
-
-            dir.y = 0.0f;
-
-            // 前方にいるか確認
-            float angle =
-                Vector3.Angle(transform.forward, dir.normalized);
-
-            if (angle > m_angle / 2.0f)
-                continue;
-
-            // スタン効果
-            Stun(entity);
-        }
+        m_isInitialized = false;
     }
-
-    private void Stun(Entity target)
-    {
-        Debug.Log(target.name + " が " + m_stunTime + "秒スタン！");
-    }
-
-
 }

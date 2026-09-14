@@ -2,20 +2,62 @@ using UnityEngine;
 
 public class KnockBackTrap : TrapBase
 {
-    [Header("KnockBack")]
+    [Header("Life Time")]
     [SerializeField]
-    private float m_knockBackPower = 10f;
+    private float m_lifeTime = 3f;
+
+    private float m_timer;
+
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+            AttackType = m_attackType,
+
+            Knockback = m_power,
+
+            AttackDir = m_dir
+        };
+    }
 
 
     protected override void EntitySetUp()
     {
-        
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+            AttackType = m_attackType,
+
+            Knockback = m_owner.KnockBack,
+
+            AttackDir = m_dir
+        };
+    }
+
+
+    private void FixedUpdate()
+    {
+        OnMove(m_dir);
+
+        m_timer += Time.fixedDeltaTime;
+
+        if (m_timer >= m_lifeTime)
+        {
+            OnReturnPool();
+        }
     }
 
 
     protected override void OnHit()
     {
-       OnReturnPool();
+      
     }
 
 
@@ -27,27 +69,19 @@ public class KnockBackTrap : TrapBase
         if (target == null)
             return;
 
-
-        if (target == m_owner)
+        if (m_owner != null &&
+            target == m_owner)
             return;
 
 
-        Rigidbody targetRb =
-            other.attachedRigidbody;
+        EntityHP entityHP =
+            target.GetComponent<EntityHP>();
 
-        if (targetRb == null)
+        if (entityHP == null)
             return;
 
-        
-        Vector3 knockBackDir =
-            target.transform.position -
-            transform.position;
- 
-        knockBackDir.y = 0f;
+        entityHP.TakeDamage(m_damageData);
 
-
-        targetRb.AddForce(
-            knockBackDir.normalized * m_knockBackPower,
-            ForceMode.Impulse);
+        OnReturnPool();
     }
 }
