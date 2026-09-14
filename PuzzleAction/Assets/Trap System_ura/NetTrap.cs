@@ -7,28 +7,29 @@ public class NetTrap : TrapBase
     [SerializeField]
     private float m_stunDuration = 2.0f;
 
-    [SerializeField]
-    private float m_speed = 10.0f;
-
-
     
     private List<Entity> m_hitTargets =
         new List<Entity>();
 
 
-    private bool m_isInitialized;
+    //private bool m_isInitialized;
 
 
     private void FixedUpdate()
     {
-        if (!m_isInitialized)
-            return;
+        //if (!m_isInitialized)
+        //    return;
 
         
-        m_rb.linearVelocity =
-            m_dir * m_speed;
+        //m_rb.linearVelocity =
+        //    m_dir * m_speed;
 
-        m_isInitialized = false;
+        //m_isInitialized = false;
+    }
+
+    private void Update()
+    {
+        CheckDeadLine();
     }
 
 
@@ -39,26 +40,16 @@ public class NetTrap : TrapBase
 
         m_damageData = new DamageData
         {
-            Attack = m_str + m_owner.STR,
-            AttackType = m_attackType,
-
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-            Knockback = m_owner.KnockBack,
-
-             
             StunDuration = m_stunDuration,
-
-            AttackDir = m_dir
         };
 
         m_rb.linearVelocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
 
-        m_isInitialized = true;
-    }
 
+        OnAddForce(m_dir, 15f);
+        //m_isInitialized = true;
+    }
 
     protected override void OnHit()
     {
@@ -78,6 +69,8 @@ public class NetTrap : TrapBase
         if (target == m_owner)
             return;
 
+        if (target.Team == TeamType.Nature) return;
+
         if (target.Team == m_team)
             return;
         
@@ -96,6 +89,6 @@ public class NetTrap : TrapBase
          
         m_hitTargets.Clear();
 
-        m_isInitialized = false;
+        //m_isInitialized = false;
     }
 }

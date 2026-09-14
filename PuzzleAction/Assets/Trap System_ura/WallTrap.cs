@@ -18,18 +18,22 @@ public class WallTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-       
+        base.TrapInit();
+
+        m_dir = transform.forward;
+
+        StartCoroutine(SpawnDelay());
     }
 
 
    
     public override void TrapInit()
     {
-        base.TrapInit();
+        //base.TrapInit();
          
-        m_dir = transform.forward;
+        //m_dir = transform.forward;
 
-        StartCoroutine(SpawnDelay());
+        //StartCoroutine(SpawnDelay());
     }
 
 
@@ -48,10 +52,10 @@ public class WallTrap : TrapBase
             m_dir * m_spawnDistance;
 
       
-        OnAddForce(
-            m_dir,
-            m_knockBackPower
-        );
+        //OnAddForce(
+        //    m_dir,
+        //    m_knockBackPower
+        //);
 
         m_returnCoroutine =
             StartCoroutine(ReturnAfterTime());

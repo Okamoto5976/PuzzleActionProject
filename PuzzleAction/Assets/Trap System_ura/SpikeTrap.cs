@@ -9,22 +9,22 @@ public class SpikeTrap : TrapBase
    
     private bool m_isActive = true;
 
+    private void Awake()
+    {
+        m_anim = GetComponentInChildren<Animator>();
+    }
+
     protected override void EntitySetUp()
     {
         
         m_damageData = new DamageData
         {
-            Attack = m_str + m_owner.STR,
+            Attack = m_str,
             AttackType = m_attackType,
 
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
-
-            Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.Stun,
-
-            AttackDir = m_dir
         };
 
         m_isActive = true;
@@ -42,11 +42,6 @@ public class SpikeTrap : TrapBase
             CriticalRate = 0,
             CriticalDamage = 0,
             BreakRate = 0,
-
-            Knockback = 0,
-            StunDuration = 0,
-
-            AttackDir = Vector3.zero
         };
 
         m_isActive = true;
@@ -72,6 +67,7 @@ public class SpikeTrap : TrapBase
             return;
         }
 
+        m_anim.SetTrigger("Active");
         entity.TakeDamage(m_damageData);
 
         OnHit();

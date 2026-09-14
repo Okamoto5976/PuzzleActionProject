@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class CaltropTrap : TrapBase
 {
@@ -20,6 +19,7 @@ public class CaltropTrap : TrapBase
 
     protected override void EntitySetUp()
     {
+        OnAddForce(m_dir, 5f);
          
         m_targets.Clear();
 
@@ -30,7 +30,16 @@ public class CaltropTrap : TrapBase
         }
 
         //Damage
-        
+        m_damageData = new DamageData
+        {
+
+            Attack = m_str,
+            AttackType = m_attackType,
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+        };
+
     }
 
 
@@ -46,10 +55,14 @@ public class CaltropTrap : TrapBase
         base.TrapInit();
 
         //DamageData
-        m_damageData = new DamageData();
+        m_damageData = new DamageData
         {
-            
-          
+
+            Attack = m_str,
+            AttackType = m_attackType,
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
         };
     }
 

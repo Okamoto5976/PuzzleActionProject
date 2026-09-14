@@ -46,18 +46,25 @@ public class KnockBackTrap : TrapBase
     {
         OnMove(m_dir);
 
-        m_timer += Time.fixedDeltaTime;
+        
+    }
+
+    private void Update()
+    {
+        m_timer += Time.deltaTime;
 
         if (m_timer >= m_lifeTime)
         {
-            OnReturnPool();
+            m_timer = 0f;
+
+            OnHit();
         }
     }
 
 
     protected override void OnHit()
     {
-      
+        OnReturnPool();
     }
 
 
@@ -73,15 +80,15 @@ public class KnockBackTrap : TrapBase
             target == m_owner)
             return;
 
+        target.TakeDamage(m_damageData);
 
-        EntityHP entityHP =
-            target.GetComponent<EntityHP>();
+        //EntityHP entityHP =
+        //    target.GetComponent<EntityHP>();
 
-        if (entityHP == null)
-            return;
+        //if (entityHP == null)
+        //    return;
 
-        entityHP.TakeDamage(m_damageData);
+        //entityHP.TakeDamage(m_damageData);
 
-        OnReturnPool();
     }
 }

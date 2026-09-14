@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealingArea : MonoBehaviour
+public class HealingArea : TrapBase
 {
     [Header("Regenerate Settings")]
     [SerializeField] private float m_healAmount = 5f;
     [SerializeField] private float m_buffDuration = 1.0f;
+
+    [SerializeField] private float m_lifeTime = 10f;
+
 
     private readonly List<Entity> m_targets =
         new List<Entity>();
@@ -25,6 +28,16 @@ public class HealingArea : MonoBehaviour
         ApplyRegenerate();
     }
 
+
+    protected override void EntitySetUp()
+    {
+        Invoke(nameof(OnHit), m_lifeTime);
+    }
+
+    protected override void OnHit()
+    {
+        OnReturnPool();
+    }
 
     private void ApplyRegenerate()
     {
@@ -55,7 +68,7 @@ public class HealingArea : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
 
