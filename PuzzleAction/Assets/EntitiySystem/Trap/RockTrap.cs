@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RockTrap : TrapBase
 {
+    [SerializeField] private LayerMask m_hitLayers;
     //private void OnEnable()
     //{
     //    if (m_rb != null)
@@ -29,8 +30,7 @@ public class RockTrap : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Wall") ||
-        other.CompareTag("Ground"))
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
         {
             OnHit();
             return;

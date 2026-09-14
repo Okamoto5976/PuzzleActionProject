@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7541d2123e2bc949ad3db636c0979b3, type: 3}
-  m_Name: Boss_Golem_EntityData
+  m_Name: BossEnemy_SlimeKing
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
-  m_hp: 1000
-  m_str: 1
+  m_hp: 0
+  m_str: 0
   m_knockBack: 0
   m_def: 0
-  m_speed: 8
-  m_dashSpeed: 20
+  m_speed: 0
+  m_dashSpeed: 0
   m_criticalRate: 0
   m_criticalDamage: 0
   m_agi: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class StompShockWave : MonoBehaviour
@@ -8,12 +9,13 @@ public class StompShockWave : MonoBehaviour
     private float m_radius;
     private float m_speed = 15f;
 
-    public void Initialize(DamageData damage,TeamType team,float radius,float lifeTime)
+    private readonly HashSet<Entity> m_hitEntities = new();
+
+    public void Initialize(DamageData damage, TeamType team,float radius,float lifeTime)
     {
         m_damage = damage;
         m_team = team;
         m_radius = radius;
-
         transform.localScale = Vector3.zero;
 
         Destroy(gameObject, lifeTime);
@@ -21,7 +23,7 @@ public class StompShockWave : MonoBehaviour
 
     private void Update()
     {
-        transform.localScale = Vector3.MoveTowards(transform.localScale,Vector3.one * m_radius,m_speed * Time.deltaTime);
+        transform.localScale = Vector3.MoveTowards(transform.localScale, Vector3.one * m_radius * 2f, m_speed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -30,10 +32,9 @@ public class StompShockWave : MonoBehaviour
 
         if (entity == null) return;
         if (entity.Team == m_team) return;
+        if (m_hitEntities.Contains(entity)) return;
 
-        float distance = Vector3.Distance(transform.position,entity.transform.position);
-
-        if (distance > m_radius)return;
+        m_hitEntities.Add(entity);
         entity.TakeDamage(m_damage);
     }
 }

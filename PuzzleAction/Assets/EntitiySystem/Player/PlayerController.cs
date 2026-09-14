@@ -390,8 +390,7 @@ public class PlayerController : Entity
         //The arrow rotates only when there is input
         if (moveDir.sqrMagnitude > 0.01f)
         {
-            m_playerDirObject.transform.rotation =
-                Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
+            m_playerDirObject.transform.rotation = Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
         }
     }
 

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MapSelectPhaseSystem : MonoBehaviour
@@ -167,7 +166,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
         {
             bool selected = i == index;
 
-            //­‚µ‘å‚«‚­‚·‚é
+            //ï¿½ï¿½ï¿½ï¿½ï¿½å‚«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             m_previews[i].localScale =
                 selected
                 ? Vector3.one * 1.1f
@@ -185,7 +184,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         MapClass map = new MapClass(definition.size.x, definition.size.y);
 
-        // ‘S•” Blocked
+        // ï¿½Sï¿½ï¿½ Blocked
 
         for (int y = 0; y < definition.size.y; y++)
         {
@@ -195,7 +194,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
             }
         }
 
-        // Shape‚Ì1‚¾‚¯—LŒø
+        // Shapeï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½
 
         for (int y = 0; y < definition.size.y; y++)
         {
