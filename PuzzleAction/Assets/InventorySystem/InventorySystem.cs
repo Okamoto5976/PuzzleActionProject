@@ -288,60 +288,26 @@ public class InventorySystem : MonoBehaviour
         // 削除するアイテムを保持
         Item removeItem = activeInventory[index].data;
 
-        Item[] hotbarItems = new Item[hotbars.Length];
-
         // 現在のホットバー情報を保存
         for (int i = 0; i < hotbars.Length; i++)
         {
-            int inventoryIndex = hotbars[i];
-
-            if (inventoryIndex >= 0 &&
-                inventoryIndex < activeInventory.Count &&
-                activeInventory[inventoryIndex] != null)
+            if (hotbars[i] == index)
             {
-                hotbarItems[i] = activeInventory[inventoryIndex].data;
+                hotbarClear(i);
             }
         }
 
         // インベントリから削除(自動で左詰めされる)
         activeInventory.RemoveAt(index);
 
-        // ホットバー初期化
-        for (int i = 0; i < hotbars.Length; i++)
+        for (int i = 0; i < hotbarSlots.Length; i++)
         {
-            hotbars[i] = -1;
-        }
-
-        // ホットバー再構築
-        int hotbarIndex = 0;
-
-        for (int i = 0; i < hotbars.Length; i++)
-        {
-            if (hotbarItems[i] == null)
-                continue;
-
-            if (hotbarItems[i] == removeItem)
-                continue;
-
-            for (int j = 0; j < activeInventory.Count; j++)
+            if (hotbars[i] > index)
             {
-                if (activeInventory[j] != null &&
-                    activeInventory[j].data == hotbarItems[i])
-                {
-                    hotbars[hotbarIndex] = j;
-                    hotbarIndex++;
-                    break;
-                }
-                // ホットバーがいっぱいなら終了
-                if (hotbarIndex >= hotbars.Length)
-                {
-                    break;
-                }
-
-                break;
+                hotbars[i]--;
             }
-
         }
+
         UpdateUI();
     }
 
