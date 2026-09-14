@@ -146,7 +146,6 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     private void InitializeShops()
     {
-        Debug.LogWarning("Shops Initialized", this);
         if(m_isDebug)
         {
             for (int i = 0; i < 3; i++)
