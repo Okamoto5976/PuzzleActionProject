@@ -1,90 +1,89 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpikeTrap : TrapBase
 {
-    [Header("Damage")]
+    [Header("Trap")]
     [SerializeField]
-    private Collider m_damageCollider;
+    private float m_cooldown = 2.0f;
 
-    private bool m_isAttacking;
-    private bool m_isActivated;
+    // 発動可能か
+    private bool m_isActive = true;
+
 
     protected override void EntitySetUp()
     {
-        // 初期化
-        m_damageCollider.enabled = false;
-        m_isAttacking = false;
-        m_isActivated = false;
+        // ダメージデータを作成
+        m_damageData = new DamageData
+        {
+            Attack = m_str + m_owner.STR,
+            AttackType = m_attackType,
+
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+
+            Knockback = m_owner.KnockBack,
+            StunDuration = m_owner.Stun,
+
+            AttackDir = m_dir
+        };
+
+        // 発動可能にする
+        m_isActive = true;
     }
 
 
-    // Playerを検知した時に呼ぶ
-    public void Activate()
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (m_isActivated)
+        // クールダウン中なら無視
+        if (!m_isActive)
         {
             return;
         }
 
-        m_isActivated = true;
-    }
-
-
-    // 針が攻撃可能な状態になった時に呼ぶ
-    public void StartDamage()
-    {
-        if (!m_isActivated)
-        {
-            return;
-        }
-
-        m_isAttacking = true;
-        m_damageCollider.enabled = true;
-    }
-
-
-    // 針が引っ込む時に呼ぶ
-    public void EndDamage()
-    {
-        m_isAttacking = false;
-        m_damageCollider.enabled = false;
-    }
-
-
-    protected override void OnHit()
-    {
-        
-    }
-
-
-    protected override void OnTriggerEnter(
-        Collider other)
-    {
-        if (!m_isAttacking)
-        {
-            return;
-        }
-
-
-        Entity entity =
-            other.GetComponent<Entity>();
+        // Entityを取得
+        Entity entity = other.GetComponent<Entity>();
 
         if (entity == null)
         {
             return;
         }
 
-
-        // 設置者にはダメージを与えない
-        if (entity == m_owner)
+        // 同じチームなら無視
+        if (entity.Team == Team)
         {
             return;
         }
 
-
-        // TrapBaseのDamageDataを使用
+        // ダメージを与える
         entity.TakeDamage(m_damageData);
 
+        // 発動処理
         OnHit();
+
+        // 一時的に機能停止
+        m_isActive = false;
+
+        // クールダウン開始
+        StartCoroutine(Cooldown());
+    }
+
+
+    private IEnumerator Cooldown()
+    {
+        // 指定時間待つ
+        yield return new WaitForSeconds(m_cooldown);
+
+        // 再び発動可能
+        m_isActive = true;
+    }
+
+
+    protected override void OnHit()
+    {
+        // 針が飛び出すアニメーションやSEなど
+        // 必要になったらここに追加
     }
 }
+

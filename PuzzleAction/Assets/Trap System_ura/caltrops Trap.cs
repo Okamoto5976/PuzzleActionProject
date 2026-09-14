@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class CaltropTrap : TrapBase
 {
@@ -27,6 +28,9 @@ public class CaltropTrap : TrapBase
             StopCoroutine(m_damageCoroutine);
             m_damageCoroutine = null;
         }
+
+        //Damage
+        
     }
 
 
@@ -34,6 +38,19 @@ public class CaltropTrap : TrapBase
     {
         // 継続ダメージなので、
         // 特別なHit処理はここでは不要
+    }
+
+    
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        //DamageData
+        m_damageData = new DamageData();
+        {
+           //Attack = m_str + owner.STR,
+           //AttackType = m_attackType
+        };
     }
 
 
