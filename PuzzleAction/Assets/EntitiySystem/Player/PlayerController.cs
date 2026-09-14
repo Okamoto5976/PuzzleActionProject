@@ -17,7 +17,7 @@ public class PlayerController : Entity
 
     [Header("InputSystem")]
     private InputProvider m_input;
-
+    
     private Vector2 m_move;
 
     private bool m_isActive;
@@ -69,8 +69,12 @@ public class PlayerController : Entity
 
     //InteractSystem
     private InteractSystem m_interactSystem;
+    [Header("Interact")]
     [SerializeField] private LayerMask m_interactLayer;
-    [SerializeField] private LayerMask m_itemLayer;
+    [Header("Item Search")]
+    [SerializeField] private LayerMask m_itemSerachLayer;
+    [SerializeField] private float m_itemSearchRange = 5f;
+    [Header("UI")]
     [SerializeField] private TMPro.TMP_Text m_itemDescriptionText;
     [SerializeField] private TMPro.TMP_Text m_messageText;
     protected override void Awake()
@@ -325,34 +329,12 @@ public class PlayerController : Entity
 
     private void OnuseItemGet()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, 100f, m_itemLayer);
-
-        Debug.Log("Hit数 : " + hits.Length);
-
-        foreach (Collider hit in hits)
+        if (m_selecrItem == null)
+            return;
+        if(ReceiveItem(m_selecrItem.ItemData))
         {
-            Debug.Log(hit.name);
-
-            DropItem drop = hit.GetComponent<DropItem>();
-
-            if (drop == null)
-            {
-                Debug.Log("DropItemなし");
-                continue;
-            }
-
-            Debug.Log("DropItem発見");
-
-            if (ReceiveItem(drop.ItemData))
-            {
-                Debug.Log("アイテム追加成功");
-                drop.ItemGet();
-                break;
-            }
-            else
-            {
-                Debug.Log("アイテム追加失敗");
-            }
+            m_selecrItem.ItemGet();
+            m_selecrItem = null;
         }
     }
 
@@ -420,21 +402,29 @@ public class PlayerController : Entity
 
         return success;
     }
-    private DropItem m_currentDropItem;
+    private DropItem m_selecrItem;
     private Vector3 m_popupPosition;
     private void SearchItem()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemSerachLayer))
         {
             DropItem drop = hit.collider.GetComponent<DropItem>();
 
             if (drop != null)
             {
-                if (m_currentDropItem != drop)
+                float distancee =Vector3.Distance(transform.position,drop.transform.position);
+                
+                if(distancee >m_itemSearchRange)
                 {
-                    m_currentDropItem = drop;
+                    m_selecrItem = null;
+                    m_itemDescriptionText.text = "";
+                    return;
+                }
+                if (m_selecrItem != drop)
+                {
+                    m_selecrItem = drop;
                     m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
                 }
 
@@ -443,7 +433,7 @@ public class PlayerController : Entity
                 return;
             }
         }
-        m_currentDropItem = null;
+        m_selecrItem = null;
         m_itemDescriptionText.text = "";
     }
 }

@@ -126,6 +126,7 @@ public class InventorySystem : MonoBehaviour
         }
 
         // ‹ó‚«–³‚µ
+        //ƒCƒ“ƒxƒ“ƒgƒŠ‚Ì˜g”
         if (activeInventory.Count >= 15)
         {
             return false;
