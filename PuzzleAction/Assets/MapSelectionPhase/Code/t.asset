@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapSettingSO
   mapName: 
   size: {x: 10, y: 10}
-  startPos: {x: 0, y: 0}
-  goalPos: {x: 5, y: 9}
+  startPos: {x: 3, y: 0}
+  goalPos: {x: 9, y: 9}
   mapShape: '1111111111
 
     1111111111

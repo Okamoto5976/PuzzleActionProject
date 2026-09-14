@@ -121,6 +121,31 @@ public class EnemyController : Entity
     #endregion
 
     #region ATTACK
+    public bool TryUseCooldown()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        ConsumeCooldown();
+
+        return true;
+    }
+    public void ConsumeCooldown()
+    {
+        m_isCooldownEnd = false;
+        m_attackCooldownDuration = 0f;
+    }
+    private void HandleCooldown()
+    {
+        if (m_isCooldownEnd) return;
+
+        m_attackCooldownDuration += Time.deltaTime;
+
+        if (m_attackCooldownDuration >= m_attackCooldown)
+        {
+            m_attackCooldownDuration = 0f;
+            m_isCooldownEnd = true;
+        }
+    }
     public bool TryAttack()
     {
         if (!m_isCooldownEnd) return false;
@@ -155,31 +180,6 @@ public class EnemyController : Entity
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : Player ‚ÉHIT");
-    }
-    private void HandleCooldown()
-    {
-        if (m_isCooldownEnd) return;
-
-        m_attackCooldownDuration += Time.deltaTime;
-
-        if (m_attackCooldownDuration >= m_attackCooldown)
-        {
-            m_attackCooldownDuration = 0f;
-            m_isCooldownEnd = true;
-        }
-    }
-    public bool TryUseCooldown()
-    {
-        if (!m_isCooldownEnd) return false;
-
-        ConsumeCooldown();
-
-        return true;
-    }
-    public void ConsumeCooldown()
-    {
-        m_isCooldownEnd = false;
-        m_attackCooldownDuration = 0f;
     }
     public void UseItem(Vector3 dir)
     {

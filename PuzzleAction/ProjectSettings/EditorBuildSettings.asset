@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/PuzzleAction/Level/Scene/SceneB.unity
     guid: 7ab882288f6f57f459a39acbbfbbf6a0
+  - enabled: 1
+    path: Assets/CreatMap/Scene/CreatMap_BossEnemy.unity
+    guid: cd857894e88468543a968d9f1030d5d6
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

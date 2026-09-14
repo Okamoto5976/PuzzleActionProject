@@ -1,10 +1,8 @@
-public interface IBossBehaviour
-{
-    void Initialize(BossEnemyController controller);
+//public interface IBossBehaviour
+//{
+//    void Initialize(BossEnemyController controller);
 
-    void Execute();
+//    void Execute();
 
-    void Stop();
-
-    void Attack();
-}
+//    void Stop();
+//}

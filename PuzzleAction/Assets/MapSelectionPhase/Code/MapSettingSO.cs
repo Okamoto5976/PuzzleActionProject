@@ -36,7 +36,7 @@ public class MapSettingSO : ScriptableObject
             .Replace("\r", "")
             .Split('\n');
 
-        //y = lines.Length - 1 - y;
+        y = lines.Length - 1 - y;
 
         if (y < 0 || y >= lines.Length) return false;
         if (x < 0 || x >= lines[y].Length) return false;
