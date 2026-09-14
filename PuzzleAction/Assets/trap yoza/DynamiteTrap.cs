@@ -5,13 +5,21 @@ public class DynamiteTrap : TrapBase
     [SerializeField] private float m_knockBackValue;
     [SerializeField] private float m_stunDuration;
 
+    [SerializeField] private float m_explosionTimer = 1.5f;
+
     [SerializeField] private ParticleSystem m_fireParticle;
     [SerializeField] private ParticleSystem m_explosionParticle;
+
+    [Header("HitCollider")]
+    [SerializeField] private HitCollider m_hitCollider;
+    [SerializeField] private float m_radius;
 
     private bool m_isTimer = false;
 
     protected override void EntitySetUp()
     {
+        m_team = TeamType.Nature;//上書き
+
         m_damageData = new DamageData
         {
 
@@ -27,7 +35,8 @@ public class DynamiteTrap : TrapBase
 
         };
 
-        m_isTimer = true;
+        m_fireParticle.Play();
+        Invoke(nameof(OnHit), m_explosionTimer);
     }
 
     public override void TrapInit()
@@ -45,16 +54,31 @@ public class DynamiteTrap : TrapBase
             //AttackDir = m_dir,
 
         };
+
+        m_isTimer = true;
     }
 
     protected override void OnHit()
     {
+        AttackHitBox box = new AttackHitBox()
+        {
+            m_transform = transform,
+            m_radius = m_radius,
+        };
+
+        m_explosionParticle.Play();
+        m_hitCollider.AttackCollider(m_damageData, m_team, box);
+
+
         OnReturnPool();
 
     }
 
+    //Use TrapArea
     protected override void OnTriggerEnter(Collider other)
     {
+        if (!m_isTimer) return;
+
         Entity target = other.GetComponentInParent<Entity>();
 
         if (target == null)
@@ -64,19 +88,9 @@ public class DynamiteTrap : TrapBase
             TeamType.Nature)
             return;
 
-        if (target.Team == m_team) return;
+        m_isTimer = false;
 
-
-            //if (m_owner != null && target.Team == m_owner.Team) return;
-
-            //Debug.Log($"[DYNAMITE] {target.gameObject.name} が踏んだ！爆発！");
-
-            // Cプールに戻す（あっちのTrapBaseに備わっているプール返却処理を呼ぶ）
-            //target.TakeDamage(m_damageData);
-
-            //OnHit();
-
-            //gameObject.SetActive(false);
-        
+        m_fireParticle.Play();
+        Invoke(nameof(OnHit), m_explosionTimer);
     }
 }   

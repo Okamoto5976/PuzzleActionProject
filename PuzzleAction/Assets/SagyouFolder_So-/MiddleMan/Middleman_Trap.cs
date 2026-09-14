@@ -26,7 +26,7 @@ public class Middleman_Trap : MonoBehaviour
         var pool = trapPools.Find(x => x.type == trapType).pool;
         if (pool == null)
         {
-            Debug.LogError("Missing Pool or Key", this); 
+            Debug.LogError($"{trapType} : Missing Pool or Key", this); 
             return null;
         }
         return pool.GetComponentFromPool();

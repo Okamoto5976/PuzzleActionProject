@@ -288,7 +288,7 @@ public class EntitySpawner : MonoBehaviour
                 }
             }
 
-            trap.Init(m_trapOwner, Vector3.forward);
+            trap.TrapInit();
             trap.gameObject.SetActive(true);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");
