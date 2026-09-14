@@ -148,7 +148,7 @@ public class BossEnemyController : Entity
             CriticalDamage = CriticalDamage,
             BreakRate = BreakRate,
             Knockback = KnockBack,
-            Stun = Stun,
+            StunDuration = Stun,
             AttackDir = transform.forward,
             Attacker = this,
             //AttackerSE = AttackSE,
@@ -163,7 +163,6 @@ public class BossEnemyController : Entity
         ItemRecieveData data = new ItemRecieveData
         {
             entity = this,
-            baseValue = STR,
             pos = transform.position,
             dir = dir
         };
@@ -252,7 +251,7 @@ public class BossEnemyController : Entity
 
             pos.y = transform.position.y;
 
-            m_itemManager.DropItemSetData(pos);
+            //m_itemManager.DropItemSetData(pos, m_dropCount);
         }
     }
     #endregion

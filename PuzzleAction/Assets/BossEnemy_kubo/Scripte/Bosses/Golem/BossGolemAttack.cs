@@ -59,12 +59,12 @@ public class BossGolemAttack : MonoBehaviour
 
         Debug.Log($"Rock Spawn Request : {pos}");
         Debug.Log("Rock Spawn");
-        m_controller.UseItem(data);
+        //m_controller.UseItem(data);
 
         yield return new WaitForSeconds(0.5f);
 
         m_isAttack = false;
-        m_controller.EndAttack();
+        //m_controller.EndAttack();
     }
 
     IEnumerator StompCoroutine()
@@ -100,7 +100,7 @@ public class BossGolemAttack : MonoBehaviour
 
         yield return new WaitForSeconds(m_stompDelay);
         m_isAttack = false;
-        m_controller.EndAttack();
+        //m_controller.EndAttack();
     }
 
     private void CreateShockWave()
