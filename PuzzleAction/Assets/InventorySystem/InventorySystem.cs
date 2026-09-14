@@ -117,29 +117,50 @@ public class InventorySystem : MonoBehaviour
 
     private bool AddActiveItem(Item data, int count)
     {
-        //同じアイテムを探す
-        foreach (ItemBox item in activeInventory)
+        int maxStack = data.Data.MaxStack;
+
+        // ① 既にあるスタックの空きを埋める
+        for (int i = 0; i < activeInventory.Count; i++)
         {
-            if (item != null && item.data == data)
+            ItemBox item = activeInventory[i];
+
+            if (item == null || item.data != data)
+                continue;
+
+            if (item.count >= maxStack)
+                continue;
+
+            int space = maxStack - item.count;
+            int addCount = Mathf.Min(space, count);
+
+            item.count += addCount;
+            count -= addCount;
+
+            if (count <= 0)
             {
-                item.count += count;
-
                 UpdateUI();
-
                 return true;
             }
         }
 
-        // 空き無し
-        if (activeInventory.Count >= 15)
+        // ② まだ余っている分は新しいスタックを作る
+        while (count > 0)
         {
-            return false;
+            // 空き無し
+            if (activeInventory.Count >= 15)
+            {
+                UpdateUI();
+                return false;
+            }
+
+            int addCount = Mathf.Min(maxStack, count);
+
+            activeInventory.Add(new ItemBox(data, addCount));
+
+            count -= addCount;
         }
-        // 新規追加
-        activeInventory.Add(new ItemBox(data, count));
 
         UpdateUI();
-
         return true;
     }
 
@@ -246,6 +267,7 @@ public class InventorySystem : MonoBehaviour
         ItemBox item = activeInventory[index];
 
         item.count--;
+
         // 0以下なら完全削除
         if (item.count <= 0)
         {
@@ -261,6 +283,9 @@ public class InventorySystem : MonoBehaviour
             //    }
             //}
         }
+        // 同じアイテムのスタックを整理する
+        StackItem(item.data);
+
         UpdateUI();
     }
 
@@ -288,12 +313,15 @@ public class InventorySystem : MonoBehaviour
         // 削除するアイテムを保持
         Item removeItem = activeInventory[index].data;
 
+        // 削除されるスタックを使っていたホットバーを記録
+        List<int> targetHotbars = new List<int>();
+
         // 現在のホットバー情報を保存
         for (int i = 0; i < hotbars.Length; i++)
         {
             if (hotbars[i] == index)
             {
-                hotbarClear(i);
+                targetHotbars.Add(i);
             }
         }
 
@@ -305,6 +333,30 @@ public class InventorySystem : MonoBehaviour
             if (hotbars[i] > index)
             {
                 hotbars[i]--;
+            }
+        }
+
+        // 同じアイテムが残っているか探す
+        int nextIndex = -1;
+
+        for (int i = 0; i < activeInventory.Count; i++)
+        {
+            if (activeInventory[i].data == removeItem)
+            {
+                nextIndex = i;
+                break;
+            }
+        }
+        // 削除されたスタックを選択していたホットバーを同じアイテムの別スタックへ切り替える
+        foreach (int hotbarIndex in targetHotbars)
+        {
+            if (nextIndex >= 0)
+            {
+                hotbars[hotbarIndex] = nextIndex;
+            }
+            else
+            {
+                hotbarClear(hotbarIndex);
             }
         }
 
@@ -321,6 +373,7 @@ public class InventorySystem : MonoBehaviour
 
         ItemBox item = activeInventory[index];
 
+        // 1個使用
         item.count--;
 
         Debug.Log(item.data.ItemName + " を使用");
@@ -354,8 +407,67 @@ public class InventorySystem : MonoBehaviour
             return;
         }
 
+        // 同じアイテムのスタックを整理する
+        StackItem(item.data);
+
         UpdateUI();
     }
+
+    private void StackItem(Item data)
+    {
+        int maxStack = data.Data.MaxStack;
+
+        // 前のスタックから順番に確認
+        for (int i = 0; i < activeInventory.Count; i++)
+        {
+            if (activeInventory[i] == null)
+                continue;
+
+            if (activeInventory[i].data != data)
+                continue;
+
+            // すでに最大数なら次へ
+            if (activeInventory[i].count >= maxStack)
+                continue;
+
+            // 後ろのスタックからアイテムを移動
+            for (int j = i + 1; j < activeInventory.Count; j++)
+            {
+                if (activeInventory[j] == null)
+                    continue;
+
+                if (activeInventory[j].data != data)
+                    continue;
+
+                // i側の空き
+                int space = maxStack - activeInventory[i].count;
+
+                // 移動する個数
+                int moveCount = Mathf.Min(
+                    space,
+                    activeInventory[j].count
+                );
+
+                activeInventory[i].count += moveCount;
+                activeInventory[j].count -= moveCount;
+
+                // 後ろのスタックが0個になったら削除
+                if (activeInventory[j].count <= 0)
+                {
+                    RemoveItem(j);
+                }
+
+                // i側が満タンになったら次のスタックへ
+                if (activeInventory[i].count >= maxStack)
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+
+
 
     //hotber
 
