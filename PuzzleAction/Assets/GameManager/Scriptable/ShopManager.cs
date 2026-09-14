@@ -69,6 +69,9 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private RarityEnumAsset m_defaultShopRarity;
     [SerializeField] private int m_forcedRarityCount;
 
+    [Header("Shop Item Rarity Overlay")]
+    [SerializeField] private ShopRarityVisuals m_shopRarityVisuals;
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -143,7 +146,6 @@ public class ShopManager : MonoBehaviour
     /// </summary>
     private void InitializeShops()
     {
-        Debug.LogWarning("Shops Initialized", this);
         if(m_isDebug)
         {
             for (int i = 0; i < 3; i++)
@@ -201,7 +203,8 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < SlotCount; i++)
         {
-            m_goodsPrefab[i].SetData(shopInventory.inventory[i]);
+            var shopItem = shopInventory.inventory[i];
+            m_goodsPrefab[i].SetData(shopItem, m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity));
         }
     }
 
