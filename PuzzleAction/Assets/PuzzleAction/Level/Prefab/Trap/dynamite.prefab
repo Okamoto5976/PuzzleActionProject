@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 1288153900421120325}
   - component: {fileID: 74107977654017426}
   - component: {fileID: 8988422936948150200}
+  - component: {fileID: 5034231960300179592}
+  - component: {fileID: 2940700304109731131}
   m_Layer: 0
   m_Name: dynamite
   m_TagString: Untagged
@@ -67,8 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38c83a312c54b34c8d9bb0089751fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dynamite_Trap
-  m_team: 2
-  m_trapdata: {fileID: 11400000, guid: 5a6159b9ee2dc8c4e8b15fb1e7098253, type: 2}
   m_str: 5
   m_speed: 0
   m_attackType: 0
@@ -99,3 +99,32 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 14
   m_CollisionDetection: 0
+--- !u!114 &5034231960300179592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897296333762648534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
+--- !u!114 &2940700304109731131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8897296333762648534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
+  m_isViewCollider: 0
+  m_isVisible: 1
+  hitBoxes:
+  - m_transform: {fileID: 1465111920557476121}
+    m_radius: 0.5

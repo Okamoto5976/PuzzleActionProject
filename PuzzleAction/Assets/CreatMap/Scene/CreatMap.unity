@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 389996727671295936, guid: fab4953a82a28294d8d2753acfee2fef, type: 3}
+  m_prefab: {fileID: 7131541308926137162, guid: e0b4ac4895565e74bad9fb4ca9dc2f1e, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!4 &11185804
@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntitySpawner
   m_player: {fileID: 721869216}
   m_playerC: {fileID: 721869219}
-  m_camera: {fileID: 0}
+  m_camera: {fileID: 1957982647}
   m_enemyPool: {fileID: 776241687}
   m_spawnCount: 5
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -469,53 +469,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &125733069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 125733070}
-  - component: {fileID: 125733071}
-  m_Layer: 0
-  m_Name: SlowSharpArrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &125733070
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125733069}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 435115611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &125733071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125733069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: 420458ddd65e7524c9b89058111649e5, type: 3}
-  m_poolCount: 30
-  m_forcePoolCount: 1
 --- !u!1001 &179334779
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -540,6 +493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5653737303500713224, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: _targetCamera
+      value: 
+      objectReference: {fileID: 1957982643}
     - target: {fileID: 5761074183309458794, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_testLight
       value: 
@@ -684,53 +641,6 @@ Transform:
   - {fileID: 1007118618}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &222316281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 222316282}
-  - component: {fileID: 222316283}
-  m_Layer: 0
-  m_Name: CRDownSharpArrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &222316282
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222316281}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 435115611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &222316283
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222316281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: 5f2646a3f23ed8d4a895030c866d737b, type: 3}
-  m_poolCount: 30
-  m_forcePoolCount: 1
 --- !u!212 &236226198 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 3676967130022225026, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
@@ -959,53 +869,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &400932660
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 400932661}
-  - component: {fileID: 400932662}
-  m_Layer: 0
-  m_Name: StunSharpArrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &400932661
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400932660}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 435115611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &400932662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400932660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: 3e29e837d80ba1941a9a5e4574c52282, type: 3}
-  m_poolCount: 30
-  m_forcePoolCount: 1
 --- !u!1 &417542572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,30 +1001,24 @@ MonoBehaviour:
   - type: 2
     pool: {fileID: 1377944240}
   - type: 3
-    pool: {fileID: 125733071}
-  - type: 4
     pool: {fileID: 336080990}
-  - type: 5
-    pool: {fileID: 832530370}
-  - type: 6
+  - type: 4
     pool: {fileID: 188310926}
-  - type: 7
-    pool: {fileID: 1883061651}
-  - type: 8
+  - type: 5
     pool: {fileID: 1301632986}
-  - type: 9
-    pool: {fileID: 222316283}
-  - type: 10
+  - type: 6
     pool: {fileID: 1697125214}
-  - type: 11
-    pool: {fileID: 400932662}
-  - type: 33
+  - type: 7
+    pool: {fileID: 831392857}
+  - type: 8
+    pool: {fileID: 757957888}
+  - type: 28
     pool: {fileID: 11185803}
-  - type: 15
+  - type: 10
     pool: {fileID: 2131066617}
-  - type: 34
+  - type: 29
     pool: {fileID: 1281278073}
-  - type: 32
+  - type: 27
     pool: {fileID: 735960746}
 --- !u!4 &435115611
 Transform:
@@ -1179,15 +1036,12 @@ Transform:
   - {fileID: 975252806}
   - {fileID: 1566126494}
   - {fileID: 1377944239}
-  - {fileID: 125733070}
   - {fileID: 336080989}
-  - {fileID: 832530369}
   - {fileID: 188310925}
-  - {fileID: 1883061650}
   - {fileID: 1301632985}
-  - {fileID: 222316282}
   - {fileID: 1697125213}
-  - {fileID: 400932661}
+  - {fileID: 831392856}
+  - {fileID: 757957887}
   - {fileID: 11185804}
   - {fileID: 2131066616}
   - {fileID: 1281278072}
@@ -2040,6 +1894,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 74042322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &757957886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 757957887}
+  - component: {fileID: 757957888}
+  m_Layer: 0
+  m_Name: SharpKnife
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &757957887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757957886}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 435115611}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &757957888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757957886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
+  m_prefab: {fileID: 9130968029162177211, guid: d3c014215fa78b2478e9df827fafd325, type: 3}
+  m_poolCount: 30
+  m_forcePoolCount: 1
 --- !u!1 &776241686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,7 +2028,7 @@ Transform:
   - {fileID: 436269124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &832530368
+--- !u!1 &831392855
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2135,22 +2036,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 832530369}
-  - component: {fileID: 832530370}
+  - component: {fileID: 831392856}
+  - component: {fileID: 831392857}
   m_Layer: 0
-  m_Name: PoisonSharpArrow
+  m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &832530369
+--- !u!4 &831392856
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832530368}
+  m_GameObject: {fileID: 831392855}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2159,19 +2060,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 435115611}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &832530370
+--- !u!114 &831392857
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 832530368}
+  m_GameObject: {fileID: 831392855}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: bd546afd84f20b646b8c2962f3965c54, type: 3}
+  m_prefab: {fileID: 9130968029162177211, guid: 01b5a4fde013982478f4f53a49776a50, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &836592459
@@ -3129,7 +3030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 4574407748689759281, guid: 61da06d3a9731bf45979a0b9a63334ac, type: 3}
+  m_prefab: {fileID: 8719441754121234464, guid: d1575ac9c6e9e77409872969539cd576, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1301632984
@@ -3689,53 +3590,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 776241688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1883061649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1883061650}
-  - component: {fileID: 1883061651}
-  m_Layer: 0
-  m_Name: BurnSharpArrow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1883061650
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883061649}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 435115611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1883061651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883061649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: 0b7b67e066c391f48bbab66f9bc51e98, type: 3}
-  m_poolCount: 30
-  m_forcePoolCount: 1
 --- !u!114 &1895134535 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
@@ -6336,7 +6190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7780e3918ef33642aeecf2dc11de4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemManager
-  ShopList: []
   ItemList:
   - {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
   - {fileID: 11400000, guid: 224e1962884dcfc459c5fae0ca825e11, type: 2}
@@ -6367,15 +6220,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
   - {fileID: 11400000, guid: d1443505bef836f42873b64c02708473, type: 2}
   - {fileID: 11400000, guid: eb3ef5fc26d7d994ca021ae21231cd61, type: 2}
-  - {fileID: 11400000, guid: 5c3384c60c93f15458ba51eeadef5871, type: 2}
   - {fileID: 11400000, guid: 955c293a1b0fb9a42a7c757c13dac76a, type: 2}
-  - {fileID: 11400000, guid: 57f9349058a6830409552a1356c4c4ca, type: 2}
   - {fileID: 11400000, guid: e296d5beb7d118e438f137e8773d00b6, type: 2}
-  - {fileID: 11400000, guid: 40cb616a45ba8d2429a099d28f8e6d8e, type: 2}
   - {fileID: 11400000, guid: f8ec9c4bf915e364b8532ce74bcc4dc1, type: 2}
-  - {fileID: 11400000, guid: 97ded2823a5a77f4d846d577ce33bb00, type: 2}
   - {fileID: 11400000, guid: aaa5d0281399e894bb1b9a38c6e64be4, type: 2}
-  - {fileID: 11400000, guid: 01ed1c9f16444754ca9911f965c91919, type: 2}
   - {fileID: 11400000, guid: cee31a69152a0fa45add68f50490e7bb, type: 2}
   - {fileID: 11400000, guid: 364a03ffe04510f4db3a446aea2cca35, type: 2}
   - {fileID: 11400000, guid: a95928846dc3a8b4f9ec59c8d21c1e6a, type: 2}
@@ -6418,14 +6266,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81dca3f2ebcbc914c9af6ffff21ffb8a, type: 2}
   - {fileID: 11400000, guid: 837578132e746b840899e74f2b6bb8f5, type: 2}
   - {fileID: 11400000, guid: c96238741142ec944b87f27d72692d73, type: 2}
-  DropRateList: []
-  PlayerItems: []
-  EnemyItems: []
   m_middleman_trap: {fileID: 435115610}
   m_dropItem: {fileID: 0}
   DropItems: []
   m_itemPool: {fileID: 673198001}
-  items: []
 --- !u!1 &869878583074309818
 GameObject:
   m_ObjectHideFlags: 0

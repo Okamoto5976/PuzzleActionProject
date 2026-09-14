@@ -321,7 +321,7 @@ public class EnemyController : Entity
     public void ItemDrop()
     {
         if (m_dropItem == null) return;
-        //m_itemManager.ItemDrop(m_itemDrop, transform.position)
+        m_itemManager.DropItemSetData(transform.position, m_dropItem);
     }
     public void ReturnPool()
     {
