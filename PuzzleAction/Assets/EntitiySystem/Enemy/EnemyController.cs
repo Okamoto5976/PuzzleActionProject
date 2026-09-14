@@ -25,6 +25,7 @@ public class EnemyController : Entity
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
     public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [NonSerialized] public Item m_dropItem;
+
     public Item DropItem
     {
         get => m_dropItem;
@@ -125,6 +126,13 @@ public class EnemyController : Entity
     {
         if (!m_isCooldownEnd) return false;
 
+        if(m_anim != null)
+        {
+            m_anim.SetTrigger("Attack");
+
+        }
+
+
         Attack();
         ConsumeCooldown();
         return true;
@@ -215,6 +223,11 @@ public class EnemyController : Entity
     public void SetDestination(Vector3 targetPos, float speed)
     {
         m_agent.isStopped = false;
+        if(m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+
+        }
 
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
@@ -255,6 +268,12 @@ public class EnemyController : Entity
     public void Stop()
     {
         m_agent.isStopped = true;
+        if(m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+
+        }
+
     }
     private void StopAll()
     {

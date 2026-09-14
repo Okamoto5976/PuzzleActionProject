@@ -1172,8 +1172,6 @@ MonoBehaviour:
   - {fileID: 2696698503287207879}
   - {fileID: 702978554416571477}
   m_buffImageList:
-  - m_buffID: 0
-    m_sprite: {fileID: 21300000, guid: c97f9052bc09b254aa59dedaaefef40b, type: 3}
   - m_buffID: 1
     m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
   - m_buffID: 2
@@ -1197,6 +1195,42 @@ MonoBehaviour:
   - m_buffID: 11
     m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
   - m_buffID: 12
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 13
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 14
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 15
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 16
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 17
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 18
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 19
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 20
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 21
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 22
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 23
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 24
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 25
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 26
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 27
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 28
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 29
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 30
     m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
 --- !u!223 &6591543693613818236
 Canvas:

@@ -106,6 +106,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
         GridLayoutGroup grid = rootObj.AddComponent<GridLayoutGroup>();
         grid.cellSize = new Vector2(cellSize, cellSize);
         grid.spacing = Vector2.zero;
+        grid.startCorner = GridLayoutGroup.Corner.LowerLeft;
 
         // -------- Generate Tiles --------
 
