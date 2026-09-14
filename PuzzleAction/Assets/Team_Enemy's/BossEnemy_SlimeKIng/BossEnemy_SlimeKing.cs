@@ -1,22 +1,22 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public enum SlimeKingAttackType{
     Attack,
-    Summon
+    Summon,
 
 }
-public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
+
+public class Boss_SlimeKing : MonoBehaviour//,IBossBehaviour
 {
     [Header("Summon Setting")]
     [SerializeField] private List<Enum_EnemyType> m_summonTypes = new();
     [SerializeField] private float SlimeKingRange;
     [SerializeField] private float attackRange;
-    [SerializeField] private float findRange; 
+    [SerializeField] private float findRange;
     private EnemyController m_enemyController;
-
     private BossEnemyController m_controller;
     public void Initialized(EnemyController enemyController)
     {
@@ -26,33 +26,46 @@ public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
     {
         if (m_enemyController.Target == null) return;
         float distance = Vector3.Distance(transform.position, m_enemyController.Target.Value);
-        SlimeKingAttackType attackType;
-        if (distance <= SlimeKingRange)
+        bool attackType ;
+        
+        if(distance <= attackRange)
         {
-            attackType = SlimeKingAttackType.Attack ;
+            Attack();
+            return;
+        }
+        m_controller.SetDestination(m_controller.Target.Value,m_controller.Speed);
+    }
+
+    public void Attack()
+    {
+        float distance=Vector3.Distance(transform.position,m_controller.Target.Value);
+        SlimeKingAttackType attackType;
+        if(distance <=  attackRange)
+        {
+            attackType =SlimeKingAttackType.Attack;
         }
         else
         {
             attackType = SlimeKingAttackType.Summon;
         }
+
         m_controller.StartAttack();
 
-        m_enemyController.Stop();
         switch (attackType)
         {
             case SlimeKingAttackType.Attack:
-
                 AttackRange(distance);
                 break;
 
+            //case SlimeKingAttackType.;
+            //break;
+            //case SlimeKingAttackType.Summon;
+            //break;
             case SlimeKingAttackType.Summon:
-
                 FindRange(distance);
                 break;
-         
         }
     }
-
 
     private void SummonEnemies()
     {
@@ -116,8 +129,9 @@ public class BossEnemy_SlimeKing : MonoBehaviour//, IBossBehaviour
             SummonEnemies();
         }
     }
-  
-    
+   
+        
+
 }
 
 
