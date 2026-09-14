@@ -65,6 +65,7 @@ MonoBehaviour:
   m_shopItemGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
   m_defaultShopRarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
   m_forcedRarityCount: 2
+  m_shopRarityVisuals: {fileID: 11400000, guid: d5ed0c4980becde469090d608197e2da, type: 2}
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1
