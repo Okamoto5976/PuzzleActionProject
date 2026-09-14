@@ -18,14 +18,16 @@ MonoBehaviour:
     itemID: 3
     itemName: DefenceUpPorthion
     itemIcon: {fileID: 21300000, guid: 3960c70ce2b6f6d418cbda673fd12796, type: 3}
-    description: 
+    description: defece
     maxStack: 99
     dropRate: 0
-    itemGrade: 0
     itemType: 0
+    m_itemUseType: 0
     price: 100
     Type: 0
+    itemGrade: 0
   m_buffDuration: 60
+  m_buffID: 0
   m_buffType: 1
   m_buffEffectType: 0
   m_statusType: 3

@@ -18,12 +18,12 @@ MonoBehaviour:
     itemID: 4
     itemName: RowHealPorshon
     itemIcon: {fileID: 21300000, guid: 6f9d95fd690790340bd7550e677b28b0, type: 3}
-    description: 
+    description: heal
     maxStack: 99
     dropRate: 0
-    itemGrade: 0
     itemType: 0
+    m_itemUseType: 0
     price: 100
     Type: 0
+    itemGrade: 0
   HealingInterval: 0
-  HealTime: 0
