@@ -13,23 +13,27 @@ public class WallTrap : TrapBase
     [Header("KnockBack")]
     [SerializeField] private float m_knockBackPower = 5.0f;
 
-    private Coroutine m_returnCoroutine;
-
 
     protected override void EntitySetUp()
     {
-       
+        
     }
 
 
-   
     public override void TrapInit()
     {
         base.TrapInit();
-         
+
         m_dir = transform.forward;
 
-        StartCoroutine(SpawnDelay());
+        if (m_spawnDelay > 0.0f)
+        {
+            StartCoroutine(SpawnDelay());
+        }
+        else
+        {
+            Spawn();
+        }
     }
 
 
@@ -43,18 +47,17 @@ public class WallTrap : TrapBase
 
     private void Spawn()
     {
-       
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+
         transform.position +=
             m_dir * m_spawnDistance;
-
-      
         OnAddForce(
             m_dir,
             m_knockBackPower
         );
 
-        m_returnCoroutine =
-            StartCoroutine(ReturnAfterTime());
+        StartCoroutine(ReturnAfterTime());
     }
 
 
