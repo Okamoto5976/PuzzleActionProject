@@ -189,8 +189,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5192190198220617858}
-  - component: {fileID: 528806279578718545}
   - component: {fileID: -5396902195688915075}
+  - component: {fileID: 528806279578718545}
   - component: {fileID: -8928694272576341907}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 7341675702321249772}
@@ -221,6 +221,21 @@ Transform:
   - {fileID: 5361813224094951186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5396902195688915075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfd0248362c9544f88cde823476d8a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Summoner
+  m_summonTypes: 020000000900000009000000
+  m_summonCount: 1
+  m_maxAliveSummons: 6
 --- !u!114 &528806279578718545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,25 +255,12 @@ MonoBehaviour:
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 10
   m_attackRange: 8
-  m_attackCooldown: 6
+  m_attackCooldown: 12
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
     m_radius: 1
   m_attackItem: {fileID: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
---- !u!114 &-5396902195688915075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfd0248362c9544f88cde823476d8a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Summoner
-  m_summonTypes: 0200000002000000
 --- !u!114 &-8928694272576341907
 MonoBehaviour:
   m_ObjectHideFlags: 0
