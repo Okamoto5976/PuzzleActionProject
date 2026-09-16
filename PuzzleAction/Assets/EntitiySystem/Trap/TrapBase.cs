@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ReturnObjectToPool))]
-[RequireComponent(typeof(Rigidbody))]
 
 public abstract class TrapBase : MonoBehaviour
 {

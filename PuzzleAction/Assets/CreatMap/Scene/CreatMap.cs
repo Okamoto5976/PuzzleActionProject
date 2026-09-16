@@ -20,7 +20,7 @@ public class CreatMap : MonoBehaviour
 
         if (mapClass == null)
         {
-            Debug.Log("DebugMapPlaceSystem On");
+            //Debug.Log("DebugMapPlaceSystem On");
 
             m_instanceCounter.ResetCount();
 
@@ -31,7 +31,7 @@ public class CreatMap : MonoBehaviour
             else
             {
                 m_mapClass = m_mapClassData.MapClass;
-                if (m_mapClass != null) Debug.Log("MapClass in");
+                //if (m_mapClass != null) Debug.Log("MapClass in");
             }
         }
 
