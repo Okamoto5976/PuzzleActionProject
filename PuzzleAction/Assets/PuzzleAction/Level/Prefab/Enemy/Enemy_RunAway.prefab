@@ -238,6 +238,7 @@ MonoBehaviour:
     m_transform: {fileID: 3042968806835571943}
     m_radius: 1
   m_attackItem: {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &-6208613025751143186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,8 +252,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   m_currentHP: 0
+  m_max: 0
   m_damageParticleController: {fileID: 429245284499668544}
-  m_isItemDrop: 0
+  m_isItemDrop: 1
 --- !u!114 &-6878687357098537760
 MonoBehaviour:
   m_ObjectHideFlags: 0

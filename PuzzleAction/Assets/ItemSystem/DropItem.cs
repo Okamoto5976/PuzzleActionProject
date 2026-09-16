@@ -9,6 +9,10 @@ public class DropItem : MonoBehaviour
     //private GameObject prefab;
     //public event Action m_event;
 
+    private ReturnObjectToPool m_returnObjectPool;
+
+    private SpriteRenderer m_renderer;
+
     private Item m_itemData;
 
     public Item ItemData => m_itemData;
@@ -31,10 +35,15 @@ public class DropItem : MonoBehaviour
     //    }
     //}
 
+    private void Awake()
+    {
+        m_returnObjectPool = GetComponent<ReturnObjectToPool>();
+        m_renderer = GetComponentInChildren<SpriteRenderer>();
+    }
 
     private void Start()
     {
-        Initialize();
+        //Initialize();
     }
 
 
@@ -44,8 +53,9 @@ public class DropItem : MonoBehaviour
         Return();
     }
 
-    public void Initialize(Item data = null)
+    public void Initialize(Item data)
     {
+        Debug.Log("Item Init");
         Invoke(nameof(Return), m_timeToReturn); // timeToReturn秒後にReturnメソッドを呼び出す
         if (data == null) return;
         SetItemData(data);
@@ -53,7 +63,11 @@ public class DropItem : MonoBehaviour
 
     private void SetItemData(Item data)
     {
+        Debug.Log("Set Item");
+
         m_itemData = data;
+
+        m_renderer.sprite = data.icon;
     }
 
     private void Return()
@@ -64,7 +78,9 @@ public class DropItem : MonoBehaviour
         //    //Poolに返す処理
         //    pool.ReturnItem(prefab);
         //}
-        Debug.Log("Return");
+        //Debug.Log("Return");
+
+        m_returnObjectPool.ReturnToPool();
         //return pool
     }
 }

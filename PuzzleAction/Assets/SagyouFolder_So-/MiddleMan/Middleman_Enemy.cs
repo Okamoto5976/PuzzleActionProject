@@ -3,31 +3,5 @@ using UnityEngine;
 
 public class Middleman_Enemy : MiddlemanBase<Enum_EnemyType, ComponentPoolHandler_Enemy, EnemyController>
 {
-    //[System.Serializable]
-    //private struct EnemyDict
-    //{
-    //    public Enum_EnemyType type;
-    //    public ComponentPoolHandler_Enemy pool;
-    //}
 
-    //[SerializeField] private List<EnemyDict> enemyPools;
-
-    //public void InitializePool()
-    //{
-    //    foreach (var enemyPool in enemyPools)
-    //    {
-    //        enemyPool.pool.Initialize();
-    //    }
-    //}
-
-    //public EnemyController GetEnemy(Enum_EnemyType enemyType)
-    //{
-    //    var pool = enemyPools.Find(x => x.type == enemyType).pool;
-    //    if (pool == null)
-    //    {
-    //        Debug.LogError("Missing Pool or Key", this);
-    //        return null;
-    //    }
-    //    return pool.GetComponentFromPool();
-    //}
 }

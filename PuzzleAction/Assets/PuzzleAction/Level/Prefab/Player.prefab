@@ -235,6 +235,7 @@ GameObject:
   - component: {fileID: 8049973323928560549}
   - component: {fileID: 5761074183309458794}
   - component: {fileID: 9049173678588975528}
+  - component: {fileID: 1685510717018303622}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -372,6 +373,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c30ef2cc7fc49e4ba13a83ace803449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityPassiveBuffSystem
+--- !u!114 &1685510717018303622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501914875296179412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e972cb244f0d7784cbf2d97919b7273e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupItem
+  m_pickupRange: 0
+  m_maxColliderDetectCount: 0
 --- !u!1 &2753646007902922138
 GameObject:
   m_ObjectHideFlags: 0

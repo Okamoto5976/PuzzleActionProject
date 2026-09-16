@@ -77,6 +77,7 @@ public class ItemManager : MonoBehaviour
 
 
     [SerializeField] private ComponentPoolHandler_Item m_itemPool;
+    [SerializeField] private float m_groundPos;
     public void DropItemSetData(Vector3 pos, Item data)
     {
         //get object"DropItem" from pool        
@@ -88,14 +89,24 @@ public class ItemManager : MonoBehaviour
         //DropItem m_dropItem = DropItems[dropIndex];
         //m_dropItem.Initialize(data);
         //set pos DropItem Position
+
+
+        Debug.LogWarning("Drop Item");
+
         DropItem obj = m_itemPool.GetComponentFromPool();
+        obj.gameObject.SetActive(true);
+
+        if (obj == null)
+        {
+            Debug.LogWarning("Obj null");
+
+        }
 
         obj.Initialize(data);
 
         //m_dropItem.gameObject.transform.position = pos;
-        obj.gameObject.transform.position = pos;
+        obj.gameObject.transform.position = new Vector3(pos.x, m_groundPos, pos.z);
 
-        Debug.LogWarning("Drop Item");
 
         //foreach (var obj in DropItems)
         //{
