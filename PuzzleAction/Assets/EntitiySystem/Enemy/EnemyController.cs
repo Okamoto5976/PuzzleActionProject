@@ -348,7 +348,7 @@ public class EnemyController : Entity
             Debug.LogWarning("Middleman_Enemy Not Found");
             return null;
         }
-        EnemyController enemy = pool.GetEnemy(type);
+        EnemyController enemy = pool.GetComponent(type);
         if(enemy == null)
         {
             Debug.LogWarning($"Pool Missing : {type}");

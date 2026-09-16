@@ -812,8 +812,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd0fdfac73f10044ac770185efa3da9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_Treasure
-  treasurePools:
-  - type: 0
+  pools:
+  - key: 0
     pool: {fileID: 1007118617}
 --- !u!4 &193231411
 Transform:
@@ -1276,8 +1276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b42962e64311c045a414e0df91dac27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_Effect
-  effectPools:
-  - type: 0
+  pools:
+  - key: 0
     pool: {fileID: 1998405415}
 --- !u!4 &423272710
 Transform:
@@ -1324,74 +1324,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077588c5d4483e9459d40d59c50040a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_Trap
-  trapPools:
-  - type: 0
+  pools:
+  - key: 0
     pool: {fileID: 975252805}
-  - type: 1
+  - key: 1
     pool: {fileID: 1566126495}
-  - type: 2
+  - key: 2
     pool: {fileID: 1377944240}
-  - type: 3
+  - key: 3
     pool: {fileID: 336080990}
-  - type: 4
+  - key: 4
     pool: {fileID: 188310926}
-  - type: 5
+  - key: 5
     pool: {fileID: 1301632986}
-  - type: 6
+  - key: 6
     pool: {fileID: 1697125214}
-  - type: 7
+  - key: 7
     pool: {fileID: 831392857}
-  - type: 8
+  - key: 8
     pool: {fileID: 757957888}
-  - type: 9
+  - key: 9
     pool: {fileID: 1817513314}
-  - type: 10
+  - key: 10
     pool: {fileID: 2131066617}
-  - type: 11
+  - key: 11
     pool: {fileID: 1404455128}
-  - type: 12
+  - key: 12
     pool: {fileID: 1007156454}
-  - type: 13
+  - key: 13
     pool: {fileID: 1169332786}
-  - type: 14
+  - key: 14
     pool: {fileID: 184982341}
-  - type: 15
+  - key: 15
     pool: {fileID: 1341396321}
-  - type: 16
+  - key: 16
     pool: {fileID: 215921234}
-  - type: 17
+  - key: 17
     pool: {fileID: 132723307}
-  - type: 18
+  - key: 18
     pool: {fileID: 33073621}
-  - type: 19
+  - key: 19
     pool: {fileID: 1540560733}
-  - type: 20
+  - key: 20
     pool: {fileID: 1356557546}
-  - type: 21
+  - key: 21
     pool: {fileID: 1018647579}
-  - type: 22
+  - key: 22
     pool: {fileID: 1565582376}
-  - type: 23
+  - key: 23
     pool: {fileID: 43065948}
-  - type: 24
+  - key: 24
     pool: {fileID: 469692362}
-  - type: 25
+  - key: 25
     pool: {fileID: 1055649210}
-  - type: 26
+  - key: 26
     pool: {fileID: 341403896}
-  - type: 27
+  - key: 27
     pool: {fileID: 735960746}
-  - type: 28
+  - key: 28
     pool: {fileID: 11185803}
-  - type: 29
+  - key: 29
     pool: {fileID: 1281278073}
-  - type: 30
+  - key: 30
     pool: {fileID: 972296279}
-  - type: 31
+  - key: 31
     pool: {fileID: 1117582746}
-  - type: 32
+  - key: 32
     pool: {fileID: 484888540}
-  - type: 33
+  - key: 33
     pool: {fileID: 1392508915}
 --- !u!4 &435115611
 Transform:
@@ -2505,35 +2505,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b4fa61edfd1ba428cf4d1834a96126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_Enemy
-  enemyPools:
-  - type: 0
+  pools:
+  - key: 0
     pool: {fileID: 1034517596}
-  - type: 1
+  - key: 1
     pool: {fileID: 32432718}
-  - type: 2
+  - key: 2
     pool: {fileID: 1214272747}
-  - type: 3
+  - key: 3
     pool: {fileID: 1034817198}
-  - type: 5
-    pool: {fileID: 1731456572}
-  - type: 6
-    pool: {fileID: 1189560941}
-  - type: 7
-    pool: {fileID: 979544501}
-  - type: 8
-    pool: {fileID: 707530922}
-  - type: 9
-    pool: {fileID: 1361733459}
-  - type: 10
-    pool: {fileID: 836592460}
-  - type: 11
-    pool: {fileID: 417542573}
-  - type: 12
-    pool: {fileID: 1811358556}
-  - type: 13
-    pool: {fileID: 436269123}
-  - type: 4
+  - key: 4
     pool: {fileID: 1092138093}
+  - key: 5
+    pool: {fileID: 1731456572}
+  - key: 6
+    pool: {fileID: 1189560941}
+  - key: 7
+    pool: {fileID: 979544501}
+  - key: 8
+    pool: {fileID: 707530922}
+  - key: 9
+    pool: {fileID: 1361733459}
+  - key: 10
+    pool: {fileID: 836592460}
+  - key: 11
+    pool: {fileID: 417542573}
+  - key: 12
+    pool: {fileID: 1811358556}
+  - key: 13
+    pool: {fileID: 436269123}
 --- !u!4 &776241688
 Transform:
   m_ObjectHideFlags: 0
@@ -3736,10 +3736,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f5cc6424192b44fb110d36e448f6d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Middleman_BossEnemy
-  m_bossPools:
-  - type: 0
+  pools:
+  - key: 0
     pool: {fileID: 593164553}
-  - type: 2
+  - key: 2
     pool: {fileID: 264986809}
 --- !u!4 &1266464615
 Transform:

@@ -266,7 +266,7 @@ public class BossEnemyController : Entity
             return null;
         }
         //get enemy flom pool
-        EnemyController enemy = pool.GetEnemy(type);
+        EnemyController enemy = pool.GetComponent(type);
         if (enemy == null)
         {
             Debug.LogWarning($"Pool Missing : {type}");

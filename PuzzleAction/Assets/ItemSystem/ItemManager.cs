@@ -51,7 +51,7 @@ public class ItemManager : MonoBehaviour
         {
             if (item is TrapItem trap)
             {
-                TrapBase obj = m_middleman_trap.GetTrap(trap.EnumTrap);
+                TrapBase obj = m_middleman_trap.GetComponent(trap.EnumTrap);
 
                 if (obj == null)
                 {

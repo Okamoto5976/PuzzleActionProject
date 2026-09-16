@@ -26,7 +26,7 @@ public class ObjectConsolidation : MonoBehaviour
         foreach (Vector3 pos in spawnPos)
         {
             //Debug.Log("trap" + trapType);
-            TrapBase trap = m_middleman_Trap.GetTrap(trapType);
+            TrapBase trap = m_middleman_Trap.GetComponent(trapType);
             //Debug.Log("trap" + trap);
 
             if (trap == null)

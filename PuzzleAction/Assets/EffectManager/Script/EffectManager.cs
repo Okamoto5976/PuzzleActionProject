@@ -32,7 +32,7 @@ public class EffectManager : MonoBehaviour
         //GameObject obj =
         //    m_effectPool.Get(data.EffectPrefab);
 
-        EffectObj obj = m_effectPool.GetEffect(data.effectData.Type);
+        EffectObj obj = m_effectPool.GetComponent(data.effectData.Type);
 
         obj.transform.SetPositionAndRotation(
             data.effectPos,

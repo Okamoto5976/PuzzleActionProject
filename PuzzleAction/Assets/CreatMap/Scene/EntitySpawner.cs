@@ -192,7 +192,7 @@ public class EntitySpawner : MonoBehaviour
 
         // 同レアリティ内ランダム
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
-        EnemyController enemy =m_enemyPool.GetEnemy(selectedType);
+        EnemyController enemy =m_enemyPool.GetComponent(selectedType);
 
 
         if (enemy == null)
@@ -212,7 +212,7 @@ public class EntitySpawner : MonoBehaviour
     {
         Vector2Int center = room.m_roomSizes[room.m_roomSizes.Count / 2];
         Enum_BossType bossType = GetCurrentBossType();
-        BossEnemyController boss = m_bossEnemyPool.GetBoss(bossType);
+        BossEnemyController boss = m_bossEnemyPool.GetComponent(bossType);
 
         if (boss == null)
         {
@@ -293,7 +293,7 @@ public class EntitySpawner : MonoBehaviour
         foreach (Vector3 pos in position)
         {
 
-            TrapBase trap = m_trapPool.GetTrap(selectedType);
+            TrapBase trap = m_trapPool.GetComponent(selectedType);
 
             if (trap == null)
             {
@@ -424,7 +424,7 @@ public class EntitySpawner : MonoBehaviour
             case Enum_TreasureType.TreasureBox:
                 {
                     //gete Pool 
-                    Treasure treasure = m_treasurePool.GetTreasure(Enum_TreasureType.TreasureBox);
+                    Treasure treasure = m_treasurePool.GetComponent(Enum_TreasureType.TreasureBox);
                     if (treasure == null)return;
 
                     treasure.transform.position = position;
@@ -436,7 +436,7 @@ public class EntitySpawner : MonoBehaviour
             case Enum_TreasureType.Mimic:
                 {
                     //get pool 
-                    EnemyController mimic = m_enemyPool.GetEnemy(Enum_EnemyType.Mimic);
+                    EnemyController mimic = m_enemyPool.GetComponent(Enum_EnemyType.Mimic);
                     if (mimic == null)return;
 
                     mimic.transform.position =position;
