@@ -13,6 +13,8 @@ public class BossEnemyHP : EntityHP
             Debug.Log($"{this.name} : BossEnemyController not found");
             return;
         }
+        if (boss.CurrentState == Entity.EntityState.Dead) return;
+        boss.KillEntity();
         boss.OnDead(m_isItemDrop);
         OnReturnPool();
     }

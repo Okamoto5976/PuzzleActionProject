@@ -80,14 +80,13 @@ public class EnemyController : Entity
 
     private void Update()
     {
-        OnUpdateFlag();
-
+        if (CurrentState == Entity.EntityState.Dead) return;
         if (m_target == null) return;
 
+        OnUpdateFlag();
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
-
         HandleRotation(distance);
 
         if (distance > m_findRange)
@@ -111,6 +110,8 @@ public class EnemyController : Entity
     }
     private void OnEnable()
     {
+        ChangeState(EntityState.Idle);
+
         m_isCooldownEnd = true;
         m_attackCooldownDuration = 0f;
 
@@ -149,6 +150,7 @@ public class EnemyController : Entity
     }
     public bool TryAttack()
     {
+        if (CurrentState == Entity.EntityState.Dead) return false;
         if (!m_isCooldownEnd) return false;
 
         if(m_anim != null)
