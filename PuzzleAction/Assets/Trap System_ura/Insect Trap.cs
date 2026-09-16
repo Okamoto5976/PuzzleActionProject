@@ -16,7 +16,7 @@ public class InsectTrap : TrapBase
 
     private Coroutine m_stunCoroutine;
 
-    protected  void SetUp()
+    protected override void EntitySetUp()
     {
         m_target.Clear();
 
@@ -30,11 +30,6 @@ public class InsectTrap : TrapBase
         {
             m_insectCollider.enabled = false;
         }
-    }
-
-    protected override void EntitySetUp()
-    {
-        
     }
 
     public void Activate()
