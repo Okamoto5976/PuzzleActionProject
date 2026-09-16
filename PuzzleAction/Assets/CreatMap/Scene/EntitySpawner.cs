@@ -154,8 +154,6 @@ public class EntitySpawner : MonoBehaviour
 
         foreach (var pos in positions)
         {
-            if (IsForbiddenPos(pos)) continue;
-
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
             SpawnEnemyByGacha(worldPositions);
         }
@@ -265,8 +263,6 @@ public class EntitySpawner : MonoBehaviour
         List<Vector3> worldPositions = new();
         foreach (var pos in room.m_roomSizes)
         {
-            if (IsForbiddenPos(pos)) continue;
-
             worldPositions.Add(m_mapGeneration.GridToWorld(pos));
         }
         SpawnTrapByGacha(worldPositions);
@@ -330,36 +326,20 @@ public class EntitySpawner : MonoBehaviour
 
         foreach (var pos in positions)
         {
-            if (IsForbiddenPos(pos)) continue;
-
             Instantiate(m_shopPrefab, m_mapGeneration.GridToWorld(pos), Quaternion.identity);
         }
     }
     private void SpawnGoal()
     {
-        Vector3 pos =
-            m_mapGeneration.GridToWorld(
-                m_mapClassData.GoalPos);
-
-        GameObject goal =
-            Instantiate(
-                m_goalPrefab,
-                pos,
-                Quaternion.identity);
-
-        GoalSystem goalSystem =
-            goal.GetComponent<GoalSystem>();
-
+        Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.GoalPos);
+        GameObject goal = Instantiate(m_goalPrefab, pos, Quaternion.identity);
+        GoalSystem goalSystem = goal.GetComponent<GoalSystem>();
         goalSystem.Initialize(m_mainGameManager);
     }
     private void SpawnPlayer()
     {
-        Vector3 pos =
-            m_mapGeneration.GridToWorld(
-                m_mapClassData.StartPos);
-
+        Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
         pos.y = 0.5f;
-
         m_player.position = pos;
 
         if (m_camera != null)
@@ -404,7 +384,6 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnTreasureByGacha(Vector3 position)
     {
         if (m_treasureGachaEngine == null) return;
-
         if (m_treasureRarityTable == null) return;
 
         RarityEnumAsset rarity = m_treasureGachaEngine.Collapse();
@@ -445,15 +424,12 @@ public class EntitySpawner : MonoBehaviour
                     break;
                 }
         }
-
-        Debug.Log($"Spawn {selectedType} [{rarity.name}]");
     }
     #endregion
 
     private bool IsForbiddenPos(Vector2Int pos)
     {
         if (pos == GetStartPos()) return true;
-
         if (pos == GetGoalPos()) return true;
 
         return false;
@@ -473,15 +449,20 @@ public class EntitySpawner : MonoBehaviour
     /// <returns></returns>
     private List<Vector2Int> ChooseRandomPosition(RoomData room, int count)
     {
-        List<Vector2Int> copy = new(room.m_roomSizes);
-        List<Vector2Int> result = new();
+        List<Vector2Int> copy = new();
+        foreach (var pos in room.m_roomSizes)
+        {
+            if (IsForbiddenPos(pos)) continue;
 
+            copy.Add(pos);
+        }
+
+        List<Vector2Int> result = new();
         count = Mathf.Min(count, copy.Count);
 
         for (int i = 0; i < count; i++)
         {
             int index = UnityEngine.Random.Range(0, copy.Count);
-
             result.Add(copy[index]);
             copy.RemoveAt(index);
         }
