@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossEnemy_Golem
   m_golem:
     ShortRange: 7
-    LongRange: 19
+    LongRange: 10
     JumpHeight: 4
     JumpDuration: 0.5
     ShockWaveLifeTime: 1

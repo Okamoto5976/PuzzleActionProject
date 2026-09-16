@@ -7,6 +7,8 @@ public class EnemyHP : EntityHP
 
     protected override void Die()
     {
+        Debug.LogWarning(" enemy die");
+
         //Ž€‚ñ‚¾‚Æ‚«pool‚É–ß‚é
         // player get money
         // add score

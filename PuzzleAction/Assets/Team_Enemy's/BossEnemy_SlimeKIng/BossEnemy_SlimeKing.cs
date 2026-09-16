@@ -7,34 +7,34 @@ public class BossEnemy_SlimeKing : MonoBehaviour, IBossBehaviour
     [SerializeField]
     private SlimeKingController m_slimeKing;
 
-    private BossEnemyController m_controller;
+    private BossEnemyController m_bossEnemyController;
 
     private readonly List<EnemyController> m_children = new();
 
     public void Initialize(BossEnemyController controller)
     {
-        m_controller = controller;
+        m_bossEnemyController = controller;
     }
 
     public void Execute()
     {
-        if (m_controller == null) return;
-        if (m_controller.Target == null) return;
+        if (m_bossEnemyController == null) return;
+        if (m_bossEnemyController.Target == null) return;
 
-        float distance = Vector3.Distance(transform.position, m_controller.Target.Value);
-        if (distance <= m_controller.AttackRange)
+        float distance = Vector3.Distance(transform.position, m_bossEnemyController.Target.Value);
+        if (distance <= m_bossEnemyController.AttackRange)
         {
             CloseAttack();
             return;
         }
-        if (distance > m_controller.FindRange)
+        if (distance > m_bossEnemyController.FindRange)
         {
             return;
         }
 
-        m_controller.SetDestination(m_controller.Target.Value, m_controller.Speed);
+        m_bossEnemyController.SetDestination(m_bossEnemyController.Target.Value, m_bossEnemyController.Speed);
 
-        if (m_controller.TryUseCooldown())
+        if (m_bossEnemyController.TryUseCooldown())
         {
             Debug.Log("Summon Start");
 
@@ -44,8 +44,8 @@ public class BossEnemy_SlimeKing : MonoBehaviour, IBossBehaviour
 
     private void CloseAttack()
     {
-        m_controller.Stop();
-        m_controller.TryAttack();
+        m_bossEnemyController.Stop();
+        m_bossEnemyController.TryAttack();
     }
 
     private void SummonEnemies()
@@ -95,13 +95,13 @@ public class BossEnemy_SlimeKing : MonoBehaviour, IBossBehaviour
     }
     private bool TryGetSummonPosition(out Vector3 result)
     {
-        Vector2 pos = m_controller.GetRandomPosition(m_slimeKing.SummonRadius);
+        Vector2 pos = m_bossEnemyController.GetRandomPosition(m_slimeKing.SummonRadius);
         result = new Vector3(pos.x, transform.position.y, pos.y);
         return true;
     }
 
     public void Stop()
     {
-        m_controller.Stop();
+        m_bossEnemyController.Stop();
     }
 }

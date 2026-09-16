@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class EntitySpawner : MonoBehaviour
@@ -194,7 +192,6 @@ public class EntitySpawner : MonoBehaviour
 
         // 同レアリティ内ランダム
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
-        Debug.Log($"Selected Enemy : {selectedType}");
         EnemyController enemy =m_enemyPool.GetEnemy(selectedType);
 
 
@@ -208,8 +205,6 @@ public class EntitySpawner : MonoBehaviour
 
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-
-        Debug.Log($"Spawn Enemy [{selectedType}] Rarity [{rarity.name}]");
     }
 
     //BossEnemy
@@ -227,8 +222,6 @@ public class EntitySpawner : MonoBehaviour
 
         boss.transform.position = m_mapGeneration.GridToWorld(center);
         boss.gameObject.SetActive(true);
-
-        Debug.Log($"Spawn Boss : {bossType}");
     }
     private Enum_BossType GetCurrentBossType()
     {
@@ -259,11 +252,11 @@ public class EntitySpawner : MonoBehaviour
         RarityEnumAsset rarity = enemy.ItemDropGachaEngine.Collapse();
 
         // hoka tantou jissou yotei 
-        //Item item = m_itemManager.GetRandomItem(rarity);
-        Item item = null;
+        Item item = m_itemManager.DropItem(rarity);
+        //Item item = null;
         //set drop item 
         enemy.DropItem = item;
-        Debug.Log($"{enemy.name} DropRarity = {rarity.name}");
+        Debug.LogWarning($"{enemy.name} DropRarity = {rarity.name}");
     }
 
     //Trap

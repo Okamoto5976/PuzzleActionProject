@@ -95,6 +95,7 @@ public class ItemManager : MonoBehaviour
         //m_dropItem.gameObject.transform.position = pos;
         obj.gameObject.transform.position = pos;
 
+        Debug.LogWarning("Drop Item");
 
         //foreach (var obj in DropItems)
         //{
