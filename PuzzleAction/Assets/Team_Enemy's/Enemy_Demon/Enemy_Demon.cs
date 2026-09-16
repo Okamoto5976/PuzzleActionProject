@@ -10,13 +10,14 @@ public class Enemy_Demon : MonoBehaviour, IEnemyBehaviour
     [SerializeField] private float probabilityOfTakeStep = 75f;
     [SerializeField] private float nextActionDurationMin = 1f;
     [SerializeField] private float nextActionDurationMax = 5f;
-    [SerializeField] private float stepPower = 1f;
+    [SerializeField] private float stepPower = 3f;
 
 
     public void Initialized(EnemyController enemyController)
     {
         m_enemyController = enemyController;
-        m_enemyDemonController.Initialize(enemyController, transform, probabilityOfTakeStep, Random.Range(nextActionDurationMin, nextActionDurationMax), stepPower);
+        Rigidbody rb = GetComponent<Rigidbody>();
+        m_enemyDemonController.Initialize(enemyController, transform, probabilityOfTakeStep, Random.Range(nextActionDurationMin, nextActionDurationMax), stepPower, rb);
     }
 
     public void Execute()

@@ -705,6 +705,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1027978937202661744, guid: 6e899bf394291684db70a01f415e2502, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1027978937202661744, guid: 6e899bf394291684db70a01f415e2502, type: 3}
+      propertyPath: m_Constraints
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 528806279578718545, guid: 6e899bf394291684db70a01f415e2502, type: 3}
+      propertyPath: m_attackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386965129153338412, guid: 6e899bf394291684db70a01f415e2502, type: 3}
+      propertyPath: stepPower
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5192190198220617858, guid: 6e899bf394291684db70a01f415e2502, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -748,6 +764,10 @@ PrefabInstance:
     - target: {fileID: 6967910656285339947, guid: 6e899bf394291684db70a01f415e2502, type: 3}
       propertyPath: m_Name
       value: EnemyDemon
+      objectReference: {fileID: 0}
+    - target: {fileID: 7341675702321249772, guid: 6e899bf394291684db70a01f415e2502, type: 3}
+      propertyPath: m_AutoTraverseOffMeshLink
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

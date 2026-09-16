@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDemonController
@@ -13,7 +14,8 @@ public class EnemyDemonController
     {
         Back,
         Left,
-        Right
+        Right,
+        Max
     }
 
     private enum ChasingAction
@@ -26,22 +28,23 @@ public class EnemyDemonController
     }
 
     private EnemyController enemyController;
-    private DemonState state;
-    private StepDirection stepDir;
-    private ChasingAction action;
+    [SerializeField] private DemonState state;
+    [SerializeField] private StepDirection stepDir;
+    [SerializeField] private ChasingAction action;
     private Transform transform;
     private Rigidbody rb;
 
-    private float time;
+    [SerializeField] private float time;
 
-    private float probabilityOfTakeStep;
-    private float nextActionDuration;
-    private float stepPower;
+    [SerializeField] private float probabilityOfTakeStep;
+    [SerializeField] private float nextActionDuration;
+    [SerializeField] private float stepPower;
+    private bool wasStep;
 
 
     private float DistanceToTarget => Vector3.Distance(transform.position, enemyController.Target.Value);
 
-    public void Initialize(EnemyController enemyController, Transform transform, float probablityOfTakeStep, float nextActionDuration, float stepPower)
+    public void Initialize(EnemyController enemyController, Transform transform, float probablityOfTakeStep, float nextActionDuration, float stepPower, Rigidbody rb)
     {
         this.enemyController = enemyController;
         this.transform = transform;
@@ -49,15 +52,19 @@ public class EnemyDemonController
         this.nextActionDuration = nextActionDuration;
         this.stepPower = stepPower;
         time = 0;
+        this.rb = rb;
+        this.wasStep = false;
         enemyController.SetIsInvincible(true);
     }
 
     public void DoDemonStates()
     {
         time += Time.deltaTime;
+        //Debug.Log($"time: {time}");
         switch (state)
         {
             case DemonState.Chasing: DoChasing(); break;
+            case DemonState.Step:   TakeStep(stepDir); break;
             case DemonState.Attack: DoAttack(); break;
         }
     }
@@ -70,17 +77,31 @@ public class EnemyDemonController
             SetState(DemonState.Attack);
             return;
         }
+
+        //Debug.Log("SetDestination");
+        enemyController.SetDestination(enemyController.Target.Value, enemyController.Speed);
     }
 
     private void DoAttack()
     {
+        //Debug.Log($"IsCooldownReady: {enemyController.IsCooldownReady}");
+        if (!enemyController.IsCooldownReady)  return;
+
+        Debug.Log("Demon.DoAttack");
         enemyController.Stop();
-        enemyController.Attack();
-        float lotteryTakeStep = Random.Range(0, 100);
-        if (lotteryTakeStep < probabilityOfTakeStep)
+        if (enemyController.TryAttack())
         {
-            SetState(DemonState.Step);
-            return;
+            float lotteryTakeStep = UnityEngine.Random.Range(0, 100);
+            Debug.Log($"LTS: {lotteryTakeStep}");
+            if (lotteryTakeStep < probabilityOfTakeStep)
+            {
+                SetState(DemonState.Step);
+                stepDir = (StepDirection)Enum.ToObject(typeof(StepDirection), UnityEngine.Random.Range(0, (int)StepDirection.Max));
+                Debug.Log($"stepDir: {stepDir}");
+                TakeStep(stepDir);
+                //TakeStep(StepDirection.Back);
+                return;
+            }
         }
 
         if (DistanceToTarget > enemyController.AttackRange)
@@ -93,20 +114,29 @@ public class EnemyDemonController
 
     private void TakeStep(StepDirection stepDir)
     {
-        enemyController.SetEnableRotation(false);
+        //Debug.Log("TakeStep");
+        if (time >= 1f)
+        {
+            rb.linearVelocity = Vector3.zero;
+
+            if (time < 1.3f) return;
+            SetState(DemonState.Chasing);
+            wasStep = false;
+            return;
+        }
+
+        if (wasStep) return;
         Vector3 stepForce = Vector3.zero;
         switch (stepDir)
         {
-            case StepDirection.Back: stepForce = -Vector3.forward * stepPower + Vector3.up; break;
-            case StepDirection.Left: stepForce = -Vector3.right * stepPower + Vector3.up; break;
-            case StepDirection.Right: stepForce = Vector3.right * stepPower + Vector3.up; break;
+            case StepDirection.Back: stepForce = -Vector3.forward * stepPower; break;
+            case StepDirection.Left: stepForce = -Vector3.right * stepPower; break;
+            case StepDirection.Right: stepForce = Vector3.right * stepPower; break;
         }
-        rb.AddForce(stepForce);
-    }
-
-    private void AfterTheStep()
-    {
-
+        //Debug.Log($"stepForce: {stepForce}");
+        
+        rb.AddForce(stepForce, mode: ForceMode.Acceleration);
+        wasStep = true;
     }
 
     private void SetState(DemonState state)
