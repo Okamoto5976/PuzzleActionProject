@@ -24,8 +24,8 @@ public class CameraSpriteCorrection : MonoBehaviour
     private void CorrectRotation()
     {
         Vector3 cameraRotation = _targetCamera.transform.localRotation.eulerAngles;
-        Vector3 rotation = _transform.localRotation.eulerAngles;
+        Vector3 rotation = Vector3.zero;
         rotation.x = cameraRotation.x;
-        _transform.localRotation = Quaternion.Euler(rotation);
+        _transform.rotation = Quaternion.Euler(rotation);
     }
 }
