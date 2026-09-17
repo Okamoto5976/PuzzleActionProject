@@ -313,7 +313,7 @@ public class EnemyController : Entity
     {
         if (isDropItem)
         {
-            Debug.LogWarning("DropItem from Enemy");
+            //Debug.LogWarning("DropItem from Enemy");
 
             ItemDrop();
         }
@@ -322,7 +322,7 @@ public class EnemyController : Entity
 
     public void ItemDrop()
     {
-        Debug.LogWarning($"{m_dropItem.ItemName}");
+        //Debug.LogWarning($"{m_dropItem.ItemName}");
 
         if (m_dropItem == null) return;
         m_itemManager.DropItemSetData(transform.position, m_dropItem);
