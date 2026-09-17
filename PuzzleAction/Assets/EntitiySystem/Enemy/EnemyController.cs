@@ -165,9 +165,9 @@ public class EnemyController : Entity
     public void Attack()
     {
         Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
-        Debug.Log(m_attackHitBox.m_transform.position);
-        Debug.Log(m_attackHitBox.m_radius);
+        //Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
+        //Debug.Log(m_attackHitBox.m_transform.position);
+        //Debug.Log(m_attackHitBox.m_radius);
 
 
         if (m_hitCollider == null) return;

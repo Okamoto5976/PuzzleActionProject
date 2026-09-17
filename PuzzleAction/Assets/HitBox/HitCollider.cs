@@ -72,7 +72,7 @@ public class HitCollider : MonoBehaviour
 
                 entity.TakeDamage(data);
 
-                Debug.Log($"{entity.name}‚Éƒqƒbƒg");
+                //Debug.Log($"{entity.name}‚Éƒqƒbƒg");
                 //Debug.Log($"hit : {hit}");
                 //var damageable = hit.GetComponentInParent<IDamage>();
                 //if (damageable == null) continue;

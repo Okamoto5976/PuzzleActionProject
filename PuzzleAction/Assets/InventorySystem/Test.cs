@@ -48,7 +48,7 @@ public class Test : MonoBehaviour
 
     public void SetInventoryVisibility(bool state)
     {
-        Debug.Log($"call SetInventory{state}");
+        //Debug.Log($"call SetInventory{state}");
 
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
@@ -90,8 +90,8 @@ public class Test : MonoBehaviour
     }
     public void ShowItemInfo(Item data)
     {
-        Debug.Log("=== ShowItemInfo ===");
-        Debug.Log($"data = {data}");
+        //Debug.Log("=== ShowItemInfo ===");
+        //Debug.Log($"data = {data}");
 
         if (data == null)
         {
@@ -99,8 +99,8 @@ public class Test : MonoBehaviour
             return;
         }
 
-        Debug.Log($"ñºëO = {data.ItemName}");
-        Debug.Log($"ê‡ñæ = {data.info}");
+        //Debug.Log($"ñºëO = {data.ItemName}");
+        //Debug.Log($"ê‡ñæ = {data.info}");
 
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
@@ -166,7 +166,7 @@ public class Test : MonoBehaviour
 
     public void SetIndex(int index, bool isPassive)
     {
-        Debug.Log($"SetIndex : {index}");
+        //Debug.Log($"SetIndex : {index}");
 
         m_index = index;
         m_isPassive = isPassive;
@@ -174,7 +174,7 @@ public class Test : MonoBehaviour
 
     public void HideButtons()
     {
-        Debug.Log("Hide!");
+        //Debug.Log("Hide!");
 
         m_trashButton.SetActive(false);
         m_selectButton.SetActive(false);
@@ -191,7 +191,7 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber1()
     {
-        Debug.Log($"Hotbar1 index = {m_index}");
+        //Debug.Log($"Hotbar1 index = {m_index}");
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(0, m_index);
@@ -199,7 +199,7 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber2()
     {
-        Debug.Log($"Hotbar2 index = {m_index}");
+        //Debug.Log($"Hotbar2 index = {m_index}");
 
         if (m_index == -1) return;
 
@@ -208,7 +208,7 @@ public class Test : MonoBehaviour
 
     public void OnMoveItemHotber3()
     {
-        Debug.Log($"Hotbar3 index = {m_index}");
+        //Debug.Log($"Hotbar3 index = {m_index}");
 
         if (m_index == -1) return;
 

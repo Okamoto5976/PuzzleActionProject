@@ -46,6 +46,7 @@ public class PlayerController : Entity
 
     //--------player foward -----------------
     [SerializeField] private GameObject m_playerDirObject;
+    [SerializeField] private ParticleSystem m_trailParticle;
 
     [SerializeField] private RectTransform m_reticle;
 
@@ -277,6 +278,9 @@ public class PlayerController : Entity
 
             m_power = 0f;
             m_reticle.gameObject.SetActive(true);
+
+            m_trailParticle.gameObject.SetActive(true);
+
             //start to pull the bow
             
 
@@ -287,6 +291,7 @@ public class PlayerController : Entity
             m_isUsingSetItem = true;
             m_power = 0f;
             m_reticle.gameObject.SetActive(true);
+            
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
         {
@@ -310,13 +315,20 @@ public class PlayerController : Entity
     {
         //Debug.Log("Hold");
 
-        if(m_isUsingArrow)
+        if (m_isUsingArrow)
         {
             OnReticle();
 
+
+
             m_power += Time.deltaTime;
+
+            m_power = Mathf.Min(m_power, 3f);
+
+            var main = m_trailParticle.main;
+            main.startSpeed = m_power * 8 / m_rb.mass;
         }
-        else if(m_isUsingSetItem)
+        else if (m_isUsingSetItem)
         {
             OnReticle();
         }
@@ -324,7 +336,10 @@ public class PlayerController : Entity
         {
             OnReticle();
 
+
             m_power += Time.deltaTime;
+
+            m_power = Mathf.Min(m_power, 3f);
         }
     }
 
@@ -337,10 +352,9 @@ public class PlayerController : Entity
             m_isUsingArrow = false;
 
             m_reticle.gameObject.SetActive(false);
+            m_trailParticle.gameObject.SetActive(false);
 
-            m_power = Mathf.Min(m_power, 3f);
-
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power, m_pullOffSet);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power * 8, m_pullOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
         }
@@ -358,8 +372,6 @@ public class PlayerController : Entity
             m_isUsingAttackItem = false;
 
             m_reticle.gameObject.SetActive(false);
-
-            m_power = Mathf.Min(m_power, 3f);
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);

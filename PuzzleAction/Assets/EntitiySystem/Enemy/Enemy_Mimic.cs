@@ -22,7 +22,7 @@ public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
             {
                 m_isAwakened = true;
 
-                Debug.Log("Mimic Awaken");
+                //Debug.Log("Mimic Awaken");
             }
             return;
         }
