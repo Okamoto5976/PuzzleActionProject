@@ -1,21 +1,31 @@
 using UnityEngine;
 
-public class Bluffbomb : TrapBase
+public class Bluffbomb_moto : TrapBase
 {
     [Header("Bomb Settings")]
     [SerializeField] private float m_Range = 4f;
     [SerializeField] private float m_KnockbackPower = 15f;
+    [SerializeField] private float m_StunDuration = 1f;
+    [SerializeField] private float  m_FuseTime= 3f;
 
-    //[Header("Visual Effects")]
-    //[SerializeField] private GameObject m_Effect;
-
+    private bool m_isFuseActive=false;
+    private float m_fuseTimer = 0f;
     protected override void OnHit()
     {
         Explode();
     }
     protected override void EntitySetUp()
     {
-        
+        m_damageData = new DamageData()
+        {
+            Attack = 0f,
+            AttackType = m_attackType,
+            Knockback = m_KnockbackPower + (m_owner != null ? m_owner.KnockBack : 0f),
+            StunDuration = m_StunDuration + (m_owner != null ? m_owner.StunPower : 0f),
+            Attacker = m_owner
+        };
+        m_isFuseActive = true;
+        m_fuseTimer = 0f;
     }
 
     public override void TrapInit()
@@ -24,38 +34,50 @@ public class Bluffbomb : TrapBase
 
         m_damageData = new DamageData()
         {
-            Knockback = m_KnockbackPower
-            //stun duration
+           Attack=0f,
+           AttackType=m_attackType,
+           Knockback=m_KnockbackPower,
+           StunDuration=m_StunDuration,
+           Attacker=null
         };
+        m_isFuseActive =false;
+        m_fuseTimer=0f;
     }
 
     private void FixedUpdate()
     {
-        //OnMove(m_dir);
-        //CheckRange();
         CheckDeadLine();
+    }
+
+    private void Update()
+    {
+        if(m_isFuseActive)
+        {
+            m_fuseTimer += Time.deltaTime;
+            if(m_fuseTimer>=m_FuseTime)
+            {
+                m_isFuseActive=false;
+                Explode();
+            }
+        }
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
         //base.OnTriggerEnter(other);
+        if (m_team == TeamType.Nature) return;
 
         Entity target = other.GetComponent<Entity>();
 
         if(target != null )
         {
             if(target.Team==m_team)return;
-        }
-
         Explode();
+        }
     }
 
     private void Explode()
     {
-        //if (m_Effect != null)
-        //{
-        //    Instantiate(m_Effect, transform.position, Quaternion.identity);
-        //}
         //”ÍˆÍ”»’è
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_Range);
 
@@ -73,8 +95,9 @@ public class Bluffbomb : TrapBase
             {
                 knockbackDir = m_dir;
             }
+            m_damageData.AttackDir = knockbackDir.normalized;
 
-            //target.ApplyKnockBack(knockbackDir.normalized, m_KnockbackPower,0f);
+            target.TakeDamage(m_damageData);
         }
             OnReturnPool();
     }

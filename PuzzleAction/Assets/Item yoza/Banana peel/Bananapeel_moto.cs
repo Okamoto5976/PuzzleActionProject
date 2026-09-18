@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ReturnObjectToPool))]
-public class Bananapeel : TrapBase
+public class Bananapeel_moto : TrapBase
 {
     //[SerializeField] private float stunTime = 2.0f;
     //“]“|K‚à‚¿•t‚­‚¾‚ë‚¤‚©‚ç‚»‚Ì‚¯‚Â‚ÌÕŒ‚(‚¨‚Ó‚´‚¯•Ê‚É‚¢‚ç‚ñƒKƒLS‚¾)
