@@ -462,6 +462,7 @@ MonoBehaviour:
   m_player: {fileID: 721869216}
   m_playerC: {fileID: 721869219}
   m_camera: {fileID: 1957982647}
+  m_playerHeightOffset: 1.5
   m_enemyPool: {fileID: 776241687}
   m_spawnCount: 5
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -683,6 +684,10 @@ PrefabInstance:
     - target: {fileID: 5968134673738187912, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186335976659372128, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: m_Constraints
+      value: 116
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1185,6 +1190,7 @@ MonoBehaviour:
   m_prefab: {fileID: 1688672096297515227, guid: 0b85ce34697ebd14d906bb0fbbf1be9f, type: 3}
   m_poolCount: 100
   m_forcePoolCount: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!4 &370946760
 Transform:
   m_ObjectHideFlags: 0
@@ -4366,6 +4372,9 @@ MonoBehaviour:
   m_inventorySystem: {fileID: 966751217}
   m_index: 32
   m_count: 10
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
+  m_pos: {x: 10, y: 0.5, z: 10}
+  m_money: 10
 --- !u!4 &1505666508
 Transform:
   m_ObjectHideFlags: 0
@@ -7532,7 +7541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
   m_target: {fileID: 721869216}
-  m_distance: 15
+  m_distance: 5
   m_followSpeed: 0
   m_isShaking: 0
   m_shakeStrength: 0.1

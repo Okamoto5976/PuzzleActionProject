@@ -186,7 +186,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : Player ��HIT");
+        Debug.Log("EnemyController : Player ‚ÉHIT");
     }
     public void UseItem(Vector3 dir)
     {

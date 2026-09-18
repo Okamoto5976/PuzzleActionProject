@@ -12,7 +12,7 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
-    [Tooltip("1Piece‚É‰½‘Ìo‚é‚©"), SerializeField] private int m_spawnCount;
+    [Tooltip("1Pieceï¿½É‰ï¿½ï¿½Ìoï¿½é‚©"), SerializeField] private int m_spawnCount;
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
@@ -189,7 +189,7 @@ public class EntitySpawner : MonoBehaviour
             return;
         }
 
-        // “¯ƒŒƒAƒŠƒeƒB“àƒ‰ƒ“ƒ_ƒ€
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½eï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
         EnemyController enemy =m_enemyPool.GetComponent(selectedType);
 
@@ -340,6 +340,7 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnPlayer()
     {
         Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
+        Debug.Log(pos);
         m_player.position = pos;
 
         if (m_camera != null)
