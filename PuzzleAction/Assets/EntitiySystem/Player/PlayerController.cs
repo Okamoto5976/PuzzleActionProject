@@ -63,8 +63,13 @@ public class PlayerController : Entity
     [SerializeField] private LayerMask m_itemSerachLayer;
     [SerializeField] private float m_itemSearchRange = 5f;
     [Header("UI")]
+    [SerializeField] private GameObject m_textPanel;
+    [SerializeField] private TMPro.TMP_Text m_nameText;
     [SerializeField] private TMPro.TMP_Text m_itemDescriptionText;
-    [SerializeField] private TMPro.TMP_Text m_messageText;
+
+    //if inventory max 
+    [SerializeField] private GameObject m_textErrorMessage;
+
     protected override void Awake()
     {
         base.Awake();
@@ -89,8 +94,10 @@ public class PlayerController : Entity
         
         m_input.Enable();
 
-        m_messageText.text = "";
+        m_nameText.text = "";
         m_itemDescriptionText.text = "";
+        m_textPanel.SetActive(false);
+        m_textErrorMessage.SetActive(false);
     }
 
     private void OnEnable()
@@ -127,11 +134,13 @@ public class PlayerController : Entity
         m_isNext = m_input.IsNext;
         m_isInteract = m_input.IsInteract;
         m_isGetDropItem = m_input.IsGetDropItem;
+
         if (m_isGetDropItem)
         {
-            Debug.Log("PlayerController");
+            //Debug.Log("PlayerController");
             OnuseItemGet();
         }
+
         if (m_isInteract)
         {
             OnInteract();
@@ -400,13 +409,23 @@ public class PlayerController : Entity
 
     private void OnuseItemGet()
     {
-        if (m_selecrItem == null)
-            return;
+        if (m_selecrItem == null) return;
+
         if(ReceiveItem(m_selecrItem.ItemData))
         {
             m_selecrItem.ItemGet();
             m_selecrItem = null;
         }
+        else
+        {
+            m_textErrorMessage.SetActive(true);
+            Invoke(nameof(CloseErrorMessage), 1f);
+        }
+    }
+
+    private void CloseErrorMessage()
+    {
+        m_textErrorMessage.SetActive(false);
     }
 
     private void OnReticle()
@@ -502,10 +521,11 @@ public class PlayerController : Entity
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemSerachLayer))
         {
-            DropItem drop = hit.collider.GetComponent<DropItem>();
+            DropItem drop = hit.collider.GetComponentInParent<DropItem>();
 
             if (drop != null)
             {
+
                 float distancee =Vector3.Distance(transform.position,drop.transform.position);
                 
                 if(distancee >m_itemSearchRange)
@@ -520,6 +540,9 @@ public class PlayerController : Entity
                     m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
                 }
 
+                m_textPanel.SetActive(true);
+
+                m_nameText.text = drop.ItemData.ItemName;
                 m_itemDescriptionText.rectTransform.position = m_popupPosition;
                 m_itemDescriptionText.text = drop.ItemData.info;
                 return;
@@ -527,5 +550,6 @@ public class PlayerController : Entity
         }
         m_selecrItem = null;
         m_itemDescriptionText.text = "";
+        m_textPanel.SetActive(false);
     }
 }
