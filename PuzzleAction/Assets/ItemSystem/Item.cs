@@ -6,6 +6,7 @@ public struct ItemRecieveData
     public float power;
     public Vector3 pos;
     public Vector3 dir;
+    public Vector3 offset;
     public Vector2 size;
 }
 

@@ -229,7 +229,7 @@ public class ShopManager : MonoBehaviour
 
     public bool PurchaseItem(int slotId)
     {
-        Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+        //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
         var data = m_shopInventories[_currentShopId].inventory[slotId].data;
 
         int money = GameManager.Instance.Money;
@@ -244,12 +244,12 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("you purchase item");
+            //Debug.Log("you purchase item");
 
             //InventoryManager‚ÉItem‚ð“n‚·
             if (!m_inventorySystem.AddItem(data, 1))
             {
-                Debug.Log("you already have item max");
+                //Debug.Log("you already have item max");
                 m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.InventoryFull);
                 return false;
             }
@@ -267,7 +267,7 @@ public class ShopManager : MonoBehaviour
             var item = m_shopInventories[_currentShopId].inventory[slotId];
             item.IsSold = true;
             m_shopInventories[_currentShopId].inventory[slotId] = item;
-            Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+            //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
 
             m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Buy);
 

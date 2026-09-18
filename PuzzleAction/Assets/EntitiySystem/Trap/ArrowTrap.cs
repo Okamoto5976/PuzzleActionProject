@@ -34,7 +34,7 @@ public class ArrowTrap : TrapBase
         if (!m_isInitialized)
             return;
 
-        OnAddForce(m_dir, m_power * 8);
+        OnAddForce(m_dir, m_power);
 
         m_isInitialized = false;
     }

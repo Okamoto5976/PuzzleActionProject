@@ -15,7 +15,7 @@ public class InteractSystem
         {
             if (collider.TryGetComponent<IInteractable>(out var interactable))
             {
-                Debug.Log("Interact");
+                //Debug.Log("Interact");
 
 
                 interactable.OnInteract(entity);

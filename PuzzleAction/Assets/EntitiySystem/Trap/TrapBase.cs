@@ -61,18 +61,21 @@ public abstract class TrapBase : MonoBehaviour
 
     //call when entity use item 
     public void Init(
-        Entity owner,
-        Vector3 dir)
+        ItemRecieveData data)
     {
-        m_owner = owner;
+        m_owner = data.entity;
         m_team = m_owner.Team;
 
-        m_dir =
-            dir.normalized;
+        m_dir = data.dir.normalized;
+
+        gameObject.transform.position = data.pos + data.offset;
 
         transform.rotation =
             Quaternion.LookRotation(
                 m_dir);
+
+        m_power = data.power;
+
 
         //åpè≥êÊÇ≈
         //m_damageData = new DamageData
@@ -95,43 +98,42 @@ public abstract class TrapBase : MonoBehaviour
         EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
     }
 
-    public void PullInit(
-        Entity owner,
-        Vector3 dir,
-        float power)
-    {
-        m_owner = owner;
-        m_team = m_owner.Team;
+    //public void PullInit(
+    //    ItemRecieveData data)
+    //{
+    //    m_owner = data.entity;
+    //    m_team = m_owner.Team;
 
-        m_dir =
-            dir.normalized;
+    //    m_dir = data.dir.normalized;
 
-        transform.rotation =
-            Quaternion.LookRotation(
-                m_dir);
+    //    gameObject.transform.position = data.pos + data.offset;
 
-        m_power = power;
+    //    transform.rotation =
+    //        Quaternion.LookRotation(
+    //            m_dir);
 
-        //åpè≥êÊÇ≈
-        //m_damageData = new DamageData
-        //{
+    //    m_power = data.;
 
-        //    Attack = m_str + owner.STR,
-        //    AttackType = m_attackType,
-        //    //HitRate
-        //    CriticalRate = owner.CriticalRate,
-        //    CriticalDamage = owner.CriticalDamage,
-        //    BreakRate = owner.BreakRate,
-        //    Knockback = owner.KnockBack,
-        //    StunDuration = owner.Stun,
-        //    //Duration
-        //    AttackDir = dir,
-        //    //SE
+    //    //åpè≥êÊÇ≈
+    //    //m_damageData = new DamageData
+    //    //{
 
-        //};
+    //    //    Attack = m_str + owner.STR,
+    //    //    AttackType = m_attackType,
+    //    //    //HitRate
+    //    //    CriticalRate = owner.CriticalRate,
+    //    //    CriticalDamage = owner.CriticalDamage,
+    //    //    BreakRate = owner.BreakRate,
+    //    //    Knockback = owner.KnockBack,
+    //    //    StunDuration = owner.Stun,
+    //    //    //Duration
+    //    //    AttackDir = dir,
+    //    //    //SE
 
-        EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
-    }
+    //    //};
+
+    //    EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
+    //}
 
 
     //use TrapArea

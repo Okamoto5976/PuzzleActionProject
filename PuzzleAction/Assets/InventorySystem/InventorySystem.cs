@@ -383,7 +383,7 @@ public class InventorySystem : MonoBehaviour
         // 1個使用
         item.count--;
 
-        Debug.Log(item.data.ItemName + " を使用");
+        //Debug.Log(item.data.ItemName + " を使用");
 
         //m_itemManager.OnUseItem(item.data, data);
         //ItemManager
@@ -498,7 +498,7 @@ public class InventorySystem : MonoBehaviour
             hotbarSlots[hotberNumber].Clear();
             return;
         }
-        Debug.Log($"AddHotber called : {hotberNumber}, {index}");
+        //Debug.Log($"AddHotber called : {hotberNumber}, {index}");
         hotbars[hotberNumber] = index;
 
         hotbarSlots[hotberNumber].SetItem(activeInventory[index], index);

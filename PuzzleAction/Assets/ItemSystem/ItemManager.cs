@@ -91,7 +91,7 @@ public class ItemManager : MonoBehaviour
         //set pos DropItem Position
 
 
-        Debug.LogWarning("Drop Item");
+        //Debug.LogWarning("Drop Item");
 
         DropItem obj = m_itemPool.GetComponentFromPool();
         obj.gameObject.SetActive(true);
