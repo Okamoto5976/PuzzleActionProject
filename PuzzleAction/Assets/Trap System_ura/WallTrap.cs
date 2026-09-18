@@ -25,8 +25,6 @@ public class WallTrap : TrapBase
         StartCoroutine(SpawnDelay());
     }
 
-
-   
     public override void TrapInit()
     {
         //base.TrapInit();
@@ -47,7 +45,6 @@ public class WallTrap : TrapBase
 
     private void Spawn()
     {
-       
         transform.position +=
             m_dir * m_spawnDistance;
 
@@ -72,6 +69,7 @@ public class WallTrap : TrapBase
 
     protected override void OnHit()
     {
-        
+       
     }
+
 }
