@@ -5,8 +5,8 @@ using UnityEngine;
 public class SlimeKingController
 {
     [Header("Summon")]
-    public int SummonCount = 6;
-    public int MaxAliveSummons = 12;
+    public int SummonCount = 2;
+    public int MaxAliveSummons = 6;
 
     [Header("Range")]
     public float SummonRadius = 5f;

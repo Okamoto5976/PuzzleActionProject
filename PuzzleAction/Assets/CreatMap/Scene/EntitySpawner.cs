@@ -255,7 +255,7 @@ public class EntitySpawner : MonoBehaviour
         //Item item = null;
         //set drop item 
         enemy.DropItem = item;
-        Debug.LogWarning($"{enemy.name} DropRarity = {rarity.name}");
+        //Debug.LogWarning($"{enemy.name} DropRarity = {rarity.name}");
     }
 
     //Trap

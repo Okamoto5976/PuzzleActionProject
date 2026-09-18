@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9090369488491812326}
   - component: {fileID: -3111847403253305925}
   - component: {fileID: -4799814626124688497}
+  - component: {fileID: 2811649400638317769}
   m_Layer: 0
   m_Name: Enemy_Spear
   m_TagString: Untagged
@@ -183,6 +184,18 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 1317092252857654707}
   m_isItemDrop: 1
+--- !u!114 &2811649400638317769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824311768983952739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityTemporaryBuffSystem
 --- !u!1 &6707361649631240394
 GameObject:
   m_ObjectHideFlags: 0

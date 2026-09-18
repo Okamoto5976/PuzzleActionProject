@@ -3,19 +3,19 @@ using UnityEngine;
 [System.Serializable]
 public enum Enum_EnemyType
 {
-    Archer,    //uncommon
-    BinBone,   //rare
-    Chase,     //common
-    Explosion, //uncommon
-    Mimic,     //
-    Ork,       //uncommon
-    RunAway,   //rare
-    Rush,      //rare
-    Slime_Blue,//common
+    Archer,    
+    BinBone,   
+    Chase,     
+    Explosion, 
+    Mimic,     
+    Ork,       
+    RunAway,   
+    Rush,      
+    Slime_Blue,
     Slime_Normal,
-    Slime_Red, //common
-    Spear,     //rare
-    Summoner,  //uncommon
-    Worm,      //rejendary
-
+    Slime_Red, 
+    Spear,     
+    Summoner,  
+    Worm,      
+    Demon
 }

@@ -19,7 +19,14 @@ public class EnemyHP : EntityHP
             Debug.Log($"{this.name} : EnemyController not found");
             return;
         }
+
+        if (enemy.CurrentState == Entity.EntityState.Dead) return;
+
+        //kill enemy
+        enemy.KillEntity();
+        //item drop from enemy
         enemy.OnDead(m_isItemDrop);
+        //return pool 
         OnReturnPool();
     }
     private void OnReturnPool()

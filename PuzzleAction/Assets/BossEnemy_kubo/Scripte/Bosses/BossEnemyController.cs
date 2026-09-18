@@ -79,10 +79,9 @@ public class BossEnemyController : Entity
 
     private void Update()
     {
-        OnUpdateFlag();
-
+        if (CurrentState == Entity.EntityState.Dead) return;
         if (m_target == null) return;
-
+        OnUpdateFlag();
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
@@ -96,6 +95,18 @@ public class BossEnemyController : Entity
         }
 
         m_bossBehaviour?.Execute();
+    }
+    private void OnEnable()
+    {
+        ChangeState(EntityState.Idle);
+
+        m_isCooldownReady = true;
+        m_cooldownTimer = 0f;
+
+        if (m_entityHP is EntityHP hp)
+        {
+            hp.ResetHP();
+        }
     }
     #endregion
 
@@ -126,6 +137,7 @@ public class BossEnemyController : Entity
     }
     public bool TryAttack()
     {
+        if (CurrentState == Entity.EntityState.Dead) return false;
         if (!m_isCooldownReady) return false;
         Attack();
         ConsumeCooldown();
