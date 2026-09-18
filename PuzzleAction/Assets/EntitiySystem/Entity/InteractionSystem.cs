@@ -7,7 +7,7 @@ public class InteractSystem
 
         Collider[] colliders = Physics.OverlapSphere(
             position,
-            2.0f,
+            3f,
             layer
         );
 

@@ -17,7 +17,7 @@ public class DEBUG_DropItemsAtRandomPositions : MonoBehaviour
         {
             var random = Random.insideUnitCircle * radius;
             Vector3 position = new(random.x, 0, random.y);
-            pool.DropItemAtPosition(position);
+            pool.DropItemAtPosition(position, 100);
         }
     }
 }

@@ -15,4 +15,14 @@ public class TestAddItem : MonoBehaviour
 
         m_inventorySystem.AddItem(item, m_count);
     }
+
+    [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
+    [SerializeField] private Vector3 m_pos;
+    [SerializeField] private int m_money;
+
+    [ContextMenu("DropMoney")]
+    public void DropMoney()
+    {
+        m_dropMoneyEventSO.Raise(m_pos, m_money);
+    }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EntityTemporaryBuffSystem))]
 public class EnemyController : Entity
 {
     [Header("Target")]
@@ -39,7 +40,7 @@ public class EnemyController : Entity
     private bool m_isRotating = true;
 
     //===== API =====
-
+    public bool CanAction => CurrentState != EntityState.Dead && !IsStun;
     public float AttackRange => m_attackRange;
     public float FindRange => m_findRange;
     public bool IsCooldownReady => m_isCooldownEnd;
@@ -80,14 +81,23 @@ public class EnemyController : Entity
 
     private void Update()
     {
+        if (CurrentState == Entity.EntityState.Dead) return;
         OnUpdateFlag();
 
+        if (IsStun)
+        {
+            Stop();
+             if(m_anim != null)
+            {
+                m_anim.SetBool("Move", false);
+            }
+            return;
+        }
         if (m_target == null) return;
 
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
-
         HandleRotation(distance);
 
         if (distance > m_findRange)
@@ -95,22 +105,13 @@ public class EnemyController : Entity
             StopAll();
             return;
         }
-
-        //if (m_type == Enum_EnemyType.Chase || m_type == Enum_EnemyType.Mimic)
-        //{
-        //    if (distance <= m_attackRange)
-        //    {
-        //        StopAll();
-
-        //        TryAttack();
-
-        //        return;
-        //    }
-        //}
+       
         m_enemyBehaviour.Execute();
     }
     private void OnEnable()
     {
+        ChangeState(EntityState.Idle);
+
         m_isCooldownEnd = true;
         m_attackCooldownDuration = 0f;
 
@@ -157,7 +158,6 @@ public class EnemyController : Entity
 
         }
 
-
         Attack();
         ConsumeCooldown();
         return true;
@@ -179,7 +179,7 @@ public class EnemyController : Entity
                 CriticalDamage = CriticalDamage,
                 BreakRate = BreakRate,
                 Knockback = KnockBack,
-                StunDuration = StunPower,
+                StunDuration = m_data.StunDuration,
                 AttackDir = transform.forward,
                 Attacker = this,
                 //AttackerSE = AttackSE,
@@ -187,7 +187,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : Player ‚ÉHIT");
+        Debug.Log("EnemyController : Player â€šÃ‰HIT");
     }
     public void UseItem(Vector3 dir)
     {
@@ -205,6 +205,10 @@ public class EnemyController : Entity
     #region MOVE
     public void Move(Vector3 dir, float speed)
     {
+        if (!CanAction) return;
+        {
+            
+        }
         if (dir == Vector3.zero)
         {
             Stop();

@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Enemy_Summoner : MonoBehaviour, IEnemyBehaviour
 {
-    [Header("Summon Setting")]
+    [Header("Summon")]
     [SerializeField] private List<Enum_EnemyType> m_summonTypes = new();
 
+    [SerializeField] private int m_summonCount = 2;
+    [SerializeField] private int m_maxAliveSummons = 6;
+
     private EnemyController m_enemyController;
+    private readonly List<EnemyController> m_children = new();
 
     public void Initialized(EnemyController enemyController)
     {
@@ -16,11 +19,12 @@ public class Enemy_Summoner : MonoBehaviour, IEnemyBehaviour
 
     public void Execute()
     {
+        if (m_enemyController == null) return;
         if (m_enemyController.Target == null) return;
 
         float distance = Vector3.Distance(transform.position, m_enemyController.Target.Value);
 
-        // distination
+        //distination
         if (distance > m_enemyController.AttackRange)
         {
             m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
@@ -31,12 +35,20 @@ public class Enemy_Summoner : MonoBehaviour, IEnemyBehaviour
 
         if (!m_enemyController.TryUseCooldown()) return;
 
+        Debug.Log($"{name} Summon Start");
+
         SummonEnemies();
     }
 
     private void SummonEnemies()
     {
-        foreach (Enum_EnemyType enemyType in m_summonTypes)
+        int aliveCount = GetAliveCount();
+        int remain = m_maxAliveSummons - aliveCount;
+        if (remain <= 0) return;
+
+
+        int summonCount = Mathf.Min(m_summonCount, remain);
+        for (int i = 0; i < summonCount; i++)
         {
             if (!TryGetSummonPosition(out Vector3 summonPos))
             {
@@ -44,51 +56,33 @@ public class Enemy_Summoner : MonoBehaviour, IEnemyBehaviour
                 continue;
             }
 
+            if (m_summonTypes.Count == 0)
+            {
+                Debug.LogWarning("Summon Types Empty");
+                return;
+            }
+
+            int index = Random.Range(0, m_summonTypes.Count);
+            Enum_EnemyType enemyType = m_summonTypes[index];
+
             //summon enemy
             EnemyController enemy = EnemyController.SpawnEnemy(enemyType, summonPos);
-
-            if (enemy == null) continue;
+            if (enemy == null)  continue;
+            m_children.Add(enemy);
         }
     }
 
     private bool TryGetSummonPosition(out Vector3 result)
     {
-        result = transform.position;
+        Vector2 pos = m_enemyController.GetRandomPosition(m_enemyController.AttackRange);
+        result = new Vector3(pos.x, transform.position.y, pos.y);
+        return true;
+    }
 
-        const int maxTry = 20;
-
-        for (int i = 0; i < maxTry; i++)
-        {
-            float angle = Random.Range(0f, Mathf.PI * 2f);
-
-            float radius = Random.Range(1f, m_enemyController.AttackRange);
-
-            Vector3 candidate = transform.position + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
-
-            // navmesh de position hosei 
-            if (!NavMesh.SamplePosition(candidate, out NavMeshHit hit, 1f, NavMesh.AllAreas)) 
-            {
-                continue;
-            }
-
-            //can summon position 
-            candidate = hit.position; 
-            Vector3 dir = candidate - transform.position;
-            float dist = dir.magnitude;
-
-            dir.Normalize();
-
-            // wall check
-            if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, dist))
-            {
-                continue;
-            }
-
-            result = candidate;
-            return true;
-        }
-
-        return false;
+    private int GetAliveCount()
+    {
+        m_children.RemoveAll(x => x == null ||  !x.gameObject.activeSelf);
+        return m_children.Count;
     }
 
     public void Stop()
