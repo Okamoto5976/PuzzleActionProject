@@ -8,11 +8,14 @@ public class DynamiteTrap : TrapBase
     [SerializeField] private float m_explosionTimer = 1.5f;
 
     [SerializeField] private ParticleSystem m_fireParticle;
-    [SerializeField] private ParticleSystem m_explosionParticle;
+    //[SerializeField] private ParticleSystem m_explosionParticle;
 
     [Header("HitCollider")]
     [SerializeField] private HitCollider m_hitCollider;
     [SerializeField] private float m_radius;
+
+    [SerializeField] private EffectEventDataSO m_effectEventData;
+
 
     private bool m_isTimer = false;
 
@@ -66,7 +69,15 @@ public class DynamiteTrap : TrapBase
             m_radius = m_radius,
         };
 
-        m_explosionParticle.Play();
+        //m_explosionParticle.Play();
+        Effect data = new Effect()
+        {
+            effectType = Enum_EffectType.Explosion,
+            effectPos = transform.position + new Vector3(0f,0.5f,0f),
+            effectRot = transform.rotation,
+        };
+
+        m_effectEventData.Raise(data);
         m_hitCollider.AttackCollider(m_damageData, m_team, box);
 
 
