@@ -194,7 +194,7 @@ public abstract class TrapBase : MonoBehaviour
 
 
 
-        m_rb.AddForce(dir * power, ForceMode.Impulse);
+        m_rb.AddForce(dir * power, ForceMode.VelocityChange);
 
     }
 

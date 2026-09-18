@@ -46,9 +46,10 @@ public class PlayerController : Entity
 
     //--------player foward -----------------
     [SerializeField] private GameObject m_playerDirObject;
-    [SerializeField] private ParticleSystem m_trailParticle;
+    [SerializeField] private AimTrail m_aimTrail;
 
     [SerializeField] private RectTransform m_reticle;
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
 
     public Vector3 Forward => m_playerDirObject.transform.forward;
 
@@ -201,11 +202,11 @@ public class PlayerController : Entity
 
         if (input.x > 0.1f)
         {
-            transform.localScale = new Vector3(2, 2, 2);
+            m_spriteRenderer.flipX = false;
         }
         else if (input.x < -0.1f)
         {
-            transform.localScale = new Vector3(-2, 2, 2);
+            m_spriteRenderer.flipX = true;
         }
     }
 
@@ -279,7 +280,7 @@ public class PlayerController : Entity
             m_power = 0f;
             m_reticle.gameObject.SetActive(true);
 
-            m_trailParticle.gameObject.SetActive(true);
+            m_aimTrail.gameObject.SetActive(true);
 
             //start to pull the bow
             
@@ -325,8 +326,7 @@ public class PlayerController : Entity
 
             m_power = Mathf.Min(m_power, 3f);
 
-            var main = m_trailParticle.main;
-            main.startSpeed = m_power * 8 / m_rb.mass;
+            m_aimTrail.UpdateVariables(m_pullOffSet, m_arrowTemporaryForward, m_power * 8);
         }
         else if (m_isUsingSetItem)
         {
@@ -352,7 +352,7 @@ public class PlayerController : Entity
             m_isUsingArrow = false;
 
             m_reticle.gameObject.SetActive(false);
-            m_trailParticle.gameObject.SetActive(false);
+            m_aimTrail.gameObject.SetActive(false);
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power * 8, m_pullOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
