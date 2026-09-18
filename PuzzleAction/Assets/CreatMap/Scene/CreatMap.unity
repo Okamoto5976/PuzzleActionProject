@@ -462,6 +462,7 @@ MonoBehaviour:
   m_player: {fileID: 721869216}
   m_playerC: {fileID: 721869219}
   m_camera: {fileID: 1957982647}
+  m_playerHeightOffset: 1.5
   m_enemyPool: {fileID: 776241687}
   m_spawnCount: 5
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -7540,7 +7541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
   m_target: {fileID: 721869216}
-  m_distance: 15
+  m_distance: 5
   m_followSpeed: 0
   m_isShaking: 0
   m_shakeStrength: 0.1

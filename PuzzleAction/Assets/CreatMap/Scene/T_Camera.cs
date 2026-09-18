@@ -17,6 +17,7 @@ public class T_Camera : MonoBehaviour
     [SerializeField] private float m_shakeStrength = 0.1f;
     [SerializeField] private float m_shakeSpeed = 0.05f;
     private Vector3 m_shakeOffset = Vector3.zero;
+    private float m_heightOffset = 0f;
 
     private Coroutine m_shakeCoroutine;
 
@@ -44,6 +45,15 @@ public class T_Camera : MonoBehaviour
         set
         {
             m_distance = value;
+            CalculateOffset();
+        }
+    }
+    public float HeightOffset
+    {
+        get => m_heightOffset;
+        set
+        {
+            m_heightOffset = value;
             CalculateOffset();
         }
     }
@@ -99,13 +109,25 @@ public class T_Camera : MonoBehaviour
     }
     public void SetTarget(Transform target)
     {
-        m_target = target;
+        SetTargetAndHeightOffset(target, 0);
     }
 
+    public void SetTargetAndHeightOffset(Transform target, float height)
+    {
+        m_target = target;
+        m_heightOffset = height;
+    }
+
+    /// <summary>
+    /// using trignometry, calculate height from distance and angle
+    /// compensates sprite angle correction
+    /// </summary>
+    /// <returns>offset from object</returns>
     private Vector3 GetOffset(float distanceToObject, float rotationFromHorizon)
     {
         float height = Mathf.Abs(distanceToObject) / Mathf.Tan((90 - rotationFromHorizon) * Mathf.Deg2Rad);
-        return new(0, height, -distanceToObject);
+        float calculatedOffset = m_heightOffset / Mathf.Cos(rotationFromHorizon * Mathf.Deg2Rad);
+        return new(0, height + calculatedOffset, -distanceToObject);
     }
 
     private void LateUpdate()

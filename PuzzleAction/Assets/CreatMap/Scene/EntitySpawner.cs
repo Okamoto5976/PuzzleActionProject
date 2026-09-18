@@ -7,6 +7,7 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private Transform m_player;
     [SerializeField] private PlayerController m_playerC;
     [SerializeField] private T_Camera m_camera;
+    [SerializeField] private float m_playerHeightOffset;
     [Space(10)]
 
     [Header("========== Enemy ==========")]
@@ -339,13 +340,12 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnPlayer()
     {
         Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
-        //pos.y = 0f;
         Debug.Log(pos);
         m_player.position = pos;
 
         if (m_camera != null)
         {
-            m_camera.SetTarget(m_player);
+            m_camera.SetTargetAndHeightOffset(m_player, m_playerHeightOffset);
         }
     }
 
