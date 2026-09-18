@@ -61,7 +61,7 @@ public class InsectTrap : TrapBase
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target = other.GetComponent<Entity>();
 

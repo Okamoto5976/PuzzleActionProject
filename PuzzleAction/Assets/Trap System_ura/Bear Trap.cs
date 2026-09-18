@@ -5,9 +5,6 @@ public class BearTrap : TrapBase
     [Header("Bear Trap")]
     [SerializeField] private Collider m_damageCollider;
 
-    [Header("Damage")]
-    [SerializeField] private float m_damage = 10.0f;
-
     [Header("Recovery")]
     [SerializeField] private float m_recoveryTime = 3.0f;
 
@@ -39,9 +36,11 @@ public class BearTrap : TrapBase
             return;
         }
 
+        if (target.Team == m_team) return;
+
         m_damageData = new DamageData
         {
-            Attack = m_damage,
+            Attack = m_str,
             AttackType = m_attackType,
             AttackDir = (target.transform.position - transform.position).normalized
         };
