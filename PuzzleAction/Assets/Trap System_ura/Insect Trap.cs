@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InsectTrap : TrapBase
@@ -8,25 +7,23 @@ public class InsectTrap : TrapBase
     [SerializeField] private Collider m_insectCollider;
 
     [Header("Stun Setting")]
-    [SerializeField] private float m_stunDuration;
-    [SerializeField] private float m_stunInterval;
+    [SerializeField] private float m_stunDuration = 5.0f;
 
-    private readonly HashSet<Entity> m_target =
-        new HashSet<Entity>();
+    private Entity m_target;
 
     private Coroutine m_stunCoroutine;
 
     protected override void EntitySetUp()
     {
-        m_target.Clear();
+        m_target = null;
 
-        if(m_stunCoroutine != null)
+        if (m_stunCoroutine != null)
         {
             StopCoroutine(m_stunCoroutine);
             m_stunCoroutine = null;
         }
 
-        if(m_insectCollider != null)
+        if (m_insectCollider != null)
         {
             m_insectCollider.enabled = false;
         }
@@ -39,7 +36,7 @@ public class InsectTrap : TrapBase
 
         m_insectCollider.enabled = true;
 
-        if (m_stunCoroutine == null) 
+        if (m_stunCoroutine == null)
         {
             m_stunCoroutine = StartCoroutine(StunLoop());
         }
@@ -47,23 +44,23 @@ public class InsectTrap : TrapBase
 
     public void Deactivate()
     {
-        if(m_insectCollider != null)
+        if (m_insectCollider != null)
         {
             m_insectCollider.enabled = false;
         }
 
-        m_target.Clear();
+        m_target = null;
 
-        if(m_stunCoroutine != null)
+        if (m_stunCoroutine != null)
         {
-            StopCoroutine (m_stunCoroutine);
+            StopCoroutine(m_stunCoroutine);
             m_stunCoroutine = null;
         }
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
@@ -74,41 +71,47 @@ public class InsectTrap : TrapBase
         if (target.Team == m_team)
             return;
 
-        m_target.Add(target);
+        // Ç∑Ç≈Ç…1ëÃÇ¢ÇÈèÍçáÇÕñ≥éã
+        if (m_target != null)
+            return;
+
+        m_target = target;
     }
 
-    private void OnTriggerExit(Collider other)
+    protected  void OnTriggerExit(Collider other)
     {
-        Entity target=other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
-        if (target == null) return;
+        if (target == null)
+            return;
 
-        m_target.Remove(target);
+        if (target == m_target)
+        {
+            m_target = null;
+        }
     }
 
     private IEnumerator StunLoop()
     {
-        while (true) 
+        while (true)
         {
-            foreach (Entity target in m_target)
+            if (m_target != null)
             {
-                if (target == null)
-                    continue;
-
                 m_damageData = new DamageData
                 {
                     StunDuration = m_stunDuration,
                     Attacker = m_owner
                 };
 
-                target.TakeDamage(m_damageData);
+                m_target.TakeDamage(m_damageData);
             }
+
             yield return new WaitForSeconds(m_stunDuration);
         }
     }
 
     protected override void OnHit()
     {
-        
+
     }
 }
