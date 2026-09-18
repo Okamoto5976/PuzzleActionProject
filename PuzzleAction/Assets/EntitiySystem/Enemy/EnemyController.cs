@@ -164,9 +164,9 @@ public class EnemyController : Entity
     public void Attack()
     {
         Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
-        Debug.Log(m_attackHitBox.m_transform.position);
-        Debug.Log(m_attackHitBox.m_radius);
+        //Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
+        //Debug.Log(m_attackHitBox.m_transform.position);
+        //Debug.Log(m_attackHitBox.m_radius);
 
 
         if (m_hitCollider == null) return;
@@ -186,7 +186,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : Player ‚ÉHIT");
+        Debug.Log("EnemyController : Player â€šÃ‰HIT");
     }
     public void UseItem(Vector3 dir)
     {
@@ -316,7 +316,7 @@ public class EnemyController : Entity
     {
         if (isDropItem)
         {
-            Debug.LogWarning("DropItem from Enemy");
+            //Debug.LogWarning("DropItem from Enemy");
 
             ItemDrop();
         }
@@ -325,7 +325,7 @@ public class EnemyController : Entity
 
     public void ItemDrop()
     {
-        Debug.LogWarning($"{m_dropItem.ItemName}");
+        //Debug.LogWarning($"{m_dropItem.ItemName}");
 
         if (m_dropItem == null) return;
         m_itemManager.DropItemSetData(transform.position, m_dropItem);

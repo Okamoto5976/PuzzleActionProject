@@ -462,6 +462,7 @@ MonoBehaviour:
   m_player: {fileID: 721869216}
   m_playerC: {fileID: 721869219}
   m_camera: {fileID: 1957982647}
+  m_playerHeightOffset: 1.5
   m_enemyPool: {fileID: 776241687}
   m_spawnCount: 5
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -683,6 +684,10 @@ PrefabInstance:
     - target: {fileID: 5968134673738187912, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6186335976659372128, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: m_Constraints
+      value: 116
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1185,6 +1190,7 @@ MonoBehaviour:
   m_prefab: {fileID: 1688672096297515227, guid: 0b85ce34697ebd14d906bb0fbbf1be9f, type: 3}
   m_poolCount: 100
   m_forcePoolCount: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!4 &370946760
 Transform:
   m_ObjectHideFlags: 0
@@ -1489,63 +1495,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 776241688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &454555591
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1507705121183690295, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4973414102923213279, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
-      propertyPath: m_Name
-      value: DropItem
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d66bd35ef567c0d41af095d9cc4d374d, type: 3}
 --- !u!1001 &461354458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4423,6 +4372,9 @@ MonoBehaviour:
   m_inventorySystem: {fileID: 966751217}
   m_index: 32
   m_count: 10
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
+  m_pos: {x: 10, y: 0.5, z: 10}
+  m_money: 10
 --- !u!4 &1505666508
 Transform:
   m_ObjectHideFlags: 0
@@ -7622,7 +7574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71d31b202a199a488c14168545db632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSpriteCorrection
-  _targetCamera: {fileID: 0}
+  _targetCamera: {fileID: 1957982643}
 --- !u!224 &1998194011 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6473270640396964738, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
@@ -8837,4 +8789,3 @@ SceneRoots:
   - {fileID: 9179671923686957670}
   - {fileID: 1762978}
   - {fileID: 1505666508}
-  - {fileID: 454555591}

@@ -19,7 +19,7 @@ public class CaltropTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        OnAddForce(m_dir, 5f);
+        //OnAddForce(m_dir, 5f);
          
         m_targets.Clear();
 

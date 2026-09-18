@@ -57,7 +57,7 @@ public class Goods : MonoBehaviour,
     // Set Data
     public void SetData(ShopItem shopItem, Sprite rarityOverlay)
     {
-        Debug.Log("setData");
+        //Debug.Log("setData");
         m_data = shopItem.data;
         m_icon.sprite = m_data.Data.ItemIcon;
         m_priceText.text = m_data.Data.Price.ToString() + " $";
@@ -88,10 +88,10 @@ public class Goods : MonoBehaviour,
     //クリック時
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Clicked!");
+        //Debug.Log("Clicked!");
         //購入済みの際　買えない
         if (m_soldOn) return;
-        Debug.Log("Buying...");
+        //Debug.Log("Buying...");
         if (m_shopManager.PurchaseItem(m_slotId))
         {
             SetSoldVisibility(true);

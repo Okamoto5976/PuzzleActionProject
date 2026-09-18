@@ -119,9 +119,9 @@ abstract public class EntityHP : MonoBehaviour
 
         m_currentHP = Mathf.Max(m_currentHP, 0);
 
-        Debug.Log($"{gameObject.name} : {damage}damage");
+        //Debug.Log($"{gameObject.name} : {damage}damage");
 
-        Debug.Log($"HP : {m_currentHP}");
+        Debug.Log($"{gameObject.name} HP : {m_currentHP}");
 
         if(m_entity.DamageSE !=null&&m_audioSource!=null)
         {

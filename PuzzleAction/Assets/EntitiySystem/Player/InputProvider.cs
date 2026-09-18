@@ -78,7 +78,7 @@ public class InputProvider
 
     public void OnInputClear()
     {
-        Debug.LogWarning("InputClear");
+        //Debug.LogWarning("InputClear");
         m_active = false;
         m_activeRelease = false;
         m_isEvasion = false;

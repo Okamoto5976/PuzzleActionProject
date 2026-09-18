@@ -124,7 +124,7 @@ public class UIController : MonoBehaviour
     private void ToggleInventory(InputAction.CallbackContext callback)
     {
         if (GameManager.Instance.IsStop) return;
-        Debug.Log("Inventory");
+        //Debug.Log("Inventory");
 
         if (!m_isInventory)
         {
