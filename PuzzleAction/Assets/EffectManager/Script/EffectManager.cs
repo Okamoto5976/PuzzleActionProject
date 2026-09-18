@@ -32,24 +32,24 @@ public class EffectManager : MonoBehaviour
         //GameObject obj =
         //    m_effectPool.Get(data.EffectPrefab);
 
-        EffectObj obj = m_effectPool.GetComponent(data.effectData.Type);
+        //EffectObj obj = m_effectPool.GetComponent(data.effectData.Type);
 
-        obj.transform.SetPositionAndRotation(
-            data.effectPos,
-            data.effectRot);
+        //obj.transform.SetPositionAndRotation(
+        //    data.effectPos,
+        //    data.effectRot);
 
-        obj.gameObject.SetActive(true);
+        //obj.gameObject.SetActive(true);
 
-        ParticleSystem particle =
-            obj.GetComponent<ParticleSystem>();
+        //ParticleSystem particle =
+        //    obj.GetComponent<ParticleSystem>();
 
-        if (particle != null)
-        {
-            particle.Clear();
-            particle.Play();
-        }
+        //if (particle != null)
+        //{
+        //    particle.Clear();
+        //    particle.Play();
+        //}
 
-        obj.Initialize(data.effectData.Duration);
+        //obj.Initialize(data.effectData.Duration);
 
 
         //AutoReturn autoReturn =

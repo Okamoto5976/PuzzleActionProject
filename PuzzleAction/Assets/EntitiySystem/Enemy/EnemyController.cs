@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EntityTemporaryBuffSystem))]
 public class EnemyController : Entity
 {
     [Header("Target")]
