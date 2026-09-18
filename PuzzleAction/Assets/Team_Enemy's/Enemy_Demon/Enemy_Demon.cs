@@ -16,7 +16,7 @@ public class Enemy_Demon : MonoBehaviour, IEnemyBehaviour
     [SerializeField] private float stepTime = 0.9f;
     [SerializeField] private float waitTimeAfterStep = 0.2f;
     [SerializeField] private float zigzagRange = 12f;
-    [SerializeField][Range(0, 0.5f)] private float stopTime = 0.5f;
+    [SerializeField][Range(0, 1f)] private float stopTime = 0.5f;
 
 
     public void Initialized(EnemyController enemyController)
