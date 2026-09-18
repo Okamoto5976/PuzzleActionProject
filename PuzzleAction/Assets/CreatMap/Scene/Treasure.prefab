@@ -127,4 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc24a1c9c085754f95dff1a92e62e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Treasure
-  m_rareItemRate: 0.2
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 8edaebc22064db848907e39a6a522f9c, type: 2}
