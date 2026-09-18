@@ -7,7 +7,8 @@ public class EnemyDemonController
     {
         Chasing,
         Step,
-        Attack
+        Attack,
+        Stop
     }
 
     private enum StepDirection
@@ -21,7 +22,6 @@ public class EnemyDemonController
     private enum ChasingAction
     {
         None,
-        Meandering,
         Zigzag,
         Stop,
         Step,
@@ -35,15 +35,19 @@ public class EnemyDemonController
     private Transform transform;
     private Rigidbody rb;
 
-    private float time;
+    //private float time;
     private float untilNextAction;   // Time until the next action.
+    private float time_zigzag;
+    private float time_stop;
+    private float time_step;
 
     private float probabilityOfTakeStep;
     private float nextActionDuration;
     private float nADMin;   //  nextActionDuration(Min)
     private float nADMax;   //  nextActionDuration(Max)
     private float stepPower;
-    private float meanderingRange;
+    private float zigzagRange;
+    private float stopTime;
 
     private bool wasStep;
     private bool moveRight;
@@ -52,7 +56,7 @@ public class EnemyDemonController
     private float DistanceToTarget => Vector3.Distance(transform.position, enemyController.Target.Value);
 
     public void Initialize(EnemyController enemyController, Transform transform, float probablityOfTakeStep, float nADMin, float nADMax,
-        float stepPower, Rigidbody rb, float meanderingRange)
+        float stepPower, Rigidbody rb, float zigzagRange, float stopTime)
     {
         this.enemyController = enemyController;
         this.transform = transform;
@@ -61,9 +65,13 @@ public class EnemyDemonController
         this.nADMin = nADMin;
         this.nADMax = nADMax;
         this.stepPower = stepPower;
-        this.meanderingRange = meanderingRange;
-        time = 0;
+        this.zigzagRange = zigzagRange;
+        this.stopTime = stopTime;
+        //time = 0;
         untilNextAction = 0;
+        time_zigzag = 0;
+        time_stop = 0;
+        time_step = 0;
         action = ChasingAction.None;
         this.rb = rb;
         this.wasStep = false;
@@ -73,13 +81,15 @@ public class EnemyDemonController
 
     public void DoDemonStates()
     {
-        time += Time.deltaTime;
+        //time += Time.deltaTime;
         //Debug.Log($"time: {time}");
+        //Debug.Log($"[DoDemonStates]state: {state}");
         switch (state)
         {
             case DemonState.Chasing: DoChasing(); break;
             case DemonState.Step:   TakeStep(stepDir); break;
             case DemonState.Attack: DoAttack(); break;
+            case DemonState.Stop:   DoStop(); break;
         }
     }
 
@@ -92,21 +102,22 @@ public class EnemyDemonController
             return;
         }
 
+        //Debug.Log("SetDestination");
+        enemyController.SetDestination(enemyController.Target.Value, enemyController.Speed);
+
         // Action
         untilNextAction += Time.deltaTime;
         if (untilNextAction >= nextActionDuration)
         {
             //action = (ChasingAction)Enum.ToObject(typeof(ChasingAction), UnityEngine.Random.Range(0, (int)ChasingAction.Max));
-            action = ChasingAction.Meandering;
-            nextActionDuration = UnityEngine.Random.Range(nADMin, nADMax);
+            action = ChasingAction.Step;
+
             untilNextAction = 0f;
+            nextActionDuration = UnityEngine.Random.Range(nADMin, nADMax);
             Debug.Log($"nextDuration: {nextActionDuration}");
             Debug.Log($"action: {action}");
         }
         TakeAction(action);
-
-        //Debug.Log("SetDestination");
-        enemyController.SetDestination(enemyController.Target.Value, enemyController.Speed);
     }
 
     private void DoAttack()
@@ -115,6 +126,7 @@ public class EnemyDemonController
 
         Debug.Log("Demon.DoAttack");
         enemyController.Stop();
+        rb.linearVelocity = Vector3.zero;
         if (enemyController.TryAttack())
         {
             float lotteryTakeStep = UnityEngine.Random.Range(0, 100);
@@ -123,9 +135,7 @@ public class EnemyDemonController
             {
                 SetState(DemonState.Step);
                 stepDir = (StepDirection)Enum.ToObject(typeof(StepDirection), UnityEngine.Random.Range(0, (int)StepDirection.Max));
-                //Debug.Log($"stepDir: {stepDir}");
                 TakeStep(stepDir);
-                //TakeStep(StepDirection.Back);
                 return;
             }
         }
@@ -140,18 +150,21 @@ public class EnemyDemonController
 
     private void TakeStep(StepDirection stepDir)
     {
-        //Debug.Log("TakeStep");
-        if (time >= 1f)
+        time_step += Time.deltaTime;
+        if (time_step >= 1f)
         {
             rb.linearVelocity = Vector3.zero;
 
-            if (time < 1.3f) return;
+            if (time_step < 1.3f) return;
+            Debug.Log("ppppp");
             SetState(DemonState.Chasing);
+            time_step = 0f;
             wasStep = false;
             return;
         }
 
         if (wasStep) return;
+        Debug.Log($"TakeStep: {stepDir}");
         Vector3 stepForce = Vector3.zero;
         switch (stepDir)
         {
@@ -159,10 +172,21 @@ public class EnemyDemonController
             case StepDirection.Left: stepForce = -transform.right * stepPower; break;
             case StepDirection.Right: stepForce = transform.right * stepPower; break;
         }
-        //Debug.Log($"stepForce: {stepForce}");
         
         rb.AddForce(stepForce, mode: ForceMode.Acceleration);
         wasStep = true;
+    }
+
+    private void DoStop()
+    {
+        time_stop += Time.deltaTime;
+
+        if (time_stop >= stopTime)
+        {
+            time_stop = 0;
+            SetState(DemonState.Chasing);
+            action = ChasingAction.None;
+        }
     }
 
     private void TakeAction(ChasingAction action)
@@ -171,37 +195,40 @@ public class EnemyDemonController
 
         switch (action)
         {
-            case ChasingAction.Meandering:
-                {
-                    Vector3 force = rb.GetAccumulatedForce();
-                    float hForce = force.x * force.x + force.z * force.z;   // horizontal force
-                    Debug.Log($"force: {force}");
-                    Debug.Log($"hForce: {hForce}");
-
-                    if (hForce < 4 && moveRight)
-                        rb.AddForce(transform.right * meanderingRange * Time.deltaTime);
-                    else if (hForce < 4 && !moveRight)
-                        rb.AddForce(-transform.right * meanderingRange * Time.deltaTime);
-
-                    if (hForce >= 4) moveRight = !moveRight;
-                }
-                break;
-
             case ChasingAction.Zigzag:
                 {
+                    time_zigzag += Time.deltaTime;
+                    //Vector3 force = rb.GetAccumulatedForce();
+                    //float hForce = force.x * force.x + force.z * force.z;
+                    //Debug.Log($"moveRight: {moveRight}");
 
+                    if (moveRight)
+                        rb.AddForce(transform.right * zigzagRange);
+                    else if (!moveRight)
+                        rb.AddForce(-transform.right * zigzagRange);
+
+                    if (time_zigzag > 0.25f)
+                    {
+                        time_zigzag = 0f;
+                        moveRight = !moveRight;
+                        rb.linearVelocity = Vector3.zero;
+                    }
                 }
                 break;
 
             case ChasingAction.Stop:
                 {
-
+                    SetState(DemonState.Stop);
+                    enemyController.Stop();
                 }
                 break;
 
             case ChasingAction.Step:
                 {
-
+                    SetState(DemonState.Step);
+                    enemyController.Stop();
+                    stepDir = (StepDirection)Enum.ToObject(typeof(StepDirection), UnityEngine.Random.Range(1, (int)StepDirection.Max)); // Back step is exclusion.
+                    Debug.Log($"[TakeAction]stepDir: {stepDir}");
                 }
                 break;
         }
@@ -210,6 +237,6 @@ public class EnemyDemonController
     private void SetState(DemonState state)
     {
         this.state = state;
-        time = 0;
+        //time = 0;
     }
 }

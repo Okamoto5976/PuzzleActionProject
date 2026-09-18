@@ -273,7 +273,7 @@ MonoBehaviour:
   nextActionDurationMin: 1
   nextActionDurationMax: 5
   stepPower: 300
-  meanderingRange: 300
+  zigzagRange: 10
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
