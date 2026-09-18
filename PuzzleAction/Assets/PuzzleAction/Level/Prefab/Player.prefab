@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 5761074183309458794}
   - component: {fileID: 9049173678588975528}
   - component: {fileID: 1685510717018303622}
+  - component: {fileID: 8743255071538060541}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -289,7 +290,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &292732359283115402
 MonoBehaviour:
@@ -316,7 +317,6 @@ MonoBehaviour:
   m_canInputEvent: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
   m_playerDirObject: {fileID: 7214972691664052804}
   m_trailParticle: {fileID: 2798006954459440303}
-  m_groundObj: {fileID: 0}
   m_reticle: {fileID: 0}
   m_interactLayer:
     serializedVersion: 2
@@ -388,8 +388,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e972cb244f0d7784cbf2d97919b7273e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  m_pickupRange: 0
-  m_maxColliderDetectCount: 0
+  m_pickupRange: 6
+  m_maxColliderDetectCount: 10
+--- !u!114 &8743255071538060541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501914875296179412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16d7567c3369f124c9fd4600253c14d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoneyPickup
 --- !u!1 &2753646007902922138
 GameObject:
   m_ObjectHideFlags: 0

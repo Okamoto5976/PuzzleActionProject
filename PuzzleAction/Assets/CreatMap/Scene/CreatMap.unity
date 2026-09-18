@@ -684,6 +684,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6186335976659372128, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1185,6 +1189,7 @@ MonoBehaviour:
   m_prefab: {fileID: 1688672096297515227, guid: 0b85ce34697ebd14d906bb0fbbf1be9f, type: 3}
   m_poolCount: 100
   m_forcePoolCount: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!4 &370946760
 Transform:
   m_ObjectHideFlags: 0
@@ -4366,6 +4371,9 @@ MonoBehaviour:
   m_inventorySystem: {fileID: 966751217}
   m_index: 32
   m_count: 10
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
+  m_pos: {x: 10, y: 0.5, z: 10}
+  m_money: 10
 --- !u!4 &1505666508
 Transform:
   m_ObjectHideFlags: 0

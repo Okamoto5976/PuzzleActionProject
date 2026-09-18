@@ -28,6 +28,11 @@ public class DroppedObject : MonoBehaviour
         m_returnObjectToPool = GetComponent<ReturnObjectToPool>();
     }
 
+    public virtual void  SetValue(int value)
+    {
+
+    }
+
     /// <summary>
     /// call to pickup this item
     /// </summary>
@@ -67,6 +72,7 @@ public class DroppedObject : MonoBehaviour
     /// </summary>
     public void Release()
     {
+        m_target = null;
         m_returnObjectToPool.ReturnToPool();
     }
 

@@ -339,7 +339,8 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnPlayer()
     {
         Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
-        pos.y = 0.5f;
+        //pos.y = 0f;
+        Debug.Log(pos);
         m_player.position = pos;
 
         if (m_camera != null)
