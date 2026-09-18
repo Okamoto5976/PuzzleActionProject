@@ -249,7 +249,7 @@ MonoBehaviour:
   m_team: 1
   m_data: {fileID: 11400000, guid: ec1a0ac7c56e3e74db74cb621da66b83, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_findRange: 8
+  m_findRange: 9
   m_attackRange: 2
   m_attackCooldown: 1
   m_attackHitBox:
@@ -273,7 +273,10 @@ MonoBehaviour:
   nextActionDurationMin: 1
   nextActionDurationMax: 5
   stepPower: 300
-  zigzagRange: 10
+  stepTime: 0.9
+  waitTimeAfterStep: 0.2
+  zigzagRange: 12
+  stopTime: 0.5
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -321,7 +324,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 32
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6548486075970649895
 MonoBehaviour:
