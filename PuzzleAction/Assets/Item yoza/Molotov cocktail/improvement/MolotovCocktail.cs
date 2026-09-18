@@ -9,7 +9,7 @@ public class MolotovCocktail : TrapBase
 
     [Header("Fire Area Settings")]
     [SerializeField] private Collider m_fireCollider;
-    [SerializeField] private GameObject m_fireEffect;
+    [SerializeField] private ParticleSystem m_fireEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_damagePerTick = 5f;
@@ -37,7 +37,7 @@ public class MolotovCocktail : TrapBase
         }
 
         if (m_fireCollider != null) m_fireCollider.enabled = false;
-        if (m_fireEffect != null) m_fireEffect.SetActive(false);
+        if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(false);
     }
 
     protected override void OnHit()
@@ -49,7 +49,7 @@ public class MolotovCocktail : TrapBase
     {
         if (!m_isBurning)
         {
-         if(!m_isAddForceCalled)
+            if(!m_isAddForceCalled)
             {
                 OnAddForce(m_dir, m_power);
                 m_isAddForceCalled=true;
@@ -66,7 +66,7 @@ public class MolotovCocktail : TrapBase
         if (m_burnTimer >= m_duration)
         {
             if (m_fireCollider != null) m_fireCollider.enabled = false;
-            if (m_fireEffect != null) m_fireEffect.SetActive(false);
+            if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(false);
             OnReturnPool();
             return;
         }
@@ -133,7 +133,7 @@ public class MolotovCocktail : TrapBase
 
         if (m_fireCollider != null) m_fireCollider.enabled = true;
 
-        if (m_fireEffect != null) m_fireEffect.SetActive(true);
+        if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(true);
     }
 
     private void ApplyFireDamage()
@@ -157,6 +157,8 @@ public class MolotovCocktail : TrapBase
             };
 
             target.TakeDamage(damageData);
+
+            m_fireEffect.Play();
         }
     }
 }

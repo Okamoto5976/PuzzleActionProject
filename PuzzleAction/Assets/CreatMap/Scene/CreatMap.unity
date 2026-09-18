@@ -3020,7 +3020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8213095029228168054, guid: a7457ed2aee9883469da5a2bcf9c2772, type: 3}
+  m_prefab: {fileID: 5405777550611800389, guid: fb9a7f8492c814842b6543cb90290e7f, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1034517595
@@ -3969,7 +3969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8213095029228168054, guid: a7457ed2aee9883469da5a2bcf9c2772, type: 3}
+  m_prefab: {fileID: 5405777550611800389, guid: 00babb27126ea894fa73cc02c5e7272a, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1356557544
