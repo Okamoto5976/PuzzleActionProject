@@ -250,8 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c80f675d7435a4a80120beeae0bfff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KnifeTrap
+  m_isFowardDir: 1
   m_str: 5
-  m_speed: 5
+  m_speed: 35
   m_attackType: 0
   m_rate: 2
   m_hitLayers:

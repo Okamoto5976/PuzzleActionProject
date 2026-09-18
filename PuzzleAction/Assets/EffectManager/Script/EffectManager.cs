@@ -41,7 +41,7 @@ public class EffectManager : MonoBehaviour
         obj.gameObject.SetActive(true);
 
         ParticleSystem particle =
-            obj.GetComponent<ParticleSystem>();
+            obj.GetComponentInChildren<ParticleSystem>();
 
         if (particle != null)
         {

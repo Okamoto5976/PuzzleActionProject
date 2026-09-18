@@ -301,7 +301,7 @@ public class PlayerController : Entity
         }
         else
         {
-            ItemRecieveData data = CreateItemData(Forward, 0f);
+            ItemRecieveData data = CreateItemData(Forward, 0f, m_pullOffSet);
 
             m_inventorySystem.UsePressed(m_hotberIndex, data);
 

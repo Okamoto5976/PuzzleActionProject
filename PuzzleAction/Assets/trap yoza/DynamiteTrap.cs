@@ -38,6 +38,7 @@ public class DynamiteTrap : TrapBase
 
         };
 
+        Debug.Log("fire");
         m_fireParticle.Play();
         Invoke(nameof(OnHit), m_explosionTimer);
     }
@@ -57,6 +58,7 @@ public class DynamiteTrap : TrapBase
             //AttackDir = m_dir,
 
         };
+
 
         m_isTimer = true;
     }
