@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 967168956980264904}
   - component: {fileID: 6222392426850108708}
   - component: {fileID: 8372712719120505819}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ItemImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,8 +211,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4052668135508155962}
-  - component: {fileID: 7727252269452802821}
-  m_Layer: 0
+  - component: {fileID: 251089526058010864}
+  m_Layer: 9
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,8 +234,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1507705121183690295}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7727252269452802821
-SphereCollider:
+--- !u!65 &251089526058010864
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -253,5 +253,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Size: {x: 0.4, y: 0.4, z: 0.4}
   m_Center: {x: 0, y: 0, z: 0}
