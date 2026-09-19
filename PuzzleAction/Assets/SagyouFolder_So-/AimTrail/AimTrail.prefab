@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3787579032607973817}
-  - component: {fileID: 7810718939355723916}
   - component: {fileID: -3291569849037985504}
+  - component: {fileID: 7810718939355723916}
   m_Layer: 0
   m_Name: AimTrail
   m_TagString: Untagged
@@ -33,6 +33,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3291569849037985504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022746069294881753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81e4d446931be2743bc9315b2489b62e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AimTrail
+  _initializedTrailCount: 40
+  _trailResolution: 4
 --- !u!120 &7810718939355723916
 LineRenderer:
   serializedVersion: 3
@@ -143,17 +157,3 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-3291569849037985504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022746069294881753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81e4d446931be2743bc9315b2489b62e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AimTrail
-  _initializedTrailCount: 40
-  _trailResolution: 4

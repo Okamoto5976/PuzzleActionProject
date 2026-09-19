@@ -265,6 +265,7 @@ Transform:
   - {fileID: 2005381536994068819}
   - {fileID: 2763788182778437123}
   - {fileID: 781869982463653725}
+  - {fileID: 3799260462204051300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6186335976659372128
@@ -320,9 +321,9 @@ MonoBehaviour:
   m_playerDirObject: {fileID: 7214972691664052804}
   m_aimTrail: {fileID: 5942639327858087933}
   m_reticle: {fileID: 0}
+  m_spriteRenderer: {fileID: 3676967130022225026}
   m_trapPlaceRange: 5
   m_trapPreview: {fileID: 3632008991586162287}
-  m_trapRangeCircle: {fileID: 3877582118259054799}
   m_interactLayer:
     serializedVersion: 2
     m_Bits: 256
