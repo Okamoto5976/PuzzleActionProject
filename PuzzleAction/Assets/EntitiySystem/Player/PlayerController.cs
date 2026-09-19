@@ -58,7 +58,7 @@ public class PlayerController : Entity
     [Header("Set Trap on Space & Mouse")]
     [SerializeField] private float m_trapPlaceRange = 5f;
     [SerializeField] private GameObject m_trapPreview;
-    [SerializeField] private GameObject m_trapRangeCircle;
+    //[SerializeField] private GameObject m_trapRangeCircle;
     private Vector3 m_trapSetPosition;
 
     //InteractSystem
@@ -329,9 +329,9 @@ public class PlayerController : Entity
             m_reticle.gameObject.SetActive(true);
 
             m_trapPreview.gameObject.SetActive(true);
-            m_trapRangeCircle.transform.position = gameObject.transform.position;
-            m_trapRangeCircle.transform.localScale = new Vector3(m_trapPlaceRange * 2, 0.5f, m_trapPlaceRange * 2);
-            m_trapRangeCircle.gameObject.SetActive(true);
+            //m_trapRangeCircle.transform.position = gameObject.transform.position;
+            //m_trapRangeCircle.transform.localScale = new Vector3(m_trapPlaceRange * 2, 0.5f, m_trapPlaceRange * 2);
+            //m_trapRangeCircle.gameObject.SetActive(true);
             
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
@@ -407,7 +407,7 @@ public class PlayerController : Entity
             m_reticle.gameObject.SetActive(false);
 
             m_trapPreview.SetActive(false);
-            m_trapRangeCircle.gameObject.SetActive(false);
+            //m_trapRangeCircle.gameObject.SetActive(false);
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_setOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
