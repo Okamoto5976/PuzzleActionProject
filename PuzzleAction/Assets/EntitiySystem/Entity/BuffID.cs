@@ -31,7 +31,7 @@ public enum BuffID
     Poison,
     Water,
     Gas,
-    Burn,
+    Burn,//
     Swamp,
     Stun,
     Invincible

@@ -13,6 +13,7 @@ public class InputProvider
     private bool m_isPrevious;
     private bool m_isNext;
     private bool m_isInteract;
+    private bool m_isGetDropItem;
 
     public InputProvider()//newÇ≥ÇÍÇΩÇ∆Ç´èâä˙âª
     {
@@ -27,7 +28,7 @@ public class InputProvider
         m_action.Player.Previous.performed += OnPrevious;
         m_action.Player.Next.performed += OnNext;
         m_action.Player.Interact.performed += OnInteract;
-
+        m_action.Player.GetDropItem.performed += OnGetDropItem;
         m_action.Enable();
     }
 
@@ -76,6 +77,7 @@ public class InputProvider
         m_isInteract = true;
     }
 
+
     public void OnInputClear()
     {
         //Debug.LogWarning("InputClear");
@@ -85,6 +87,12 @@ public class InputProvider
         m_isPrevious = false;
         m_isNext = false;
         m_isInteract = false;
+    }
+
+    private void OnGetDropItem(InputAction.CallbackContext context)
+    {
+        Debug.Log("OnGetDropItem");
+        m_isGetDropItem = true;
     }
 
     public Vector2 Move
@@ -167,4 +175,16 @@ public class InputProvider
             return result;
         }
     }
+
+    public bool IsGetDropItem
+    {
+        get
+        {
+            bool result = m_isGetDropItem;
+            m_isGetDropItem = false;
+
+            return result;
+        }
+    }
+
 }

@@ -201,9 +201,9 @@ MonoBehaviour:
   m_stunDuration: 2
   m_explosionTimer: 1.5
   m_fireParticle: {fileID: 7447349913393547030}
-  m_explosionParticle: {fileID: 0}
   m_hitCollider: {fileID: 2940700304109731131}
   m_radius: 3
+  m_effectEventData: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
 --- !u!54 &8988422936948150200
 Rigidbody:
   m_ObjectHideFlags: 0
