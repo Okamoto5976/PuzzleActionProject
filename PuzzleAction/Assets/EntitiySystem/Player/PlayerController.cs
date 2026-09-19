@@ -55,6 +55,12 @@ public class PlayerController : Entity
 
     private Vector3 m_arrowTemporaryForward;
 
+    [Header("Set Trap on Space & Mouse")]
+    [SerializeField] private float m_trapPlaceRange = 5f;
+    [SerializeField] private GameObject m_trapPreview;
+    [SerializeField] private GameObject m_trapRangeCircle;
+    private Vector3 m_trapSetPosition;
+
     //InteractSystem
     private InteractSystem m_interactSystem;
     [Header("Interact")]
@@ -278,7 +284,7 @@ public class PlayerController : Entity
         {
             entity = this,
             power = power,
-            pos = transform.position,
+            pos = m_trapSetPosition,
             dir = forward,
             offset = offset,
 
@@ -319,7 +325,13 @@ public class PlayerController : Entity
         {
             m_isUsingSetItem = true;
             m_power = 0f;
+
             m_reticle.gameObject.SetActive(true);
+
+            m_trapPreview.gameObject.SetActive(true);
+            m_trapRangeCircle.transform.position = gameObject.transform.position;
+            m_trapRangeCircle.transform.localScale = new Vector3(m_trapPlaceRange * 2, 0.5f, m_trapPlaceRange * 2);
+            m_trapRangeCircle.gameObject.SetActive(true);
             
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
@@ -360,6 +372,7 @@ public class PlayerController : Entity
         else if (m_isUsingSetItem)
         {
             OnReticle();
+            m_trapPreview.transform.position = m_trapSetPosition;
         }
         else if (m_isUsingAttackItem)
         {
@@ -392,6 +405,9 @@ public class PlayerController : Entity
             m_isUsingSetItem = false;
 
             m_reticle.gameObject.SetActive(false);
+
+            m_trapPreview.SetActive(false);
+            m_trapRangeCircle.gameObject.SetActive(false);
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_setOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
@@ -430,12 +446,9 @@ public class PlayerController : Entity
 
     private void OnReticle()
     {
-        //Debug.Log("reticle");
-
         m_reticle.position = Input.mousePosition;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         Plane plane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
 
         if(plane.Raycast(ray, out float distance))
@@ -449,6 +462,15 @@ public class PlayerController : Entity
 
             //temporary save, use when arrow pull
             m_arrowTemporaryForward = Forward;
+
+            //trap
+            
+            Vector3 offset = mousePos - transform.position;
+            offset.y = 0f;
+
+            if(offset.magnitude > m_trapPlaceRange) offset = offset.normalized * m_trapPlaceRange;
+
+            m_trapSetPosition = transform.position + offset;
         }
 
     }
