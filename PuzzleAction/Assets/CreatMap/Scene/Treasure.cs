@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Treasure : MonoBehaviour, IInteractable
 {
+    private Animator m_anim;
+    
     [Header("Drop")]
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
     private ItemManager m_itemManager;
@@ -12,6 +14,11 @@ public class Treasure : MonoBehaviour, IInteractable
     {
         m_itemManager = FindAnyObjectByType<ItemManager>();
         NULLCHECK();
+    }
+
+    private void Awake()
+    {
+        m_anim = GetComponentInChildren<Animator>();   
     }
 
     private void OpenChest()
@@ -35,6 +42,9 @@ public class Treasure : MonoBehaviour, IInteractable
         }
 
         m_isOpened = true;
+
+        m_anim.SetBool("IsOpen", true);
+
         OpenChest();
     }
 

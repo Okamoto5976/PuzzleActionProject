@@ -257,7 +257,7 @@ public class InventorySystem : MonoBehaviour
             // 表示更新
             hotbarSlots[i].SetItem(activeInventory[index], index);
         }
-        OnUpdateMainHotber();
+        //OnUpdateMainHotber();
     }
 
     public void RemoveActiveItem(int index)
@@ -267,6 +267,12 @@ public class InventorySystem : MonoBehaviour
         ItemBox item = activeInventory[index];
 
         item.count--;
+
+        // ItemDrop用
+        Vector3 position = m_playerPosition.Value;
+        Item itemData = item.data;
+        m_itemManager.DropItemSetData(position, itemData);
+
 
         // 0以下なら完全削除
         if (item.count <= 0)
@@ -300,8 +306,10 @@ public class InventorySystem : MonoBehaviour
         m_itemManager.OnRemovePassive(data.data, m_player);
 
         // ItemDrop用
-        // Vector3 position = m_playerPosition.Value;
-        // Item itemData = data.data;
+         Vector3 position = m_playerPosition.Value;
+         Item itemData = data.data;
+
+        m_itemManager.DropItemSetData(position, itemData);
 
         passiveInventory.RemoveAt(index);
 
@@ -650,109 +658,108 @@ public class InventorySystem : MonoBehaviour
         UpdateUI();
     }
 
-    private void OnUpdateMainHotber()
-    {
+    //private void OnUpdateMainHotber()
+    //{
 
 
-        return;
-        Debug.Log("===== OnUpdateMainHotber START =====");
+    //    Debug.Log("===== OnUpdateMainHotber START =====");
 
-        //int count = Mathf.Min(
-        //    hotbars.Length,
-        //    mainHotbarImages.Length
-        //);
+    //    //int count = Mathf.Min(
+    //    //    hotbars.Length,
+    //    //    mainHotbarImages.Length
+    //    //);
 
-        int count = hotbars.Length;
+    //    int count = hotbars.Length;
 
-        Debug.Log(count);
+    //    Debug.Log(count);
 
-        for (int i = 0; i < count; i++)
-        {
-            if (mainHotbarImages[i] == null)
-            {
-                Debug.Log("なにもない");
-            }
+    //    for (int i = 0; i < count; i++)
+    //    {
+    //        if (mainHotbarImages[i] == null)
+    //        {
+    //            Debug.Log("なにもない");
+    //        }
 
-            Image hotbarImage = mainHotbarImages[i];
+    //        Image hotbarImage = mainHotbarImages[i];
 
-            if (hotbarImage == null)
-            {
-                continue;
-            }
+    //        if (hotbarImage == null)
+    //        {
+    //            continue;
+    //        }
 
-            if (hotbars[i] == -1)
-            {
-                hotbarImage.sprite = null;
-                //hotbarImage.enabled = false;
-                continue;
-            }
+    //        if (hotbars[i] == -1)
+    //        {
+    //            hotbarImage.sprite = null;
+    //            //hotbarImage.enabled = false;
+    //            continue;
+    //        }
 
-            int inventoryIndex = hotbars[i];
+    //        int inventoryIndex = hotbars[i];
 
-            if (inventoryIndex < 0 ||
-                inventoryIndex >= activeInventory.Count)
-            {
-                hotbarImage.sprite = null;
-                //hotbarImage.enabled = false;
-                continue;
-            }
+    //        if (inventoryIndex < 0 ||
+    //            inventoryIndex >= activeInventory.Count)
+    //        {
+    //            hotbarImage.sprite = null;
+    //            //hotbarImage.enabled = false;
+    //            continue;
+    //        }
 
-            ItemBox item = activeInventory[inventoryIndex];
+    //        ItemBox item = activeInventory[inventoryIndex];
 
-            if (item == null || item.data == null)
-            {
-                hotbarImage.sprite = null;
-                //hotbarImage.enabled = false;
-                continue;
-            }
+    //        if (item == null || item.data == null)
+    //        {
+    //            hotbarImage.sprite = null;
+    //            //hotbarImage.enabled = false;
+    //            continue;
+    //        }
 
-            hotbarImage.sprite = item.data.icon;
-            //hotbarImage.enabled = true;
+    //        hotbarImage.sprite = item.data.icon;
+    //        //hotbarImage.enabled = true;
 
-            Debug.Log(
-                $"MainHotbar[{i}]に " +
-                $"{item.data.ItemName} のImageを更新"
-            );
-        }
-        Debug.Log("===== OnUpdateMainHotber END =====");
-    }
+    //        Debug.Log(
+    //            $"MainHotbar[{i}]に " +
+    //            $"{item.data.ItemName} のImageを更新"
+    //        );
+    //    }
+    //    Debug.Log("===== OnUpdateMainHotber END =====");
+    //}
 
-    //ソート　アイテム削除後などに
-    private void InventorySort()
-    {
-        //List<ItemBox> list = new List<ItemBox>();
+    ////ソート　アイテム削除後などに
+    //private void InventorySort()
+    //{
+    //    //List<ItemBox> list = new List<ItemBox>();
 
-        //for(int y = 0; y < m_height; ++y)
-        //{
-        //    for(int x = 0; x < m_width;  ++x)
-        //    {
-        //        if(inventory[x, y] != null)
-        //        {
-        //            list.Add(inventory[x, y]);
-        //        }
-        //    }
-        //}
+    //    //for(int y = 0; y < m_height; ++y)
+    //    //{
+    //    //    for(int x = 0; x < m_width;  ++x)
+    //    //    {
+    //    //        if(inventory[x, y] != null)
+    //    //        {
+    //    //            list.Add(inventory[x, y]);
+    //    //        }
+    //    //    }
+    //    //}
 
-        //for (int y = 0;y < m_height; ++y)
-        //{
-        //    for (int x = 0; x < m_width; ++x)
-        //    {
-        //        inventory[x, y] = null;
-        //    }
-        //}
+    //    //for (int y = 0;y < m_height; ++y)
+    //    //{
+    //    //    for (int x = 0; x < m_width; ++x)
+    //    //    {
+    //    //        inventory[x, y] = null;
+    //    //    }
+    //    //}
 
-        //int index = 0;
+    //    //int index = 0;
 
-        //for (int y = 0; y<m_height; ++y)
-        //{
-        //    for (int x = 0; x<m_width; ++x)
-        //    {
-        //        if (index < list.Count)
-        //        {
-        //            inventory[x, y] = list[index];
-        //            index++;
-        //        }
-        //    }
-        //}
-    }
+    //    //for (int y = 0; y<m_height; ++y)
+    //    //{
+    //    //    for (int x = 0; x<m_width; ++x)
+    //    //    {
+    //    //        if (index < list.Count)
+    //    //        {
+    //    //            inventory[x, y] = list[index];
+    //    //            index++;
+    //    //        }
+    //    //    }
+    //    //}
+    //}
 }

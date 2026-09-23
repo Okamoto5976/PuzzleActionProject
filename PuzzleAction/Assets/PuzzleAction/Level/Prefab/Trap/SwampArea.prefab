@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5112746732719993547}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4872,7 +4872,7 @@ Transform:
   m_GameObject: {fileID: 5773867480711577715}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4983,6 +4983,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c3fcfd29f6841f4e9e136d0ef81a9bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwampTrap
+  m_isFowardDir: 0
   m_str: 0
   m_speed: 0
   m_attackType: 0

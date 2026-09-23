@@ -198,6 +198,12 @@ public class EnemyController : Entity
             dir = dir
         };
 
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Item");
+
+        }
+
         m_itemManager.OnUseItem(m_attackItem, data);
     }
     #endregion
