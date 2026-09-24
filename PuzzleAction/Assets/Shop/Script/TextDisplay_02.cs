@@ -16,7 +16,7 @@ public class TextDisplay_02 : MonoBehaviour
 
     public void ShowMessageGradually(string message, float speed = 0.04f)
     {
-        Debug.Log("ShowMessageGradually : " + message);
+        //Debug.Log("ShowMessageGradually : " + message);
         StopAllCoroutines();
         StartCoroutine(TypeText(message, speed));
     }

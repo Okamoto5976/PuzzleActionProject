@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: -6208613025751143186}
   - component: {fileID: -6878687357098537760}
   - component: {fileID: 359080160195294053}
+  - component: {fileID: 5583940323451125462}
   m_Layer: 0
   m_Name: Enemy_RunAway
   m_TagString: Untagged
@@ -236,8 +237,10 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 3042968806835571943}
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 1
   m_attackItem: {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &-6208613025751143186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,8 +254,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   m_currentHP: 0
+  m_max: 0
   m_damageParticleController: {fileID: 429245284499668544}
-  m_isItemDrop: 0
+  m_isItemDrop: 1
 --- !u!114 &-6878687357098537760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,9 +271,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 3042968806835571943}
-    m_radius: 2
 --- !u!136 &359080160195294053
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -293,6 +294,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &5583940323451125462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9213505366536643909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityTemporaryBuffSystem
 --- !u!1001 &4558927397495782449
 PrefabInstance:
   m_ObjectHideFlags: 0

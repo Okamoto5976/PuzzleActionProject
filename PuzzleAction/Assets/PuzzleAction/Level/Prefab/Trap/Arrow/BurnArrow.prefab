@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7c635aab6f7f24d900190cd20b9383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowTrap
+  m_isFowardDir: 1
   m_str: 30
   m_speed: 0
   m_attackType: 0

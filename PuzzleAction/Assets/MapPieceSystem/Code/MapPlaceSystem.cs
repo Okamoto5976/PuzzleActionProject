@@ -675,7 +675,7 @@ public class MapPlaceSystem : MonoBehaviour
             counter.ResetCount();
         }
 
-        //SceneManager.LoadScene("CreatMap");
+        //SceneManager.LoadScene("CreatMap_BossEnemy");
         LoadManager.m_instance.LoadScene(m_creatScene.Value);
     }
 

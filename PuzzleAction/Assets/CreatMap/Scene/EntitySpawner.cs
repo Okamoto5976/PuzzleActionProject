@@ -7,14 +7,20 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private Transform m_player;
     [SerializeField] private PlayerController m_playerC;
     [SerializeField] private T_Camera m_camera;
+    [SerializeField] private float m_playerHeightOffset;
     [Space(10)]
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
-    [Tooltip("1PieceÇ…âΩëÃèoÇÈÇ©"), SerializeField] private int m_spawnCount;
+    [Tooltip("1Piece3~5"), SerializeField] private int m_spawnCount;
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
+    [Space(10)]
+
+    [Header("========== Boss ==========")]
+    [SerializeField] private Middleman_BossEnemy m_bossEnemyPool;
+    [SerializeField] private List<Enum_BossType> m_bossOrder;
     [Space(10)]
 
     [Header("========== Trap ==========")]
@@ -38,8 +44,9 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private Middleman_Treasure m_treasurePool;
     [SerializeField] private GachaEngine m_treasureGachaEngine;
     [SerializeField] private TreasureRarityTable m_treasureRarityTable;
-
     [SerializeField] private int m_treasureCount = 3;
+
+    private HashSet<Vector2Int> m_reservedPosition = new();
 
     private MapClassData m_mapClassData;
     private MapGeneration m_mapGeneration;
@@ -62,6 +69,7 @@ public class EntitySpawner : MonoBehaviour
         m_playerC.SetState();
 
         InitializeEnemyPools();
+        InitializeBossEnemyPool();
         InitializeTrapPool();
         InitializeTreasurePool();
 
@@ -88,6 +96,11 @@ public class EntitySpawner : MonoBehaviour
     {
         if (m_treasurePool == null) return;
         m_treasurePool.InitializePool();
+    }
+    private void InitializeBossEnemyPool()
+    {
+        if(m_bossEnemyPool == null) return;
+        m_bossEnemyPool.InitializePool();
     }
     #endregion
 
@@ -126,25 +139,28 @@ public class EntitySpawner : MonoBehaviour
                 case AreaType.Damage:
                     SpawnTrap(room);
                     break;
+
+                case AreaType.Boss:
+                    SpawnBoss(room);
+                        break;
             }
         }
     }
 
+    #region SPAWN
+    //Enemy
     private void SpawnEnemy(RoomData room)
     {
         var positions = ChooseRandomPosition(room, m_spawnCount);
 
-
         foreach (var pos in positions)
         {
-            if (IsForbiddenPos(pos)) continue;
-
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
             SpawnEnemyByGacha(worldPositions);
+            m_reservedPosition.Add(pos);
         }
 
     }
-
     private void SpawnEnemyByGacha(Vector3 position)
     {
         if (m_enemyPool == null)
@@ -174,10 +190,9 @@ public class EntitySpawner : MonoBehaviour
             return;
         }
 
-        // ìØÉåÉAÉäÉeÉBì‡ÉâÉìÉ_ÉÄ
+        // ÔøΩÔøΩÔøΩÔøΩÔøΩAÔøΩÔøΩÔøΩeÔøΩBÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ_ÔøΩÔøΩ
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
-        Debug.Log($"Selected Enemy : {selectedType}");
-        EnemyController enemy =m_enemyPool.GetEnemy(selectedType);
+        EnemyController enemy =m_enemyPool.GetComponent(selectedType);
 
 
         if (enemy == null)
@@ -190,9 +205,34 @@ public class EntitySpawner : MonoBehaviour
 
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-
-        Debug.Log($"Spawn Enemy [{selectedType}] Rarity [{rarity.name}]");
     }
+
+    //BossEnemy
+    private void SpawnBoss(RoomData room)
+    {
+        Vector2Int center = room.m_roomSizes[room.m_roomSizes.Count / 2];
+        Enum_BossType bossType = GetCurrentBossType();
+        BossEnemyController boss = m_bossEnemyPool.GetComponent(bossType);
+
+        if (boss == null)
+        {
+            Debug.LogError($"Boss Missing : {bossType}");
+            return;
+        }
+
+        boss.transform.position = m_mapGeneration.GridToWorld(center);
+        boss.gameObject.SetActive(true);
+        m_reservedPosition.Add(center);
+    }
+    private Enum_BossType GetCurrentBossType()
+    {
+        int level = GameManager.Instance.Level;
+        int bossIndex = (level / 5) - 1;
+        if (bossIndex < 0) bossIndex = 0;
+        bossIndex %= m_bossOrder.Count;
+        return m_bossOrder[bossIndex];
+    }
+    //itemDrop
     private void AssignDropItem(EnemyController enemy)
     {
         if (enemy == null) return;
@@ -212,37 +252,25 @@ public class EntitySpawner : MonoBehaviour
         RarityEnumAsset rarity = enemy.ItemDropGachaEngine.Collapse();
 
         // hoka tantou jissou yotei 
-        //Item item = m_itemManager.GetRandomItem(rarity);
-        Item item = null;
+        Item item = m_itemManager.DropItem(rarity);
+        //Item item = null;
         //set drop item 
         enemy.DropItem = item;
-        Debug.Log($"{enemy.name} DropRarity = {rarity.name}");
+        //Debug.LogWarning($"{enemy.name} DropRarity = {rarity.name}");
     }
 
-    private void SpawnShop(RoomData room)
-    {
-        var positions = ChooseRandomPosition(room, 1);
-
-        foreach (var pos in positions)
-        {
-            if (IsForbiddenPos(pos)) continue;
-
-            Instantiate(m_shopPrefab, m_mapGeneration.GridToWorld(pos), Quaternion.identity);
-        }
-    }
-
+    //Trap
     private void SpawnTrap(RoomData room)
     {
         List<Vector3> worldPositions = new();
         foreach (var pos in room.m_roomSizes)
         {
-            if (IsForbiddenPos(pos)) continue;
-
             worldPositions.Add(m_mapGeneration.GridToWorld(pos));
+            m_reservedPosition.Add(pos);
         }
         SpawnTrapByGacha(worldPositions);
-    }
 
+    }
     private void SpawnTrapByGacha(List<Vector3> position)
     {
         if (m_trapPool == null)return;
@@ -264,7 +292,7 @@ public class EntitySpawner : MonoBehaviour
         foreach (Vector3 pos in position)
         {
 
-            TrapBase trap = m_trapPool.GetTrap(selectedType);
+            TrapBase trap = m_trapPool.GetComponent(selectedType);
 
             if (trap == null)
             {
@@ -272,7 +300,7 @@ public class EntitySpawner : MonoBehaviour
                 return;
             }
 
-            trap.transform.position = pos;
+            //trap.transform.position = pos;
 
             BoxCollider box = trap.GetComponent<BoxCollider>();
 
@@ -288,46 +316,48 @@ public class EntitySpawner : MonoBehaviour
                 }
             }
 
-            trap.Init(m_trapOwner, Vector3.forward);
+            ItemRecieveData data = new ItemRecieveData()
+            {
+                entity = null,
+                pos = pos,
+            };
+            
+            trap.TrapInit(data);
             trap.gameObject.SetActive(true);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");
     }
 
+    //Object
+    private void SpawnShop(RoomData room)
+    {
+        var positions = ChooseRandomPosition(room, 1);
+
+        foreach (var pos in positions)
+        {
+            Instantiate(m_shopPrefab, m_mapGeneration.GridToWorld(pos), Quaternion.identity);
+            m_reservedPosition.Add(pos);
+        }
+    }
     private void SpawnGoal()
     {
-        Vector3 pos =
-            m_mapGeneration.GridToWorld(
-                m_mapClassData.GoalPos);
-
-        GameObject goal =
-            Instantiate(
-                m_goalPrefab,
-                pos,
-                Quaternion.identity);
-
-        GoalSystem goalSystem =
-            goal.GetComponent<GoalSystem>();
-
+        Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.GoalPos);
+        GameObject goal = Instantiate(m_goalPrefab, pos, Quaternion.identity);
+        GoalSystem goalSystem = goal.GetComponent<GoalSystem>();
         goalSystem.Initialize(m_mainGameManager);
     }
-
     private void SpawnPlayer()
     {
-        Vector3 pos =
-            m_mapGeneration.GridToWorld(
-                m_mapClassData.StartPos);
-
-        pos.y = 0.5f;
-
+        Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
         m_player.position = pos;
 
         if (m_camera != null)
         {
-            m_camera.SetTarget(m_player);
+            m_camera.SetTargetAndHeightOffset(m_player, m_playerHeightOffset);
         }
     }
 
+    //Treasure
     private void SpawnTreasures()
     {
         // Potential treasure chest spawn locations
@@ -335,11 +365,17 @@ public class EntitySpawner : MonoBehaviour
 
         foreach (var room in m_mapClassData.roomDatas)
         {
-            //reject other than None
-            if (room.m_type != AreaType.None) continue;
-            foreach (var pos in room.m_roomSizes)
+            //reject BossArea
+            if (room.m_type == AreaType.Boss) continue;
+            //reject rooms containing a StartPos
+            if (room.m_roomSizes.Contains(GetStartPos())) continue;
+            // reject other
+            foreach(var pos in room.m_roomSizes)
             {
-                if (IsForbiddenPos(pos)) continue;
+                //reject startPos goalPos
+                if(IsForbiddenPos(pos)) continue;
+                //reject Enemy, Trap, Shop, Boss. position
+                if (m_reservedPosition.Contains(pos)) continue;
                 candidates.Add(pos);
             }
         }
@@ -363,7 +399,6 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnTreasureByGacha(Vector3 position)
     {
         if (m_treasureGachaEngine == null) return;
-
         if (m_treasureRarityTable == null) return;
 
         RarityEnumAsset rarity = m_treasureGachaEngine.Collapse();
@@ -383,7 +418,7 @@ public class EntitySpawner : MonoBehaviour
             case Enum_TreasureType.TreasureBox:
                 {
                     //gete Pool 
-                    Treasure treasure = m_treasurePool.GetTreasure(Enum_TreasureType.TreasureBox);
+                    Treasure treasure = m_treasurePool.GetComponent(Enum_TreasureType.TreasureBox);
                     if (treasure == null)return;
 
                     treasure.transform.position = position;
@@ -395,7 +430,7 @@ public class EntitySpawner : MonoBehaviour
             case Enum_TreasureType.Mimic:
                 {
                     //get pool 
-                    EnemyController mimic = m_enemyPool.GetEnemy(Enum_EnemyType.Mimic);
+                    EnemyController mimic = m_enemyPool.GetComponent(Enum_EnemyType.Mimic);
                     if (mimic == null)return;
 
                     mimic.transform.position =position;
@@ -404,14 +439,12 @@ public class EntitySpawner : MonoBehaviour
                     break;
                 }
         }
-
-        Debug.Log($"Spawn {selectedType} [{rarity.name}]");
     }
+    #endregion
 
     private bool IsForbiddenPos(Vector2Int pos)
     {
         if (pos == GetStartPos()) return true;
-
         if (pos == GetGoalPos()) return true;
 
         return false;
@@ -431,15 +464,20 @@ public class EntitySpawner : MonoBehaviour
     /// <returns></returns>
     private List<Vector2Int> ChooseRandomPosition(RoomData room, int count)
     {
-        List<Vector2Int> copy = new(room.m_roomSizes);
-        List<Vector2Int> result = new();
+        List<Vector2Int> copy = new();
+        foreach (var pos in room.m_roomSizes)
+        {
+            if (IsForbiddenPos(pos)) continue;
 
+            copy.Add(pos);
+        }
+
+        List<Vector2Int> result = new();
         count = Mathf.Min(count, copy.Count);
 
         for (int i = 0; i < count; i++)
         {
             int index = UnityEngine.Random.Range(0, copy.Count);
-
             result.Add(copy[index]);
             copy.RemoveAt(index);
         }

@@ -47,7 +47,7 @@ public class MapGeneration : MonoBehaviour
     private void InitializeMap()
     {
         // new map class
-        Debug.Log(m_mapClass.Floors.Count);
+        //Debug.Log(m_mapClass.Floors.Count);
         var floorCount = m_size.x * m_size.y;
 
         // get prefab bounds
@@ -288,7 +288,7 @@ public class MapGeneration : MonoBehaviour
 
         return new Vector3(
             origin.position.x + gridPos.x * m_floorScale.x,
-            0.5f,
+            0f,
             origin.position.z + gridPos.y * m_floorScale.z);
     }
 }

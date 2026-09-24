@@ -60,9 +60,12 @@ MonoBehaviour:
   m_moneyText: {fileID: 0}
   m_infoTextPrefab: {fileID: 0}
   m_inventorySystem: {fileID: 0}
-  m_shopInventories: []
   m_showShopUI: {fileID: 11400000, guid: 92e3bcd4ccde4a44bb97d6a2e05a062b, type: 2}
+  m_palyerIgnoreInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
+  m_shopItemGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
+  m_defaultShopRarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+  m_forcedRarityCount: 2
+  m_shopRarityVisuals: {fileID: 11400000, guid: d5ed0c4980becde469090d608197e2da, type: 2}
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1
-  m_palyerIgnoreInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}

@@ -1,42 +1,75 @@
+using System.Collections;
 using UnityEngine;
 
 public class WallTrap : TrapBase
 {
-    [Header("Wall")]
-    [SerializeField] private GameObject m_wallPrefab;
+    [Header("Rock")]
+    [SerializeField] private float m_spawnDistance = 3.0f;
+    [SerializeField] private float m_lifeTime = 5.0f;
 
-    [SerializeField] private float m_wallLifeTime = 5f;
+    [Header("Spawn")]
+    [SerializeField] private float m_spawnDelay = 1.0f;
+
+    [Header("KnockBack")]
+    [SerializeField] private float m_knockBackPower = 5.0f;
+
+    private Coroutine m_returnCoroutine;
 
 
     protected override void EntitySetUp()
     {
+        //base.TrapInit();
 
+        m_dir = transform.forward;
+
+        StartCoroutine(SpawnDelay());
     }
 
-    public void Activate()
+    public override void TrapInit(ItemRecieveData data)
     {
-        SpawnWall();
+        //base.TrapInit();
+         
+        //m_dir = transform.forward;
+
+        //StartCoroutine(SpawnDelay());
     }
 
-    protected override void OnHit()
+
+    private IEnumerator SpawnDelay()
     {
+        yield return new WaitForSeconds(m_spawnDelay);
+
+        Spawn();
+    }
+
+
+    private void Spawn()
+    {
+        transform.position +=
+            m_dir * m_spawnDistance;
+
+      
+        //OnAddForce(
+        //    m_dir,
+        //    m_knockBackPower
+        //);
+
+        m_returnCoroutine =
+            StartCoroutine(ReturnAfterTime());
+    }
+
+
+    private IEnumerator ReturnAfterTime()
+    {
+        yield return new WaitForSeconds(m_lifeTime);
+
         OnReturnPool();
     }
 
-    private void SpawnWall()
-    {
-        GameObject wall =
-            Instantiate(
-                m_wallPrefab,
-                transform.position,
-                transform.rotation
-            );
 
-        Destroy(
-            wall,
-            m_wallLifeTime
-        );
+    protected override void OnHit()
+    {
+       
     }
 
-   
 }

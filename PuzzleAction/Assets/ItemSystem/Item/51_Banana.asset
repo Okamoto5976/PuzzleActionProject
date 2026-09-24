@@ -25,4 +25,4 @@ MonoBehaviour:
     price: 100
     Type: 0
   TrapPrefab: {fileID: 0}
-  m_enumTrap: 20
+  m_enumTrap: 15

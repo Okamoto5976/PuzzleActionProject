@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class T_Camera : MonoBehaviour
@@ -11,6 +13,31 @@ public class T_Camera : MonoBehaviour
     [Header("Follow")]
     [SerializeField] private float m_followSpeed = 0f; // 0 = ‘¦Žž’Ç]
 
+    [SerializeField] private bool m_isShaking = false;
+    [SerializeField] private float m_shakeStrength = 0.1f;
+    [SerializeField] private float m_shakeSpeed = 0.05f;
+    private Vector3 m_shakeOffset = Vector3.zero;
+    private float m_heightOffset = 0f;
+
+    private Coroutine m_shakeCoroutine;
+
+    public bool IsShaking
+    {
+        get => m_isShaking;
+        set => m_isShaking = value;
+    }
+
+    public float ShakeStrength
+    {
+        get => m_shakeStrength;
+        set => m_shakeStrength = value;
+    }
+
+    public float ShakeSpeed
+    {
+        get => m_shakeSpeed;
+        set => m_shakeSpeed = value;
+    }
 
     public float Distance
     {
@@ -21,6 +48,15 @@ public class T_Camera : MonoBehaviour
             CalculateOffset();
         }
     }
+    public float HeightOffset
+    {
+        get => m_heightOffset;
+        set
+        {
+            m_heightOffset = value;
+            CalculateOffset();
+        }
+    }
 
     private Vector3 m_offset;
     private float m_angle;
@@ -28,6 +64,37 @@ public class T_Camera : MonoBehaviour
     private void Awake()
     {
         Initialize();
+    }
+
+    private void OnEnable()
+    {
+        StartShake();
+    }
+
+    private void StartShake()
+    {
+        if (m_shakeCoroutine != null)
+        {
+            StopCoroutine(m_shakeCoroutine);
+        }
+        StartCoroutine(DoShake());
+    }
+
+    private IEnumerator DoShake()
+    {
+        while (true)
+        {
+            m_shakeOffset = Random.onUnitCircle * m_shakeStrength;
+            yield return new WaitForSeconds(m_shakeSpeed);
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (m_shakeCoroutine != null)
+        {
+            StopCoroutine(m_shakeCoroutine);
+        }
     }
 
     private void Initialize()
@@ -42,19 +109,38 @@ public class T_Camera : MonoBehaviour
     }
     public void SetTarget(Transform target)
     {
-        m_target = target;
+        SetTargetAndHeightOffset(target, 0);
     }
 
+    public void SetTargetAndHeightOffset(Transform target, float height)
+    {
+        m_target = target;
+        m_heightOffset = height;
+    }
+
+    /// <summary>
+    /// using trignometry, calculate height from distance and angle
+    /// compensates sprite angle correction
+    /// </summary>
+    /// <returns>offset from object</returns>
     private Vector3 GetOffset(float distanceToObject, float rotationFromHorizon)
     {
         float height = Mathf.Abs(distanceToObject) / Mathf.Tan((90 - rotationFromHorizon) * Mathf.Deg2Rad);
-        return new(0, height, -distanceToObject);
+        float calculatedOffset = m_heightOffset / Mathf.Cos(rotationFromHorizon * Mathf.Deg2Rad);
+        return new(0, height + calculatedOffset, -distanceToObject);
     }
 
     private void LateUpdate()
     {
         DoCameraCorrection();
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        CalculateOffset();
+    }
+#endif
 
     private void DoCameraCorrection()
     {
@@ -66,6 +152,10 @@ public class T_Camera : MonoBehaviour
         }
 
         Vector3 targetPos = m_target.position + m_offset;
+        if (m_isShaking)
+        {
+            targetPos += m_shakeOffset;
+        }
 
         if (m_followSpeed <= 0f)
         {

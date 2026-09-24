@@ -43,10 +43,10 @@ public class PoisonMagic : TrapBase
         if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
         if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
-        base.TrapInit();
-        EntitySetUp();
+        base.TrapInit(data);
+        //EntitySetUp();
     }
 
     private void FixedUpdate()

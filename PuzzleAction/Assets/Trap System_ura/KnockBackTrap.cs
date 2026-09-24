@@ -2,52 +2,93 @@ using UnityEngine;
 
 public class KnockBackTrap : TrapBase
 {
-    [Header("KnockBack")]
+    [Header("Life Time")]
     [SerializeField]
-    private float m_knockBackPower = 10f;
+    private float m_lifeTime = 3f;
+
+    private float m_timer;
+
+    public override void TrapInit(ItemRecieveData data)
+    {
+        base.TrapInit(data);
+
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+            AttackType = m_attackType,
+
+            Knockback = m_power,
+
+            AttackDir = m_dir
+        };
+    }
 
 
     protected override void EntitySetUp()
     {
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+            AttackType = m_attackType,
+
+            Knockback = m_owner.KnockBack,
+
+            AttackDir = m_dir
+        };
+    }
+
+
+    private void FixedUpdate()
+    {
+        OnMove(m_dir);
+
         
+    }
+
+    private void Update()
+    {
+        m_timer += Time.deltaTime;
+
+        if (m_timer >= m_lifeTime)
+        {
+            m_timer = 0f;
+
+            OnHit();
+        }
     }
 
 
     protected override void OnHit()
     {
-       OnReturnPool();
+        OnReturnPool();
     }
 
 
     protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
 
-
-        if (target == m_owner)
+        if (m_owner != null &&
+            target == m_owner)
             return;
 
+        target.TakeDamage(m_damageData);
 
-        Rigidbody targetRb =
-            other.attachedRigidbody;
+        //EntityHP entityHP =
+        //    target.GetComponent<EntityHP>();
 
-        if (targetRb == null)
-            return;
+        //if (entityHP == null)
+        //    return;
 
-        
-        Vector3 knockBackDir =
-            target.transform.position -
-            transform.position;
- 
-        knockBackDir.y = 0f;
+        //entityHP.TakeDamage(m_damageData);
 
-
-        targetRb.AddForce(
-            knockBackDir.normalized * m_knockBackPower,
-            ForceMode.Impulse);
     }
 }

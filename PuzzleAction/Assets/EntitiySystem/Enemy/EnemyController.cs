@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EntityTemporaryBuffSystem))]
 public class EnemyController : Entity
 {
     [Header("Target")]
@@ -14,17 +17,39 @@ public class EnemyController : Entity
     [SerializeField] private float m_attackCooldown = 1f;
     private float m_attackCooldownDuration;
     private bool m_isCooldownEnd = true;
-    [Header("Ref")]
+    [Header("AttachCollider Setthing")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
     [Header("Item")]
     [SerializeField] private Item m_attackItem;
+    [SerializeField] private float m_power = 3f;
+    [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    #region UnityEditor
+    #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (m_attackItem == null) return;
+
+            Vector3 shootPos = transform.position + m_shootOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(shootPos, 0.15f);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(shootPos, shootPos + transform.forward * 2f);
+
+            Handles.color = Color.white;
+            Handles.Label(shootPos + Vector3.up * 0.3f, "Shoot Offset");
+        }
+    #endif
+    #endregion
     private ItemManager m_itemManager;
 
     [Header("Drop")]
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
     public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [NonSerialized] public Item m_dropItem;
+
     public Item DropItem
     {
         get => m_dropItem;
@@ -38,10 +63,11 @@ public class EnemyController : Entity
     private bool m_isRotating = true;
 
     //===== API =====
-
+    public bool CanAction => CurrentState != EntityState.Dead && !IsStun;
     public float AttackRange => m_attackRange;
     public float FindRange => m_findRange;
     public bool IsCooldownReady => m_isCooldownEnd;
+    public float ShootPower => m_power;
     public Vector3 Forward => transform.forward;
     public Vector3 SpawnPosition => m_spawnPosition;
     public Vector3Asset Target => m_target;
@@ -79,14 +105,23 @@ public class EnemyController : Entity
 
     private void Update()
     {
+        if (CurrentState == Entity.EntityState.Dead) return;
         OnUpdateFlag();
 
+        if (IsStun)
+        {
+            Stop();
+             if(m_anim != null)
+            {
+                m_anim.SetBool("Move", false);
+            }
+            return;
+        }
         if (m_target == null) return;
 
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
-
         HandleRotation(distance);
 
         if (distance > m_findRange)
@@ -94,22 +129,13 @@ public class EnemyController : Entity
             StopAll();
             return;
         }
-
-        //if (m_type == Enum_EnemyType.Chase || m_type == Enum_EnemyType.Mimic)
-        //{
-        //    if (distance <= m_attackRange)
-        //    {
-        //        StopAll();
-
-        //        TryAttack();
-
-        //        return;
-        //    }
-        //}
+       
         m_enemyBehaviour.Execute();
     }
     private void OnEnable()
     {
+        ChangeState(EntityState.Idle);
+
         m_isCooldownEnd = true;
         m_attackCooldownDuration = 0f;
 
@@ -121,53 +147,6 @@ public class EnemyController : Entity
     #endregion
 
     #region ATTACK
-    public bool TryAttack()
-    {
-        if (!m_isCooldownEnd) return false;
-
-        Attack();
-        ConsumeCooldown();
-        return true;
-    }
-    public void Attack()
-    {
-        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
-        Debug.Log(m_attackHitBox.m_transform.position);
-        Debug.Log(m_attackHitBox.m_radius);
-
-
-        if (m_hitCollider == null) return;
-
-        DamageData damage = new DamageData
-            {
-                Attack = (int)STR,
-                CriticalRate = CriticalRate,
-                CriticalDamage = CriticalDamage,
-                BreakRate = BreakRate,
-                Knockback = KnockBack,
-                StunDuration = Stun,
-                AttackDir = transform.forward,
-                Attacker = this,
-                //AttackerSE = AttackSE,
-                //AudioSource = AudioSource
-            };
-
-        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : Player ‚ÉHIT");
-    }
-    private void HandleCooldown()
-    {
-        if (m_isCooldownEnd) return;
-
-        m_attackCooldownDuration += Time.deltaTime;
-
-        if (m_attackCooldownDuration >= m_attackCooldown)
-        {
-            m_attackCooldownDuration = 0f;
-            m_isCooldownEnd = true;
-        }
-    }
     public bool TryUseCooldown()
     {
         if (!m_isCooldownEnd) return false;
@@ -181,14 +160,75 @@ public class EnemyController : Entity
         m_isCooldownEnd = false;
         m_attackCooldownDuration = 0f;
     }
+    private void HandleCooldown()
+    {
+        if (m_isCooldownEnd) return;
+
+        m_attackCooldownDuration += Time.deltaTime;
+
+        if (m_attackCooldownDuration >= m_attackCooldown)
+        {
+            m_attackCooldownDuration = 0f;
+            m_isCooldownEnd = true;
+        }
+    }
+    public bool TryAttack()
+    {
+        if (!m_isCooldownEnd) return false;
+
+        if(m_anim != null)
+        {
+            m_anim.SetTrigger("Attack");
+
+        }
+
+        Attack();
+        ConsumeCooldown();
+        return true;
+    }
+    public void Attack()
+    {
+        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
+        //Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
+        //Debug.Log(m_attackHitBox.m_transform.position);
+        //Debug.Log(m_attackHitBox.m_radius);
+
+
+        if (m_hitCollider == null) return;
+
+        DamageData damage = new DamageData
+            {
+                Attack = (int)STR,
+                CriticalRate = CriticalRate,
+                CriticalDamage = CriticalDamage,
+                BreakRate = BreakRate,
+                Knockback = KnockBack,
+                StunDuration = m_data.StunDuration,
+                AttackDir = transform.forward,
+                Attacker = this,
+                //AttackerSE = AttackSE,
+                //AudioSource = AudioSource
+            };
+
+        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        Debug.Log("EnemyController : Player HIT");
+    }
     public void UseItem(Vector3 dir)
     {
         ItemRecieveData data = new ItemRecieveData
         {
             entity = this,
             pos = transform.position,
-            dir = dir
+            dir = dir,
+            power = m_power * 8,
+            offset = m_shootOffset,
         };
+
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Item");
+
+        }
 
         m_itemManager.OnUseItem(m_attackItem, data);
     }
@@ -197,6 +237,10 @@ public class EnemyController : Entity
     #region MOVE
     public void Move(Vector3 dir, float speed)
     {
+        if (!CanAction) return;
+        {
+            
+        }
         if (dir == Vector3.zero)
         {
             Stop();
@@ -215,6 +259,11 @@ public class EnemyController : Entity
     public void SetDestination(Vector3 targetPos, float speed)
     {
         m_agent.isStopped = false;
+        if(m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+
+        }
 
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
@@ -255,6 +304,12 @@ public class EnemyController : Entity
     public void Stop()
     {
         m_agent.isStopped = true;
+        if(m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+
+        }
+
     }
     private void StopAll()
     {
@@ -296,13 +351,12 @@ public class EnemyController : Entity
         {
             ItemDrop();
         }
-        //ReturnPool();
     }
 
     public void ItemDrop()
     {
         if (m_dropItem == null) return;
-        //m_itemManager.ItemDrop(m_itemDrop, transform.position)
+        m_itemManager.DropItemSetData(transform.position, m_dropItem);
     }
     public void ReturnPool()
     {
@@ -325,7 +379,7 @@ public class EnemyController : Entity
             Debug.LogWarning("Middleman_Enemy Not Found");
             return null;
         }
-        EnemyController enemy = pool.GetEnemy(type);
+        EnemyController enemy = pool.GetComponent(type);
         if(enemy == null)
         {
             Debug.LogWarning($"Pool Missing : {type}");

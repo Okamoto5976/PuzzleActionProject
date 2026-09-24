@@ -7,17 +7,20 @@ public class EnemyHP : EntityHP
 
     protected override void Die()
     {
-        //Ž€‚ñ‚¾‚Æ‚«pool‚É–ß‚é
-        // player get money
-        // add score
-        // item drop
         EnemyController enemy = GetComponent<EnemyController>();
         if(enemy == null)
         {
             Debug.Log($"{this.name} : EnemyController not found");
             return;
         }
+
+        if (enemy.CurrentState == Entity.EntityState.Dead) return;
+
+        //kill enemy
+        enemy.KillEntity();
+        //item drop from enemy
         enemy.OnDead(m_isItemDrop);
+        //return pool 
         OnReturnPool();
     }
     private void OnReturnPool()

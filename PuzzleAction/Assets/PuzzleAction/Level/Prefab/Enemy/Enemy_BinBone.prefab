@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: 4454756479888953108}
+  - component: {fileID: -7297444003917248090}
   m_Layer: 0
   m_Name: Enemy_BinBone
   m_TagString: Untagged
@@ -243,9 +244,12 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
+    m_radius: 2
   m_attackItem: {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
-  m_itemDropGachaEngine: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &8382535904999966303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,9 +276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +291,7 @@ MonoBehaviour:
   m_currentHP: 0
   m_max: 0
   m_damageParticleController: {fileID: 3109024123308804497}
-  m_isItemDrop: 0
+  m_isItemDrop: 1
 --- !u!54 &-1027978937202661744
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -337,7 +338,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &4454756479888953108
@@ -363,6 +364,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7297444003917248090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityTemporaryBuffSystem
 --- !u!1001 &1266941858842676192
 PrefabInstance:
   m_ObjectHideFlags: 0

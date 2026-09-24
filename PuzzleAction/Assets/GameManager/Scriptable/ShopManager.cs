@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -56,7 +55,7 @@ public class ShopManager : MonoBehaviour
     private List<Item> m_passiveItems;
     private List<Item> m_activeItems;
 
-    [SerializeField] private List<ShopInventory> m_shopInventories;
+    private List<ShopInventory> m_shopInventories;
 
 
     private int ShopCount => m_shopCount.Count;
@@ -65,6 +64,13 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private BoolEventSO m_showShopUI;
 
     [SerializeField] private BoolEventSO m_palyerIgnoreInput;
+    [Header("Shop Item Randomizer")]
+    [SerializeField] private GachaEngine m_shopItemGachaEngine;
+    [SerializeField] private RarityEnumAsset m_defaultShopRarity;
+    [SerializeField] private int m_forcedRarityCount;
+
+    [Header("Shop Item Rarity Overlay")]
+    [SerializeField] private ShopRarityVisuals m_shopRarityVisuals;
 
     //========Debug===============
     [Header("Debug")]
@@ -97,16 +103,18 @@ public class ShopManager : MonoBehaviour
         InitializeSellableItems();
         m_shopInventories = new();
     }
+    private void Start()
+    {
+        InitializeShops();
+    }
 
     private void OnEnable()
     {
-        m_onGenerateShopInventories.OnTrigger += InitializeShops;
         m_shopIdEvent.Register(SetDatasToSlots);
     }
 
     private void OnDisable()
     {
-        m_onGenerateShopInventories.OnTrigger -= InitializeShops;
         m_shopIdEvent.Unregister(SetDatasToSlots);
     }
 
@@ -142,7 +150,7 @@ public class ShopManager : MonoBehaviour
         {
             for (int i = 0; i < 3; i++)
             {
-                m_shopInventories.Add(GenerateShopInventory(1, 1));
+                m_shopInventories.Add(GenerateShopInventory(m_forcedRarityCount));
             }
 
             return;
@@ -150,42 +158,25 @@ public class ShopManager : MonoBehaviour
 
         for (int i = 0; i < ShopCount; i++)
         {
-            m_shopInventories.Add(GenerateShopInventory(1, 1));
+            m_shopInventories.Add(GenerateShopInventory(m_forcedRarityCount));
         }
     }
 
-    private ShopInventory GenerateShopInventory(int passiveCount, float passiveWeight)
+    private ShopInventory GenerateShopInventory(int forcedRarityCount)
     {
-        ShopInventory newInventory = new();
-        newInventory.inventory = new();
-
-        System.Random random = new();
-        int passiveItemCount = 0;
-        if (passiveCount > 0)
+        ShopInventory newInventory = new()
         {
-            int passiveWeightValue = Random.Range(0, 100) - (int)(passiveWeight * 100);
-            if (passiveWeightValue < 0)
-            {
-                passiveItemCount = (int)((Mathf.Abs(passiveWeightValue) + (100.0 / passiveCount) - 1) / (int)(passiveWeight * 100));
-            }
-        }
-        int activeItemCount = SlotCount - passiveItemCount;
-        Debug.Log($"a : {activeItemCount}, p : {passiveItemCount}");
-
-        var items = m_activeItems
-            .OrderBy(x => random.Next())
-            .Take(activeItemCount)
-            .ToList();
-        items.AddRange(m_passiveItems
-                .OrderBy(x => random.Next())
-                .Take(passiveItemCount)
-                .ToList());
+            inventory = new()
+        };
 
         for (int i = 0; i < SlotCount; i++)
         {
-            ShopItem item = new();
-            item.IsSold = false;
-            item.data = items[i];
+            var rarity = i < forcedRarityCount ? m_defaultShopRarity : m_shopItemGachaEngine.Collapse();
+            ShopItem item = new()
+            {
+                IsSold = false,
+                data = m_itemManager.GetRandomShopItemByRarity(rarity)
+            };
             newInventory.inventory.Add(item);
         }
         return newInventory;
@@ -193,7 +184,6 @@ public class ShopManager : MonoBehaviour
 
     private void SetDatasToSlots(int id)
     {
-
         SetShopText();
 
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
@@ -213,7 +203,8 @@ public class ShopManager : MonoBehaviour
     {
         for (int i = 0; i < SlotCount; i++)
         {
-            m_goodsPrefab[i].SetData(shopInventory.inventory[i]);
+            var shopItem = shopInventory.inventory[i];
+            m_goodsPrefab[i].SetData(shopItem, m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity));
         }
     }
 
@@ -238,7 +229,7 @@ public class ShopManager : MonoBehaviour
 
     public bool PurchaseItem(int slotId)
     {
-        Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+        //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
         var data = m_shopInventories[_currentShopId].inventory[slotId].data;
 
         int money = GameManager.Instance.Money;
@@ -253,12 +244,12 @@ public class ShopManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("you purchase item");
+            //Debug.Log("you purchase item");
 
             //InventoryManager‚ÉItem‚ð“n‚·
             if (!m_inventorySystem.AddItem(data, 1))
             {
-                Debug.Log("you already have item max");
+                //Debug.Log("you already have item max");
                 m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.InventoryFull);
                 return false;
             }
@@ -276,7 +267,7 @@ public class ShopManager : MonoBehaviour
             var item = m_shopInventories[_currentShopId].inventory[slotId];
             item.IsSold = true;
             m_shopInventories[_currentShopId].inventory[slotId] = item;
-            Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
+            //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
 
             m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Buy);
 

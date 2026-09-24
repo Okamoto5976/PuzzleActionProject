@@ -38,7 +38,7 @@ public class MolotovCocktail : TrapBase
         }
 
         if (m_fireCollider != null) m_fireCollider.enabled = false;
-        if (m_fireEffect != null) m_fireEffect.SetActive(false);
+        if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(false);
     }
 
     protected override void OnHit()
@@ -50,7 +50,7 @@ public class MolotovCocktail : TrapBase
     {
         if (!m_isBurning)
         {
-         if(!m_isAddForceCalled)
+            if(!m_isAddForceCalled)
             {
                 OnAddForce(m_dir, m_power);
                 m_isAddForceCalled=true;
@@ -67,7 +67,7 @@ public class MolotovCocktail : TrapBase
         if (m_burnTimer >= m_duration)
         {
             if (m_fireCollider != null) m_fireCollider.enabled = false;
-            if (m_fireEffect != null) m_fireEffect.SetActive(false);
+            if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(false);
             OnReturnPool();
             return;
         }
@@ -91,7 +91,7 @@ public class MolotovCocktail : TrapBase
                 OnHit();
             return;
             }
-           Entity hitTarget=other.GetComponent<Entity>();
+           Entity hitTarget=other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 OnHit();
@@ -100,7 +100,7 @@ public class MolotovCocktail : TrapBase
             return;
         }
 
-        Entity inFireTarget = other.GetComponent<Entity>();
+        Entity inFireTarget = other.GetComponentInParent<Entity>();
         if (inFireTarget == null) return;
         if (inFireTarget.Team == m_team) return;
 
@@ -114,7 +114,7 @@ public class MolotovCocktail : TrapBase
     {
         if (!m_isBurning) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
         if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
@@ -134,7 +134,7 @@ public class MolotovCocktail : TrapBase
 
         if (m_fireCollider != null) m_fireCollider.enabled = true;
 
-        if (m_fireEffect != null) m_fireEffect.SetActive(true);
+        if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(true);
     }
 
     private void ApplyFireDamage()

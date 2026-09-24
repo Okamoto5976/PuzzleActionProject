@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ReturnObjectToPool))]
-[RequireComponent(typeof(Rigidbody))]
 
 public abstract class TrapBase : MonoBehaviour
 {
@@ -11,6 +10,9 @@ public abstract class TrapBase : MonoBehaviour
 
     protected TeamType m_team = TeamType.Nature;
     public TeamType Team => m_team;
+
+    //å¸Ç´Ç…âûÇ∂ÇƒÅ@ÇªÇÃï˚Çê≥ñ Ç…Ç∑ÇÈÇ©
+    [SerializeField] private bool m_isFowardDir;
 
     //[Header("TrapData")]
     //[SerializeField]
@@ -62,18 +64,25 @@ public abstract class TrapBase : MonoBehaviour
 
     //call when entity use item 
     public void Init(
-        Entity owner,
-        Vector3 dir)
+        ItemRecieveData data)
     {
-        m_owner = owner;
+        m_owner = data.entity;
         m_team = m_owner.Team;
 
-        m_dir =
-            dir.normalized;
+        m_dir = data.dir.normalized;
 
-        transform.rotation =
+        gameObject.transform.position = data.pos + data.offset;
+
+        if(m_isFowardDir)
+        {
+            transform.rotation =
             Quaternion.LookRotation(
                 m_dir);
+        }
+        
+
+        m_power = data.power;
+
 
         //åpè≥êÊÇ≈
         //m_damageData = new DamageData
@@ -96,54 +105,55 @@ public abstract class TrapBase : MonoBehaviour
         EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
     }
 
-    public void PullInit(
-        Entity owner,
-        Vector3 dir,
-        float power)
-    {
-        m_owner = owner;
-        m_team = m_owner.Team;
+    //public void PullInit(
+    //    ItemRecieveData data)
+    //{
+    //    m_owner = data.entity;
+    //    m_team = m_owner.Team;
 
-        m_dir =
-            dir.normalized;
+    //    m_dir = data.dir.normalized;
 
-        transform.rotation =
-            Quaternion.LookRotation(
-                m_dir);
+    //    gameObject.transform.position = data.pos + data.offset;
 
-        m_power = power;
+    //    transform.rotation =
+    //        Quaternion.LookRotation(
+    //            m_dir);
 
-        //åpè≥êÊÇ≈
-        //m_damageData = new DamageData
-        //{
+    //    m_power = data.;
 
-        //    Attack = m_str + owner.STR,
-        //    AttackType = m_attackType,
-        //    //HitRate
-        //    CriticalRate = owner.CriticalRate,
-        //    CriticalDamage = owner.CriticalDamage,
-        //    BreakRate = owner.BreakRate,
-        //    Knockback = owner.KnockBack,
-        //    StunDuration = owner.Stun,
-        //    //Duration
-        //    AttackDir = dir,
-        //    //SE
+    //    //åpè≥êÊÇ≈
+    //    //m_damageData = new DamageData
+    //    //{
 
-        //};
+    //    //    Attack = m_str + owner.STR,
+    //    //    AttackType = m_attackType,
+    //    //    //HitRate
+    //    //    CriticalRate = owner.CriticalRate,
+    //    //    CriticalDamage = owner.CriticalDamage,
+    //    //    BreakRate = owner.BreakRate,
+    //    //    Knockback = owner.KnockBack,
+    //    //    StunDuration = owner.Stun,
+    //    //    //Duration
+    //    //    AttackDir = dir,
+    //    //    //SE
 
-        EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
-    }
+    //    //};
+
+    //    EntitySetUp();//ó·Å@ïbêîÇê›íËÇµÅ@éûä‘åoâﬂÇ≈îöîjÇ»Ç«
+    //}
 
 
     //use TrapArea
-    public virtual void TrapInit()
+    public virtual void TrapInit(ItemRecieveData data)
     {
+        
+
         m_owner = null;
 
         m_dir = Vector3.zero;
         m_team = TeamType.Nature;
 
-
+        gameObject.transform.position = data.pos;
     }
 
     //protected DamageData SetDamageData()
@@ -193,7 +203,7 @@ public abstract class TrapBase : MonoBehaviour
 
 
 
-        m_rb.AddForce(dir * power, ForceMode.Impulse);
+        m_rb.AddForce(dir * power, ForceMode.VelocityChange);
 
     }
 

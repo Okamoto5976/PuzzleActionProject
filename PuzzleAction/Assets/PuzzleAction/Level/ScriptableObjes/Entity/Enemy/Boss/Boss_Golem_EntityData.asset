@@ -12,21 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7541d2123e2bc949ad3db636c0979b3, type: 3}
   m_Name: Boss_Golem_EntityData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
-  m_hp: 0
+  m_hp: 1000
   m_str: 1
   m_knockBack: 0
   m_def: 0
-  m_speed: 10
+  m_speed: 8
   m_dashSpeed: 20
   m_criticalRate: 0
   m_criticalDamage: 0
-  m_dex: 0
   m_agi: 0
-  m_vision: 0
   m_breakRate: 0
   m_stun: 0
   m_recover: 0
   m_poisonRes: 0
   m_stunRes: 0
   m_slowRes: 0
-  m_blindRes: 0

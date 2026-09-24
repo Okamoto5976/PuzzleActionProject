@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ecd51184b9d2cc4396fcbd311bcbbe3, type: 3}
   m_Name: Chase_GachaEngine
   m_EditorClassIdentifier: Assembly-CSharp::GachaEngine
-  rarities: []
+  rarities:
+  - rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
+    weight: 100

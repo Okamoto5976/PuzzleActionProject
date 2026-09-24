@@ -2,28 +2,36 @@ using UnityEngine;
 
 public class Treasure : MonoBehaviour, IInteractable
 {
-    [Header("Rate Setting")]
-    [SerializeField, Range(0, 1)] private float m_rareItemRate = 0.2f;
+    private Animator m_anim;
+    
+    [Header("Drop")]
+    [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    private ItemManager m_itemManager;
 
     private bool m_isOpened = false;
-
     public bool IsOpened => m_isOpened;
-
-    private void Chest()
+    private void OnEnable()
     {
-        bool isRare = Random.value < m_rareItemRate;
+        m_itemManager = FindAnyObjectByType<ItemManager>();
+        NULLCHECK();
+    }
 
-        if (isRare)
-        {
-            Debug.Log("★ レアアイテムを入手！");
-        }
-        else
-        {
-            Debug.Log("□ 通常アイテムを入手！");
-        }
+    private void Awake()
+    {
+        m_anim = GetComponentInChildren<Animator>();   
+    }
 
-        //return to pool OR SetActive(false)
-        // Destroy(gameObject);
+    private void OpenChest()
+    {
+        RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+        Item item = m_itemManager.DropItem(rarity);
+        if (item == null)
+        {
+            Debug.Log($"{this.name} : item null");
+            return;
+        }
+        m_itemManager.DropItemSetData(transform.position, item);
+        Debug.Log($"Treasure Open : {item.name}[{rarity.name}]");
     }
 
     public void OnInteract(Entity entity)
@@ -34,6 +42,23 @@ public class Treasure : MonoBehaviour, IInteractable
         }
 
         m_isOpened = true;
-        Chest();
+
+        m_anim.SetBool("IsOpen", true);
+
+        OpenChest();
+    }
+
+    private void NULLCHECK()
+    {
+        if (m_itemManager == null)
+        {
+            Debug.Log($"{this.name} : ItemManeger not found");
+            return;
+        }
+        if (m_itemDropGachaEngine == null)
+        {
+            Debug.Log($"{this.name} : GachaEngine not found");
+            return;
+        }
     }
 }

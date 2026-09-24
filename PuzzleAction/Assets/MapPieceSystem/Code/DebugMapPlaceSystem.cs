@@ -229,7 +229,7 @@ public class DebugMapPlaceSystem : MonoBehaviour
 
                     if (!m_connectionMap.ContainsKey(key))
                     {
-                        Debug.Log(key);
+                        //Debug.Log(key);
                         m_connectionMap[key] = new List<EdgeVariant>();
                     }
 
@@ -274,7 +274,7 @@ public class DebugMapPlaceSystem : MonoBehaviour
         //Get startId
         int startID = m_mapClass.GetFloorID(m_startPos.x, m_startPos.y);
 
-        Debug.Log("kok");
+        //Debug.Log("kok");
         //Get endId
         int endID = m_mapClass.GetFloorID(m_endPos.x, m_endPos.y);
 

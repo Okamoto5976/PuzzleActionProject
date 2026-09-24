@@ -10,8 +10,8 @@ public class Bananapeel : TrapBase
 
     protected override void EntitySetUp()
     {
-        float owanerStun =(m_owner!=null)?m_owner.StunPower : 0;
-        m_appliedStunDuration = m_stunDuration + owanerStun;
+        //float owanerStun =(m_owner!=null)?m_owner.StunPower : 0;
+        m_appliedStunDuration = m_stunDuration;
     }
     public void FixedUpdate()
     {
@@ -24,9 +24,10 @@ public class Bananapeel : TrapBase
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        if (m_team == TeamType.Nature) return;
 
         Entity victim =other.GetComponentInParent<Entity>();
+
+        if (victim.Team == TeamType.Nature) return;
 
         if (victim!=null)
         {

@@ -6,7 +6,7 @@ public class PlayerController : Entity
 {
     [Header("InputSystem")]
     private InputProvider m_input;
-
+    
     private Vector2 m_move;
 
     private bool m_isActive;
@@ -15,8 +15,11 @@ public class PlayerController : Entity
     private bool m_isPrevious;
     private bool m_isNext;
     private bool m_isInteract;
+    private bool m_isGetDropItem;
 
     [SerializeField] private Vector3Asset m_position;
+    [SerializeField] private Vector3 m_pullOffSet;
+    //private Vector3 m_setOffSet;
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -44,17 +47,35 @@ public class PlayerController : Entity
 
     //--------player foward -----------------
     [SerializeField] private GameObject m_playerDirObject;
+    [SerializeField] private AimTrail m_aimTrail;
 
     [SerializeField] private RectTransform m_reticle;
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
 
     public Vector3 Forward => m_playerDirObject.transform.forward;
 
     private Vector3 m_arrowTemporaryForward;
 
+    [Header("Set Trap on Space & Mouse")]
+    [SerializeField] private float m_trapPlaceRange = 5f;
+    [SerializeField] private GameObject m_trapPreview;
+    //[SerializeField] private GameObject m_trapRangeCircle;
+    private Vector3 m_trapSetPosition;
+
     //InteractSystem
     private InteractSystem m_interactSystem;
+    [Header("Interact")]
     [SerializeField] private LayerMask m_interactLayer;
+    [Header("Item Search")]
+    [SerializeField] private LayerMask m_itemSerachLayer;
+    [SerializeField] private float m_itemSearchRange = 5f;
+    [Header("UI")]
+    [SerializeField] private GameObject m_textPanel;
+    [SerializeField] private TMPro.TMP_Text m_nameText;
+    [SerializeField] private TMPro.TMP_Text m_itemDescriptionText;
 
+    //if inventory max 
+    [SerializeField] private GameObject m_textErrorMessage;
 
     protected override void Awake()
     {
@@ -79,6 +100,11 @@ public class PlayerController : Entity
         m_input = new InputProvider();
         
         m_input.Enable();
+
+        m_nameText.text = "";
+        m_itemDescriptionText.text = "";
+        m_textPanel.SetActive(false);
+        m_textErrorMessage.SetActive(false);
     }
 
     private void OnEnable()
@@ -114,8 +140,15 @@ public class PlayerController : Entity
         m_isPrevious = m_input.IsPrevious;
         m_isNext = m_input.IsNext;
         m_isInteract = m_input.IsInteract;
+        m_isGetDropItem = m_input.IsGetDropItem;
 
-        if(m_isInteract)
+        if (m_isGetDropItem)
+        {
+            //Debug.Log("PlayerController");
+            OnuseItemGet();
+        }
+
+        if (m_isInteract)
         {
             OnInteract();
         }
@@ -144,8 +177,14 @@ public class PlayerController : Entity
             OnUseItemRelease();
         }
 
+        if(m_isGetDropItem)
+        {
+            OnuseItemGet();
+        }
+
         InputHotber();
 
+        SearchItem();
     }
 
     /// <summary>
@@ -198,11 +237,11 @@ public class PlayerController : Entity
 
         if (input.x > 0.1f)
         {
-            transform.localScale = new Vector3(2, 2, 2);
+            m_spriteRenderer.flipX = false;
         }
         else if (input.x < -0.1f)
         {
-            transform.localScale = new Vector3(-2, 2, 2);
+            m_spriteRenderer.flipX = true;
         }
     }
 
@@ -237,17 +276,10 @@ public class PlayerController : Entity
         m_displayManager.SetIndex(m_hotberIndex);
     }
 
-    private ItemRecieveData CreateItemData(Vector3 forward)
-    {
-        return new ItemRecieveData
-        {
-            entity = this,
-            pos = transform.position,
-            dir = forward,
-        };
-    }
-
-    private ItemRecieveData CreatePullItemData(Vector3 forward, float power)
+    private ItemRecieveData CreateItemData(
+        Vector3 forward,
+        float power,
+        Vector3 offset = new Vector3())
     {
         return new ItemRecieveData
         {
@@ -255,8 +287,22 @@ public class PlayerController : Entity
             power = power,
             pos = transform.position,
             dir = forward,
+            offset = offset,
+
         };
     }
+
+    //private ItemRecieveData CreatePullItemData(Vector3 forward, float power)
+    //{
+    //    return new ItemRecieveData
+    //    {
+    //        entity = this,
+    //        power = power,
+    //        pos = transform.position,
+    //        dir = forward,
+    //        offset = m_pullOffSet,
+    //    };
+    //}
 
     private void OnUseItemPressed()
     {
@@ -268,6 +314,9 @@ public class PlayerController : Entity
 
             m_power = 0f;
             m_reticle.gameObject.SetActive(true);
+
+            m_aimTrail.gameObject.SetActive(true);
+
             //start to pull the bow
             
 
@@ -277,7 +326,14 @@ public class PlayerController : Entity
         {
             m_isUsingSetItem = true;
             m_power = 0f;
+
             m_reticle.gameObject.SetActive(true);
+
+            m_trapPreview.gameObject.SetActive(true);
+            //m_trapRangeCircle.transform.position = gameObject.transform.position;
+            //m_trapRangeCircle.transform.localScale = new Vector3(m_trapPlaceRange * 2, 0.5f, m_trapPlaceRange * 2);
+            //m_trapRangeCircle.gameObject.SetActive(true);
+            
         }
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
         {
@@ -287,7 +343,7 @@ public class PlayerController : Entity
         }
         else
         {
-            ItemRecieveData data = CreateItemData(Forward);
+            ItemRecieveData data = CreateItemData(Forward, 0f, m_pullOffSet);
 
             m_inventorySystem.UsePressed(m_hotberIndex, data);
 
@@ -301,21 +357,31 @@ public class PlayerController : Entity
     {
         //Debug.Log("Hold");
 
-        if(m_isUsingArrow)
+        if (m_isUsingArrow)
         {
             OnReticle();
 
+
+
             m_power += Time.deltaTime;
+
+            m_power = Mathf.Min(m_power, 3f);
+
+            m_aimTrail.UpdateVariables(m_pullOffSet, m_arrowTemporaryForward, m_power * 8);
         }
-        else if(m_isUsingSetItem)
+        else if (m_isUsingSetItem)
         {
             OnReticle();
+            m_trapPreview.transform.position = m_trapSetPosition;
         }
         else if (m_isUsingAttackItem)
         {
             OnReticle();
 
+
             m_power += Time.deltaTime;
+
+            m_power = Mathf.Min(m_power, 3f);
         }
     }
 
@@ -328,10 +394,11 @@ public class PlayerController : Entity
             m_isUsingArrow = false;
 
             m_reticle.gameObject.SetActive(false);
+            m_aimTrail.gameObject.SetActive(false);
 
-            m_power = Mathf.Min(m_power, 3f);
+            Debug.LogWarning($"{m_pullOffSet}");
 
-            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power * 8, m_pullOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
         }
@@ -341,9 +408,10 @@ public class PlayerController : Entity
 
             m_reticle.gameObject.SetActive(false);
 
-            m_power = 5f;
+            m_trapPreview.SetActive(false);
+            //m_trapRangeCircle.gameObject.SetActive(false);
 
-            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_trapSetPosition);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
         else if (m_isUsingAttackItem)
@@ -352,21 +420,37 @@ public class PlayerController : Entity
 
             m_reticle.gameObject.SetActive(false);
 
-            m_power = Mathf.Min(m_power, 3f);
-
-            ItemRecieveData data = CreatePullItemData(m_arrowTemporaryForward, m_power);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
     }
 
+    private void OnuseItemGet()
+    {
+        if (m_selecrItem == null) return;
+
+        if(ReceiveItem(m_selecrItem.ItemData))
+        {
+            m_selecrItem.ItemGet();
+            m_selecrItem = null;
+        }
+        else
+        {
+            m_textErrorMessage.SetActive(true);
+            Invoke(nameof(CloseErrorMessage), 1f);
+        }
+    }
+
+    private void CloseErrorMessage()
+    {
+        m_textErrorMessage.SetActive(false);
+    }
+
     private void OnReticle()
     {
-        //Debug.Log("reticle");
-
         m_reticle.position = Input.mousePosition;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         Plane plane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
 
         if(plane.Raycast(ray, out float distance))
@@ -380,6 +464,15 @@ public class PlayerController : Entity
 
             //temporary save, use when arrow pull
             m_arrowTemporaryForward = Forward;
+
+            //trap
+            
+            Vector3 offset = mousePos - transform.position;
+            offset.y = 0f;
+
+            if(offset.magnitude > m_trapPlaceRange) offset = offset.normalized * m_trapPlaceRange;
+
+            m_trapSetPosition = transform.position + offset;
         }
 
     }
@@ -390,8 +483,7 @@ public class PlayerController : Entity
         //The arrow rotates only when there is input
         if (moveDir.sqrMagnitude > 0.01f)
         {
-            m_playerDirObject.transform.rotation =
-                Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
+            m_playerDirObject.transform.rotation = Quaternion.LookRotation(moveDir, m_playerDirObject.transform.up);
         }
     }
 
@@ -416,9 +508,72 @@ public class PlayerController : Entity
     {
         m_ignoreInput = ignoreInput;
 
-        if(!ignoreInput)
+        if (!ignoreInput)
         {
             m_input.OnInputClear();
         }
+    }
+    public virtual bool ReceiveItem(Item item)
+    {
+        Debug.Log("ReceiveItemäJén");
+
+        if (item == null)
+        {
+            Debug.Log("itemÇ™null");
+            return false;
+        }
+
+        if (m_inventorySystem == null)
+        {
+            Debug.Log("InventorySystemÇ™null");
+            return false;
+        }
+
+        Debug.Log("AddItemÇåƒÇ—Ç‹Ç∑");
+
+        bool success = m_inventorySystem.AddItem(item, 1);
+
+        Debug.Log("AddItemèIóπ : " + success);
+
+        return success;
+    }
+    private DropItem m_selecrItem;
+    private Vector3 m_popupPosition;
+    private void SearchItem()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemSerachLayer))
+        {
+            DropItem drop = hit.collider.GetComponentInParent<DropItem>();
+
+            if (drop != null)
+            {
+
+                float distancee =Vector3.Distance(transform.position,drop.transform.position);
+                
+                if(distancee >m_itemSearchRange)
+                {
+                    m_selecrItem = null;
+                    m_itemDescriptionText.text = "";
+                    return;
+                }
+                if (m_selecrItem != drop)
+                {
+                    m_selecrItem = drop;
+                    m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
+                }
+
+                m_textPanel.SetActive(true);
+
+                m_nameText.text = drop.ItemData.ItemName;
+                m_itemDescriptionText.rectTransform.position = m_popupPosition;
+                m_itemDescriptionText.text = drop.ItemData.info;
+                return;
+            }
+        }
+        m_selecrItem = null;
+        m_itemDescriptionText.text = "";
+        m_textPanel.SetActive(false);
     }
 }

@@ -7,7 +7,7 @@ public class InteractSystem
 
         Collider[] colliders = Physics.OverlapSphere(
             position,
-            2.0f,
+            3f,
             layer
         );
 
@@ -15,7 +15,7 @@ public class InteractSystem
         {
             if (collider.TryGetComponent<IInteractable>(out var interactable))
             {
-                Debug.Log("Interact");
+                //Debug.Log("Interact");
 
 
                 interactable.OnInteract(entity);

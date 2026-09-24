@@ -8,7 +8,7 @@ public class DullnessPoisnon : TrapBase
     //[SerializeField] private BuffID m_buffID;       // 毒用のBuffID
 
     [Header("低下率パラメーター")]
-    [SerializeField] private float m_critRateReduction = 0.2f; // クリティカル率低下量
+    //[SerializeField] private float m_critRateReduction = 0.2f; // クリティカル率低下量
 
     //[SerializeField] private float m_power;
 

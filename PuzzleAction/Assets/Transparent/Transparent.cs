@@ -44,21 +44,19 @@ public class Transparent : MonoBehaviour
 
     private void Update()
     {
+        CalculateTransparency();
+    }
+
+    private void CalculateTransparency()
+    {
         m_currentHits.Clear();
 
-        float cameraZ = m_camera.transform.position.z;
-        float playerZ = m_player.Value.z;
+        Vector3 cameraOrigin = m_camera.transform.position;
+        Vector3 playerPosition = m_player.Value;
+        Vector3 playerDirection = (playerPosition - cameraOrigin).normalized;
 
-        float minZ = Mathf.Min(cameraZ, playerZ);
-        float maxZ = Mathf.Max(cameraZ, playerZ);
-
-        float xRot = transform.rotation.eulerAngles.x;
-        float fov = m_camera.fieldOfView;
-        float nRot = xRot - (fov / 2);
-        float cameraY = m_camera.transform.position.y;
-        float tan = Mathf.Tan(nRot * Mathf.Deg2Rad);
-        float cameraShadow = cameraY / tan;
-        float cameraRatio = cameraY / cameraShadow;
+        float max = Mathf.Max(cameraOrigin.z, playerPosition.z);
+        float min = Mathf.Min(cameraOrigin.z, playerPosition.z);
 
         bool isWallInBetween = false;
 
@@ -67,24 +65,17 @@ public class Transparent : MonoBehaviour
             if (wall == null) continue;
             if (!wall.isVisible) continue;
 
-            float wallZ = wall.bounds.center.z;
+            Vector3 wallPosition = wall.transform.position;
 
-            bool isBetween =
-                wallZ >= minZ &&
-                wallZ <= maxZ;
-
+            bool isBetween = min < wallPosition.z && wallPosition.z < max;
             if (!isBetween)
             {
                 SetAlphaSmooth(wall, 1f);
                 continue;
             }
 
-            float distanceToWall = Mathf.Abs(cameraZ - wallZ);
-            float remainingWallShadow = Mathf.Abs(cameraShadow - distanceToWall);
-            float wallRatio = m_mapGeneration.WallScale.y / remainingWallShadow;
-            if (wallRatio <= cameraRatio) continue;
-
-
+            Vector3 wallDirection = (wallPosition - cameraOrigin).normalized;
+            if (wallDirection.y <= playerDirection.y) continue;
 
             SetAlphaSmooth(wall, 0.3f);
             m_currentHits.Add(wall);
@@ -98,13 +89,12 @@ public class Transparent : MonoBehaviour
 
                 float otherZ = otherWall.bounds.center.z;
 
-                if (Mathf.Abs(otherZ - wallZ) < 0.1f)
+                if (Mathf.Abs(otherZ - wallPosition.z) < 0.1f)
                 {
                     SetAlphaSmooth(otherWall, 0.3f);
                     m_currentHits.Add(otherWall);
                 }
             }
-
         }
         foreach (Renderer wall in m_allWalls)
         {
@@ -119,7 +109,8 @@ public class Transparent : MonoBehaviour
         if (isWallInBetween)
         {
             m_playerSpriteRenderer.sortingOrder = -1;
-        } else
+        }
+        else
         {
             m_playerSpriteRenderer.sortingOrder = 1;
         }

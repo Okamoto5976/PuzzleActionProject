@@ -15,7 +15,7 @@ MonoBehaviour:
   mapName: o
   size: {x: 10, y: 10}
   startPos: {x: 0, y: 0}
-  goalPos: {x: 8, y: 8}
+  goalPos: {x: 9, y: 8}
   mapShape: '1111111111
 
     1111111111
