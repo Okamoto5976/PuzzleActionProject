@@ -115,8 +115,8 @@ public class EnemyDemonController
 
             untilNextAction = 0f;
             nextActionDuration = UnityEngine.Random.Range(nADMin, nADMax);
-            Debug.Log($"nextDuration: {nextActionDuration}");
-            Debug.Log($"action: {action}");
+            //Debug.Log($"nextDuration: {nextActionDuration}");
+            //Debug.Log($"action: {action}");
         }
         TakeAction(action);
     }
@@ -230,7 +230,7 @@ public class EnemyDemonController
                     this.action = ChasingAction.None;
                     enemyController.Stop();
                     stepDir = (StepDirection)Enum.ToObject(typeof(StepDirection), UnityEngine.Random.Range(1, (int)StepDirection.Max)); // Back step is exclusion.
-                    Debug.Log($"[TakeAction]stepDir: {stepDir}");
+                    //Debug.Log($"[TakeAction]stepDir: {stepDir}");
                 }
                 break;
         }
