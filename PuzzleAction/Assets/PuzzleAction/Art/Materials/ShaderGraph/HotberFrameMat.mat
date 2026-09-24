@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hotber1FrameMat
+  m_Name: HotberFrameMat
   m_Shader: {fileID: -6465566751694194690, guid: fe8ed4c65b36a7b4e9784d21f69fb5dd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
