@@ -117,7 +117,7 @@ MonoBehaviour:
   m_attackRange: 4
   m_attackCooldown: 2
   m_attackHitBox:
-    m_transform: {fileID: 0}
+    m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
     m_radius: 4
   m_attackItem: {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
