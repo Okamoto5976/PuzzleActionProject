@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EntitySpawner : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Trap ==========")]
     [SerializeField] private Middleman_Trap m_trapPool;
+    private TrapGenerator_EqualDistribution m_trapEqualDistribution = new();
     [Header("========== TrapGacha ==========")]
     [SerializeField] private GachaEngine m_trapGachaEngine;
     [SerializeField] private TrapRarityTable m_trapRarityTable;
@@ -271,7 +273,7 @@ public class EntitySpawner : MonoBehaviour
         SpawnTrapByGacha(worldPositions);
 
     }
-    private void SpawnTrapByGacha(List<Vector3> position)
+    private void SpawnTrapByGacha(List<Vector3> positions)
     {
         if (m_trapPool == null)return;
         if (m_trapGachaEngine == null)return;
@@ -288,42 +290,42 @@ public class EntitySpawner : MonoBehaviour
 
         Enum_TrapType selectedType = candidates[Random.Range(0, candidates.Count)];
 
-        //
-        foreach (Vector3 pos in position)
+        if (selectedType == Enum_TrapType.GasArea || selectedType == Enum_TrapType.SwampArea)
         {
-
-            TrapBase trap = m_trapPool.GetComponent(selectedType);
-
-            if (trap == null)
+            foreach (Vector3 pos in positions)
             {
-                Debug.LogWarning($"Trap Pool Missing : {selectedType}");
-                return;
-            }
 
-            //trap.transform.position = pos;
+                TrapBase trap = m_trapPool.GetComponent(selectedType);
 
-            BoxCollider box = trap.GetComponent<BoxCollider>();
+                if (trap == null)
+                {
+                    Debug.LogWarning($"Trap Pool Missing : {selectedType}");
+                    return;
+                }
 
-            if (box != null)
-            {
-                if (selectedType == Enum_TrapType.GasArea || selectedType == Enum_TrapType.SwampArea)
+                //trap.transform.positions = pos;
+
+                BoxCollider box = trap.GetComponent<BoxCollider>();
+
+                if (box != null)
                 {
                     box.size = new Vector3(m_mapGeneration.FloorScale.x, box.size.y, m_mapGeneration.FloorScale.z);
                 }
-                else
-                {
-                    box.size = Vector3.one;
-                }
-            }
 
-            ItemRecieveData data = new ItemRecieveData()
-            {
-                entity = null,
-                pos = pos,
-            };
-            
-            trap.TrapInit(data);
-            trap.gameObject.SetActive(true);
+                ItemRecieveData data = new ItemRecieveData()
+                {
+                    entity = null,
+                    pos = pos,
+                };
+
+                trap.TrapInit(data);
+                trap.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            float trapDensity = 1; // temporary
+            m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, selectedType, trapDensity);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");
     }
