@@ -177,11 +177,6 @@ public class PlayerController : Entity
             OnUseItemRelease();
         }
 
-        if(m_isGetDropItem)
-        {
-            OnuseItemGet();
-        }
-
         InputHotber();
 
         SearchItem();
@@ -422,15 +417,34 @@ public class PlayerController : Entity
             m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
     }
+    private DropItem GetNearestItem()
+    {
+        DropItem[] items = FindObjectsByType<DropItem>(FindObjectsSortMode.None);
 
+        DropItem nearest = null;
+        float nearestDistance = m_itemSearchRange;
+
+        foreach (DropItem item in items)
+        {
+            float distance = Vector3.Distance(transform.position, item.transform.position);
+
+            if (distance <= nearestDistance)
+            {
+                nearestDistance = distance;
+                nearest = item;
+            }
+        }
+        return nearest;
+    }
     private void OnuseItemGet()
     {
-        if (m_selecrItem == null) return;
+    DropItem item =GetNearestItem();
 
-        if(ReceiveItem(m_selecrItem.ItemData))
+        if (item == null)
+            return;
+        if(ReceiveItem(item.ItemData))
         {
-            m_selecrItem.ItemGet();
-            m_selecrItem = null;
+            item.ItemGet();
         }
         else
         {
@@ -439,6 +453,7 @@ public class PlayerController : Entity
         }
     }
 
+    
     private void CloseErrorMessage()
     {
         m_textErrorMessage.SetActive(false);
@@ -535,7 +550,7 @@ public class PlayerController : Entity
 
         return success;
     }
-    private DropItem m_selecrItem;
+    private DropItem m_hoverItem;
     private Vector3 m_popupPosition;
     private void SearchItem()
     {
@@ -552,13 +567,13 @@ public class PlayerController : Entity
                 
                 if(distancee >m_itemSearchRange)
                 {
-                    m_selecrItem = null;
+                    m_hoverItem = null;
                     m_itemDescriptionText.text = "";
                     return;
                 }
-                if (m_selecrItem != drop)
+                if (m_hoverItem != drop)
                 {
-                    m_selecrItem = drop;
+                    m_hoverItem = drop;
                     m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
                 }
 
@@ -570,7 +585,7 @@ public class PlayerController : Entity
                 return;
             }
         }
-        m_selecrItem = null;
+        m_hoverItem = null;
         m_itemDescriptionText.text = "";
         m_textPanel.SetActive(false);
     }
