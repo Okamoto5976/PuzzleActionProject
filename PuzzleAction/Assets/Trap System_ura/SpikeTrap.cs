@@ -30,9 +30,9 @@ public class SpikeTrap : TrapBase
         m_isActive = true;
     }
   
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
-        base.TrapInit();
+        base.TrapInit(data);
 
         m_damageData = new DamageData
         {

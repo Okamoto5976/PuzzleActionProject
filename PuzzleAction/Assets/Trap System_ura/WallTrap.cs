@@ -18,14 +18,14 @@ public class WallTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        base.TrapInit();
+        //base.TrapInit();
 
         m_dir = transform.forward;
 
         StartCoroutine(SpawnDelay());
     }
 
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
         //base.TrapInit();
          

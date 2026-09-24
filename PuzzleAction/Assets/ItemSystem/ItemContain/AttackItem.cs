@@ -1,40 +1,45 @@
 using UnityEngine;
-
-
-public  enum AttackItemType
-{
-    Sword,
-    Shot,
-    Rod
-}
-
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
 {
+    public  enum AttackItemType
+    {
+        Shot,
+        Club,
+        Sword,
+        Chopsticks
+    }
 
     //[SerializeField] private ItemData ItemName;
     //[SerializeField] private float specialEffectDuration; //特殊効果時間
 
     [SerializeField] private DamageData damage;
-    [SerializeField] private AttackItemType a_type;
-    [SerializeField] private Transform i_transform;
+    [SerializeField] private AttackItemType m_attackType;
+
+    [System.Serializable]
+    public class BuffModify
+    {
+        public StatusModifier m_statusmod;
+        public BuffID m_buffID;
+        public float m_duration;
+    }
+
+    [SerializeField] private List<BuffModify> m_buffList = new();
 
     public override void Activation(ItemRecieveData data)
     {
-        
-        //Collider
-        
+        //powerで当たり判定を大きく
+
         //設定
         Collider[] hits = Physics.OverlapSphere(
-            i_transform.position,
-            data.power 
+            data.pos,
+            3f
             );
 
         //Pos
         //座標の指定
-        
-        hits[1].transform.position = data.pos;
 
         foreach (Collider hit in hits)
         {
@@ -46,15 +51,22 @@ public class AttackItem : Item
 
             //Effect
             //効果（ダメージや）
-            switch (a_type)
+            switch (m_attackType)
             {
+                case AttackItemType.Shot:
+                    
+
+                    
+                    break;
+
+                case AttackItemType.Club:
+                    break;
+
                 case AttackItemType.Sword:
                     break;
 
-                case AttackItemType.Shot:
-                    break;
+                case AttackItemType.Chopsticks:
 
-                case AttackItemType.Rod:
                     break;
             }
             entity.TakeDamage(damage);

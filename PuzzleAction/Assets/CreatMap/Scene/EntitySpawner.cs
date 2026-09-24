@@ -300,7 +300,7 @@ public class EntitySpawner : MonoBehaviour
                 return;
             }
 
-            trap.transform.position = pos;
+            //trap.transform.position = pos;
 
             BoxCollider box = trap.GetComponent<BoxCollider>();
 
@@ -316,7 +316,13 @@ public class EntitySpawner : MonoBehaviour
                 }
             }
 
-            trap.TrapInit();
+            ItemRecieveData data = new ItemRecieveData()
+            {
+                entity = null,
+                pos = pos,
+            };
+            
+            trap.TrapInit(data);
             trap.gameObject.SetActive(true);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");

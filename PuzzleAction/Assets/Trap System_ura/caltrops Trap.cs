@@ -50,9 +50,9 @@ public class CaltropTrap : TrapBase
     }
 
     
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
-        base.TrapInit();
+        base.TrapInit(data);
 
         //DamageData
         m_damageData = new DamageData
@@ -69,7 +69,7 @@ public class CaltropTrap : TrapBase
     protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
@@ -93,7 +93,7 @@ public class CaltropTrap : TrapBase
     private void OnTriggerExit(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;

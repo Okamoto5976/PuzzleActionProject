@@ -19,7 +19,7 @@ public class PlayerController : Entity
 
     [SerializeField] private Vector3Asset m_position;
     [SerializeField] private Vector3 m_pullOffSet;
-    private Vector3 m_setOffSet;
+    //private Vector3 m_setOffSet;
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -285,7 +285,7 @@ public class PlayerController : Entity
         {
             entity = this,
             power = power,
-            pos = m_trapSetPosition,
+            pos = transform.position,
             dir = forward,
             offset = offset,
 
@@ -396,6 +396,8 @@ public class PlayerController : Entity
             m_reticle.gameObject.SetActive(false);
             m_aimTrail.gameObject.SetActive(false);
 
+            Debug.LogWarning($"{m_pullOffSet}");
+
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power * 8, m_pullOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
 
@@ -409,7 +411,7 @@ public class PlayerController : Entity
             m_trapPreview.SetActive(false);
             //m_trapRangeCircle.gameObject.SetActive(false);
 
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_setOffSet);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_trapSetPosition);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
         else if (m_isUsingAttackItem)
