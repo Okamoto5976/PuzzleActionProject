@@ -71,7 +71,6 @@ public class InsectTrap : TrapBase
         if (target.Team == m_team)
             return;
 
-        // ‚·‚Å‚É1‘Ì‚¢‚éê‡‚Í–³‹
         if (m_target != null)
             return;
 
