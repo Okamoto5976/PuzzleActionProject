@@ -62,6 +62,7 @@ public class BossEnemyController : Entity
     private IBossBehaviour m_bossBehaviour;
     private ReturnObjectToPool m_returnPool;
 
+    public bool CanAction => CurrentState != EntityState.Dead && !IsStun;
     public float FindRange => m_findRange;
     public float AttackRange => m_attackRange;
     public bool IsCooldownReady => m_isCooldownReady;
@@ -107,6 +108,15 @@ public class BossEnemyController : Entity
     private void Update()
     {
         if (CurrentState == Entity.EntityState.Dead) return;
+        if (IsStun)
+        {
+            Stop();
+            if (m_anim != null)
+            {
+                m_anim.SetBool("Move", false);
+            }
+            return;
+        }
         if (m_target == null) return;
         OnUpdateFlag();
         HandleCooldown();
@@ -166,6 +176,11 @@ public class BossEnemyController : Entity
     {
         if (CurrentState == Entity.EntityState.Dead) return false;
         if (!m_isCooldownReady) return false;
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Attack");
+
+        }
         Attack();
         ConsumeCooldown();
         return true;
@@ -187,7 +202,7 @@ public class BossEnemyController : Entity
             CriticalDamage = CriticalDamage,
             BreakRate = BreakRate,
             Knockback = KnockBack,
-            StunDuration = Stun,
+            StunDuration = m_data.StunDuration,
             AttackDir = transform.forward,
             Attacker = this,
             //AttackerSE = AttackSE,
@@ -216,6 +231,7 @@ public class BossEnemyController : Entity
     #region MOVE
     public void Move(Vector3 dir, float speed)
     {
+        if (!CanAction) return;
         if (dir == Vector3.zero)
         {
             Stop();
@@ -230,7 +246,10 @@ public class BossEnemyController : Entity
     public void SetDestination(Vector3 pos, float speed)
     {
         m_agent.isStopped = false;
-
+        if (m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+        }
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
         m_agent.stoppingDistance = m_attackRange;
