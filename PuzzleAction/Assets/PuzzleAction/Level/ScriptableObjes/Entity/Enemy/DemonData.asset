@@ -22,7 +22,7 @@ MonoBehaviour:
   m_criticalDamage: 0
   m_agi: 0
   m_breakRate: 0
-  m_stunDuration: 3
+  m_stunDuration: 1
   m_recover: 0
   m_poisonRes: 0
   m_stunRes: 0

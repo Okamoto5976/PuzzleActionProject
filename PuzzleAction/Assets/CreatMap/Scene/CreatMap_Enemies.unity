@@ -462,6 +462,7 @@ MonoBehaviour:
   m_player: {fileID: 721869216}
   m_playerC: {fileID: 721869219}
   m_camera: {fileID: 1957982647}
+  m_playerHeightOffset: 0
   m_enemyPool: {fileID: 776241687}
   m_spawnCount: 5
   m_enemyGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
@@ -1185,6 +1186,7 @@ MonoBehaviour:
   m_prefab: {fileID: 1688672096297515227, guid: 0b85ce34697ebd14d906bb0fbbf1be9f, type: 3}
   m_poolCount: 100
   m_forcePoolCount: 1
+  m_dropMoneyEventSO: {fileID: 0}
 --- !u!4 &370946760
 Transform:
   m_ObjectHideFlags: 0
@@ -4471,8 +4473,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 32
+  m_index: 38
   m_count: 10
+  m_dropMoneyEventSO: {fileID: 0}
+  m_pos: {x: 0, y: 0, z: 0}
+  m_money: 0
 --- !u!4 &1505666508
 Transform:
   m_ObjectHideFlags: 0
