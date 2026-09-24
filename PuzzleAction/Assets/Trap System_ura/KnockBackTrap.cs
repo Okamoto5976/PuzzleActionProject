@@ -71,7 +71,7 @@ public class KnockBackTrap : TrapBase
     protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;

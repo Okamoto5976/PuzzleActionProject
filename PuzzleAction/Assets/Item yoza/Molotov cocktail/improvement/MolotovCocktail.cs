@@ -90,7 +90,7 @@ public class MolotovCocktail : TrapBase
                 OnHit();
             return;
             }
-           Entity hitTarget=other.GetComponent<Entity>();
+           Entity hitTarget=other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 OnHit();
@@ -99,7 +99,7 @@ public class MolotovCocktail : TrapBase
             return;
         }
 
-        Entity inFireTarget = other.GetComponent<Entity>();
+        Entity inFireTarget = other.GetComponentInParent<Entity>();
         if (inFireTarget == null) return;
         if (inFireTarget.Team == m_team) return;
 
@@ -113,7 +113,7 @@ public class MolotovCocktail : TrapBase
     {
         if (!m_isBurning) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
         if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
