@@ -20,6 +20,7 @@ public class InventorySaveManager : MonoBehaviour
         // SaveDataの中身をコピーする
         fileData.activeItems = m_saveData.activeItems;
         fileData.passiveItems = m_saveData.passiveItems;
+        fileData.hotbarItems = m_saveData.hotbarItems;
 
         //JSON文字列に変換する
         string json = JsonUtility.ToJson(fileData, true);
@@ -37,6 +38,7 @@ public class InventorySaveManager : MonoBehaviour
         // SaveDataの中身を削除
         m_saveData.activeItems.Clear();
         m_saveData.passiveItems.Clear();
+        m_saveData.hotbarItems.Clear();
 
         // セーブファイルを削除
         string path = Application.persistentDataPath + "/save.json";
@@ -69,6 +71,7 @@ public class InventorySaveManager : MonoBehaviour
         // SaveDataに渡す
         m_saveData.activeItems = fileData.activeItems;
         m_saveData.passiveItems = fileData.passiveItems;
+        m_saveData.hotbarItems = fileData.hotbarItems;
 
         // Inventoryに反映
         m_inventorySystem.LoadInventory();
