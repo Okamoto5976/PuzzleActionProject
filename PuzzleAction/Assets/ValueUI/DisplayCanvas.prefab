@@ -1676,7 +1676,7 @@ MonoBehaviour:
   - {fileID: 4370348760476133737}
   - {fileID: 2780614603433590436}
   - {fileID: 6118064045062221556}
-  m_frameMaterial: {fileID: 0}
+  m_frameMaterial: {fileID: 2100000, guid: 2e3618dddd4135045a7deb5fe3929e49, type: 2}
   m_itemImages:
   - {fileID: 6398034231939215896}
   - {fileID: 470850341999517136}
