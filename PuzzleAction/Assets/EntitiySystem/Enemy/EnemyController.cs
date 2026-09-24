@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(EntityTemporaryBuffSystem))]
 public class EnemyController : Entity
@@ -20,6 +22,27 @@ public class EnemyController : Entity
     private HitCollider m_hitCollider;
     [Header("Item")]
     [SerializeField] private Item m_attackItem;
+    [SerializeField] private float m_power = 3f;
+    [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    #region UnityEditor
+    #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (m_attackItem == null) return;
+
+            Vector3 shootPos = transform.position + m_shootOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(shootPos, 0.15f);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(shootPos, shootPos + transform.forward * 2f);
+
+            Handles.color = Color.white;
+            Handles.Label(shootPos + Vector3.up * 0.3f, "Shoot Offset");
+        }
+    #endif
+    #endregion
     private ItemManager m_itemManager;
 
     [Header("Drop")]
@@ -44,6 +67,7 @@ public class EnemyController : Entity
     public float AttackRange => m_attackRange;
     public float FindRange => m_findRange;
     public bool IsCooldownReady => m_isCooldownEnd;
+    public float ShootPower => m_power;
     public Vector3 Forward => transform.forward;
     public Vector3 SpawnPosition => m_spawnPosition;
     public Vector3Asset Target => m_target;
@@ -195,7 +219,9 @@ public class EnemyController : Entity
         {
             entity = this,
             pos = transform.position,
-            dir = dir
+            dir = dir,
+            power = m_power * 8,
+            offset = m_shootOffset,
         };
 
         if (m_anim != null)
