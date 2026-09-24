@@ -6,4 +6,5 @@ public class SaveFileData
 {
     public List<SaveItemData> activeItems = new();
     public List<SaveItemData> passiveItems = new();
+    public List<SaveItemData> hotbarItems = new();
 }
