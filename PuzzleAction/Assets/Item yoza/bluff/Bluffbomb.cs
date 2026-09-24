@@ -28,9 +28,9 @@ public class Bluffbomb_moto : TrapBase
         m_fuseTimer = 0f;
     }
 
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
-        base.TrapInit();
+        base.TrapInit(data);
 
         m_damageData = new DamageData()
         {

@@ -7591,7 +7591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
   m_target: {fileID: 721869216}
-  m_distance: 5
+  m_distance: 10
   m_followSpeed: 0
   m_isShaking: 0
   m_shakeStrength: 0.1

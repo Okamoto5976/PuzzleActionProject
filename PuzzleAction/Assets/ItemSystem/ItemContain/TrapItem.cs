@@ -25,6 +25,16 @@ public class TrapItem : Item
             return;
         }
 
+
+        //Trap Area use item
+        if(data.entity == null)
+        {
+            TrapPrefab.TrapInit(data);
+            TrapPrefab.gameObject.SetActive(false);
+
+            return;
+        }
+
         //if (data.power > 0f)
         //{
         //    TrapPrefab.PullInit(data.entity, data.dir, data.power);

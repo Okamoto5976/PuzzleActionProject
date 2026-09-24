@@ -76,9 +76,9 @@ public class BearTrap : TrapBase
         }
     }
 
-    public override void TrapInit()
+    public override void TrapInit(ItemRecieveData data)
     {
-        base.TrapInit();
+        base.TrapInit(data);
 
         CancelInvoke(nameof(RecoverTrap));
 
