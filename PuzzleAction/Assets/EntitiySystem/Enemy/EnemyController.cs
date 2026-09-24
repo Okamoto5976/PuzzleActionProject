@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 #if UNITY_EDITOR
@@ -21,14 +22,16 @@ public class EnemyController : Entity
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
     [Header("Item")]
-    [SerializeField] private Item m_attackItem;
+    [SerializeField] private bool m_isRandom = false;
+    [SerializeField] private List<Item> m_attackItems = new();
     [SerializeField] private float m_power = 3f;
     [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    private int m_itemIndex;
     #region UnityEditor
     #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            if (m_attackItem == null) return;
+            if (m_attackItems == null) return;
 
             Vector3 shootPos = transform.position + m_shootOffset;
 
@@ -213,24 +216,45 @@ public class EnemyController : Entity
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : Player HIT");
     }
+    private Item GetUseItem()
+    {
+        if (m_attackItems == null || m_attackItems.Count == 0) return null;
+
+        if (m_isRandom)
+        {
+            return m_attackItems[UnityEngine.Random.Range(0, m_attackItems.Count)];
+        }
+
+        Item item = m_attackItems[m_itemIndex];
+        m_itemIndex++;
+
+        if (m_itemIndex >= m_attackItems.Count)
+        {
+            m_itemIndex = 0;
+        }
+        return item;
+    }
     public void UseItem(Vector3 dir)
     {
-        ItemRecieveData data = new ItemRecieveData
-        {
-            entity = this,
-            pos = transform.position,
-            dir = dir,
-            power = m_power * 8,
-            offset = m_shootOffset,
-        };
+        Item useItem = GetUseItem();
+        if (useItem == null) return;
+
+        ItemRecieveData data =
+            new ItemRecieveData
+            {
+                entity = this,
+                pos = transform.position,
+                dir = dir,
+                power = m_power * 8,
+                offset = m_shootOffset,
+            };
 
         if (m_anim != null)
         {
             m_anim.SetTrigger("Item");
-
         }
 
-        m_itemManager.OnUseItem(m_attackItem, data);
+        m_itemManager.OnUseItem(useItem, data);
     }
     #endregion
 
@@ -238,9 +262,6 @@ public class EnemyController : Entity
     public void Move(Vector3 dir, float speed)
     {
         if (!CanAction) return;
-        {
-            
-        }
         if (dir == Vector3.zero)
         {
             Stop();
@@ -262,7 +283,6 @@ public class EnemyController : Entity
         if(m_anim != null)
         {
             m_anim.SetBool("Move", !m_agent.isStopped);
-
         }
 
         m_agent.speed = speed;

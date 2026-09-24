@@ -17,5 +17,6 @@ public enum Enum_EnemyType
     Spear,     
     Summoner,  
     Worm,      
-    Demon
+    Demon, 
+    Wizard
 }
