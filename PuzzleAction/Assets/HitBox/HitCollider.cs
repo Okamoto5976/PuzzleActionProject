@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public enum AttackType
@@ -22,6 +23,7 @@ public class DamageResult
 public class AttackHitBox
 {
     public Transform m_transform;
+    public Vector3 m_hitBoxOffset;
     public float m_radius;
 }
 
@@ -37,7 +39,8 @@ public class HitCollider : MonoBehaviour
     [SerializeField] protected bool m_isVisible;
 
     
-    [SerializeField] private AttackHitBox[] hitBoxes;   // 当たり判定
+    private AttackHitBox[] hitBoxes;   // 当たり判定
+    private AttackHitBox m_currentHitBox;
 
     //[SerializeField] private EffectDataSO m_overrideEffect;
     //[SerializeField] private AudioDataSO m_overrideAudio;
@@ -49,11 +52,13 @@ public class HitCollider : MonoBehaviour
         // ヒットした判定のセット
         //HashSet<Entity> hitSet = new();
         {
+            m_currentHitBox = attackHitBox;
+
             Collider[] hits = Physics.OverlapSphere(
-                attackHitBox.m_transform.position,
+                attackHitBox.m_transform.position + attackHitBox.m_hitBoxOffset,
                 attackHitBox.m_radius
                        );
-            
+
 
             //Debug.Log($"hits.Length : {hits.Length}");
 
@@ -145,20 +150,23 @@ public class HitCollider : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!m_isVisible) return;
+        if (hitBoxes == null) return;
         //Debug.Log("DrawGizmos");
 
         Gizmos.color = Color.red;
 
-        foreach(var hitBox in hitBoxes)
-        {
-            if (hitBox.m_transform == null) continue;
-            Gizmos.DrawWireSphere(
-                hitBox.m_transform.position,
-                hitBox.m_radius
-                );
-        }
-    }
+        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
 
+        //foreach(var hitBox in hitBoxes)
+        //{
+        //    if (hitBox.m_transform == null) continue;
+        //    Gizmos.DrawWireSphere(
+        //        hitBox.m_transform.position,
+        //        hitBox.m_radius
+        //        );
+        //}
+    }
     private Transform[] My_OverlapSphere(AttackHitBox attackHitBox)
     {
         List<Transform> colSet = new List<Transform>();

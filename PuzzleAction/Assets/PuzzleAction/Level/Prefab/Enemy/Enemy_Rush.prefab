@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 2397220607751291012}
   - component: {fileID: 4019934756921845371}
   m_Layer: 0
-  m_Name: EnemyRush
+  m_Name: Enemy_Rush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,8 +245,11 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
+    m_hitBoxOffset: {x: 0, y: 2, z: 0}
+    m_radius: 2
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 2, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &-2953856426515140081
 MonoBehaviour:
@@ -433,9 +436,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2
 --- !u!136 &8836355652535874919
 CapsuleCollider:
   m_ObjectHideFlags: 0

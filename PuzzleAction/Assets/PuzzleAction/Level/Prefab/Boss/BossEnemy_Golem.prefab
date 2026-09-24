@@ -64,6 +64,8 @@ MonoBehaviour:
     m_transform: {fileID: 6054870468107764460}
     m_radius: 3
   m_attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
+  m_power: 24
+  m_shootOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &-3879386613953403271
 MonoBehaviour:
   m_ObjectHideFlags: 0

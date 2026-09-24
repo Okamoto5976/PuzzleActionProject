@@ -133,8 +133,11 @@ MonoBehaviour:
   m_attackCooldown: 12
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
+    m_radius: 2
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &-8928694272576341907
 MonoBehaviour:
@@ -150,9 +153,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0

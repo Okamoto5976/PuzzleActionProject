@@ -1,3 +1,5 @@
+using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,7 +25,35 @@ public class BossEnemyController : Entity
 
     [Header("Item")]
     [SerializeField] private Item m_attackItem;
+    [SerializeField] private float m_power = 24f;
+    [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    #region UnityEditor
+    #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (m_attackItem == null) return;
+
+            Vector3 shootPos = transform.position + m_shootOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(shootPos, 0.15f);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(shootPos, shootPos + transform.forward * 2f);
+
+            Handles.color = Color.white;
+            Handles.Label(shootPos + Vector3.up * 0.3f, "Shoot Offset");
+        }
+    #endif
+    #endregion
     private ItemManager m_itemManager;
+    [NonSerialized] public Item m_dropItem;
+
+    public Item DropItem
+    {
+        get => m_dropItem;
+        set => m_dropItem = value;
+    }
 
     private float m_cooldownTimer;
     private bool m_isCooldownReady = true;
@@ -34,13 +64,10 @@ public class BossEnemyController : Entity
 
     public float FindRange => m_findRange;
     public float AttackRange => m_attackRange;
-
     public bool IsCooldownReady => m_isCooldownReady;
-
+    public float ShootPower => m_power;
     public Vector3 SpawnPosition { get; private set; }
-
     public NavMeshAgent Agent => m_agent;
-
     public Vector3Asset Target => m_target;
 
     #region UNITY EVENT
@@ -58,10 +85,10 @@ public class BossEnemyController : Entity
 
         m_attackHitBox.m_transform = gameObject.transform;
 
-        if (m_attackItem == null)
-        {
-            Debug.LogWarning($"{name} AttackItem Missing");
-        }
+        //if (m_attackItem == null)
+        //{
+        //    Debug.LogWarning($"{name} AttackItem Missing");
+        //}
 
         if (m_itemManager == null)
         {
@@ -176,7 +203,10 @@ public class BossEnemyController : Entity
         {
             entity = this,
             pos = transform.position,
-            dir = dir
+            dir = dir, 
+            power = m_power, 
+            offset = m_shootOffset,
+            
         };
 
         m_itemManager.OnUseItem(m_attackItem, data);
@@ -230,7 +260,7 @@ public class BossEnemyController : Entity
 
         for (float i = range; i >= 0; i--)
         {
-            Vector3 randomPoint = transform.position + new Vector3((Random.value * 2 - 1) * range, 0, (Random.value * 2 - 1) * range);
+            Vector3 randomPoint = transform.position + new Vector3((UnityEngine.Random.value * 2 - 1) * range, 0, (UnityEngine.Random.value * 2 - 1) * range);
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
             {
                 result.x = hit.position.x;
@@ -259,11 +289,11 @@ public class BossEnemyController : Entity
 
         for (int i = 0; i < m_dropCount; i++)
         {
-            Vector3 pos = transform.position + Random.insideUnitSphere;
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere;
 
             pos.y = transform.position.y;
 
-            //m_itemManager.DropItemSetData(pos, m_dropCount);
+            m_itemManager.DropItemSetData(pos, m_dropItem);
         }
     }
     #endregion

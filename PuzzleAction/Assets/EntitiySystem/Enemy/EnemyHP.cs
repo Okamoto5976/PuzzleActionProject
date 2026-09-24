@@ -7,12 +7,6 @@ public class EnemyHP : EntityHP
 
     protected override void Die()
     {
-        //Debug.LogWarning($"{this.name} enemy die");
-
-        //Ž€‚ñ‚¾‚Æ‚«pool‚É–ß‚é
-        // player get money
-        // add score
-        // item drop
         EnemyController enemy = GetComponent<EnemyController>();
         if(enemy == null)
         {

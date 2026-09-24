@@ -114,8 +114,11 @@ MonoBehaviour:
   m_attackCooldown: 1
   m_attackHitBox:
     m_transform: {fileID: 4938633091440572511}
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 3
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!65 &2478160255407731771
 BoxCollider:
@@ -152,9 +155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BoxHitbox
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 4938633091440572511}
-    m_radius: 2
 --- !u!114 &-3111847403253305925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +248,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.5
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
