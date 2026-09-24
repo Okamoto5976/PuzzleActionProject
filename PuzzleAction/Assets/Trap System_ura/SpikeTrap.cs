@@ -55,7 +55,7 @@ public class SpikeTrap : TrapBase
             return;
         }
 
-        Entity entity = other.GetComponent<Entity>();
+        Entity entity = other.GetComponentInParent<Entity>();
 
         if (entity == null)
         {

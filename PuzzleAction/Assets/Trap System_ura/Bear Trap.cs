@@ -29,7 +29,7 @@ public class BearTrap : TrapBase
             return;
         }
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
         if (target == null) 
         {

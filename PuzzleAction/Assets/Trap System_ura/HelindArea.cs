@@ -70,7 +70,7 @@ public class HealingArea : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
@@ -87,7 +87,7 @@ public class HealingArea : TrapBase
 
     private void OnTriggerExit(Collider other)
     {
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
