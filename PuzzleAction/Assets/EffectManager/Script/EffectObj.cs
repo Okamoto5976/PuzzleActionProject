@@ -4,12 +4,14 @@ public class EffectObj : MonoBehaviour
 {
     private ReturnObjectToPool m_returnObjPool;
 
-    public void Initialize(float lifeTime)
+    [SerializeField] private float m_lifeTime;
+
+    public void Initialize()
     {
 
         CancelInvoke();
 
-        Invoke(nameof(Return), lifeTime);
+        Invoke(nameof(Return), m_lifeTime);
     }
 
     private void Return()

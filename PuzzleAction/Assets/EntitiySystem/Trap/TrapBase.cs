@@ -11,6 +11,9 @@ public abstract class TrapBase : MonoBehaviour
     protected TeamType m_team = TeamType.Nature;
     public TeamType Team => m_team;
 
+    //Œü‚«‚É‰‚¶‚Ä@‚»‚Ì•û‚ğ³–Ê‚É‚·‚é‚©
+    [SerializeField] private bool m_isFowardDir;
+
     //[Header("TrapData")]
     //[SerializeField]
     //protected TrapData m_trapdata;
@@ -70,9 +73,13 @@ public abstract class TrapBase : MonoBehaviour
 
         gameObject.transform.position = data.pos + data.offset;
 
-        transform.rotation =
+        if(m_isFowardDir)
+        {
+            transform.rotation =
             Quaternion.LookRotation(
                 m_dir);
+        }
+        
 
         m_power = data.power;
 
@@ -194,7 +201,7 @@ public abstract class TrapBase : MonoBehaviour
 
 
 
-        m_rb.AddForce(dir * power, ForceMode.Impulse);
+        m_rb.AddForce(dir * power, ForceMode.VelocityChange);
 
     }
 

@@ -117,7 +117,7 @@ public class DisplayManager : MonoBehaviour
             }
 
             buffIcon.SetData(instance, sprite);
-            break;
+            return;
         }
 
         Debug.LogWarning("BuffIconImage Not enough");

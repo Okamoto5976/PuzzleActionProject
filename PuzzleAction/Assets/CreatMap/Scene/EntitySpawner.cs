@@ -12,7 +12,7 @@ public class EntitySpawner : MonoBehaviour
 
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
-    [Tooltip("1Piece�ɉ��̏o�邩"), SerializeField] private int m_spawnCount;
+    [Tooltip("1Piece3~5"), SerializeField] private int m_spawnCount;
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
@@ -44,8 +44,9 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private Middleman_Treasure m_treasurePool;
     [SerializeField] private GachaEngine m_treasureGachaEngine;
     [SerializeField] private TreasureRarityTable m_treasureRarityTable;
-
     [SerializeField] private int m_treasureCount = 3;
+
+    private HashSet<Vector2Int> m_reservedPosition = new();
 
     private MapClassData m_mapClassData;
     private MapGeneration m_mapGeneration;
@@ -152,11 +153,11 @@ public class EntitySpawner : MonoBehaviour
     {
         var positions = ChooseRandomPosition(room, m_spawnCount);
 
-
         foreach (var pos in positions)
         {
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
             SpawnEnemyByGacha(worldPositions);
+            m_reservedPosition.Add(pos);
         }
 
     }
@@ -221,6 +222,7 @@ public class EntitySpawner : MonoBehaviour
 
         boss.transform.position = m_mapGeneration.GridToWorld(center);
         boss.gameObject.SetActive(true);
+        m_reservedPosition.Add(center);
     }
     private Enum_BossType GetCurrentBossType()
     {
@@ -230,7 +232,6 @@ public class EntitySpawner : MonoBehaviour
         bossIndex %= m_bossOrder.Count;
         return m_bossOrder[bossIndex];
     }
-
     //itemDrop
     private void AssignDropItem(EnemyController enemy)
     {
@@ -265,10 +266,11 @@ public class EntitySpawner : MonoBehaviour
         foreach (var pos in room.m_roomSizes)
         {
             worldPositions.Add(m_mapGeneration.GridToWorld(pos));
+            m_reservedPosition.Add(pos);
         }
         SpawnTrapByGacha(worldPositions);
-    }
 
+    }
     private void SpawnTrapByGacha(List<Vector3> position)
     {
         if (m_trapPool == null)return;
@@ -328,6 +330,7 @@ public class EntitySpawner : MonoBehaviour
         foreach (var pos in positions)
         {
             Instantiate(m_shopPrefab, m_mapGeneration.GridToWorld(pos), Quaternion.identity);
+            m_reservedPosition.Add(pos);
         }
     }
     private void SpawnGoal()
@@ -340,7 +343,6 @@ public class EntitySpawner : MonoBehaviour
     private void SpawnPlayer()
     {
         Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.StartPos);
-        Debug.Log(pos);
         m_player.position = pos;
 
         if (m_camera != null)
@@ -357,11 +359,17 @@ public class EntitySpawner : MonoBehaviour
 
         foreach (var room in m_mapClassData.roomDatas)
         {
-            //reject other than None
-            if (room.m_type != AreaType.None) continue;
-            foreach (var pos in room.m_roomSizes)
+            //reject BossArea
+            if (room.m_type == AreaType.Boss) continue;
+            //reject rooms containing a StartPos
+            if (room.m_roomSizes.Contains(GetStartPos())) continue;
+            // reject other
+            foreach(var pos in room.m_roomSizes)
             {
-                if (IsForbiddenPos(pos)) continue;
+                //reject startPos goalPos
+                if(IsForbiddenPos(pos)) continue;
+                //reject Enemy, Trap, Shop, Boss. position
+                if (m_reservedPosition.Contains(pos)) continue;
                 candidates.Add(pos);
             }
         }

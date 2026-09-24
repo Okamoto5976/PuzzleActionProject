@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public struct Effect
 {
-    public EffectData effectData;
+    public Enum_EffectType effectType;
     public Vector3 effectPos;
     public Quaternion effectRot;
 

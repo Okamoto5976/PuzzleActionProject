@@ -5,14 +5,9 @@ public class NetTrap : TrapBase
 {
     [Header("Net Settings")]
     [SerializeField]
-    private float m_stunDuration = 2.0f;
-
+    private float m_stunDuration = 5.0f;
     
-    private List<Entity> m_hitTargets =
-        new List<Entity>();
-
-
-    //private bool m_isInitialized;
+    private List<Entity> m_hitTargets = new List<Entity>();
 
 
     private void FixedUpdate()
@@ -24,7 +19,6 @@ public class NetTrap : TrapBase
         //m_rb.linearVelocity =
         //    m_dir * m_speed;
 
-        //m_isInitialized = false;
     }
 
     private void Update()
@@ -35,12 +29,12 @@ public class NetTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-       
         m_hitTargets.Clear();
 
         m_damageData = new DamageData
         {
             StunDuration = m_stunDuration,
+
         };
 
         m_rb.linearVelocity = Vector3.zero;
@@ -53,7 +47,6 @@ public class NetTrap : TrapBase
 
     protected override void OnHit()
     {
-        
         OnReturnPool();
     }
 
@@ -73,20 +66,18 @@ public class NetTrap : TrapBase
 
         if (target.Team == m_team)
             return;
-        
+
         if (m_hitTargets.Contains(target))
             return;
 
-         
         m_hitTargets.Add(target);
-             
+
         target.TakeDamage(m_damageData);
     }
 
 
     private void OnDisable()
     {
-         
         m_hitTargets.Clear();
 
         //m_isInitialized = false;

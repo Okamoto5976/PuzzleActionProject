@@ -32,7 +32,7 @@ public class EffectManager : MonoBehaviour
         //GameObject obj =
         //    m_effectPool.Get(data.EffectPrefab);
 
-        EffectObj obj = m_effectPool.GetComponent(data.effectData.Type);
+        EffectObj obj = m_effectPool.GetComponent(data.effectType);
 
         obj.transform.SetPositionAndRotation(
             data.effectPos,
@@ -41,7 +41,7 @@ public class EffectManager : MonoBehaviour
         obj.gameObject.SetActive(true);
 
         ParticleSystem particle =
-            obj.GetComponent<ParticleSystem>();
+            obj.GetComponentInChildren<ParticleSystem>();
 
         if (particle != null)
         {
@@ -49,7 +49,7 @@ public class EffectManager : MonoBehaviour
             particle.Play();
         }
 
-        obj.Initialize(data.effectData.Duration);
+        obj.Initialize();
 
 
         //AutoReturn autoReturn =
