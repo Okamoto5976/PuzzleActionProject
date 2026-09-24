@@ -17,7 +17,7 @@ public class EnemyController : Entity
     [SerializeField] private float m_attackCooldown = 1f;
     private float m_attackCooldownDuration;
     private bool m_isCooldownEnd = true;
-    [Header("Ref")]
+    [Header("AttachCollider Setthing")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
     [Header("Item")]
@@ -211,7 +211,7 @@ public class EnemyController : Entity
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
-        Debug.Log("EnemyController : Player ‚ÉHIT");
+        Debug.Log("EnemyController : Player HIT");
     }
     public void UseItem(Vector3 dir)
     {
@@ -349,17 +349,12 @@ public class EnemyController : Entity
     {
         if (isDropItem)
         {
-            //Debug.LogWarning("DropItem from Enemy");
-
             ItemDrop();
         }
-        //ReturnPool();
     }
 
     public void ItemDrop()
     {
-        //Debug.LogWarning($"{m_dropItem.ItemName}");
-
         if (m_dropItem == null) return;
         m_itemManager.DropItemSetData(transform.position, m_dropItem);
     }

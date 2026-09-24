@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 7341675702321249772}
   - component: {fileID: 1657796534440256524}
   m_Layer: 0
-  m_Name: EnemyDemon
+  m_Name: Enemy_Demon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,6 +112,10 @@ MonoBehaviour:
   nextActionDurationMin: 1
   nextActionDurationMax: 5
   stepPower: 300
+  stepTime: 0.9
+  waitTimeAfterStep: 0.2
+  zigzagRange: 12
+  stopTime: 0.5
 --- !u!114 &-7725082635600245204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,8 +154,11 @@ MonoBehaviour:
   m_attackCooldown: 1
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
+    m_hitBoxOffset: {x: 0, y: 2, z: 0}
+    m_radius: 3
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 2, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &6548486075970649895
 MonoBehaviour:
@@ -167,9 +174,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
 --- !u!54 &-1027978937202661744
 Rigidbody:
   m_ObjectHideFlags: 0

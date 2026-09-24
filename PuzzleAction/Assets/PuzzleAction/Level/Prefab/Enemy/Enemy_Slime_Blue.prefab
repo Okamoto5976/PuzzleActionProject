@@ -51,10 +51,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,8 +118,11 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 2
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
@@ -212,9 +215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 3
 --- !u!114 &-8786459632492989013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,15 +310,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_ConstrainProportionsScale

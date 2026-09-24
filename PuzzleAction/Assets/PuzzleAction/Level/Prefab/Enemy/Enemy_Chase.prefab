@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 1068217950511628011}
   m_Layer: 0
-  m_Name: EnemyChase
+  m_Name: Enemy_Chase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,8 +63,11 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_radius: 1
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
+    m_radius: 3
   m_attackItem: {fileID: 0}
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
 --- !u!114 &-1107635115429977923
 MonoBehaviour:
@@ -92,9 +95,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 2
 --- !u!114 &-2858229487795613166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,10 +223,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1
+  m_Radius: 0.5
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &2133668262031944866
 PrefabInstance:
   m_ObjectHideFlags: 0
