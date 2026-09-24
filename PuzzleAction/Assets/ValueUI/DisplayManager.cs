@@ -44,6 +44,10 @@ public class DisplayManager : MonoBehaviour
 
         if (levelUI != null) levelUI.UpdateScoreDisplay(m_level);
 
+        foreach (var frame in m_frames)
+        {
+            frame.material = Instantiate(m_frameMaterial);
+        }
     }
 
     private void Update()
@@ -60,6 +64,7 @@ public class DisplayManager : MonoBehaviour
     }
 
     [SerializeField] private List<Image> m_frames;
+    [SerializeField] private Material m_frameMaterial;
     [SerializeField] private List<Image> m_itemImages;
 
     //UI Mask
