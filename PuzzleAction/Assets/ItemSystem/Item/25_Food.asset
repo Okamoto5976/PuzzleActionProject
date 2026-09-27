@@ -22,6 +22,6 @@ MonoBehaviour:
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 80
+    price: 50
     Type: 0
   m_value: 40

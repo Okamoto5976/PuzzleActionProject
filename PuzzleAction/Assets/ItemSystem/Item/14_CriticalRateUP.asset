@@ -16,7 +16,7 @@ MonoBehaviour:
   m_data:
     itemID: 14
     itemName: CriticalRatePorthon
-    itemIcon: {fileID: 21300000, guid: c97f9052bc09b254aa59dedaaefef40b, type: 3}
+    itemIcon: {fileID: 21300000, guid: 463dc47f822cc0348abc3ddadcad50cb, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}

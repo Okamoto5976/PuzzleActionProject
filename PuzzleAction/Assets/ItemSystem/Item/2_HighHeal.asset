@@ -16,12 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 2
     itemName: HighHealPotion
-    itemIcon: {fileID: 21300000, guid: e6060dd8392ec574a9df6ae461d9b394, type: 3}
+    itemIcon: {fileID: 21300000, guid: 7f57d95a8607f7a47b93b0761f0bc3e5, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
+    price: 120
     Type: 0
   m_value: 50

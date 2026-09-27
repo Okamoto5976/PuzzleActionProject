@@ -24,3 +24,22 @@ MonoBehaviour:
     m_itemUseType: 3
     price: 100
     Type: 0
+  m_overrideDamage: 1
+  m_damage:
+    Attack: 20
+    AttackType: 0
+    CriticalRate: 0
+    CriticalDamage: 0
+    BreakRate: 0
+    Knockback: 0
+    StunDuration: 0
+    Duration: 0
+    AttackDir: {x: 0, y: 0, z: 0}
+    Attacker: {fileID: 0}
+  m_selfBuffList: []
+  m_targetBuffList:
+  - m_value: 10
+    m_statusType: 16
+    m_modifierType: 0
+    m_duration: 10
+    m_buffID: 20

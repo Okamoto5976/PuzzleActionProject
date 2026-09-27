@@ -19,7 +19,7 @@ public class PlayerController : Entity
 
     [SerializeField] private Vector3Asset m_position;
     [SerializeField] private Vector3 m_pullOffSet;
-    //private Vector3 m_setOffSet;
+    private Vector3 m_setOffSet;
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -338,8 +338,8 @@ public class PlayerController : Entity
         else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
         {
             m_isUsingAttackItem = true;
-            m_power = 0f;
-            m_reticle.gameObject.SetActive(true);
+            m_power = 3f;
+            //m_reticle.gameObject.SetActive(true);
         }
         else
         {
@@ -381,7 +381,7 @@ public class PlayerController : Entity
 
             m_power += Time.deltaTime;
 
-            m_power = Mathf.Min(m_power, 3f);
+            m_power = Mathf.Min(m_power, 4f);
         }
     }
 
@@ -411,14 +411,14 @@ public class PlayerController : Entity
             m_trapPreview.SetActive(false);
             //m_trapRangeCircle.gameObject.SetActive(false);
 
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_trapSetPosition);
+            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_setOffSet);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
         }
         else if (m_isUsingAttackItem)
         {
             m_isUsingAttackItem = false;
 
-            m_reticle.gameObject.SetActive(false);
+            //m_reticle.gameObject.SetActive(false);
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(m_hotberIndex, data);
@@ -473,6 +473,8 @@ public class PlayerController : Entity
             if(offset.magnitude > m_trapPlaceRange) offset = offset.normalized * m_trapPlaceRange;
 
             m_trapSetPosition = transform.position + offset;
+
+            m_setOffSet = offset;
         }
 
     }

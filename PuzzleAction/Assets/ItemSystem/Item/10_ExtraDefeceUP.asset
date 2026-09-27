@@ -16,13 +16,13 @@ MonoBehaviour:
   m_data:
     itemID: 10
     itemName: ExtraDefenceUpPorthion
-    itemIcon: {fileID: 21300000, guid: 3960c70ce2b6f6d418cbda673fd12796, type: 3}
+    itemIcon: {fileID: 21300000, guid: 2cd2f5b11b5509b458839e362bf85c41, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
+    price: 480
     Type: 0
   m_buffEffectType: 0
   m_buffItemClass:

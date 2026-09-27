@@ -16,13 +16,13 @@ MonoBehaviour:
   m_data:
     itemID: 19
     itemName: ExtraCriticalDamageUPPotion
-    itemIcon: {fileID: 21300000, guid: c97f9052bc09b254aa59dedaaefef40b, type: 3}
+    itemIcon: {fileID: 21300000, guid: 796ac6d82e6a85f46b6cf3e2616a7266, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
+    price: 600
     Type: 0
   m_buffEffectType: 0
   m_buffItemClass:

@@ -16,7 +16,7 @@ MonoBehaviour:
   m_data:
     itemID: 32
     itemName: Arrow
-    itemIcon: {fileID: 21300000, guid: 79b566b0097c3464f98aae5d78b90658, type: 3}
+    itemIcon: {fileID: 21300000, guid: 94849ac1dd818e8469a708c52a107162, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}

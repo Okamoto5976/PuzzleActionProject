@@ -3,12 +3,9 @@ using UnityEngine;
 public class TrapItem : Item
 {
     //pool‚©‚ç‚à‚ç‚Á‚½obj“ü‚ê‚é •Ï”
-    public TrapBase TrapPrefab;
+    [HideInInspector] public TrapBase TrapPrefab;
 
     [SerializeField] private Enum_TrapType m_enumTrap;
-
-    [SerializeField] private bool m_isSetGround;
-    [SerializeField] private FloatRunTime m_groundPos;
 
     public Enum_TrapType EnumTrap => m_enumTrap;
 
