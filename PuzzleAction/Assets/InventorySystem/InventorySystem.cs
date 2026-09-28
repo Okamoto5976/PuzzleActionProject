@@ -582,6 +582,7 @@ public class InventorySystem : MonoBehaviour
     {
         saveData.activeItems.Clear();
         saveData.passiveItems.Clear();
+        saveData.hotbarItems.Clear();
 
         foreach (ItemBox item in activeInventory)
         {
@@ -603,6 +604,29 @@ public class InventorySystem : MonoBehaviour
             saveData.passiveItems.Add(saveItem);
         }
 
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            int inventoryIndex = hotbars[i];
+
+            // Hotbar‚ª‹ó
+            if (inventoryIndex < 0 ||
+                inventoryIndex >= activeInventory.Count)
+            {
+                saveItem.id = -1;
+                saveItem.count = 0;
+            }
+            else
+            {
+                ItemBox item = activeInventory[inventoryIndex];
+
+                saveItem.id = item.data.ID;
+                saveItem.count = item.count;
+            }
+            saveData.hotbarItems.Add(saveItem);
+        }
+
         Debug.Log("=== Active ===");
 
         foreach (SaveItemData item in saveData.activeItems)
@@ -616,6 +640,13 @@ public class InventorySystem : MonoBehaviour
         {
             Debug.Log($"ID:{item.id} Count:{item.count}");
         }
+
+        Debug.Log("=== Hotbar ===");
+        for (int i = 0; i < saveData.hotbarItems.Count; i++)
+        {
+            Debug.Log($"Hotbar[{i}]ID:{saveData.hotbarItems[i].id}");
+        }
+
     }
 
     public void LoadInventory()
@@ -623,6 +654,12 @@ public class InventorySystem : MonoBehaviour
         Debug.Log($"LoadInventory = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
         activeInventory.Clear();
         passiveInventory.Clear();
+
+        // Hotbar‚ðˆê“x‹ó‚É‚·‚é
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            hotbars[i] = -1;
+        }
 
         foreach (SaveItemData saveItem in saveData.activeItems)
         {
@@ -655,7 +692,44 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < saveData.hotbarItems.Count &&  i < hotbars.Length; i++)
+        {
+            SaveItemData hotbarSave = saveData.hotbarItems[i];
+            // •Û‘¶Žž‚É‹ó‚¾‚Á‚½Hotbar
+            if (hotbarSave.id < 0)
+            {
+                hotbars[i] = -1;
+                continue;
+            }
+            // ActiveInventory‚©‚ç“¯‚¶ID‚ð’T‚·
+            for(int j = 0; j < activeInventory.Count; j++)
+            {
+                if (activeInventory[j].data.ID == hotbarSave.id)
+                {
+                    hotbars[i] = j;
+                    break;
+                }
+            }
+        }
+
         UpdateUI();
+
+        // ƒƒCƒ“Hotbar‚Ì‰æ‘œ‚à•œŒ³
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            int inventoryIndex = hotbars[i];
+
+            if (inventoryIndex >= 0 &&
+                inventoryIndex < activeInventory.Count)
+            {
+                m_displayManager.SetHotberImage(i, activeInventory[inventoryIndex].data.icon);
+                }
+            else
+            {
+                m_displayManager.ResetHotberImage(i);
+            }
+        }
+        Debug.Log($"Hotbar Load = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
     }
 
     //private void OnUpdateMainHotber()
