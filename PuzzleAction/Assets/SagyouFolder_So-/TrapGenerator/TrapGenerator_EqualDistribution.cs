@@ -17,7 +17,7 @@ public class TrapGenerator_EqualDistribution : TrapGenerator
     /// <returns>list of center positions of subdivided cells</returns>
     private List<Vector3> SubdivideCell(Vector3 origin, Vector3 cellSize, int subdivision)
     {
-        Vector3 properSquareSize = new(cellSize.x, 0, cellSize.y);
+        Vector3 properSquareSize = new(cellSize.x, 0, cellSize.z);
         var count = subdivision * subdivision;
         List<Vector3> result = new(new Vector3[count]);
         Vector3 adjust = -(properSquareSize / 2) + (properSquareSize / (subdivision * 2));
