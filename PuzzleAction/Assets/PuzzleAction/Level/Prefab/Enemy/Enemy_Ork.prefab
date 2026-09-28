@@ -117,7 +117,7 @@ MonoBehaviour:
   m_attackRange: 4
   m_attackCooldown: 2
   m_attackHitBox:
-    m_transform: {fileID: 0}
+    m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
     m_radius: 4
   m_attackItem: {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
@@ -241,7 +241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.y
@@ -249,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.47965
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalRotation.w
