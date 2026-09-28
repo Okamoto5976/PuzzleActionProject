@@ -39,11 +39,6 @@ public class GasCylinder : TrapBase
         if(m_gasEffect!=null)m_gasEffect.SetActive(false);
     }
 
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-        //EntitySetUp();
-    }
     protected override void OnHit()
     {
         StartGas();

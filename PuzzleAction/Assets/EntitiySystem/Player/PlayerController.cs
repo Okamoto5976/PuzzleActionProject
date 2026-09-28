@@ -210,6 +210,8 @@ public class PlayerController : Entity
 
     private void InputMove()
     {
+        if (CurrentState == EntityState.Damage) return;
+
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
@@ -298,6 +300,16 @@ public class PlayerController : Entity
     //        offset = m_pullOffSet,
     //    };
     //}
+
+
+    [ContextMenu("ApplyKnockBack")]
+    public void ApplyKnockBack()
+    {
+
+    
+
+        //TakeDamage(new Vector3(1, 0, 0), 3f);
+    }
 
     private void OnUseItemPressed()
     {

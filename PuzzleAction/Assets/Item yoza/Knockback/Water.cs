@@ -23,9 +23,9 @@ public class Water : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
         
         m_isAddForceCalled = false;
         m_timer = 0f;

@@ -38,14 +38,18 @@ public class DynamiteTrap : TrapBase
 
         };
 
-        Debug.Log("fire");
+        
+
+        //m_fireParticle.gameObject.SetActive(true);
+
         m_fireParticle.Play();
+
         Invoke(nameof(OnHit), m_explosionTimer);
     }
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_damageData = new DamageData
         {

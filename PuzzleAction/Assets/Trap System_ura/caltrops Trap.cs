@@ -50,9 +50,9 @@ public class CaltropTrap : TrapBase
     }
 
     
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         //DamageData
         m_damageData = new DamageData

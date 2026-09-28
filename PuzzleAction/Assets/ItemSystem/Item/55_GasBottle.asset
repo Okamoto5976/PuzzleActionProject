@@ -16,13 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 55
     itemName: GasBottle
-    itemIcon: {fileID: -1936911769, guid: 2ee0c638d36b6614a8bcea2ed4b5d64b, type: 3}
+    itemIcon: {fileID: 21300000, guid: 232f6f7ca10b3eb419f7d75d33643a22, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 2
     price: 100
-    Type: 0
   TrapPrefab: {fileID: 0}
   m_enumTrap: 19

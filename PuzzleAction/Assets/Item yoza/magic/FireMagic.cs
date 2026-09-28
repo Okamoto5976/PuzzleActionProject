@@ -25,11 +25,11 @@ public class FireMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-        //EntitySetUp();
-    }
+    //public override void TrapInit()
+    //{
+    //    base.TrapInit(data);
+    //    //EntitySetUp();
+    //}
 
     private void FixedUpdate()
     {

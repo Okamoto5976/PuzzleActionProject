@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bluffbomb_moto : TrapBase
+public class KnockBackBomb : TrapBase
 {
     [Header("Bomb Settings")]
     [SerializeField] private float m_Range = 4f;
@@ -10,12 +10,19 @@ public class Bluffbomb_moto : TrapBase
 
     private bool m_isFuseActive=false;
     private float m_fuseTimer = 0f;
+
+    [SerializeField] private EffectEventDataSO m_effectEventData;
+
+    [SerializeField] private ParticleSystem m_fireParticle;
+
     protected override void OnHit()
     {
         Explode();
     }
     protected override void EntitySetUp()
     {
+
+
         m_damageData = new DamageData()
         {
             Attack = 0f,
@@ -26,11 +33,14 @@ public class Bluffbomb_moto : TrapBase
         };
         m_isFuseActive = true;
         m_fuseTimer = 0f;
+
+        m_fireParticle.Play();
+
     }
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_damageData = new DamageData()
         {
@@ -51,12 +61,16 @@ public class Bluffbomb_moto : TrapBase
 
     private void Update()
     {
-        if(m_isFuseActive)
+
+
+        if (m_isFuseActive)
         {
             m_fuseTimer += Time.deltaTime;
             if(m_fuseTimer>=m_FuseTime)
             {
-                m_isFuseActive=false;
+
+
+                m_isFuseActive = false;
                 Explode();
             }
         }
@@ -64,16 +78,21 @@ public class Bluffbomb_moto : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (m_isFuseActive) return;
+
         //base.OnTriggerEnter(other);
         if (m_team == TeamType.Nature) return;
 
         Entity target = other.GetComponent<Entity>();
 
-        if(target != null )
-        {
-            if(target.Team==m_team)return;
-        Explode();
-        }
+        if (target == null) return;
+
+        if(target.Team==m_team)return;
+
+        m_fireParticle.Play();
+
+        m_isFuseActive = true;
+        Invoke(nameof(Explode), m_fuseTimer);
     }
 
     private void Explode()
@@ -99,7 +118,18 @@ public class Bluffbomb_moto : TrapBase
 
             target.TakeDamage(m_damageData);
         }
-            OnReturnPool();
+
+        //m_explosionParticle.Play();
+        Effect data = new Effect()
+        {
+            effectType = Enum_EffectType.Explosion,
+            effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
+            effectRot = transform.rotation,
+        };
+
+        m_effectEventData.Raise(data);
+
+        OnReturnPool();
     }
     private void OnDrawGizmosSelected()
     {

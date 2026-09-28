@@ -8,9 +8,9 @@ public class KnockBackTrap : TrapBase
 
     private float m_timer;
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_timer = 0f;
 

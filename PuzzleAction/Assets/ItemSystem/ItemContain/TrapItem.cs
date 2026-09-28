@@ -26,8 +26,8 @@ public class TrapItem : Item
         //Trap Area use item
         if(data.entity == null)
         {
-            TrapPrefab.TrapInit(data);
-            TrapPrefab.gameObject.SetActive(false);
+            TrapPrefab.gameObject.SetActive(true);
+            TrapPrefab.TrapInit();
 
             return;
         }
@@ -46,9 +46,9 @@ public class TrapItem : Item
         //obj‚ÌEntity‚ÉmoveDir‚ª‚ ‚é‚©‚çdata‚Ìdir‚ð“ü‚ê‚é
         //var entity = TrapPrefab.GetComponent<Entity>();
         
+        TrapPrefab.gameObject.SetActive(true);
         TrapPrefab.Init(data);
         //TrapPrefab.gameObject.transform.position = data.pos;
-        TrapPrefab.gameObject.SetActive(true);
         //TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
         //entity.moveDir = data.dir;
     }

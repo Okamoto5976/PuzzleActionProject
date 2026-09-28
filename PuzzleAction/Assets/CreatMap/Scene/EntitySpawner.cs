@@ -303,7 +303,7 @@ public class EntitySpawner : MonoBehaviour
                     return;
                 }
 
-                //trap.transform.positions = pos;
+                trap.gameObject.transform.position = pos;
 
                 BoxCollider box = trap.GetComponent<BoxCollider>();
 
@@ -312,13 +312,13 @@ public class EntitySpawner : MonoBehaviour
                     box.size = new Vector3(m_mapGeneration.FloorScale.x, box.size.y, m_mapGeneration.FloorScale.z);
                 }
 
-                ItemRecieveData data = new ItemRecieveData()
-                {
-                    entity = null,
-                    pos = pos,
-                };
+                //ItemRecieveData data = new ItemRecieveData()
+                //{
+                //    entity = null,
+                //    pos = pos,
+                //};
 
-                trap.TrapInit(data);
+                trap.TrapInit();
                 trap.gameObject.SetActive(true);
             }
         }

@@ -64,6 +64,7 @@ public class TrapGenerator_EqualDistribution : TrapGenerator
                 var newPosition = newPositions[j];
                 var obj = trapPools.GetComponent(trapType);
                 obj.transform.position = newPosition;
+                obj.TrapInit();
                 obj.gameObject.SetActive(true);
             }
         }

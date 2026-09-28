@@ -40,11 +40,11 @@ public class SwampBottle : TrapBase
         if (m_swampEffect != null) m_swampEffect.SetActive(false);
     }
 
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-        //EntitySetUp();
-    }
+    //public override void TrapInit()
+    //{
+    //    base.TrapInit();
+    //    //EntitySetUp();
+    //}
     protected override void OnHit()
     {
         StartGas();

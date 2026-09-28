@@ -683,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dca46635e1dd946b9be9b6dc3ce8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrap
+  m_isFowardDir: 0
   m_str: 10
   m_speed: 0
   m_attackType: 0

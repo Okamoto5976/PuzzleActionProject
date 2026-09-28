@@ -16,13 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 52
     itemName: Net
-    itemIcon: {fileID: 21300000, guid: dc96d91ff6f1e4145bff87ba8ab1a94b, type: 3}
+    itemIcon: {fileID: 21300000, guid: ffa49cadfdb272348a93f7caa054deb1, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 2
     price: 100
-    Type: 0
   TrapPrefab: {fileID: 0}
   m_enumTrap: 16

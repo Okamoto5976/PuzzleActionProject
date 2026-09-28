@@ -144,7 +144,7 @@ public abstract class TrapBase : MonoBehaviour
 
 
     //use TrapArea
-    public virtual void TrapInit(ItemRecieveData data)
+    public virtual void TrapInit()
     {
         
 
@@ -153,7 +153,7 @@ public abstract class TrapBase : MonoBehaviour
         m_dir = Vector3.zero;
         m_team = TeamType.Nature;
 
-        gameObject.transform.position = data.pos;
+        //gameObject.transform.position = data.pos;
     }
 
     //protected DamageData SetDamageData()
