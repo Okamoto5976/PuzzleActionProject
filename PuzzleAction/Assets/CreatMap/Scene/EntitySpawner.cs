@@ -324,7 +324,7 @@ public class EntitySpawner : MonoBehaviour
         }
         else
         {
-            float trapDensity = 1; // temporary
+            float trapDensity = 2f; // temporary
             m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, selectedType, trapDensity);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");
