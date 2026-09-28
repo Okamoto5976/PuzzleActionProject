@@ -99,6 +99,7 @@ public class EnemyController : Entity
         SetCanMove(true);
         SetIsStun(false);
         SetIsInvincible(false);
+        AssignDropItem();
     }
 
     #region UNITY EVENT
@@ -412,31 +413,37 @@ public class EnemyController : Entity
 
     #region ENEMY
 
-    public static EnemyController SpawnEnemy(Enum_EnemyType type, Vector3 position)
+    public static EnemyController SpawnEnemy( Enum_EnemyType type, Vector3 position)
     {
         Middleman_Enemy pool = FindAnyObjectByType<Middleman_Enemy>();
-        if(pool == null)
+        if (pool == null)
         {
-            Debug.LogWarning("Middleman_Enemy Not Found");
-            return null;
+            Debug.LogWarning("Middleman_Enemy Not Found"); return null;
         }
+
         EnemyController enemy = pool.GetComponent(type);
-        if(enemy == null)
+
+        if (enemy == null)
         {
-            Debug.LogWarning($"Pool Missing : {type}");
-            return null;
+            Debug.LogWarning($"Pool Missing : {type}"); return null;
         }
 
         enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-        EnemyHP hp = enemy.GetComponent<EnemyHP>();
-        if (hp != null)
-        {
-            hp.ResetHP();
-        }
+        enemy.InitializeSpawn();
+        enemy.AssignDropItem();
 
         return enemy;
+    }
+    public void AssignDropItem()
+    {
+        if (m_itemManager == null) return;
+        if (m_itemDropGachaEngine == null) return;
+
+        RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+        Item item = m_itemManager.DropItem(rarity);
+        m_dropItem = item;
     }
     #endregion
 }

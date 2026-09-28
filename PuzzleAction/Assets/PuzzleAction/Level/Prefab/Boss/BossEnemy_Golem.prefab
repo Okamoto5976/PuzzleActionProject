@@ -59,6 +59,7 @@ MonoBehaviour:
   m_findRange: 20
   m_attackRange: 7
   m_attackCooldown: 2
+  m_itemDropGachaEngine: {fileID: 11400000, guid: ce8a86fee1115a447b55261f20b575c0, type: 2}
   m_dropCount: 3
   m_attackHitBox:
     m_transform: {fileID: 6054870468107764460}

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,6 +17,8 @@ public class BossEnemyController : Entity
     [SerializeField] private float m_attackCooldown = 3f;
 
     [Header("Drop")]
+    [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [SerializeField] private int m_dropCount = 3;
 
     [Header("Ref")]
@@ -47,13 +49,7 @@ public class BossEnemyController : Entity
     #endif
     #endregion
     private ItemManager m_itemManager;
-    [NonSerialized] public Item m_dropItem;
-
-    public Item DropItem
-    {
-        get => m_dropItem;
-        set => m_dropItem = value;
-    }
+    private List<Item> m_dropItems = new();
 
     private float m_cooldownTimer;
     private bool m_isCooldownReady = true;
@@ -86,6 +82,7 @@ public class BossEnemyController : Entity
         SetCanMove(true);
         SetIsStun(false);
         SetIsInvincible(false);
+        AssignDropItem();
     }
     #region UNITY EVENT
     protected override void Awake()
@@ -319,16 +316,15 @@ public class BossEnemyController : Entity
     }
     private void DropItems()
     {
-        if (m_itemManager == null)
-            return;
+        if (m_itemManager == null) return;
 
-        for (int i = 0; i < m_dropCount; i++)
+        foreach (Item item in m_dropItems)
         {
+            if (item == null) continue;
+
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere;
-
             pos.y = transform.position.y;
-
-            m_itemManager.DropItemSetData(pos, m_dropItem);
+            m_itemManager.DropItemSetData(pos, item);
         }
     }
     #endregion
@@ -354,13 +350,28 @@ public class BossEnemyController : Entity
         enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-        EnemyHP hp = enemy.GetComponent<EnemyHP>();
-        if (hp != null)
-        {
-            hp.ResetHP();
-        }
+
+        enemy.InitializeSpawn();
+        enemy.AssignDropItem();
 
         return enemy;
+    }
+    public void AssignDropItem()
+    {
+        if (m_itemManager == null) return;
+        if (m_itemDropGachaEngine == null) return;
+
+        m_dropItems.Clear();
+
+        for (int i = 0; i < m_dropCount; i++)
+        {
+            RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+            Item item = m_itemManager.DropItem(rarity);
+            if (item != null)
+            {
+                m_dropItems.Add(item);
+            }
+        }
     }
     #endregion
 }
