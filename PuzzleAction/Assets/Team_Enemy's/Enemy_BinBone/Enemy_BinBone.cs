@@ -24,7 +24,7 @@ public class Enemy_BinBone : MonoBehaviour, IEnemyBehaviour
 
             if (m_controller.TryUseCooldown())
             {
-                m_controller.UseItem(dir.normalized, "Item");
+                m_controller.UseItem(dir.normalized);
             }
             return;
         }

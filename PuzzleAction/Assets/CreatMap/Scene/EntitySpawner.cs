@@ -207,6 +207,7 @@ public class EntitySpawner : MonoBehaviour
 
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
+        enemy.InitializeSpawn();
     }
 
     //BossEnemy
@@ -224,6 +225,7 @@ public class EntitySpawner : MonoBehaviour
 
         boss.transform.position = m_mapGeneration.GridToWorld(center);
         boss.gameObject.SetActive(true);
+        boss.InitializeSpawn();
         m_reservedPosition.Add(center);
     }
     private Enum_BossType GetCurrentBossType()

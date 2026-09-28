@@ -112,9 +112,13 @@ MonoBehaviour:
   m_attackCooldown: 1
   m_attackHitBox:
     m_transform: {fileID: 5684922870896197467}
+    m_hitBoxOffset: {x: 0, y: 0, z: 0}
     m_radius: 1.5
-  m_attackItem: {fileID: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_isRandom: 0
+  m_attackItems: []
+  m_power: 3
+  m_shootOffset: {x: 0, y: 0.5, z: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: bd356a36a60fb7547af11d332ea8a4d9, type: 2}
 --- !u!114 &4413715628403061547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,9 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5684922870896197467}
-    m_radius: 1
 --- !u!114 &302776586832592860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,7 +198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8761899927999882934}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -223,10 +224,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &994408458996984905
 PrefabInstance:
   m_ObjectHideFlags: 0

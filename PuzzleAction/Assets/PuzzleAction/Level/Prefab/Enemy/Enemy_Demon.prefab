@@ -51,7 +51,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -156,10 +156,11 @@ MonoBehaviour:
     m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
     m_radius: 3
-  m_attackItem: {fileID: 0}
+  m_isRandom: 0
+  m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 2, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: a957f0b7498876f4fb9627559f7a9de8, type: 2}
 --- !u!114 &6548486075970649895
 MonoBehaviour:
   m_ObjectHideFlags: 0

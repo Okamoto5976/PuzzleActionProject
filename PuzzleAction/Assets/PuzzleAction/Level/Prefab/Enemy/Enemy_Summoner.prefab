@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfd0248362c9544f88cde823476d8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Summoner
-  m_summonTypes: 020000000900000009000000
+  m_summonTypes: 020000000a000000090000000800000000000000
   m_summonCount: 1
   m_maxAliveSummons: 6
 --- !u!114 &528806279578718545
@@ -130,15 +130,16 @@ MonoBehaviour:
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 10
   m_attackRange: 8
-  m_attackCooldown: 12
+  m_attackCooldown: 8
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 2
-  m_attackItem: {fileID: 0}
+  m_isRandom: 0
+  m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 1, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 02379d45c84e978489286ee9e8ab366e, type: 2}
 --- !u!114 &-8928694272576341907
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -67,8 +67,8 @@ public class Enemy_Wizard : MonoBehaviour, IEnemyBehaviour
     {
         if (!m_enemy.IsCooldownReady) return;
 
-        Vector3 dir = (m_enemy.Target.Value - transform.position) .normalized;
-        m_enemy.UseItem(dir, "FireItem");
+        Vector3 dir = (m_enemy.Target.Value - transform.position).normalized;
+        m_enemy.UseItem(dir);
         m_enemy.ConsumeCooldown();
 
         UpdateOrbitDirection();
