@@ -992,6 +992,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 966751217}
     - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_playerController
+      value: 
+      objectReference: {fileID: 721869219}
+    - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_goodsPrefab.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -6205,6 +6209,10 @@ PrefabInstance:
       objectReference: {fileID: 721869219}
     - target: {fileID: 5562016793495321260, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
       propertyPath: itemManager
+      value: 
+      objectReference: {fileID: 681700649319570257}
+    - target: {fileID: 5562016793495321260, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}
+      propertyPath: m_itemManager
       value: 
       objectReference: {fileID: 681700649319570257}
     - target: {fileID: 5562016793495321260, guid: e862b6ebdff68bd4bb6ab6aff54069aa, type: 3}

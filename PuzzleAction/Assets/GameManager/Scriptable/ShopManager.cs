@@ -72,6 +72,14 @@ public class ShopManager : MonoBehaviour
     [Header("Shop Item Rarity Overlay")]
     [SerializeField] private ShopRarityVisuals m_shopRarityVisuals;
 
+    [Header("Passive Effect")]
+    [SerializeField] private PlayerController m_playerController;
+
+    private bool m_isCoupon;
+    private bool m_isMemberShip;
+
+    private float m_discount;
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -184,6 +192,21 @@ public class ShopManager : MonoBehaviour
 
     private void SetDatasToSlots(int id)
     {
+        m_isCoupon = m_playerController.m_isCoupon;
+        m_isMemberShip = m_playerController.m_isMemberShip;
+
+        m_discount = 0f;
+
+        if (m_isCoupon)
+        {
+            m_discount += 0.2f;
+        }
+
+        if(m_isMemberShip)
+        {
+            m_discount += 0.3f;
+        }
+
         SetShopText();
 
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
@@ -204,7 +227,11 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < SlotCount; i++)
         {
             var shopItem = shopInventory.inventory[i];
-            m_goodsPrefab[i].SetData(shopItem, m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity));
+            m_goodsPrefab[i].SetData(
+                shopItem,
+                m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity),
+                m_discount
+                );
         }
     }
 
@@ -232,10 +259,13 @@ public class ShopManager : MonoBehaviour
         //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
         var data = m_shopInventories[_currentShopId].inventory[slotId].data;
 
+        int price = Mathf.CeilToInt(data.Data.Price * (1f - m_discount));
+
+
         int money = GameManager.Instance.Money;
 
         //­‚È‚¢@w“üo—ˆ‚È‚¢ê‡
-        if (data.Data.Price > money)
+        if (price > money)
         {
             Debug.Log("you do not have money");
 
@@ -254,7 +284,7 @@ public class ShopManager : MonoBehaviour
                 return false;
             }
 
-            int value = -(data.Data.Price);
+            int value = -(price);
 
             if(!GameManager.Instance.ModifyMoney(value))
             {

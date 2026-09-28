@@ -43,7 +43,7 @@ public class InventorySystem : MonoBehaviour
 
     [SerializeField] private List<Image> mainHotbarImages;
 
-    private ItemManager m_itemManager;
+    [SerializeField] private ItemManager m_itemManager;
 
     //passive effect add player
     [SerializeField] private PlayerController m_player;
@@ -58,10 +58,15 @@ public class InventorySystem : MonoBehaviour
 
         hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>(true);
 
-        m_itemManager = FindAnyObjectByType<ItemManager>();
+        //m_itemManager = FindAnyObjectByType<ItemManager>();
     }
 
     private void Start()
+    {
+        Initialized();
+    }
+
+    public void Initialized()
     {
         for (int i = 0; i < hotbars.Length; i++)
         {
@@ -71,6 +76,7 @@ public class InventorySystem : MonoBehaviour
 
         UpdateUI();
     }
+
     //[SerializeField] private Data data;
 
     //private void Update()
@@ -88,13 +94,13 @@ public class InventorySystem : MonoBehaviour
     //    }
     //}
 
-    public void OnItem(Item data, int count)
-    {
-        if (AddItem(data, count))
-        {
+    //public void OnItem(Item data, int count)
+    //{
+    //    if (AddItem(data, count))
+    //    {
            
-        }
-    }
+    //    }
+    //}
     public void Save()
     {
         SaveInventory();

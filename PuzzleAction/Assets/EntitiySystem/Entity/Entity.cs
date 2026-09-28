@@ -142,6 +142,8 @@ abstract public class Entity : MonoBehaviour
 
     public Vector3 MoveDir { get => m_moveDir; }
 
+    private bool m_isCheckState = false;
+
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -158,6 +160,9 @@ abstract public class Entity : MonoBehaviour
     #region Status
     public void SetState()
     {
+        if (m_isCheckState) return;
+        m_isCheckState = true;
+
         if (m_data == null)
         {
             Debug.LogError("Not EntityData");

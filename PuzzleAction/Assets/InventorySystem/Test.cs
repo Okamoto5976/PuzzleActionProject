@@ -117,20 +117,20 @@ public class Test : MonoBehaviour
     //    //inventorySystem.AddItem(_item);
     //}
 
-    public void OnItem()
-    {
+    //public void OnItem()
+    //{
 
-        Debug.Log("AddItem");
-        if (m_istrigger)
-        {
-            inventorySystem.OnItem(m_posion, 1);
+    //    Debug.Log("AddItem");
+    //    if (m_istrigger)
+    //    {
+    //        inventorySystem.OnItem(m_posion, 1);
 
-        }
-        else
-        {
-            inventorySystem.OnItem(m_dog, 1);
-        }
-    }
+    //    }
+    //    else
+    //    {
+    //        inventorySystem.OnItem(m_dog, 1);
+    //    }
+    //}
 
     //=========remove button=============
 

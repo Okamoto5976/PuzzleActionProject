@@ -26,7 +26,7 @@ MonoBehaviour:
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1.2
-    m_statusType: 7
+    m_statusType: 5
     m_modifierType: 2
     m_duration: 0
     m_buffID: 0
