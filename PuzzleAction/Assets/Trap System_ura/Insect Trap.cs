@@ -100,7 +100,6 @@ public class InsectTrap : TrapBase
                 m_damageData = new DamageData
                 {
                     StunDuration = m_stunDuration,
-                    Attacker = m_owner
                 };
 
                 m_target.TakeDamage(m_damageData);

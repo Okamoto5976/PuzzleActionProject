@@ -133,7 +133,7 @@ public class EnemyController : Entity
     private void Update()
     {
         if (CurrentState == Entity.EntityState.Dead) return;
-        OnUpdateFlag();
+        UpdateFlag();
 
         if (IsStun)
         {
@@ -226,9 +226,6 @@ public class EnemyController : Entity
                 Knockback = KnockBack,
                 StunDuration = m_data.StunDuration,
                 AttackDir = transform.forward,
-                Attacker = this,
-                //AttackerSE = AttackSE,
-                //AudioSource = AudioSource
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);

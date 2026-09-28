@@ -632,11 +632,15 @@ PrefabInstance:
     - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_textPanel
       value: 
-      objectReference: {fileID: 418899927}
+      objectReference: {fileID: 418899928}
     - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_messageText
       value: 
       objectReference: {fileID: 1479976968}
+    - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: testknockback
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_displayManager
       value: 
@@ -1273,9 +1277,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 776241688}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &418899927 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6434634021049352070, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
+--- !u!224 &418899928 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 6450855789804114540, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
   m_PrefabInstance: {fileID: 6203895217231895579}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &423272708

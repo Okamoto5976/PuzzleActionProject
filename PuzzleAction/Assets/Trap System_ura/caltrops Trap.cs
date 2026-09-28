@@ -34,7 +34,6 @@ public class CaltropTrap : TrapBase
         {
 
             Attack = m_str,
-            AttackType = m_attackType,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
@@ -59,7 +58,6 @@ public class CaltropTrap : TrapBase
         {
 
             Attack = m_str,
-            AttackType = m_attackType,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,

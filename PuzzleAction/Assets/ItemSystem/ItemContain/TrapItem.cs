@@ -31,25 +31,9 @@ public class TrapItem : Item
 
             return;
         }
-
-        //if (data.power > 0f)
-        //{
-        //    TrapPrefab.PullInit(data.entity, data.dir, data.power);
-        //    //TrapPrefab.gameObject.transform.position = data.pos;
-        //    TrapPrefab.gameObject.SetActive(true);
-        //    return;
-        //}
-        
-        //data posにobjを置く dataに向きも入れる
-        //objにEntity(Trap)がついている　Enityに dataのbaseValueを送る（コメントにする
-        //EntityTrap.SetbaseValue(data.baseValue)                Trap側でTrapの攻撃力＋baseValue
-        //objのEntityにmoveDirがあるからdataのdirを入れる
-        //var entity = TrapPrefab.GetComponent<Entity>();
         
         TrapPrefab.gameObject.SetActive(true);
         TrapPrefab.Init(data);
-        //TrapPrefab.gameObject.transform.position = data.pos;
-        //TrapPrefab.gameObject.transform.rotation = Quaternion.LookRotation(data.dir);
-        //entity.moveDir = data.dir;
+        
     }
 }

@@ -79,7 +79,6 @@ public class Flame : TrapBase
             DamageData damageDate = new DamageData
             {
                 Attack = m_Amountdamage + m_baseValue,
-                Attacker = m_owner,
                 AttackDir =
                     (target.transform.position - transform.position).normalized
             };

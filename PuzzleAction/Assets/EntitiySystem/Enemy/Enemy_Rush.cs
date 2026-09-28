@@ -116,7 +116,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     {
         transform.rotation = Quaternion.LookRotation(m_dir);
 
-        m_controller.Move(m_dir, m_controller.EvasionSpeed);
+        m_controller.Move(m_dir, m_controller.Speed * 1.5f);
 
         float distanceToPlayer = Vector3.Distance(transform.position, m_controller.Target.Value);
         if (distanceToPlayer <= m_controller.AttackRange)

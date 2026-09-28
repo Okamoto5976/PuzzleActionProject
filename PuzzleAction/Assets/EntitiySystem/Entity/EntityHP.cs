@@ -36,18 +36,6 @@ abstract public class EntityHP : MonoBehaviour
 
     public virtual void TakeDamage(DamageData data)//DamageData
     {
-        switch (data.AttackType)
-        {
-            case AttackType.None:
-                break;
-
-            case AttackType.Recovery:
-                Heal(data.Attack);
-                break;
-
-            case AttackType.Fire:
-                break;
-        }
 
         //float hitRate =
         //    data.HitRate - m_entity.DEX;
@@ -84,7 +72,7 @@ abstract public class EntityHP : MonoBehaviour
         }
         else
         {
-            damage = Mathf.Max(data.Attack -(int) m_entity.DEF, 1);
+            damage = Mathf.Max(data.Attack -(int) m_entity.DEF, 0);
 
             //Critical
             if(isCritical)
@@ -123,34 +111,24 @@ abstract public class EntityHP : MonoBehaviour
 
         Debug.Log($"{gameObject.name} HP : {m_currentHP}");
 
-        if(m_entity.DamageSE !=null&&m_audioSource!=null)
-        {
-            m_audioSource.PlayOneShot(m_entity.DamageSE);
-        }
+        //if(m_entity.DamageSE !=null&&m_audioSource!=null)
+        //{
+        //    m_audioSource.PlayOneShot(m_entity.DamageSE);
+        //}
 
-        float knockBackPower = Mathf.Max(data.Knockback - m_entity.DEF, 0);
-
-        //float stunPower = Mathf.Max(data.StunDuration - m_entity.StunRes, 0);
-
-        //float stunTime=stunPower * 0.1f;
-
-        m_entity.AddControlEffectStun(data.StunDuration);
-
+        float knockBackPower = Mathf.Min(data.Knockback - m_entity.DEF, 3f);
         Vector3 dir = data.AttackDir.normalized;
-
         m_entity.ApplyKnockBack(dir, knockBackPower);
+
+
+        m_entity.ApplyStun(data.StunDuration);
+
 
         if ( m_currentHP <= 0 ) 
         {
             Die();
         }
     }
-
-    public void Damage(int value)
-    {
-
-    }
-
 
     public void Heal(float amount)
     {

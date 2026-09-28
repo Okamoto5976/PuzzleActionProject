@@ -45,13 +45,12 @@ public class BornTrap : TrapBase
         {
 
             Attack = m_owner.STR * m_rate,
-            AttackType = m_attackType,
             //HitRate
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
             Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.Stun,
+            StunDuration = m_owner.StunPower,
             //Duration
             AttackDir = m_dir,
             //SE

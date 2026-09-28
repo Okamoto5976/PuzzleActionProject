@@ -103,7 +103,6 @@ public class PoisonMagic : TrapBase
                 DamageData damageData = new DamageData
                 {
                     Attack = m_damage,
-                    Attacker = m_owner,
                     AttackDir = m_dir,
                 };
                 hitTarget.TakeDamage(damageData);

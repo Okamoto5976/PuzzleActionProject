@@ -131,7 +131,7 @@ public class BossEnemyController : Entity
             return;
         }
         if (m_target == null) return;
-        OnUpdateFlag();
+        UpdateFlag();
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
@@ -217,9 +217,6 @@ public class BossEnemyController : Entity
             Knockback = KnockBack,
             StunDuration = m_data.StunDuration,
             AttackDir = transform.forward,
-            Attacker = this,
-            //AttackerSE = AttackSE,
-            //AudioSource = AudioSource
         };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);

@@ -17,7 +17,6 @@ public class KnockBackTrap : TrapBase
         m_damageData = new DamageData
         {
             Attack = 0,
-            AttackType = m_attackType,
 
             Knockback = m_power,
 
@@ -33,7 +32,6 @@ public class KnockBackTrap : TrapBase
         m_damageData = new DamageData
         {
             Attack = 0,
-            AttackType = m_attackType,
 
             Knockback = m_owner.KnockBack,
 

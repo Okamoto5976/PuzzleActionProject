@@ -2,14 +2,41 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "OtherItem", menuName = "Scriptable Objects/Datas/OtherItem")]
 public class OthorItem:Item
 {
-    //[SerializeField] private ItemData ItemName;
-    //[SerializeField] private float specialEffectDuration; //“ÁŽêŒø‰ÊŽžŠÔ
-
     [SerializeField] private Passive m_passiveType;
 
-    public override void Activation(ItemRecieveData data)
+    public override void AddPassive(PlayerController player)
     {
-        //Passive
-        Debug.Log($"Passive ”­“®");
+        switch(m_passiveType)
+        { 
+            case Passive.Coupon:
+                player.m_isCoupon = true;
+
+                break;
+            case Passive.MembershipCard:
+                player.m_isMemberShip = true;
+
+                break;
+            default:
+                Debug.LogWarning("not decide passive type");
+                break;
+        }
+    }
+
+    public override void RemovePassive(PlayerController player)
+    {
+        switch (m_passiveType)
+        {
+            case Passive.Coupon:
+                player.m_isCoupon = false;
+
+                break;
+            case Passive.MembershipCard:
+                player.m_isMemberShip = false;
+
+                break;
+            default:
+                Debug.LogWarning("not decide passive type");
+                break;
+        }
     }
 }

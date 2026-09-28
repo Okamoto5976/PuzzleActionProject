@@ -54,16 +54,9 @@ abstract public class Item : ScriptableObject
         Activation(data);
     }
 
-    public virtual void Press(ItemRecieveData data) { }
-
-    public virtual void Hold(ItemRecieveData data) { }
-
-    public virtual void Release(ItemRecieveData data) { }
-
-
     public virtual void Activation(ItemRecieveData data) { }
 
-    //passive effect, when use passive from inventory
+    //passive effect, when use passive from inventory----------------
     public virtual void AddPassive(PlayerController player) { }
     
     public virtual void RemovePassive(PlayerController player) { }

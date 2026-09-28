@@ -313,24 +313,22 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
   m_position: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_pullOffSet: {x: 0, y: 2.5, z: 0}
+  m_spriteRenderer: {fileID: 3676967130022225026}
   m_evasionDuration: 0.2
   m_inventorySystem: {fileID: 0}
   m_displayManager: {fileID: 0}
   m_hotberIndex: 0
   m_canInputEvent: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
   m_playerDirObject: {fileID: 7214972691664052804}
-  m_aimTrail: {fileID: 5942639327858087933}
   m_reticle: {fileID: 0}
-  m_spriteRenderer: {fileID: 3676967130022225026}
-  m_trapPlaceRange: 5
+  m_aimTrail: {fileID: 5942639327858087933}
+  m_itemLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
   m_trapPreview: {fileID: 3632008991586162287}
   m_interactLayer:
     serializedVersion: 2
     m_Bits: 256
-  m_itemSerachLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  m_itemSearchRange: 5
   m_textPanel: {fileID: 0}
   m_nameText: {fileID: 0}
   m_itemDescriptionText: {fileID: 0}

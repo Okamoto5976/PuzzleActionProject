@@ -27,15 +27,11 @@ public class DynamiteTrap : TrapBase
         {
 
             Attack = m_str,
-            AttackType = m_attackType,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
             Knockback = m_knockBackValue,
             StunDuration = m_stunDuration,
-            //Dirは　当たった時に設定
-            //AttackDir = m_dir,
-
         };
 
         
@@ -55,12 +51,8 @@ public class DynamiteTrap : TrapBase
         {
 
             Attack = m_str,
-            AttackType = m_attackType,
             Knockback = m_knockBackValue,
             StunDuration = m_stunDuration,
-            //Dirは　当たった時に設定
-            //AttackDir = m_dir,
-
         };
 
 

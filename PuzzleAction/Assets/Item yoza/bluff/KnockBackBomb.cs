@@ -26,10 +26,8 @@ public class KnockBackBomb : TrapBase
         m_damageData = new DamageData()
         {
             Attack = 0f,
-            AttackType = m_attackType,
             Knockback = m_KnockbackPower + (m_owner != null ? m_owner.KnockBack : 0f),
             StunDuration = m_StunDuration + (m_owner != null ? m_owner.StunPower : 0f),
-            Attacker = m_owner
         };
         m_isFuseActive = true;
         m_fuseTimer = 0f;
@@ -45,10 +43,8 @@ public class KnockBackBomb : TrapBase
         m_damageData = new DamageData()
         {
            Attack=0f,
-           AttackType=m_attackType,
            Knockback=m_KnockbackPower,
            StunDuration=m_StunDuration,
-           Attacker=null
         };
         m_isFuseActive =false;
         m_fuseTimer=0f;

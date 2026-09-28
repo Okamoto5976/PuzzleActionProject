@@ -61,7 +61,6 @@ public class Bananapeel_moto : TrapBase
                 DamageData damageData = new DamageData
                 {
                     Attack = Buttattack,
-                    Attacker = attacker,
                     AttackDir = (target.transform.position - attacker.transform.position).normalized
                 };
                 target.TakeDamage(damageData);

@@ -34,7 +34,7 @@ public class Bananapeel : TrapBase
 
 
             if (victim.Team == m_team) return;
-            victim.AddControlEffectStun(m_appliedStunDuration);
+            victim.ApplyStun(m_appliedStunDuration);
             OnHit();
         }
     }

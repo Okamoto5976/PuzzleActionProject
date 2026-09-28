@@ -23,7 +23,6 @@ public abstract class TrapBase : MonoBehaviour
 
     [SerializeField] protected float m_str;
     [SerializeField] protected float m_speed;
-    [SerializeField] protected AttackType m_attackType;
     protected float m_power;//use arrow
 
     //startPosition
