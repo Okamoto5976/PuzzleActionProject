@@ -259,7 +259,7 @@ abstract public class Entity : MonoBehaviour
         if (m_isStun) return;
         if (!m_canMove) return;
 
-        if(m_currentState == EntityState.Dead) return;
+        //if(m_currentState == EntityState.Dead) return;
 
         //Entitystate = dead  do not move
         if (m_currentState == EntityState.Dead) return;
@@ -445,7 +445,7 @@ abstract public class Entity : MonoBehaviour
     {
         if (m_isInvincible) return;
 
-        ChangeState(EntityState.Damage);
+        //ChangeState(EntityState.Damage);
 
         //SetIsStun(true);
         //m_stunTime = stunTime;
