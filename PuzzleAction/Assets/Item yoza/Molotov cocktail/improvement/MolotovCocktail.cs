@@ -9,10 +9,11 @@ public class MolotovCocktail : TrapBase
 
     [Header("Fire Area Settings")]
     [SerializeField] private Collider m_fireCollider;
-    [SerializeField] private ParticleSystem m_fireEffect;
-    [SerializeField] private float m_duration = 10f;
+    [SerializeField] private GameObject m_fireEffect;
+    [SerializeField] private float m_duration = 1f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_damagePerTick = 5f;
+    [SerializeField] private float m_burnBuffDuration = 1f;
 
     private bool m_isBurning = false;
     private bool m_isAddForceCalled = false;
@@ -148,17 +149,14 @@ public class MolotovCocktail : TrapBase
                 continue;
             }
 
-            DamageData damageData = new DamageData
+            StatusModifier burnModifier = new StatusModifier
             {
-                Attack = m_damagePerTick + m_str,
-                AttackType = m_attackType,
-                Attacker = m_owner,
-                AttackDir = (target.transform.position - transform.position).normalized
+                m_statType = StatusType.Burn,
+                m_value = m_damagePerTick + m_str,
+                m_modType = ModifierType.Add
             };
 
-            target.TakeDamage(damageData);
-
-            m_fireEffect.Play();
+            target.AddDamageBuff(burnModifier, BuffID.Burn, m_burnBuffDuration);
         }
     }
 }
