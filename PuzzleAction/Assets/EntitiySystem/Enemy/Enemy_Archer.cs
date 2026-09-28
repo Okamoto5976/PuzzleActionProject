@@ -24,7 +24,7 @@ public class Enemy_Archer : MonoBehaviour, IEnemyBehaviour
 
             if (m_controller.TryUseCooldown())
             {
-                m_controller.UseItem(dir.normalized);
+                m_controller.UseItem(dir.normalized, "Item");
             }
             return;
         }

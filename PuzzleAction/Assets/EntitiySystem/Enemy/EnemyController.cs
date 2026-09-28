@@ -234,7 +234,7 @@ public class EnemyController : Entity
         }
         return item;
     }
-    public void UseItem(Vector3 dir)
+    public void UseItem(Vector3 dir, string animName)
     {
         Item useItem = GetUseItem();
         if (useItem == null) return;
@@ -251,7 +251,7 @@ public class EnemyController : Entity
 
         if (m_anim != null)
         {
-            m_anim.SetTrigger("Item");
+            m_anim.SetTrigger(animName);
         }
 
         m_itemManager.OnUseItem(useItem, data);

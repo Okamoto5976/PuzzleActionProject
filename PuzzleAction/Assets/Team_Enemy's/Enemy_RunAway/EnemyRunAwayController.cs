@@ -34,7 +34,7 @@ public class EnemyRunAwayController
 
         if (enemyController.TryUseCooldown())
         {
-            enemyController.UseItem(enemyController.Target.Value - transform.position);
+            enemyController.UseItem(enemyController.Target.Value - transform.position, "Item");
         }
     }
 

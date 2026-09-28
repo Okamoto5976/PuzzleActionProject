@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8897296333762648534, guid: f29f20e9413501c419611f708f99bcf4, type: 3}
+  m_prefab: {fileID: 9130968029162177211, guid: 52a7362177a29d048b1a90e54744169c, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &370946758
@@ -4481,7 +4481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 58
+  m_index: 59
   m_count: 10
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}
