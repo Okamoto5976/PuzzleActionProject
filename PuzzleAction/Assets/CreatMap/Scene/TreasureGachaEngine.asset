@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GachaEngine
   rarities:
   - rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
-    weight: 95
+    weight: 0
   - rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
-    weight: 5
+    weight: 100
