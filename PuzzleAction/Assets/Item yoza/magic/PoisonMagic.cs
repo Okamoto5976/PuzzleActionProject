@@ -5,13 +5,11 @@ using System.Collections.Generic;
 public class PoisonMagic : TrapBase
 {
     [Header("Direct Hit Setting")]
-    [SerializeField] private LayerMask m_hitLayers;
+    [SerializeField] private LayerMask m_ignoreLayers;
     [SerializeField] private float m_damage = 10f;
     [SerializeField] private float m_lifeTime = 5f;
 
     [Header("Fire Magic Settings")]
-    [SerializeField] private Collider m_poisonCollider;
-    [SerializeField] private GameObject m_poisonEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_poisonDamage = 2f;
@@ -40,8 +38,6 @@ public class PoisonMagic : TrapBase
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
-        if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
-        if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
     public override void TrapInit(ItemRecieveData data)
     {
@@ -75,8 +71,6 @@ public class PoisonMagic : TrapBase
         m_areaTimer += Time.deltaTime;
         if(m_areaTimer>=m_duration)
         {
-            if (m_poisonCollider != null) m_poisonCollider.enabled = false;
-            if(m_poisonEffect!=null)m_poisonEffect.SetActive (false);
             OnReturnPool();
             return;
         }
@@ -95,10 +89,9 @@ public class PoisonMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
         if (!m_isAreaActive)
         {
-            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+            if ((m_ignoreLayers.value & (1 << other.gameObject.layer)) != 0)
             {
                 OnHit();
                 return;
@@ -149,9 +142,6 @@ public class PoisonMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
             m_rb.isKinematic = true;
         }
-
-        if (m_poisonCollider != null) m_poisonCollider.enabled = true;
-        if (m_poisonEffect != null) m_poisonEffect.SetActive(true);
     }
 
     private void ApplyPoisonEffect()

@@ -16,12 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 58
     itemName: FireMagic
-    itemIcon: {fileID: 21300000, guid: 0c752ef179f634948ac5b648f878b2e8, type: 3}
+    itemIcon: {fileID: 21300000, guid: 29c33bde8ed3c0048a7f65712af7d63e, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
-    m_itemUseType: 2
+    m_itemUseType: 0
     price: 100
     Type: 0
   TrapPrefab: {fileID: 0}

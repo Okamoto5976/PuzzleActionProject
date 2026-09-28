@@ -16,7 +16,7 @@ MonoBehaviour:
   m_data:
     itemID: 59
     itemName: PoisonMagic
-    itemIcon: {fileID: 21300000, guid: e6060dd8392ec574a9df6ae461d9b394, type: 3}
+    itemIcon: {fileID: 21300000, guid: 4f370cf66e248b74e88c135ed3610f3d, type: 3}
     description: 
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
