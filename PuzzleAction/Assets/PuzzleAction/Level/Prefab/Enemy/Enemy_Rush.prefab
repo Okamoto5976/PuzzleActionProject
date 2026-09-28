@@ -64,13 +64,13 @@ MonoBehaviour:
   m_attackCooldown: 2
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
-    m_hitBoxOffset: {x: 0, y: 2, z: 0}
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 2
   m_isRandom: 0
   m_attackItems: []
   m_power: 3
-  m_shootOffset: {x: 0, y: 2, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_shootOffset: {x: 0, y: 1, z: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 8c6c572b88de4c0488db26d8174de757, type: 2}
 --- !u!114 &-2953856426515140081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,10 +275,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.25
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.25, z: 0}
 --- !u!114 &2397220607751291012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,15 +317,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_ConstrainProportionsScale

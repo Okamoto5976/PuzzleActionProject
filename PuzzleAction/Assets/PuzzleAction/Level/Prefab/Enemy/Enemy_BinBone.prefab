@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2683562310750529780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3021549121619212611}
+  - component: {fileID: 5850237883439194917}
+  m_Layer: 0
+  m_Name: collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3021549121619212611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683562310750529780}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5192190198220617858}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &5850237883439194917
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2683562310750529780}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +70,6 @@ GameObject:
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 7341675702321249772}
-  - component: {fileID: 4454756479888953108}
   - component: {fileID: -7297444003917248090}
   m_Layer: 0
   m_Name: Enemy_BinBone
@@ -37,6 +91,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3021549121619212611}
   - {fileID: 5361813224094951186}
   - {fileID: 4281590472350728029}
   m_Father: {fileID: 0}
@@ -67,10 +122,11 @@ MonoBehaviour:
     m_radius: 2
   m_isRandom: 0
   m_attackItems:
-  - {fileID: 11400000, guid: c4bc40cddfe63b342be0ca82f791227e, type: 2}
+  - ItemAnimation: Item
+    attackItem: {fileID: 11400000, guid: c4bc40cddfe63b342be0ca82f791227e, type: 2}
   m_power: 3
   m_shootOffset: {x: 0, y: 1, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: b0f08d42bd832674c8002f0211d4617a, type: 2}
 --- !u!114 &8382535904999966303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,29 +218,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &4454756479888953108
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &-7297444003917248090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,15 +313,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_ConstrainProportionsScale

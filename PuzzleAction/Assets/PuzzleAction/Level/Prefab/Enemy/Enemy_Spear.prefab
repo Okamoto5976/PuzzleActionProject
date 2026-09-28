@@ -116,10 +116,11 @@ MonoBehaviour:
     m_transform: {fileID: 4938633091440572511}
     m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 3
-  m_attackItem: {fileID: 0}
+  m_isRandom: 0
+  m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 1, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 84504eb314d4046489d53c63779c38b4, type: 2}
 --- !u!65 &2478160255407731771
 BoxCollider:
   m_ObjectHideFlags: 0

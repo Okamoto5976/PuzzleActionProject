@@ -21,9 +21,15 @@ public class EnemyController : Entity
     [Header("AttachCollider Setthing")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
+    [System.Serializable]
+    public class AttackItem
+    {
+        public string ItemAnimation;
+        public Item attackItem;
+    }
     [Header("Item")]
     [SerializeField] private bool m_isRandom = false;
-    [SerializeField] private List<Item> m_attackItems = new();
+    [SerializeField] private List<AttackItem> m_attackItems = new();
     [SerializeField] private float m_power = 3f;
     [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
     private int m_itemIndex;
@@ -77,6 +83,23 @@ public class EnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
+
+    public void InitializeSpawn()
+    {
+        ChangeState(EntityState.Idle);
+
+        m_isCooldownEnd = true;
+        m_attackCooldownDuration = 0f;
+
+        if (m_entityHP is EnemyHP hp)
+        {
+            hp.ResetHP();
+        }
+
+        SetCanMove(true);
+        SetIsStun(false);
+        SetIsInvincible(false);
+    }
 
     #region UNITY EVENT
     protected override void Awake()
@@ -191,12 +214,6 @@ public class EnemyController : Entity
     }
     public void Attack()
     {
-        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        //Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
-        //Debug.Log(m_attackHitBox.m_transform.position);
-        //Debug.Log(m_attackHitBox.m_radius);
-
-
         if (m_hitCollider == null) return;
 
         DamageData damage = new DamageData
@@ -216,7 +233,7 @@ public class EnemyController : Entity
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : Player HIT");
     }
-    private Item GetUseItem()
+    private AttackItem GetUseItem()
     {
         if (m_attackItems == null || m_attackItems.Count == 0) return null;
 
@@ -225,19 +242,22 @@ public class EnemyController : Entity
             return m_attackItems[UnityEngine.Random.Range(0, m_attackItems.Count)];
         }
 
-        Item item = m_attackItems[m_itemIndex];
+        AttackItem item = m_attackItems[m_itemIndex];
+
         m_itemIndex++;
 
         if (m_itemIndex >= m_attackItems.Count)
         {
             m_itemIndex = 0;
         }
+
         return item;
     }
-    public void UseItem(Vector3 dir, string animName)
+    public void UseItem(Vector3 dir)
     {
-        Item useItem = GetUseItem();
-        if (useItem == null) return;
+        AttackItem useData = GetUseItem();
+
+        if (useData == null) return;
 
         ItemRecieveData data =
             new ItemRecieveData
@@ -249,12 +269,13 @@ public class EnemyController : Entity
                 offset = m_shootOffset,
             };
 
-        if (m_anim != null)
+        if (m_anim != null &&
+            !string.IsNullOrEmpty(useData.ItemAnimation))
         {
-            m_anim.SetTrigger(animName);
+            m_anim.SetTrigger(useData.ItemAnimation);
         }
 
-        m_itemManager.OnUseItem(useItem, data);
+        m_itemManager.OnUseItem(useData.attackItem, data);
     }
     #endregion
 
@@ -406,8 +427,14 @@ public class EnemyController : Entity
             return null;
         }
 
+        enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
+        EnemyHP hp = enemy.GetComponent<EnemyHP>();
+        if (hp != null)
+        {
+            hp.ResetHP();
+        }
 
         return enemy;
     }

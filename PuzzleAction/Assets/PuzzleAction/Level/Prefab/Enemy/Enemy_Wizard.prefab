@@ -135,11 +135,13 @@ MonoBehaviour:
     m_radius: 3
   m_isRandom: 1
   m_attackItems:
-  - {fileID: 11400000, guid: 645a9688eab41df409fb69fa6002a69d, type: 2}
-  - {fileID: 11400000, guid: b24c8c826d379294bb553ca46443e70f, type: 2}
+  - ItemAnimation: FireItem
+    attackItem: {fileID: 11400000, guid: 645a9688eab41df409fb69fa6002a69d, type: 2}
+  - ItemAnimation: PoisonItem
+    attackItem: {fileID: 11400000, guid: b24c8c826d379294bb553ca46443e70f, type: 2}
   m_power: 3
   m_shootOffset: {x: 0, y: 1.5, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 801dc7101fb185549887d7192a40dac5, type: 2}
 --- !u!114 &-7725082635600245204
 MonoBehaviour:
   m_ObjectHideFlags: 0

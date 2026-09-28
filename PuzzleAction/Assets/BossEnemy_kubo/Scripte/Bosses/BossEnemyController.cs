@@ -71,6 +71,22 @@ public class BossEnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public Vector3Asset Target => m_target;
 
+    public void InitializeSpawn()
+    {
+        ChangeState(EntityState.Idle);
+
+        m_isCooldownReady = true;
+        m_cooldownTimer = 0f;
+
+        if (m_entityHP is EnemyHP hp)
+        {
+            hp.ResetHP();
+        }
+
+        SetCanMove(true);
+        SetIsStun(false);
+        SetIsInvincible(false);
+    }
     #region UNITY EVENT
     protected override void Awake()
     {
@@ -335,9 +351,14 @@ public class BossEnemyController : Entity
         }
 
         //set enemy info
+        enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-        Debug.Log($"spawn : {enemy}");
+        EnemyHP hp = enemy.GetComponent<EnemyHP>();
+        if (hp != null)
+        {
+            hp.ResetHP();
+        }
 
         return enemy;
     }

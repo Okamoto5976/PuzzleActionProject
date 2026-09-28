@@ -73,7 +73,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!54 &1183424356675428887
@@ -128,10 +128,12 @@ MonoBehaviour:
     m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 1
   m_isRandom: 0
-  m_attackItems: []
+  m_attackItems:
+  - ItemAnimation: Item
+    attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 9aada60219c2f264488573b3f095fede, type: 2}
 --- !u!114 &-6208613025751143186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,14 +179,14 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5583940323451125462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,15 +282,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_ConstrainProportionsScale
