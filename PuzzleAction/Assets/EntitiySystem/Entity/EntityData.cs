@@ -37,10 +37,10 @@ public class EntityData : ScriptableObject
     [SerializeField] private float m_def;
     [SerializeField] private float m_speed;
     [SerializeField] private float m_dashSpeed;
-    [SerializeField,Range(0f,100f)] private float m_criticalRate;
+    [SerializeField,Range(0f,1f)] private float m_criticalRate;
     [SerializeField] private float m_criticalDamage;
     [SerializeField] private float m_agi;
-    [SerializeField,Range(0f,100f)] private float m_breakRate;
+    [SerializeField,Range(0f,1f)] private float m_breakRate;
     [SerializeField] private float m_stunDuration;
     [SerializeField,Range(0f,1f)] private float m_recover;
     [SerializeField,Range(0f,1f)] private float m_poisonRes;

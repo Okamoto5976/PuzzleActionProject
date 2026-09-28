@@ -433,12 +433,15 @@ public class EntitySpawner : MonoBehaviour
 
             case Enum_TreasureType.Mimic:
                 {
-                    //get pool 
                     EnemyController mimic = m_enemyPool.GetComponent(Enum_EnemyType.Mimic);
-                    if (mimic == null)return;
 
-                    mimic.transform.position =position;
+                    if (mimic == null) return;
+
+                    AssignDropItem(mimic);
+
+                    mimic.transform.position = position;
                     mimic.gameObject.SetActive(true);
+                    mimic.InitializeSpawn();
 
                     break;
                 }

@@ -7,7 +7,7 @@ public class StompShockWave : MonoBehaviour
     private TeamType m_team;
 
     private float m_radius;
-    private float m_speed = 15f;
+    private float m_speed = 30f;
 
     private readonly HashSet<Entity> m_hitEntities = new();
 
