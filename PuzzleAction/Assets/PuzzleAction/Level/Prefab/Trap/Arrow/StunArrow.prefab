@@ -262,7 +262,7 @@ MonoBehaviour:
   - m_value: 2
     m_statusType: 22
     m_modifierType: 0
-    m_duration: 1
+    m_duration: 1.5
     m_buffID: 29
 --- !u!54 &3760152005104094903
 Rigidbody:

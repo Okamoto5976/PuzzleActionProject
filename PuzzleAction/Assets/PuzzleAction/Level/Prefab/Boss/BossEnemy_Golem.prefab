@@ -62,7 +62,8 @@ MonoBehaviour:
   m_dropCount: 3
   m_attackHitBox:
     m_transform: {fileID: 6054870468107764460}
-    m_radius: 3
+    m_hitBoxOffset: {x: 0, y: 2, z: 0}
+    m_radius: 7
   m_attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
   m_power: 24
   m_shootOffset: {x: 0, y: 2, z: 0}
@@ -115,9 +116,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
   m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 6054870468107764460}
-    m_radius: 3
 --- !u!195 &6295794922853557716
 NavMeshAgent:
   m_ObjectHideFlags: 0

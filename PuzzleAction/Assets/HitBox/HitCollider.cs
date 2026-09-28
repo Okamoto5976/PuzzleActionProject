@@ -155,17 +155,12 @@ public class HitCollider : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
-        Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
-
-        //foreach(var hitBox in hitBoxes)
-        //{
-        //    if (hitBox.m_transform == null) continue;
-        //    Gizmos.DrawWireSphere(
-        //        hitBox.m_transform.position,
-        //        hitBox.m_radius
-        //        );
-        //}
+        foreach (var hitBox in hitBoxes)
+        {
+            if (hitBox.m_transform == null) continue;
+            Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+            Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
+        }
     }
     private Transform[] My_OverlapSphere(AttackHitBox attackHitBox)
     {
