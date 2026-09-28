@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7721ef16df94d244c9248d6ba745026d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Explosion
+  m_effectEventData: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
 --- !u!114 &6220031024552198085
 MonoBehaviour:
   m_ObjectHideFlags: 0
