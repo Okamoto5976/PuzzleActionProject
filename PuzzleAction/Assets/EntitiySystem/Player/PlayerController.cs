@@ -85,6 +85,10 @@ public class PlayerController : Entity
     //----passive effect---------------------
     [HideInInspector] public bool m_isCoupon;
     [HideInInspector] public bool m_isMemberShip;
+    [HideInInspector] public bool m_isWinnerTrophy;
+    [HideInInspector] public bool m_isLoserTrophy;
+    [HideInInspector] public bool m_isTrophy;
+
 
     protected override void Awake()
     {
@@ -397,6 +401,17 @@ public class PlayerController : Entity
     public void RemovePassive(Passive type)
     {
         m_passiveSystem.RemoveBuff(type);
+    }
+
+    public bool CheckTrophy()
+    {
+        if(!m_isWinnerTrophy) return false;
+
+        if (!m_isLoserTrophy) return false;
+
+        if(!m_isTrophy) return false;
+
+        return true;
     }
 
     public void SetCanInput(bool ignoreInput)

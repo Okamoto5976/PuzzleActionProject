@@ -70,6 +70,11 @@ public class EntitySpawner : MonoBehaviour
 
         m_playerC.SetState();
 
+        if(m_playerC.CheckTrophy())
+        {
+            Debug.LogWarning("Title Trophy spawn");
+        }
+
         InitializeEnemyPools();
         InitializeBossEnemyPool();
         InitializeTrapPool();

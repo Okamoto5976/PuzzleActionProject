@@ -516,6 +516,7 @@ MonoBehaviour:
   m_entitySpawner: {fileID: 74042319}
   m_debugMapPlaceSystem: {fileID: 74042318}
   m_instanceCounter: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
+  m_inventorySystem: {fileID: 966751217}
 --- !u!4 &74042322
 Transform:
   m_ObjectHideFlags: 0

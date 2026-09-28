@@ -63,7 +63,7 @@ public class InventorySystem : MonoBehaviour
 
     private void Start()
     {
-        Initialized();
+        //Initialized();
     }
 
     public void Initialized()

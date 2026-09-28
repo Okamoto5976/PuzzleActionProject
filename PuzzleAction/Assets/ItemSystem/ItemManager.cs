@@ -6,6 +6,7 @@ public class ItemManager : MonoBehaviour
 {
     //public List <Item> DropList=new();
     public List<Item> ItemList = new();
+    public List<Item> ShopList = new();
     //private int nextId; //Ÿ‚ÌID‚ğŠÇ—‚·‚é•Ï”
     [SerializeField] private Middleman_Trap m_middleman_trap;
     //DropPool I_pool;

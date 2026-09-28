@@ -62,7 +62,21 @@ public class BuffItem : Item
     {
         Debug.LogWarning("AddPassive in item");
 
-        if(m_buffEffectType == ItemType.Passive)
+        if(m_passiveType == Passive.WinnerTrophy)
+        {
+            player.m_isWinnerTrophy = true;
+        }
+        else if(m_passiveType == Passive.LoserTrophy)
+        {
+            player.m_isLoserTrophy = true;
+        }
+        else if(m_passiveType == Passive.Trophy)
+        {
+            player.m_isTrophy = true;
+        }
+
+
+        if (m_buffEffectType == ItemType.Passive)
         {
             foreach (var buff in m_buffItemClass)
             {
@@ -90,6 +104,19 @@ public class BuffItem : Item
 
     public override void RemovePassive(PlayerController player)
     {
+        if (m_passiveType == Passive.WinnerTrophy)
+        {
+            player.m_isWinnerTrophy = false;
+        }
+        else if (m_passiveType == Passive.LoserTrophy)
+        {
+            player.m_isLoserTrophy = false;
+        }
+        else if (m_passiveType == Passive.Trophy)
+        {
+            player.m_isTrophy = false;
+        }
+
         player.RemovePassive(m_passiveType);
     }
 }
