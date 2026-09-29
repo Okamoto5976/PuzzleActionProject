@@ -27,6 +27,7 @@ abstract public class Entity : MonoBehaviour
     public float GasRes => m_status[StatusType.GasRes].Value;
     public float BurnRes => m_status[StatusType.BurnRes].Value;
     public float Slow => m_status[StatusType.Slow].Value;
+    public float Swamp => m_status[StatusType.Swamp].Value;
     public float Poison => m_status[StatusType.Poison].Value;
     public float Gas => m_status[StatusType.Gas].Value;
     public float Burn => m_status[StatusType.Burn].Value;
@@ -179,10 +180,11 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.StunDuration, new EntityStatus(m_data.StunDuration));
         m_status.Add(StatusType.PoisonRes, new EntityStatus(m_data.PoisonRes));
         m_status.Add(StatusType.StunRes, new EntityStatus(m_data.StunRes));
-        m_status.Add(StatusType.SwampRes, new EntityStatus(m_data.SlowRes));
+        m_status.Add(StatusType.SwampRes, new EntityStatus(m_data.SwampRes));
         m_status.Add(StatusType.GasRes, new EntityStatus(m_data.GasRes));
         m_status.Add(StatusType.BurnRes, new EntityStatus(m_data.BurnRes));
         m_status.Add(StatusType.Slow, new EntityStatus(0f));
+        m_status.Add(StatusType.Swamp, new EntityStatus(0f));
         m_status.Add(StatusType.Poison, new EntityStatus(0f));
         m_status.Add(StatusType.Gas, new EntityStatus(0f));
         m_status.Add(StatusType.Burn, new EntityStatus(0f));

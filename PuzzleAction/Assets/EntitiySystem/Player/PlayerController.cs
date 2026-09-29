@@ -253,10 +253,10 @@ public class PlayerController : Entity
 
         }
 
-        float slowMultiplier = 1f - Slow * (1f - SlowRes);
+        float slowMultiplier = 1f - Swamp * (1f - SlowRes);
         slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
 
-        float finalSpeed = Speed * slowMultiplier;
+        float finalSpeed = (Speed * slowMultiplier) - Slow;
 
         if (m_isEvading)
         {
