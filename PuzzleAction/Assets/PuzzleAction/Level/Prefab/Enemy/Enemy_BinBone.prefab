@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3021549121619212611}
   - component: {fileID: 5850237883439194917}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -7297444003917248090}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy_BinBone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: 38122b5066446b2419914fc2c81dffa0, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
@@ -194,7 +192,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!195 &7341675702321249772
 NavMeshAgent:
@@ -238,9 +236,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5192190198220617858}
     m_Modifications:
+    - target: {fileID: 44688392065161030, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_Name
       value: DamagePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
@@ -335,6 +341,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapRenderer
       objectReference: {fileID: 0}
+    - target: {fileID: 4052661641254162185, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -379,6 +389,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d7c42df4fa350c64bbe2fe6a49dbcf20, type: 2}
+    - target: {fileID: 7537675690710177230, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357025503503154993, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

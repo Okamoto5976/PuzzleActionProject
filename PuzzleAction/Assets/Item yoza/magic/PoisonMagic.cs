@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PoisonMagic : TrapBase
 {
     [Header("Direct Hit Setting")]
-    [SerializeField] private LayerMask m_ignoreLayers;
+    [SerializeField] private LayerMask m_hitLayers;
     [SerializeField] private float m_damage = 10f;
     [SerializeField] private float m_lifeTime = 5f;
 
@@ -91,13 +91,13 @@ public class PoisonMagic : TrapBase
     {
         if (!m_isAreaActive)
         {
-            if ((m_ignoreLayers.value & (1 << other.gameObject.layer)) != 0)
+            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
             {
                 OnHit();
                 return;
             }
 
-            Entity hitTarget = other.GetComponent<Entity>();
+            Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 DamageData damageData = new DamageData
@@ -111,7 +111,7 @@ public class PoisonMagic : TrapBase
             }
             return;
         }
-        Entity inAreaTarget=other.GetComponent<Entity>();
+        Entity inAreaTarget=other.GetComponentInParent<Entity>();
         if (inAreaTarget == null) return;
         if (inAreaTarget.Team == m_team) return;
         if (!m_targetsInRange.Contains(inAreaTarget))
@@ -124,7 +124,7 @@ public class PoisonMagic : TrapBase
     {
         if (!m_isAreaActive) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
         if(target != null&&m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);

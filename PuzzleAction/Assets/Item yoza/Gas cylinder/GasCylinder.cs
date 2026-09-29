@@ -7,8 +7,8 @@ public class GasCylinder : TrapBase
     [SerializeField] private LayerMask m_hitLayers;
 
     [Header("Gas Area Settings")]
-    [SerializeField] private Collider m_gasCollider;
-    [SerializeField] private GameObject m_gasEffect;
+    //[SerializeField] private Collider m_gasCollider;
+    //[SerializeField] private GameObject m_gasEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_poisonDamage = 2f;
@@ -35,8 +35,8 @@ public class GasCylinder : TrapBase
             m_rb.linearVelocity=Vector3.zero;
             m_rb.angularVelocity=Vector3.zero;
         }
-        if (m_gasCollider != null) m_gasCollider.enabled = false;
-        if(m_gasEffect!=null)m_gasEffect.SetActive(false);
+        //if (m_gasCollider != null) m_gasCollider.enabled = false;
+        //if(m_gasEffect!=null)m_gasEffect.SetActive(false);
     }
 
     protected override void OnHit()
@@ -63,8 +63,8 @@ public class GasCylinder : TrapBase
         m_gasTimer += Time.deltaTime;
         if (m_gasTimer >= m_duration)
         {
-            if (m_gasCollider != null) m_gasCollider.enabled = false;
-            if (m_gasEffect != null) m_gasEffect.SetActive(false);
+            //if (m_gasCollider != null) m_gasCollider.enabled = false;
+            //if (m_gasEffect != null) m_gasEffect.SetActive(false);
             OnReturnPool();
             return;
         }
@@ -78,8 +78,6 @@ public class GasCylinder : TrapBase
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
         if(!m_isGassing)
         {
             if((m_hitLayers.value&(1<<other.gameObject.layer))!=0)
@@ -88,7 +86,7 @@ public class GasCylinder : TrapBase
                 return;
             }
 
-            Entity hitTarget = other.GetComponent<Entity>();
+            Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 OnHit();
@@ -97,7 +95,7 @@ public class GasCylinder : TrapBase
             return;
         }
 
-        Entity inGasTarget=other.GetComponent<Entity>();
+        Entity inGasTarget=other.GetComponentInParent<Entity>();
         if (inGasTarget == null) return;
         if (inGasTarget.Team == m_team) return;
 
@@ -110,7 +108,7 @@ public class GasCylinder : TrapBase
     {
         if (!m_isGassing) return;
 
-        Entity target=other.GetComponent<Entity>();
+        Entity target=other.GetComponentInParent<Entity>();
         if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
@@ -126,8 +124,8 @@ public class GasCylinder : TrapBase
             m_rb.angularVelocity = Vector3.zero;
             m_rb.isKinematic = true;
         }
-        if (m_gasCollider != null) m_gasCollider.enabled = true;
-        if (m_gasEffect != null) m_gasEffect.SetActive(true);
+        //if (m_gasCollider != null) m_gasCollider.enabled = true;
+        //if (m_gasEffect != null) m_gasEffect.SetActive(true);
     }
 
     private void ApplyPoisonEffect()

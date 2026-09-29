@@ -212,8 +212,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4534400832726257739}
   - component: {fileID: 7277797425382834796}
-  - component: {fileID: 3760152005104094903}
   - component: {fileID: 8629952716382898349}
+  - component: {fileID: 3760152005104094903}
   m_Layer: 0
   m_Name: SlowArrow
   m_TagString: Untagged
@@ -253,7 +253,6 @@ MonoBehaviour:
   m_isFowardDir: 1
   m_str: 30
   m_speed: 0
-  m_attackType: 0
   m_rate: 1
   m_hitLayers:
     serializedVersion: 2
@@ -264,6 +263,18 @@ MonoBehaviour:
     m_modifierType: 2
     m_duration: 10
     m_buffID: 20
+--- !u!114 &8629952716382898349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9130968029162177211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
 --- !u!54 &3760152005104094903
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -291,15 +302,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8629952716382898349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9130968029162177211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool

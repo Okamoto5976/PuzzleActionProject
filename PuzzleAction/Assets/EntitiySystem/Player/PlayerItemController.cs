@@ -97,7 +97,7 @@ public class PlayerItemController
 
 
 
-            m_power += Time.deltaTime;
+            m_power += Time.deltaTime * 1.5f;
 
             m_power = Mathf.Min(m_power, 3f);
 

@@ -28,7 +28,7 @@ public class HitCollider : MonoBehaviour
     }
 
     [SerializeField] protected bool m_isViewCollider;
-    [SerializeField] protected bool m_isVisible;
+    protected bool m_isVisible;
 
     
     private AttackHitBox[] hitBoxes;   // “–‚½‚è”»’è
@@ -142,17 +142,20 @@ public class HitCollider : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!m_isVisible) return;
-        if (hitBoxes == null) return;
+        if (m_currentHitBox == null) return;
         //Debug.Log("DrawGizmos");
 
         Gizmos.color = Color.red;
 
-        foreach (var hitBox in hitBoxes)
-        {
-            if (hitBox.m_transform == null) continue;
-            Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        //foreach (var hitBox in hitBoxes)
+        //{
+        //    if (hitBox.m_transform == null) continue;
+        //    Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        //    Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
+        //}
+
+        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
             Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
-        }
     }
     private Transform[] My_OverlapSphere(AttackHitBox attackHitBox)
     {
