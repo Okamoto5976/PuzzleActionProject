@@ -29,9 +29,7 @@ public enum Enum_TrapType
     PoisonMagic,
     RockMagic,
     WindMagic,
-    //---enemy
     Born,
-    Rock,
     //---trapArea
     GasArea,
     SwampArea,

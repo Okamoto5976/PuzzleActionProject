@@ -5037,7 +5037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwampTrap
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 1ee9ee7b84ccb8444826b4a12cae7a17, type: 2}
   m_speed: 0
 --- !u!114 &4969366526268400199
 MonoBehaviour:

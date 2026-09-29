@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bananapeel
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 3ee6db1a0a5e32f4d956ea9d602c74c6, type: 2}
   m_speed: 0
   m_stunDuration: 2
 --- !u!114 &4138614842166381810

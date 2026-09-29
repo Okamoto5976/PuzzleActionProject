@@ -166,7 +166,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: dc96d91ff6f1e4145bff87ba8ab1a94b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ffa49cadfdb272348a93f7caa054deb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetTrap
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 1e5cf48f4ba0c934cbb3634202b47173, type: 2}
   m_speed: 0
   m_stunDuration: 2
 --- !u!114 &5553791492813868636

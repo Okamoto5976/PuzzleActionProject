@@ -49,13 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MolotovCocktail
   m_isFowardDir: 0
-  m_str: 2
+  m_trapData: {fileID: 11400000, guid: c333b1957abf56a41b0e8cfaffc9e071, type: 2}
   m_speed: 0
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192
   m_fireCollider: {fileID: 4031413804075750395}
-  m_fireEffect: {fileID: 2300984813006871762}
+  m_fireEffect: {fileID: 0}
   m_duration: 10
   m_tickInterval: 0.5
   m_damagePerTick: 5

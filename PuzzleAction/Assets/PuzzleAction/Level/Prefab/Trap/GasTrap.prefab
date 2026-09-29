@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GasCylinder
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 3e766911f6ef27d4d85ad23b86976794, type: 2}
   m_speed: 0
   m_hitLayers:
     serializedVersion: 2

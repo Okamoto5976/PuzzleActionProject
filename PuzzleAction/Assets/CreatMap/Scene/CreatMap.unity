@@ -1472,18 +1472,16 @@ MonoBehaviour:
   - key: 26
     pool: {fileID: 341403896}
   - key: 27
-    pool: {fileID: 735960746}
-  - key: 28
     pool: {fileID: 11185803}
-  - key: 29
+  - key: 28
     pool: {fileID: 1281278073}
-  - key: 30
+  - key: 29
     pool: {fileID: 972296279}
-  - key: 31
+  - key: 30
     pool: {fileID: 1117582746}
-  - key: 32
+  - key: 31
     pool: {fileID: 484888540}
-  - key: 33
+  - key: 32
     pool: {fileID: 1392508915}
 --- !u!4 &435115611
 Transform:
@@ -1525,7 +1523,6 @@ Transform:
   - {fileID: 469692361}
   - {fileID: 1055649209}
   - {fileID: 341403895}
-  - {fileID: 735960745}
   - {fileID: 11185804}
   - {fileID: 1281278072}
   - {fileID: 972296278}
@@ -2439,53 +2436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2e1a9e2623a024e925b52eec850d4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!1 &735960744
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 735960745}
-  - component: {fileID: 735960746}
-  m_Layer: 0
-  m_Name: Rock
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &735960745
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735960744}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 435115611}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &735960746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735960744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: b4d30fa2b7adb314fbc4a390330f8cb0, type: 3}
-  m_poolCount: 30
-  m_forcePoolCount: 1
 --- !u!1 &737178094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4163,7 +4113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8213095029228168054, guid: a7457ed2aee9883469da5a2bcf9c2772, type: 3}
+  m_prefab: {fileID: 5405777550611800389, guid: a21972f87fda6104e8910e88a3648ed6, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1361733458

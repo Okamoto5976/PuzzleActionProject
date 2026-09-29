@@ -40,7 +40,7 @@ public class BearTrap : TrapBase
 
         m_damageData = new DamageData
         {
-            Attack = m_str,
+            Attack = m_trapData.m_base,
             AttackDir = (target.transform.position - transform.position).normalized
         };
 

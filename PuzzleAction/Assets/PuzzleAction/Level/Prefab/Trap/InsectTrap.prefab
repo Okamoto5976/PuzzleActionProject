@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InsectTrap
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 6181138000e43514bb7eb713016cef32, type: 2}
   m_speed: 0
   m_insectCollider: {fileID: 6563586515305359531}
-  m_stunDuration: 0
+  m_stunDuration: 2
 --- !u!114 &613635683574313116
 MonoBehaviour:
   m_ObjectHideFlags: 0

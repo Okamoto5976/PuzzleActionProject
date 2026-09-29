@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BearTrap
   m_isFowardDir: 0
-  m_str: 1
+  m_trapData: {fileID: 11400000, guid: 307ca69b4203dbd41aba9969435c7df5, type: 2}
   m_speed: 0
   m_damageCollider: {fileID: 0}
   m_recoveryTime: 3

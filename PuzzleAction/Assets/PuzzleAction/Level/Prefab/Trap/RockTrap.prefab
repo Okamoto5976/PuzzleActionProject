@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RockTrap
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: b0633e1cca5237748b41b43a9ad83ee1, type: 2}
   m_speed: 0
   m_hitLayers:
     serializedVersion: 2

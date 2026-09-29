@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bluffbomb
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: bbe5303fd80fb5f43a94de508182582b, type: 2}
   m_speed: 0
   m_Range: 4
   m_KnockbackPower: 15

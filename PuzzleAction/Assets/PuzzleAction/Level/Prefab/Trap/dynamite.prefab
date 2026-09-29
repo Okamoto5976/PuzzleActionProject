@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Dynamite_Trap
   m_isFowardDir: 0
-  m_str: 30
+  m_trapData: {fileID: 11400000, guid: 5a7b5ddb3d4fed8459cad5ed9aa7ea8d, type: 2}
   m_speed: 0
   m_knockBackValue: 5
   m_stunDuration: 2

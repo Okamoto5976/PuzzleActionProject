@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CaltropTrap
   m_isFowardDir: 0
-  m_str: 10
+  m_trapData: {fileID: 11400000, guid: 0114ef140cc429e44a539ecd2b7dc5f5, type: 2}
   m_speed: 0
   m_damageInterval: 1
 --- !u!114 &613635683574313116

@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KnifeTrap
   m_isFowardDir: 1
-  m_str: 5
+  m_trapData: {fileID: 11400000, guid: fdc973d0e92782247886685f30adc6f5, type: 2}
   m_speed: 35
   m_rate: 2
   m_hitLayers:

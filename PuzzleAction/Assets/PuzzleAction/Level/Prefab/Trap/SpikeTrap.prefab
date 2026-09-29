@@ -736,7 +736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrap
   m_isFowardDir: 0
-  m_str: 10
+  m_trapData: {fileID: 11400000, guid: ab561c87979960249a8b62044ab72335, type: 2}
   m_speed: 0
   m_cooldown: 2
 --- !u!114 &8110528615864431924

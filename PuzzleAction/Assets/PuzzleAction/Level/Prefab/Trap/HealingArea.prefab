@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealingArea
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: cd59aa08921fb6c45b903042577f4f29, type: 2}
   m_speed: 0
   m_healAmount: 5
   m_buffDuration: 1

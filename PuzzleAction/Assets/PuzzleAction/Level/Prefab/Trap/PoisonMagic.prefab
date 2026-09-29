@@ -4938,7 +4938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoisonMagic
   m_isFowardDir: 1
-  m_str: 20
+  m_trapData: {fileID: 11400000, guid: 6ab54fdd1635ebb478abe4064ad58cc4, type: 2}
   m_speed: 5
   m_hitLayers:
     serializedVersion: 2

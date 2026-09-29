@@ -19,7 +19,7 @@ public class SpikeTrap : TrapBase
         
         m_damageData = new DamageData
         {
-            Attack = m_str,
+            Attack = m_trapData.m_base,
 
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
@@ -35,7 +35,7 @@ public class SpikeTrap : TrapBase
 
         m_damageData = new DamageData
         {
-            Attack = m_str,
+            Attack = m_trapData.m_base,
 
             CriticalRate = 0,
             CriticalDamage = 0,

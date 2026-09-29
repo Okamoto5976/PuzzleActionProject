@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class ArrowTrap : TrapBase
 {
-    [SerializeField] private float m_rate = 1f;
-
-    [SerializeField] private LayerMask m_hitLayers;
-
-    private bool m_isInitialized;
-
-
     [System.Serializable]
     public class BuffItemClass
     {
@@ -20,14 +13,17 @@ public class ArrowTrap : TrapBase
         [Header("----Active Buff Setting ----")]
         public float m_duration;
         public BuffID m_buffID;
-
-
     }
 
     [Header("BuffSetting")]
 
     [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
 
+    [SerializeField] private float m_damageRate = 1f;
+
+    [SerializeField] private LayerMask m_hitLayers;
+
+    private bool m_isInitialized;
 
     private void FixedUpdate()
     {
@@ -41,27 +37,16 @@ public class ArrowTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        m_damageData = new DamageData
-        {
-
-            Attack = m_owner.STR * m_rate,
-            //HitRate
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-            Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.StunPower,
-            //Duration
-            AttackDir = m_dir,
-            //SE
-
-        };
-
-        //OnAddForce(m_dir, m_power);
         m_rb.linearVelocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
         m_isInitialized = true;
 
+        CreateDamageData();
+    }
+
+    protected override void CreateDamageData()
+    {
+        base.CreateDamageData();
     }
 
     protected override void OnHit()
@@ -69,13 +54,13 @@ public class ArrowTrap : TrapBase
         OnReturnPool();
     }
 
-    private StatusModifier SetModifier()
+    private StatusModifier SetModifier(BuffItemClass buff)
     {
         StatusModifier modifier = new StatusModifier()
         {
-            m_statType = StatusType.CriticalRate,
-            m_value = 20f,
-            m_modType = ModifierType.Subtract,
+            m_statType = buff.m_statusType,
+            m_value = buff.m_value,
+            m_modType = buff.m_modifierType,
         };
 
         return modifier;
@@ -91,25 +76,13 @@ public class ArrowTrap : TrapBase
             return;
         }
 
-        Entity target =
-            other.GetComponentInParent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
 
-        if (target == null)
-            return;
+        if (target == null) return;
 
-        //if (target.Team ==
-        //    TeamType.Nature)
-        //    return;
+        if (target.Team == TeamType.Nature) return;
 
         if (target.Team == m_team) return;
-
-
-        //if (m_owner != null)
-        //{
-        //    if (target.Team ==
-        //        m_owner.Team)
-        //        return;
-        //}
 
         target.TakeDamage(m_damageData);
 
@@ -119,24 +92,13 @@ public class ArrowTrap : TrapBase
             {
                 if (buff.m_duration <= 0) continue;
 
-                StatusModifier modifier = new StatusModifier()
-                {
-                    m_statType = buff.m_statusType,
-                    m_value = buff.m_value,
-                    m_modType = buff.m_modifierType
-                };
+                var modifier = SetModifier(buff);
 
                 target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
 
             }
         }
 
-        
-
-        //Debug.Log(
-        //    $"{other.name} Hit");
-
-        //Destroy(gameObject);
         OnHit();
     }
 }
