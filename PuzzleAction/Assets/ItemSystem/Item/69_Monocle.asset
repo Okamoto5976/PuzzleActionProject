@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 69
     itemName: Monocle
     itemIcon: {fileID: 21300000, guid: 16b9000b0b85d2244b299f58f2560333, type: 3}
-    description: 
+    description: "\u89B3\u5BDF\u773C\u304C\u5149\u308A\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387\u304C\u5E38\u6642\u5C11\u3057\u5897\u52A0\u3002"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
+    price: 999
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1.2

@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 67
     itemName: IronHeart
     itemIcon: {fileID: 21300000, guid: 9527a066287336b408ee483eaa1204e0, type: 3}
-    description: 
+    description: "\u7CBE\u795E\u304C\u5B89\u5B9A\u3057\u3001\u4F53\u529B\u304C\u5E38\u6642\u5C11\u3057\u5897\u52A0\u3002"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
+    price: 2880
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1.2

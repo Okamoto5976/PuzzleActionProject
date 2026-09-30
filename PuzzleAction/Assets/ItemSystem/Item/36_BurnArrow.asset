@@ -17,12 +17,11 @@ MonoBehaviour:
     itemID: 36
     itemName: BurnArrow
     itemIcon: {fileID: 21300000, guid: 94849ac1dd818e8469a708c52a107162, type: 3}
-    description: 
+    description: "\u77E2\u306B\u5F53\u305F\u3063\u305F\u6575\u3092\u71C3\u3084\u3059\u3002\u3000\u52B9\u679C\uFF1A\u706B\u50B7\u52B9\u679C\u4ED8\u4E0E"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 1
-    price: 100
-    Type: 0
+    price: 180
   TrapPrefab: {fileID: 0}
   m_enumTrap: 4

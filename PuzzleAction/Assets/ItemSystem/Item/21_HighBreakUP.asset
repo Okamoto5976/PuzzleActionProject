@@ -23,7 +23,6 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 0
     price: 3600
-    Type: 0
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 10
