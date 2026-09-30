@@ -1,14 +1,9 @@
 using UnityEngine;
 using TMPro;
 
-public class Test : MonoBehaviour
+public class InventoryUIController : MonoBehaviour
 {
     [SerializeField] private InventorySystem inventorySystem;
-
-    [SerializeField] private Item m_posion;
-    [SerializeField] private Item m_dog;
-
-    [SerializeField] private bool m_istrigger;
 
     [SerializeField] private GameObject m_trashButton;
 
@@ -48,8 +43,6 @@ public class Test : MonoBehaviour
 
     public void SetInventoryVisibility(bool state)
     {
-        //Debug.Log($"call SetInventory{state}");
-
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
@@ -108,29 +101,6 @@ public class Test : MonoBehaviour
         m_nameText.text = data.ItemName;
         m_infoText.text = data.info;
     }
-
-    //[SerializeField] private Sprite m_potion;
-
-    //public void testButton()
-    //{
-    //    Item _item = new Item("Potion", "HP Heal 50", m_potion);
-    //    //inventorySystem.AddItem(_item);
-    //}
-
-    //public void OnItem()
-    //{
-
-    //    Debug.Log("AddItem");
-    //    if (m_istrigger)
-    //    {
-    //        inventorySystem.OnItem(m_posion, 1);
-
-    //    }
-    //    else
-    //    {
-    //        inventorySystem.OnItem(m_dog, 1);
-    //    }
-    //}
 
     //=========remove button=============
 
@@ -229,12 +199,4 @@ public class Test : MonoBehaviour
     {
         //inventorySystem.Use(2);
     }
-
-    //private void Update()
-    //{
-    //   if (Input.GetKeyDown(KeyCode.Space))
-    //   {
-    //        SetIndex(0);
-    //    }
-    //}
 }
