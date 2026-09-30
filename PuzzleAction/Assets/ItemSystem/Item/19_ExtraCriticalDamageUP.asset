@@ -25,8 +25,8 @@ MonoBehaviour:
     price: 600
   m_buffEffectType: 0
   m_buffItemClass:
-  - m_value: 20
-    m_statusType: 7
+  - m_value: 0.4
+    m_statusType: 6
     m_modifierType: 0
     m_duration: 30
     m_buffID: 15
