@@ -17,11 +17,10 @@ MonoBehaviour:
     itemID: 26
     itemName: Magonote
     itemIcon: {fileID: 21300000, guid: 70fb3db042ff56f4885b7c5f78e1db71, type: 3}
-    description: 
+    description: "\u75D2\u3044\u6240\u306B\u624B\u304C\u5C4A\u304F\u3045\uFF5E\uFF01\u3000\u52B9\u679C\uFF1AHP+10"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 25
-    Type: 0
+    price: 100
   m_value: 10

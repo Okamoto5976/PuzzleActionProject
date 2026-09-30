@@ -31,6 +31,11 @@ public class EnemyHP : EntityHP
 
         }
         m_returnObjPool.ReturnToPool();
+
+        //EnemyController enemy = GetComponent<EnemyController>();
+        //enemy.ChangeState(Entity.EntityState.Idle);
+        //m_entity.HealHP(m_entity.HP);
+
         Debug.Log("EnemyReturnPool");
 
     }

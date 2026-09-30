@@ -17,11 +17,10 @@ MonoBehaviour:
     itemID: 62
     itemName: Coupon
     itemIcon: {fileID: 21300000, guid: 629f2cad89639d549a883898b6dfa4d0, type: 3}
-    description: 
+    description: "\u5546\u54C1\u3092\u5024\u4E0B\u3052\u3059\u308B\uFF01"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
-    Type: 0
+    price: 400
   m_passiveType: 1

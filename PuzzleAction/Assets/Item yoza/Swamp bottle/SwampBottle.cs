@@ -24,42 +24,33 @@ public class SwampBottle : TrapBase
 
     protected override void EntitySetUp()
     {
-        m_isMudActive = false;
+        // 設置した時点で沼を開始
+        m_isMudActive = true;
         m_isAddForceCalled = false;
         m_swampTimer = 0f;
         m_tickTimer = 0f;
         m_targetsInRange.Clear();
 
+        // 設置型なので動かさない
         if (m_rb != null)
         {
-            m_rb.isKinematic = false;
+            m_rb.isKinematic = true;
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
-        if (m_swampCollider != null) m_swampCollider.enabled = false;
-        if (m_swampEffect != null) m_swampEffect.SetActive(false);
+
+        // 沼を最初から有効にする
+        if (m_swampCollider != null)
+            m_swampCollider.enabled = true;
+
+        if (m_swampEffect != null)
+            m_swampEffect.SetActive(true);
     }
 
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-        //EntitySetUp();
-    }
     protected override void OnHit()
     {
-        StartGas();
     }
-    private void FixedUpdate()
-    {
-        if (!m_isMudActive)
-        {
-            if (!m_isAddForceCalled)
-            {
-                OnAddForce(m_dir, m_power);
-                m_isAddForceCalled = true;
-            }
-        }
-    }
+
     private void Update()
     {
         CheckDeadLine();
@@ -67,44 +58,37 @@ public class SwampBottle : TrapBase
         if (!m_isMudActive) return;
 
         m_swampTimer += Time.deltaTime;
+
         if (m_swampTimer >= m_duration)
         {
-            if (m_swampCollider != null) m_swampCollider.enabled = false;
-            if (m_swampEffect != null) m_swampEffect.SetActive(false);
+            if (m_swampCollider != null)
+                m_swampCollider.enabled = false;
+
+            if (m_swampEffect != null)
+                m_swampEffect.SetActive(false);
+
             OnReturnPool();
             return;
         }
 
         m_tickTimer += Time.deltaTime;
+
         if (m_tickTimer >= m_tickInterval)
         {
             m_tickTimer = 0;
             ApplyPoisonEffect();
         }
     }
+
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
 
-        if (!m_isMudActive)
-        {
-            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
-            {
-                OnHit();
-                return;
-            }
+        Entity inGasTarget =
+            other.GetComponentInParent<Entity>();
 
-            Entity hitTarget = other.GetComponent<Entity>();
-            if (hitTarget != null && hitTarget.Team != m_team)
-            {
-                OnHit();
-                return;
-            }
-            return;
-        }
-
-        Entity inGasTarget = other.GetComponent<Entity>();
         if (inGasTarget == null) return;
+
         if (inGasTarget.Team == m_team) return;
 
         if (!m_targetsInRange.Contains(inGasTarget))
@@ -112,28 +96,18 @@ public class SwampBottle : TrapBase
             m_targetsInRange.Add(inGasTarget);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (!m_isMudActive) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target =
+            other.GetComponentInParent<Entity>();
+
         if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
         }
-    }
-    private void StartGas()
-    {
-        m_isMudActive = true;
-
-        if (m_rb != null)
-        {
-            m_rb.linearVelocity = Vector3.zero;
-            m_rb.angularVelocity = Vector3.zero;
-            m_rb.isKinematic = true;
-        }
-        if (m_swampCollider != null) m_swampCollider.enabled = true;
-        if (m_swampEffect != null) m_swampEffect.SetActive(true);
     }
 
     private void ApplyPoisonEffect()
@@ -154,7 +128,12 @@ public class SwampBottle : TrapBase
                 m_value = m_slowAmount,
                 m_modType = ModifierType.Add
             };
-            target.AddBuff(slowModifier, BuffID.Water, m_slowTimer);
+
+            target.AddBuff(
+                slowModifier,
+                BuffID.Water,
+                m_slowTimer
+            );
         }
     }
 }

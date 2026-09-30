@@ -16,12 +16,11 @@ MonoBehaviour:
   m_data:
     itemID: 3
     itemName: ExtraHealPotion
-    itemIcon: {fileID: 21300000, guid: e6060dd8392ec574a9df6ae461d9b394, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 6f9d95fd690790340bd7550e677b28b0, type: 3}
+    description: "\u8CA0\u50B7\u3057\u305F\u7D30\u80DE\u304C\u77AC\u304F\u9593\u306B\u518D\u751F\u3059\u308B\u3002\u3000\u52B9\u679C\uFF1AHP+100"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 360
   m_value: 100

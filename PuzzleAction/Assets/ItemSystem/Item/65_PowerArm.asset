@@ -16,14 +16,13 @@ MonoBehaviour:
   m_data:
     itemID: 65
     itemName: PowerArm
-    itemIcon: {fileID: 21300000, guid: 207cf381ef28d6640bb558aca8c4b1cf, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 59e22f0b47d18404cbfdd803dff2b0e0, type: 3}
+    description: "\u8155\u529B\u304C\u5F37\u304F\u306A\u308A\u3001\u529B\u304C\u5E38\u6642\u5C11\u3057\u5897\u52A0\u3002"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
-    Type: 0
+    price: 3600
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1.2

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8063288571165968259}
   - component: {fileID: 6926009269752508024}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 7470603499713679253}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 6334792236557903116}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy_Ork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,8 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: ec1a0ac7c56e3e74db74cb621da66b83, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
@@ -117,13 +115,14 @@ MonoBehaviour:
   m_attackRange: 4
   m_attackCooldown: 2
   m_attackHitBox:
-    m_transform: {fileID: 0}
+    m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
     m_radius: 4
-  m_attackItem: {fileID: 11400000, guid: f6caaf3e1380ae649b7a1cc0eb964c70, type: 2}
+  m_isRandom: 0
+  m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 0, z: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 5fcf1bdc47b4cea4d831283e99fb442e, type: 2}
 --- !u!114 &9036534983232500468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +182,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &7470603499713679253
 MonoBehaviour:
@@ -235,13 +234,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5192190198220617858}
     m_Modifications:
+    - target: {fileID: 44688392065161030, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_Name
       value: DamagePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.y
@@ -249,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.47965
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalRotation.w
@@ -332,6 +339,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyRenderer
       objectReference: {fileID: 0}
+    - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -376,6 +387,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 8e0436842cdf42744b2ec2ab8986e4c3, type: 2}
+    - target: {fileID: 7537675690710177230, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357025503503154993, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

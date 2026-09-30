@@ -17,10 +17,20 @@ MonoBehaviour:
     itemID: 41
     itemName: Gun
     itemIcon: {fileID: 21300000, guid: 225c6377d217a5141a5fa7bbf99a4c90, type: 3}
-    description: 
+    description: "\u5C04\u6483\u3067\u5927\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u304C\u3001\u53CD\u52D5\u3067\u9283\u306F\u58CA\u308C\u308B\u3002"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 3
-    price: 100
-    Type: 0
+    price: 600
+  m_overrideDamage: 1
+  m_damage:
+    Attack: 20
+    CriticalRate: 0
+    CriticalDamage: 0
+    BreakRate: 0
+    Knockback: 0
+    StunDuration: 0
+    AttackDir: {x: 0, y: 0, z: 0}
+  m_selfBuffList: []
+  m_targetBuffList: []

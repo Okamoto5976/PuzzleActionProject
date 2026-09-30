@@ -10,12 +10,10 @@ public class FireMagic : TrapBase
     [SerializeField] private float m_burnDuration = 4f;
     [SerializeField] private float m_lifeTime = 5f;
 
-    private bool m_isAddForceCalled = false;
     private float m_timer = 0f;
 
     protected override void EntitySetUp()
     {
-        m_isAddForceCalled = false;
         m_timer = 0f;
 
         if(m_rb!=null)
@@ -26,15 +24,15 @@ public class FireMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    
+    //public override void TrapInit()
+    //{
+    //    base.TrapInit(data);
+    //    //EntitySetUp();
+    //}
 
     private void FixedUpdate()
     {
-        if(!m_isAddForceCalled)
-        {
-            OnAddForce(m_dir, m_power);
-            m_isAddForceCalled=true;
-        }
+        OnMove(m_dir);
     }
 
     private void Update()
@@ -55,7 +53,12 @@ public class FireMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        {
+            OnHit();
+            return;
+        }
+
         if (m_team == TeamType.Nature) return;
 
         if((m_hitLayer.value&(1<<other.gameObject.layer)) != 0)
@@ -71,7 +74,6 @@ public class FireMagic : TrapBase
         DamageData damageData = new DamageData
         {
             Attack = m_damage,
-            Attacker = m_owner,
             AttackDir = m_dir,
         };
         target.TakeDamage(damageData);

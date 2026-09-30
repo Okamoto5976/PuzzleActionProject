@@ -11,7 +11,7 @@ public class Button : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_messageText; //メッセージ表示用
     [SerializeField] private Vector3 m_fadeOutOffset;
     [SerializeField] private string m_itemName;    //送るアイテム名
-    [SerializeField] private Inventory m_inventory;
+    //[SerializeField] private Inventory m_inventory;
     [SerializeField] private int m_itemId;  //このボタンが売るアイテム
     [SerializeField] private GameObject m_speechBubble; //吹き出し本体
     [SerializeField] private MessageManager m_messageManager;
@@ -29,38 +29,38 @@ void Start()
     }
     public void BuyItem()
     {
-        m_timer.NotifyAction();
+        //m_timer.NotifyAction();
 
-        if (m_inventory.GetItemCount(m_itemId) >= 10)
-        {
-            //m_messageManager.ShowByState(State.InventoryFull);
-            return;
-        }
-        //お金チェック
-        if (!m_money.UseMoney(m_price))
-        {
-            //m_messageManager.ShowByState(State.NoMoney);
-            return;
-        }
-        //インベントリに追加
-        if (!m_inventory.AddItem(m_itemId))
-        {
-            //m_messageManager.ShowByState(State.InventoryFull);
-            return;
-        }
-        //購入メッセージ
-        m_messageManager.ShowBuyMessage(m_itemName, 1);
+        //if (m_inventory.GetItemCount(m_itemId) >= 10)
+        //{
+        //    //m_messageManager.ShowByState(State.InventoryFull);
+        //    return;
+        //}
+        ////お金チェック
+        //if (!m_money.UseMoney(m_price))
+        //{
+        //    //m_messageManager.ShowByState(State.NoMoney);
+        //    return;
+        //}
+        ////インベントリに追加
+        //if (!m_inventory.AddItem(m_itemId))
+        //{
+        //    //m_messageManager.ShowByState(State.InventoryFull);
+        //    return;
+        //}
+        ////購入メッセージ
+        //m_messageManager.ShowBuyMessage(m_itemName, 1);
     }
     public void SendItemAtInventory()
     {
-        if (m_inventory.AddItem(m_itemId))
-        {
-            Debug.Log("インベントリにアイテムを送った" +  m_itemName);
-        }
-        else
-        {
-            Debug.Log("インベントリがいっぱいで送れない");
-        }
+        //if (m_inventory.AddItem(m_itemId))
+        //{
+        //    Debug.Log("インベントリにアイテムを送った" +  m_itemName);
+        //}
+        //else
+        //{
+        //    Debug.Log("インベントリがいっぱいで送れない");
+        //}
     }
     void ShowMessage(string message, Color color)
     {

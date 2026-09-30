@@ -19,8 +19,7 @@ public class SpikeTrap : TrapBase
         
         m_damageData = new DamageData
         {
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
 
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
@@ -30,14 +29,13 @@ public class SpikeTrap : TrapBase
         m_isActive = true;
     }
   
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_damageData = new DamageData
         {
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
 
             CriticalRate = 0,
             CriticalDamage = 0,

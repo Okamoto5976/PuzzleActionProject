@@ -8,16 +8,15 @@ public class KnockBackTrap : TrapBase
 
     private float m_timer;
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_timer = 0f;
 
         m_damageData = new DamageData
         {
             Attack = 0,
-            AttackType = m_attackType,
 
             Knockback = m_power,
 
@@ -33,7 +32,6 @@ public class KnockBackTrap : TrapBase
         m_damageData = new DamageData
         {
             Attack = 0,
-            AttackType = m_attackType,
 
             Knockback = m_owner.KnockBack,
 

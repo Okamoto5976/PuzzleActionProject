@@ -16,13 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 40
     itemName: SharpKnife
-    itemIcon: {fileID: 21300000, guid: 79b566b0097c3464f98aae5d78b90658, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: dbb48683edad1a243b385e0a84ecb4db, type: 3}
+    description: "\u30CA\u30A4\u30D5\u3092\u6295\u3052\u3066\u5927\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 200
   TrapPrefab: {fileID: 0}
   m_enumTrap: 8

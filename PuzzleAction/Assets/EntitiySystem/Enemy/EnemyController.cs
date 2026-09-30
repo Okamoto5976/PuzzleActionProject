@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 #if UNITY_EDITOR
@@ -20,15 +21,23 @@ public class EnemyController : Entity
     [Header("AttachCollider Setthing")]
     [SerializeField] private AttackHitBox m_attackHitBox;
     private HitCollider m_hitCollider;
+    [System.Serializable]
+    public class AttackItem
+    {
+        public string ItemAnimation;
+        public Item attackItem;
+    }
     [Header("Item")]
-    [SerializeField] private Item m_attackItem;
+    [SerializeField] private bool m_isRandom = false;
+    [SerializeField] private List<AttackItem> m_attackItems = new();
     [SerializeField] private float m_power = 3f;
     [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    private int m_itemIndex;
     #region UnityEditor
     #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
-            if (m_attackItem == null) return;
+            if (m_attackItems == null) return;
 
             Vector3 shootPos = transform.position + m_shootOffset;
 
@@ -75,6 +84,24 @@ public class EnemyController : Entity
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
 
+    public void InitializeSpawn()
+    {
+        ChangeState(EntityState.Idle);
+
+        m_isCooldownEnd = true;
+        m_attackCooldownDuration = 0f;
+
+        if (m_entityHP is EnemyHP hp)
+        {
+            hp.ResetHP();
+        }
+
+        SetCanMove(true);
+        SetIsStun(false);
+        SetIsInvincible(false);
+        AssignDropItem();
+    }
+
     #region UNITY EVENT
     protected override void Awake()
     {
@@ -106,7 +133,7 @@ public class EnemyController : Entity
     private void Update()
     {
         if (CurrentState == Entity.EntityState.Dead) return;
-        OnUpdateFlag();
+        UpdateFlag();
 
         if (IsStun)
         {
@@ -188,12 +215,6 @@ public class EnemyController : Entity
     }
     public void Attack()
     {
-        Debug.DrawLine(transform.position,m_attackHitBox.m_transform.position,Color.red,2f);
-        //Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position,m_target.Value));
-        //Debug.Log(m_attackHitBox.m_transform.position);
-        //Debug.Log(m_attackHitBox.m_radius);
-
-
         if (m_hitCollider == null) return;
 
         DamageData damage = new DamageData
@@ -205,32 +226,54 @@ public class EnemyController : Entity
                 Knockback = KnockBack,
                 StunDuration = m_data.StunDuration,
                 AttackDir = transform.forward,
-                Attacker = this,
-                //AttackerSE = AttackSE,
-                //AudioSource = AudioSource
             };
 
         m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : Player HIT");
     }
-    public void UseItem(Vector3 dir)
+    private AttackItem GetUseItem()
     {
-        ItemRecieveData data = new ItemRecieveData
-        {
-            entity = this,
-            pos = transform.position,
-            dir = dir,
-            power = m_power * 8,
-            offset = m_shootOffset,
-        };
+        if (m_attackItems == null || m_attackItems.Count == 0) return null;
 
-        if (m_anim != null)
+        if (m_isRandom)
         {
-            m_anim.SetTrigger("Item");
-
+            return m_attackItems[UnityEngine.Random.Range(0, m_attackItems.Count)];
         }
 
-        m_itemManager.OnUseItem(m_attackItem, data);
+        AttackItem item = m_attackItems[m_itemIndex];
+
+        m_itemIndex++;
+
+        if (m_itemIndex >= m_attackItems.Count)
+        {
+            m_itemIndex = 0;
+        }
+
+        return item;
+    }
+    public void UseItem(Vector3 dir)
+    {
+        AttackItem useData = GetUseItem();
+
+        if (useData == null) return;
+
+        ItemRecieveData data =
+            new ItemRecieveData
+            {
+                entity = this,
+                pos = transform.position,
+                dir = dir,
+                power = m_power * 8,
+                offset = m_shootOffset,
+            };
+
+        if (m_anim != null &&
+            !string.IsNullOrEmpty(useData.ItemAnimation))
+        {
+            m_anim.SetTrigger(useData.ItemAnimation);
+        }
+
+        m_itemManager.OnUseItem(useData.attackItem, data);
     }
     #endregion
 
@@ -238,9 +281,6 @@ public class EnemyController : Entity
     public void Move(Vector3 dir, float speed)
     {
         if (!CanAction) return;
-        {
-            
-        }
         if (dir == Vector3.zero)
         {
             Stop();
@@ -262,7 +302,6 @@ public class EnemyController : Entity
         if(m_anim != null)
         {
             m_anim.SetBool("Move", !m_agent.isStopped);
-
         }
 
         m_agent.speed = speed;
@@ -371,25 +410,37 @@ public class EnemyController : Entity
 
     #region ENEMY
 
-    public static EnemyController SpawnEnemy(Enum_EnemyType type, Vector3 position)
+    public static EnemyController SpawnEnemy( Enum_EnemyType type, Vector3 position)
     {
         Middleman_Enemy pool = FindAnyObjectByType<Middleman_Enemy>();
-        if(pool == null)
+        if (pool == null)
         {
-            Debug.LogWarning("Middleman_Enemy Not Found");
-            return null;
-        }
-        EnemyController enemy = pool.GetComponent(type);
-        if(enemy == null)
-        {
-            Debug.LogWarning($"Pool Missing : {type}");
-            return null;
+            Debug.LogWarning("Middleman_Enemy Not Found"); return null;
         }
 
+        EnemyController enemy = pool.GetComponent(type);
+
+        if (enemy == null)
+        {
+            Debug.LogWarning($"Pool Missing : {type}"); return null;
+        }
+
+        enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
+        enemy.InitializeSpawn();
+        enemy.AssignDropItem();
 
         return enemy;
+    }
+    public void AssignDropItem()
+    {
+        if (m_itemManager == null) return;
+        if (m_itemDropGachaEngine == null) return;
+
+        RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+        Item item = m_itemManager.DropItem(rarity);
+        m_dropItem = item;
     }
     #endregion
 }

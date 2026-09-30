@@ -25,14 +25,14 @@ public class WallTrap : TrapBase
         StartCoroutine(SpawnDelay());
     }
 
-    public override void TrapInit(ItemRecieveData data)
-    {
-        //base.TrapInit();
+    //public override void TrapInit()
+    //{
+    //    //base.TrapInit();
          
-        //m_dir = transform.forward;
+    //    //m_dir = transform.forward;
 
-        //StartCoroutine(SpawnDelay());
-    }
+    //    //StartCoroutine(SpawnDelay());
+    //}
 
 
     private IEnumerator SpawnDelay()

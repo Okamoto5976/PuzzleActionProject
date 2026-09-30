@@ -10,8 +10,6 @@ public class PoisonMagic : TrapBase
     [SerializeField] private float m_lifeTime = 5f;
 
     [Header("Fire Magic Settings")]
-    [SerializeField] private Collider m_poisonCollider;
-    [SerializeField] private GameObject m_poisonEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_poisonDamage = 2f;
@@ -44,6 +42,13 @@ public class PoisonMagic : TrapBase
         if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
    
+    }
+    //public override void TrapInit(ItemRecieveData data)
+    //{
+    //    base.TrapInit(data);
+    //    //EntitySetUp();
+    //}
+
     private void FixedUpdate()
     {
         if (!m_isAreaActive&&!m_isAddForceCalled)
@@ -101,13 +106,12 @@ public class PoisonMagic : TrapBase
                 return;
             }
 
-            Entity hitTarget = other.GetComponent<Entity>();
+            Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 DamageData damageData = new DamageData
                 {
                     Attack = m_damage,
-                    Attacker = m_owner,
                     AttackDir = m_dir,
                 };
                 hitTarget.TakeDamage(damageData);
@@ -116,7 +120,7 @@ public class PoisonMagic : TrapBase
             }
             return;
         }
-        Entity inAreaTarget=other.GetComponent<Entity>();
+        Entity inAreaTarget=other.GetComponentInParent<Entity>();
         if (inAreaTarget == null) return;
         if (inAreaTarget.Team == m_team) return;
         if (!m_targetsInRange.Contains(inAreaTarget))
@@ -129,7 +133,7 @@ public class PoisonMagic : TrapBase
     {
         if (!m_isAreaActive) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
         if(target != null&&m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
@@ -146,9 +150,6 @@ public class PoisonMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
             m_rb.isKinematic = true;
         }
-
-        if (m_poisonCollider != null) m_poisonCollider.enabled = true;
-        if (m_poisonEffect != null) m_poisonEffect.SetActive(true);
     }
 
     private void ApplyPoisonEffect()

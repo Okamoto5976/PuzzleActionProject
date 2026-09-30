@@ -11,6 +11,8 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private DebugMapPlaceSystem m_debugMapPlaceSystem;
     [SerializeField] private InstanceCounter m_instanceCounter;
 
+    [SerializeField] private InventorySystem m_inventorySystem;
+
     private MapClass m_mapClass;
     private void Awake()
     {
@@ -36,6 +38,8 @@ public class CreatMap : MonoBehaviour
         }
 
         m_mapGenerate.Generate(m_mapClassData);
+
+        m_inventorySystem.Initialized();
 
         m_entitySpawner.Generate(m_mapClassData, m_mapGenerate);
     }

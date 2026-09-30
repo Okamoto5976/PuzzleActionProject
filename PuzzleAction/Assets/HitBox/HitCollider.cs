@@ -1,14 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-
-public enum AttackType
-{
-    None, 
-    Recovery,
-    Fire
-}
 
 public class DamageResult
 {
@@ -36,7 +28,7 @@ public class HitCollider : MonoBehaviour
     }
 
     [SerializeField] protected bool m_isViewCollider;
-    [SerializeField] protected bool m_isVisible;
+    protected bool m_isVisible;
 
     
     private AttackHitBox[] hitBoxes;   // “–‚½‚è”»’è
@@ -150,22 +142,20 @@ public class HitCollider : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (!m_isVisible) return;
-        if (hitBoxes == null) return;
+        if (m_currentHitBox == null) return;
         //Debug.Log("DrawGizmos");
 
         Gizmos.color = Color.red;
 
-        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
-        Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
-
-        //foreach(var hitBox in hitBoxes)
+        //foreach (var hitBox in hitBoxes)
         //{
         //    if (hitBox.m_transform == null) continue;
-        //    Gizmos.DrawWireSphere(
-        //        hitBox.m_transform.position,
-        //        hitBox.m_radius
-        //        );
+        //    Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        //    Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
         //}
+
+        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+            Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
     }
     private Transform[] My_OverlapSphere(AttackHitBox attackHitBox)
     {

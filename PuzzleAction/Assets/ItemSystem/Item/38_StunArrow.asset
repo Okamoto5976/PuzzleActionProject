@@ -16,13 +16,12 @@ MonoBehaviour:
   m_data:
     itemID: 38
     itemName: StunArrow
-    itemIcon: {fileID: 21300000, guid: 79b566b0097c3464f98aae5d78b90658, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 94849ac1dd818e8469a708c52a107162, type: 3}
+    description: "\u77E2\u306B\u5F53\u305F\u3063\u305F\u6575\u3092\u30B9\u30BF\u30F3\u3055\u305B\u308B\u3002"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 1
-    price: 100
-    Type: 0
+    price: 360
   TrapPrefab: {fileID: 0}
   m_enumTrap: 6

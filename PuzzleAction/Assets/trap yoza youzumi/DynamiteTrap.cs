@@ -26,37 +26,33 @@ public class DynamiteTrap : TrapBase
         m_damageData = new DamageData
         {
 
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
             Knockback = m_knockBackValue,
             StunDuration = m_stunDuration,
-            //Dirは　当たった時に設定
-            //AttackDir = m_dir,
-
         };
 
-        Debug.Log("fire");
+        
+
+        //m_fireParticle.gameObject.SetActive(true);
+
         m_fireParticle.Play();
+
         Invoke(nameof(OnHit), m_explosionTimer);
     }
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         m_damageData = new DamageData
         {
 
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
             Knockback = m_knockBackValue,
             StunDuration = m_stunDuration,
-            //Dirは　当たった時に設定
-            //AttackDir = m_dir,
-
         };
 
 

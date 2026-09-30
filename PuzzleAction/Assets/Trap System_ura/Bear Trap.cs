@@ -40,8 +40,7 @@ public class BearTrap : TrapBase
 
         m_damageData = new DamageData
         {
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
             AttackDir = (target.transform.position - transform.position).normalized
         };
 
@@ -76,9 +75,9 @@ public class BearTrap : TrapBase
         }
     }
 
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         CancelInvoke(nameof(RecoverTrap));
 

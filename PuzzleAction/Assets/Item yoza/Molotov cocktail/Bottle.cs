@@ -71,7 +71,7 @@ public class Bottle : TrapBase
            
             if (fireArea!=null)
             {
-             fireArea.InitFire(m_owner, m_team, m_str);
+             //fireArea.InitFire(m_owner, m_team, m_str);
             }
         }
         OnReturnPool();

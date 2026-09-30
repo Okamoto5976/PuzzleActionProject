@@ -52,7 +52,7 @@ public class MolotovCocktail : TrapBase
         {
             if(!m_isAddForceCalled)
             {
-                OnAddForce(m_dir, m_power);
+                //OnAddForce(m_dir, m_power);
                 m_isAddForceCalled=true;
             }
         }
@@ -152,7 +152,7 @@ public class MolotovCocktail : TrapBase
             StatusModifier burnModifier = new StatusModifier
             {
                 m_statType = StatusType.Burn,
-                m_value = m_damagePerTick + m_str,
+                m_value = m_damagePerTick + m_trapData.m_base,
                 m_modType = ModifierType.Add
             };
 

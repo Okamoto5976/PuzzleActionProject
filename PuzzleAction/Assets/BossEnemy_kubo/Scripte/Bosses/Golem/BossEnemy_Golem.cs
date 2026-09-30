@@ -108,9 +108,8 @@ public class BossEnemy_Golem : MonoBehaviour, IBossBehaviour
                 CriticalDamage = m_controller.CriticalDamage,
                 BreakRate = m_controller.BreakRate,
                 Knockback = m_controller.KnockBack,
-                StunDuration = m_controller.Stun,
+                StunDuration = m_controller.StunPower,
                 AttackDir = transform.forward,
-                Attacker = m_controller
             };
 
         StompShockWave shockWave = Instantiate( m_golem.ShockWavePrefab, transform.position,Quaternion.identity);

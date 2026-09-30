@@ -17,10 +17,25 @@ MonoBehaviour:
     itemID: 43
     itemName: StrongStick
     itemIcon: {fileID: 21300000, guid: ef727d3ff3a5c7042a731dbe680cbb58, type: 3}
-    description: 
+    description: "\u30EA\u30B9\u30AF\u3092\u9867\u307F\u305A\u632F\u308A\u304B\u3076\u308C\uFF01\u3000\u6027\u80FD\uFF1A\u9AD8\u5A01\u529B\u3001\u30CE\u30C3\u30AF\u30D0\u30C3\u30AF\u3001\u30B9\u30BF\u30F3"
     maxStack: 1
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 3
-    price: 100
-    Type: 0
+    price: 200
+  m_overrideDamage: 1
+  m_damage:
+    Attack: 10
+    CriticalRate: 0
+    CriticalDamage: 0
+    BreakRate: 0
+    Knockback: 0
+    StunDuration: 0
+    AttackDir: {x: 0, y: 0, z: 0}
+  m_selfBuffList:
+  - m_value: 10
+    m_statusType: 16
+    m_modifierType: 0
+    m_duration: 10
+    m_buffID: 20
+  m_targetBuffList: []

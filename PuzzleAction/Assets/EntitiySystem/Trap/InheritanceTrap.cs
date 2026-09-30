@@ -31,11 +31,9 @@ public class InheritanceTrap : Entity
 
         data.Knockback = 0f;
         data.StunDuration = 0f;
-        data.Duration = 0f;
 
         data.AttackDir = (target.transform.position - transform.position).normalized;
 
-        data.Attacker = this;
         //“–‚½‚é‚©
         //if(!CanHit(target))
         //{

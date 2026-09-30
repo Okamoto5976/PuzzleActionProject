@@ -646,8 +646,7 @@ GameObject:
   - component: {fileID: 5196034073018719024}
   - component: {fileID: 897643145533190916}
   - component: {fileID: 8110528615864431924}
-  - component: {fileID: 2693685657548565166}
-  - component: {fileID: 8152832701990887904}
+  - component: {fileID: 1746372757379145460}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -683,9 +682,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2dca46635e1dd946b9be9b6dc3ce8bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrap
-  m_str: 10
+  m_isFowardDir: 0
+  m_trapData: {fileID: 11400000, guid: ab561c87979960249a8b62044ab72335, type: 2}
   m_speed: 0
-  m_attackType: 0
   m_cooldown: 2
 --- !u!114 &8110528615864431924
 MonoBehaviour:
@@ -699,34 +698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
---- !u!54 &2693685657548565166
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8213095029228168054}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &8152832701990887904
+--- !u!65 &1746372757379145460
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -746,7 +718,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &8444701134852645061
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,8 +33,7 @@ public class CaltropTrap : TrapBase
         m_damageData = new DamageData
         {
 
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,
@@ -50,16 +49,15 @@ public class CaltropTrap : TrapBase
     }
 
     
-    public override void TrapInit(ItemRecieveData data)
+    public override void TrapInit()
     {
-        base.TrapInit(data);
+        base.TrapInit();
 
         //DamageData
         m_damageData = new DamageData
         {
 
-            Attack = m_str,
-            AttackType = m_attackType,
+            Attack = m_trapData.m_base,
             CriticalRate = m_owner.CriticalRate,
             CriticalDamage = m_owner.CriticalDamage,
             BreakRate = m_owner.BreakRate,

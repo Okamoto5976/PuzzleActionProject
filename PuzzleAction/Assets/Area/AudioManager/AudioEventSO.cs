@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 
-[CreateAssetMenu(fileName = "AudioEventSO", menuName = "Scriptable Object/AudioEventSO")]
+[CreateAssetMenu(fileName = "AudioEventSO", menuName = "Scriptable Objects/AudioEventSO")]
 public class AudioEventSO : ScriptableObject
 {
     public event Action<AudioData> OnEvent;

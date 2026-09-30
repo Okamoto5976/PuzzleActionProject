@@ -27,12 +27,14 @@ public class Bananapeel : TrapBase
 
         Entity victim =other.GetComponentInParent<Entity>();
 
-        if (victim.Team == TeamType.Nature) return;
 
         if (victim!=null)
         {
+            if (victim.Team == TeamType.Nature) return;
+
+
             if (victim.Team == m_team) return;
-            victim.AddControlEffectStun(m_appliedStunDuration);
+            victim.ApplyStun(m_appliedStunDuration);
             OnHit();
         }
     }
