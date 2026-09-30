@@ -148,7 +148,7 @@ public class PlayerController : Entity
     {
         if(m_currentState == EntityState.Dead) return;
 
-        Debug.Log($"{Swamp}");
+        //Debug.Log($"{Swamp}");
 
         UpdateFlag();
 
@@ -396,7 +396,6 @@ public class PlayerController : Entity
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {
         //Debug.LogWarning(type);
-
         m_passiveSystem.AddPassive(modifiers, type);
     }
 

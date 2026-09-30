@@ -1,5 +1,60 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1175383306073291431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5297297002674007484}
+  - component: {fileID: 3129778989720150078}
+  m_Layer: 0
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5297297002674007484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175383306073291431}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3042968806835571943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3129778989720150078
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175383306073291431}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0.5}
 --- !u!1 &9213505366536643909
 GameObject:
   m_ObjectHideFlags: 0
@@ -15,7 +70,6 @@ GameObject:
   - component: {fileID: 7709634229184462051}
   - component: {fileID: -6208613025751143186}
   - component: {fileID: -6878687357098537760}
-  - component: {fileID: 359080160195294053}
   - component: {fileID: 5583940323451125462}
   m_Layer: 11
   m_Name: Enemy_RunAway
@@ -39,6 +93,7 @@ Transform:
   m_Children:
   - {fileID: 7257964216916103363}
   - {fileID: 2166755392835542973}
+  - {fileID: 5297297002674007484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2848513853438478038
@@ -118,7 +173,7 @@ MonoBehaviour:
   m_team: 1
   m_data: {fileID: 11400000, guid: d2eb1bf4c9c05084396219b7d8b64c57, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_findRange: 10
+  m_findRange: 12
   m_attackRange: 7
   m_attackCooldown: 2
   m_attackHitBox:
@@ -128,9 +183,9 @@ MonoBehaviour:
   m_isRandom: 0
   m_attackItems:
   - ItemAnimation: Item
-    attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
+    attackItem: {fileID: 11400000, guid: 40efb3ea5d7da644e861a3f58ffe83ae, type: 2}
   m_power: 3
-  m_shootOffset: {x: 0, y: 0.5, z: 0}
+  m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 9aada60219c2f264488573b3f095fede, type: 2}
 --- !u!114 &-6208613025751143186
 MonoBehaviour:
@@ -161,30 +216,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 1
-  m_isVisible: 1
---- !u!136 &359080160195294053
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9213505366536643909}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5583940323451125462
 MonoBehaviour:
   m_ObjectHideFlags: 0

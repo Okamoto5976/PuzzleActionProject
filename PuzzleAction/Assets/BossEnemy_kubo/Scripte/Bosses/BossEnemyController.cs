@@ -239,7 +239,7 @@ public class BossEnemyController : Entity
     #endregion
 
     #region MOVE
-    public void Move(Vector3 dir, float speed)
+    public void InputMove(Vector3 dir, float speed)
     {
         if (!CanAction) return;
         if (dir == Vector3.zero)
