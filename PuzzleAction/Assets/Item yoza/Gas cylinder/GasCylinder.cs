@@ -9,7 +9,7 @@ public class GasCylinder : TrapBase
     [Header("Gas Area Settings")]
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    [SerializeField] private float m_poisonDuration = 3f;
+    //[SerializeField] private float m_poisonDuration = 3f;
 
     private bool m_isGassing = false;
     private bool m_isAddForceCalled = false;

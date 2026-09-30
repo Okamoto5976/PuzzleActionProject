@@ -21,43 +21,7 @@ public class BearTrap : TrapBase
             m_damageCollider.enabled = true;
         }
     }
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        if (!m_isActive || m_isRecovering)
-        {
-            return;
-        }
-
-        Entity target = other.GetComponentInParent<Entity>();
-
-        if (target == null) 
-        {
-            return;
-        }
-
-        if (target.Team == m_team) return;
-
-        m_damageData = new DamageData
-        {
-            Attack = m_trapData.m_base,
-            AttackDir = (target.transform.position - transform.position).normalized
-        };
-
-        target.TakeDamage(m_damageData);
-
-        OnHit();
-
-        m_isActive = false;
-        m_isRecovering = true;
-
-        if (m_damageCollider != null)
-        {
-            m_damageCollider.enabled = false;
-        }
-
-        Invoke(nameof(RecoverTrap), m_recoveryTime);
-    }
+    
 
     protected override void OnHit()
     {
@@ -88,5 +52,44 @@ public class BearTrap : TrapBase
         {
             m_damageCollider.enabled = true;
         }
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (!m_isActive || m_isRecovering)
+        {
+            return;
+        }
+
+        Entity target = other.GetComponentInParent<Entity>();
+
+        if (target == null)
+        {
+            return;
+        }
+
+        if (target.Team == m_team) return;
+
+        //m_damageData = new DamageData
+        //{
+        //    Attack = m_trapData.m_base,
+        //    AttackDir = (target.transform.position - transform.position).normalized
+        //};
+
+        m_damageData.AttackDir = (target.transform.position - transform.position).normalized;
+
+        target.TakeDamage(m_damageData);
+
+        OnHit();
+
+        m_isActive = false;
+        m_isRecovering = true;
+
+        if (m_damageCollider != null)
+        {
+            m_damageCollider.enabled = false;
+        }
+
+        Invoke(nameof(RecoverTrap), m_recoveryTime);
     }
 }

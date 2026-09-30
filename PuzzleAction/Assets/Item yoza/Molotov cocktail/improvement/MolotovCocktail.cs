@@ -12,7 +12,7 @@ public class MolotovCocktail : TrapBase
     //[SerializeField] private GameObject m_fireEffect;
     [SerializeField] private float m_duration = 1f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    [SerializeField] private float m_burnBuffDuration = 1f;
+    //[SerializeField] private float m_burnBuffDuration = 1f;
 
     private bool m_isBurning = false;
     private float m_burnTimer = 0f;

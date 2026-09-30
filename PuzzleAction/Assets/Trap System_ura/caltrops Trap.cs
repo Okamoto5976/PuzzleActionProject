@@ -5,22 +5,16 @@ using UnityEngine;
 public class CaltropTrap : TrapBase
 {
     [Header("Damage")]
-    [SerializeField]
-    private float m_damageInterval = 1.0f;
-
+    [SerializeField] private float m_damageInterval = 1.0f;
 
     // åªç›ÅAÇ‹Ç´Ç—ÇµÇÃîÕàÕì‡Ç…Ç¢ÇÈEntity
     private HashSet<Entity> m_targets =
         new HashSet<Entity>();
 
-
     private Coroutine m_damageCoroutine;
-
 
     protected override void EntitySetUp()
     {
-        //OnAddForce(m_dir, 5f);
-         
         m_targets.Clear();
 
         if (m_damageCoroutine != null)
@@ -28,42 +22,12 @@ public class CaltropTrap : TrapBase
             StopCoroutine(m_damageCoroutine);
             m_damageCoroutine = null;
         }
-
-        //Damage
-        m_damageData = new DamageData
-        {
-
-            Attack = m_trapData.m_base,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-        };
-
     }
-
 
     protected override void OnHit()
     {
-         
-         
     }
-
     
-    public override void TrapInit()
-    {
-        base.TrapInit();
-
-        //DamageData
-        m_damageData = new DamageData
-        {
-
-            Attack = m_trapData.m_base,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-        };
-    }
-
     protected override void OnTriggerEnter(Collider other)
     {
         Entity target =

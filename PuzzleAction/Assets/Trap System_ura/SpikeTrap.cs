@@ -4,8 +4,7 @@ using UnityEngine;
 public class SpikeTrap : TrapBase
 {
     [Header("Trap")]
-    [SerializeField]
-    private float m_cooldown = 2.0f;
+    [SerializeField] private float m_cooldown = 2.0f;
    
     private bool m_isActive = true;
 
@@ -16,16 +15,6 @@ public class SpikeTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        
-        m_damageData = new DamageData
-        {
-            Attack = m_trapData.m_base,
-
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-        };
-
         m_isActive = true;
     }
   
@@ -33,39 +22,22 @@ public class SpikeTrap : TrapBase
     {
         base.TrapInit();
 
-        m_damageData = new DamageData
-        {
-            Attack = m_trapData.m_base,
-
-            CriticalRate = 0,
-            CriticalDamage = 0,
-            BreakRate = 0,
-        };
-
         m_isActive = true;
     }
 
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (!m_isActive)
-        {
-            return;
-        }
+        if (!m_isActive) return;
 
         Entity entity = other.GetComponentInParent<Entity>();
 
-        if (entity == null)
-        {
-            return;
-        }
+        if (entity == null) return;
 
-        if (entity.Team == Team)
-        {
-            return;
-        }
+        if (entity.Team == Team) return;
 
         m_anim.SetTrigger("Active");
+
         entity.TakeDamage(m_damageData);
 
         OnHit();
@@ -86,7 +58,7 @@ public class SpikeTrap : TrapBase
 
     protected override void OnHit()
     {
-        
+        //sound
     }
 }
 

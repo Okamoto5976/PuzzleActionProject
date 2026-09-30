@@ -4886,8 +4886,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KnockBackTrap
   m_isFowardDir: 1
   m_trapData: {fileID: 11400000, guid: fe60e6caa22d88746ad5da6d56ed3092, type: 2}
-  m_speed: 0
-  m_lifeTime: 3
+  m_speed: 6
+  m_hitLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_lifeTime: 10
 --- !u!114 &4189156852500700316
 MonoBehaviour:
   m_ObjectHideFlags: 0

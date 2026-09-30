@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class KnockBackTrap : TrapBase
+public class WindMagic : TrapBase
 {
     [Header("Life Time")]
-    [SerializeField]
-    private float m_lifeTime = 3f;
+    [SerializeField] private LayerMask m_hitLayers;
+    [SerializeField] private float m_lifeTime = 3f;
 
     private float m_timer;
 
@@ -13,38 +13,16 @@ public class KnockBackTrap : TrapBase
         base.TrapInit();
 
         m_timer = 0f;
-
-        m_damageData = new DamageData
-        {
-            Attack = 0,
-
-            Knockback = m_power,
-
-            AttackDir = m_dir
-        };
     }
-
 
     protected override void EntitySetUp()
     {
         m_timer = 0f;
-
-        m_damageData = new DamageData
-        {
-            Attack = 0,
-
-            Knockback = m_owner.KnockBack,
-
-            AttackDir = m_dir
-        };
     }
-
 
     private void FixedUpdate()
     {
         OnMove(m_dir);
-
-        
     }
 
     private void Update()
@@ -68,6 +46,13 @@ public class KnockBackTrap : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        {
+            OnHit();
+            return;
+        }
+
+
         Entity target =
             other.GetComponentInParent<Entity>();
 
@@ -80,13 +65,7 @@ public class KnockBackTrap : TrapBase
 
         target.TakeDamage(m_damageData);
 
-        //EntityHP entityHP =
-        //    target.GetComponent<EntityHP>();
 
-        //if (entityHP == null)
-        //    return;
-
-        //entityHP.TakeDamage(m_damageData);
 
     }
 }
