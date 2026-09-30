@@ -1,92 +1,59 @@
 using UnityEngine;
 
-public class BearTrap : TrapBase
+public class BearTrap : MonoBehaviour
 {
-    [Header("Bear Trap")]
-    [SerializeField] private Collider m_damageCollider;
+    [Header("Trap Data")]
+    [SerializeField] private TrapData m_trapData;
 
     [Header("Recovery")]
     [SerializeField] private float m_recoveryTime = 3.0f;
 
-    private bool m_isActive;
-    private bool m_isRecovering;
+    private Collider m_collider;
+    private bool m_isActive = true;
 
-    protected override void EntitySetUp()
+    private void Awake()
     {
-        m_isActive = true;
-        m_isRecovering = false;
-
-        if(m_damageCollider != null)
-        {
-            m_damageCollider.enabled = true;
-        }
+        m_collider = GetComponent<Collider>();
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!m_isActive || m_isRecovering)
+        if (!m_isActive)
         {
             return;
         }
 
-        Entity target = other.GetComponentInParent<Entity>();
+        Entity entity = other.GetComponentInParent<Entity>();
 
-        if (target == null) 
+        if (entity == null)
         {
             return;
         }
 
-        if (target.Team == m_team) return;
-
-        m_damageData = new DamageData
+        DamageData damageData = new DamageData
         {
-            Attack = m_trapData.m_base,
-            AttackDir = (target.transform.position - transform.position).normalized
+            Attack = m_trapData.m_trapAttack,
+            CriticalRate = m_trapData.m_trapCriticalRate,
+            CriticalDamage = m_trapData.m_trapCriticalDamage,
+            BreakRate = m_trapData.m_trapBreakRate,
+            Knockback = m_trapData.m_trapKnockBack,
+            StunDuration = m_trapData.m_trapStunDuration,
+            AttackDir = (entity.transform.position - transform.position).normalized
         };
 
-        target.TakeDamage(m_damageData);
+        entity.TakeDamage(damageData);
 
-        OnHit();
-
+        // ˆê“x”­“®‚µ‚½‚ç–³Œø‰»
         m_isActive = false;
-        m_isRecovering = true;
+        m_collider.enabled = false;
 
-        if (m_damageCollider != null)
-        {
-            m_damageCollider.enabled = false;
-        }
-
+        // ˆê’èŽžŠÔŒã‚É•œŠˆ
         Invoke(nameof(RecoverTrap), m_recoveryTime);
-    }
-
-    protected override void OnHit()
-    {
-       
     }
 
     private void RecoverTrap()
     {
         m_isActive = true;
-        m_isRecovering = false;
-
-        if (m_damageCollider != null)
-        {
-            m_damageCollider.enabled = true;
-        }
-    }
-
-    public override void TrapInit()
-    {
-        base.TrapInit();
-
-        CancelInvoke(nameof(RecoverTrap));
-
-        m_isActive = true;
-        m_isRecovering = false;
-
-        if(m_damageCollider != null)
-        {
-            m_damageCollider.enabled = true;
-        }
+        m_collider.enabled = true;
     }
 }
