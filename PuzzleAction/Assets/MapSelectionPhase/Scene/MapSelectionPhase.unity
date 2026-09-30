@@ -447,18 +447,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 688009937}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12763b27a0d1e146b85b3cc2f05115c, type: 3}
+  m_Script: {fileID: 11500000, guid: 419a7bf942fae6f4e9751875b6252851, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DisplayManager
-  playerHPUI: {fileID: 0}
-  moneyUI: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::LevelDisplay
   levelUI: {fileID: 1481416313}
-  m_frames: []
-  m_frameMaterial: {fileID: 0}
-  m_itemImages: []
-  m_defaultImage: {fileID: 0}
-  m_buffIconList: []
-  m_buffImageList: []
 --- !u!1 &858248613
 GameObject:
   m_ObjectHideFlags: 0
