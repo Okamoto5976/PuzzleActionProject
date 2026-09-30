@@ -111,7 +111,7 @@ abstract public class Entity : MonoBehaviour
             if (m_knockbackTimer > value) return;
             m_knockbackTimer = Mathf.Min(1f, value);
 
-            m_knockbackPower = Mathf.Clamp(value, 0f, 3f);
+            m_knockbackPower = Mathf.Clamp(value, 1f, 3f);
         }
     }
 

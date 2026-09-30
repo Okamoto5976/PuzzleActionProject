@@ -25,3 +25,9 @@ MonoBehaviour:
   m_trapBreakRate: 0
   m_trapKnockBack: 0
   m_trapStunDuration: 0
+  m_buffSetting:
+  - m_value: 2
+    m_statusType: 17
+    m_modifierType: 0
+    m_duration: 1.5
+    m_buffID: 27

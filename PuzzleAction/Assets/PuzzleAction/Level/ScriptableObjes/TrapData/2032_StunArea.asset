@@ -24,4 +24,5 @@ MonoBehaviour:
   m_trapCriticalDamage: 0
   m_trapBreakRate: 0
   m_trapKnockBack: 0
-  m_trapStunDuration: 0
+  m_trapStunDuration: 1
+  m_buffSetting: []

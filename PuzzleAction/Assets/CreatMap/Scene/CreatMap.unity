@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8719441754121234464, guid: d1575ac9c6e9e77409872969539cd576, type: 3}
+  m_prefab: {fileID: 8719441754121234464, guid: b9ef8829235956a4dae018ba4fd9eb69, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &574996012
@@ -2882,7 +2882,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8719441754121234464, guid: d1575ac9c6e9e77409872969539cd576, type: 3}
+  m_prefab: {fileID: 8719441754121234464, guid: 3e92d7f8a83628c4fbc60f05768297ef, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &975252804
@@ -3603,7 +3603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8719441754121234464, guid: d1575ac9c6e9e77409872969539cd576, type: 3}
+  m_prefab: {fileID: 8719441754121234464, guid: ba971eb92634227429afc63803763669, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1133934828
@@ -4239,7 +4239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8719441754121234464, guid: d1575ac9c6e9e77409872969539cd576, type: 3}
+  m_prefab: {fileID: 8719441754121234464, guid: 0d732215eea7eca40ab423838734cf3e, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!4 &1392508916

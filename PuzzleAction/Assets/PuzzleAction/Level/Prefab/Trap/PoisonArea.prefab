@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.6367924, g: 1, b: 0.75774056, a: 1}
+      maxColor: {r: 1, g: 0.2971698, b: 0.71811616, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4911,7 +4911,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fff1f861ad1348409632d886f975b61, type: 2}
+  - {fileID: 2100000, guid: bd9e241dbba5a0740ac9a5baf3dc0299, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4944,11 +4944,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8921793828245241595}
-  - component: {fileID: -705482254768183235}
+  - component: {fileID: -8252484204856489050}
   - component: {fileID: 4969366526268400199}
-  - component: {fileID: 5931104486333945943}
+  - component: {fileID: 7970546924131938713}
   m_Layer: 0
-  m_Name: SwampArea
+  m_Name: PoisonArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4971,7 +4971,7 @@ Transform:
   - {fileID: 4854082960821804819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-705482254768183235
+--- !u!114 &-8252484204856489050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4984,14 +4984,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AreaTrap
   m_isFowardDir: 0
-  m_trapData: {fileID: 11400000, guid: 1ee9ee7b84ccb8444826b4a12cae7a17, type: 2}
+  m_trapData: {fileID: 11400000, guid: dee680c840a30f34aa646f2497555da5, type: 2}
   m_speed: 0
-  m_buffClass:
-    m_value: 0.5
-    m_statusType: 18
-    m_modifierType: 0
-    m_duration: 1.5
-    m_buffID: 28
 --- !u!114 &4969366526268400199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5004,7 +4998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
---- !u!65 &5931104486333945943
+--- !u!65 &7970546924131938713
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

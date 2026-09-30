@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8326598893244586563}
-  - component: {fileID: 3151080224976532172}
+  - component: {fileID: 2675383856732005570}
   - component: {fileID: -3148263271274697555}
   - component: {fileID: 8615355597084188572}
   m_Layer: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 6579786820677583723}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3151080224976532172
+--- !u!114 &2675383856732005570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7131541308926137162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c76627ff980297446b07352ddd88404f, type: 3}
+  m_Script: {fileID: 11500000, guid: 05d21698facdbe341b03ef9a863f057b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GasTrap
+  m_EditorClassIdentifier: Assembly-CSharp::BuffAreaTrap
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 935d01587965cc64ebc64689f7afcafe, type: 2}
   m_speed: 0
