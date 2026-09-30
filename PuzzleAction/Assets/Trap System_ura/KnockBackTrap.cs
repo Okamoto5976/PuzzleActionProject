@@ -1,66 +1,72 @@
 using UnityEngine;
 
-[RequireComponent(typeof(ReturnObjectToPool))]
-public class KnockBackTrap : MonoBehaviour
+public class KnockBackTrap : TrapBase
 {
-    [Header("Trap Data")]
-    [SerializeField]
-    private TrapData m_trapData;
-
-    [Header("Move")]
-    [SerializeField]
-    private float m_speed = 2f;
-
     [Header("Life Time")]
     [SerializeField]
     private float m_lifeTime = 3f;
 
-    private ReturnObjectToPool m_returnObjPool;
-
-    private Vector3 m_moveDirection;
     private float m_timer;
 
-
-    private void Awake()
+    public override void TrapInit()
     {
-        m_returnObjPool =
-            GetComponent<ReturnObjectToPool>();
-    }
-
-
-    public void Init(Vector3 direction)
-    {
-        m_moveDirection =
-            direction.normalized;
+        base.TrapInit();
 
         m_timer = 0f;
 
-        transform.rotation =
-            Quaternion.LookRotation(
-                m_moveDirection);
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+
+            Knockback = m_power,
+
+            AttackDir = m_dir
+        };
     }
 
 
+    protected override void EntitySetUp()
+    {
+        m_timer = 0f;
+
+        m_damageData = new DamageData
+        {
+            Attack = 0,
+
+            Knockback = m_owner.KnockBack,
+
+            AttackDir = m_dir
+        };
+    }
+
+
+    private void FixedUpdate()
+    {
+        OnMove(m_dir);
+
+        
+    }
+
     private void Update()
     {
-        // 移動方向へまっすぐ移動
-        transform.position +=
-            m_moveDirection *
-            m_speed *
-            Time.deltaTime;
-
-
-        // 時間経過
         m_timer += Time.deltaTime;
 
         if (m_timer >= m_lifeTime)
         {
-            ReturnToPool();
+            m_timer = 0f;
+
+            OnHit();
         }
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnHit()
+    {
+        OnReturnPool();
+    }
+
+
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
             other.GetComponentInParent<Entity>();
@@ -68,43 +74,19 @@ public class KnockBackTrap : MonoBehaviour
         if (target == null)
             return;
 
-
-        EntityHP entityHP =
-            target.GetComponent<EntityHP>();
-
-        if (entityHP == null)
+        if (m_owner != null &&
+            target == m_owner)
             return;
 
+        target.TakeDamage(m_damageData);
 
-        DamageData damageData =
-            new DamageData
-            {
-                Attack = 0f,
+        //EntityHP entityHP =
+        //    target.GetComponent<EntityHP>();
 
-                Knockback =
-                    m_trapData.m_knockback,
+        //if (entityHP == null)
+        //    return;
 
-                // 風の移動方向
-                AttackDir =
-                    m_moveDirection
-            };
+        //entityHP.TakeDamage(m_damageData);
 
-
-        // ノックバックはTakeDamage側で処理
-        entityHP.TakeDamage(
-            damageData);
-
-
-        // 命中後Poolへ
-        ReturnToPool();
-    }
-
-
-    private void ReturnToPool()
-    {
-        if (m_returnObjPool == null)
-            return;
-
-        m_returnObjPool.ReturnToPool();
     }
 }

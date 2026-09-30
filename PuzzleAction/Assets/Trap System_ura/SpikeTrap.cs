@@ -1,20 +1,52 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpikeTrap : MonoBehaviour
+public class SpikeTrap : TrapBase
 {
-    [Header("Trap Data")]
-    [SerializeField]
-    private TrapData m_trapData;
-
-    [Header("Cooldown")]
+    [Header("Trap")]
     [SerializeField]
     private float m_cooldown = 2.0f;
-
+   
     private bool m_isActive = true;
 
+    private void Awake()
+    {
+        m_anim = GetComponentInChildren<Animator>();
+    }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void EntitySetUp()
+    {
+        
+        m_damageData = new DamageData
+        {
+            Attack = m_trapData.m_base,
+
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+        };
+
+        m_isActive = true;
+    }
+  
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_damageData = new DamageData
+        {
+            Attack = m_trapData.m_base,
+
+            CriticalRate = 0,
+            CriticalDamage = 0,
+            BreakRate = 0,
+        };
+
+        m_isActive = true;
+    }
+
+
+    protected override void OnTriggerEnter(Collider other)
     {
         if (!m_isActive)
         {
@@ -28,25 +60,16 @@ public class SpikeTrap : MonoBehaviour
             return;
         }
 
-        // Natureà»äOÇëŒè€Ç…Ç∑ÇÈ
-        if (entity.Team == TeamType.Nature)
+        if (entity.Team == Team)
         {
             return;
         }
 
-        DamageData damageData = new DamageData
-        {
-            Attack = m_trapData.m_trapAttack,
-            CriticalRate = m_trapData.m_trapCriticalRate,
-            CriticalDamage = m_trapData.m_trapCriticalDamage,
-            BreakRate = m_trapData.m_trapBreakRate,
-            Knockback = m_trapData.m_trapKnockBack,
-            StunDuration = m_trapData.m_trapStunDuration
-        };
+        m_anim.SetTrigger("Active");
+        entity.TakeDamage(m_damageData);
 
-        entity.TakeDamage(damageData);
+        OnHit();
 
-        // àÍéûìIÇ…ñ≥å¯âª
         m_isActive = false;
 
         StartCoroutine(Cooldown());
@@ -59,4 +82,11 @@ public class SpikeTrap : MonoBehaviour
 
         m_isActive = true;
     }
+
+
+    protected override void OnHit()
+    {
+        
+    }
 }
+

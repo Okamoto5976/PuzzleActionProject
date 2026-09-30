@@ -2,80 +2,84 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaltropTrap : MonoBehaviour
+public class CaltropTrap : TrapBase
 {
-    [Header("Trap Data")]
-    [SerializeField]
-    private TrapData m_trapData;
-
-    [Header("Team")]
-    [SerializeField]
-    private TeamType m_team;
-
-
-    [Header("Damage Interval")]
+    [Header("Damage")]
     [SerializeField]
     private float m_damageInterval = 1.0f;
 
 
-    // Areaì‡Ç…Ç¢ÇÈEntity
+    // åªç›ÅAÇ‹Ç´Ç—ÇµÇÃîÕàÕì‡Ç…Ç¢ÇÈEntity
     private HashSet<Entity> m_targets =
         new HashSet<Entity>();
 
 
     private Coroutine m_damageCoroutine;
 
-    private DamageData m_damageData;
 
-
-    public void TrapInit(Entity owner, Vector3 dir)
+    protected override void EntitySetUp()
     {
+        //OnAddForce(m_dir, 5f);
+         
+        m_targets.Clear();
+
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
+
+        //Damage
         m_damageData = new DamageData
         {
-            Attack = m_trapData.m_trapAttack,
 
-            CriticalRate =
-                m_trapData.m_trapCriticalRate,
+            Attack = m_trapData.m_base,
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
+        };
 
-            CriticalDamage =
-                m_trapData.m_trapCriticalDamage,
+    }
 
-            BreakRate =
-                m_trapData.m_trapBreakRate,
 
-            Knockback =
-                m_trapData.m_trapKnockBack,
+    protected override void OnHit()
+    {
+         
+         
+    }
 
-            StunDuration =
-                m_trapData.m_trapStunDuration,
+    
+    public override void TrapInit()
+    {
+        base.TrapInit();
 
-            AttackDir = dir
+        //DamageData
+        m_damageData = new DamageData
+        {
+
+            Attack = m_trapData.m_base,
+            CriticalRate = m_owner.CriticalRate,
+            CriticalDamage = m_owner.CriticalDamage,
+            BreakRate = m_owner.BreakRate,
         };
     }
 
-
-    protected virtual void TrapArea(Entity target)
-    {
-        if (target == null)
-            return;
-
-        if (target.Team == m_team)
-            return;
-
-        target.TakeDamage(m_damageData);
-    }
-
-
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
             other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
-
+         
+        if (target == m_owner)
+            return;
+         
+        if (target.Team == m_team)
+            return;
+         
         m_targets.Add(target);
-
+         
         if (m_damageCoroutine == null)
         {
             m_damageCoroutine =
@@ -91,9 +95,10 @@ public class CaltropTrap : MonoBehaviour
 
         if (target == null)
             return;
-
+        
         m_targets.Remove(target);
 
+         
         if (m_targets.Count == 0)
         {
             StopDamage();
@@ -105,14 +110,19 @@ public class CaltropTrap : MonoBehaviour
     {
         while (m_targets.Count > 0)
         {
+             
             foreach (Entity target in m_targets)
             {
-                TrapArea(target);
-            }
+                if (target == null)
+                    continue;
 
+                target.TakeDamage(m_damageData);
+            }
+          
             yield return new WaitForSeconds(
                 m_damageInterval);
         }
+
 
         m_damageCoroutine = null;
     }
@@ -120,11 +130,11 @@ public class CaltropTrap : MonoBehaviour
 
     private void StopDamage()
     {
-        if (m_damageCoroutine == null)
-            return;
-
-        StopCoroutine(m_damageCoroutine);
-        m_damageCoroutine = null;
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
     }
 
 
