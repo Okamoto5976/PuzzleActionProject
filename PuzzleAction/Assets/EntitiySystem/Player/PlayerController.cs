@@ -148,6 +148,8 @@ public class PlayerController : Entity
     {
         if(m_currentState == EntityState.Dead) return;
 
+        Debug.Log($"{Swamp}");
+
         UpdateFlag();
 
         m_position.SetValue(transform.position);

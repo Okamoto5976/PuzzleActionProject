@@ -8092,7 +8092,7 @@ GameObject:
   - component: {fileID: 2131066616}
   - component: {fileID: 2131066617}
   m_Layer: 0
-  m_Name: dynamite
+  m_Name: Dynamite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8126,7 +8126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 8897296333762648534, guid: f29f20e9413501c419611f708f99bcf4, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!114 &681700649319570257
 MonoBehaviour:

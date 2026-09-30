@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4214378712319957509}
   - component: {fileID: 613635683574313116}
   - component: {fileID: 226224629935493032}
+  - component: {fileID: 4890533939015893577}
   m_Layer: 0
   m_Name: InsectTrap
   m_TagString: Untagged
@@ -31,8 +32,7 @@ Transform:
   m_LocalPosition: {x: 119.42857, y: 173, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 2427874780141824283}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4214378712319957509
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 6181138000e43514bb7eb713016cef32, type: 2}
   m_speed: 0
-  m_insectCollider: {fileID: 6563586515305359531}
+  m_insectCollider: {fileID: 0}
   m_stunDuration: 2
 --- !u!114 &613635683574313116
 MonoBehaviour:
@@ -91,45 +91,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &1241771546524060776
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2427874780141824283}
-  - component: {fileID: 6563586515305359531}
-  m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2427874780141824283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241771546524060776}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8008274419046017243}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6563586515305359531
+--- !u!65 &4890533939015893577
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241771546524060776}
+  m_GameObject: {fileID: 679799482741913749}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

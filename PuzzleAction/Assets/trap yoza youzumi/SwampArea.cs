@@ -50,7 +50,7 @@ public class SwampArea : TrapBase
     {
         StatusModifier modifier = new StatusModifier()
         {
-            m_statType = StatusType.Slow,
+            m_statType = StatusType.Swamp,
             m_value = 0.5f,
             m_modType = ModifierType.Add,
         };
@@ -61,6 +61,7 @@ public class SwampArea : TrapBase
     protected override void OnTriggerEnter(Collider other)
     {
         //if (!enabled) return;
+        
 
         Entity target = other.GetComponentInParent<Entity>();
 
@@ -68,6 +69,7 @@ public class SwampArea : TrapBase
 
         //if (target.Team == TeamType.Nature) return;
         //if (m_owner != null && target.Team == m_owner.Team) return;
+        Debug.Log($"{target.name}");
 
         if (!m_SlowedTargets.Contains(target))
         {
