@@ -12,11 +12,9 @@ public class SwampBottle : TrapBase
     [SerializeField] private GameObject m_swampEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    [SerializeField] private float m_slowAmount = 0.3f;
     [SerializeField] private float m_slowTimer = 3f;
 
     private bool m_isMudActive = false;
-    private bool m_isAddForceCalled = false;
     private float m_swampTimer = 0f;
     private float m_tickTimer = 0f;
 
@@ -24,14 +22,11 @@ public class SwampBottle : TrapBase
 
     protected override void EntitySetUp()
     {
-        // 設置した時点で沼を開始
         m_isMudActive = true;
-        m_isAddForceCalled = false;
         m_swampTimer = 0f;
         m_tickTimer = 0f;
         m_targetsInRange.Clear();
 
-        // 設置型なので動かさない
         if (m_rb != null)
         {
             m_rb.isKinematic = true;
@@ -39,12 +34,9 @@ public class SwampBottle : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
 
-        // 沼を最初から有効にする
-        if (m_swampCollider != null)
-            m_swampCollider.enabled = true;
+        if (m_swampCollider != null) m_swampCollider.enabled = true;
 
-        if (m_swampEffect != null)
-            m_swampEffect.SetActive(true);
+        if (m_swampEffect != null)m_swampEffect.SetActive(true);
     }
 
     protected override void OnHit()
@@ -61,11 +53,9 @@ public class SwampBottle : TrapBase
 
         if (m_swampTimer >= m_duration)
         {
-            if (m_swampCollider != null)
-                m_swampCollider.enabled = false;
+            if (m_swampCollider != null) m_swampCollider.enabled = false;
 
-            if (m_swampEffect != null)
-                m_swampEffect.SetActive(false);
+            if (m_swampEffect != null)m_swampEffect.SetActive(false);
 
             OnReturnPool();
             return;
@@ -84,12 +74,9 @@ public class SwampBottle : TrapBase
     {
         base.OnTriggerEnter(other);
 
-        Entity inGasTarget =
-            other.GetComponentInParent<Entity>();
+        Entity inGasTarget = other.GetComponentInParent<Entity>();
 
-        if (inGasTarget == null) return;
-
-        if (inGasTarget.Team == m_team) return;
+        if (inGasTarget == null || inGasTarget.Team == m_team) return;
 
         if (!m_targetsInRange.Contains(inGasTarget))
         {
@@ -101,9 +88,7 @@ public class SwampBottle : TrapBase
     {
         if (!m_isMudActive) return;
 
-        Entity target =
-            other.GetComponentInParent<Entity>();
-
+        Entity target = other.GetComponentInParent<Entity>();
         if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
@@ -112,6 +97,8 @@ public class SwampBottle : TrapBase
 
     private void ApplyPoisonEffect()
     {
+            float slowValue = m_trapData != null ? m_trapData.m_attack : 0f;
+        
         for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
         {
             Entity target = m_targetsInRange[i];
@@ -125,15 +112,11 @@ public class SwampBottle : TrapBase
             StatusModifier slowModifier = new StatusModifier
             {
                 m_statType = StatusType.Slow,
-                m_value = m_slowAmount,
+                m_value =slowValue,
                 m_modType = ModifierType.Add
             };
 
-            target.AddBuff(
-                slowModifier,
-                BuffID.Water,
-                m_slowTimer
-            );
+            target.AddBuff(slowModifier,BuffID.Water,m_slowTimer);
         }
     }
 }
