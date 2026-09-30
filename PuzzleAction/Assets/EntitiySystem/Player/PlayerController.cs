@@ -394,7 +394,6 @@ public class PlayerController : Entity
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {
         //Debug.LogWarning(type);
-
         m_passiveSystem.AddPassive(modifiers, type);
     }
 

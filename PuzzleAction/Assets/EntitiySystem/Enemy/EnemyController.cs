@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -130,20 +132,11 @@ public class EnemyController : Entity
         m_agent.updatePosition = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (CurrentState == Entity.EntityState.Dead) return;
         UpdateFlag();
+        if (HandleStateMovement()) return;
 
-        if (IsStun)
-        {
-            Stop();
-             if(m_anim != null)
-            {
-                m_anim.SetBool("Move", false);
-            }
-            return;
-        }
         if (m_target == null) return;
 
         HandleCooldown();
@@ -256,6 +249,10 @@ public class EnemyController : Entity
         AttackItem useData = GetUseItem();
 
         if (useData == null) return;
+        if (useData.attackItem == null)
+        {
+            Debug.LogError($"{name} attackItem is NULL"); return;
+        }
 
         ItemRecieveData data =
             new ItemRecieveData
@@ -267,10 +264,16 @@ public class EnemyController : Entity
                 offset = m_shootOffset,
             };
 
-        if (m_anim != null &&
-            !string.IsNullOrEmpty(useData.ItemAnimation))
+        if (m_anim != null && !string.IsNullOrEmpty(useData.ItemAnimation))
         {
-            m_anim.SetTrigger(useData.ItemAnimation);
+            if (m_anim.parameters.Any(x => x.name == useData.ItemAnimation))
+            {
+                m_anim.SetTrigger(useData.ItemAnimation);
+            }
+            else
+            {
+                Debug.LogWarning($"{name} Animator Parameter Missing : {useData.ItemAnimation}");
+            }
         }
 
         m_itemManager.OnUseItem(useData.attackItem, data);
@@ -278,12 +281,50 @@ public class EnemyController : Entity
     #endregion
 
     #region MOVE
-    public void Move(Vector3 dir, float speed)
+    private bool HandleStateMovement()
     {
-        if (!CanAction) return;
+        if (CurrentState == EntityState.Dead) return true;
+
+        if (!m_canMove || IsStun)
+        {
+            m_agent.ResetPath();
+            Stop();
+
+            if (m_anim != null) m_anim.SetBool("Move", false);
+
+            return true;
+        }
+
+        if (IsKnockBack)
+        {
+            m_agent.ResetPath();
+            m_agent.isStopped = true;
+            m_agent.Move(m_knockBackVelocity.normalized * (m_knockbackPower * 5f) * Time.fixedDeltaTime);
+
+            return true;
+        }
+
+        return false;
+    }
+    public void InputMove(Vector3 dir, float speed)
+    {
+        //if (m_currentState == EntityState.Dead) return;
+        //if (m_currentState == EntityState.Attack) return;
+        //if (!m_canMove || IsStun)
+        //{
+        //    Stop();
+        //    Move(Vector3.zero, 0);
+        //    return;
+        //}
+        //if (IsKnockBack)
+        //{
+        //    Move(m_knockBackVelocity, m_knockbackPower * 5f);
+        //    return;
+        //}
         if (dir == Vector3.zero)
         {
             Stop();
+            m_agent.Move(Vector3.zero);
             return;
         }
 
@@ -294,16 +335,18 @@ public class EnemyController : Entity
 
         m_agent.avoidancePriority = 50;
 
-        m_agent.Move(dir * speed * Time.deltaTime);
+        m_agent.Move(dir * m_agent.speed * Time.deltaTime);
     }
     public void SetDestination(Vector3 targetPos, float speed)
     {
-        m_agent.isStopped = false;
-        if(m_anim != null)
+        if (m_currentState == EntityState.Dead) return;
+        
+        if (m_anim != null)
         {
             m_anim.SetBool("Move", !m_agent.isStopped);
         }
 
+        m_agent.isStopped = false;
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
         m_agent.stoppingDistance = m_attackRange;

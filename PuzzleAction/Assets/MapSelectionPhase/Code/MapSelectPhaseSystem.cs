@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class MapSelectPhaseSystem : MonoBehaviour
 {
     [Header("Data")]
@@ -10,6 +11,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
     [SerializeField] private int m_mapCount = 3;
 
     [Header("UI")]
+    [SerializeField] private UnityEngine.UI.Button m_nextsceneButton;
     [SerializeField] private RectTransform m_previewRoot;
     [SerializeField] private Image m_tilePrefab;
 
@@ -26,6 +28,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
     private void Start()
     {
+        m_nextsceneButton.onClick.AddListener(GoMapPieceSystem);
+
         CreateRandomMaps();
         CreatePreviews();
     }
@@ -127,7 +131,6 @@ public class MapSelectPhaseSystem : MonoBehaviour
                     ? Color.white
                     : Color.clear;
 
-                Debug.Log(tile.color);
             }
         }
 

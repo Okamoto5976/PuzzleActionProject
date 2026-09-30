@@ -38,10 +38,12 @@ public class CreatMap : MonoBehaviour
         }
 
         m_mapGenerate.Generate(m_mapClassData);
-
-        m_inventorySystem.Initialized();
-
         m_entitySpawner.Generate(m_mapClassData, m_mapGenerate);
+    }
+
+    private void Start()
+    {
+        m_inventorySystem.Initialized();
     }
 }
 
