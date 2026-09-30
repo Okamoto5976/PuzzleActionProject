@@ -2,84 +2,80 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaltropTrap : TrapBase
+public class CaltropTrap : MonoBehaviour
 {
-    [Header("Damage")]
+    [Header("Trap Data")]
+    [SerializeField]
+    private TrapData m_trapData;
+
+    [Header("Team")]
+    [SerializeField]
+    private TeamType m_team;
+
+
+    [Header("Damage Interval")]
     [SerializeField]
     private float m_damageInterval = 1.0f;
 
 
-    // åªç›ÅAÇ‹Ç´Ç—ÇµÇÃîÕàÕì‡Ç…Ç¢ÇÈEntity
+    // Areaì‡Ç…Ç¢ÇÈEntity
     private HashSet<Entity> m_targets =
         new HashSet<Entity>();
 
 
     private Coroutine m_damageCoroutine;
 
+    private DamageData m_damageData;
 
-    protected override void EntitySetUp()
+
+    public void TrapInit(Entity owner, Vector3 dir)
     {
-        //OnAddForce(m_dir, 5f);
-         
-        m_targets.Clear();
-
-        if (m_damageCoroutine != null)
-        {
-            StopCoroutine(m_damageCoroutine);
-            m_damageCoroutine = null;
-        }
-
-        //Damage
         m_damageData = new DamageData
         {
+            Attack = m_trapData.m_trapAttack,
 
-            Attack = m_trapData.m_base,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-        };
+            CriticalRate =
+                m_trapData.m_trapCriticalRate,
 
-    }
+            CriticalDamage =
+                m_trapData.m_trapCriticalDamage,
 
+            BreakRate =
+                m_trapData.m_trapBreakRate,
 
-    protected override void OnHit()
-    {
-         
-         
-    }
+            Knockback =
+                m_trapData.m_trapKnockBack,
 
-    
-    public override void TrapInit()
-    {
-        base.TrapInit();
+            StunDuration =
+                m_trapData.m_trapStunDuration,
 
-        //DamageData
-        m_damageData = new DamageData
-        {
-
-            Attack = m_trapData.m_base,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
+            AttackDir = dir
         };
     }
 
-    protected override void OnTriggerEnter(Collider other)
+
+    protected virtual void TrapArea(Entity target)
+    {
+        if (target == null)
+            return;
+
+        if (target.Team == m_team)
+            return;
+
+        target.TakeDamage(m_damageData);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
     {
         Entity target =
             other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
-         
-        if (target == m_owner)
-            return;
-         
-        if (target.Team == m_team)
-            return;
-         
+
         m_targets.Add(target);
-         
+
         if (m_damageCoroutine == null)
         {
             m_damageCoroutine =
@@ -95,10 +91,9 @@ public class CaltropTrap : TrapBase
 
         if (target == null)
             return;
-        
+
         m_targets.Remove(target);
 
-         
         if (m_targets.Count == 0)
         {
             StopDamage();
@@ -110,19 +105,14 @@ public class CaltropTrap : TrapBase
     {
         while (m_targets.Count > 0)
         {
-             
             foreach (Entity target in m_targets)
             {
-                if (target == null)
-                    continue;
-
-                target.TakeDamage(m_damageData);
+                TrapArea(target);
             }
-          
+
             yield return new WaitForSeconds(
                 m_damageInterval);
         }
-
 
         m_damageCoroutine = null;
     }
@@ -130,11 +120,11 @@ public class CaltropTrap : TrapBase
 
     private void StopDamage()
     {
-        if (m_damageCoroutine != null)
-        {
-            StopCoroutine(m_damageCoroutine);
-            m_damageCoroutine = null;
-        }
+        if (m_damageCoroutine == null)
+            return;
+
+        StopCoroutine(m_damageCoroutine);
+        m_damageCoroutine = null;
     }
 
 

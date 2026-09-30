@@ -15,8 +15,7 @@ public class GasCylinder : TrapBase
     private bool m_isAddForceCalled = false;
     private float m_gasTimer = 0f;
     private float m_tickTimer = 0f;
-
-    private readonly List<Entity> m_targetsInRange = new List<Entity>();
+    private readonly List<Entity>m_targetsInRange=new List<Entity>();
 
     protected override void EntitySetUp()
     {
