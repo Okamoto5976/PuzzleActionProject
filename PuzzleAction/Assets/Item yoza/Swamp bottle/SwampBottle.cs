@@ -4,15 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class SwampBottle : TrapBase
 {
-    [Header("Hit/Layer Settings")]
-    [SerializeField] private LayerMask m_hitLayers;
-
     [Header("Gas Area Settings")]
-    [SerializeField] private Collider m_swampCollider;
-    [SerializeField] private GameObject m_swampEffect;
+    //[SerializeField] private Collider m_swampCollider;
+    //[SerializeField] private GameObject m_swampEffect;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    [SerializeField] private float m_slowTimer = 3f;
 
     private bool m_isMudActive = false;
     private float m_swampTimer = 0f;
@@ -34,9 +30,9 @@ public class SwampBottle : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
 
-        if (m_swampCollider != null) m_swampCollider.enabled = true;
+        //if (m_swampCollider != null) m_swampCollider.enabled = true;
 
-        if (m_swampEffect != null)m_swampEffect.SetActive(true);
+        //if (m_swampEffect != null)m_swampEffect.SetActive(true);
     }
 
     protected override void OnHit()
@@ -53,9 +49,9 @@ public class SwampBottle : TrapBase
 
         if (m_swampTimer >= m_duration)
         {
-            if (m_swampCollider != null) m_swampCollider.enabled = false;
+            //if (m_swampCollider != null) m_swampCollider.enabled = false;
 
-            if (m_swampEffect != null)m_swampEffect.SetActive(false);
+            //if (m_swampEffect != null)m_swampEffect.SetActive(false);
 
             OnReturnPool();
             return;
@@ -72,8 +68,6 @@ public class SwampBottle : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
         Entity inGasTarget = other.GetComponentInParent<Entity>();
 
         if (inGasTarget == null || inGasTarget.Team == m_team) return;
@@ -97,7 +91,7 @@ public class SwampBottle : TrapBase
 
     private void ApplyPoisonEffect()
     {
-            float slowValue = m_trapData != null ? m_trapData.m_attack : 0f;
+        float slowValue = m_trapData != null ? m_trapData.m_attack : 0f;
         
         for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
         {
@@ -109,14 +103,17 @@ public class SwampBottle : TrapBase
                 continue;
             }
 
-            StatusModifier slowModifier = new StatusModifier
+            if (m_trapData.m_buffSetting.Count != 0)
             {
-                m_statType = StatusType.Slow,
-                m_value =slowValue,
-                m_modType = ModifierType.Add
-            };
+                foreach (var buff in m_trapData.m_buffSetting)
+                {
+                    if (buff.m_duration <= 0) continue;
 
-            target.AddBuff(slowModifier,BuffID.Water,m_slowTimer);
+                    var modifier = SetModifier(buff);
+
+                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+                }
+            }
         }
     }
 }

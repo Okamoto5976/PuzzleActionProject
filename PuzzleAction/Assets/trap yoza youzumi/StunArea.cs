@@ -11,24 +11,10 @@ public class StunArea : TrapBase
 
     protected override void EntitySetUp()
     {
-
-    }
-
-    public override void TrapInit()
-    {
-        base.TrapInit();
-
-        CreateTrapDamageData();
-    }
-
-    protected override void CreateTrapDamageData()
-    {
-        base.CreateTrapDamageData();
     }
 
     protected override void OnHit()
     {
-
     }
 
     private void Update()
@@ -45,8 +31,6 @@ public class StunArea : TrapBase
                  m_HitTargets[i].TakeDamage(m_damageData);
             }
         }
-
-
     }
 
     protected override void OnTriggerEnter(Collider other)

@@ -204,17 +204,45 @@ abstract public class Entity : MonoBehaviour
     }
     #endregion
 
+
+    
+    private static readonly HashSet<StatusType> s_damageStatusTypes = new()
+    {
+        StatusType.Burn,
+        StatusType.Poison,
+        StatusType.Gas,
+    };
+
+    /// <summary>
+    /// ステータス系のBuffを与える際の
+    /// </summary>
+    /// <param name="modifier"></param>
+    /// <param name="buffID"></param>
+    /// <param name="duration"></param>
     public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
-        if(m_buffSystem==null)
+        if(m_buffSystem == null)
         {
+            return;
+        }
+
+        //ダメージバフの場合はこっち
+        if(s_damageStatusTypes.Contains(modifier.m_statType))
+        {
+            AddDamageBuff(modifier, buffID, duration);
             return;
         }
 
         m_buffSystem.AddBuff(modifier, buffID, duration);
     }
 
-    public void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
+    /// <summary>
+    /// ダメージのあるBuffを与える際の
+    /// </summary>
+    /// <param name="modifier"></param>
+    /// <param name="buffID"></param>
+    /// <param name="duration"></param>
+    private void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
         if (m_buffSystem == null)
         {
@@ -250,6 +278,7 @@ abstract public class Entity : MonoBehaviour
     }
 
     /// <summary>
+    /// EntityHPから呼ぶ
     /// スタンを付与する。StunResに応じて効果時間を軽減する。
     /// </summary>
     /// <param name="duration">基礎スタン時間</param>

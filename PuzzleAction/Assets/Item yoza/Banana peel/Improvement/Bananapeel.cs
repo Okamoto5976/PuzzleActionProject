@@ -5,8 +5,10 @@ public class Bananapeel : TrapBase
 {
     protected override void EntitySetUp()
     {
+
     }
-    public void FixedUpdate()
+
+    private void Update()
     {
         CheckDeadLine();
     }
@@ -15,18 +17,17 @@ public class Bananapeel : TrapBase
     {
         OnReturnPool();
     }
+
     protected override void OnTriggerEnter(Collider other)
     {
+        Entity target =other.GetComponentInParent<Entity>();
 
-        Entity victim =other.GetComponentInParent<Entity>();
-
-        if (victim!=null)
+        if (target != null)
         {
-            if (victim.Team == TeamType.Nature) return;
-            if (victim.Team == m_team) return;
+            if (target.Team == TeamType.Nature) return;
+            if (target.Team == m_team) return;
 
-            CreateDamageData();
-            victim.ApplyStun(m_damageData.StunDuration);
+            target.TakeDamage(m_damageData);
 
             OnHit();
         }

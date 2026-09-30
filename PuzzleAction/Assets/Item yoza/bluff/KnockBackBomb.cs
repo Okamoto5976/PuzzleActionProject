@@ -4,7 +4,7 @@ public class KnockBackBomb : TrapBase
 {
     [Header("Bomb Settings")]
     [SerializeField] private float m_Range = 4f;
-    [SerializeField] private float  m_FuseTime= 3f;
+    [SerializeField] private float m_FuseTime= 3f;
 
     private bool m_isFuseActive=false;
     private float m_fuseTimer = 0f;
@@ -25,13 +25,10 @@ public class KnockBackBomb : TrapBase
         if(m_fireParticle != null)m_fireParticle.Play();
     }
 
-    private void FixedUpdate()
-    {
-        CheckDeadLine();
-    }
-
     private void Update()
     {
+        CheckDeadLine();
+
         if (m_isFuseActive)
         {
             m_fuseTimer += Time.deltaTime;
@@ -48,7 +45,7 @@ public class KnockBackBomb : TrapBase
         if (m_isFuseActive) return;
         if (m_team == TeamType.Nature) return;
 
-        Entity target = other.GetComponent<Entity>();
+        Entity target = other.GetComponentInParent<Entity>();
         if (target == null || target.Team == m_team) return;
 
         if (m_fireParticle != null) m_fireParticle.Play();
@@ -64,7 +61,7 @@ public class KnockBackBomb : TrapBase
 
         foreach (var hitCollider in hitColliders)
         {
-            Entity target = hitCollider.GetComponent<Entity>();
+            Entity target = hitCollider.GetComponentInParent<Entity>();
             if (target == null || target.Team == m_team) continue;
 
             Vector3 knockbackDir = target.transform.position - transform.position;
@@ -78,6 +75,7 @@ public class KnockBackBomb : TrapBase
 
             target.TakeDamage(m_damageData);
         }
+
         if (m_effectEventData != null)
         {
             Effect data = new Effect()
@@ -86,8 +84,10 @@ public class KnockBackBomb : TrapBase
                 effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
                 effectRot = transform.rotation,
             };
-                m_effectEventData.Raise(data);
+
+            m_effectEventData.Raise(data);
         }
+
         OnReturnPool();
     }
     private void OnDrawGizmosSelected()

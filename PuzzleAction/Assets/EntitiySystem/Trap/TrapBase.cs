@@ -71,6 +71,8 @@ public abstract class TrapBase : MonoBehaviour
 
         m_power = data.power;
 
+        CreateDamageData();
+
         EntitySetUp();//—á@•b”‚ðÝ’è‚µ@ŽžŠÔŒo‰ß‚Å”š”j‚È‚Ç
     }
 
@@ -81,10 +83,11 @@ public abstract class TrapBase : MonoBehaviour
 
         m_dir = Vector3.zero;
         m_team = TeamType.Nature;
+
+        CreateTrapDamageData();
     }
 
-    //TrapInit‚ÌÛ@override‚Åã‘‚«‚Å‘Î‰ž
-    protected virtual void CreateDamageData()
+    protected void CreateDamageData()
     {
         m_damageData = new DamageData
         {
@@ -104,7 +107,7 @@ public abstract class TrapBase : MonoBehaviour
         return trapValue >= 0f ? trapValue : ownerValue;
     }
 
-    protected virtual void CreateTrapDamageData()
+    protected void CreateTrapDamageData()
     {
         m_damageData = new DamageData
         {

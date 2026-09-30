@@ -4,7 +4,7 @@ using UnityEngine;
 public class GasCylinder : TrapBase
 {
     [Header("Hit/Layer Settings")]
-    [SerializeField] private LayerMask m_hitLayers;
+    //[SerializeField] private LayerMask m_hitLayers;
 
     [Header("Gas Area Settings")]
     [SerializeField] private float m_duration = 10f;
@@ -67,15 +67,56 @@ public class GasCylinder : TrapBase
             ApplyPoisonEffect();
         }
     }
+
+    private void StartGas()
+    {
+        m_isGassing = true;
+
+        if (m_rb != null)
+        {
+            m_rb.linearVelocity = Vector3.zero;
+            m_rb.angularVelocity = Vector3.zero;
+            m_rb.isKinematic = true;
+        }
+    }
+
+    private void ApplyPoisonEffect()
+    {
+        float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0;
+
+        for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
+        {
+            Entity target = m_targetsInRange[i];
+
+            if (target == null)
+            {
+                m_targetsInRange.RemoveAt(i);
+                continue;
+            }
+
+            if (m_trapData.m_buffSetting.Count != 0)
+            {
+                foreach (var buff in m_trapData.m_buffSetting)
+                {
+                    if (buff.m_duration <= 0) continue;
+
+                    var modifier = SetModifier(buff);
+
+                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+                }
+            }
+        }
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
         if (!m_isGassing)
         {
-            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
-            {
-                OnHit();
-                return;
-            }
+            //if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+            //{
+            //    OnHit();
+            //    return;
+            //}
 
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
@@ -104,38 +145,5 @@ public class GasCylinder : TrapBase
             m_targetsInRange.Remove(target);
         }
     }
-    private void StartGas()
-    {
-        m_isGassing = true;
-
-        if (m_rb != null)
-        {
-            m_rb.linearVelocity = Vector3.zero;
-            m_rb.angularVelocity = Vector3.zero;
-            m_rb.isKinematic = true;
-        }
-    }
-
-    private void ApplyPoisonEffect()
-    {
-        float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0;
-
-        for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
-        {
-            Entity target = m_targetsInRange[i];
-
-            if (target == null)
-            {
-                m_targetsInRange.RemoveAt(i);
-                continue;
-            }
-            StatusModifier poisonModifier = new StatusModifier
-            {
-                m_statType = StatusType.Poison,
-                m_value = poisonDamage,
-                m_modType = ModifierType.Add
-            };
-            target.AddBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
-        }
-    }
+    
 }

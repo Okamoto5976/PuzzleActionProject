@@ -8,7 +8,6 @@ public class PoisonMagic : TrapBase
     [SerializeField] private LayerMask m_hitLayers;
     [SerializeField] private float m_lifeTime = 5f;
 
-    [Header("Fire Magic Settings")]
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
     [SerializeField] private float m_poisonDuration = 4f;
@@ -167,7 +166,7 @@ public class PoisonMagic : TrapBase
                 m_value = poisonDamage,
                 m_modType = ModifierType.Add
             };
-            target.AddDamageBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
+            target.AddBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
         }
     }
 }
