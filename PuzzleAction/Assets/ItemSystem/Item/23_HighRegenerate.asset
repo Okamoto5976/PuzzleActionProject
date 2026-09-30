@@ -17,13 +17,12 @@ MonoBehaviour:
     itemID: 23
     itemName: HighRegeneratePotion
     itemIcon: {fileID: 21300000, guid: 386535a1ea5bfc04b995a4071678dc6b, type: 3}
-    description: 
+    description: "\u50B7\u304C\u3069\u3093\u3069\u3093\u7652\u3048\u3066\u3044\u304F\uFF01\u3000\u52B9\u679C\uFF1A\u6BCE\u79D2\u5C11\u3057\u56DE\u5FA9"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 1440
-    Type: 0
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 10
