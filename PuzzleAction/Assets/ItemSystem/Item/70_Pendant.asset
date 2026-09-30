@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 70
     itemName: Pendant
     itemIcon: {fileID: 21300000, guid: b34122431ff9475408e74ef6815a8fbe, type: 3}
-    description: 
+    description: "\u5B9D\u77F3\u306E\u8F1D\u304D\u3067\u3001\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u306E\u300C\u78BA\u7387\u3068\u30C0\u30E1\u30FC\u30B8\u300D\u304C\u5E38\u6642\u50C5\u304B\u306B\u5897\u52A0\u3002"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
+    price: 1440
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1.1

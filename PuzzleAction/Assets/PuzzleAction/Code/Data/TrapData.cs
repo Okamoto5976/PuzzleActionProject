@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "TrapData", menuName = "Scriptable Objects/Datas/TrapData")]
 public class TrapData : ScriptableObject
@@ -20,4 +21,18 @@ public class TrapData : ScriptableObject
     public float m_trapKnockBack = 0f;
     public float m_trapStunDuration = 0f;
 
+    public List<BuffSetting> m_buffSetting = new();
+
+    //use
+    // if(m_buffItemClass.Count != 0) {
+    //     foreach (var buff in m_buffClass)
+    //    {
+    //          if (buff.m_duration <= 0) continue;
+
+    //          var modifier = SetModifier(buff);
+
+    //          target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+
+    //     }
+    //}
 }

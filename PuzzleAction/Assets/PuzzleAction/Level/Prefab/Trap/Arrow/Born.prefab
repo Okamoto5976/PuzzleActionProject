@@ -251,13 +251,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowTrap
   m_isFowardDir: 1
-  m_str: 30
+  m_trapData: {fileID: 11400000, guid: 3c96adc959573984490736414bda963f, type: 2}
   m_speed: 0
-  m_rate: 1
+  m_damageRate: 1
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_buffItemClass: []
 --- !u!114 &8629952716382898349
 MonoBehaviour:
   m_ObjectHideFlags: 0

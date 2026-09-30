@@ -17,11 +17,10 @@ MonoBehaviour:
     itemID: 1
     itemName: HealPotion
     itemIcon: {fileID: 21300000, guid: fac0dbf41844cda468f66b08c03dac39, type: 3}
-    description: "\u3053\u308C\u3092\u306E\u3081\u3070\u3000\u3052\u3093\u304D\u306B\u306A\u308B\u3067\u3057\u3087\u3046"
+    description: "\u3053\u308C\u3092\u98F2\u3081\u3070\u5143\u6C17\u306B\u306A\u308B\u3060\u308D\u3046\u3002\u52B9\u679C\uFF1AHP+25"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 60
-    Type: 0
   m_value: 25
