@@ -11,7 +11,7 @@ public class WallTrap : TrapBase
     [SerializeField] private float m_spawnDelay = 1.0f;
 
     [Header("KnockBack")]
-    [SerializeField] private float m_knockBackPower = 5.0f;
+    //[SerializeField] private float m_knockBackPower = 5.0f;
 
     private Coroutine m_returnCoroutine;
 

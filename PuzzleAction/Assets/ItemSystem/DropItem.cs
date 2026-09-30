@@ -24,7 +24,7 @@ public class DropItem : MonoBehaviour
     [SerializeField] private LayerMask m_wallLayer;
     [SerializeField] private LayerMask m_groundLayer;
 
-    private bool m_isWall;
+    //private bool m_isWall;
     private bool m_isGround;
 
     ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
@@ -77,7 +77,7 @@ public class DropItem : MonoBehaviour
     public void Initialize(Item data)
     {
         m_ignoreTime = 0.5f;
-        m_isWall = false;
+        //m_isWall = false;
         m_isGround = false;
 
         Vector3 randomDirection = new Vector3(Random.Range(-1f,1f), 0f, Random.Range(-1f,1f)).normalized;
@@ -111,7 +111,7 @@ public class DropItem : MonoBehaviour
 
         if ((m_wallLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            m_isWall = true;
+            //m_isWall = true;
 
             m_velocity.x = 0f;
             m_velocity.z = 0f;

@@ -23,12 +23,6 @@ public class ArrowTrap : TrapBase
         m_rb.angularVelocity = Vector3.zero;
         m_isInitialized = true;
 
-        CreateDamageData();
-    }
-
-    protected override void CreateDamageData()
-    {
-        base.CreateDamageData();
     }
 
     protected override void OnHit()
@@ -63,6 +57,7 @@ public class ArrowTrap : TrapBase
 
                 var modifier = SetModifier(buff);
 
+                
                 target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
 
             }
