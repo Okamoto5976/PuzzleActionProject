@@ -7,6 +7,9 @@ public class Water : TrapBase
     [SerializeField] private float m_slowAmount = 0.3f;
     [SerializeField] private float m_lifeTimer = 5f;
 
+    [SerializeField] private LayerMask m_hitLayers;
+
+
     private bool m_isAddForceCalled=false;
     private float m_timer = 0f;
 
@@ -42,7 +45,7 @@ public class Water : TrapBase
     {
         if (!m_isAddForceCalled)
         {
-            OnAddForce(m_dir, m_power);
+            OnAddForce(m_dir, m_speed);
             m_isAddForceCalled = true;
         }
     }
@@ -62,10 +65,18 @@ public class Water : TrapBase
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        if (m_team == TeamType.Nature) return;
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        {
+            OnHit();
+            return;
+        }
 
-        Entity target=other.GetComponent<Entity>();
+
+
+        Entity target=other.GetComponentInParent<Entity>();
         if (target == null) return;
+
+        if (target.Team == TeamType.Nature) return;
 
         if (target.Team == m_team) return;
 

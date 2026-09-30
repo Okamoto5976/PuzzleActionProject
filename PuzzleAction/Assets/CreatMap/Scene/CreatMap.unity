@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 8213095029228168054, guid: a7457ed2aee9883469da5a2bcf9c2772, type: 3}
+  m_prefab: {fileID: 679799482741913749, guid: b6c32e55e3a239145a176ea0983d597d, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1001 &179334779
@@ -3037,7 +3037,7 @@ GameObject:
   - component: {fileID: 1007156453}
   - component: {fileID: 1007156454}
   m_Layer: 0
-  m_Name: SteelTrap
+  m_Name: BearTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4492,7 +4492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 60
+  m_index: 52
   m_count: 10
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}
@@ -4955,7 +4955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074329a38804b9043aec6623910eeb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
-  m_prefab: {fileID: 9130968029162177211, guid: d3c014215fa78b2478e9df827fafd325, type: 3}
+  m_prefab: {fileID: 9130968029162177211, guid: 466d6490ae0f7b5498b3d0fd83071e63, type: 3}
   m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!114 &1895134535 stripped

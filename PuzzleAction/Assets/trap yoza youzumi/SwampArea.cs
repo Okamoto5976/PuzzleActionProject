@@ -69,7 +69,6 @@ public class SwampArea : TrapBase
 
         //if (target.Team == TeamType.Nature) return;
         //if (m_owner != null && target.Team == m_owner.Team) return;
-        Debug.Log($"{target.name}");
 
         if (!m_SlowedTargets.Contains(target))
         {
