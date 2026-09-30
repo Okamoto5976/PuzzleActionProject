@@ -38,6 +38,10 @@ public class PoisonMagic : TrapBase
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
+        if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
+        if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
+    }
+   
     }
     //public override void TrapInit(ItemRecieveData data)
     //{
@@ -71,9 +75,12 @@ public class PoisonMagic : TrapBase
         m_areaTimer += Time.deltaTime;
         if(m_areaTimer>=m_duration)
         {
+            if (m_poisonCollider != null) m_poisonCollider.enabled = false;
+            if (m_poisonEffect != null) m_poisonEffect.SetActive(false);
             OnReturnPool();
             return;
         }
+
         m_tickTimer += Time.deltaTime;
         if(m_tickTimer>=m_tickInterval)
         {
@@ -89,6 +96,8 @@ public class PoisonMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (!m_isAreaActive)
         {
             if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
@@ -160,7 +169,7 @@ public class PoisonMagic : TrapBase
                 m_value = m_poisonDamage,
                 m_modType = ModifierType.Add
             };
-            target.AddBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
+            target.AddDamageBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
         }
     }
 }

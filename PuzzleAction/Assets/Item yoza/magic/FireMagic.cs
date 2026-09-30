@@ -4,8 +4,7 @@ using UnityEngine;
 public class FireMagic : TrapBase
 {
     [Header("Fire Magic Settings")]
-    [SerializeField] private LayerMask m_hitLayers;
-
+    [SerializeField] private LayerMask m_hitLayer;
     [SerializeField] private float m_damage = 10f;
     [SerializeField] private float m_burnDamage = 2f;
     [SerializeField] private float m_burnDuration = 4f;
@@ -62,10 +61,14 @@ public class FireMagic : TrapBase
 
         if (m_team == TeamType.Nature) return;
 
-        Entity target =other.GetComponentInParent<Entity>();
+        if((m_hitLayer.value&(1<<other.gameObject.layer)) != 0)
+        {
+            OnHit();
+            return;
+        }
 
-        if (target == null) return;
-
+        Entity target =other.GetComponent<Entity>();
+        if(target==null) return;
         if (target.Team == m_team) return;
 
         DamageData damageData = new DamageData
@@ -81,7 +84,7 @@ public class FireMagic : TrapBase
             m_value = m_burnDamage,
             m_modType = ModifierType.Add
         };
-        target.AddBuff(burnModifier, BuffID.Burn, m_burnDuration);
+        target.AddDamageBuff(burnModifier, BuffID.Burn, m_burnDuration);
 
         OnHit();
     }
