@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: 2030_PoisonArea
   m_EditorClassIdentifier: Assembly-CSharp::TrapData
   m_base: 0
-  m_attack: -1
-  m_criticalRate: -1
-  m_criticalDamage: -1
-  m_breakRate: -1
-  m_knockback: -1
-  m_stunDuration: -1
+  m_attack: 0
+  m_criticalRate: 0
+  m_criticalDamage: 0
+  m_breakRate: 0
+  m_knockback: 0
+  m_stunDuration: 0
   m_trapAttack: 0
   m_trapCriticalRate: 0
   m_trapCriticalDamage: 0

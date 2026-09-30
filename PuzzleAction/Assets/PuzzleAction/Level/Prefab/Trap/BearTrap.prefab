@@ -51,7 +51,7 @@ MonoBehaviour:
   m_trapData: {fileID: 11400000, guid: 307ca69b4203dbd41aba9969435c7df5, type: 2}
   m_speed: 0
   m_damageCollider: {fileID: 0}
-  m_recoveryTime: 3
+  m_recoveryTime: 2.5
 --- !u!114 &613635683574313116
 MonoBehaviour:
   m_ObjectHideFlags: 0

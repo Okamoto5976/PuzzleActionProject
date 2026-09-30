@@ -473,6 +473,7 @@ MonoBehaviour:
   m_trapGachaEngine: {fileID: 11400000, guid: 68e9440d5e4ea024eb474094fd35464d, type: 2}
   m_trapRarityTable: {fileID: 11400000, guid: 6835daf62ca12e640b840a4847c4f5f3, type: 2}
   m_trapOwner: {fileID: 721869219}
+  m_areaTrapPlaceData: {fileID: 11400000, guid: d1bfc498b99278243992185378159855, type: 2}
   m_goalPrefab: {fileID: 8961092045085098247, guid: 1822f757cecfb9a47aeaf4d1490964c9, type: 3}
   m_mainGameManager: {fileID: 1832269288191839481}
   m_shopPrefab: {fileID: 108477365344056919, guid: 238c23917d1b3c84f8ea84a10bd3f0c6, type: 3}
@@ -816,7 +817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 679799482741913749, guid: 3eebce1876b6ac94292c75849faec15e, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!1 &188310924
 GameObject:
@@ -3071,7 +3072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 679799482741913749, guid: a29d9dbb901b28449b17510bed303143, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!1 &1018647577
 GameObject:
@@ -3728,7 +3729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 8213095029228168054, guid: a7457ed2aee9883469da5a2bcf9c2772, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!1 &1189560940
 GameObject:
@@ -4067,7 +4068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 5405777550611800389, guid: 00babb27126ea894fa73cc02c5e7272a, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!1 &1356557544
 GameObject:
@@ -4302,7 +4303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 8897296333762648534, guid: a599cdff854049a4588eaa87712fd7d9, type: 3}
-  m_poolCount: 30
+  m_poolCount: 70
   m_forcePoolCount: 1
 --- !u!114 &1457366627 stripped
 MonoBehaviour:
@@ -4492,7 +4493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 32
+  m_index: 49
   m_count: 10
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}

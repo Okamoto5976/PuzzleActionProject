@@ -50,14 +50,14 @@ abstract public class EntityHP : MonoBehaviour
 
         bool isBreak = false;
 
-        if(Random.Range(0f,1f)<=data.BreakRate)
+        if(Random.Range(0f,100f)<=data.BreakRate)
         {
             isBreak = true;
         }
 
         bool isCritical = false;
 
-        if(Random.Range(0f,1f)<=data.CriticalRate)
+        if(Random.Range(0f,100f)<=data.CriticalRate)
         {
             isCritical = true;
         }
@@ -69,19 +69,38 @@ abstract public class EntityHP : MonoBehaviour
         {
             damage = 9999;
 
+            Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = BreakAttack");
+
         }
         else
         {
-            damage = Mathf.Max(data.Attack -(int) m_entity.DEF, 0);
+            //クリティカルを先にアタックにかけて　
+            if (isCritical)
+            {
+                damage = (data.Attack * data.CriticalDamage);
+            }
+            else
+            {
+                damage = data.Attack;
+            }
 
-            //Critical
+              damage = Mathf.Max(damage - (int)m_entity.DEF, 0);
+
             if(isCritical)
             {
-                damage = (int)(damage * data.CriticalDamage);
+                Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = ( Attack : {data.Attack} * CD : {data.CriticalDamage}) - DEF : {m_entity.DEF}");
+
+            }
+            else
+            {
+                Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = Attack : {data.Attack} - DEF : {m_entity.DEF}");
+
             }
         }
 
             m_currentHP -= (int)damage;
+
+
 
         if(isCritical)
         {
@@ -107,17 +126,20 @@ abstract public class EntityHP : MonoBehaviour
 
         m_currentHP = Mathf.Max(m_currentHP, 0);
 
+
         //Debug.Log($"{gameObject.name} : {damage}damage");
 
-        Debug.Log($"{gameObject.name} HP : {m_currentHP}");
+        //Debug.Log($"{gameObject.name} HP : {m_currentHP}");
 
         //if(m_entity.DamageSE !=null&&m_audioSource!=null)
         //{
         //    m_audioSource.PlayOneShot(m_entity.DamageSE);
         //}
 
-        float knockBackPower = Mathf.Min(data.Knockback - m_entity.DEF, 3f);
+        float knockBackPower = Mathf.Clamp(data.Knockback - m_entity.DEF, 0f, 3f);
         Vector3 dir = data.AttackDir.normalized;
+
+
         m_entity.ApplyKnockBack(dir, knockBackPower);
 
 

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class KnifeTrap : TrapBase
 {
-    [SerializeField] private float m_rate = 1f;
     [SerializeField] private LayerMask m_hitLayers;
 
     private void FixedUpdate()
@@ -12,24 +11,12 @@ public class KnifeTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        m_damageData = new DamageData
-        {
-
-            Attack = m_owner.STR * m_rate,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-            Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.StunPower,
-            AttackDir = m_dir,
-
-        };
+        
     }
 
     protected override void OnHit()
     {
         OnReturnPool();
-
     }
 
     protected override void OnTriggerEnter(Collider other)

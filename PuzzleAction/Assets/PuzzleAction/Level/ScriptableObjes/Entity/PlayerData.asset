@@ -17,10 +17,10 @@ MonoBehaviour:
   m_knockBack: 0
   m_def: 5
   m_speed: 10
-  m_criticalRate: 0
-  m_criticalDamage: 10
+  m_criticalRate: 10
+  m_criticalDamage: 1.5
   m_breakRate: 0
-  m_stunDuration: 2
+  m_stunDuration: 0
   m_poisonRes: 0
   m_stunRes: 0
   m_swampRes: 0

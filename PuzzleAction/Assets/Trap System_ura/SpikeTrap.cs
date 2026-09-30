@@ -36,7 +36,7 @@ public class SpikeTrap : TrapBase
 
         if (entity.Team == Team) return;
 
-        m_anim.SetTrigger("Active");
+        m_anim.SetTrigger("Action");
 
         entity.TakeDamage(m_damageData);
 

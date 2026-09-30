@@ -298,6 +298,8 @@ abstract public class Entity : MonoBehaviour
 
     public void ApplyKnockBack(Vector3 direction, float power)
     {
+        if(power <= 0f) return;
+
         KnockBackTimer = power;
 
         m_knockBackVelocity = direction;

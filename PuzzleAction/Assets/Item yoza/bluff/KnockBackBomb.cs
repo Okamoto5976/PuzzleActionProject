@@ -43,19 +43,21 @@ public class KnockBackBomb : TrapBase
     protected override void OnTriggerEnter(Collider other)
     {
         if (m_isFuseActive) return;
-        if (m_team == TeamType.Nature) return;
 
         Entity target = other.GetComponentInParent<Entity>();
+
+        if (target.Team == TeamType.Nature) return;
+
         if (target == null || target.Team == m_team) return;
 
         if (m_fireParticle != null) m_fireParticle.Play();
         m_isFuseActive = true;
+
+        Invoke(nameof(Explode), m_FuseTime);
     }
 
     private void Explode()
     {
-        CreateDamageData();
-
         //”ÍˆÍ”»’è
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_Range);
 
@@ -67,10 +69,10 @@ public class KnockBackBomb : TrapBase
             Vector3 knockbackDir = target.transform.position - transform.position;
             knockbackDir.y = 0f;
 
-            if (knockbackDir.sqrMagnitude < 0.001f)
-            {
-                knockbackDir = m_dir;
-            }
+            //if (knockbackDir.sqrMagnitude < 0.001f)
+            //{
+            //    knockbackDir = m_dir;
+            //}
             m_damageData.AttackDir = knockbackDir.normalized;
 
             target.TakeDamage(m_damageData);

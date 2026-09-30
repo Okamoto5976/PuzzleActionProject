@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: 2022_Molotov
   m_EditorClassIdentifier: Assembly-CSharp::TrapData
   m_base: 0
-  m_attack: -1
-  m_criticalRate: -1
-  m_criticalDamage: -1
-  m_breakRate: -1
-  m_knockback: -1
-  m_stunDuration: -1
+  m_attack: 0
+  m_criticalRate: 0
+  m_criticalDamage: 0
+  m_breakRate: 0
+  m_knockback: 0
+  m_stunDuration: 0
   m_trapAttack: 0
   m_trapCriticalRate: 0
   m_trapCriticalDamage: 0
   m_trapBreakRate: 0
   m_trapKnockBack: 0
   m_trapStunDuration: 0
+  m_buffSetting:
+  - m_value: 5
+    m_statusType: 17
+    m_modifierType: 0
+    m_duration: 1.5
+    m_buffID: 27

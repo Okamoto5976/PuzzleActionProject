@@ -18,23 +18,6 @@ public class RockTrap : TrapBase
 
     protected override void EntitySetUp()
     {
-        m_damageData = new DamageData
-        {
-
-            Attack = m_owner.STR,
-            //HitRate
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-            Knockback = m_owner.KnockBack,
-            StunDuration = m_owner.StunPower,
-            //Duration
-            AttackDir = m_dir,
-            //SE
-
-        };
-
-        //OnAddForce(m_dir, m_power);
         m_rb.linearVelocity = Vector3.zero;
         m_rb.angularVelocity = Vector3.zero;
         m_isInitialized = true;
@@ -74,10 +57,7 @@ public class RockTrap : TrapBase
 
         target.TakeDamage(m_damageData);
 
-        //Debug.Log(
-        //    $"{other.name} Hit");
-
-        //Destroy(gameObject);
+   
         OnHit();
     }
 

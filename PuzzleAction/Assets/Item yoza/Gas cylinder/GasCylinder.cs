@@ -43,7 +43,7 @@ public class GasCylinder : TrapBase
     {
         if (!m_isGassing && !m_isAddForceCalled)
         {
-            OnAddForce(m_dir, m_power);
+            //OnAddForce(m_dir, m_power);
             m_isAddForceCalled = true;
         }
     }

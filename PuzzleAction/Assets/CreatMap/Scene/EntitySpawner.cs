@@ -30,7 +30,8 @@ public class EntitySpawner : MonoBehaviour
     [Header("========== TrapGacha ==========")]
     [SerializeField] private GachaEngine m_trapGachaEngine;
     [SerializeField] private TrapRarityTable m_trapRarityTable;
-    [SerializeField] private Entity m_trapOwner;   
+    [SerializeField] private Entity m_trapOwner;
+    [SerializeField] private AreaTrapPlaceData m_areaTrapPlaceData;
     [Space(10)]
 
     [Header("========== Goal ==========")]
@@ -336,7 +337,7 @@ public class EntitySpawner : MonoBehaviour
         }
         else
         {
-            float trapDensity = 2f; // temporary
+            float trapDensity = m_areaTrapPlaceData.GetAreaTrapPlaceData(selectedType);
             m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, selectedType, trapDensity);
         }
         Debug.Log($"Spawn Trap [{selectedType}] Rarity [{rarity.name}]");

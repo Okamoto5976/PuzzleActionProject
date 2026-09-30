@@ -23,63 +23,41 @@ public class DynamiteTrap : TrapBase
     {
         m_team = TeamType.Nature;//上書き
 
-        m_damageData = new DamageData
-        {
-
-            Attack = m_trapData.m_base,
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-            Knockback = m_knockBackValue,
-            StunDuration = m_stunDuration,
-        };
-
-        
-
         //m_fireParticle.gameObject.SetActive(true);
 
         m_fireParticle.Play();
 
-        Invoke(nameof(OnHit), m_explosionTimer);
+        Invoke(nameof(Explode), m_explosionTimer);
     }
 
     public override void TrapInit()
     {
         base.TrapInit();
 
-        m_damageData = new DamageData
-        {
-
-            Attack = m_trapData.m_base,
-            Knockback = m_knockBackValue,
-            StunDuration = m_stunDuration,
-        };
-
-
         m_isTimer = true;
     }
 
     protected override void OnHit()
     {
-        AttackHitBox box = new AttackHitBox()
-        {
-            m_transform = transform,
-            m_radius = m_radius,
-        };
+        //AttackHitBox box = new AttackHitBox()
+        //{
+        //    m_transform = transform,
+        //    m_radius = m_radius,
+        //};
 
-        //m_explosionParticle.Play();
-        Effect data = new Effect()
-        {
-            effectType = Enum_EffectType.Explosion,
-            effectPos = transform.position + new Vector3(0f,0.5f,0f),
-            effectRot = transform.rotation,
-        };
+        ////m_explosionParticle.Play();
+        //Effect data = new Effect()
+        //{
+        //    effectType = Enum_EffectType.Explosion,
+        //    effectPos = transform.position + new Vector3(0f,0.5f,0f),
+        //    effectRot = transform.rotation,
+        //};
 
-        m_effectEventData.Raise(data);
-        m_hitCollider.AttackCollider(m_damageData, m_team, box);
+        //m_effectEventData.Raise(data);
+        //m_hitCollider.AttackCollider(m_damageData, m_team, box);
 
 
-        OnReturnPool();
+        //OnReturnPool();
 
     }
 
@@ -100,6 +78,43 @@ public class DynamiteTrap : TrapBase
         m_isTimer = false;
 
         m_fireParticle.Play();
-        Invoke(nameof(OnHit), m_explosionTimer);
+        Invoke(nameof(Explode), m_explosionTimer);
+    }
+
+    private void Explode()
+    {
+        //範囲判定
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_radius);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            Entity target = hitCollider.GetComponentInParent<Entity>();
+            if (target == null || target.Team == m_team) continue;
+
+            Vector3 knockbackDir = target.transform.position - transform.position;
+            knockbackDir.y = 0f;
+
+            if (knockbackDir.sqrMagnitude < 0.001f)
+            {
+                knockbackDir = m_dir;
+            }
+            m_damageData.AttackDir = knockbackDir.normalized;
+
+            target.TakeDamage(m_damageData);
+        }
+
+        if (m_effectEventData != null)
+        {
+            Effect data = new Effect()
+            {
+                effectType = Enum_EffectType.Explosion,
+                effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
+                effectRot = transform.rotation,
+            };
+
+            m_effectEventData.Raise(data);
+        }
+
+        OnReturnPool();
     }
 }   
