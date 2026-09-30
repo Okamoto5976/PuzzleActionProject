@@ -4,9 +4,7 @@ using UnityEngine;
 public class FireMagic : TrapBase
 {
     [Header("Fire Magic Settings")]
-    [SerializeField] private LayerMask m_hitLayer;
-    [SerializeField] private float m_damage = 10f;
-    [SerializeField] private float m_burnDamage = 2f;
+    [SerializeField] private LayerMask m_hitLayers;
     [SerializeField] private float m_burnDuration = 4f;
     [SerializeField] private float m_lifeTime = 5f;
 
@@ -24,11 +22,6 @@ public class FireMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    //public override void TrapInit()
-    //{
-    //    base.TrapInit(data);
-    //    //EntitySetUp();
-    //}
 
     private void FixedUpdate()
     {
@@ -61,21 +54,16 @@ public class FireMagic : TrapBase
 
         if (m_team == TeamType.Nature) return;
 
-        Entity target =other.GetComponent<Entity>();
-        if(target==null) return;
-        if (target.Team == m_team) return;
+        Entity target =other.GetComponentInParent<Entity>();
+        if (target == null || target.Team == m_team) return;
 
-        DamageData damageData = new DamageData
-        {
-            Attack = m_damage,
-            AttackDir = m_dir,
-        };
-        target.TakeDamage(damageData);
+        CreateDamageData();
+        target.TakeDamage(m_damageData);
 
         StatusModifier burnModifier = new StatusModifier
         {
             m_statType = StatusType.Burn,
-            m_value = m_burnDamage,
+            m_value = m_trapData != null ? m_trapData.m_attack : 0f,
             m_modType = ModifierType.Add
         };
         target.AddDamageBuff(burnModifier, BuffID.Burn, m_burnDuration);

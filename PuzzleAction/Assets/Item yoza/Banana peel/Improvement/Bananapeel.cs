@@ -3,15 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class Bananapeel : TrapBase
 {
-    [Header("Bannan Peel Settings")]
-    [SerializeField] private float m_stunDuration = 2.0f;
-
-    private float m_appliedStunDuration = 2.0f;
-
     protected override void EntitySetUp()
     {
-        //float owanerStun =(m_owner!=null)?m_owner.StunPower : 0;
-        m_appliedStunDuration = m_stunDuration;
     }
     public void FixedUpdate()
     {
@@ -27,14 +20,14 @@ public class Bananapeel : TrapBase
 
         Entity victim =other.GetComponentInParent<Entity>();
 
-
         if (victim!=null)
         {
             if (victim.Team == TeamType.Nature) return;
-
-
             if (victim.Team == m_team) return;
-            victim.ApplyStun(m_appliedStunDuration);
+
+            CreateDamageData();
+            victim.ApplyStun(m_damageData.StunDuration);
+
             OnHit();
         }
     }

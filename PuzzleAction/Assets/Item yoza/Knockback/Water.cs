@@ -4,7 +4,6 @@ public class Water : TrapBase
 {
     [Header("WaterGun Settings")]
     [SerializeField] private float m_SlowTimer = 3f;
-    [SerializeField] private float m_slowAmount = 0.3f;
     [SerializeField] private float m_lifeTimer = 5f;
 
     [SerializeField] private LayerMask m_hitLayers;
@@ -26,21 +25,7 @@ public class Water : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    public override void TrapInit()
-    {
-        base.TrapInit();
-        
-        m_isAddForceCalled = false;
-        m_timer = 0f;
-
-        if (m_rb!=null)
-        {
-            m_rb.isKinematic = false;
-            m_rb.useGravity = false;
-            m_rb.linearVelocity = Vector3.zero;
-            m_rb.angularVelocity= Vector3.zero;
-        }
-    }
+   
     private void FixedUpdate()
     {
         if (!m_isAddForceCalled)
@@ -59,10 +44,12 @@ public class Water : TrapBase
             OnReturnPool();
         }
     }
+
     protected override void OnHit()
     {
         OnReturnPool();
     }
+
     protected override void OnTriggerEnter(Collider other)
     {
         if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
@@ -83,7 +70,7 @@ public class Water : TrapBase
         StatusModifier slowModifier = new StatusModifier
         {
             m_statType = StatusType.Slow,
-            m_value = m_slowAmount,
+            m_value = m_trapData != null ? m_trapData.m_attack : 0f,
             m_modType = ModifierType.Add
         };
         target.AddBuff(slowModifier,BuffID.Water,m_SlowTimer);
