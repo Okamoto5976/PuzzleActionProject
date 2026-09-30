@@ -32,6 +32,7 @@ abstract public class Entity : MonoBehaviour
     public float Gas => m_status[StatusType.Gas].Value;
     public float Burn => m_status[StatusType.Burn].Value;
     public float Regenerate => m_status[StatusType.Regenerate].Value;
+    public float Invincible => m_status[StatusType.Invincible].Value;
     #endregion
 
     public enum EntityState
@@ -93,15 +94,15 @@ abstract public class Entity : MonoBehaviour
         }
     }
 
-    protected float InvincibleTimer
-    {
-        get => m_invincibleTimer;
-        set
-        {
-            if (m_invincibleTimer > value) return;
-            m_invincibleTimer = Mathf.Min(3f, value);
-        }
-    }
+    //protected float InvincibleTimer
+    //{
+    //    get => m_invincibleTimer;
+    //    set
+    //    {
+    //        if (m_invincibleTimer > value) return;
+    //        m_invincibleTimer = Mathf.Min(3f, value);
+    //    }
+    //}
 
     protected float KnockBackTimer
     {
@@ -111,13 +112,14 @@ abstract public class Entity : MonoBehaviour
             if (m_knockbackTimer > value) return;
             m_knockbackTimer = Mathf.Min(1f, value);
 
-            m_knockbackPower = Mathf.Clamp(value, 0f, 3f);
+            m_knockbackPower = Mathf.Clamp(value, 1f, 3f);
         }
     }
 
     public bool CanMove { get => m_canMove; }
     public bool IsStun => m_isStun || StunTimer > 0f;
-    public bool IsInvincible => m_isInvincible || InvincibleTimer > 0f;
+    //public bool IsInvincible => m_isInvincible || InvincibleTimer > 0f;
+    public bool IsInvincible => Invincible > 0f;
     public bool IsKnockBack => m_isKnockBack || KnockBackTimer > 0f;
     public bool IsEvading
     {
@@ -189,6 +191,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Gas, new EntityStatus(0f));
         m_status.Add(StatusType.Burn, new EntityStatus(0f));
         m_status.Add(StatusType.Regenerate, new EntityStatus(0f));
+        m_status.Add(StatusType.Invincible, new EntityStatus(0f));
     }
 
     protected virtual void Start()
@@ -201,17 +204,45 @@ abstract public class Entity : MonoBehaviour
     }
     #endregion
 
+
+    
+    private static readonly HashSet<StatusType> s_damageStatusTypes = new()
+    {
+        StatusType.Burn,
+        StatusType.Poison,
+        StatusType.Gas,
+    };
+
+    /// <summary>
+    /// ステータス系のBuffを与える際の
+    /// </summary>
+    /// <param name="modifier"></param>
+    /// <param name="buffID"></param>
+    /// <param name="duration"></param>
     public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
-        if(m_buffSystem==null)
+        if(m_buffSystem == null)
         {
+            return;
+        }
+
+        //ダメージバフの場合はこっち
+        if(s_damageStatusTypes.Contains(modifier.m_statType))
+        {
+            AddDamageBuff(modifier, buffID, duration);
             return;
         }
 
         m_buffSystem.AddBuff(modifier, buffID, duration);
     }
 
-    public void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
+    /// <summary>
+    /// ダメージのあるBuffを与える際の
+    /// </summary>
+    /// <param name="modifier"></param>
+    /// <param name="buffID"></param>
+    /// <param name="duration"></param>
+    private void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
         if (m_buffSystem == null)
         {
@@ -247,6 +278,7 @@ abstract public class Entity : MonoBehaviour
     }
 
     /// <summary>
+    /// EntityHPから呼ぶ
     /// スタンを付与する。StunResに応じて効果時間を軽減する。
     /// </summary>
     /// <param name="duration">基礎スタン時間</param>
@@ -259,10 +291,10 @@ abstract public class Entity : MonoBehaviour
         StunTimer = actualDuration;
     }
 
-    public void ApplyInvincible(float duration)
-    {
-        InvincibleTimer = duration;
-    }
+    //public void ApplyInvincible(float duration)
+    //{
+    //    InvincibleTimer = duration;
+    //}
 
     public void ApplyKnockBack(Vector3 direction, float power)
     {

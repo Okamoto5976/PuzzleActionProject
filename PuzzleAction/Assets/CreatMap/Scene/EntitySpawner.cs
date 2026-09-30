@@ -297,7 +297,12 @@ public class EntitySpawner : MonoBehaviour
 
         Enum_TrapType selectedType = candidates[Random.Range(0, candidates.Count)];
 
-        if (selectedType == Enum_TrapType.GasArea || selectedType == Enum_TrapType.SwampArea)
+        if (selectedType == Enum_TrapType.GasArea ||
+            selectedType == Enum_TrapType.SwampArea ||
+            selectedType == Enum_TrapType.PoisonArea ||
+            selectedType == Enum_TrapType.BurnArea ||
+            selectedType == Enum_TrapType.HealingArea ||
+            selectedType == Enum_TrapType.StunArea)
         {
             foreach (Vector3 pos in positions)
             {

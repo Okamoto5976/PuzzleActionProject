@@ -6,29 +6,26 @@ public class PoisonMagic : TrapBase
 {
     [Header("Direct Hit Setting")]
     [SerializeField] private LayerMask m_hitLayers;
-    [SerializeField] private float m_damage = 10f;
     [SerializeField] private float m_lifeTime = 5f;
 
-    [Header("Fire Magic Settings")]
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    [SerializeField] private float m_poisonDamage = 2f;
     [SerializeField] private float m_poisonDuration = 4f;
 
-    private bool m_isAreaActive=false;
+    private bool m_isAreaActive = false;
     private bool m_isAddForceCalled = false;
     private float m_flyTimer = 0f;
     private float m_areaTimer = 0f;
-    private float m_tickTimer=0f;
+    private float m_tickTimer = 0f;
 
-    private readonly List<Entity> m_targetsInRange=new List<Entity>();
+    private readonly List<Entity> m_targetsInRange = new List<Entity>();
     protected override void EntitySetUp()
     {
         m_isAreaActive = false;
         m_isAddForceCalled = false;
-        m_flyTimer=0f;
-        m_areaTimer=0f;
-        m_tickTimer=0f;
+        m_flyTimer = 0f;
+        m_areaTimer = 0f;
+        m_tickTimer = 0f;
         m_targetsInRange.Clear();
 
         if (m_rb != null)
@@ -38,7 +35,11 @@ public class PoisonMagic : TrapBase
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
+        //if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
+        //if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
+   
+    
     //public override void TrapInit(ItemRecieveData data)
     //{
     //    base.TrapInit(data);
@@ -47,7 +48,7 @@ public class PoisonMagic : TrapBase
 
     private void FixedUpdate()
     {
-        if (!m_isAreaActive&&!m_isAddForceCalled)
+        if (!m_isAreaActive && !m_isAddForceCalled)
         {
             OnAddForce(m_dir, m_power);
             m_isAddForceCalled = true;
@@ -69,13 +70,16 @@ public class PoisonMagic : TrapBase
         }
 
         m_areaTimer += Time.deltaTime;
-        if(m_areaTimer>=m_duration)
+        if (m_areaTimer >= m_duration)
         {
+            //if (m_poisonCollider != null) m_poisonCollider.enabled = false;
+            //if (m_poisonEffect != null) m_poisonEffect.SetActive(false);
             OnReturnPool();
             return;
         }
+
         m_tickTimer += Time.deltaTime;
-        if(m_tickTimer>=m_tickInterval)
+        if (m_tickTimer >= m_tickInterval)
         {
             m_tickTimer = 0f;
             ApplyPoisonEffect();
@@ -89,6 +93,8 @@ public class PoisonMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (!m_isAreaActive)
         {
             if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
@@ -100,20 +106,17 @@ public class PoisonMagic : TrapBase
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
-                DamageData damageData = new DamageData
-                {
-                    Attack = m_damage,
-                    AttackDir = m_dir,
-                };
-                hitTarget.TakeDamage(damageData);
+                CreateDamageData();
+                hitTarget.TakeDamage(m_damageData);
 
                 OnHit();
             }
             return;
         }
-        Entity inAreaTarget=other.GetComponentInParent<Entity>();
-        if (inAreaTarget == null) return;
-        if (inAreaTarget.Team == m_team) return;
+
+        Entity inAreaTarget = other.GetComponentInParent<Entity>();
+        if (inAreaTarget == null || inAreaTarget.Team == m_team) return;
+
         if (!m_targetsInRange.Contains(inAreaTarget))
         {
             m_targetsInRange.Add(inAreaTarget);
@@ -125,7 +128,7 @@ public class PoisonMagic : TrapBase
         if (!m_isAreaActive) return;
 
         Entity target = other.GetComponentInParent<Entity>();
-        if(target != null&&m_targetsInRange.Contains(target))
+        if (target != null && m_targetsInRange.Contains(target))
         {
             m_targetsInRange.Remove(target);
         }
@@ -145,19 +148,22 @@ public class PoisonMagic : TrapBase
 
     private void ApplyPoisonEffect()
     {
-        for(int i=m_targetsInRange.Count-1; i>=0; i--)
+        float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0f;
+
+        for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
         {
             Entity target = m_targetsInRange[i];
 
-            if (target==null)
+            if (target == null)
             {
-             m_targetsInRange.RemoveAt(i);
+                m_targetsInRange.RemoveAt(i);
                 continue;
             }
+
             StatusModifier poisonModifier = new StatusModifier
             {
                 m_statType = StatusType.Poison,
-                m_value = m_poisonDamage,
+                m_value = poisonDamage,
                 m_modType = ModifierType.Add
             };
             target.AddBuff(poisonModifier, BuffID.Poison, m_poisonDuration);

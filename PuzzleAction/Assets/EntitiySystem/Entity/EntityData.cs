@@ -22,6 +22,7 @@ public enum StatusType
     Burn,
     Swamp,
     Regenerate,
+    Invincible,
 }
 
 [CreateAssetMenu(fileName = "EntityData", menuName = "Scriptable Objects/Datas/EntityData")]

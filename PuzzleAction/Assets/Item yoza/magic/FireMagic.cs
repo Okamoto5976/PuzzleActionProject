@@ -5,10 +5,6 @@ public class FireMagic : TrapBase
 {
     [Header("Fire Magic Settings")]
     [SerializeField] private LayerMask m_hitLayers;
-
-    [SerializeField] private float m_damage = 10f;
-    [SerializeField] private float m_burnDamage = 2f;
-    [SerializeField] private float m_burnDuration = 4f;
     [SerializeField] private float m_lifeTime = 5f;
 
     private float m_timer = 0f;
@@ -25,11 +21,6 @@ public class FireMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    //public override void TrapInit()
-    //{
-    //    base.TrapInit(data);
-    //    //EntitySetUp();
-    //}
 
     private void FixedUpdate()
     {
@@ -60,28 +51,26 @@ public class FireMagic : TrapBase
             return;
         }
 
-        if (m_team == TeamType.Nature) return;
-
         Entity target =other.GetComponentInParent<Entity>();
 
-        if (target == null) return;
+        if (m_team == TeamType.Nature) return;
 
-        if (target.Team == m_team) return;
 
-        DamageData damageData = new DamageData
+        if (target == null || target.Team == m_team) return;
+
+        target.TakeDamage(m_damageData);
+
+        if (m_trapData.m_buffSetting.Count != 0)
         {
-            Attack = m_damage,
-            AttackDir = m_dir,
-        };
-        target.TakeDamage(damageData);
+            foreach (var buff in m_trapData.m_buffSetting)
+            {
+                if (buff.m_duration <= 0) continue;
 
-        StatusModifier burnModifier = new StatusModifier
-        {
-            m_statType = StatusType.Burn,
-            m_value = m_burnDamage,
-            m_modType = ModifierType.Add
-        };
-        target.AddBuff(burnModifier, BuffID.Burn, m_burnDuration);
+                var modifier = SetModifier(buff);
+
+                target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+            }
+        }
 
         OnHit();
     }

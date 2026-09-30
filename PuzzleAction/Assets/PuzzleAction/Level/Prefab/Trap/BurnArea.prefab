@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.6367924, g: 1, b: 0.75774056, a: 1}
+      maxColor: {r: 1, g: 0.4166274, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4944,7 +4944,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8921793828245241595}
-  - component: {fileID: 8405277235771965073}
+  - component: {fileID: -8252484204856489050}
   - component: {fileID: 4969366526268400199}
   - component: {fileID: 7970546924131938713}
   m_Layer: 0
@@ -4971,7 +4971,7 @@ Transform:
   - {fileID: 4854082960821804819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8405277235771965073
+--- !u!114 &-8252484204856489050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4980,11 +4980,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8719441754121234464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3fcfd29f6841f4e9e136d0ef81a9bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 05d21698facdbe341b03ef9a863f057b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwampTrap
+  m_EditorClassIdentifier: Assembly-CSharp::AreaTrap
   m_isFowardDir: 0
-  m_trapData: {fileID: 11400000, guid: 1ee9ee7b84ccb8444826b4a12cae7a17, type: 2}
+  m_trapData: {fileID: 11400000, guid: 83b7440998b344a49a4181406f1072b6, type: 2}
   m_speed: 0
 --- !u!114 &4969366526268400199
 MonoBehaviour:
@@ -5017,5 +5017,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.5, y: 1, z: 9.5}
+  m_Size: {x: 9, y: 1, z: 9}
   m_Center: {x: 0, y: 0, z: 0}

@@ -71,6 +71,8 @@ public abstract class TrapBase : MonoBehaviour
 
         m_power = data.power;
 
+        CreateDamageData();
+
         EntitySetUp();//—á@•b”‚ðÝ’è‚µ@ŽžŠÔŒo‰ß‚Å”š”j‚È‚Ç
     }
 
@@ -81,10 +83,11 @@ public abstract class TrapBase : MonoBehaviour
 
         m_dir = Vector3.zero;
         m_team = TeamType.Nature;
+
+        CreateTrapDamageData();
     }
 
-    //TrapInit‚ÌÛ@override‚Åã‘‚«‚Å‘Î‰ž
-    protected virtual void CreateDamageData()
+    protected void CreateDamageData()
     {
         m_damageData = new DamageData
         {
@@ -102,6 +105,33 @@ public abstract class TrapBase : MonoBehaviour
     protected float GetValue(float trapValue, float ownerValue)
     {
         return trapValue >= 0f ? trapValue : ownerValue;
+    }
+
+    protected void CreateTrapDamageData()
+    {
+        m_damageData = new DamageData
+        {
+            Attack = m_trapData.m_trapAttack,
+            CriticalRate = m_trapData.m_trapCriticalRate,
+            CriticalDamage = m_trapData.m_trapCriticalDamage,
+            BreakRate = m_trapData.m_trapBreakRate,
+            Knockback = m_trapData.m_trapKnockBack,
+            StunDuration = m_trapData.m_trapStunDuration,
+
+            AttackDir = m_dir
+        };
+    }
+
+    protected StatusModifier SetModifier(BuffSetting buff)
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = buff.m_statusType,
+            m_value = buff.m_value,
+            m_modType = buff.m_modifierType,
+        };
+
+        return modifier;
     }
 
     protected void OnMove(Vector3 dir)

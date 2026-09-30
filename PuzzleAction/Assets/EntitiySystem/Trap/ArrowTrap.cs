@@ -3,24 +3,6 @@ using UnityEngine;
 
 public class ArrowTrap : TrapBase
 {
-    [System.Serializable]
-    public class BuffItemClass
-    {
-        public float m_value;
-        public StatusType m_statusType;//what status? HP, Strength
-        public ModifierType m_modifierType;//what mod? Add, Multiply
-
-        [Header("----Active Buff Setting ----")]
-        public float m_duration;
-        public BuffID m_buffID;
-    }
-
-    [Header("BuffSetting")]
-
-    [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
-
-    [SerializeField] private float m_damageRate = 1f;
-
     [SerializeField] private LayerMask m_hitLayers;
 
     private bool m_isInitialized;
@@ -41,31 +23,12 @@ public class ArrowTrap : TrapBase
         m_rb.angularVelocity = Vector3.zero;
         m_isInitialized = true;
 
-        CreateDamageData();
-    }
-
-    protected override void CreateDamageData()
-    {
-        base.CreateDamageData();
     }
 
     protected override void OnHit()
     {
         OnReturnPool();
     }
-
-    private StatusModifier SetModifier(BuffItemClass buff)
-    {
-        StatusModifier modifier = new StatusModifier()
-        {
-            m_statType = buff.m_statusType,
-            m_value = buff.m_value,
-            m_modType = buff.m_modifierType,
-        };
-
-        return modifier;
-    }
-
 
     protected override void OnTriggerEnter(
         Collider other)
@@ -86,14 +49,15 @@ public class ArrowTrap : TrapBase
 
         target.TakeDamage(m_damageData);
 
-        if(m_buffItemClass.Count != 0)
+        if(m_trapData.m_buffSetting.Count != 0)
         {
-            foreach (var buff in m_buffItemClass)
+            foreach (var buff in m_trapData.m_buffSetting)
             {
                 if (buff.m_duration <= 0) continue;
 
                 var modifier = SetModifier(buff);
 
+                
                 target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
 
             }
