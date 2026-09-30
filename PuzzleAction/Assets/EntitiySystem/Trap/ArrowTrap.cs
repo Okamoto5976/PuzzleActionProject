@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ArrowTrap : TrapBase
 {
-    [SerializeField] private float m_damageRate = 1f;
-
     [SerializeField] private LayerMask m_hitLayers;
 
     private bool m_isInitialized;

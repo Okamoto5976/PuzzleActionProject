@@ -32,6 +32,7 @@ abstract public class Entity : MonoBehaviour
     public float Gas => m_status[StatusType.Gas].Value;
     public float Burn => m_status[StatusType.Burn].Value;
     public float Regenerate => m_status[StatusType.Regenerate].Value;
+    public float Invincible => m_status[StatusType.Invincible].Value;
     #endregion
 
     public enum EntityState
@@ -93,15 +94,15 @@ abstract public class Entity : MonoBehaviour
         }
     }
 
-    protected float InvincibleTimer
-    {
-        get => m_invincibleTimer;
-        set
-        {
-            if (m_invincibleTimer > value) return;
-            m_invincibleTimer = Mathf.Min(3f, value);
-        }
-    }
+    //protected float InvincibleTimer
+    //{
+    //    get => m_invincibleTimer;
+    //    set
+    //    {
+    //        if (m_invincibleTimer > value) return;
+    //        m_invincibleTimer = Mathf.Min(3f, value);
+    //    }
+    //}
 
     protected float KnockBackTimer
     {
@@ -117,7 +118,8 @@ abstract public class Entity : MonoBehaviour
 
     public bool CanMove { get => m_canMove; }
     public bool IsStun => m_isStun || StunTimer > 0f;
-    public bool IsInvincible => m_isInvincible || InvincibleTimer > 0f;
+    //public bool IsInvincible => m_isInvincible || InvincibleTimer > 0f;
+    public bool IsInvincible => Invincible > 0f;
     public bool IsKnockBack => m_isKnockBack || KnockBackTimer > 0f;
     public bool IsEvading
     {
@@ -189,6 +191,7 @@ abstract public class Entity : MonoBehaviour
         m_status.Add(StatusType.Gas, new EntityStatus(0f));
         m_status.Add(StatusType.Burn, new EntityStatus(0f));
         m_status.Add(StatusType.Regenerate, new EntityStatus(0f));
+        m_status.Add(StatusType.Invincible, new EntityStatus(0f));
     }
 
     protected virtual void Start()
@@ -259,10 +262,10 @@ abstract public class Entity : MonoBehaviour
         StunTimer = actualDuration;
     }
 
-    public void ApplyInvincible(float duration)
-    {
-        InvincibleTimer = duration;
-    }
+    //public void ApplyInvincible(float duration)
+    //{
+    //    InvincibleTimer = duration;
+    //}
 
     public void ApplyKnockBack(Vector3 direction, float power)
     {
