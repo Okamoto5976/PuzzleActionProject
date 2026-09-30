@@ -53,19 +53,13 @@ public class FireMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        if ((m_hitLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             OnHit();
             return;
         }
 
         if (m_team == TeamType.Nature) return;
-
-        if((m_hitLayer.value&(1<<other.gameObject.layer)) != 0)
-        {
-            OnHit();
-            return;
-        }
 
         Entity target =other.GetComponent<Entity>();
         if(target==null) return;
