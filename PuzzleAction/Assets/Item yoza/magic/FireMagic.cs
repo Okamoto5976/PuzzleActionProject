@@ -46,7 +46,7 @@ public class FireMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        if ((m_hitLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             OnHit();
             return;
@@ -66,7 +66,7 @@ public class FireMagic : TrapBase
             m_value = m_trapData != null ? m_trapData.m_attack : 0f,
             m_modType = ModifierType.Add
         };
-        target.AddBuff(burnModifier, BuffID.Burn, m_burnDuration);
+        target.AddDamageBuff(burnModifier, BuffID.Burn, m_burnDuration);
 
         OnHit();
     }

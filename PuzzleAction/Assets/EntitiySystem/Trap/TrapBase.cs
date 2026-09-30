@@ -104,6 +104,33 @@ public abstract class TrapBase : MonoBehaviour
         return trapValue >= 0f ? trapValue : ownerValue;
     }
 
+    protected virtual void CreateTrapDamageData()
+    {
+        m_damageData = new DamageData
+        {
+            Attack = m_trapData.m_trapAttack,
+            CriticalRate = m_trapData.m_trapCriticalRate,
+            CriticalDamage = m_trapData.m_trapCriticalDamage,
+            BreakRate = m_trapData.m_trapBreakRate,
+            Knockback = m_trapData.m_trapKnockBack,
+            StunDuration = m_trapData.m_trapStunDuration,
+
+            AttackDir = m_dir
+        };
+    }
+
+    protected StatusModifier SetModifier(BuffSetting buff)
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = buff.m_statusType,
+            m_value = buff.m_value,
+            m_modType = buff.m_modifierType,
+        };
+
+        return modifier;
+    }
+
     protected void OnMove(Vector3 dir)
     {
         dir = dir.normalized;

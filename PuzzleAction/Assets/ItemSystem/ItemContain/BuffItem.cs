@@ -5,24 +5,10 @@ using UnityEngine;
 public class BuffItem : Item 
 {
 
-    [System.Serializable]
-    public class BuffItemClass
-    {
-        public float m_value;
-        public StatusType m_statusType;//what status? HP, Strength
-        public ModifierType m_modifierType;//what mod? Add, Multiply
-
-        [Header("----Active Buff Setting ----")]
-        public float m_duration;
-        public BuffID m_buffID;
-
-
-    }
-
     [Header("Buff Reference")]
     [SerializeField] private ItemType m_buffEffectType;
 
-    [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
+    [SerializeField] private List<BuffSetting> m_buffItemClass = new();
 
     //[SerializeField] private BuffType m_buffType;
 
