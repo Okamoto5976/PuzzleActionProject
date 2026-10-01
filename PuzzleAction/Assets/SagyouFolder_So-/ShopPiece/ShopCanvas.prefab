@@ -802,10 +802,10 @@ RectTransform:
   - {fileID: 6333752647039985964}
   - {fileID: 9126099960126830302}
   - {fileID: 8391522010355784685}
-  - {fileID: 6885513796030504262}
   - {fileID: 8674773576588969385}
   - {fileID: 3745251639154676372}
   - {fileID: 1385509090443228536}
+  - {fileID: 6885513796030504262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

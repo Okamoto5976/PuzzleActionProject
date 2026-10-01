@@ -8,12 +8,12 @@ public class InfoText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_infoText;
 
     //仮　後に引数はItemData
-    public void GetItemDataInfo(ItemData data)
+    public void GetItemDataInfo(ItemData data, Vector3 goodsPos)
     {
         m_nameText.text = data.ItemName;
         m_infoText.text = data.Description;
 
-        SetPlace();
+        SetPlace(goodsPos);
     }
 
     public void Reset()
@@ -23,10 +23,25 @@ public class InfoText : MonoBehaviour
     }
 
     //仮　場所によって配置を変えてほしい
-    public void SetPlace()
+    public void SetPlace(Vector3 goodsPos)
     {
-        Vector2 pos = Mouse.current.position.ReadValue();
+        Canvas.ForceUpdateCanvases();
 
-        transform.position = new Vector3(pos.x + 10, pos.y + 10);
+        RectTransform rect = GetComponent<RectTransform>();
+
+        float panelWidth = rect.rect.width;
+
+        Vector3 pos = goodsPos;
+
+        if (goodsPos.x > Screen.width * 0.5f)
+        {
+            pos.x -= panelWidth + 30f;
+        }
+        else
+        {
+            pos.x += 100f;
+        }
+
+        transform.position = pos;
     }
 }

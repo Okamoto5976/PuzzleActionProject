@@ -73,7 +73,7 @@ public class Goods : MonoBehaviour,
         //SE再生
 
         //info　表示
-        m_shopManager.OnInfoPanelFromGoods(m_data.Data);
+        m_shopManager.OnInfoPanelFromGoods(m_data.Data, transform.position);
 
 
         //infoの量に応じて　大きさ変更したい
