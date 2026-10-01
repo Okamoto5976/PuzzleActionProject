@@ -1,39 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
 {
-    //[SerializeField] private IntRunTime m_scoreRuntime;
-    //[SerializeField] private IntRunTime m_moneyRuntime;
-    [SerializeField] private TimeManager timemanager;
-
-    //[Header("Clear")]
-    //[SerializeField] private IntRunTime m_level;
+    public static MainGameManager Instance;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_gameClearUIEvent;
 
     [SerializeField] private EventSO m_playerDeadEvent;
-    //[SerializeField] private BoolEventSO m_menuUIEvent;
-    //[SerializeField] private BoolEventSO m_optionUIEvent;
-    //[SerializeField] private BoolEventSO m_inventoryUIEvent;
-    //[SerializeField] private BoolEventSO m_shopUIEvent;
 
-    [SerializeField] private EventSO m_gameOverEvent;
-    [SerializeField] private EventSO m_gameClearEvent;
+    //[SerializeField] private EventSO m_gameOverEvent;
+    //[SerializeField] private EventSO m_gameClearEvent;
 
-    [SerializeField] private SceneEventScript m_sceneEvent;
+    //[SerializeField] private SceneEventScript m_sceneEvent;
 
     [SerializeField] private StaticSceneAsset m_mapPhaseScene;
 
     [SerializeField] private InventorySystem m_inventorySystem;
 
     private bool m_isGameOver = false;
-    
+    public bool IsGameOver => m_isGameOver;
+
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     void Start()
     {
         Time.timeScale = 1f;
@@ -67,16 +67,16 @@ public class MainGameManager : MonoBehaviour
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
-        timemanager.DecreaseValue(Time.deltaTime);
+        //timemanager.DecreaseValue(Time.deltaTime);
 
         //デバック用
         //Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
         
         //時間切れ
-        if (timemanager.Value <= 0)
-        {
-            //GameOver();
-        }
+        //if (timemanager.Value <= 0)
+        //{
+        //    //GameOver();
+        //}
     }
     
 
@@ -121,17 +121,17 @@ public class MainGameManager : MonoBehaviour
 
         //for example
         //player do not move, state change, save, result
-        if (m_gameClearEvent != null)
-        {
-            m_gameClearEvent.Raise();
+        //if (m_gameClearEvent != null)
+        //{
+        //    m_gameClearEvent.Raise();
 
-        }
+        //}
 
         //return;
 
         //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
 
-        LoadManager.m_instance.LoadScene("MapSelectionPhase");
+        LoadManager.m_instance.LoadScene(m_mapPhaseScene.Value);
     }
 
     //ゲームオーバー

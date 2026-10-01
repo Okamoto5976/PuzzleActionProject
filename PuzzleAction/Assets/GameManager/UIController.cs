@@ -7,10 +7,12 @@ public class UIController : MonoBehaviour
 
     [SerializeField] private GameObject m_gameOverUI;
     [SerializeField] private GameObject m_gameClearUI;
-    [SerializeField] private GameObject m_menuUI;
+    [SerializeField] private MenuUI m_menuUI;
     //[SerializeField] private MenuUI m_menuUIObj;
 
-    [SerializeField] private GameObject m_shopUI;
+    //[SerializeField] private GameObject m_shopUI;
+    [SerializeField] private InventoryUIController m_inventoryUIController;
+
     //[SerializeField] private GameObject m_inventoryUI;
     [SerializeField] private BoolEventSO m_inventoryEvent;
 
@@ -22,12 +24,11 @@ public class UIController : MonoBehaviour
     //[SerializeField] private BoolEventSO m_shopUIEvent;
     //[SerializeField] private BoolEventSO m_inventoryUIEvent;
 
-    private bool m_isMenu = false;
+    public bool IsMenu => m_menuUI.gameObject.activeSelf;
     private bool m_isInventory = false;
     //private bool isInventoryOpen = false;
 
     //player input stop
-    [SerializeField] private BoolEventSO m_playerIgnoreInput;
 
     private void OnEnable()
     {
@@ -66,9 +67,9 @@ public class UIController : MonoBehaviour
 
 
         m_gameOverUI.SetActive(false);
-        m_menuUI.SetActive(false);
+        //m_menuUI.SetActive(false);
         //m_optionUI.SetActive(false);
-        if(m_shopUI != null) m_shopUI.SetActive(false);
+        //if (m_shopUI != null) m_shopUI.SetActive(false);
         //m_inventoryUI.SetActive(false);
         m_gameClearUI.SetActive(false);
     }
@@ -101,45 +102,43 @@ public class UIController : MonoBehaviour
     //if get key "EscapeKey"
     private void ToggleMenu(InputAction.CallbackContext context)
     {
+        if (MainGameManager.Instance.IsGameOver) return;
 
-        if (!m_isMenu)
+
+        if (IsMenu)
         {
-            OnShowMenuUI(true);
-            //m_menuUIObj.TransitionTitle();
-            GameManager.Instance.OnSetStop(true);
-            m_playerIgnoreInput.Raise(true);
-
+            m_menuUI.Close();
+            
         }
         else
         {
-            OnShowMenuUI(false);
-            GameManager.Instance.OnSetStop(false);
-            m_playerIgnoreInput.Raise(false);
-
-
+            m_menuUI.Open();
         }
 
     }
 
     private void ToggleInventory(InputAction.CallbackContext callback)
     {
+        if (MainGameManager.Instance.IsGameOver) return;
+
         if (GameManager.Instance.IsStop) return;
         //Debug.Log("Inventory");
 
-        if (!m_isInventory)
-        {
-            //OnShowInventoryUI(true);
-            m_inventoryEvent.RaiseEvent(true);
-            m_isInventory = true;
-        }
-        else
-        {
-            //OnShowInventoryUI(false);
-            m_inventoryEvent.RaiseEvent(false);
-            m_isInventory = false;
+        m_inventoryEvent.RaiseEvent(!m_inventoryUIController.IsOpen);
+
+        //if (!m_isInventory)
+        //{
+        //    //OnShowInventoryUI(true);
+        //    m_isInventory = true;
+        //}
+        //else
+        //{
+        //    //OnShowInventoryUI(false);
+        //    m_inventoryEvent.RaiseEvent(false);
+        //    m_isInventory = false;
 
 
-        }
+        //}
     }
 
 
@@ -157,18 +156,18 @@ public class UIController : MonoBehaviour
         m_gameClearUI.SetActive(isbool);
     }
 
-    public void OnShowMenuUI(bool isbool)
-    {
-        if (m_menuUI == null) return;
-        //menu Isoption = true , menu run method
-        m_isMenu = isbool;
-        m_menuUI.SetActive(isbool);
-    }
+    //public void OnShowMenuUI(bool isbool)
+    //{
+    //    if (m_menuUI == null) return;
+    //    //menu Isoption = true , menu run method
+    //    m_isMenu = isbool;
+    //    m_menuUI.SetActive(isbool);
+    //}
 
 
     public void OnShowShopUI(bool isbool)
     {
-        if (m_shopUI == null) return;
+        //if (m_shopUI == null) return;
 
         //m_shopUI.SetActive(isbool);
     }

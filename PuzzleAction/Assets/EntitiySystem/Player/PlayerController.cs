@@ -147,6 +147,8 @@ public class PlayerController : Entity
 
     private void Update()
     {
+        m_playerItemController.Update();
+
         if(m_currentState == EntityState.Dead) return;
 
         UpdateFlag();

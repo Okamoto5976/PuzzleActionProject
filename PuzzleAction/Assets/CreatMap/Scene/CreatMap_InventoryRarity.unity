@@ -440,11 +440,11 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_instanceCounterList: []
   m_rooms:
-  - m_type: 0
+  - m_type: 3
     m_originPos: {x: 0, y: 0}
-  - m_type: 4
+  - m_type: 3
     m_originPos: {x: 3, y: 0}
-  - m_type: 1
+  - m_type: 3
     m_originPos: {x: 6, y: 0}
   - m_type: 2
     m_originPos: {x: 0, y: 3}
@@ -529,6 +529,7 @@ MonoBehaviour:
   m_debugMapPlaceSystem: {fileID: 74042318}
   m_instanceCounter: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
   m_inventorySystem: {fileID: 966751217}
+  m_player: {fileID: 0}
 --- !u!4 &74042322
 Transform:
   m_ObjectHideFlags: 0

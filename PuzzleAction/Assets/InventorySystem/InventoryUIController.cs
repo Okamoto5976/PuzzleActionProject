@@ -11,6 +11,8 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private GameObject m_hotbarActionPanel;
 
+    [SerializeField] private GameObject m_statusView;
+
     [SerializeField] private TMP_Text m_nameText;
 
     [SerializeField] private TMP_Text m_infoText;
@@ -23,11 +25,15 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private GameObject m_Panel;
 
+    //なんでもいいからfalse,trueになるオブジェクトを見て、開かれてるか見る
+    public bool IsOpen => m_activePanel.gameObject.activeSelf;
+
     private void Start()
     {
         m_trashButton.SetActive(false);
         m_selectButton.SetActive(false);
         m_hotbarActionPanel.SetActive(false);
+        m_statusView.SetActive(false);
 
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
@@ -46,6 +52,7 @@ public class InventoryUIController : MonoBehaviour
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
+        m_statusView.SetActive(state);
 
         m_Panel.SetActive(state);
 

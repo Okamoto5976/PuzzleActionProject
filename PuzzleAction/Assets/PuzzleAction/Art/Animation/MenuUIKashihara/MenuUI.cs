@@ -21,6 +21,9 @@ public class MenuUI : MonoBehaviour
     //[SerializeField] private FloatRunTime m_bgmVolume;
     //[SerializeField] private FloatRunTime m_seVolume;
 
+    [SerializeField] private BoolEventSO m_playerIgnoreInput;
+
+
     //-----audio save set-------------
     private OptionSaveManager m_optionSaveManager = new();
 
@@ -67,15 +70,22 @@ public class MenuUI : MonoBehaviour
         IsOption = true;
     }
 
-    public void Back()
+    public void Open()
     {
-        Debug.Log("Back");
+        gameObject.SetActive(true);
+
+        GameManager.Instance.OnSetStop(true);
+        m_playerIgnoreInput.Raise(true);
+    }
+
+    public void Close()
+    {
         gameObject.SetActive(false);
 
         GameManager.Instance.OnSetStop(false);
+        m_playerIgnoreInput.Raise(false);
 
     }
-
 
 
     //impossible

@@ -1,14 +1,14 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using TMPro;
 
 public class TestScript : MonoBehaviour
 {
-    [SerializeField] private TestDB m_DB;
+    [SerializeField] private string m_testText;
 
-    public void OnClick()
+    [SerializeField] private TextMeshProUGUI m_text;
+
+    private void Start()
     {
-        m_DB.AddValue(1);
-
-        SceneManager.LoadScene("SceneB");
+        m_text.text = m_testText;
     }
 }
