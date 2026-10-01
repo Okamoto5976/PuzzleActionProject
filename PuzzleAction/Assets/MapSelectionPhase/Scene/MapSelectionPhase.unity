@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d284e4d3579e8624c8fb5fd5b7a5617a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelUI
-  levelText: {fileID: 495325667}
+  levelText: {fileID: 614599851}
 --- !u!224 &1481416314
 RectTransform:
   m_ObjectHideFlags: 0
@@ -734,9 +734,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 495325669}
-  m_Father: {fileID: 688009942}
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -1132,4 +1131,4 @@ SceneRoots:
   - {fileID: 676155247}
   - {fileID: 1975928177}
   - {fileID: 1422590393}
-  - {fileID: 688009942}
+  - {fileID: 1481416314}

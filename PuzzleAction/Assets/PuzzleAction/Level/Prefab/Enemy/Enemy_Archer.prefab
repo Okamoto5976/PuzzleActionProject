@@ -95,7 +95,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitCollider
   m_isViewCollider: 0
-  m_isVisible: 0
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0
