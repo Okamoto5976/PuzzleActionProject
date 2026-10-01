@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class MolotovCocktail : TrapBase
 {
-    [Header("Hit/Layer Settings")]
     [SerializeField] private LayerMask m_hitLayers;
 
     [Header("Fire Area Settings")]
@@ -71,16 +70,10 @@ public class MolotovCocktail : TrapBase
 
         if (!m_isBurning)
         {
-            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
-            {
-                OnHit();
-                return;
-            }
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 OnHit();
-                return;
             }
             return;
         }
@@ -120,6 +113,8 @@ public class MolotovCocktail : TrapBase
         if (m_fireCollider != null) m_fireCollider.enabled = true;
 
         if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(true);
+
+        DetectInitialTargets();
     }
 
     private void ApplyFireDamage()
