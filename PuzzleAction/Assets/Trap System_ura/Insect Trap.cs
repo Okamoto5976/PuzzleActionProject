@@ -65,8 +65,8 @@ public class InsectTrap : TrapBase
         if (target == null)
             return;
 
-        if (target == m_owner)
-            return;
+        if (target.Team == TeamType.Nature) return;
+
 
         if (target.Team == m_team)
             return;
@@ -85,6 +85,7 @@ public class InsectTrap : TrapBase
         if (target == null)
             return;
 
+
         if (target == m_target)
         {
             m_target = null;
@@ -97,11 +98,6 @@ public class InsectTrap : TrapBase
         {
             if (m_target != null)
             {
-                m_damageData = new DamageData
-                {
-                    StunDuration = m_stunDuration,
-                };
-
                 m_target.TakeDamage(m_damageData);
             }
 

@@ -285,21 +285,23 @@ public class EnemyController : Entity
     {
         if (CurrentState == EntityState.Dead) return true;
 
-        if (!m_canMove || IsStun)
-        {
-            m_agent.ResetPath();
-            Stop();
-
-            if (m_anim != null) m_anim.SetBool("Move", false);
-
-            return true;
-        }
+        
 
         if (IsKnockBack)
         {
             m_agent.ResetPath();
             m_agent.isStopped = true;
             m_agent.Move(m_knockBackVelocity.normalized * (m_knockbackPower * 5f) * Time.fixedDeltaTime);
+
+            return true;
+        }
+
+        if (!m_canMove || IsStun)
+        {
+            m_agent.ResetPath();
+            Stop();
+
+            if (m_anim != null) m_anim.SetBool("Move", false);
 
             return true;
         }

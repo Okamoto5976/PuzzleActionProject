@@ -231,16 +231,16 @@ public class PlayerController : Entity
         if (m_currentState == EntityState.Dead) return;
         if (m_currentState == EntityState.Attack) return;
 
-        if(!m_canMove ||
-            IsStun)
+        if (IsKnockBack)
         {
-            Move(Vector3.zero, 0f);
+            Move(m_knockBackVelocity, m_knockbackPower * 5f);
             return;
         }
 
-        if(IsKnockBack)
+        if (!m_canMove ||
+            IsStun)
         {
-            Move(m_knockBackVelocity, m_knockbackPower * 5f);
+            Move(Vector3.zero, 0f);
             return;
         }
 
