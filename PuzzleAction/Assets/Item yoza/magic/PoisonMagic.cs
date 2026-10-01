@@ -35,17 +35,9 @@ public class PoisonMagic : TrapBase
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
-        //if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
-        //if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
    
     
-    //public override void TrapInit(ItemRecieveData data)
-    //{
-    //    base.TrapInit(data);
-    //    //EntitySetUp();
-    //}
-
     private void FixedUpdate()
     {
         if (!m_isAreaActive && !m_isAddForceCalled)
@@ -72,8 +64,6 @@ public class PoisonMagic : TrapBase
         m_areaTimer += Time.deltaTime;
         if (m_areaTimer >= m_duration)
         {
-            //if (m_poisonCollider != null) m_poisonCollider.enabled = false;
-            //if (m_poisonEffect != null) m_poisonEffect.SetActive(false);
             OnReturnPool();
             return;
         }

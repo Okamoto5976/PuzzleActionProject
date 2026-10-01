@@ -4,15 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class MolotovCocktail : TrapBase
 {
-    [Header("Hit/Layer Settings")]
     [SerializeField] private LayerMask m_hitLayers;
 
     [Header("Fire Area Settings")]
-    //[SerializeField] private Collider m_fireCollider;
-    //[SerializeField] private GameObject m_fireEffect;
+    [SerializeField] private Collider m_fireCollider;
+    [SerializeField] private GameObject m_fireEffect;
     [SerializeField] private float m_duration = 1f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    //[SerializeField] private float m_burnBuffDuration = 1f;
+    [SerializeField] private float m_burnBuffDuration = 1f;
 
     private bool m_isBurning = false;
     private float m_burnTimer = 0f;
@@ -34,8 +33,8 @@ public class MolotovCocktail : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
 
-        //if (m_fireCollider != null) m_fireCollider.enabled = false;
-        //if (m_fireEffect != null) m_fireEffect.SetActive(false);
+        if (m_fireCollider != null) m_fireCollider.enabled = false;
+        if (m_fireEffect != null) m_fireEffect.SetActive(false);
     }
 
     protected override void OnHit()
@@ -51,8 +50,8 @@ public class MolotovCocktail : TrapBase
         m_burnTimer += Time.deltaTime;
         if (m_burnTimer >= m_duration)
         {
-            //if (m_fireCollider != null) m_fireCollider.enabled = false;
-            //if (m_fireEffect != null) m_fireEffect.SetActive(false);
+            if (m_fireCollider != null) m_fireCollider.enabled = false;
+            if (m_fireEffect != null) m_fireEffect.SetActive(false);
             OnReturnPool();
             return;
         }
@@ -65,68 +64,19 @@ public class MolotovCocktail : TrapBase
         }
     }
 
-    private void StartFire()
-    {
-        m_isBurning = true;
-
-        if (m_rb != null)
-        {
-            m_rb.linearVelocity = Vector3.zero;
-            m_rb.angularVelocity = Vector3.zero;
-            m_rb.isKinematic = true;
-        }
-
-        //if (m_fireCollider != null) m_fireCollider.enabled = true;
-
-        //if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(true);
-    }
-
-    private void ApplyFireDamage()
-    {
-        float damageValue = (m_trapData != null ? m_trapData.m_attack + m_trapData.m_base : 0f);
-
-        for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
-        {
-            Entity target = m_targetsInRange[i];
-
-            if (target == null)
-            {
-                m_targetsInRange.RemoveAt(i);
-                continue;
-            }
-
-            if (m_trapData.m_buffSetting.Count != 0)
-            {
-                foreach (var buff in m_trapData.m_buffSetting)
-                {
-                    if (buff.m_duration <= 0) continue;
-
-                    var modifier = SetModifier(buff);
-
-                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
-                }
-            }
-        }
-    }
-
     protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+
         if (!m_isBurning)
         {
-            if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
-            {
-                OnHit();
-                return;
-            }
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
                 OnHit();
-                return;
             }
             return;
         }
-
         Entity inFireTarget = other.GetComponentInParent<Entity>();
 
         if (inFireTarget == null || inFireTarget.Team == m_team) return;
@@ -148,5 +98,63 @@ public class MolotovCocktail : TrapBase
         }
     }
 
-    
+    private void StartFire()
+    {
+        m_isBurning = true;
+
+        if (m_rb != null)
+        {
+            m_rb.linearVelocity = Vector3.zero;
+            m_rb.angularVelocity = Vector3.zero;
+            m_rb.isKinematic = true;
+        }
+
+        if (m_fireCollider != null) m_fireCollider.enabled = true;
+
+        if (m_fireEffect != null) m_fireEffect.gameObject.SetActive(true);
+
+        DetectInitialTargets();
+    }
+
+    private void DetectInitialTargets()
+    {
+        if (m_fireCollider == null) return;
+
+        Collider[]hitColliders=Physics.OverlapBox(m_fireCollider.bounds.center, m_fireCollider.bounds.extents,transform.rotation);
+
+        foreach(var col in hitColliders)
+        {
+            Entity target = col.GetComponentInParent<Entity>();
+            if(target!=null&&target.Team!=m_team)
+            {
+                if (!m_targetsInRange.Contains(target))
+                {
+                m_targetsInRange.Add(target);
+                }
+            }
+        }
+    }
+    private void ApplyFireDamage()
+    {
+        float damageValue = (m_trapData != null ? m_trapData.m_attack + m_trapData.m_base : 0f);
+
+        for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
+        {
+            Entity target = m_targetsInRange[i];
+
+            if (target == null)
+            {
+                m_targetsInRange.RemoveAt(i);
+                continue;
+            }
+
+            StatusModifier burnModifier = new StatusModifier
+            {
+                m_statType = StatusType.Burn,
+                m_value = damageValue,
+                m_modType = ModifierType.Add
+            };
+            target.AddBuff(burnModifier, BuffID.Burn, m_burnBuffDuration);
+        }
+    }
 }
