@@ -170,21 +170,21 @@ abstract public class EntityHP : MonoBehaviour
             case StatusType.Gas:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Gas);
                 }
                 break;
             case StatusType.Poison:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Poison);
                 }
                 break;
             case StatusType.Burn:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Burn);
                 }
                 break;
