@@ -19,9 +19,19 @@ public class EnemyCameraDetector : MonoBehaviour
             Debug.Log("敵が画面内に入りました");
         }
 
+        if (previousEnemyVisible && !currentEnemyVisible)
+        {
+            Debug.Log("敵が画面外に出ました");
+        }
+
         if (!previousBossVisible && currentBossVisible)
         {
             Debug.Log("ボスが画面内に入りました");
+        }
+
+        if (previousBossVisible && !currentBossVisible)
+        {
+            Debug.Log("ボスが画面外に出ました");
         }
 
         previousEnemyVisible = currentEnemyVisible;
@@ -43,7 +53,6 @@ public class EnemyCameraDetector : MonoBehaviour
             if (renderer == null)
                 continue;
 
-            // ① 画面内か判定
             Vector3 pos = mainCamera.WorldToViewportPoint(enemy.transform.position);
 
             if (pos.z <= 0 ||
@@ -53,12 +62,7 @@ public class EnemyCameraDetector : MonoBehaviour
                 continue;
             }
 
-            // ② カメラから敵へ線を描く（デバッグ用）
-            Debug.DrawLine(mainCamera.transform.position,
-                           enemy.transform.position,
-                           Color.red);
 
-            // ③ 壁があるなら見えていない
             if (Physics.Linecast(mainCamera.transform.position,
                                  enemy.transform.position,
                                  wallLayer))
@@ -66,7 +70,6 @@ public class EnemyCameraDetector : MonoBehaviour
                 continue;
             }
 
-            // ④ 画面内で壁もない
             return true;
         }
 
@@ -84,7 +87,6 @@ public class EnemyCameraDetector : MonoBehaviour
             if (renderer == null)
                 continue;
 
-            // ① 画面内か判定
             Vector3 pos = mainCamera.WorldToViewportPoint(boss.transform.position);
 
             if (pos.z <= 0 ||
@@ -94,12 +96,7 @@ public class EnemyCameraDetector : MonoBehaviour
                 continue;
             }
 
-            // ② カメラからボスへ線を描く（デバッグ用）
-            Debug.DrawLine(mainCamera.transform.position,
-                           boss.transform.position,
-                           Color.blue);
 
-            // ③ 壁があるなら見えていない
             if (Physics.Linecast(mainCamera.transform.position,
                                  boss.transform.position,
                                  wallLayer))
@@ -107,7 +104,6 @@ public class EnemyCameraDetector : MonoBehaviour
                 continue;
             }
 
-            // ④ 画面内で壁もない
             return true;
         }
 
