@@ -134,7 +134,7 @@ public class EnemyController : Entity
 
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
-        m_hitCollider = GetComponent<HitCollider>();
+        m_hitCollider = new HitCollider(true);
 
         if (m_enemyBehaviour != null)
         {

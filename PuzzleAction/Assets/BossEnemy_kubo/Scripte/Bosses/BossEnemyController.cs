@@ -92,7 +92,7 @@ public class BossEnemyController : Entity
         SpawnPosition = transform.position;
 
         m_agent = GetComponent<NavMeshAgent>();
-        m_hitCollider = GetComponent<HitCollider>();
+        m_hitCollider = new HitCollider(true);
         m_bossBehaviour = GetComponent<IBossBehaviour>();
         m_returnPool = GetComponent<ReturnObjectToPool>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
