@@ -2,7 +2,6 @@ using UnityEngine;
 [System.Serializable]
 public enum AreaType
 {
-    None,
     Damage,
     Summon,
     Normal,
@@ -10,6 +9,7 @@ public enum AreaType
     Goal,
     NotImplemented,
     Boss,
+    Fairy,
 }
 
 public class AreaSet : MonoBehaviour

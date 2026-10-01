@@ -66,7 +66,6 @@ GameObject:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: -5396902195688915075}
   - component: {fileID: 528806279578718545}
-  - component: {fileID: -8928694272576341907}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
@@ -123,8 +122,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: b8ff2ddfba3469342a9f9245c287c6c6, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
@@ -140,20 +137,6 @@ MonoBehaviour:
   m_power: 3
   m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 02379d45c84e978489286ee9e8ab366e, type: 2}
---- !u!114 &-8928694272576341907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
-  m_isVisible: 1
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0

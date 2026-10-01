@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 9014365078368189758}
   - component: {fileID: 7536149573719372520}
   - component: {fileID: -2954304509094281346}
-  - component: {fileID: 4413715628403061547}
   - component: {fileID: 302776586832592860}
   - component: {fileID: 7313648818790958268}
   - component: {fileID: 4418636522119921570}
@@ -117,19 +116,6 @@ MonoBehaviour:
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: bd356a36a60fb7547af11d332ea8a4d9, type: 2}
---- !u!114 &4413715628403061547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7553583667136533194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
 --- !u!114 &302776586832592860
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -69,7 +69,6 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -8358337252980725659}
-  - component: {fileID: 6220031024552198085}
   - component: {fileID: 2784328855026812732}
   m_Layer: 11
   m_Name: Enemy_Explosion
@@ -201,19 +200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Explosion
   m_effectEventData: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
---- !u!114 &6220031024552198085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
 --- !u!114 &2784328855026812732
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -136,9 +136,6 @@ public class EntitySpawner : MonoBehaviour
         {
             switch (room.m_type)
             {
-                case AreaType.None:
-                    break;
-
                 case AreaType.Summon:
                     SpawnEnemy(room);
                     break;
@@ -153,6 +150,8 @@ public class EntitySpawner : MonoBehaviour
 
                 case AreaType.Boss:
                     SpawnBoss(room);
+                        break;
+                default:
                         break;
             }
         }
