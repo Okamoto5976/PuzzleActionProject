@@ -40,7 +40,6 @@ public class MapPlaceSystem : MonoBehaviour
     private GameObject m_roomPieceParentObj;//bringing piece now
     private RectTransform m_roomPieceParentRect;
 
-
     //use GenerateMap MainSece, PlaceRoomDatas
     private List<RoomData> m_roomData = new();
 
@@ -124,12 +123,35 @@ public class MapPlaceSystem : MonoBehaviour
         }
         else
         {
-            m_mapClass = m_mapClassData.MapClass;
+            m_mapClass = CreateRuntimeMap(m_mapClassData.MapClass);
 
             m_startPos = m_mapClassData.StartPos;
             m_endPos = m_mapClassData.GoalPos;
         }
         m_boardManager.Generate(m_mapClass, m_startPos, m_endPos);
+    }
+
+    //コピー
+    private MapClass CreateRuntimeMap(MapClass source)
+    {
+        MapClass result = new MapClass(
+            source.Size.x,
+            source.Size.y
+        );
+
+        for (int y = 0; y <= source.Size.y; y++)
+        {
+            for (int x = 0; x <= source.Size.x; x++)
+            {
+                result.GetFloor(x, y).SetState(
+                    source.GetFloor(x, y).State
+                );
+            }
+        }
+
+        result.UpdateFloors();
+
+        return result;
     }
 
     private void InitializeMapGrid()
@@ -355,14 +377,25 @@ public class MapPlaceSystem : MonoBehaviour
         //if have roomPieceParentObject, following mousePoint
         if (m_roomPieceParentObj != null)
         {
+            RectTransform parentRect = m_roomPieceParentRect.parent as RectTransform;
+
             Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
+            Vector2 mouseLocalPos;
+
+            //UIのサイズに合わせて動かす
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentRect,
+                mouseScreenPos,
+                null,
+                out mouseLocalPos
+            );
             //piece index 0, 1, 2...  Shift piece index difference
             Vector2 differencePos = new Vector2(
-                            (m_difference.x) * 15f + 0.5f,
-                            (m_difference.y) * 15f + 0.5f
+                            (m_difference.x) * 50f,
+                            (m_difference.y) * 50f
                             );
-            m_roomPieceParentRect.position = mouseScreenPos - differencePos;
+            m_roomPieceParentRect.anchoredPosition = mouseLocalPos - differencePos;
         }
     }
 
@@ -808,5 +841,10 @@ public class MapPlaceSystem : MonoBehaviour
         var floor = m_mapClass.GetWall(edge.pos.x, edge.pos.y, edge.dir);
 
         floor.SetState(Wall.WallState.door);
+    }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

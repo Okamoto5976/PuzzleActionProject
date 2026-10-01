@@ -50,7 +50,7 @@ public class RoomPieceManager : MonoBehaviour
     #region ルーム作成
     private Room CreateRoom()
     {
-        int num = UnityEngine.Random.Range(0, 6);
+        int num = UnityEngine.Random.Range(0, 9);
 
         Room room = new(new(), new(0, 0));
 
@@ -81,13 +81,22 @@ public class RoomPieceManager : MonoBehaviour
             room = new(
                 new()
                 {
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                }, new(3, 3)
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.empty,Floor.FloorState.full,
+                }, new(2, 2)
                 );
         }
         else if (num == 3)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.empty,
+                }, new(2, 2)
+                );
+        }
+        else if (num == 4)
         {
             room = new(
                 new()
@@ -97,7 +106,7 @@ public class RoomPieceManager : MonoBehaviour
                 }, new(2, 2)
                 );
         }
-        else if (num == 4)
+        else if (num == 5)
         {
             room = new(
                new()
@@ -107,16 +116,38 @@ public class RoomPieceManager : MonoBehaviour
                }, new(2, 2)
                );
         }
-        else if (num == 5)
+        else if (num == 6)
         {
             room = new(
                 new()
                 {
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                }, new(5, 1)
+                    Floor.FloorState.empty,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full
+                }, new(2, 2)
                 );
         }
-
+        else if (num == 7)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full
+                }, new(4, 1)
+                );
+        }
+        else if (num == 8)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,
+                    Floor.FloorState.full,
+                    Floor.FloorState.full,
+                    Floor.FloorState.full
+                }, new(1, 4)
+                );
+        }
+        
         return room;
     }
 
@@ -190,14 +221,18 @@ public class RoomPieceManager : MonoBehaviour
         }
 
         var roomPieceParent = parentObj.GetComponent<RoomPieceParent>();
+        roomPieceParent.Init(this);
         roomPieceParent.SetRoom(room);
 
         //SetAreatype
         //AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
-        AreaType type = m_randomAreaTypes[Random.Range(0, m_randomAreaTypes.Count)];
+        //AreaType type = m_randomAreaTypes[Random.Range(0, m_randomAreaTypes.Count)];
+        int num = RandomType();
+
+        AreaType type = m_randomAreaTypes[num];
 
         roomPieceParent.SetAreaType(type);
-        roomPieceParent.Init(this);
+
 
         switch (type)
         {
@@ -216,6 +251,36 @@ public class RoomPieceManager : MonoBehaviour
         }
 
         return roomPieceParent;
+    }
+
+    int[] count = new int[4];
+
+    //重み付きランダム
+    private int RandomType()
+    {
+        float totalWeight = 0f;
+
+        for(int i = 0; i < count.Length; i++)
+        {
+            totalWeight += 1f / (count[i] + 1);
+        }
+
+        float random = Random.value * totalWeight;
+
+        for(int i = 0;i < count.Length; i++)
+        {
+            float weight = 1f / (count[i] + 1);
+
+            random -= weight;
+
+            if(random <= 0f)
+            {
+                count[i]++;
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     public RoomPieceParent GenerateFairyRoomObject(Room room)
