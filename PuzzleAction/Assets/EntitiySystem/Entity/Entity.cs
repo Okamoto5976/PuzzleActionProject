@@ -16,7 +16,20 @@ abstract public class Entity : MonoBehaviour
     public float STR  => m_status[StatusType.Strength].Value; 
     public float KnockBack => m_status[StatusType.KnockBack].Value;
     public float DEF => m_status[StatusType.Defense].Value;
-    public float Speed => m_status[StatusType.Speed].Value;
+    public float Speed
+    {
+        get
+        {
+            float baseSpeed = m_status[StatusType.Speed].Value;
+
+            float slowMultiplier = 1f - Swamp * (1f - SlowRes);
+            slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
+
+            float finalSpeed = (baseSpeed * slowMultiplier) - Slow;
+
+            return Mathf.Max(finalSpeed, 0f);
+        }
+    }
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float BreakRate => m_status[StatusType.BreakRate].Value;

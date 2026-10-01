@@ -19,6 +19,8 @@ public class KnockBackBomb : TrapBase
     }
     protected override void EntitySetUp()
     {
+        m_team = TeamType.Nature;
+
         m_isFuseActive = true;
         m_fuseTimer = 0f;
 

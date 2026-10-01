@@ -111,8 +111,6 @@ public class MolotovCocktail : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
         if (!m_isBurning)
         {
             if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)

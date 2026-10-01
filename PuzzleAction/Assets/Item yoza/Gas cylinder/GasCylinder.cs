@@ -82,7 +82,7 @@ public class GasCylinder : TrapBase
 
     private void ApplyPoisonEffect()
     {
-        float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0;
+        //float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0;
 
         for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
         {
