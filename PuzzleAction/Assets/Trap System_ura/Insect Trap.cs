@@ -32,8 +32,8 @@ public class InsectTrap : TrapBase
         if (target == null)
             return;
 
-        if (target.Team == TeamType.Nature)
-            return;
+        if (target.Team == TeamType.Nature) return;
+
 
         if (target.Team == m_team)
             return;

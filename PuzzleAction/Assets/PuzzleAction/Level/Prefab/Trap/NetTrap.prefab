@@ -174,7 +174,9 @@ MonoBehaviour:
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 1e5cf48f4ba0c934cbb3634202b47173, type: 2}
   m_speed: 0
-  m_stunDuration: 2
+  m_hitLayers:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!114 &5553791492813868636
 MonoBehaviour:
   m_ObjectHideFlags: 0

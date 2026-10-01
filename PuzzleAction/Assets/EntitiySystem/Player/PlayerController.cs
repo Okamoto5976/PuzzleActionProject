@@ -87,7 +87,8 @@ public class PlayerController : Entity
     [HideInInspector] public bool m_isMemberShip;
     [HideInInspector] public bool m_isWinnerTrophy;
     [HideInInspector] public bool m_isLoserTrophy;
-    [HideInInspector] public bool m_isTrophy;
+    [HideInInspector] public bool m_isNormalTrophy;
+    [HideInInspector] public bool m_titleTrophy;
 
 
     protected override void Awake()
@@ -231,16 +232,16 @@ public class PlayerController : Entity
         if (m_currentState == EntityState.Dead) return;
         if (m_currentState == EntityState.Attack) return;
 
-        if(!m_canMove ||
-            IsStun)
+        if (IsKnockBack)
         {
-            Move(Vector3.zero, 0f);
+            Move(m_knockBackVelocity, m_knockbackPower * 5f);
             return;
         }
 
-        if(IsKnockBack)
+        if (!m_canMove ||
+            IsStun)
         {
-            Move(m_knockBackVelocity, m_knockbackPower * 5f);
+            Move(Vector3.zero, 0f);
             return;
         }
 
@@ -253,18 +254,13 @@ public class PlayerController : Entity
 
         }
 
-        float slowMultiplier = 1f - Swamp * (1f - SlowRes);
-        slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
-
-        float finalSpeed = (Speed * slowMultiplier) - Slow;
-
         if (m_isEvading)
         {
-            Move(m_evadeDirection, finalSpeed * 1.5f);
+            Move(m_evadeDirection, Speed * 1.5f);
         }
         else
         {
-            Move(m_moveDir, finalSpeed);
+            Move(m_moveDir, Speed);
         }
 
 
@@ -408,7 +404,7 @@ public class PlayerController : Entity
 
         if (!m_isLoserTrophy) return false;
 
-        if(!m_isTrophy) return false;
+        if(!m_isNormalTrophy) return false;
 
         return true;
     }

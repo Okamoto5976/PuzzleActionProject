@@ -66,7 +66,6 @@ GameObject:
   - component: {fileID: 9036534983232500468}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
-  - component: {fileID: 7470603499713679253}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 6334792236557903116}
   m_Layer: 11
@@ -182,19 +181,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &7470603499713679253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0

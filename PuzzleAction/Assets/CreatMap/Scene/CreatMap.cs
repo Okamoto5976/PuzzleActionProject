@@ -12,6 +12,7 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private InstanceCounter m_instanceCounter;
 
     [SerializeField] private InventorySystem m_inventorySystem;
+    [SerializeField] private GameObject m_player;
 
     private MapClass m_mapClass;
     private void Awake()
@@ -44,6 +45,7 @@ public class CreatMap : MonoBehaviour
     private void Start()
     {
         m_inventorySystem.Initialized();
+        m_entitySpawner.SpawnTitleTrophy(m_player.transform.position);
     }
 }
 

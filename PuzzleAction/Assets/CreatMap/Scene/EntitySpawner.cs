@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,6 +16,7 @@ public class EntitySpawner : MonoBehaviour
     [Header("========== Enemy ==========")]
     [SerializeField] private Middleman_Enemy m_enemyPool;
     [Tooltip("1Piece3~5"), SerializeField] private int m_spawnCount;
+    
     [Header("========== EnemyGacha ==========")]
     [SerializeField] private GachaEngine m_enemyGachaEngine;
     [SerializeField] private EnemyRarityTable m_enemyRarityTable;
@@ -133,9 +136,6 @@ public class EntitySpawner : MonoBehaviour
         {
             switch (room.m_type)
             {
-                case AreaType.None:
-                    break;
-
                 case AreaType.Summon:
                     SpawnEnemy(room);
                     break;
@@ -151,6 +151,8 @@ public class EntitySpawner : MonoBehaviour
                 case AreaType.Boss:
                     SpawnBoss(room);
                         break;
+                default:
+                        break;
             }
         }
     }
@@ -164,7 +166,14 @@ public class EntitySpawner : MonoBehaviour
         foreach (var pos in positions)
         {
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
-            SpawnEnemyByGacha(worldPositions);
+            Vector3 WorldPositions = worldPositions + GetRandomSpawnOffset();
+            SpawnEnemyByGacha(WorldPositions);
+            // 2 enemies spawn
+            if(Random.Range(0f, 1f) <= 0.05f)
+            {
+                SpawnEnemyByGacha(WorldPositions);
+                Debug.Log($"Double Spawn : {WorldPositions}");
+            }
             m_reservedPosition.Add(pos);
         }
 
@@ -370,6 +379,24 @@ public class EntitySpawner : MonoBehaviour
         {
             m_camera.SetTargetAndHeightOffset(m_player, m_playerHeightOffset);
         }
+
+        //SpawnTitleTrophy(pos);
+    }
+
+    public void SpawnTitleTrophy(Vector3 pos)
+    {
+        if (!m_playerC.CheckTrophy()) return;
+        if(m_itemManager == null) return;
+        int id = 82;
+        Item titleTrophy = m_itemManager.GetItem(id); // Title Trophy Id
+
+        if(titleTrophy == null)
+        {
+            Debug.LogWarning($"{id} Trophy Not Found");
+            return;
+        }
+        m_itemManager.DropItemSetData(pos, titleTrophy);
+        Debug.Log("GameTitle Trophy Spawn");
     }
 
     //Treasure
@@ -472,6 +499,15 @@ public class EntitySpawner : MonoBehaviour
     {
         int index = Random.Range(0, m_areaTrapType.Length);
         return m_areaTrapType[index];
+    }
+
+    private Vector3 GetRandomSpawnOffset()
+    {
+        float maxOffset = Mathf.Min(m_mapGeneration.FloorScale.x, m_mapGeneration.FloorScale.z) * 0.5f;
+
+        Vector2 offset = Random.insideUnitCircle * maxOffset;
+
+        return new Vector3(offset.x, 0f, offset.y);
     }
 
     /// <summary>

@@ -79,6 +79,8 @@ public class MapPlaceSystem : MonoBehaviour
     private int m_trapPieceCount;
     [SerializeField] private int m_bossPieceMax;
     private int m_bossPieceCount;
+    [SerializeField] private int m_fairyPieceMax;
+    private int m_fairyPieceCount;
 
     //error all connect roomcheck
     private HashSet<int> m_allRoomID;
@@ -194,7 +196,7 @@ public class MapPlaceSystem : MonoBehaviour
 
                         switch (roomPieceParent.AreaType)
                         {
-                            case AreaType.None:
+                            case AreaType.Normal:
                                 break;
                             case AreaType.Summon:
                                 if (m_enemyPieceMax <= m_enemyPieceCount)
@@ -233,6 +235,15 @@ public class MapPlaceSystem : MonoBehaviour
                                     return;
                                 }
                                 m_bossPieceCount++;
+                                break;
+                            case AreaType.Fairy:
+                                if (m_fairyPieceMax <= m_fairyPieceCount)
+                                {
+                                    RoomCountLimitError();
+
+                                    return;
+                                }
+                                m_fairyPieceCount++;
                                 break;
                         }
                         m_gridObj.OnPlaceFloor(
@@ -288,7 +299,7 @@ public class MapPlaceSystem : MonoBehaviour
 
                     switch (roomPieceParent.AreaType)
                     {
-                        case AreaType.None:
+                        case AreaType.Normal:
                             break;
                         case AreaType.Summon:
                             m_enemyPieceCount--;
@@ -305,6 +316,9 @@ public class MapPlaceSystem : MonoBehaviour
                         case AreaType.Boss:
                             m_bossPieceCount--;
 
+                            break;
+                        case AreaType.Fairy:
+                            m_fairyPieceCount--;
                             break;
                     }
 
@@ -625,6 +639,15 @@ public class MapPlaceSystem : MonoBehaviour
     //Call by Button
     public void OnClickDFS()
     {
+        //二重チェック
+        if (CallDFS(m_startPos, m_endPos))
+        {
+            m_isDoorGenerate = true;
+        }
+        else
+        {
+            m_isDoorGenerate = false;
+        }
 
         if (!m_isDoorGenerate)
         {

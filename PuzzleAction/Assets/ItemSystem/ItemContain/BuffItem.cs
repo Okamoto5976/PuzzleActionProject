@@ -58,7 +58,11 @@ public class BuffItem : Item
         }
         else if(m_passiveType == Passive.Trophy)
         {
-            player.m_isTrophy = true;
+            player.m_isNormalTrophy = true;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = true;
         }
 
 
@@ -100,7 +104,11 @@ public class BuffItem : Item
         }
         else if (m_passiveType == Passive.Trophy)
         {
-            player.m_isTrophy = false;
+            player.m_isNormalTrophy = false;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = false;
         }
 
         player.RemovePassive(m_passiveType);

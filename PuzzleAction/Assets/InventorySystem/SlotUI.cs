@@ -8,7 +8,7 @@ public class SlotUI : MonoBehaviour
     private int m_index;
     public GameObject m_InventoryPanel;
 
-    [SerializeField] private Test m_testButton;
+    [SerializeField] private InventoryUIController m_testButton;
 
     [SerializeField] private bool isPassive;
 

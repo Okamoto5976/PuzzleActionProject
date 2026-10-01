@@ -774,6 +774,7 @@ GameObject:
   - component: {fileID: 4151098947707785000}
   - component: {fileID: 5834196779708829249}
   - component: {fileID: 642143258254061662}
+  - component: {fileID: 1748835722955373803}
   m_Layer: 5
   m_Name: ShopCanvas
   m_TagString: Untagged
@@ -801,10 +802,10 @@ RectTransform:
   - {fileID: 6333752647039985964}
   - {fileID: 9126099960126830302}
   - {fileID: 8391522010355784685}
-  - {fileID: 6885513796030504262}
   - {fileID: 8674773576588969385}
   - {fileID: 3745251639154676372}
   - {fileID: 1385509090443228536}
+  - {fileID: 6885513796030504262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -875,6 +876,34 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1748835722955373803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7174138788086197111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18af176a49ac4db43b700e8a0a1ecc7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoolToUnityEvent
+  m_event: {fileID: 11400000, guid: 92e3bcd4ccde4a44bb97d6a2e05a062b, type: 2}
+  m_unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4151098947707785000}
+        m_TargetAssemblyTypeName: UnityEngine.Canvas, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8078112105197367662
 GameObject:
   m_ObjectHideFlags: 0

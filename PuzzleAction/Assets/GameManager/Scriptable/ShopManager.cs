@@ -306,10 +306,10 @@ public class ShopManager : MonoBehaviour
     }
 
     //ê‡ñæï∂ï\é¶
-    public void OnInfoPanelFromGoods(ItemData data)
+    public void OnInfoPanelFromGoods(ItemData data, Vector3 goodsPos)
     {
         m_infoTextPrefab.gameObject.SetActive(true);
-        m_infoTextPrefab.GetItemDataInfo(data);
+        m_infoTextPrefab.GetItemDataInfo(data, goodsPos);
     }
 
     //ê‡ñæï∂îÒï\é¶

@@ -104,7 +104,7 @@ public class GridObject : MonoBehaviour
 
         switch(type)
         {
-            case AreaType.None:
+            case AreaType.Normal:
                 color = Color.white;
                 break;
             case AreaType.Summon:
@@ -118,6 +118,9 @@ public class GridObject : MonoBehaviour
                 break;
             case AreaType.Boss:
                 color = Color.magenta;
+                break;
+            case AreaType.Fairy:
+                color = Color.pink;
                 break;
         }
         m_floor.SetColor(color);
