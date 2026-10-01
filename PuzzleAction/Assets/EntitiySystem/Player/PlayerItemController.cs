@@ -43,6 +43,31 @@ public class PlayerItemController
     //Use Item Method
     //==============================
 
+    public void UseItemCancel()
+    {
+        if(m_isUsingArrow)
+        {
+            m_isUsingArrow = false;
+            m_playerController.ReticleActive(false);
+            m_playerController.AimTrailActive(false);
+
+            m_power = 0f;
+        }
+        else if(m_isUsingSetItem)
+        {
+            m_isUsingSetItem= false;
+            m_playerController.ReticleActive(false);
+            m_playerController.SetItemPreview(false);
+
+            m_power = 0f;
+        }
+        else if(m_isUsingAttackItem)
+        {
+            m_isUsingAttackItem = false;
+            m_power = 0f;
+        }
+    }
+
     public void UseItemPressed(int hotberIndex)
     {
         //Debug.Log("Pressed");

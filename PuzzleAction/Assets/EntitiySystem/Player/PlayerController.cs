@@ -12,8 +12,10 @@ public class PlayerController : Entity
     private bool m_isActive;
     private bool m_isActiveHold;
     private bool m_isActiveRelease;
-    private bool m_isPrevious;
-    private bool m_isNext;
+    private bool m_isHotber1;
+    private bool m_isHotber2;
+    private bool m_isHotber3;
+    private bool m_isCancel;
     private bool m_isInteract;
     private bool m_isGetDropItem;
 
@@ -160,8 +162,10 @@ public class PlayerController : Entity
         m_isActive = m_input.IsActive;
         m_isActiveHold = m_input.IsActiveHold;
         m_isActiveRelease = m_input.IsActiveRelease;
-        m_isPrevious = m_input.IsPrevious;
-        m_isNext = m_input.IsNext;
+        m_isHotber1 = m_input.IsHotber1;
+        m_isHotber2 = m_input.IsHotber2;
+        m_isHotber3 = m_input.IsHotber3;
+        m_isCancel = m_input.IsCancel;
         m_isInteract = m_input.IsInteract;
         m_isGetDropItem = m_input.IsGetDropItem;
 
@@ -181,6 +185,11 @@ public class PlayerController : Entity
         }
 
         DoEvading();
+
+        if(m_isCancel)
+        {
+            m_playerItemController.UseItemCancel();
+        }
 
 
         if (m_isActive)
@@ -293,25 +302,31 @@ public class PlayerController : Entity
 
         if (m_playerItemController.m_isUsingSetItem) return;
 
-        if (m_isPrevious)
+        if (m_isHotber1)
         {
-            m_hotberIndex--;
+            //m_hotberIndex--;
 
-            if (m_hotberIndex <= -1)
-            {
-                m_hotberIndex = 2;
-            }
+            //if (m_hotberIndex <= -1)
+            //{
+            //    m_hotberIndex = 2;
+            //}
+            m_hotberIndex = 0;
         }
 
-        if (m_isNext)
+        if (m_isHotber2)
         {
+            m_hotberIndex = 1;
+            //m_hotberIndex++;
 
-            m_hotberIndex++;
+            //if (m_hotberIndex >= 3)
+            //{
+            //    m_hotberIndex = 0;
+            //}
+        }
 
-            if (m_hotberIndex >= 3)
-            {
-                m_hotberIndex = 0;
-            }
+        if (m_isHotber3)
+        {
+            m_hotberIndex = 2;
         }
 
         m_displayManager.SetIndex(m_hotberIndex);
