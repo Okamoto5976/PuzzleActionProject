@@ -112,7 +112,7 @@ MonoBehaviour:
   m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
-  m_itemDropGachaEngine: {fileID: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: bd356a36a60fb7547af11d332ea8a4d9, type: 2}
 --- !u!114 &-132694917962651984
 MonoBehaviour:
   m_ObjectHideFlags: 0
