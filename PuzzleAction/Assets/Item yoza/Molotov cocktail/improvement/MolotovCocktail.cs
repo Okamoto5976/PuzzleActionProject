@@ -66,8 +66,6 @@ public class MolotovCocktail : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
         if (!m_isBurning)
         {
             Entity hitTarget = other.GetComponentInParent<Entity>();
@@ -120,9 +118,12 @@ public class MolotovCocktail : TrapBase
     {
         if (m_fireCollider == null) return;
 
-        Collider[]hitColliders=Physics.OverlapBox(m_fireCollider.bounds.center, m_fireCollider.bounds.extents,transform.rotation);
+        Vector3 center = m_fireCollider.bounds.center;
+        float radius = m_fireCollider.bounds.extents.magnitude;
 
-        foreach(var col in hitColliders)
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        foreach (var col in hitColliders)
         {
             Entity target = col.GetComponentInParent<Entity>();
             if(target!=null&&target.Team!=m_team)
@@ -148,13 +149,17 @@ public class MolotovCocktail : TrapBase
                 continue;
             }
 
-            StatusModifier burnModifier = new StatusModifier
+            if (m_trapData.m_buffSetting.Count != 0)
             {
-                m_statType = StatusType.Burn,
-                m_value = damageValue,
-                m_modType = ModifierType.Add
-            };
-            target.AddBuff(burnModifier, BuffID.Burn, m_burnBuffDuration);
+                foreach (var buff in m_trapData.m_buffSetting)
+                {
+                    if (buff.m_duration <= 0) continue;
+
+                    var modifier = SetModifier(buff);
+
+                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+                }
+            }
         }
     }
 }

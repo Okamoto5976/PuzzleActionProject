@@ -51,6 +51,7 @@ MonoBehaviour:
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 3e766911f6ef27d4d85ad23b86976794, type: 2}
   m_speed: 0
+  m_gasCollider: {fileID: 4639004702062619109}
   m_duration: 10
   m_tickInterval: 1
 --- !u!114 &3194208984523995871

@@ -71,7 +71,6 @@ public class SwampBottle : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
 
         Entity inGasTarget = other.GetComponentInParent<Entity>();
 
@@ -97,11 +96,10 @@ public class SwampBottle : TrapBase
     {
         if (m_swampCollider == null) return;
 
-        Collider[] hitColliders = Physics.OverlapBox(
-            m_swampCollider.bounds.center,
-            m_swampCollider.bounds.extents,
-            transform.rotation
-        );
+        Vector3 center = m_swampCollider.bounds.center;
+        float radius = m_swampCollider.bounds.extents.magnitude;
+
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
 
         foreach (var col in hitColliders)
         {
@@ -130,14 +128,17 @@ public class SwampBottle : TrapBase
                 continue;
             }
 
-            StatusModifier slowModifier = new StatusModifier
+            if (m_trapData.m_buffSetting.Count != 0)
             {
-                m_statType = StatusType.Slow,
-                m_value =slowValue,
-                m_modType = ModifierType.Add
-            };
+                foreach (var buff in m_trapData.m_buffSetting)
+                {
+                    if (buff.m_duration <= 0) continue;
 
-            target.AddBuff(slowModifier,BuffID.Water,m_slowTimer);
+                    var modifier = SetModifier(buff);
+
+                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+                }
+            }
         }
     }
 }
