@@ -1,66 +1,33 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InsectTrap : TrapBase
 {
-    [Header("Insect Setting")]
-    [SerializeField] private Collider m_insectCollider;
-
     [Header("Stun Setting")]
-    [SerializeField] private float m_stunDuration = 5.0f;
+    [SerializeField] private float m_stunInterval = 1.0f;
 
-    private Entity m_target;
+    private readonly HashSet<Entity> m_targets =
+        new HashSet<Entity>();
 
     private Coroutine m_stunCoroutine;
 
     protected override void EntitySetUp()
     {
-        m_target = null;
+        m_targets.Clear();
 
         if (m_stunCoroutine != null)
         {
             StopCoroutine(m_stunCoroutine);
-            m_stunCoroutine = null;
         }
 
-        if (m_insectCollider != null)
-        {
-            m_insectCollider.enabled = false;
-        }
-    }
-
-    public void Activate()
-    {
-        if (m_insectCollider == null)
-            return;
-
-        m_insectCollider.enabled = true;
-
-        if (m_stunCoroutine == null)
-        {
-            m_stunCoroutine = StartCoroutine(StunLoop());
-        }
-    }
-
-    public void Deactivate()
-    {
-        if (m_insectCollider != null)
-        {
-            m_insectCollider.enabled = false;
-        }
-
-        m_target = null;
-
-        if (m_stunCoroutine != null)
-        {
-            StopCoroutine(m_stunCoroutine);
-            m_stunCoroutine = null;
-        }
+        m_stunCoroutine = StartCoroutine(StunLoop());
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
-        Entity target = other.GetComponentInParent<Entity>();
+        Entity target =
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
@@ -71,42 +38,49 @@ public class InsectTrap : TrapBase
         if (target.Team == m_team)
             return;
 
-        // Ç∑Ç≈Ç…1ëÃÇ¢ÇÈèÍçáÇÕñ≥éã
-        if (m_target != null)
-            return;
-
-        m_target = target;
+        m_targets.Add(target);
     }
 
-    protected  void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        Entity target = other.GetComponentInParent<Entity>();
+        Entity target =
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
             return;
 
-
-        if (target == m_target)
-        {
-            m_target = null;
-        }
+        m_targets.Remove(target);
     }
 
     private IEnumerator StunLoop()
     {
         while (true)
         {
-            if (m_target != null)
+            foreach (Entity target in m_targets)
             {
-                m_target.TakeDamage(m_damageData);
+                if (target == null)
+                    continue;
+
+                target.TakeDamage(m_damageData);
             }
 
-            yield return new WaitForSeconds(m_stunDuration);
+            yield return new WaitForSeconds(m_stunInterval);
         }
     }
 
     protected override void OnHit()
     {
 
+    }
+
+    private void OnDisable()
+    {
+        m_targets.Clear();
+
+        if (m_stunCoroutine != null)
+        {
+            StopCoroutine(m_stunCoroutine);
+            m_stunCoroutine = null;
+        }
     }
 }
