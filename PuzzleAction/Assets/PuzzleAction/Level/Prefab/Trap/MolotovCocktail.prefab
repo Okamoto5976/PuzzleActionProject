@@ -54,8 +54,11 @@ MonoBehaviour:
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192
+  m_fireCollider: {fileID: 3057631888293353375}
+  m_fireEffect: {fileID: 0}
   m_duration: 10
   m_tickInterval: 0.5
+  m_burnBuffDuration: 1
 --- !u!114 &4138614842166381810
 MonoBehaviour:
   m_ObjectHideFlags: 0
