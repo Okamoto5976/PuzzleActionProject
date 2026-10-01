@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 528806279578718545}
   - component: {fileID: 4821778530584433029}
-  - component: {fileID: -8210829372241536840}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 7341675702321249772}
@@ -82,20 +81,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9e52368232e5c4ab994c97d829ccc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Archer
---- !u!114 &-8210829372241536840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 0
-  m_isVisible: 0
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0
