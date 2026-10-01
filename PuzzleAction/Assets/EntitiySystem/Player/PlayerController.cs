@@ -87,7 +87,8 @@ public class PlayerController : Entity
     [HideInInspector] public bool m_isMemberShip;
     [HideInInspector] public bool m_isWinnerTrophy;
     [HideInInspector] public bool m_isLoserTrophy;
-    [HideInInspector] public bool m_isTrophy;
+    [HideInInspector] public bool m_isNormalTrophy;
+    [HideInInspector] public bool m_titleTrophy;
 
 
     protected override void Awake()
@@ -403,7 +404,7 @@ public class PlayerController : Entity
 
         if (!m_isLoserTrophy) return false;
 
-        if(!m_isTrophy) return false;
+        if(!m_isNormalTrophy) return false;
 
         return true;
     }

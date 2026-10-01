@@ -153,6 +153,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         Highlight(index);
 
+        if (m_selectedMaps[index].mapName == null) return;
+
         Debug.Log($"Selected : {m_selectedMaps[index].mapName}");
     }
 
