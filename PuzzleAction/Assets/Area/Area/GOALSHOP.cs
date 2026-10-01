@@ -91,8 +91,8 @@ public class GOALSHOP : MonoBehaviour
                 m_showShopUI.Raise(m_active);
                 break;
 
-            case AreaType.Goal:
-                Debug.Log("ゴールおめ");
+            //case AreaType.Goal:
+                //Debug.Log("ゴールおめ");
                 //AreaTypeがGoalだった時の処理追加（Goalの起動）
                 //m_goalSystem.OnGoal();
                 //gameManager GoalUI true
@@ -113,8 +113,8 @@ public class GOALSHOP : MonoBehaviour
                 //m_showShopUI.Raise(m_active);
                 break;
 
-            case AreaType.Goal:
-                Debug.Log("ゴールおめ");
+            //case AreaType.Goal:
+                //Debug.Log("ゴールおめ");
                 //AreaTypeがGoalだった時の処理追加（Goalの起動）
                 //gameManager GoalUI true
                 break;

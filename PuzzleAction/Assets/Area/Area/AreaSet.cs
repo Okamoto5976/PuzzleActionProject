@@ -6,8 +6,6 @@ public enum AreaType
     Summon,
     Normal,
     Shop,
-    Goal,
-    NotImplemented,
     Boss,
     Fairy,
 }
