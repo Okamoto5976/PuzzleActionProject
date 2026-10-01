@@ -19,8 +19,12 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private InventorySystem m_inventorySystem;
 
+    private PlayerSave m_playerSave;
+
     private bool m_isGameOver = false;
     public bool IsGameOver => m_isGameOver;
+
+    [SerializeField] private EntityHP m_playerHP;
 
 
     private void Awake()
@@ -109,6 +113,16 @@ public class MainGameManager : MonoBehaviour
 
         //クリア階層記録　
         GameManager.Instance.AddLevel(1);
+
+        m_playerSave = new();
+
+        PlayerData data = new PlayerData();
+
+        data.m_hp = m_playerHP.CurrentHP;
+
+        m_playerSave.SavePlayerData(data);
+
+
         //m_level.AddValue(1);
         //Debug.Log($"クリア回数：{m_level.Value}");
         //Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");

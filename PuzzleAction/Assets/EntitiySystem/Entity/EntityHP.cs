@@ -6,7 +6,7 @@ abstract public class EntityHP : MonoBehaviour
 
     private AudioSource m_audioSource;
 
-    [SerializeField] private int m_currentHP;
+    [SerializeField] protected int m_currentHP;
     [SerializeField] private int m_max;
     public int CurrentHP { get => m_currentHP;}
 
@@ -28,7 +28,7 @@ abstract public class EntityHP : MonoBehaviour
         m_max = MaxHP;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (m_entity == null) return;
         m_currentHP = (int)m_entity.HP;

@@ -12,6 +12,7 @@ public class StartManager : MonoBehaviour
     [SerializeField] private Slider m_seSlider;
 
     private InventorySaveManager m_inventorySaveManager;
+    private PlayerSave m_playerSave;
 
     //-----audio save set-------------
     private OptionSaveManager m_optionSaveManager = new();
@@ -19,6 +20,7 @@ public class StartManager : MonoBehaviour
     private void Awake()
     {
         m_inventorySaveManager = GetComponent<InventorySaveManager>();
+        m_playerSave = new();
     }
 
     private void Start()
@@ -60,6 +62,7 @@ public class StartManager : MonoBehaviour
         GameManager.Instance.SetLevel(1);
         //save reset
         m_inventorySaveManager.ClearSaveData();
+        m_playerSave.DeletePlayerData();
 
         LoadManager.m_instance.LoadScene(m_scene.Value);
 
