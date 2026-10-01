@@ -7648,6 +7648,7 @@ GameObject:
   - component: {fileID: 1957982647}
   - component: {fileID: 1957982649}
   - component: {fileID: 1957982648}
+  - component: {fileID: 1957982650}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7820,6 +7821,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraSpriteCorrection
   _targetCamera: {fileID: 1957982643}
+--- !u!114 &1957982650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957982641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 902d118a69331ba4f9b5eabdf9dce601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCameraDetector
+  mainCamera: {fileID: 1957982643}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1961750642
 GameObject:
   m_ObjectHideFlags: 0
