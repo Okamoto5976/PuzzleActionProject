@@ -42,10 +42,10 @@ public class MainGameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        if(!GameManager.Instance.ModifyMoney(5000))
-        {
-            Debug.LogError("ModifyMoney over ");
-        }
+        //if(!GameManager.Instance.ModifyMoney(5000))
+        //{
+        //    Debug.LogError("ModifyMoney over ");
+        //}
     }
 
     private void OnEnable()

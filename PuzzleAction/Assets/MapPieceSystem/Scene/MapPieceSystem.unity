@@ -223,6 +223,10 @@ MonoBehaviour:
   m_roomPieceParent: {fileID: 3621389001753909684, guid: 25bd27e716aa7ac4695448e183184818, type: 3}
   m_roomPiece: {fileID: 7110370001246736035, guid: 79fef458a04c8654d8e4144e06e29400, type: 3}
   m_pieceAmount: 20
+  m_XMin: -300
+  m_XMax: 200
+  m_YMin: -500
+  m_YMax: 400
   m_randomAreaTypes: 00000000010000000200000003000000
 --- !u!114 &50533904
 MonoBehaviour:

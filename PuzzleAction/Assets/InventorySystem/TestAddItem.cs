@@ -25,4 +25,10 @@ public class TestAddItem : MonoBehaviour
     {
         m_dropMoneyEventSO.Raise(m_pos, m_money);
     }
+
+    [ContextMenu("BGM")]
+    public void PlayBGM()
+    {
+        m_dropMoneyEventSO.Raise(m_pos, m_money);
+    }
 }

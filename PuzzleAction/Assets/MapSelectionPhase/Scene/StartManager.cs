@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -61,6 +62,8 @@ public class StartManager : MonoBehaviour
     {
         GameManager.Instance.SetLevel(1);
         //save reset
+        GameManager.Instance.SetMoney(0);
+
         m_inventorySaveManager.ClearSaveData();
         m_playerSave.DeletePlayerData();
 

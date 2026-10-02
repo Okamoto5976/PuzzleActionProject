@@ -1898,6 +1898,8 @@ MonoBehaviour:
     m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
   - m_buffID: 30
     m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
+  - m_buffID: 31
+    m_sprite: {fileID: 21300000, guid: d3013e9683df20742b3e0df15013efa6, type: 3}
 --- !u!223 &6591543693613818236
 Canvas:
   m_ObjectHideFlags: 0

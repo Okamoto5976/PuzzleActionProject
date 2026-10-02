@@ -13,6 +13,12 @@ public class RoomPieceManager : MonoBehaviour
 
     [SerializeField] private int m_pieceAmount = 20;
 
+    [SerializeField] private float m_XMin;
+    [SerializeField] private float m_XMax;
+    [SerializeField] private float m_YMin;
+    [SerializeField] private float m_YMax;
+
+
     //use random type when create piece
     [SerializeField] private List<AreaType> m_randomAreaTypes = new();
 
@@ -193,8 +199,8 @@ public class RoomPieceManager : MonoBehaviour
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
@@ -287,8 +293,8 @@ public class RoomPieceManager : MonoBehaviour
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
@@ -332,8 +338,8 @@ public class RoomPieceManager : MonoBehaviour
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
