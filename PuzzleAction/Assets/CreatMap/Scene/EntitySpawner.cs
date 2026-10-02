@@ -52,6 +52,9 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private TreasureRarityTable m_treasureRarityTable;
     [SerializeField] private int m_treasureCount = 3;
 
+    [Header("========== Treasure ==========")]
+    [SerializeField] private GameObject m_spring;
+
     private HashSet<Vector2Int> m_reservedPosition = new();
 
     private MapClassData m_mapClassData;
@@ -146,6 +149,10 @@ public class EntitySpawner : MonoBehaviour
 
                 case AreaType.Damage:
                     SpawnTrap(room);
+                    break;
+
+                case AreaType.Fairy:
+                    SpawnFairy(room);
                     break;
 
                 case AreaType.Boss:
@@ -363,6 +370,18 @@ public class EntitySpawner : MonoBehaviour
             m_reservedPosition.Add(pos);
         }
     }
+
+    private void SpawnFairy(RoomData room)
+    {
+        var positions = ChooseRandomPosition(room, 1);
+
+        foreach(var pos in positions)
+        {
+            Instantiate(m_spring, m_mapGeneration.GridToWorld(pos), Quaternion.identity);
+            m_reservedPosition.Add(pos);
+        }
+    }
+
     private void SpawnGoal()
     {
         Vector3 pos = m_mapGeneration.GridToWorld(m_mapClassData.GoalPos);

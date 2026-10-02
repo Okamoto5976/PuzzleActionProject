@@ -17,8 +17,11 @@ public class DebugViewCollider : MonoBehaviour
     }
 
     private AttackHitBox m_currentHitBox;
+    private AttackRay m_currentRay;
 
-    private bool m_isVisible;
+    private bool m_isHitVisible;
+
+    private bool m_isRayVisible;
 
     private Coroutine m_viewCoroutine;
 
@@ -28,14 +31,34 @@ public class DebugViewCollider : MonoBehaviour
 
         if (m_viewCoroutine != null) return;
 
-        m_viewCoroutine = StartCoroutine(ViewColliderTime());
+        m_viewCoroutine = StartCoroutine(ViewHitColliderTime());
     }
 
-    private IEnumerator ViewColliderTime()
+    public void ViewRayCollider(AttackRay ray)
     {
-        m_isVisible = true;
+        m_currentRay = ray;
+
+        if (m_viewCoroutine != null) return;
+
+        m_viewCoroutine = StartCoroutine(ViewRayColliderTime());
+    }
+
+    private IEnumerator ViewHitColliderTime()
+    {
+        m_isHitVisible = true;
         yield return new WaitForSeconds(0.5f);
-        m_isVisible = false;
+        m_isHitVisible = false;
+
+        m_viewCoroutine = null;
+
+        yield break;
+    }
+
+    private IEnumerator ViewRayColliderTime()
+    {
+        m_isRayVisible = true;
+        yield return new WaitForSeconds(0.5f);
+        m_isRayVisible = false;
 
         m_viewCoroutine = null;
 
@@ -44,13 +67,25 @@ public class DebugViewCollider : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!m_isVisible) return;
-        if (m_currentHitBox == null) return;
-        //Debug.Log("DrawGizmos");
+        if (m_isHitVisible)
+        {
+            if (m_currentHitBox == null) return;
+            //Debug.Log("DrawGizmos");
 
-        Gizmos.color = Color.red;
+            Gizmos.color = Color.red;
 
-        Vector3 center = m_currentHitBox.m_pos + m_currentHitBox.m_hitBoxOffset;
-        Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
+            Vector3 center = m_currentHitBox.m_pos + m_currentHitBox.m_hitBoxOffset;
+            Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
+        }
+        else if(m_isRayVisible)
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawRay(
+                m_currentRay.origin,
+                m_currentRay.direction * m_currentRay.range
+            );
+        }
     }
+
 }

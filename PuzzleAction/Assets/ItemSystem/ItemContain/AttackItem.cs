@@ -81,6 +81,8 @@ public class AttackItem : Item
             };
 
             hits = m_rayCollider.AttackCollider(m_damage, data.entity.Team, collider);
+
+            DebugViewCollider.Instance.ViewRayCollider(collider);
         }
         else
         {

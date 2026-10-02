@@ -429,7 +429,7 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_instanceCounterList: []
   m_rooms:
-  - m_type: 2
+  - m_type: 5
     m_originPos: {x: 0, y: 0}
   - m_type: 3
     m_originPos: {x: 3, y: 0}
@@ -481,6 +481,7 @@ MonoBehaviour:
   m_treasureGachaEngine: {fileID: 11400000, guid: 2870ca23be566fc438dd03ba66e973e8, type: 2}
   m_treasureRarityTable: {fileID: 11400000, guid: 6873e69ebccfc444c8dd96e77e3d7a86, type: 2}
   m_treasureCount: 3
+  m_spring: {fileID: 4381252645458984183, guid: 9213cf4b1dd62144c9fd67368592f15a, type: 3}
   m_itemManager: {fileID: 681700649319570257}
 --- !u!114 &74042320
 MonoBehaviour:
@@ -4583,7 +4584,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 43
+  m_index: 41
   m_count: 10
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}
