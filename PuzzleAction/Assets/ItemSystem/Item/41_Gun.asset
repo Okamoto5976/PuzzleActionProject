@@ -21,16 +21,17 @@ MonoBehaviour:
     maxStack: 1
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
-    m_itemUseType: 3
+    m_itemUseType: 0
     price: 600
-  m_overrideDamage: 1
   m_damage:
-    Attack: 20
-    CriticalRate: 0
-    CriticalDamage: 0
-    BreakRate: 0
-    Knockback: 0
-    StunDuration: 0
+    Attack: 30
+    CriticalRate: -1
+    CriticalDamage: -1
+    BreakRate: -1
+    Knockback: 15
+    StunDuration: 5
     AttackDir: {x: 0, y: 0, z: 0}
+  m_isRayCollider: 1
+  m_range: 5
   m_selfBuffList: []
   m_targetBuffList: []

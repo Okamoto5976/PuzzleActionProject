@@ -23,14 +23,15 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 3
     price: 1111
-  m_overrideDamage: 0
   m_damage:
     Attack: 10
-    CriticalRate: 0
-    CriticalDamage: 0
-    BreakRate: 50
+    CriticalRate: -1
+    CriticalDamage: -1
+    BreakRate: 10
     Knockback: 0
     StunDuration: 0
     AttackDir: {x: 0, y: 0, z: 0}
+  m_isRayCollider: 0
+  m_range: 0
   m_selfBuffList: []
   m_targetBuffList: []

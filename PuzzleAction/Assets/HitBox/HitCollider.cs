@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -25,49 +26,65 @@ public class HitCollider
 
     protected Coroutine m_viewCoroutine;
     
-    public void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
+    public List<Collider> AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
         // ヒットした判定のセット
         //HashSet<Entity> hitSet = new();
-        {
-            m_currentHitBox = attackHitBox;
+        // ヒットした判定のセット
+        List<Collider> hitSet = new();
 
-            Collider[] hits = Physics.OverlapSphere(
-                attackHitBox.m_transform.position + attackHitBox.m_hitBoxOffset,
-                attackHitBox.m_radius
-                       );
+        
+        m_currentHitBox = attackHitBox;
+
+        Collider[] hits = Physics.OverlapSphere(
+            attackHitBox.m_transform.position + attackHitBox.m_hitBoxOffset,
+            attackHitBox.m_radius
+                    );
 
 
-            //Debug.Log($"hits.Length : {hits.Length}");
+        //Debug.Log($"hits.Length : {hits.Length}");
 
-            foreach (var hit in hits)
-            {
-                Entity entity = hit.GetComponentInParent<Entity>();
+        //foreach (var hit in hits)
+        //{
+        //    Entity entity = hit.GetComponentInParent<Entity>();
 
-                if (entity == null)
-                {
-                    continue;
-                }
-                if(entity.Team==myTeam)
-                {
-                    continue;
-                }
+        //    if (entity == null)
+        //    {
+        //        continue;
+        //    }
+        //    if(entity.Team==myTeam)
+        //    {
+        //        continue;
+        //    }
 
-                entity.TakeDamage(data);
+        //    entity.TakeDamage(data);
 
                 
-            }
+        //}
 
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+
+            if (entity == null)
+                continue;
+
+            if (entity.Team == myTeam)
+                continue;
+
+            hitSet.Add(hit);
         }
 
         if (m_isViewCollider)
         {
-            if (m_viewCoroutine != null) return;
+            if (m_viewCoroutine != null) return hitSet;
 
             OnDrawGizmos();
             //m_viewCoroutine = StartCoroutine(ViewColliderTime());
         }
 
+
+        return hitSet;
     }
 
     private IEnumerator ViewColliderTime()
