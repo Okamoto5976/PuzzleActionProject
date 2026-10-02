@@ -26,9 +26,28 @@ public class ItemDropper : ComponentPoolHandler<DroppedObject>
     /// </summary>
     public void DropItemAtPosition(Vector3 position, int money)
     {
-        var obj = GetComponentFromPool();
-        obj.SetValue(money);
-        obj.transform.position = position;
-        obj.gameObject.SetActive(true);
+        //êÿÇËè„Ç∞
+        int count = Mathf.CeilToInt((float)money / 50f);
+        count = Mathf.Clamp(count, 1, 16);
+
+        int baseMoney = money / count;
+        int remainder = money % count;
+
+        for(int i  = 0; i < count; i++)
+        {
+            int dropMoney = baseMoney;
+
+            if(i < remainder)
+            {
+                dropMoney++;
+            }
+
+            var obj = GetComponentFromPool();
+            obj.SetValue(dropMoney);
+            obj.transform.position = position;
+            obj.gameObject.SetActive(true);
+            obj.AddForce();
+        }
+        
     }
 }

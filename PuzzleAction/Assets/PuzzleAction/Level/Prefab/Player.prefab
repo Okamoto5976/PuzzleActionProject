@@ -334,7 +334,8 @@ MonoBehaviour:
   m_isMemberShip: 0
   m_isWinnerTrophy: 0
   m_isLoserTrophy: 0
-  m_isTrophy: 0
+  m_isNormalTrophy: 0
+  m_titleTrophy: 0
   testknockback: 0
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
@@ -403,8 +404,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e972cb244f0d7784cbf2d97919b7273e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  m_pickupRange: 6
-  m_maxColliderDetectCount: 10
+  m_pickupRange: 10
+  m_maxColliderDetectCount: 20
 --- !u!114 &8743255071538060541
 MonoBehaviour:
   m_ObjectHideFlags: 0
