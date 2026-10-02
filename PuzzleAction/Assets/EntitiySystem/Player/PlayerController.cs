@@ -84,6 +84,9 @@ public class PlayerController : Entity
     //if inventory max 
     [SerializeField] private GameObject m_textErrorMessage;
 
+    //if using item view cancel 
+    [SerializeField] private GameObject m_cancelMessage;
+
     //----passive effect---------------------
     [HideInInspector] public bool m_isCoupon;
     [HideInInspector] public bool m_isMemberShip;
@@ -373,6 +376,11 @@ public class PlayerController : Entity
         m_textErrorMessage.SetActive(active);
     }
 
+    public void CancelMessageActive(bool active)
+    {
+        m_cancelMessage.SetActive(active);
+    }
+
     public void ItemDescriptionPanelActive(bool active)
     {
         m_textPanel.gameObject.SetActive(active);
@@ -417,6 +425,8 @@ public class PlayerController : Entity
 
     public bool CheckTrophy()
     {
+        if (m_titleTrophy) return false;
+
         if(!m_isWinnerTrophy) return false;
 
         if (!m_isLoserTrophy) return false;

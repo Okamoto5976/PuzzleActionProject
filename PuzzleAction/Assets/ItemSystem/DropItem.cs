@@ -121,7 +121,7 @@ public class DropItem : MonoBehaviour
 
         if ((m_groundLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            Debug.Log("item hit ground");
+            //Debug.Log("item hit ground");
             m_isGround = true;
 
             m_velocity.y = 0f;

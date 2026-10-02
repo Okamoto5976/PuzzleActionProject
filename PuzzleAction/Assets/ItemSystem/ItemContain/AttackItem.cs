@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static TrapRarityTable;
 
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
@@ -87,23 +86,28 @@ public class AttackItem : Item
         {
             AttackHitBox hitbox = new()
             {
-                m_transform = data.entity.transform,
-                m_hitBoxOffset = data.pos,
+                m_pos = data.pos,
+                m_hitBoxOffset = data.offset,
                 m_radius = m_range
             };
 
             hits = m_hitCollider.AttackCollider(m_damage, data.entity.Team, hitbox);
+
+            DebugViewCollider.Instance.ViewHitCollider(hitbox);
         }
 
         //if (m_overrideDamage)
         //{
         //    m_damage.Attack += data.entity.STR;
-            
+
         //}
-        
+        Debug.Log("Attack Item");
 
         foreach (Collider hit in hits)
         {
+            Debug.Log("Collider");
+
+
             Entity entity = hit.GetComponentInParent<Entity>();
             if (entity == null)
             {

@@ -239,8 +239,21 @@ public class EnemyController : Entity
                 AttackDir = transform.forward,
             };
 
-        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        var hits = m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
         Debug.Log("EnemyController : Player HIT");
+
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+            if (entity == null)
+            {
+                continue;
+            }
+
+            if (entity.Team == Team) continue;
+
+            entity.TakeDamage(damage);
+        }
     }
     private AttackItem GetUseItem()
     {

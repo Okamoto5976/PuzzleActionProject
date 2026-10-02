@@ -17,6 +17,8 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private TMP_Text m_infoText;
 
+    [SerializeField] private TMP_Text m_useTypeText;
+
     [SerializeField] private GameObject m_activePanel;
 
     [SerializeField] private GameObject m_passivepanel;
@@ -37,6 +39,7 @@ public class InventoryUIController : MonoBehaviour
 
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
+        m_useTypeText.gameObject.SetActive(false);
 
         m_activePanel.SetActive(false);
         m_passivepanel.SetActive(false);
@@ -104,9 +107,31 @@ public class InventoryUIController : MonoBehaviour
 
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
+        m_useTypeText.gameObject.SetActive (true);
 
         m_nameText.text = data.ItemName;
         m_infoText.text = data.info;
+
+        string description = null;
+
+        switch (data.ItemUseType)
+        {       
+            case ItemUseType.Instant:
+                description = $"Spaceを押すと向いている方向に発動";
+                break;
+            case ItemUseType.Arrow:
+                description = $"Space長押しで距離を伸ばし、離すと発動";
+                break;
+            case ItemUseType.Set:
+                description = $"Space長押しで設置場所を指定、離すと発動";
+                break;
+            case ItemUseType.Attack:
+                description = $"Space長押しで構え、離すと発動";
+                break;
+        }
+
+
+        m_useTypeText.text = $"{data.ItemUseType}\n" + description;
     }
 
     //=========remove button=============
@@ -160,6 +185,7 @@ public class InventoryUIController : MonoBehaviour
 
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
+        m_useTypeText.gameObject.SetActive(false);
 
         m_index = -1;
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class AttackHitBox
 {
-    public Transform m_transform;
+    public Vector3 m_pos;
     public Vector3 m_hitBoxOffset;
     public float m_radius;
 }
@@ -24,7 +24,9 @@ public class HitCollider
     
     private AttackHitBox m_currentHitBox;
 
-    protected Coroutine m_viewCoroutine;
+    public AttackHitBox CurrentHitBox => m_currentHitBox;
+
+    private Coroutine m_viewCoroutine;
     
     public List<Collider> AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
@@ -37,7 +39,7 @@ public class HitCollider
         m_currentHitBox = attackHitBox;
 
         Collider[] hits = Physics.OverlapSphere(
-            attackHitBox.m_transform.position + attackHitBox.m_hitBoxOffset,
+            attackHitBox.m_pos + attackHitBox.m_hitBoxOffset,
             attackHitBox.m_radius
                     );
 
@@ -106,7 +108,7 @@ public class HitCollider
 
         Gizmos.color = Color.red;
 
-        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        Vector3 center = m_currentHitBox.m_pos + m_currentHitBox.m_hitBoxOffset;
         Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
     }
 }

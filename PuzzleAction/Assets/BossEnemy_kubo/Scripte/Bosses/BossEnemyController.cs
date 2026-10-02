@@ -97,7 +97,7 @@ public class BossEnemyController : Entity
         m_returnPool = GetComponent<ReturnObjectToPool>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
 
-        m_attackHitBox.m_transform = gameObject.transform;
+        m_attackHitBox.m_pos = gameObject.transform.position;
 
         //if (m_attackItem == null)
         //{
@@ -200,9 +200,9 @@ public class BossEnemyController : Entity
     }
     public void Attack()
     {
-        Debug.DrawLine(transform.position, m_attackHitBox.m_transform.position, Color.red, 2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position, m_target.Value));
-        Debug.Log(m_attackHitBox.m_transform.position);
+        Debug.DrawLine(transform.position, m_attackHitBox.m_pos, Color.red, 2f);
+        Debug.Log(Vector3.Distance(m_attackHitBox.m_pos, m_target.Value));
+        Debug.Log(m_attackHitBox.m_pos);
         Debug.Log(m_attackHitBox.m_radius);
 
 

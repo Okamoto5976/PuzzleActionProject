@@ -44,7 +44,7 @@ public class RayCollider
                 //Debug.Log($"hit.name: {hit.collider.name}");
 
                 hitSet.Add(hit.collider);
-                hitSet[i].enabled = false;  // 2‰ñˆÈã‚Í”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
+                //hitSet[i].enabled = false;  // 2‰ñˆÈã‚Í”»’è‚µ‚È‚¢‚æ‚¤‚É‚·‚é
             }
             else
             {
