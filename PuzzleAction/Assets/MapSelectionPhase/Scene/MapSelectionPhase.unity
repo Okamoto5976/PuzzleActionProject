@@ -1271,6 +1271,7 @@ MonoBehaviour:
   m_maxPreviewWidth: 500
   m_previewSpacing: 100
   m_mapPieceSystem: {fileID: 11400000, guid: e146380b9990c5746a4d09a816b1ddd5, type: 2}
+  m_tutorialMap: {fileID: 11400000, guid: c80b372e9de729641ac9ff706c6ccd70, type: 2}
 --- !u!1 &2125702354
 GameObject:
   m_ObjectHideFlags: 0

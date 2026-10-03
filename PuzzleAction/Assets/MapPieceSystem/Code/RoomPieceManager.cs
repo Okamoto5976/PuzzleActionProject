@@ -22,6 +22,9 @@ public class RoomPieceManager : MonoBehaviour
     //use random type when create piece
     [SerializeField] private List<AreaType> m_randomAreaTypes = new();
 
+    [Header("Tutorial")]
+    [SerializeField] private List<AreaType> m_tutorialTypes = new();
+
     //[SerializeField] private int m_poolPieceAmount = 100;
 
     //[SerializeField] private int m_normalRoomGenerate = 40;
@@ -33,6 +36,18 @@ public class RoomPieceManager : MonoBehaviour
 
     public void Start()
     {
+        if(GameManager.Instance.m_isTutorial)
+        {
+            for (int i = 0; i < m_tutorialTypes.Count; i++)
+            {
+                Room room = CreateTutorialRoom();
+                RoomPieceParent piece = GenerateTutorialRoomObject(room, i);
+                //m_pieces.Enqueue(piece);
+            }
+
+            return;
+        }
+
         for(int i = 0; i < m_pieceAmount; i++)
         {
             Room room = CreateRoom();
@@ -191,6 +206,23 @@ public class RoomPieceManager : MonoBehaviour
         return room;
     }
 
+    private Room CreateTutorialRoom()
+    {
+        Room room = new(new(), new(0, 0));
+
+
+        room = new(
+            new()
+            {
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,
+            }, new(2, 2)
+            );
+
+
+        return room;
+    }
+
     #endregion
 
 
@@ -289,6 +321,65 @@ public class RoomPieceManager : MonoBehaviour
         return 0;
     }
 
+
+    public RoomPieceParent GenerateTutorialRoomObject(Room room, int num)
+    {
+        GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
+
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
+
+        RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
+
+        rect.anchoredPosition = new Vector2(rectX, rectY);
+
+        for (int y = 0; y < room.Size.y; y++)
+        {
+            for (int x = 0; x < room.Size.x; x++)
+            {
+                int roomIndex = x + y * room.Size.x;
+                if (room.Floors[roomIndex].State == Floor.FloorState.empty) continue;
+                var floor = Instantiate(m_roomPiece, parentObj.transform);
+                var FloorRect = floor.GetComponent<RectTransform>();
+
+
+                FloorRect.anchoredPosition = new Vector2(
+                    x * 50f,
+                    y * 50f
+                );
+
+                var roomPiece = floor.GetComponent<RoomPiece>();
+                roomPiece.SetIndex(new Vector2Int(x, y));
+            }
+        }
+
+        var roomPieceParent = parentObj.GetComponent<RoomPieceParent>();
+        roomPieceParent.Init(this);
+        roomPieceParent.SetRoom(room);
+
+        AreaType type = m_tutorialTypes[num];
+
+        roomPieceParent.SetAreaType(type);
+
+
+        switch (type)
+        {
+            case AreaType.Normal:
+                break;
+            case AreaType.Summon:
+                roomPieceParent.SetColor(Color.red);
+                break;
+            case AreaType.Shop:
+                roomPieceParent.SetColor(Color.green);
+                break;
+            case AreaType.Damage:
+                roomPieceParent.SetColor(Color.cyan);
+
+                break;
+        }
+
+        return roomPieceParent;
+    }
     public RoomPieceParent GenerateFairyRoomObject(Room room)
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);

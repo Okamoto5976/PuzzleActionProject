@@ -15,6 +15,10 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private GameObject m_player;
 
     private MapClass m_mapClass;
+
+    [SerializeField] private MapBGMData m_mapBGMData;
+    [SerializeField] private EnemyCameraDetector m_enemyCameraDetector;
+
     private void Awake()
     {
         GameManager.Instance.ResetData();
@@ -46,6 +50,19 @@ public class CreatMap : MonoBehaviour
     {
         m_inventorySystem.Initialized();
         m_entitySpawner.SpawnTitleTrophy(m_player.transform.position);
+
+        PlayBGM();
+    }
+
+
+    private void PlayBGM()
+    {
+        var list = m_mapBGMData.m_bgms;
+
+        AudioManager.Instance.PlayAudio(list[0].m_audioData);
+
+        m_enemyCameraDetector.SetMapBGM(list[0].m_audioData);
+
     }
 }
 

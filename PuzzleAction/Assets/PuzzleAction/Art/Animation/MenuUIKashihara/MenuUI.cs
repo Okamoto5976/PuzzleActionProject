@@ -112,16 +112,16 @@ public class MenuUI : MonoBehaviour
 
     public void SetMasterVolume(float value)
     {
-        AudioManager.instance.SetMaster(value);
+        AudioManager.Instance.SetMaster(value);
     }
 
     public void SetBGMVolume(float value)
     {
-        AudioManager.instance.SetBGM(value);
+        AudioManager.Instance.SetBGM(value);
     }
 
     public void SetSEVolume(float value)
     {
-        AudioManager.instance.SetSE(value);
+        AudioManager.Instance.SetSE(value);
     }
 }

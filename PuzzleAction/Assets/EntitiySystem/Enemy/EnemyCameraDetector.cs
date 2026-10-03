@@ -9,36 +9,127 @@ public class EnemyCameraDetector : MonoBehaviour
     private bool previousEnemyVisible;
     private bool previousBossVisible;
 
+    private float m_enemyTimer;
+    private float m_bossTimer;
+
+
+
+    [SerializeField] private AudioData m_enemyBGM;
+    [SerializeField] private AudioData m_bossBGM;
+
+    private AudioData m_mapBGM;
+
+    //bossのbgmを優先
+
+
+    [SerializeField] private float m_minX = 0.2f;
+    [SerializeField] private float m_maxX = 0.8f;
+    [SerializeField] private float m_minY = 0.2f;
+    [SerializeField] private float m_maxY = 0.8f;
+
+    [SerializeField] private float m_enemyAudioPlayTime;
+    [SerializeField] private float m_bossAudioPlayTime;
+
     void Update()
     {
+        if (GameManager.Instance.isShop) return;
+
         bool currentEnemyVisible = IsEnemyVisible();
         bool currentBossVisible = IsBossVisible();
 
-        if (!previousEnemyVisible && currentEnemyVisible)
+        UpdateEnemyTimer(currentEnemyVisible);
+        UpdateBossTimer(currentBossVisible);
+
+        //previousEnemyVisible = currentEnemyVisible;
+        //previousBossVisible = currentBossVisible;
+
+        //EnemyVisible = currentEnemyVisible;
+        //BossVisible = currentBossVisible;
+
+        UpdateEnemyState();
+        UpdateBossState();
+    }
+
+    private void UpdateEnemyTimer(bool value)
+    {
+        if(value)
         {
-            Debug.Log("敵が画面内に入りました");
+            m_enemyTimer += Time.deltaTime;
+        }
+        else
+        {
+            m_enemyTimer -= Time.deltaTime * 0.2f; 
         }
 
-        if (previousEnemyVisible && !currentEnemyVisible)
+        m_enemyTimer = Mathf.Clamp(m_enemyTimer, 0f, m_enemyAudioPlayTime);
+    }
+
+    private void UpdateBossTimer(bool value)
+    {
+        if(value)
         {
-            Debug.Log("敵が画面外に出ました");
+            m_bossTimer += Time.deltaTime;
+        }
+        else
+        {
+            m_bossTimer -= Time.deltaTime * 0.2f;
         }
 
-        if (!previousBossVisible && currentBossVisible)
+        m_bossTimer = Mathf.Clamp(m_bossTimer, 0f, m_bossAudioPlayTime);
+    }
+
+    private void UpdateEnemyState()
+    {
+        if (m_enemyTimer >= m_enemyAudioPlayTime && !EnemyVisible)
         {
-            Debug.Log("ボスが画面内に入りました");
+            EnemyVisible = true;
+            UpdateBGM();
         }
-
-        if (previousBossVisible && !currentBossVisible)
+        else if (m_enemyTimer <= 0f && EnemyVisible)
         {
-            Debug.Log("ボスが画面外に出ました");
+            EnemyVisible = false;
+            UpdateBGM();
         }
+    }
 
-        previousEnemyVisible = currentEnemyVisible;
-        previousBossVisible = currentBossVisible;
+    private void UpdateBossState()
+    {
+        if(m_bossTimer >= m_bossAudioPlayTime && !BossVisible)
+        {
+            BossVisible = true;
+            UpdateBGM();
+        }
+        else if(m_bossTimer <= 0f &&  BossVisible)
+        {
+            BossVisible = false;
+            UpdateBGM();
+        }
+    }
 
-        EnemyVisible = currentEnemyVisible;
-        BossVisible = currentBossVisible;
+    private void UpdateBGM()
+    {
+        if (BossVisible)
+        {
+            PlayBGM(m_bossBGM);
+        }
+        else if (EnemyVisible)
+        {
+            PlayBGM(m_enemyBGM);
+        }
+        else
+        {
+            PlayBGM(m_mapBGM);
+        }
+    }
+
+    private void PlayBGM(AudioData data)
+    {
+        AudioManager.Instance.PlayAudio(data);
+    }
+
+    public void SetMapBGM(AudioData data)
+    {
+        m_mapBGM = data;
     }
 
     bool IsEnemyVisible()
@@ -56,8 +147,8 @@ public class EnemyCameraDetector : MonoBehaviour
             Vector3 pos = mainCamera.WorldToViewportPoint(enemy.transform.position);
 
             if (pos.z <= 0 ||
-                pos.x < 0 || pos.x > 1 ||
-                pos.y < 0 || pos.y > 1)
+                pos.x < m_minX || pos.x > m_maxX ||
+                pos.y < m_minY || pos.y > m_maxY)
             {
                 continue;
             }
@@ -90,8 +181,8 @@ public class EnemyCameraDetector : MonoBehaviour
             Vector3 pos = mainCamera.WorldToViewportPoint(boss.transform.position);
 
             if (pos.z <= 0 ||
-                pos.x < 0 || pos.x > 1 ||
-                pos.y < 0 || pos.y > 1)
+                 pos.x < m_minX || pos.x > m_maxX ||
+                 pos.y < m_minY || pos.y > m_maxY)
             {
                 continue;
             }

@@ -29,7 +29,6 @@ public class ShopManager : MonoBehaviour
 
     //private List<Data> t_itemDataList = new();
 
-    [SerializeField] private IntRunTime m_currentLevel;
     [SerializeField] private ItemManager m_itemManager;   
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;
@@ -80,6 +79,13 @@ public class ShopManager : MonoBehaviour
 
     private float m_discount;
 
+    [SerializeField] private AudioData m_enteySE;
+    [SerializeField] private AudioData m_bgm;
+    [SerializeField] private AudioData m_buySE;
+
+    private AudioData m_mapBGM;
+
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -118,12 +124,12 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        m_shopIdEvent.Register(SetDatasToSlots);
+        m_shopIdEvent.Register(SetDatasToSlotsWhenEnter);
     }
 
     private void OnDisable()
     {
-        m_shopIdEvent.Unregister(SetDatasToSlots);
+        m_shopIdEvent.Unregister(SetDatasToSlotsWhenEnter);
     }
 
     /// <summary>
@@ -190,8 +196,16 @@ public class ShopManager : MonoBehaviour
         return newInventory;
     }
 
-    private void SetDatasToSlots(int id)
+    private void SetDatasToSlotsWhenEnter(int id)
     {
+        GameManager.Instance.SetIsShop(true);
+
+        m_mapBGM = AudioManager.Instance.GetNowBGM();
+
+        AudioManager.Instance.PlayAudio(m_enteySE);
+        AudioManager.Instance.InstancePlayAudio(m_bgm);
+
+
         m_isCoupon = m_playerController.m_isCoupon;
         m_isMemberShip = m_playerController.m_isMemberShip;
 
@@ -214,6 +228,38 @@ public class ShopManager : MonoBehaviour
         _currentShopId = id;
 
         m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Welcome);
+    }
+
+    private void SetDatasToSlotsWhenLeave(int id)
+    {
+        GameManager.Instance.SetIsShop(false);
+
+
+        AudioManager.Instance.PlayAudio(m_enteySE);
+        AudioManager.Instance.InstancePlayAudio(m_mapBGM);
+
+        m_isCoupon = m_playerController.m_isCoupon;
+        m_isMemberShip = m_playerController.m_isMemberShip;
+
+        m_discount = 0f;
+
+        if (m_isCoupon)
+        {
+            m_discount += 0.2f;
+        }
+
+        if (m_isMemberShip)
+        {
+            m_discount += 0.3f;
+        }
+
+        SetShopText();
+
+        SetDatasToSlotsFromInventory(m_shopInventories[id]);
+        //textManager start
+        _currentShopId = id;
+
+        m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.SeeYou);
     }
 
     private void SetShopText()
@@ -291,6 +337,8 @@ public class ShopManager : MonoBehaviour
                 Debug.LogError("Modify over");
             }
 
+            AudioManager.Instance.PlayAudio(m_buySE);
+
             m_moneyText.text = "money :" + GameManager.Instance.Money.ToString();//çƒÇ—ç≈êVÇï\é¶
 
 
@@ -324,7 +372,7 @@ public class ShopManager : MonoBehaviour
     public void OnClose()
     {
         m_showShopUI.Raise(false);
-        SetDatasToSlots(_currentShopId);
+        SetDatasToSlotsWhenLeave(_currentShopId);
 
         GameManager.Instance.OnSetStop(false);
         m_palyerIgnoreInput.Raise(false);

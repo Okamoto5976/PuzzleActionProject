@@ -7,6 +7,8 @@ public class Treasure : MonoBehaviour, IInteractable
     [Header("Drop")]
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
 
+    [SerializeField] private AudioData m_openSE;
+
     private bool m_isOpened = false;
     public bool IsOpened => m_isOpened;
     private void OnEnable()
@@ -22,6 +24,8 @@ public class Treasure : MonoBehaviour, IInteractable
 
     private void OpenChest()
     {
+        AudioManager.Instance.PlayAudio(m_openSE);
+
         RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
         Item item = ItemManager.Instance.DropItem(rarity);
         if (item == null)

@@ -24,8 +24,13 @@ public class BuffItem : Item
     {
         if (m_buffEffectType == ItemType.Active)
         {
+            if (m_se != null)
+            {
+                AudioManager.Instance.PlayAudio(m_se);
 
-            foreach(var buff in m_buffItemClass)
+            }
+
+            foreach (var buff in m_buffItemClass)
             {
                 if (buff.m_duration <= 0) continue;
 
@@ -48,7 +53,13 @@ public class BuffItem : Item
     {
         Debug.LogWarning("AddPassive in item");
 
-        if(m_passiveType == Passive.WinnerTrophy)
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
+
+        if (m_passiveType == Passive.WinnerTrophy)
         {
             player.m_isWinnerTrophy = true;
         }

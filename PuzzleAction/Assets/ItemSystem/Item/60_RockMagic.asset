@@ -23,5 +23,6 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 1
     price: 480
+  m_se: {fileID: 11400000, guid: 0a155e101b5794f488d1beff99e35d00, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 24

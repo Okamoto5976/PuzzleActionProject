@@ -14,8 +14,6 @@ public class DynamiteTrap : TrapBase
     [SerializeField] private HitCollider m_hitCollider;
     [SerializeField] private float m_radius;
 
-    [SerializeField] private EffectEventDataSO m_effectEventData;
-
 
     private bool m_isTimer = false;
 
@@ -103,18 +101,15 @@ public class DynamiteTrap : TrapBase
             target.TakeDamage(m_damageData);
         }
 
-        if (m_effectEventData != null)
-        {
-            Effect data = new Effect()
-            {
-                effectType = Enum_EffectType.Explosion,
-                effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
-                effectRot = transform.rotation,
-            };
-
-            m_effectEventData.Raise(data);
-        }
+        Particle();
 
         OnReturnPool();
+    }
+
+    private void Particle()
+    {
+        var pos = transform.position + new Vector3(0f, 0.5f, 0f);
+
+        ParticleManager.Instance.PlayParticle(Enum_EffectType.Explosion, pos);
     }
 }   

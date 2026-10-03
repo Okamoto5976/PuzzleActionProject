@@ -533,7 +533,6 @@ MonoBehaviour:
   m_messages: {fileID: 11400000, guid: d869501bda0e04848ba1c6a4da7d88ff, type: 2}
   m_speakerText: {fileID: 0}
   m_speechParent: {fileID: 560284200190739217}
-  m_closeButton: {fileID: 0}
 --- !u!114 &2988548281874168588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextDisplay_02
   m_messageText: {fileID: 9176152510228260273}
   m_audioSource: {fileID: 27656524632628516}
-  m_audioClip: {fileID: 8300000, guid: b15ba316fe8840949b07f49076415f39, type: 3}
+  m_messegeSE: {fileID: 11400000, guid: 48eabd62b4e18cf4294ac8ef5c151ed0, type: 2}
   m_pitch: 1
 --- !u!1 &4693441500836514965
 GameObject:

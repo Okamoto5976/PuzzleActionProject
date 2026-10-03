@@ -13,7 +13,7 @@ public class AudioTest : MonoBehaviour
         audioEvent.Raise(new AudioData
         {
             audioClip = bgm1,
-            clipVolume = 1f,
+            volume = 1f,
             isLoop = true
         });
     }
@@ -24,7 +24,7 @@ public class AudioTest : MonoBehaviour
         audioEvent.Raise(new AudioData
         {
             audioClip = bgm2,
-            clipVolume = 1f,
+            volume = 1f,
             isLoop = true
         });
     }
@@ -35,7 +35,7 @@ public class AudioTest : MonoBehaviour
         audioEvent.Raise(new AudioData
         {
             audioClip = se,
-            clipVolume = 1f,
+            volume = 1f,
             isLoop = false
         });
     }

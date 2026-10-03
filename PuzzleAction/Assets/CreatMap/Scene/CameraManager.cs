@@ -2,7 +2,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class T_Camera : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
     [Header("Follow Target")]
     [SerializeField] private Transform m_target;
@@ -133,6 +133,27 @@ public class T_Camera : MonoBehaviour
     private void LateUpdate()
     {
         DoCameraCorrection();
+    }
+
+    /// <summary>
+    /// power2f~5f
+    /// </summary>
+    /// <param name="power"></param>
+    public void Shake(float power)
+    {
+        m_shakeStrength = power;
+
+        StartCoroutine(ShakeCoroutine());
+    }
+
+    private IEnumerator ShakeCoroutine()
+    {
+        m_isShaking = true;
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        m_isShaking = false;
+
+        yield return null;
     }
 
 #if UNITY_EDITOR

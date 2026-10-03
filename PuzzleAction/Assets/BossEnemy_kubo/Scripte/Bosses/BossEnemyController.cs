@@ -218,8 +218,24 @@ public class BossEnemyController : Entity
             StunDuration = m_data.StunDuration,
             AttackDir = transform.forward,
         };
+        m_attackHitBox.m_pos = transform.position;
 
-        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        var hits = m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        DebugViewCollider.Instance.ViewHitCollider(m_attackHitBox);
+
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+            if (entity == null)
+            {
+                continue;
+            }
+
+            if (entity.Team == Team) continue;
+
+            entity.TakeDamage(damage);
+        }
+
         Debug.Log("BossEnemyController : Player ‚ÉHIT");
     }
     public void UseItem(Vector3 dir)

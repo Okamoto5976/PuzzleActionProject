@@ -6,6 +6,9 @@ public class PlayerHP : EntityHP
 
     [SerializeField] private EventSO m_playerDeadEvent;
 
+    [SerializeField] private CameraManager m_cameraManager;
+
+
     private PlayerSave m_playerSave;
 
     protected override void Start()
@@ -24,6 +27,8 @@ public class PlayerHP : EntityHP
     public override void TakeDamage(DamageData data)
     {
         if(m_entity.CurrentState == Entity.EntityState.Dead)return;
+
+        m_cameraManager.Shake(2f);
 
         base.TakeDamage(data);
 

@@ -15,6 +15,8 @@ public class StartManager : MonoBehaviour
     private InventorySaveManager m_inventorySaveManager;
     private PlayerSave m_playerSave;
 
+    [SerializeField] private GameObject m_tutorial;
+
     //-----audio save set-------------
     private OptionSaveManager m_optionSaveManager = new();
 
@@ -45,20 +47,32 @@ public class StartManager : MonoBehaviour
 
     public void SetMasterVolume(float value)
     {
-        AudioManager.instance.SetMaster(value);
+        AudioManager.Instance.SetMaster(value);
     }
 
     public void SetBGMVolume(float value)
     {
-        AudioManager.instance.SetBGM(value);
+        AudioManager.Instance.SetBGM(value);
     }
 
     public void SetSEVolume(float value)
     {
-        AudioManager.instance.SetSE(value);
+        AudioManager.Instance.SetSE(value);
     }
 
     public void OnStart()
+    {
+        if(GameManager.Instance.m_isTutorial)
+        {
+            m_tutorial.SetActive(true);
+        }
+        else
+        {
+            GameStart();
+        }
+    }
+
+    private void GameStart()
     {
         GameManager.Instance.SetLevel(1);
         //save reset
@@ -68,8 +82,8 @@ public class StartManager : MonoBehaviour
         m_playerSave.DeletePlayerData();
 
         LoadManager.m_instance.LoadScene(m_scene.Value);
-
     }
+    
 
     public void OnOption(bool isActive)
     {

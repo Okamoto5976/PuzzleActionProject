@@ -10,7 +10,6 @@ public class MessageManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI m_speakerText;
     [SerializeField] private GameObject m_speechParent;
-    [SerializeField] private Button m_closeButton;
     private TextDisplay_02 m_textDisplay;
     private void Awake()
     {

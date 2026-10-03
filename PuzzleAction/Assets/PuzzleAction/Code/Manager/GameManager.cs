@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
     public bool HasKey => m_hasKey;
     public bool IsStop => m_isStop;
 
+    public bool isShop;
+
+    public bool m_isTutorial;
+
     public void AddLevel(int value)
     {
         if (value < 0)
@@ -87,4 +91,6 @@ public class GameManager : MonoBehaviour
     {
         m_hasKey = false;
     }
+
+    public void SetIsShop(bool value) => isShop = value;
 }

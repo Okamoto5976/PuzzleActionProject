@@ -429,7 +429,7 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_instanceCounterList: []
   m_rooms:
-  - m_type: 5
+  - m_type: 2
     m_originPos: {x: 0, y: 0}
   - m_type: 3
     m_originPos: {x: 3, y: 0}
@@ -499,8 +499,8 @@ MonoBehaviour:
   m_wallPrefab: {fileID: 3648684842657275054, guid: 3462c65f45e5c5746b23c17027318b13, type: 3}
   m_navMeshPlane: {fileID: 737178099}
   m_navMeshSurface: {fileID: 737178095}
-  m_floorScale: {x: 10, y: 1, z: 10}
-  m_wallScale: {x: 10, y: 10, z: 1}
+  m_floorScale: {x: 20, y: 1, z: 20}
+  m_wallScale: {x: 20, y: 10, z: 1}
 --- !u!114 &74042321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,6 +520,8 @@ MonoBehaviour:
   m_instanceCounter: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
   m_inventorySystem: {fileID: 966751217}
   m_player: {fileID: 128709781}
+  m_mapBGMData: {fileID: 11400000, guid: 55f8ef41d8b2a284c9fc5e57c3d465f2, type: 2}
+  m_enemyCameraDetector: {fileID: 1957982650}
 --- !u!4 &74042322
 Transform:
   m_ObjectHideFlags: 0
@@ -602,6 +604,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8794102270786672288, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: m_cameraManager
+      value: 
+      objectReference: {fileID: 1957982647}
     - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_reticle
       value: 
@@ -1016,6 +1022,10 @@ PrefabInstance:
       propertyPath: m_itemManager
       value: 
       objectReference: {fileID: 681700649319570257}
+    - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
+      propertyPath: m_currentLevel
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7162781306950593183, guid: bb1adf4286364d247939ee2278b1803c, type: 3}
       propertyPath: m_infoTextPrefab
       value: 
@@ -3661,7 +3671,7 @@ GameObject:
   - component: {fileID: 1133934830}
   - component: {fileID: 1133934829}
   m_Layer: 0
-  m_Name: EffectManager
+  m_Name: ParticleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3680,7 +3690,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EffectManager
   m_effectPool: {fileID: 423272709}
-  m_effectEventSO: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
 --- !u!4 &1133934830
 Transform:
   m_ObjectHideFlags: 0
@@ -4584,11 +4593,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestAddItem
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
-  m_index: 41
+  m_index: 50
   m_count: 10
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}
   m_money: 360
+  m_audioData: {fileID: 11400000, guid: 5dcf4998746e9bd41b1ddeb5d1b75842, type: 2}
+  m_audioSE: {fileID: 11400000, guid: 0a155e101b5794f488d1beff99e35d00, type: 2}
 --- !u!4 &1505666508
 Transform:
   m_ObjectHideFlags: 0
@@ -5975,13 +5986,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1957982644}
+  - component: {fileID: 1957982647}
+  - component: {fileID: 1957982650}
   - component: {fileID: 1957982643}
   - component: {fileID: 1957982642}
   - component: {fileID: 1957982645}
-  - component: {fileID: 1957982647}
   - component: {fileID: 1957982649}
   - component: {fileID: 1957982648}
-  - component: {fileID: 1957982650}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -6121,9 +6132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::T_Camera
   m_target: {fileID: 721869216}
   m_distance: 10
-  m_followSpeed: 0
+  m_followSpeed: 6
   m_isShaking: 0
-  m_shakeStrength: 0.1
+  m_shakeStrength: 3
   m_shakeSpeed: 0.05
 --- !u!114 &1957982648
 MonoBehaviour:
@@ -6170,6 +6181,14 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
+  m_enemyBGM: {fileID: 11400000, guid: 08574b2b9cbc3ed4886fa7a662b22e2f, type: 2}
+  m_bossBGM: {fileID: 11400000, guid: 8e772e829cbbcad459fbdc1d348130cc, type: 2}
+  m_minX: 0.1
+  m_maxX: 0.9
+  m_minY: 0.1
+  m_maxY: 0.9
+  m_enemyAudioPlayTime: 3
+  m_bossAudioPlayTime: 3
 --- !u!1 &1961750642
 GameObject:
   m_ObjectHideFlags: 0
@@ -6698,6 +6717,7 @@ MonoBehaviour:
   m_middleman_trap: {fileID: 435115610}
   m_dropItem: {fileID: 0}
   DropItems: []
+  m_dropItemSE: {fileID: 11400000, guid: 0a155e101b5794f488d1beff99e35d00, type: 2}
   m_itemPool: {fileID: 673198001}
   m_groundPos: 2
 --- !u!1 &869878583074309818

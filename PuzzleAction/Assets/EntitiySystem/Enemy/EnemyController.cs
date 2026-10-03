@@ -239,7 +239,12 @@ public class EnemyController : Entity
                 AttackDir = transform.forward,
             };
 
+        m_attackHitBox.m_pos = transform.position;
+
         var hits = m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+
+        DebugViewCollider.Instance.ViewHitCollider(m_attackHitBox);
+
         Debug.Log("EnemyController : Player HIT");
 
         foreach (Collider hit in hits)

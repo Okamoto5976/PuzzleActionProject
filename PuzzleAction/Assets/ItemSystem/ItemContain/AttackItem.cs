@@ -105,6 +105,12 @@ public class AttackItem : Item
         //}
         Debug.Log("Attack Item");
 
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
+
         foreach (Collider hit in hits)
         {
             Debug.Log("Collider");

@@ -26,9 +26,24 @@ public class TestAddItem : MonoBehaviour
         m_dropMoneyEventSO.Raise(m_pos, m_money);
     }
 
+    [ContextMenu("AddMoney")]
+    public void Money()
+    {
+        GameManager.Instance.ModifyMoney(1000);
+    }
+
+
+    [SerializeField] private AudioData m_audioData;
     [ContextMenu("BGM")]
     public void PlayBGM()
     {
-        m_dropMoneyEventSO.Raise(m_pos, m_money);
+        AudioManager.Instance.InstancePlayAudio(m_audioData);
+    }
+    [SerializeField] private AudioData m_audioSE;
+
+    [ContextMenu("SE")]
+    public void PlaySE()
+    {
+        AudioManager.Instance.PlayAudio(m_audioSE);
     }
 }

@@ -10,6 +10,11 @@ public class HealItem : Item
 
     public override void Activation(ItemRecieveData data)
     {
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
 
         data.entity.HealHP(m_value);
 

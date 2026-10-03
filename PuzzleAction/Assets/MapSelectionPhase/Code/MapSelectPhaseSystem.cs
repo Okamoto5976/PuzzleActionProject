@@ -26,11 +26,27 @@ public class MapSelectPhaseSystem : MonoBehaviour
     private float m_currentX;
     private int m_selectedIndex = -1;
 
+    [Header("Tutorial")]
+    [SerializeField] private MapSettingSO m_tutorialMap;
+
     private void Start()
     {
         m_nextsceneButton.onClick.AddListener(GoMapPieceSystem);
 
+        if(GameManager.Instance.m_isTutorial)
+        {
+
+            Tutorial();
+            return;
+        }
+
         CreateRandomMaps();
+        CreatePreviews();
+    }
+
+    private void Tutorial()
+    {
+        m_selectedMaps.Add(m_tutorialMap);
         CreatePreviews();
     }
 

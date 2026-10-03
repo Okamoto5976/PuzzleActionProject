@@ -6,8 +6,6 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
 {
     private EnemyController m_enemyController;
 
-    [SerializeField] private EffectEventDataSO m_effectEventData;
-
     public void Initialized(EnemyController enemyController)=>m_enemyController=enemyController;
 
     public void Execute()
@@ -22,15 +20,7 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
 
             if (m_enemyController.TryAttack())
             {
-                //m_explosionParticle.Play();
-                Effect data = new Effect()
-                {
-                    effectType = Enum_EffectType.Explosion,
-                    effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
-                    effectRot = transform.rotation,
-                };
-
-                m_effectEventData.Raise(data);
+                Particle();
 
                 m_enemyController.ReturnPool();
             }
@@ -40,4 +30,11 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
         m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
     }
     public void Stop() => m_enemyController.Stop();
+
+    private void Particle()
+    {
+        var pos = transform.position + new Vector3(0f, 0.5f, 0f);
+
+        ParticleManager.Instance.PlayParticle(Enum_EffectType.Explosion, pos);
+    }
 }

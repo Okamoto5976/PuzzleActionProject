@@ -28,7 +28,6 @@ public class PlayerController : Entity
     [SerializeField] private DisplayManager m_displayManager;
 
 
-
     [SerializeField] private Vector3Asset m_position;
     public Vector3 m_pullOffSet;
 
@@ -94,6 +93,11 @@ public class PlayerController : Entity
     [HideInInspector] public bool m_isLoserTrophy;
     [HideInInspector] public bool m_isNormalTrophy;
     [HideInInspector] public bool m_titleTrophy;
+
+
+
+    //[Header("Audio")]
+    //[SerializeField] private AudioData 
 
 
     protected override void Awake()
@@ -337,23 +341,23 @@ public class PlayerController : Entity
 
     [SerializeField] private float testknockback;
 
-    [ContextMenu("ApplyKnockBack")]
-    public void ApplyKnockBack()
-    {
-        DamageData data = new();
-        {
-            data.Attack = 0f;
-            data.AttackDir = new Vector3(1, 0, 0);
-            data.CriticalRate = 0f;
-            data.CriticalDamage = 0f;
-            data.BreakRate = 0;
-            data.Knockback = testknockback;
-            data.StunDuration = 0;
-        }
+    //[ContextMenu("ApplyKnockBack")]
+    //public void ApplyKnockBack()
+    //{
+    //    DamageData data = new();
+    //    {
+    //        data.Attack = 0f;
+    //        data.AttackDir = new Vector3(1, 0, 0);
+    //        data.CriticalRate = 0f;
+    //        data.CriticalDamage = 0f;
+    //        data.BreakRate = 0;
+    //        data.Knockback = testknockback;
+    //        data.StunDuration = 0;
+    //    }
 
 
-        TakeDamage(data);
-    }
+    //    TakeDamage(data);
+    //}
 
     #region Object_SetActive_Method
     public void ReticleActive(bool active)

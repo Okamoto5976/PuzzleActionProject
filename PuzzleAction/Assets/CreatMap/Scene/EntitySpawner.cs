@@ -9,7 +9,7 @@ public class EntitySpawner : MonoBehaviour
     [Header("========== Player ==========")]
     [SerializeField] private Transform m_player;
     [SerializeField] private PlayerController m_playerC;
-    [SerializeField] private T_Camera m_camera;
+    [SerializeField] private CameraManager m_camera;
     [SerializeField] private float m_playerHeightOffset;
     [Space(10)]
 

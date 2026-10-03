@@ -23,6 +23,7 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 0
     price: 160
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 10
