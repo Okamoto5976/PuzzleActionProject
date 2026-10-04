@@ -25,6 +25,10 @@ public class MainGameManager : MonoBehaviour
     public bool IsGameOver => m_isGameOver;
 
     [SerializeField] private EntityHP m_playerHP;
+    [SerializeField] private PlayerController m_playerController;
+
+    //=========tutorial===============
+    private TutorialSave m_tutorialSave = new();
 
 
     private void Awake()
@@ -41,6 +45,11 @@ public class MainGameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+
+        if(GameManager.Instance.IsTutorial)
+        {
+            GameManager.Instance.ModifyMoney(100);
+        }
 
         //if(!GameManager.Instance.ModifyMoney(5000))
         //{
@@ -97,53 +106,42 @@ public class MainGameManager : MonoBehaviour
 
         m_inventorySystem.Save();
 
-        //m_isGameOver = true;
-
-        //リザルト表示、関数を呼ぶ
-        //if (m_level.Value % 5 == 0)
-        //{
-        //    m_gameClearUIEvent.Raise(true);
-        //    m_gameClearEvent.Raise();
-
-        //    //m_level.AddValue(1);
-
-        //    return;
-
-        //}
-
         //クリア階層記録　
-        GameManager.Instance.AddLevel(1);
-
-        m_playerSave = new();
 
         PlayerData data = new PlayerData();
 
-        data.m_hp = m_playerHP.CurrentHP;
+
+        //TutorialはHPを復活させる
+        if (GameManager.Instance.IsTutorial)
+        {
+            data.m_hp = (int)m_playerController.HP;
+
+
+            GameManager.Instance.SetIsTutorial(false);
+            var tutorialData = m_tutorialSave.LoadTutorialData();
+
+            if(tutorialData != null)
+            {
+                tutorialData = new()
+                {
+                    m_tutorialCompleted = false,
+                    m_GoalTutorialCompleted = false,
+                };
+            }
+
+            tutorialData.m_tutorialCompleted = true;
+            m_tutorialSave.SaveTutorialData(tutorialData);
+        }
+        else
+        {
+            data.m_hp = m_playerHP.CurrentHP;
+
+            GameManager.Instance.AddLevel(1);
+
+        }
+        m_playerSave = new();
 
         m_playerSave.SavePlayerData(data);
-
-
-        //m_level.AddValue(1);
-        //Debug.Log($"クリア回数：{m_level.Value}");
-        //Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
-
-
-
-        
-
-        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
-
-        //for example
-        //player do not move, state change, save, result
-        //if (m_gameClearEvent != null)
-        //{
-        //    m_gameClearEvent.Raise();
-
-        //}
-
-        //return;
-
-        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
 
         LoadManager.m_instance.LoadScene(m_mapPhaseScene.Value);
     }
@@ -161,7 +159,7 @@ public class MainGameManager : MonoBehaviour
 
         //UIを表示させない
 
-        
+        //リザルト
 
         //Sceneリセット　ゲームリセット
         //SceneMove Tile

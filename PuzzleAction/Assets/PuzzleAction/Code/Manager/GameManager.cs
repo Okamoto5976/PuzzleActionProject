@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        Debug.LogWarning($"Tutorial :{IsTutorial}");
+
         //m_level = 1;
     }
 
@@ -31,7 +34,8 @@ public class GameManager : MonoBehaviour
 
     public bool isShop;
 
-    public bool m_isTutorial;
+    private bool m_isTutorial;
+    public bool IsTutorial => m_isTutorial;
 
     public void AddLevel(int value)
     {
@@ -93,4 +97,5 @@ public class GameManager : MonoBehaviour
     }
 
     public void SetIsShop(bool value) => isShop = value;
+    public void SetIsTutorial(bool value) => m_isTutorial = value;
 }

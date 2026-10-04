@@ -69,6 +69,13 @@ MonoBehaviour:
   m_enteySE: {fileID: 11400000, guid: 0534074b3485996498f3d5109f4ec9b1, type: 2}
   m_bgm: {fileID: 11400000, guid: ffba4064737c22a42b03e2dc0d569cb8, type: 2}
   m_buySE: {fileID: 11400000, guid: 5beb11598cb8c604cbb18298d9ba7f05, type: 2}
+  m_tutorialItemes:
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: cee31a69152a0fa45add68f50490e7bb, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
+  - {fileID: 11400000, guid: 3ff7b92972f47d1418c723fdd0cf1dc9, type: 2}
+  - {fileID: 11400000, guid: 118b9222ad1d819489a3e7a7bd672b94, type: 2}
+  - {fileID: 11400000, guid: 7c4f142a86f2ec543a26b524765b0e27, type: 2}
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EntitySpawner : MonoBehaviour
 {
@@ -70,6 +67,14 @@ public class EntitySpawner : MonoBehaviour
     [Header("========== Ref ==========")]
     [SerializeField] private ItemManager m_itemManager;
 
+
+    [Header("========== Tutorial ==========")]
+    [SerializeField] private TutorialManager m_tutorialManager;
+    [SerializeField] private List<Enum_EnemyType> m_tutorialEnemies = new();
+    [SerializeField] private Enum_TrapType m_tutorialTrap;
+
+    private bool m_isTutorial => GameManager.Instance.IsTutorial;
+
     public void Generate(MapClassData mapData, MapGeneration mapGeneration)
     {
         m_mapClassData = mapData;
@@ -91,7 +96,15 @@ public class EntitySpawner : MonoBehaviour
 
         ProcessAreaTypes();
 
-        SpawnTreasures();
+        if(m_isTutorial)
+        {
+            TSpawnTreasures();
+        }
+        else
+        {
+            SpawnTreasures();
+
+        }
 
         SpawnPlayer();
     }
@@ -140,7 +153,15 @@ public class EntitySpawner : MonoBehaviour
             switch (room.m_type)
             {
                 case AreaType.Summon:
-                    SpawnEnemy(room);
+                    if(m_isTutorial)
+                    {
+                        TSpawnEnemy(room);
+                    }
+                    else
+                    {
+                        SpawnEnemy(room);
+                    }
+
                     break;
 
                 case AreaType.Shop:
@@ -148,7 +169,15 @@ public class EntitySpawner : MonoBehaviour
                     break;
 
                 case AreaType.Damage:
-                    SpawnTrap(room);
+                    if(m_isTutorial)
+                    {
+                        TSpawnTrap(room);
+                    }
+                    else
+                    {
+                        SpawnTrap(room);
+                    }
+
                     break;
 
                 case AreaType.Fairy:
@@ -161,8 +190,54 @@ public class EntitySpawner : MonoBehaviour
                 default:
                         break;
             }
+
+            if(m_isTutorial)
+            {
+
+                switch (room.m_type)
+                {
+                    case AreaType.Summon:
+                        var enemyEventPos = m_mapGeneration.GridToWorld(room.m_roomSizes[0]);
+                        //EnemyAreaに入る前にEvent
+                        m_tutorialManager.SetEnemyEventPos(enemyEventPos.z - 15f);
+
+                        break;
+
+                    case AreaType.Shop:
+                        var shopEventPos = m_mapGeneration.GridToWorld(room.m_roomSizes[0]);
+                        //ShopAreaに入る前にEvent
+                        m_tutorialManager.SetShopEventPos(shopEventPos.z - 15f);
+                        break;
+
+                    case AreaType.Damage:
+                        var trapEventPos = m_mapGeneration.GridToWorld(room.m_roomSizes[0]);
+                        //TrapAreaに入ってEvent
+                        m_tutorialManager.SetTrapEventPos(trapEventPos.z - 5f);
+
+                        var attentionEventPos = m_mapGeneration.GridToWorld(room.m_roomSizes[0]);
+
+                        m_tutorialManager.SetAttentionPos(attentionEventPos.z - 10f);
+                        break;
+                    default:
+                        break;
+                }
+
+                //var Pos = m_mapGeneration.GridToWorld(room.m_roomSizes[0]);
+
+                //Instantiate(obj, Pos, Quaternion.identity);
+
+                //Pos = m_mapGeneration.GridToWorld(room.m_roomSizes[1]);
+
+                //Instantiate(obj, Pos, Quaternion.identity);
+            }
+            
         }
     }
+
+    //[SerializeField] private GameObject m_shopAreaTutorial;
+    //[SerializeField] private GameObject m_trapAreaTutorial;
+    //[SerializeField] private GameObject m_enemyAreaTutorial;
+
 
     #region SPAWN
     //Enemy
@@ -174,11 +249,16 @@ public class EntitySpawner : MonoBehaviour
         {
             Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
             Vector3 WorldPositions = worldPositions + GetRandomSpawnOffset();
+
+
             SpawnEnemyByGacha(WorldPositions);
+
             // 2 enemies spawn
-            if(Random.Range(0f, 1f) <= 0.05f)
+            if (Random.Range(0f, 1f) <= 0.05f)
             {
+
                 SpawnEnemyByGacha(WorldPositions);
+
                 Debug.Log($"Double Spawn : {WorldPositions}");
             }
             m_reservedPosition.Add(pos);
@@ -504,6 +584,130 @@ public class EntitySpawner : MonoBehaviour
                 }
         }
     }
+    #endregion
+
+    #region TutorialSPAWN
+
+    //Enemy
+    private void TSpawnEnemy(RoomData room)
+    {
+        int num = 0;
+
+        //ListCount = spawnCount
+        var positions = ChooseRandomPosition(room, 3);
+
+        foreach (var pos in positions)
+        {
+            Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
+            Vector3 WorldPositions = worldPositions + GetRandomSpawnOffset();
+
+            TSpawnEnemyByGacha(WorldPositions, num);
+            num++;
+
+            m_reservedPosition.Add(pos);
+        }
+
+    }
+
+    private void TSpawnEnemyByGacha(Vector3 position, int num)
+    {
+        if (m_enemyPool == null)
+        {
+            Debug.LogWarning("EnemyPool is null");
+            return;
+        }
+
+        Enum_EnemyType selectedType = m_tutorialEnemies[num];
+
+        EnemyController enemy = m_enemyPool.GetComponent(selectedType);
+
+        if (enemy == null)
+        {
+            Debug.LogWarning($"Pool Missing : {selectedType}");
+            return;
+        }
+
+        AssignDropItem(enemy);
+
+        enemy.transform.position = position;
+        enemy.gameObject.SetActive(true);
+        enemy.InitializeSpawn();
+    }
+
+
+    //Trap
+    private void TSpawnTrap(RoomData room)
+    {
+        List<Vector3> worldPositions = new();
+        foreach (var pos in room.m_roomSizes)
+        {
+            worldPositions.Add(m_mapGeneration.GridToWorld(pos));
+            m_reservedPosition.Add(pos);
+        }
+        TSpawnTrapByGacha(worldPositions);
+
+    }
+    private void TSpawnTrapByGacha(List<Vector3> positions)
+    {
+        if (m_trapPool == null) return;
+
+        float trapDensity = m_areaTrapPlaceData.GetAreaTrapPlaceData(m_tutorialTrap);
+        m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, m_tutorialTrap, trapDensity);
+
+    }
+
+    private void TSpawnTreasures()
+    {
+        // Potential treasure chest spawn locations
+        List<Vector2Int> candidates = new();
+
+        foreach (var room in m_mapClassData.roomDatas)
+        {
+            //reject BossArea
+            if (room.m_type == AreaType.Boss) continue;
+            //reject rooms containing a StartPos
+            if (room.m_roomSizes.Contains(GetStartPos())) continue;
+            // reject other
+            foreach (var pos in room.m_roomSizes)
+            {
+                //reject startPos goalPos
+                if (IsForbiddenPos(pos)) continue;
+                //reject Enemy, Trap, Shop, Boss. position
+                if (m_reservedPosition.Contains(pos)) continue;
+                candidates.Add(pos);
+            }
+        }
+
+        //Return smallest value
+        int count = Mathf.Min(m_treasureCount, candidates.Count);
+
+        for (int i = 0; i < count; i++)
+        {
+            //random selsect || Max roomSize
+            int index = Random.Range(0, candidates.Count);
+
+            Vector2Int pos = candidates[index];
+
+            //delete index candidates
+            candidates.RemoveAt(index);
+
+            TSpawnTreasureByGacha(m_mapGeneration.GridToWorld(pos));
+        }
+    }
+    private void TSpawnTreasureByGacha(Vector3 position)
+    {
+        if (m_treasureGachaEngine == null) return;
+        if (m_treasureRarityTable == null) return;
+
+        //gete Pool 
+        Treasure treasure = m_treasurePool.GetComponent(Enum_TreasureType.TreasureBox);
+        if (treasure == null) return;
+
+        treasure.transform.position = position;
+        treasure.gameObject.SetActive(true);
+
+    }
+
     #endregion
 
     private bool IsForbiddenPos(Vector2Int pos)

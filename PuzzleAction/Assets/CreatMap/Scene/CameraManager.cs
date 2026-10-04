@@ -116,6 +116,10 @@ public class CameraManager : MonoBehaviour
     {
         m_target = target;
         m_heightOffset = height;
+
+        Vector3 targetPos = m_target.position + m_offset;
+        transform.position = targetPos;
+
     }
 
     /// <summary>

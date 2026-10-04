@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapBGMData;
 
 
 public class MapSelectPhaseSystem : MonoBehaviour
@@ -9,6 +10,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
     [SerializeField] private MapClassData m_mapClassData;
     [SerializeField] private List<MapSettingSO> m_allMaps;
     [SerializeField] private int m_mapCount = 3;
+
+    [SerializeField] private AudioData m_bgm;
 
     [Header("UI")]
     [SerializeField] private UnityEngine.UI.Button m_nextsceneButton;
@@ -28,20 +31,27 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
     [Header("Tutorial")]
     [SerializeField] private MapSettingSO m_tutorialMap;
+    [SerializeField] private GameObject m_guidePanel;
 
     private void Start()
     {
         m_nextsceneButton.onClick.AddListener(GoMapPieceSystem);
 
-        if(GameManager.Instance.m_isTutorial)
+        if(GameManager.Instance.IsTutorial)
         {
-
+            m_guidePanel.SetActive(true);
             Tutorial();
             return;
         }
 
+        m_guidePanel.SetActive(false);
+
+
         CreateRandomMaps();
         CreatePreviews();
+
+        AudioManager.Instance.PlayAudio(m_bgm);
+
     }
 
     private void Tutorial()

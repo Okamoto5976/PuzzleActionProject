@@ -24,6 +24,9 @@ public class UIController : MonoBehaviour
     //[SerializeField] private BoolEventSO m_shopUIEvent;
     //[SerializeField] private BoolEventSO m_inventoryUIEvent;
 
+    [SerializeField] private TutorialManager m_tutorialManager;
+
+
     public bool IsMenu => m_menuUI.gameObject.activeSelf;
     private bool m_isInventory = false;
     //private bool isInventoryOpen = false;
@@ -105,6 +108,7 @@ public class UIController : MonoBehaviour
         if (MainGameManager.Instance.IsGameOver) return;
 
 
+
         if (IsMenu)
         {
             m_menuUI.Close();
@@ -122,7 +126,17 @@ public class UIController : MonoBehaviour
         if (MainGameManager.Instance.IsGameOver) return;
 
         if (GameManager.Instance.IsStop) return;
-        //Debug.Log("Inventory");
+
+        if (GameManager.Instance.IsTutorial)
+        {
+            if (!m_tutorialManager.m_canTab) return;
+
+            m_tutorialManager.InventoryTutorial();
+
+        }
+        Debug.Log("Tab");
+
+
 
         m_inventoryEvent.RaiseEvent(!m_inventoryUIController.IsOpen);
 

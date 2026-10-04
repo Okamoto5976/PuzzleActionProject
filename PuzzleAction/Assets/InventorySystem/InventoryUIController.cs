@@ -27,6 +27,9 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private GameObject m_Panel;
 
+    [SerializeField] private TutorialManager m_tutorialManager;
+
+
     //なんでもいいからfalse,trueになるオブジェクトを見て、開かれてるか見る
     public bool IsOpen => m_activePanel.gameObject.activeSelf;
 
@@ -52,6 +55,12 @@ public class InventoryUIController : MonoBehaviour
 
     public void SetInventoryVisibility(bool state)
     {
+        if (GameManager.Instance.IsTutorial && state == false)
+        {
+            if (m_tutorialManager.m_isInventoryEvent) return;
+
+        }
+
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
@@ -68,6 +77,13 @@ public class InventoryUIController : MonoBehaviour
     {
         if (m_index == -1) return;
 
+        if (GameManager.Instance.IsTutorial)
+        {
+            m_tutorialManager.InventoryTutorialNextButton();
+
+        }
+
+
         m_trashButton.SetActive(true);
         m_selectButton.SetActive(true);
     }
@@ -75,6 +91,12 @@ public class InventoryUIController : MonoBehaviour
     public void ShowPassiveButtons()
     {
         if (m_index == -1) return;
+
+        if (GameManager.Instance.IsTutorial)
+        {
+            if (!m_tutorialManager.m_canClickItem) return;
+
+        }
 
         m_trashButton.SetActive(true);
         m_selectButton.SetActive(false);

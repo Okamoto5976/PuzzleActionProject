@@ -35,7 +35,10 @@ public class PlayerController : Entity
 
     private int m_hotberIndex = 0;
 
+    private bool m_canInteract = true;
 
+    public bool CanInteract => m_canInteract;
+    
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -260,6 +263,8 @@ public class PlayerController : Entity
             IsStun)
         {
             Move(Vector3.zero, 0f);
+            m_anim.SetBool("Run", false);
+
             return;
         }
 
@@ -413,8 +418,12 @@ public class PlayerController : Entity
 
     private void OnInteract()
     {
+        if (!m_canInteract) return;
+
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
+
+    public void SetCanInteract(bool value) => m_canInteract = value;
 
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {

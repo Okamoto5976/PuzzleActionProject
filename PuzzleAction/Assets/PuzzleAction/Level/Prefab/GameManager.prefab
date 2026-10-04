@@ -47,4 +47,4 @@ MonoBehaviour:
   m_level: 1
   m_money: 0
   isShop: 0
-  m_isTutorial: 1
+  m_isTutorial: 0

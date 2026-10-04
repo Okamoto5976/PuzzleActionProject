@@ -60,7 +60,18 @@ public class Goods : MonoBehaviour,
         //Debug.Log("setData");
         m_data = shopItem.data;
         m_icon.sprite = m_data.Data.ItemIcon;
-        int price = Mathf.CeilToInt(m_data.Data.Price * (1f -discount));
+
+        int price;
+        if(GameManager.Instance.IsTutorial)
+        {
+            price = 10;
+
+        }
+        else
+        {
+            price = Mathf.CeilToInt(m_data.Data.Price * (1f - discount));
+
+        }
         m_priceText.text =price.ToString() + " $";
         m_overlay.sprite = rarityOverlay;
         SetSoldVisibility(shopItem.IsSold);

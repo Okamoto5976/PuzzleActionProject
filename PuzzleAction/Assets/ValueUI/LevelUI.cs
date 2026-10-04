@@ -24,7 +24,15 @@ public class LevelUI : MonoBehaviour
 
         if (levelText != null)
         {
-            levelText.text = "Level:" + level.ToString();
+            if(!GameManager.Instance.IsTutorial)
+            {
+                levelText.text = "Level:" + level.ToString();
+
+            }
+            else
+            {
+                levelText.text = "Level: Tutorial";
+            }
         }
     }
 }

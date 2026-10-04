@@ -12,7 +12,10 @@ abstract public class EntityHP : MonoBehaviour
 
     public int MaxHP => (int)m_entity.HP;
 
-    
+
+    //======Player Tutorial==============
+    public bool m_isTutorial = false;
+
 
     [SerializeField] private DamageParticleController m_damageParticleController;
 
@@ -145,6 +148,10 @@ abstract public class EntityHP : MonoBehaviour
 
         m_entity.ApplyStun(data.StunDuration);
 
+        if(m_isTutorial)
+        {
+            m_currentHP = Mathf.Max(m_currentHP, 1);
+        }
 
         if ( m_currentHP <= 0 ) 
         {

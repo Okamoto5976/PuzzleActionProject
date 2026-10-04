@@ -36,7 +36,7 @@ public class RoomPieceManager : MonoBehaviour
 
     public void Start()
     {
-        if(GameManager.Instance.m_isTutorial)
+        if(GameManager.Instance.IsTutorial)
         {
             for (int i = 0; i < m_tutorialTypes.Count; i++)
             {
@@ -470,26 +470,26 @@ public class RoomPieceManager : MonoBehaviour
         return roomPieceParent;
     }
 
-    public void ResetRoomPiece()
-    {
-        //all delete
-        //UIPanel right slide
-        //show 20piece
-    }
+    //public void ResetRoomPiece()
+    //{
+    //    //all delete
+    //    //UIPanel right slide
+    //    //show 20piece
+    //}
 
-    private void ShowRoomObject()
-    {
-        //get from queue
-        RoomPieceParent piece = m_pieces.Dequeue();
+    //private void ShowRoomObject()
+    //{
+    //    //get from queue
+    //    RoomPieceParent piece = m_pieces.Dequeue();
 
-        //random
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+    //    //random
+    //    float rectX = UnityEngine.Random.Range(-300f, 300f);
+    //    float rectY = UnityEngine.Random.Range(-500f, 500f);
 
-        RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
+    //    RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
 
-        rect.anchoredPosition = new Vector2(rectX, rectY);
-    }
+    //    rect.anchoredPosition = new Vector2(rectX, rectY);
+    //}
 
     public void OnResetTransform(RoomPieceParent piece, Vector2 pos)
     {
