@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc51282e7a5d804186198730622b627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopManager
-  m_currentLevel: {fileID: 11400000, guid: 1f01f7ccd64633045bb2153ef28c311d, type: 2}
   m_itemManager: {fileID: 0}
   m_onGenerateShopInventories: {fileID: 11400000, guid: 29b461411ae04e247ab894115bd5034b, type: 2}
   m_shopCount: {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
@@ -66,6 +65,17 @@ MonoBehaviour:
   m_defaultShopRarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
   m_forcedRarityCount: 2
   m_shopRarityVisuals: {fileID: 11400000, guid: d5ed0c4980becde469090d608197e2da, type: 2}
+  m_playerController: {fileID: 0}
+  m_enteySE: {fileID: 11400000, guid: 0534074b3485996498f3d5109f4ec9b1, type: 2}
+  m_bgm: {fileID: 11400000, guid: ffba4064737c22a42b03e2dc0d569cb8, type: 2}
+  m_buySE: {fileID: 11400000, guid: 5beb11598cb8c604cbb18298d9ba7f05, type: 2}
+  m_tutorialItemes:
+  - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
+  - {fileID: 11400000, guid: cee31a69152a0fa45add68f50490e7bb, type: 2}
+  - {fileID: 11400000, guid: 301a898adcb5fd842b2b4a6d539d4d2b, type: 2}
+  - {fileID: 11400000, guid: 3ff7b92972f47d1418c723fdd0cf1dc9, type: 2}
+  - {fileID: 11400000, guid: 118b9222ad1d819489a3e7a7bd672b94, type: 2}
+  - {fileID: 11400000, guid: 7c4f142a86f2ec543a26b524765b0e27, type: 2}
   m_isDebug: 1
   m_ShopUI: {fileID: 0}
   m_shopId: 1

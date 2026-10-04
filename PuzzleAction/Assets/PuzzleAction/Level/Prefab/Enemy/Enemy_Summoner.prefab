@@ -129,7 +129,7 @@ MonoBehaviour:
   m_attackRange: 8
   m_attackCooldown: 8
   m_attackHitBox:
-    m_transform: {fileID: 5192190198220617858}
+    m_pos: {x: 0, y: 0, z: 0}
     m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 2
   m_isRandom: 0
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 3109024123308804497}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0

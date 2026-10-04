@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e1236798c313c944bb31225f8b57ed1, type: 3}
   m_Name: t
   m_EditorClassIdentifier: Assembly-CSharp::MapSettingSO
-  mapName: 
+  mapName: t
   size: {x: 10, y: 10}
   startPos: {x: 3, y: 0}
   goalPos: {x: 9, y: 9}

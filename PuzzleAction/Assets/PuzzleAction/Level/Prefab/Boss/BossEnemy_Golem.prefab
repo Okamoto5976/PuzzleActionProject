@@ -55,14 +55,14 @@ MonoBehaviour:
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 20
   m_attackRange: 7
-  m_attackCooldown: 2
+  m_attackCooldown: 4
   m_itemDropGachaEngine: {fileID: 11400000, guid: ce8a86fee1115a447b55261f20b575c0, type: 2}
   m_dropCount: 3
   m_attackHitBox:
-    m_transform: {fileID: 6054870468107764460}
+    m_pos: {x: 0, y: 0, z: 0}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
     m_radius: 7
-  m_attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
+  m_attackItem: {fileID: 11400000, guid: 07fa19ba75fe3e241b4091b13ab23ee0, type: 2}
   m_power: 24
   m_shootOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &-3879386613953403271
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 9160133618166530080}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!195 &6295794922853557716
 NavMeshAgent:
   m_ObjectHideFlags: 0

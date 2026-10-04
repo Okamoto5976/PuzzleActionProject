@@ -13,8 +13,17 @@ public class RoomPieceManager : MonoBehaviour
 
     [SerializeField] private int m_pieceAmount = 20;
 
+    [SerializeField] private float m_XMin;
+    [SerializeField] private float m_XMax;
+    [SerializeField] private float m_YMin;
+    [SerializeField] private float m_YMax;
+
+
     //use random type when create piece
     [SerializeField] private List<AreaType> m_randomAreaTypes = new();
+
+    [Header("Tutorial")]
+    [SerializeField] private List<AreaType> m_tutorialTypes = new();
 
     //[SerializeField] private int m_poolPieceAmount = 100;
 
@@ -27,6 +36,18 @@ public class RoomPieceManager : MonoBehaviour
 
     public void Start()
     {
+        if(GameManager.Instance.IsTutorial)
+        {
+            for (int i = 0; i < m_tutorialTypes.Count; i++)
+            {
+                Room room = CreateTutorialRoom();
+                RoomPieceParent piece = GenerateTutorialRoomObject(room, i);
+                //m_pieces.Enqueue(piece);
+            }
+
+            return;
+        }
+
         for(int i = 0; i < m_pieceAmount; i++)
         {
             Room room = CreateRoom();
@@ -50,7 +71,7 @@ public class RoomPieceManager : MonoBehaviour
     #region ルーム作成
     private Room CreateRoom()
     {
-        int num = UnityEngine.Random.Range(0, 6);
+        int num = UnityEngine.Random.Range(0, 9);
 
         Room room = new(new(), new(0, 0));
 
@@ -81,13 +102,22 @@ public class RoomPieceManager : MonoBehaviour
             room = new(
                 new()
                 {
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                    Floor.FloorState.full,Floor.FloorState.full ,Floor.FloorState.full,
-                }, new(3, 3)
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.empty,Floor.FloorState.full,
+                }, new(2, 2)
                 );
         }
         else if (num == 3)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.empty,
+                }, new(2, 2)
+                );
+        }
+        else if (num == 4)
         {
             room = new(
                 new()
@@ -97,7 +127,7 @@ public class RoomPieceManager : MonoBehaviour
                 }, new(2, 2)
                 );
         }
-        else if (num == 4)
+        else if (num == 5)
         {
             room = new(
                new()
@@ -107,16 +137,38 @@ public class RoomPieceManager : MonoBehaviour
                }, new(2, 2)
                );
         }
-        else if (num == 5)
+        else if (num == 6)
         {
             room = new(
                 new()
                 {
-                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,
-                }, new(5, 1)
+                    Floor.FloorState.empty,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full
+                }, new(2, 2)
                 );
         }
-
+        else if (num == 7)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full,Floor.FloorState.full
+                }, new(4, 1)
+                );
+        }
+        else if (num == 8)
+        {
+            room = new(
+                new()
+                {
+                    Floor.FloorState.full,
+                    Floor.FloorState.full,
+                    Floor.FloorState.full,
+                    Floor.FloorState.full
+                }, new(1, 4)
+                );
+        }
+        
         return room;
     }
 
@@ -154,6 +206,23 @@ public class RoomPieceManager : MonoBehaviour
         return room;
     }
 
+    private Room CreateTutorialRoom()
+    {
+        Room room = new(new(), new(0, 0));
+
+
+        room = new(
+            new()
+            {
+                    Floor.FloorState.full,Floor.FloorState.full,
+                    Floor.FloorState.full,Floor.FloorState.full,
+            }, new(2, 2)
+            );
+
+
+        return room;
+    }
+
     #endregion
 
 
@@ -162,8 +231,8 @@ public class RoomPieceManager : MonoBehaviour
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
@@ -190,14 +259,18 @@ public class RoomPieceManager : MonoBehaviour
         }
 
         var roomPieceParent = parentObj.GetComponent<RoomPieceParent>();
+        roomPieceParent.Init(this);
         roomPieceParent.SetRoom(room);
 
         //SetAreatype
         //AreaType type = (AreaType)Random.Range(0, System.Enum.GetValues(typeof(AreaType)).Length);
-        AreaType type = m_randomAreaTypes[Random.Range(0, m_randomAreaTypes.Count)];
+        //AreaType type = m_randomAreaTypes[Random.Range(0, m_randomAreaTypes.Count)];
+        int num = RandomType();
+
+        AreaType type = m_randomAreaTypes[num];
 
         roomPieceParent.SetAreaType(type);
-        roomPieceParent.Init(this);
+
 
         switch (type)
         {
@@ -218,12 +291,101 @@ public class RoomPieceManager : MonoBehaviour
         return roomPieceParent;
     }
 
+    int[] count = new int[4];
+
+    //重み付きランダム
+    private int RandomType()
+    {
+        float totalWeight = 0f;
+
+        for(int i = 0; i < count.Length; i++)
+        {
+            totalWeight += 1f / (count[i] + 1);
+        }
+
+        float random = Random.value * totalWeight;
+
+        for(int i = 0;i < count.Length; i++)
+        {
+            float weight = 1f / (count[i] + 1);
+
+            random -= weight;
+
+            if(random <= 0f)
+            {
+                count[i]++;
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+
+    public RoomPieceParent GenerateTutorialRoomObject(Room room, int num)
+    {
+        GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
+
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
+
+        RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
+
+        rect.anchoredPosition = new Vector2(rectX, rectY);
+
+        for (int y = 0; y < room.Size.y; y++)
+        {
+            for (int x = 0; x < room.Size.x; x++)
+            {
+                int roomIndex = x + y * room.Size.x;
+                if (room.Floors[roomIndex].State == Floor.FloorState.empty) continue;
+                var floor = Instantiate(m_roomPiece, parentObj.transform);
+                var FloorRect = floor.GetComponent<RectTransform>();
+
+
+                FloorRect.anchoredPosition = new Vector2(
+                    x * 50f,
+                    y * 50f
+                );
+
+                var roomPiece = floor.GetComponent<RoomPiece>();
+                roomPiece.SetIndex(new Vector2Int(x, y));
+            }
+        }
+
+        var roomPieceParent = parentObj.GetComponent<RoomPieceParent>();
+        roomPieceParent.Init(this);
+        roomPieceParent.SetRoom(room);
+
+        AreaType type = m_tutorialTypes[num];
+
+        roomPieceParent.SetAreaType(type);
+
+
+        switch (type)
+        {
+            case AreaType.Normal:
+                break;
+            case AreaType.Summon:
+                roomPieceParent.SetColor(Color.red);
+                break;
+            case AreaType.Shop:
+                roomPieceParent.SetColor(Color.green);
+                break;
+            case AreaType.Damage:
+                roomPieceParent.SetColor(Color.cyan);
+
+                break;
+        }
+
+        return roomPieceParent;
+    }
     public RoomPieceParent GenerateFairyRoomObject(Room room)
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
@@ -267,8 +429,8 @@ public class RoomPieceManager : MonoBehaviour
     {
         GameObject parentObj = Instantiate(m_roomPieceParent, m_MapPieceUI.transform);
 
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+        float rectX = UnityEngine.Random.Range(m_XMin, m_XMax);
+        float rectY = UnityEngine.Random.Range(m_YMin, m_YMax);
 
         RectTransform rect = parentObj.gameObject.GetComponent<RectTransform>();
 
@@ -308,26 +470,26 @@ public class RoomPieceManager : MonoBehaviour
         return roomPieceParent;
     }
 
-    public void ResetRoomPiece()
-    {
-        //all delete
-        //UIPanel right slide
-        //show 20piece
-    }
+    //public void ResetRoomPiece()
+    //{
+    //    //all delete
+    //    //UIPanel right slide
+    //    //show 20piece
+    //}
 
-    private void ShowRoomObject()
-    {
-        //get from queue
-        RoomPieceParent piece = m_pieces.Dequeue();
+    //private void ShowRoomObject()
+    //{
+    //    //get from queue
+    //    RoomPieceParent piece = m_pieces.Dequeue();
 
-        //random
-        float rectX = UnityEngine.Random.Range(-300f, 300f);
-        float rectY = UnityEngine.Random.Range(-500f, 500f);
+    //    //random
+    //    float rectX = UnityEngine.Random.Range(-300f, 300f);
+    //    float rectY = UnityEngine.Random.Range(-500f, 500f);
 
-        RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
+    //    RectTransform rect = piece.gameObject.GetComponent<RectTransform>();
 
-        rect.anchoredPosition = new Vector2(rectX, rectY);
-    }
+    //    rect.anchoredPosition = new Vector2(rectX, rectY);
+    //}
 
     public void OnResetTransform(RoomPieceParent piece, Vector2 pos)
     {

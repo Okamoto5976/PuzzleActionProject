@@ -11,9 +11,13 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private GameObject m_hotbarActionPanel;
 
+    [SerializeField] private GameObject m_statusView;
+
     [SerializeField] private TMP_Text m_nameText;
 
     [SerializeField] private TMP_Text m_infoText;
+
+    [SerializeField] private TMP_Text m_useTypeText;
 
     [SerializeField] private GameObject m_activePanel;
 
@@ -23,14 +27,22 @@ public class InventoryUIController : MonoBehaviour
 
     [SerializeField] private GameObject m_Panel;
 
+    [SerializeField] private TutorialManager m_tutorialManager;
+
+
+    //なんでもいいからfalse,trueになるオブジェクトを見て、開かれてるか見る
+    public bool IsOpen => m_activePanel.gameObject.activeSelf;
+
     private void Start()
     {
         m_trashButton.SetActive(false);
         m_selectButton.SetActive(false);
         m_hotbarActionPanel.SetActive(false);
+        m_statusView.SetActive(false);
 
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
+        m_useTypeText.gameObject.SetActive(false);
 
         m_activePanel.SetActive(false);
         m_passivepanel.SetActive(false);
@@ -43,9 +55,16 @@ public class InventoryUIController : MonoBehaviour
 
     public void SetInventoryVisibility(bool state)
     {
+        if (GameManager.Instance.IsTutorial && state == false)
+        {
+            if (m_tutorialManager.m_isInventoryEvent) return;
+
+        }
+
         m_activePanel.SetActive(state);
         m_passivepanel.SetActive(state);
         m_hotbarPanel.SetActive(state);
+        m_statusView.SetActive(state);
 
         m_Panel.SetActive(state);
 
@@ -58,6 +77,13 @@ public class InventoryUIController : MonoBehaviour
     {
         if (m_index == -1) return;
 
+        if (GameManager.Instance.IsTutorial)
+        {
+            m_tutorialManager.InventoryTutorialNextButton();
+
+        }
+
+
         m_trashButton.SetActive(true);
         m_selectButton.SetActive(true);
     }
@@ -65,6 +91,12 @@ public class InventoryUIController : MonoBehaviour
     public void ShowPassiveButtons()
     {
         if (m_index == -1) return;
+
+        if (GameManager.Instance.IsTutorial)
+        {
+            if (!m_tutorialManager.m_canClickItem) return;
+
+        }
 
         m_trashButton.SetActive(true);
         m_selectButton.SetActive(false);
@@ -97,9 +129,31 @@ public class InventoryUIController : MonoBehaviour
 
         m_nameText.gameObject.SetActive (true);
         m_infoText.gameObject.SetActive (true);
+        m_useTypeText.gameObject.SetActive (true);
 
         m_nameText.text = data.ItemName;
         m_infoText.text = data.info;
+
+        string description = null;
+
+        switch (data.ItemUseType)
+        {       
+            case ItemUseType.Instant:
+                description = $"Spaceを押すと向いている方向に発動";
+                break;
+            case ItemUseType.Arrow:
+                description = $"Space長押しで距離を伸ばし、離すと発動";
+                break;
+            case ItemUseType.Set:
+                description = $"Space長押しで設置場所を指定、離すと発動";
+                break;
+            case ItemUseType.Attack:
+                description = $"Space長押しで構え、離すと発動";
+                break;
+        }
+
+
+        m_useTypeText.text = $"{data.ItemUseType}\n" + description;
     }
 
     //=========remove button=============
@@ -153,6 +207,7 @@ public class InventoryUIController : MonoBehaviour
 
         m_nameText.gameObject.SetActive(false);
         m_infoText.gameObject.SetActive(false);
+        m_useTypeText.gameObject.SetActive(false);
 
         m_index = -1;
     }

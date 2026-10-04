@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5045903686643083275}
@@ -105,14 +105,14 @@ MonoBehaviour:
   m_attackRange: 1.5
   m_attackCooldown: 1
   m_attackHitBox:
-    m_transform: {fileID: 2074712064826403026}
+    m_pos: {x: 0, y: 0, z: 0}
     m_hitBoxOffset: {x: 0, y: 0, z: 0}
     m_radius: 5
   m_isRandom: 0
   m_attackItems: []
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
-  m_itemDropGachaEngine: {fileID: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: bd356a36a60fb7547af11d332ea8a4d9, type: 2}
 --- !u!114 &-132694917962651984
 MonoBehaviour:
   m_ObjectHideFlags: 0

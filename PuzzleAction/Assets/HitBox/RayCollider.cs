@@ -22,7 +22,7 @@ public class RayCollider
     private bool m_isVisible;  // UnityEditorでHitBoxの当たり判定を表示するか
 
 
-    public void AttackCollider(DamageData data, TeamType myTeam, AttackRay attackRay)
+    public List<Collider> AttackCollider(DamageData data, TeamType myTeam, AttackRay attackRay)
     {
         // ヒットした判定のセット
         List<Collider> hitSet = new();
@@ -44,7 +44,7 @@ public class RayCollider
                 //Debug.Log($"hit.name: {hit.collider.name}");
 
                 hitSet.Add(hit.collider);
-                hitSet[i].enabled = false;  // 2回以上は判定しないようにする
+                //hitSet[i].enabled = false;  // 2回以上は判定しないようにする
             }
             else
             {
@@ -53,16 +53,21 @@ public class RayCollider
         }
 
         // 判定を戻す
-        foreach (var col in hitSet)
-        {
-            col.enabled = true;
 
-            Entity entity = col.GetComponentInParent<Entity>();
-            if (entity == null) continue;
-            if (entity.Team == myTeam) continue;
+        return hitSet;
+        
+        //foreach (var col in hitSet)
+        //{
+        //    col.enabled = true;
 
-            entity.TakeDamage(data);
-        }
+        //    Entity entity = col.GetComponentInParent<Entity>();
+        //    if (entity == null) continue;
+        //    if (entity.Team == myTeam) continue;
+
+        //    entity.TakeDamage(data);
+        //}
+
+        
 
     }
 }

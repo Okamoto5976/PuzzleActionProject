@@ -172,7 +172,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 4374548950182303544, guid: fe7f15f0edcb13b488060375fa73bb29, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: e0f109b7cc7209e49a2f99c1e27553ee, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -305,7 +305,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f871b55858090b64693f1d908d3b1532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  audioEvent: {fileID: 11400000, guid: 9b9c9444505753946a0cffaafc4a295c, type: 2}
   BGMSource: {fileID: 1593642120226390321}
   SESource: {fileID: 1623773433696020689}
   m_audioMix: {fileID: 24100000, guid: fe7f15f0edcb13b488060375fa73bb29, type: 2}
@@ -323,4 +322,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioFader
   audioSource: {fileID: 1593642120226390321}
-  fadeDuration: 2
+  fadeDuration: 1

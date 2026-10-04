@@ -108,7 +108,7 @@ MonoBehaviour:
   m_attackRange: 2
   m_attackCooldown: 1
   m_attackHitBox:
-    m_transform: {fileID: 5684922870896197467}
+    m_pos: {x: 0, y: 0, z: 0}
     m_hitBoxOffset: {x: 0, y: 0, z: 0}
     m_radius: 1.5
   m_isRandom: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 3998269744627953208}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &7313648818790958268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,15 +234,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.04284
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.17406
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.49816
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalRotation.w

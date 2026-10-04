@@ -5,6 +5,8 @@ public class EnemyHP : EntityHP
     private ReturnObjectToPool m_returnObjPool;
     [SerializeField] private bool m_isItemDrop;
 
+    [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
+
     protected override void Die()
     {
         EnemyController enemy = GetComponent<EnemyController>();
@@ -15,6 +17,9 @@ public class EnemyHP : EntityHP
         }
 
         if (enemy.CurrentState == Entity.EntityState.Dead) return;
+
+        //dropMoney
+        m_dropMoneyEventSO.Raise(transform.position, 160);
 
         //kill enemy
         enemy.KillEntity();

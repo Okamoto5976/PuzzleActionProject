@@ -35,17 +35,9 @@ public class PoisonMagic : TrapBase
             m_rb.linearVelocity = Vector3.zero;
             m_rb.angularVelocity = Vector3.zero;
         }
-        //if(m_poisonCollider!=null)m_poisonCollider.enabled= false;
-        //if(m_poisonEffect!=null)m_poisonEffect.SetActive(false);
     }
    
     
-    //public override void TrapInit(ItemRecieveData data)
-    //{
-    //    base.TrapInit(data);
-    //    //EntitySetUp();
-    //}
-
     private void FixedUpdate()
     {
         if (!m_isAreaActive && !m_isAddForceCalled)
@@ -72,8 +64,6 @@ public class PoisonMagic : TrapBase
         m_areaTimer += Time.deltaTime;
         if (m_areaTimer >= m_duration)
         {
-            //if (m_poisonCollider != null) m_poisonCollider.enabled = false;
-            //if (m_poisonEffect != null) m_poisonEffect.SetActive(false);
             OnReturnPool();
             return;
         }
@@ -93,8 +83,6 @@ public class PoisonMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-
         if (!m_isAreaActive)
         {
             if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
@@ -106,7 +94,6 @@ public class PoisonMagic : TrapBase
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {
-                CreateDamageData();
                 hitTarget.TakeDamage(m_damageData);
 
                 OnHit();
@@ -160,13 +147,17 @@ public class PoisonMagic : TrapBase
                 continue;
             }
 
-            StatusModifier poisonModifier = new StatusModifier
+            if (m_trapData.m_buffSetting.Count != 0)
             {
-                m_statType = StatusType.Poison,
-                m_value = poisonDamage,
-                m_modType = ModifierType.Add
-            };
-            target.AddBuff(poisonModifier, BuffID.Poison, m_poisonDuration);
+                foreach (var buff in m_trapData.m_buffSetting)
+                {
+                    if (buff.m_duration <= 0) continue;
+
+                    var modifier = SetModifier(buff);
+
+                    target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+                }
+            }
         }
     }
 }

@@ -1,10 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class AttackHitBox
 {
-    public Transform m_transform;
+    public Vector3 m_pos;
     public Vector3 m_hitBoxOffset;
     public float m_radius;
 }
@@ -23,51 +24,69 @@ public class HitCollider
     
     private AttackHitBox m_currentHitBox;
 
-    protected Coroutine m_viewCoroutine;
+    public AttackHitBox CurrentHitBox => m_currentHitBox;
+
+    private Coroutine m_viewCoroutine;
     
-    public void AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
+    public List<Collider> AttackCollider(DamageData data, TeamType myTeam, AttackHitBox attackHitBox)
     {
         // ヒットした判定のセット
         //HashSet<Entity> hitSet = new();
-        {
-            m_currentHitBox = attackHitBox;
+        // ヒットした判定のセット
+        List<Collider> hitSet = new();
 
-            Collider[] hits = Physics.OverlapSphere(
-                attackHitBox.m_transform.position + attackHitBox.m_hitBoxOffset,
-                attackHitBox.m_radius
-                       );
+        
+        m_currentHitBox = attackHitBox;
+
+        Collider[] hits = Physics.OverlapSphere(
+            attackHitBox.m_pos + attackHitBox.m_hitBoxOffset,
+            attackHitBox.m_radius
+                    );
 
 
-            //Debug.Log($"hits.Length : {hits.Length}");
+        //Debug.Log($"hits.Length : {hits.Length}");
 
-            foreach (var hit in hits)
-            {
-                Entity entity = hit.GetComponentInParent<Entity>();
+        //foreach (var hit in hits)
+        //{
+        //    Entity entity = hit.GetComponentInParent<Entity>();
 
-                if (entity == null)
-                {
-                    continue;
-                }
-                if(entity.Team==myTeam)
-                {
-                    continue;
-                }
+        //    if (entity == null)
+        //    {
+        //        continue;
+        //    }
+        //    if(entity.Team==myTeam)
+        //    {
+        //        continue;
+        //    }
 
-                entity.TakeDamage(data);
+        //    entity.TakeDamage(data);
 
                 
-            }
+        //}
 
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+
+            if (entity == null)
+                continue;
+
+            if (entity.Team == myTeam)
+                continue;
+
+            hitSet.Add(hit);
         }
 
         if (m_isViewCollider)
         {
-            if (m_viewCoroutine != null) return;
+            if (m_viewCoroutine != null) return hitSet;
 
             OnDrawGizmos();
             //m_viewCoroutine = StartCoroutine(ViewColliderTime());
         }
 
+
+        return hitSet;
     }
 
     private IEnumerator ViewColliderTime()
@@ -89,7 +108,9 @@ public class HitCollider
 
         Gizmos.color = Color.red;
 
-        Vector3 center = m_currentHitBox.m_transform.position + m_currentHitBox.m_hitBoxOffset;
+        Vector3 center = m_currentHitBox.m_pos + m_currentHitBox.m_hitBoxOffset;
         Gizmos.DrawWireSphere(center, m_currentHitBox.m_radius);
     }
+
+  
 }

@@ -6,13 +6,16 @@ abstract public class EntityHP : MonoBehaviour
 
     private AudioSource m_audioSource;
 
-    [SerializeField] private int m_currentHP;
+    [SerializeField] protected int m_currentHP;
     [SerializeField] private int m_max;
     public int CurrentHP { get => m_currentHP;}
 
     public int MaxHP => (int)m_entity.HP;
 
-    
+
+    //======Player Tutorial==============
+    public bool m_isTutorial = false;
+
 
     [SerializeField] private DamageParticleController m_damageParticleController;
 
@@ -28,7 +31,7 @@ abstract public class EntityHP : MonoBehaviour
         m_max = MaxHP;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (m_entity == null) return;
         m_currentHP = (int)m_entity.HP;
@@ -145,6 +148,10 @@ abstract public class EntityHP : MonoBehaviour
 
         m_entity.ApplyStun(data.StunDuration);
 
+        if(m_isTutorial)
+        {
+            m_currentHP = Mathf.Max(m_currentHP, 1);
+        }
 
         if ( m_currentHP <= 0 ) 
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -39,7 +40,6 @@ public class MapPlaceSystem : MonoBehaviour
 
     private GameObject m_roomPieceParentObj;//bringing piece now
     private RectTransform m_roomPieceParentRect;
-
 
     //use GenerateMap MainSece, PlaceRoomDatas
     private List<RoomData> m_roomData = new();
@@ -110,6 +110,10 @@ public class MapPlaceSystem : MonoBehaviour
 
     //[SerializeField] private IntRunTime m_level;
 
+    private bool m_canMovePiece = true;
+
+    public void SetCanMovePiece(bool value) => m_canMovePiece = value;
+
     private void Awake()
     {
         m_errorMessageClass = GetComponent<MapPlaceErrorMessage>();
@@ -124,12 +128,35 @@ public class MapPlaceSystem : MonoBehaviour
         }
         else
         {
-            m_mapClass = m_mapClassData.MapClass;
+            m_mapClass = CreateRuntimeMap(m_mapClassData.MapClass);
 
             m_startPos = m_mapClassData.StartPos;
             m_endPos = m_mapClassData.GoalPos;
         }
         m_boardManager.Generate(m_mapClass, m_startPos, m_endPos);
+    }
+
+    //コピー
+    private MapClass CreateRuntimeMap(MapClass source)
+    {
+        MapClass result = new MapClass(
+            source.Size.x,
+            source.Size.y
+        );
+
+        for (int y = 0; y <= source.Size.y; y++)
+        {
+            for (int x = 0; x <= source.Size.x; x++)
+            {
+                result.GetFloor(x, y).SetState(
+                    source.GetFloor(x, y).State
+                );
+            }
+        }
+
+        result.UpdateFloors();
+
+        return result;
     }
 
     private void InitializeMapGrid()
@@ -150,8 +177,9 @@ public class MapPlaceSystem : MonoBehaviour
         Vector2Int mousePos = m_origin;
         Vector2Int origin = m_origin - m_difference;
 
+        if (!m_canMovePiece) return;
 
-        #region �}�E�X����
+        #region 
         if (m_action.action.WasPressedThisFrame())
         {
             m_gridObj = null;
@@ -355,14 +383,25 @@ public class MapPlaceSystem : MonoBehaviour
         //if have roomPieceParentObject, following mousePoint
         if (m_roomPieceParentObj != null)
         {
+            RectTransform parentRect = m_roomPieceParentRect.parent as RectTransform;
+
             Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
 
+            Vector2 mouseLocalPos;
+
+            //UIのサイズに合わせて動かす
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentRect,
+                mouseScreenPos,
+                null,
+                out mouseLocalPos
+            );
             //piece index 0, 1, 2...  Shift piece index difference
             Vector2 differencePos = new Vector2(
-                            (m_difference.x) * 15f + 0.5f,
-                            (m_difference.y) * 15f + 0.5f
+                            (m_difference.x) * 50f,
+                            (m_difference.y) * 50f
                             );
-            m_roomPieceParentRect.position = mouseScreenPos - differencePos;
+            m_roomPieceParentRect.anchoredPosition = mouseLocalPos - differencePos;
         }
     }
 
@@ -600,6 +639,11 @@ public class MapPlaceSystem : MonoBehaviour
 
         visited.Add(startID);
 
+        if(GameManager.Instance.IsTutorial)
+        {
+            m_roomIDTutorial.Add(startID);
+        }
+
         return (DFS(startID, endID, visited));
     }
 
@@ -623,7 +667,14 @@ public class MapPlaceSystem : MonoBehaviour
             if (visited.Contains(next)) continue;
 
             visited.Add(next);
-            if(DFS(next, end, visited)) return true;
+
+            if (GameManager.Instance.IsTutorial)
+            {
+                m_roomIDTutorial.Add(next);
+            }
+
+
+            if (DFS(next, end, visited)) return true;
              visited.Remove(next);
 
         }
@@ -690,6 +741,15 @@ public class MapPlaceSystem : MonoBehaviour
             Debug.Log("error: not connect all piece");
             m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotPieceConnected);
             return;
+        }
+
+        if(GameManager.Instance.IsTutorial)
+        {
+            if(!CheckRouteTutorial())
+            {
+                m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotTutorial);
+                return;
+            }
         }
 
         ////shopObject reset
@@ -774,15 +834,15 @@ public class MapPlaceSystem : MonoBehaviour
         //errorcheck is all conect piece?
         foreach (var placeId in m_allRoomID)
         {
-            Debug.Log($"allRoomID{placeId}");
+            //Debug.Log($"allRoomID{placeId}");
             if (mainPath.Contains(placeId)) continue;
-            Debug.Log("check false");
+            //Debug.Log("check false");
             return false;
         }
 
         m_mapClassData.SetMapClass(m_mapClass);
         m_mapClassData.SetRoomDatas(m_roomData);
-        Debug.Log("check true");
+        //Debug.Log("check true");
 
         return true;
     }
@@ -809,4 +869,38 @@ public class MapPlaceSystem : MonoBehaviour
 
         floor.SetState(Wall.WallState.door);
     }
+
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private List<int> m_roomIDTutorial = new();
+    [SerializeField] private List<AreaType> m_tutorialAreaTypeOrder = new();
+
+    public bool CheckRouteTutorial()
+    {
+        m_roomIDTutorial.Clear();
+        if (!CallDFS(m_startPos, m_endPos)) return false;
+
+        //ここで繋がりの順をみる　どうせチュートリアルなので　一直線以外はない
+        //順にスタートからゴールまでのIDを見る
+        //m_roomDataからそのIDのAreaTypeを見ていき　チュートリアルのAreaType順と同じなら成功
+
+        //for (int i = 0; i < m_roomData.Count; i++)
+        //{
+        //    Debug.Log($"{m_roomData[i].m_ID} : {m_roomData[i].m_type} ");
+        //}
+
+        for (int i = 0; i < m_roomIDTutorial.Count; i++)
+        {
+            if (m_roomData[m_roomIDTutorial[i]].m_type != m_tutorialAreaTypeOrder[i]) return false;
+
+        }
+
+
+        return true;
+    }
+
+    
 }

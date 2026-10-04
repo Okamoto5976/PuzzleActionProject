@@ -5,6 +5,18 @@ using TMPro;
 public class SlotUI : MonoBehaviour
 {
     [SerializeField] private Image m_icon;
+    [SerializeField] private Image m_rarityImage;
+
+    [SerializeField] private RarityEnumAsset m_commonRarity;
+    [SerializeField] private RarityEnumAsset m_uncommonRarity;
+    [SerializeField] private RarityEnumAsset m_rareRarity;
+    [SerializeField] private RarityEnumAsset m_legendaryRarity;
+
+    [SerializeField] private Sprite m_commonSprite;
+    [SerializeField] private Sprite m_uncommonSprite;
+    [SerializeField] private Sprite m_rareSprite;
+    [SerializeField] private Sprite m_legendarySprite;
+
     private int m_index;
     public GameObject m_InventoryPanel;
 
@@ -22,6 +34,27 @@ public class SlotUI : MonoBehaviour
         m_index = index;
         m_icon.enabled = true;
         m_data = item.data;
+
+        RarityEnumAsset rarity = item.data.Data.Rarity;
+
+        if (rarity == m_commonRarity)
+        {
+            m_rarityImage.sprite = m_commonSprite;
+        }
+        else if (rarity == m_uncommonRarity)
+        {
+            m_rarityImage.sprite = m_uncommonSprite;
+        }
+        else if (rarity == m_rareRarity)
+        {
+            m_rarityImage.sprite = m_rareSprite;
+        }
+        else if (rarity == m_legendaryRarity)
+        {
+            m_rarityImage.sprite = m_legendarySprite;
+        }
+
+        m_rarityImage.enabled = true;
 
         if (m_countText != null)
         {
@@ -41,6 +74,7 @@ public class SlotUI : MonoBehaviour
         //Debug.Log($"{gameObject.name} Clear");
         //Debug.Log(System.Environment.StackTrace);
         m_icon.enabled = false;
+        m_rarityImage.enabled = false;
 
         if (m_countText != null)
         {

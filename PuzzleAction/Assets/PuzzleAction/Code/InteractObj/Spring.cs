@@ -7,14 +7,66 @@ public class Spring : MonoBehaviour, IInteractable
 
     [SerializeField] private List<BuffSetting> m_buffList = new();
 
+    [SerializeField] private GachaEngine m_itemDropGachaEngine;
+
+    [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
+    [SerializeField] private int m_minMoney;
+    [SerializeField] private int m_maxMoney;
+
+
     public void OnInteract(Entity entity)
     {
         if (m_isActive) return;
 
-        //effect
-        int num = Random.Range(0, m_buffList.Count);
+        int num = Random.Range(0, 3);
 
-        var buff = m_buffList[num];
+        switch (num)
+        { 
+            case 0:
+                DropMoney();
+                break;
+
+            case 1:
+                DropItem();
+                break;
+
+            case 2:
+                GiftBuff(entity);
+                break;
+        }
+
+
+        
+
+        m_isActive = true;
+    }
+
+    private void DropMoney()
+    {
+        int money = Random.Range(m_minMoney, m_maxMoney);
+
+        m_dropMoneyEventSO.Raise(transform.position, money);
+
+    }
+
+    private void DropItem()
+    {
+        RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+        Item item = ItemManager.Instance.DropItem(rarity);
+        if (item == null)
+        {
+            Debug.Log($"{this.name} : item null");
+            return;
+        }
+        ItemManager.Instance.DropItemSetData(transform.position, item);
+    }
+
+    private void GiftBuff(Entity entity)
+    {
+        //effect
+        int index = Random.Range(0, m_buffList.Count);
+
+        var buff = m_buffList[index];
 
 
         StatusModifier modifier = new StatusModifier()
@@ -25,7 +77,5 @@ public class Spring : MonoBehaviour, IInteractable
         };
 
         entity.AddBuff(modifier, buff.m_buffID, buff.m_duration);
-
-        m_isActive = true;
     }
 }
