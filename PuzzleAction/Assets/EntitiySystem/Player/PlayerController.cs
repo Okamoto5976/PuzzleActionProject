@@ -102,6 +102,7 @@ public class PlayerController : Entity
     [SerializeField] private AudioData m_walkSE;
     [SerializeField] private AudioData m_pull;
     [SerializeField] private AudioData m_stunSE;
+    [SerializeField] private AudioData m_hotberSE;
 
 
     //[Header("Audio")]
