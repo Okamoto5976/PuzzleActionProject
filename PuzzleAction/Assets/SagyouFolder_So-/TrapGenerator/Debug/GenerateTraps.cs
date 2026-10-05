@@ -15,6 +15,6 @@ public class GenerateTraps : MonoBehaviour
     public void Generate()
     {
         Debug.Log(_trapPositions.Count);
-        _trapGenerator.SpawnTraps(_trapPositions, Vector3.one, _trapPools, Enum_TrapType.Dynamite, 1);
+        _trapGenerator.SpawnTraps(_trapPositions, Vector3.one, _trapPools, Enum_TrapType.Dynamite, 1, Vector3.zero);
     }
 }

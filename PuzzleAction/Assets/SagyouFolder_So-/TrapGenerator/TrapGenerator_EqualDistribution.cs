@@ -39,7 +39,7 @@ public class TrapGenerator_EqualDistribution : TrapGenerator
     /// <param name="positions">cell positions</param>
     /// <param name="cellSize">size of cell</param>
     /// <param name="trapPools">trapPools</param>
-    public override void SpawnTraps(List<Vector3> positions, Vector3 cellSize, Middleman_Trap trapPools, Enum_TrapType trapType, float density)
+    public override void SpawnTraps(List<Vector3> positions, Vector3 cellSize, Middleman_Trap trapPools, Enum_TrapType trapType, float density, Vector3 exclude)
     {
         var cellCount = positions.Count;
         List<int> itemsInCells = new(new int[cellCount]);
@@ -56,6 +56,7 @@ public class TrapGenerator_EqualDistribution : TrapGenerator
         for (var i = 0; i < itemsInCells.Count; i++)
         {
             var origin = positions[i];
+            if (origin == exclude) continue;
             var itemsInCell = itemsInCells[i];
             var newPositions = SubdivideCell(origin, cellSize, itemsInCell);
             newPositions = newPositions.OrderBy(x => random.Next()).ToList();
