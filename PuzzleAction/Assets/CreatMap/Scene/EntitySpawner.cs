@@ -671,7 +671,7 @@ public class EntitySpawner : MonoBehaviour
         if (m_trapPool == null) return;
 
         float trapDensity = m_areaTrapPlaceData.GetAreaTrapPlaceData(m_tutorialTrap);
-        m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, m_tutorialTrap, trapDensity);
+        m_trapEqualDistribution.SpawnTraps(positions, m_mapGeneration.FloorScale, m_trapPool, m_tutorialTrap, trapDensity, m_mapGeneration.GridToWorld(m_mapClassData.StartPos));
 
     }
 
