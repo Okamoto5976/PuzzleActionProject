@@ -1,11 +1,19 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "AttackItem", menuName = "Scriptable Objects/Datas/AttackItem")]
 public class AttackItem : Item
 {
-    [SerializeField] private bool m_overrideDamage;
+    //[SerializeField] private bool m_overrideDamage;
     [SerializeField] private DamageData m_damage = new();
+
+
+    [SerializeField] private bool m_isRayCollider;
+
+    private HitCollider m_hitCollider = new(true);
+
+    private RayCollider m_rayCollider = new(true);
+    [SerializeField] private float m_range;
 
     [System.Serializable]
     public class BuffModify
@@ -28,23 +36,86 @@ public class AttackItem : Item
 
     public override void Activation(ItemRecieveData data)
     {
-        Collider[] hits = Physics.OverlapSphere(
-            data.pos + data.offset,
-            data.power
-            );
+        List<Collider> hits = new();
 
-        if(m_overrideDamage)
+        if (m_damage.Attack < 0f)
         {
             m_damage.Attack += data.entity.STR;
-            m_damage.BreakRate += data.entity.BreakRate;
-            m_damage.CriticalRate += data.entity.CriticalRate;
-            m_damage.CriticalDamage += data.entity.CriticalDamage;
         }
 
-        
+        if (m_damage.CriticalDamage < 0f)
+        {
+            m_damage.CriticalDamage += data.entity.CriticalDamage;
+
+        }
+
+        if(m_damage.CriticalRate < 0f)
+        {
+            m_damage.CriticalRate += data.entity.CriticalRate;
+
+        }
+
+        if (m_damage.Knockback < 0f)
+        {
+            m_damage.Knockback += data.entity.KnockBack;
+        }
+
+        if (m_damage.BreakRate < 0f)
+        {
+            m_damage.BreakRate += data.entity.BreakRate;
+        }
+
+        if (m_damage.StunDuration < 0f)
+        {
+            m_damage.StunDuration += data.entity.StunPower;
+        }
+
+        if (m_isRayCollider)
+        {
+            AttackRay collider = new()
+            {
+                origin = data.pos,
+                direction = data.dir,
+                range = m_range,
+                maxPenetrate = 1,
+            };
+
+            hits = m_rayCollider.AttackCollider(m_damage, data.entity.Team, collider);
+
+            DebugViewCollider.Instance.ViewRayCollider(collider);
+        }
+        else
+        {
+            AttackHitBox hitbox = new()
+            {
+                m_pos = data.pos,
+                m_hitBoxOffset = data.offset,
+                m_radius = m_range
+            };
+
+            hits = m_hitCollider.AttackCollider(m_damage, data.entity.Team, hitbox);
+
+            DebugViewCollider.Instance.ViewHitCollider(hitbox);
+        }
+
+        //if (m_overrideDamage)
+        //{
+        //    m_damage.Attack += data.entity.STR;
+
+        //}
+        Debug.Log("Attack Item");
+
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
 
         foreach (Collider hit in hits)
         {
+            Debug.Log("Collider");
+
+
             Entity entity = hit.GetComponentInParent<Entity>();
             if (entity == null)
             {
@@ -89,5 +160,4 @@ public class AttackItem : Item
 
         //Debug.Log($"AttackItem‚ðŽg—p‚µ‚Ü‚µ‚½");
     }
-
 }

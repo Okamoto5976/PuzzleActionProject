@@ -85,6 +85,19 @@ public class EnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
+    //public float CurrentMoveSpeed
+    //{
+    //    get
+    //    {
+    //        float slowMultiplier = 1f - Swamp * (1f - SlowRes);
+    //        slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
+
+    //        float finalSpeed = (Speed * slowMultiplier) - Slow;
+
+    //        return Mathf.Max(0f, finalSpeed);
+    //    }
+    //}
+
 
     public void InitializeSpawn()
     {
@@ -121,7 +134,7 @@ public class EnemyController : Entity
 
 
         m_enemyBehaviour = GetComponent<IEnemyBehaviour>();
-        m_hitCollider = GetComponent<HitCollider>();
+        m_hitCollider = new HitCollider(true);
 
         if (m_enemyBehaviour != null)
         {
@@ -130,6 +143,11 @@ public class EnemyController : Entity
 
         m_agent.updateRotation = false;
         m_agent.updatePosition = true;
+
+        int playerLyer = LayerMask.NameToLayer("Player");
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+
+        Physics.IgnoreLayerCollision(playerLyer, enemyLayer, true);
     }
 
     private void FixedUpdate()
@@ -149,7 +167,7 @@ public class EnemyController : Entity
             StopAll();
             return;
         }
-       
+        m_rb.constraints = RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         m_enemyBehaviour.Execute();
     }
     private void OnEnable()
@@ -221,8 +239,26 @@ public class EnemyController : Entity
                 AttackDir = transform.forward,
             };
 
-        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        m_attackHitBox.m_pos = transform.position;
+
+        var hits = m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+
+        DebugViewCollider.Instance.ViewHitCollider(m_attackHitBox);
+
         Debug.Log("EnemyController : Player HIT");
+
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+            if (entity == null)
+            {
+                continue;
+            }
+
+            if (entity.Team == Team) continue;
+
+            entity.TakeDamage(damage);
+        }
     }
     private AttackItem GetUseItem()
     {
@@ -281,9 +317,21 @@ public class EnemyController : Entity
     #endregion
 
     #region MOVE
+
     private bool HandleStateMovement()
     {
         if (CurrentState == EntityState.Dead) return true;
+
+        
+
+        if (IsKnockBack)
+        {
+            m_agent.ResetPath();
+            m_agent.isStopped = true;
+            m_agent.Move(m_knockBackVelocity.normalized * (m_knockbackPower * 5f) * Time.fixedDeltaTime);
+
+            return true;
+        }
 
         if (!m_canMove || IsStun)
         {
@@ -291,15 +339,6 @@ public class EnemyController : Entity
             Stop();
 
             if (m_anim != null) m_anim.SetBool("Move", false);
-
-            return true;
-        }
-
-        if (IsKnockBack)
-        {
-            m_agent.ResetPath();
-            m_agent.isStopped = true;
-            m_agent.Move(m_knockBackVelocity.normalized * (m_knockbackPower * 5f) * Time.fixedDeltaTime);
 
             return true;
         }
@@ -329,6 +368,7 @@ public class EnemyController : Entity
         }
 
         m_agent.isStopped = false;
+        //m_agent.speed = Mathf.Min(speed, CurrentMoveSpeed);
         m_agent.speed = speed;
 
         m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
@@ -347,19 +387,22 @@ public class EnemyController : Entity
         }
 
         m_agent.isStopped = false;
+        //m_agent.speed = Mathf.Min(speed, CurrentMoveSpeed);
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
         m_agent.stoppingDistance = m_attackRange;
 
         m_agent.SetDestination(targetPos);
     }
+    #endregion
+    #region ROTATE
     private void HandleRotation(float distance)
     {
         if (!m_isRotating) return;
         if (distance > m_findRange) return;
 
         Enemy_Rush rush = m_enemyBehaviour as Enemy_Rush;
-
+        m_rb.freezeRotation = false;
         if (rush != null && rush.IsRunning)
         {
             Rotate(rush.CurrentDirection);
@@ -382,10 +425,14 @@ public class EnemyController : Entity
     {
         m_isRotating = state;
     }
-
+    #endregion
+    #region STOP
     public void Stop()
     {
         m_agent.isStopped = true;
+        //m_rb.freezeRotation = true;
+        m_rb.constraints = RigidbodyConstraints.FreezeAll;
+
         if(m_anim != null)
         {
             m_anim.SetBool("Move", !m_agent.isStopped);
@@ -398,6 +445,8 @@ public class EnemyController : Entity
         m_enemyBehaviour?.Stop();
         Stop();
     }
+    #endregion
+    #region POSITION
     public Vector2 GetRandomPosition(float range)
     {
         Vector2 result = new(transform.position.x, transform.position.z);
@@ -424,7 +473,6 @@ public class EnemyController : Entity
         m_agent.Warp(origin);
     }
     #endregion
-
     #region DEAD 
 
     public void OnDead(bool isDropItem = true)

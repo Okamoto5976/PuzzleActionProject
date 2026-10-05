@@ -38,10 +38,9 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject hotbarPanel;
 
     [SerializeField] private SaveData saveData;
-    [SerializeField] private ItemManager itemManager;
     [SerializeField] private InventorySaveManager m_saveManager;
 
-    [SerializeField] private List<Image> mainHotbarImages;
+    //[SerializeField] private List<Image> mainHotbarImages;
 
     [SerializeField] private ItemManager m_itemManager;
 
@@ -671,7 +670,7 @@ public class InventorySystem : MonoBehaviour
         {
             Debug.Log($"ÉçÅ[ÉhíÜ ID:{saveItem.id}");
 
-            Item data = itemManager.GetItem(saveItem.id);
+            Item data = m_itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {
@@ -685,7 +684,7 @@ public class InventorySystem : MonoBehaviour
 
         foreach (SaveItemData saveItem in saveData.passiveItems)
         {
-            Item data = itemManager.GetItem(saveItem.id);
+            Item data = m_itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {

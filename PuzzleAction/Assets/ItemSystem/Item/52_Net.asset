@@ -21,7 +21,8 @@ MonoBehaviour:
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
-    m_itemUseType: 2
+    m_itemUseType: 1
     price: 480
+  m_se: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 16

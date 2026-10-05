@@ -3,13 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class GasCylinder : TrapBase
 {
-    [Header("Hit/Layer Settings")]
-    //[SerializeField] private LayerMask m_hitLayers;
-
     [Header("Gas Area Settings")]
+    [SerializeField] private Collider m_gasCollider;
     [SerializeField] private float m_duration = 10f;
     [SerializeField] private float m_tickInterval = 0.5f;
-    //[SerializeField] private float m_poisonDuration = 3f;
 
     private bool m_isGassing = false;
     private bool m_isAddForceCalled = false;
@@ -43,7 +40,6 @@ public class GasCylinder : TrapBase
     {
         if (!m_isGassing && !m_isAddForceCalled)
         {
-            //OnAddForce(m_dir, m_power);
             m_isAddForceCalled = true;
         }
     }
@@ -56,6 +52,7 @@ public class GasCylinder : TrapBase
         m_gasTimer += Time.deltaTime;
         if (m_gasTimer >= m_duration)
         {
+            if(m_gasCollider!=null)m_gasCollider.enabled = false;
             OnReturnPool();
             return;
         }
@@ -78,12 +75,35 @@ public class GasCylinder : TrapBase
             m_rb.angularVelocity = Vector3.zero;
             m_rb.isKinematic = true;
         }
+        if(m_gasCollider!= null)m_gasCollider.enabled=true;
+
+        DetectInitialTargets();
+    }
+
+    private void DetectInitialTargets()
+    {
+        if (m_gasCollider == null) return;
+
+        Vector3 center = m_gasCollider.bounds.center;
+        float radius = m_gasCollider.bounds.extents.magnitude;
+
+        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+
+        foreach (var col in hitColliders)
+        {
+            Entity target = col.GetComponentInParent<Entity>();
+            if (target != null && target.Team != m_team)
+            {
+                if (!m_targetsInRange.Contains(target))
+                {
+                    m_targetsInRange.Add(target);
+                }
+            }
+        }
     }
 
     private void ApplyPoisonEffect()
     {
-        float poisonDamage = m_trapData != null ? m_trapData.m_attack : 0;
-
         for (int i = m_targetsInRange.Count - 1; i >= 0; i--)
         {
             Entity target = m_targetsInRange[i];
@@ -112,12 +132,6 @@ public class GasCylinder : TrapBase
     {
         if (!m_isGassing)
         {
-            //if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
-            //{
-            //    OnHit();
-            //    return;
-            //}
-
             Entity hitTarget = other.GetComponentInParent<Entity>();
             if (hitTarget != null && hitTarget.Team != m_team)
             {

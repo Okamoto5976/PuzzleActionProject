@@ -51,13 +51,9 @@ MonoBehaviour:
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 3e766911f6ef27d4d85ad23b86976794, type: 2}
   m_speed: 0
-  m_hitLayers:
-    serializedVersion: 2
-    m_Bits: 0
+  m_gasCollider: {fileID: 4639004702062619109}
   m_duration: 10
-  m_tickInterval: 0.5
-  m_poisonDamage: 2
-  m_poisonDuration: 3
+  m_tickInterval: 1
 --- !u!114 &3194208984523995871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +85,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3, y: 1, z: 3}
+  m_Size: {x: 9, y: 1, z: 9}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &489287881168934697
 PrefabInstance:

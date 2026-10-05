@@ -22,9 +22,14 @@ public class TrapItem : Item
             return;
         }
 
+        if(m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
 
         //Trap Area use item
-        if(data.entity == null)
+        if (data.entity == null)
         {
             TrapPrefab.gameObject.SetActive(true);
             TrapPrefab.TrapInit();

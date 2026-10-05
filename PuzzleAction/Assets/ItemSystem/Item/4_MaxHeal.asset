@@ -23,4 +23,5 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 0
     price: 1440
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_value: 9999

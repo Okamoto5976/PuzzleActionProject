@@ -1,13 +1,12 @@
 using UnityEngine;
-[System.Serializable] 
-public class AudioData
-{
-   public AudioClip audioClip; //public float volume; public float pitch;
-    public float clipVolume;
-    public bool isLoop;
 
-    public Vector3 position;
-    public Quaternion rotation;
-    //public float lifeTime;
-   // public float fadeTime;
+[CreateAssetMenu(fileName = "AudioData", menuName = "Scriptable Objects/Datas/AudioData")]
+public class AudioData : ScriptableObject
+{
+    public AudioClip audioClip; //public float volume; public float pitch;
+
+    [Range(0f, 1f)]
+    public float volume;
+
+    public bool isLoop;
 }

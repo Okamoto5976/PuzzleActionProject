@@ -1444,7 +1444,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6647856782984371037}
         m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
-        m_MethodName: Back
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1655,7 +1655,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2692970833969632531
 MonoBehaviour:
@@ -1712,6 +1712,7 @@ MonoBehaviour:
   m_masterSlider: {fileID: 5772913149697795723}
   m_bgmSlider: {fileID: 8017602669340417132}
   m_seSlider: {fileID: 416792758842797641}
+  m_playerIgnoreInput: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
   m_scene:
   - {fileID: 3246868586156816132}
   - {fileID: 3573474587166616909}
@@ -1907,7 +1908,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6647856782984371037}
         m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
-        m_MethodName: Back
+        m_MethodName: Close
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

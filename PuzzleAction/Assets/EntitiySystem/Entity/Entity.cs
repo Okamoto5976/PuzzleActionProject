@@ -16,14 +16,27 @@ abstract public class Entity : MonoBehaviour
     public float STR  => m_status[StatusType.Strength].Value; 
     public float KnockBack => m_status[StatusType.KnockBack].Value;
     public float DEF => m_status[StatusType.Defense].Value;
-    public float Speed => m_status[StatusType.Speed].Value;
+    public float Speed
+    {
+        get
+        {
+            float baseSpeed = m_status[StatusType.Speed].Value;
+
+            float slowMultiplier = 1f - Swamp * (1f - SwampRes);
+            slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
+
+            float finalSpeed = (baseSpeed * slowMultiplier) - Slow;
+
+            return Mathf.Max(finalSpeed, 0f);
+        }
+    }
     public float CriticalRate => m_status[StatusType.CriticalRate].Value;
     public float CriticalDamage => m_status[StatusType.CriticalDamage].Value;
     public float BreakRate => m_status[StatusType.BreakRate].Value;
     public float StunPower => m_status[StatusType.StunDuration].Value;
     public float PoisonRes => m_status[StatusType.PoisonRes].Value;
     public float StunRes => m_status[StatusType.StunRes].Value;
-    public float SlowRes => m_status[StatusType.SwampRes].Value;
+    public float SwampRes => m_status[StatusType.SwampRes].Value;
     public float GasRes => m_status[StatusType.GasRes].Value;
     public float BurnRes => m_status[StatusType.BurnRes].Value;
     public float Slow => m_status[StatusType.Slow].Value;
@@ -221,6 +234,8 @@ abstract public class Entity : MonoBehaviour
     /// <param name="duration"></param>
     public void AddBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
+        if(m_currentState == EntityState.Dead) return;
+
         if(m_buffSystem == null)
         {
             return;
@@ -244,6 +259,9 @@ abstract public class Entity : MonoBehaviour
     /// <param name="duration"></param>
     private void AddDamageBuff(StatusModifier modifier, BuffID buffID, float duration)
     {
+        if (m_currentState == EntityState.Dead) return;
+
+
         if (m_buffSystem == null)
         {
             return;
@@ -284,6 +302,9 @@ abstract public class Entity : MonoBehaviour
     /// <param name="duration">基礎スタン時間</param>
     public void ApplyStun(float duration)
     {
+        if (m_currentState == EntityState.Dead) return;
+
+
         float actualDuration = duration * (1f - Mathf.Clamp01(StunRes));
 
         if (actualDuration <= 0f) return;
@@ -298,7 +319,10 @@ abstract public class Entity : MonoBehaviour
 
     public void ApplyKnockBack(Vector3 direction, float power)
     {
-        if(power <= 0f) return;
+        if (m_currentState == EntityState.Dead) return;
+
+
+        if (power <= 0f) return;
 
         KnockBackTimer = power;
 
@@ -309,6 +333,9 @@ abstract public class Entity : MonoBehaviour
     //call Update-------------------------------------------------------
     protected virtual void UpdateFlag()
     {
+        if (m_currentState == EntityState.Dead) return;
+
+
         m_stunTimer -= Time.deltaTime;
         m_invincibleTimer -= Time.deltaTime;
         m_knockbackTimer -= Time.deltaTime;
@@ -376,9 +403,10 @@ abstract public class Entity : MonoBehaviour
     /// <summary>
     /// </summary>
     /// <param name="data"></param>
-    public virtual void TakeDamage(DamageData data)//��XDamageData��DamageResult
+    public virtual void TakeDamage(DamageData data)
     {
-        //Debug.Log("TakeDamageよばれた");
+        if (m_currentState == EntityState.Dead) return;
+
         if (IsInvincible) return;
 
         if (m_entityHP == null) return;
@@ -388,6 +416,8 @@ abstract public class Entity : MonoBehaviour
 
     protected virtual void BuffTakeDamage(StatusType type, float damage)
     {
+        if (m_currentState == EntityState.Dead) return;
+
         if (m_entityHP == null) return;
 
         m_entityHP.TakeBuffDamage(type, damage);
@@ -395,19 +425,26 @@ abstract public class Entity : MonoBehaviour
 
     public virtual void HealHP(float value)
     {
-        if (m_entityHP == null) return;
+        if (m_currentState == EntityState.Dead) return;
 
+        if (m_entityHP == null) return;
 
         m_entityHP.Heal(value);
     }
 
     public void ChangeState(EntityState newState)
     {
+        if (m_currentState == EntityState.Dead) return;
+
+
         m_currentState = newState;
     }
 
     public void KillEntity()
     {
+        if (m_currentState == EntityState.Dead) return;
+
+
         m_currentState = EntityState.Dead;
         SetCanMove(false);
     }

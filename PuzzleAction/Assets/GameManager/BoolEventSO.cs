@@ -8,7 +8,7 @@ public class BoolEventSO : ScriptableObject
 
     public void Raise(bool d_event)
     {
-    m_event?.Invoke(d_event);
+        m_event?.Invoke(d_event);
     }
 
     public void Register(Action<bool> d_event)

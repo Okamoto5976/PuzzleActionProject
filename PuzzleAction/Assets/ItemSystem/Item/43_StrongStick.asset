@@ -23,18 +23,20 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 3
     price: 200
-  m_overrideDamage: 1
+  m_se: {fileID: 11400000, guid: 0c055665e11bbff489c1241cab42035d, type: 2}
   m_damage:
-    Attack: 10
-    CriticalRate: 0
-    CriticalDamage: 0
-    BreakRate: 0
-    Knockback: 0
-    StunDuration: 0
+    Attack: 30
+    CriticalRate: 9
+    CriticalDamage: 0.5
+    BreakRate: -1
+    Knockback: 30
+    StunDuration: 10
     AttackDir: {x: 0, y: 0, z: 0}
+  m_isRayCollider: 0
+  m_range: 5
   m_selfBuffList:
-  - m_value: 10
-    m_statusType: 16
+  - m_value: 4
+    m_statusType: 14
     m_modifierType: 0
     m_duration: 10
     m_buffID: 20

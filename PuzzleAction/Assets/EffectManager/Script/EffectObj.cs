@@ -6,6 +6,11 @@ public class EffectObj : MonoBehaviour
 
     [SerializeField] private float m_lifeTime;
 
+    private void Awake()
+    {
+        m_returnObjPool = GetComponent<ReturnObjectToPool>();
+    }
+
     public void Initialize()
     {
 

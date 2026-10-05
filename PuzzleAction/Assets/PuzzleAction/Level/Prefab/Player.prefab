@@ -229,14 +229,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5968134673738187912}
-  - component: {fileID: 6186335976659372128}
   - component: {fileID: 292732359283115402}
   - component: {fileID: -8794102270786672288}
   - component: {fileID: 8049973323928560549}
-  - component: {fileID: 5761074183309458794}
   - component: {fileID: 9049173678588975528}
   - component: {fileID: 1685510717018303622}
   - component: {fileID: 8743255071538060541}
+  - component: {fileID: 6186335976659372128}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -268,33 +267,6 @@ Transform:
   - {fileID: 3799260462204051300}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &6186335976659372128
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501914875296179412}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!114 &292732359283115402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +284,7 @@ MonoBehaviour:
   m_inventorySystem: {fileID: 0}
   m_displayManager: {fileID: 0}
   m_position: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_pullOffSet: {x: 0, y: 2.5, z: 0}
+  m_pullOffSet: {x: 0, y: 2, z: 0}
   m_spriteRenderer: {fileID: 3676967130022225026}
   m_evasionDuration: 0.2
   m_canInputEvent: {fileID: 11400000, guid: 7827707140a5e544e83f1d49b60dc742, type: 2}
@@ -330,11 +302,13 @@ MonoBehaviour:
   m_nameText: {fileID: 0}
   m_itemDescriptionText: {fileID: 0}
   m_textErrorMessage: {fileID: 0}
+  m_cancelMessage: {fileID: 0}
   m_isCoupon: 0
   m_isMemberShip: 0
   m_isWinnerTrophy: 0
   m_isLoserTrophy: 0
-  m_isTrophy: 0
+  m_isNormalTrophy: 0
+  m_titleTrophy: 0
   testknockback: 0
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
@@ -365,20 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfeb9e838a249b46b90ee1ae3922bbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityBuffSystem
---- !u!114 &5761074183309458794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501914875296179412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e5f079b52bcfab448c47e1c6ae52638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityLightReceiver
-  m_testLight: {fileID: 0}
-  m_renderer: {fileID: 3676967130022225026}
 --- !u!114 &9049173678588975528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,8 +363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e972cb244f0d7784cbf2d97919b7273e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  m_pickupRange: 6
-  m_maxColliderDetectCount: 10
+  m_pickupRange: 10
+  m_maxColliderDetectCount: 20
 --- !u!114 &8743255071538060541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +377,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d7567c3369f124c9fd4600253c14d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyPickup
+--- !u!54 &6186335976659372128
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501914875296179412}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &2753646007902922138
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +486,7 @@ Transform:
   m_GameObject: {fileID: 3227259501486519020}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

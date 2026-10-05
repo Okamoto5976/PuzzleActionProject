@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class SpikeTrap : TrapBase
 {
@@ -13,6 +14,7 @@ public class SpikeTrap : TrapBase
     private void Awake()
     {
         m_isActive = true;
+        m_anim = GetComponentInChildren<Animator>();
     }
 
 
@@ -42,7 +44,7 @@ public class SpikeTrap : TrapBase
     protected override void OnTriggerEnter(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
         {
@@ -66,7 +68,7 @@ public class SpikeTrap : TrapBase
     private void OnTriggerExit(Collider other)
     {
         Entity target =
-            other.GetComponent<Entity>();
+            other.GetComponentInParent<Entity>();
 
         if (target == null)
         {
@@ -85,6 +87,10 @@ public class SpikeTrap : TrapBase
     {
         while (m_targets.Count > 0)
         {
+            m_anim.SetTrigger("Action");
+
+            List<Entity> removeTargets = new List<Entity>();
+
             foreach (Entity target in m_targets)
             {
                 if (target == null)
@@ -92,10 +98,22 @@ public class SpikeTrap : TrapBase
                     continue;
                 }
 
+                if(target.gameObject.activeSelf == false)
+                {
+
+                    removeTargets.Add(target);
+                    continue;
+                }
+
                 target.TakeDamage(m_damageData);
             }
 
             OnHit();
+
+            foreach(Entity target in removeTargets)
+            {
+                m_targets.Remove(target);
+            }
 
             yield return new WaitForSeconds(
                 m_damageInterval);

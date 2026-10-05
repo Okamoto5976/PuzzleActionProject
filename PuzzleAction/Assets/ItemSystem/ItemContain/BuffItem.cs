@@ -24,8 +24,13 @@ public class BuffItem : Item
     {
         if (m_buffEffectType == ItemType.Active)
         {
+            if (m_se != null)
+            {
+                AudioManager.Instance.PlayAudio(m_se);
 
-            foreach(var buff in m_buffItemClass)
+            }
+
+            foreach (var buff in m_buffItemClass)
             {
                 if (buff.m_duration <= 0) continue;
 
@@ -48,7 +53,13 @@ public class BuffItem : Item
     {
         Debug.LogWarning("AddPassive in item");
 
-        if(m_passiveType == Passive.WinnerTrophy)
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
+
+        if (m_passiveType == Passive.WinnerTrophy)
         {
             player.m_isWinnerTrophy = true;
         }
@@ -58,7 +69,11 @@ public class BuffItem : Item
         }
         else if(m_passiveType == Passive.Trophy)
         {
-            player.m_isTrophy = true;
+            player.m_isNormalTrophy = true;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = true;
         }
 
 
@@ -100,7 +115,11 @@ public class BuffItem : Item
         }
         else if (m_passiveType == Passive.Trophy)
         {
-            player.m_isTrophy = false;
+            player.m_isNormalTrophy = false;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = false;
         }
 
         player.RemovePassive(m_passiveType);

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 541972471744533260}
   - component: {fileID: 5314661228541134203}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,6 @@ GameObject:
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
   - component: {fileID: 4273408005679039058}
-  - component: {fileID: -9200685379070060709}
   - component: {fileID: 2397220607751291012}
   - component: {fileID: 4019934756921845371}
   m_Layer: 11
@@ -295,19 +294,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &-9200685379070060709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
 --- !u!114 &2397220607751291012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +310,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 4861542947272929205}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &4019934756921845371
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,6 @@ using UnityEngine;
 public class HealingArea : TrapBase
 {
     [Header("Regenerate Settings")]
-    [SerializeField] private float m_healAmount = 5f;
     [SerializeField] private float m_buffDuration = 1.0f;
 
     [SerializeField] private float m_lifeTime = 10f;
@@ -53,18 +52,17 @@ public class HealingArea : TrapBase
 
     private void AddRegenerate(Entity target)
     {
-        StatusModifier modifier = new StatusModifier
+        if (m_trapData.m_buffSetting.Count != 0)
         {
-            m_statType = StatusType.Regenerate,
-            m_value = m_healAmount,
-            m_modType = ModifierType.Add
-        };
+            foreach (var buff in m_trapData.m_buffSetting)
+            {
+                if (buff.m_duration <= 0) continue;
 
-        target.AddBuff(
-            modifier,
-            BuffID.Regenerate,
-            m_buffDuration
-        );
+                var modifier = SetModifier(buff);
+
+                target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+            }
+        }
     }
 
 

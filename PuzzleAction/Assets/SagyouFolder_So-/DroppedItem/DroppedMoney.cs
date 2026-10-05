@@ -11,6 +11,8 @@ public class DroppedMoney : DroppedObject
 
     public override void SetValue(int value)
     {
+        base.SetValue(value);
+
         m_amount = value;
     }
 
