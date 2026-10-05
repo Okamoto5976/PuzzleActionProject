@@ -23,6 +23,11 @@ public class GasCylinder : TrapBase
         m_tickTimer = 0f;
         m_targetsInRange.Clear();
 
+        if(m_gasCollider != null)
+        {
+        m_gasCollider.enabled = true;
+        }
+
         if (m_rb != null)
         {
             m_rb.isKinematic = false;
@@ -36,13 +41,6 @@ public class GasCylinder : TrapBase
         StartGas();
     }
 
-    private void FixedUpdate()
-    {
-        if (!m_isGassing && !m_isAddForceCalled)
-        {
-            m_isAddForceCalled = true;
-        }
-    }
     private void Update()
     {
         CheckDeadLine();
