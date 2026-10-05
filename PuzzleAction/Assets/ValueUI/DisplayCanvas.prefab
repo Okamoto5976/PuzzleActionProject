@@ -2163,7 +2163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisplayManager
   playerHPUI: {fileID: 8520913955849867257}
-  bossHPUI: {fileID: 7945474396962492918}
   moneyUI: {fileID: 3110104625783399027}
   levelUI: {fileID: 2502132376975270674}
   m_frames:

@@ -11321,6 +11321,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7945474396962492918, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
+      propertyPath: _middlemanBossEnemy
+      value: 
+      objectReference: {fileID: 1266464614}
     - target: {fileID: 8415004562306946916, guid: c9c676d93c18adb4f9b8353db7a9f723, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -424,6 +424,8 @@ abstract public class Entity : MonoBehaviour
     {
         if (m_currentState == EntityState.Dead) return;
 
+        if (IsInvincible) return;
+
         if (m_entityHP == null) return;
 
         m_entityHP.TakeBuffDamage(type, damage);

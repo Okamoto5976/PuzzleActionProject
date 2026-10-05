@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d7567c3369f124c9fd4600253c14d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyPickup
+  m_moneySE: {fileID: 11400000, guid: c2efc616ddc2c954094f5747f22bfafe, type: 2}
 --- !u!54 &6186335976659372128
 Rigidbody:
   m_ObjectHideFlags: 0

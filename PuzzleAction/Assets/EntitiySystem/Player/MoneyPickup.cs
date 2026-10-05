@@ -4,6 +4,8 @@ public class MoneyPickup : MonoBehaviour
 {
     private PickupItem m_pickUpItem;
 
+    [SerializeField] private AudioData m_moneySE;
+
     private void Awake()
     {
         m_pickUpItem = GetComponent<PickupItem>();
@@ -34,6 +36,8 @@ public class MoneyPickup : MonoBehaviour
             int money = obj.GetMoney();
 
             GameManager.Instance.ModifyMoney(money);
+
+            AudioManager.Instance.PlayAudio(m_moneySE);
         }
     }
 }
