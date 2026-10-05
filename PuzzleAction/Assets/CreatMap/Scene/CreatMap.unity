@@ -543,7 +543,7 @@ MonoBehaviour:
     m_originPos: {x: 0, y: 0}
   - m_type: 3
     m_originPos: {x: 3, y: 0}
-  - m_type: 0
+  - m_type: 4
     m_originPos: {x: 6, y: 0}
   - m_type: 1
     m_originPos: {x: 0, y: 3}

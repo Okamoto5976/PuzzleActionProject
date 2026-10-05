@@ -23,7 +23,7 @@ MonoBehaviour:
     itemType: 0
     m_itemUseType: 0
     price: 600
-  m_se: {fileID: 11400000, guid: 0c055665e11bbff489c1241cab42035d, type: 2}
+  m_se: {fileID: 11400000, guid: 1136bf377e409654da321a2923128954, type: 2}
   m_damage:
     Attack: 30
     CriticalRate: -1
