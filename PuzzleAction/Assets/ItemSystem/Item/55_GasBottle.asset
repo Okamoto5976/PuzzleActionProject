@@ -17,7 +17,7 @@ MonoBehaviour:
     itemID: 55
     itemName: GasBottle
     itemIcon: {fileID: 21300000, guid: 232f6f7ca10b3eb419f7d75d33643a22, type: 3}
-    description: "\u5272\u308C\u305F\u5834\u6240\u306B\u6BD2\u304C\u6B8B\u7559\u3059\u308B\u3002\u3000\u52B9\u679C\uFF1A\u6BD2\u3067\u5F90\u3005\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3000"
+    description: "\u5272\u308C\u305F\u5834\u6240\u306B\u6BD2\u304C\u6B8B\u7559\u3059\u308B\u3002\\n\u52B9\u679C\uFF1A\u6BD2\u3067\u5F90\u3005\u306B\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3000"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0

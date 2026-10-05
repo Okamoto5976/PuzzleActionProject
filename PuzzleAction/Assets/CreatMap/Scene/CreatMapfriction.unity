@@ -888,6 +888,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 650350166}
     - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
+      propertyPath: wallLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 292732359283115402, guid: 25ee7d53ffa31c14b98a9205abc7e5cd, type: 3}
       propertyPath: m_inventorySystem
       value: 
       objectReference: {fileID: 966751217}
@@ -7560,7 +7564,7 @@ MonoBehaviour:
   m_itemManager: {fileID: 681700649319570257}
   m_inventorySystem: {fileID: 966751217}
   m_index: 50
-  m_count: 10
+  m_count: 1
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
   m_pos: {x: 10, y: 0.5, z: 10}
   m_money: 360

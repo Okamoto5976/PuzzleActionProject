@@ -17,7 +17,7 @@ MonoBehaviour:
     itemID: 2
     itemName: HighHealPotion
     itemIcon: {fileID: 21300000, guid: 7f57d95a8607f7a47b93b0761f0bc3e5, type: 3}
-    description: "high heel\uFF1F \u5426\u3001high heal\u3060\u3063\u305F\u3002\u52B9\u679C:HP+50"
+    description: "high heel\uFF1F \u5426\u3001high heal\u3060\u3063\u305F\u3002\\n\u52B9\u679C:HP+50"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
