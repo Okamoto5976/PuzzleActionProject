@@ -140,7 +140,7 @@ public class MolotovCocktail : TrapBase
 
         Entity inFireTarget = other.GetComponentInParent<Entity>();
         if (inFireTarget == null || inFireTarget.Team == m_team) return;
-        
+         
         //if (inFireTarget==null)
         //{
         //    Debug.Log($"‚Â‚¢‚Ä‚Ë‚¦:{other.name}");
