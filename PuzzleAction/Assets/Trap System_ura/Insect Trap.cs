@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class InsectTrap : TrapBase
 {
+    [Header("Life Time")]
+    [SerializeField] private float m_lifeTime = 10.0f;
+
     [Header("Stun Setting")]
+    [SerializeField] private float m_stunDuration = 5.0f;
     [SerializeField] private float m_stunInterval = 1.0f;
 
     private readonly HashSet<Entity> m_targets =
         new HashSet<Entity>();
 
     private Coroutine m_stunCoroutine;
+    private Coroutine m_lifeCoroutine;
+
 
     protected override void EntitySetUp()
     {
@@ -21,8 +27,15 @@ public class InsectTrap : TrapBase
             StopCoroutine(m_stunCoroutine);
         }
 
+        if (m_lifeCoroutine != null)
+        {
+            StopCoroutine(m_lifeCoroutine);
+        }
+
         m_stunCoroutine = StartCoroutine(StunLoop());
+        m_lifeCoroutine = StartCoroutine(LifeTimer());
     }
+
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -32,7 +45,7 @@ public class InsectTrap : TrapBase
         if (target == null)
             return;
 
-        if (target.Team == TeamType.Nature)
+        if (target == m_owner)
             return;
 
         if (target.Team == m_team)
@@ -40,6 +53,7 @@ public class InsectTrap : TrapBase
 
         m_targets.Add(target);
     }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -52,6 +66,7 @@ public class InsectTrap : TrapBase
         m_targets.Remove(target);
     }
 
+
     private IEnumerator StunLoop()
     {
         while (true)
@@ -61,6 +76,11 @@ public class InsectTrap : TrapBase
                 if (target == null)
                     continue;
 
+                m_damageData = new DamageData
+                {
+                    StunDuration = m_stunDuration
+                };
+
                 target.TakeDamage(m_damageData);
             }
 
@@ -68,10 +88,19 @@ public class InsectTrap : TrapBase
         }
     }
 
+
+    private IEnumerator LifeTimer()
+    {
+        yield return new WaitForSeconds(m_lifeTime);
+
+        OnReturnPool();
+    }
+
+
     protected override void OnHit()
     {
-
     }
+
 
     private void OnDisable()
     {
@@ -81,6 +110,12 @@ public class InsectTrap : TrapBase
         {
             StopCoroutine(m_stunCoroutine);
             m_stunCoroutine = null;
+        }
+
+        if (m_lifeCoroutine != null)
+        {
+            StopCoroutine(m_lifeCoroutine);
+            m_lifeCoroutine = null;
         }
     }
 }

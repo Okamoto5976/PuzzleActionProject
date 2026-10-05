@@ -12,6 +12,7 @@ public class BearTrap : TrapBase
     private HashSet<Entity> m_targets = new HashSet<Entity>();
 
     private Coroutine m_recoveryCoroutine;
+    private Coroutine m_damageCoroutine;
 
     protected override void EntitySetUp()
     {
@@ -22,6 +23,12 @@ public class BearTrap : TrapBase
         {
             StopCoroutine(m_recoveryCoroutine);
             m_recoveryCoroutine = null;
+        }
+
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
         }
     }
 
@@ -38,12 +45,12 @@ public class BearTrap : TrapBase
         if (target.Team == TeamType.Nature) return;
         if (target.Team == m_team) return;
 
-  
         m_targets.Add(target);
 
-        target.TakeDamage(m_damageData);
-
-        OnHit();
+        if (m_damageCoroutine == null)
+        {
+            m_damageCoroutine = StartCoroutine(DamageCoroutine());
+        }
 
         m_isActive = false;
 
@@ -51,6 +58,7 @@ public class BearTrap : TrapBase
         {
             StopCoroutine(m_recoveryCoroutine);
         }
+
         m_recoveryCoroutine = StartCoroutine(RecoveryCoroutine());
     }
 
@@ -62,7 +70,44 @@ public class BearTrap : TrapBase
         {
             return;
         }
+
         m_targets.Remove(target);
+
+        if (m_targets.Count == 0)
+        {
+            StopDamage();
+        }
+    }
+
+    private IEnumerator DamageCoroutine()
+    {
+        while (m_targets.Count > 0)
+        {
+            foreach (Entity target in m_targets)
+            {
+                if (target == null)
+                {
+                    continue;
+                }
+
+                target.TakeDamage(m_damageData);
+            }
+
+            OnHit();
+
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        m_damageCoroutine = null;
+    }
+
+    private void StopDamage()
+    {
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
     }
 
     private IEnumerator RecoveryCoroutine()
@@ -75,11 +120,14 @@ public class BearTrap : TrapBase
 
     private void OnDisable()
     {
+        StopDamage();
+
         if (m_recoveryCoroutine != null)
         {
             StopCoroutine(m_recoveryCoroutine);
             m_recoveryCoroutine = null;
         }
+
         m_targets.Clear();
     }
 
@@ -91,6 +139,8 @@ public class BearTrap : TrapBase
     public override void TrapInit()
     {
         base.TrapInit();
+
+        StopDamage();
 
         if (m_recoveryCoroutine != null)
         {
