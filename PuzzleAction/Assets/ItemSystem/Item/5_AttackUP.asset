@@ -17,12 +17,13 @@ MonoBehaviour:
     itemID: 5
     itemName: AttackUPPotion
     itemIcon: {fileID: 21300000, guid: b188b57750554ee4ba6ab1a16bc361ac, type: 3}
-    description: "\u653B\u6483\u529B\u304C\u4E0A\u6607\uFF01\u3000\u52B9\u679C\uFF1A\u653B\u6483\u529B\u304C\u50C5\u304B\u306B\u5897\u52A0"
+    description: "\u653B\u6483\u529B\u304C\u4E0A\u6607\uFF01\\n\u3000\u52B9\u679C\uFF1A\u653B\u6483\u529B\u304C\u50C5\u304B\u306B\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 80
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 5

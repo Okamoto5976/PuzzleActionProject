@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6025245797175781337}
   - component: {fileID: 968089544282957833}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ CapsuleCollider:
   m_Radius: 1
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,9 +69,8 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: -892202173841469504}
-  - component: {fileID: 2075910911787773953}
   - component: {fileID: -7978336703457551575}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy_Slime_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,8 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: d7ea995ba85b46445b8cdf46aadab6cb, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
@@ -190,6 +187,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 3109024123308804497}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &-892202173841469504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,20 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96c46084f372c1742943e70cf60da8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Slime_Red
---- !u!114 &2075910911787773953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
-  m_isVisible: 1
 --- !u!114 &-7978336703457551575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +243,10 @@ PrefabInstance:
     - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Name
       value: EnemyRenderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -304,6 +292,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 13f3dd33e4a6c6149b508c181efd0d9e, type: 2}
+    - target: {fileID: 7537675690710177230, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357025503503154993, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -322,9 +318,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5192190198220617858}
     m_Modifications:
+    - target: {fileID: 44688392065161030, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_Name
       value: DamagePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x

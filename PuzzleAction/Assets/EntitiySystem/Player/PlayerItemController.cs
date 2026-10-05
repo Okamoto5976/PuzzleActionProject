@@ -43,12 +43,43 @@ public class PlayerItemController
     //Use Item Method
     //==============================
 
+    public void UseItemCancel()
+    {
+        m_playerController.CancelMessageActive(false);
+
+
+        if (m_isUsingArrow)
+        {
+            m_isUsingArrow = false;
+            m_playerController.ReticleActive(false);
+            m_playerController.AimTrailActive(false);
+
+            m_power = 0f;
+        }
+        else if(m_isUsingSetItem)
+        {
+            m_isUsingSetItem= false;
+            m_playerController.ReticleActive(false);
+            m_playerController.SetItemPreview(false);
+
+            m_power = 0f;
+        }
+        else if(m_isUsingAttackItem)
+        {
+            m_isUsingAttackItem = false;
+            m_power = 0f;
+        }
+    }
+
     public void UseItemPressed(int hotberIndex)
     {
         //Debug.Log("Pressed");
 
         if (m_inventorySystem.IsCheckCurrentItem(hotberIndex, ItemUseType.Arrow))
         {
+            m_playerController.CancelMessageActive(true);
+
+
             m_isUsingArrow = true;
 
             m_power = 0f;
@@ -64,6 +95,9 @@ public class PlayerItemController
         }
         else if (m_inventorySystem.IsCheckCurrentItem(hotberIndex, ItemUseType.Set))
         {
+            m_playerController.CancelMessageActive(true);
+
+
             m_isUsingSetItem = true;
             m_power = 0f;
 
@@ -75,6 +109,9 @@ public class PlayerItemController
         }
         else if (m_inventorySystem.IsCheckCurrentItem(hotberIndex, ItemUseType.Attack))
         {
+            m_playerController.CancelMessageActive(true);
+
+
             m_isUsingAttackItem = true;
             m_power = 3f;
         }
@@ -91,11 +128,11 @@ public class PlayerItemController
 
     public void UseItemHold()
     {
+
+
         if (m_isUsingArrow)
         {
             OnReticle();
-
-
 
             m_power += Time.deltaTime * 1.5f;
 
@@ -106,12 +143,12 @@ public class PlayerItemController
         else if (m_isUsingSetItem)
         {
             OnReticle();
+
             m_playerController.m_trapPreview.transform.position = m_trapSetPosition;
         }
         else if (m_isUsingAttackItem)
         {
             OnReticle();
-
 
             m_power += Time.deltaTime;
 
@@ -121,6 +158,8 @@ public class PlayerItemController
 
     public void UseItemRelease(int hotberIndex)
     {
+        m_playerController.CancelMessageActive(false);
+
         if (m_isUsingArrow)
         {
             m_isUsingArrow = false;

@@ -17,12 +17,13 @@ MonoBehaviour:
     itemID: 22
     itemName: RegeneratePotion
     itemIcon: {fileID: 21300000, guid: 879fb5ae30bb8ab4c9b7a4dd4e3560b4, type: 3}
-    description: "\u50B7\u304C\u5F90\u3005\u306B\u7652\u3048\u3066\u3044\u304F\uFF01\u3000\u52B9\u679C\uFF1A\u6BCE\u79D2\u50C5\u304B\u306B\u56DE\u5FA9"
+    description: "\u50B7\u304C\u5F90\u3005\u306B\u7652\u3048\u3066\u3044\u304F\uFF01\u3000\\n\u52B9\u679C\uFF1A\u6BCE\u79D2\u50C5\u304B\u306B\u56DE\u5FA9"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 360
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 5

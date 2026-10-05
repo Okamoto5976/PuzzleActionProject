@@ -72,7 +72,7 @@ public class MapGeneration : MonoBehaviour
         Vector3 wallSize = new Vector3(
             baseWallSize.x * m_wallScale.x,
             baseWallSize.y * m_wallScale.y,
-            baseWallSize.z * m_wallScale.z);
+            Mathf.Max(baseWallSize.z, 1) * m_wallScale.z);
 
         // create floor parent
         var floorParent = new GameObject();

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8063288571165968259}
-  - component: {fileID: 4223919811115234690}
+  - component: {fileID: 8336542166946330500}
   m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
@@ -32,8 +32,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5192190198220617858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &4223919811115234690
-BoxCollider:
+--- !u!136 &8336542166946330500
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -50,9 +50,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.5, z: 1}
-  m_Center: {x: 0, y: 0.75, z: 0.5}
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0
@@ -66,7 +68,6 @@ GameObject:
   - component: {fileID: 9036534983232500468}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
-  - component: {fileID: 7470603499713679253}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 6334792236557903116}
   m_Layer: 11
@@ -110,8 +111,8 @@ MonoBehaviour:
   m_data: {fileID: 11400000, guid: ec1a0ac7c56e3e74db74cb621da66b83, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
-  m_attackRange: 4
-  m_attackCooldown: 2
+  m_attackRange: 3.5
+  m_attackCooldown: 4
   m_attackHitBox:
     m_transform: {fileID: 5192190198220617858}
     m_hitBoxOffset: {x: 0, y: 2, z: 0}
@@ -182,19 +183,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &7470603499713679253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +199,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 3109024123308804497}
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &6334792236557903116
 MonoBehaviour:
   m_ObjectHideFlags: 0

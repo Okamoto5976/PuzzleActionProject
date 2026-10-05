@@ -17,12 +17,13 @@ MonoBehaviour:
     itemID: 10
     itemName: ExtraDefenceUpPotion
     itemIcon: {fileID: 21300000, guid: 2cd2f5b11b5509b458839e362bf85c41, type: 3}
-    description: "\u8CA7\u5F31\u306A\u653B\u6483\u306A\u305E\u3001\u3059\u3079\u3066\u7121\u529B\u5316\uFF01\u3000\u52B9\u679C\uFF1A\u9632\u5FA1\u529B\u304C\u304B\u306A\u308A\u5897\u52A0"
+    description: "\u8CA7\u5F31\u306A\u653B\u6483\u306A\u305E\u3001\u3059\u3079\u3066\u7121\u529B\u5316\uFF01\\n\u3000\u52B9\u679C\uFF1A\u9632\u5FA1\u529B\u304C\u304B\u306A\u308A\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 480
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 20

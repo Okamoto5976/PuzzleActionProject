@@ -10,8 +10,10 @@ public class InputProvider
     private bool m_activeRelease;
 
     private bool m_isEvasion;
-    private bool m_isPrevious;
-    private bool m_isNext;
+    private bool m_isHotber1;
+    private bool m_isHotber2;
+    private bool m_isHotber3;
+    private bool m_isCancel;
     private bool m_isInteract;
     private bool m_isGetDropItem;
 
@@ -25,8 +27,10 @@ public class InputProvider
 
         m_action.Player.Attack.performed += OnActive;
         m_action.Player.Sprint.performed += OnEvasion;
-        m_action.Player.Previous.performed += OnPrevious;
-        m_action.Player.Next.performed += OnNext;
+        m_action.Player.Hotber1.performed += OnHotber1;
+        m_action.Player.Hotber2.performed += OnHotber2;
+        m_action.Player.Hotber3.performed += OnHotber3;
+        m_action.Player.Cancel.performed += OnCancel;
         m_action.Player.Interact.performed += OnInteract;
         m_action.Player.GetDropItem.performed += OnGetDropItem;
         m_action.Enable();
@@ -62,14 +66,24 @@ public class InputProvider
         m_isEvasion = true;
     }
 
-    private void OnPrevious(InputAction.CallbackContext context)
+    private void OnHotber1(InputAction.CallbackContext context)
     {
-        m_isPrevious = true;
+        m_isHotber1 = true;
     }
 
-    private void OnNext(InputAction.CallbackContext context)
+    private void OnHotber2(InputAction.CallbackContext context)
     {
-        m_isNext= true;
+        m_isHotber2= true;
+    }
+
+    private void OnHotber3(InputAction.CallbackContext context)
+    {
+        m_isHotber3 = true;
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        m_isCancel = true;
     }
 
     private void OnInteract(InputAction.CallbackContext context)
@@ -84,8 +98,10 @@ public class InputProvider
         m_active = false;
         m_activeRelease = false;
         m_isEvasion = false;
-        m_isPrevious = false;
-        m_isNext = false;
+        m_isHotber1 = false;
+        m_isHotber2 = false;
+        m_isHotber3 = false;
+        m_isCancel = false;
         m_isInteract = false;
     }
 
@@ -125,23 +141,45 @@ public class InputProvider
         }
     }
 
-    public bool IsPrevious
+    public bool IsHotber1
     {
         get
         {
-            bool result = m_isPrevious;
-            m_isPrevious = false;
+            bool result = m_isHotber1;
+            m_isHotber1 = false;
 
             return result;
         }
     }
 
-    public bool IsNext
+    public bool IsHotber2
     {
         get
         {
-            bool result = m_isNext;
-            m_isNext = false;
+            bool result = m_isHotber2;
+            m_isHotber2 = false;
+
+            return result;
+        }
+    }
+
+    public bool IsHotber3
+    {
+        get
+        {
+            bool result = m_isHotber3;
+            m_isHotber3 = false;
+
+            return result;
+        }
+    }
+
+    public bool IsCancel
+    {
+        get
+        {
+            bool result = m_isCancel;
+            m_isCancel = false;
 
             return result;
         }

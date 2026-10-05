@@ -18,6 +18,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private DropItem m_dropItem;
     [SerializeField] private List<DropItem> DropItems = new();
 
+    [SerializeField] private AudioData m_dropItemSE;
+
     private void Awake()
     {
         if(Instance != null)
@@ -105,6 +107,7 @@ public class ItemManager : MonoBehaviour
         }
 
         obj.Initialize(data);
+        AudioManager.Instance.PlayAudio(m_dropItemSE);
 
         //m_dropItem.gameObject.transform.position = pos;
         obj.gameObject.transform.position = new Vector3(pos.x, m_groundPos, pos.z);

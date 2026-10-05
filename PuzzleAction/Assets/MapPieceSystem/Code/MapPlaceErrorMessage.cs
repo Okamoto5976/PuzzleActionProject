@@ -8,6 +8,8 @@ public enum MapPlaceErrorMessageType
     BossArea, //if have BossAreaPiece you have place BossArea
     NotPieceConnected, //if all piece to place not connected
     NotRouteConnected, //if not connected from start to end
+    NotTutorial,
+    NotStartOrGoal
 }
 
 [System.Serializable]

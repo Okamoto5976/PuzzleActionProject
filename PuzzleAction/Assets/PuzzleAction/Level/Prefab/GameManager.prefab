@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   m_level: 1
   m_money: 0
+  isShop: 0
+  m_isTutorial: 0

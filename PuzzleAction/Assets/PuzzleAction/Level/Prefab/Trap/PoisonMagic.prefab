@@ -4866,8 +4866,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4420314414301512060}
   m_Father: {fileID: 0}
@@ -4890,11 +4890,9 @@ MonoBehaviour:
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192
-  m_damage: 10
   m_lifeTime: 5
   m_duration: 10
   m_tickInterval: 0.5
-  m_poisonDamage: 2
   m_poisonDuration: 4
 --- !u!114 &4189156852500700316
 MonoBehaviour:

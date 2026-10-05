@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e1236798c313c944bb31225f8b57ed1, type: 3}
-  m_Name: L
+  m_Name: l
   m_EditorClassIdentifier: Assembly-CSharp::MapSettingSO
-  mapName: 
+  mapName: l
   size: {x: 10, y: 10}
   startPos: {x: 0, y: 9}
   goalPos: {x: 9, y: 0}

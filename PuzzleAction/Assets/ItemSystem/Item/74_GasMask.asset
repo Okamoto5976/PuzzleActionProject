@@ -17,12 +17,13 @@ MonoBehaviour:
     itemID: 74
     itemName: GasMask
     itemIcon: {fileID: 21300000, guid: afba6f8aee353e040a0f3481652193be, type: 3}
-    description: "\u30AC\u30B9\u3092\u53D6\u308A\u9664\u304F\u3002\u3000\u52B9\u679C\uFF1A\u30AC\u30B9\u7121\u52B9"
+    description: "\u30AC\u30B9\u3092\u53D6\u308A\u9664\u304F\u3002\\n\u52B9\u679C\uFF1A\u30AC\u30B9\u7121\u52B9"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
     price: 1440
+  m_se: {fileID: 0}
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1

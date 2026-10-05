@@ -46,6 +46,8 @@ abstract public class Item : ScriptableObject
 
     public ItemEffectType Type => m_type;
 
+    [SerializeField] protected AudioData m_se;
+
     //public Grade grade => m_data.ItemGrade;
     //ID public
 

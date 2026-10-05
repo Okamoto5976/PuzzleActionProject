@@ -17,11 +17,12 @@ MonoBehaviour:
     itemID: 47
     itemName: KnockBomb
     itemIcon: {fileID: 21300000, guid: c7303f366d83f8c439f48c8b1b8f94ae, type: 3}
-    description: "\u6575\u3092\u8105\u3057\u3066\u8D85\u30CE\u30C3\u30AF\u30D0\u30C3\u30AF\u3055\u305B\u308B\u3002\u3000\u52B9\u679C\uFF1A\u30B9\u30BF\u30F3\u306E\u307F"
+    description: "\u6575\u3092\u8105\u3057\u3066\u8D85\u30CE\u30C3\u30AF\u30D0\u30C3\u30AF\u3055\u305B\u308B\u3002\\n\u52B9\u679C\uFF1A\u30B9\u30BF\u30F3\u306E\u307F"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 2
     price: 180
+  m_se: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 11

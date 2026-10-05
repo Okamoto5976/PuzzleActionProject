@@ -34,5 +34,6 @@ public enum BuffID
     Burn,//
     Swamp,
     Stun,
-    Invincible
+    Invincible,
+    Fairy
 }

@@ -12,8 +12,10 @@ public class PlayerController : Entity
     private bool m_isActive;
     private bool m_isActiveHold;
     private bool m_isActiveRelease;
-    private bool m_isPrevious;
-    private bool m_isNext;
+    private bool m_isHotber1;
+    private bool m_isHotber2;
+    private bool m_isHotber3;
+    private bool m_isCancel;
     private bool m_isInteract;
     private bool m_isGetDropItem;
 
@@ -26,7 +28,6 @@ public class PlayerController : Entity
     [SerializeField] private DisplayManager m_displayManager;
 
 
-
     [SerializeField] private Vector3Asset m_position;
     public Vector3 m_pullOffSet;
 
@@ -34,7 +35,10 @@ public class PlayerController : Entity
 
     private int m_hotberIndex = 0;
 
+    private bool m_canInteract = true;
 
+    public bool CanInteract => m_canInteract;
+    
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -82,12 +86,27 @@ public class PlayerController : Entity
     //if inventory max 
     [SerializeField] private GameObject m_textErrorMessage;
 
+    //if using item view cancel 
+    [SerializeField] private GameObject m_cancelMessage;
+
     //----passive effect---------------------
     [HideInInspector] public bool m_isCoupon;
     [HideInInspector] public bool m_isMemberShip;
     [HideInInspector] public bool m_isWinnerTrophy;
     [HideInInspector] public bool m_isLoserTrophy;
-    [HideInInspector] public bool m_isTrophy;
+    [HideInInspector] public bool m_isNormalTrophy;
+    [HideInInspector] public bool m_titleTrophy;
+
+
+    //audioData
+    [SerializeField] private AudioData m_walkSE;
+    [SerializeField] private AudioData m_pull;
+    [SerializeField] private AudioData m_stunSE;
+    [SerializeField] private AudioData m_hotberSE;
+
+
+    //[Header("Audio")]
+    //[SerializeField] private AudioData 
 
 
     protected override void Awake()
@@ -146,6 +165,8 @@ public class PlayerController : Entity
 
     private void Update()
     {
+        m_playerItemController.Update();
+
         if(m_currentState == EntityState.Dead) return;
 
         UpdateFlag();
@@ -157,8 +178,10 @@ public class PlayerController : Entity
         m_isActive = m_input.IsActive;
         m_isActiveHold = m_input.IsActiveHold;
         m_isActiveRelease = m_input.IsActiveRelease;
-        m_isPrevious = m_input.IsPrevious;
-        m_isNext = m_input.IsNext;
+        m_isHotber1 = m_input.IsHotber1;
+        m_isHotber2 = m_input.IsHotber2;
+        m_isHotber3 = m_input.IsHotber3;
+        m_isCancel = m_input.IsCancel;
         m_isInteract = m_input.IsInteract;
         m_isGetDropItem = m_input.IsGetDropItem;
 
@@ -178,6 +201,11 @@ public class PlayerController : Entity
         }
 
         DoEvading();
+
+        if(m_isCancel)
+        {
+            m_playerItemController.UseItemCancel();
+        }
 
 
         if (m_isActive)
@@ -241,6 +269,8 @@ public class PlayerController : Entity
             IsStun)
         {
             Move(Vector3.zero, 0f);
+            m_anim.SetBool("Run", false);
+
             return;
         }
 
@@ -290,25 +320,31 @@ public class PlayerController : Entity
 
         if (m_playerItemController.m_isUsingSetItem) return;
 
-        if (m_isPrevious)
+        if (m_isHotber1)
         {
-            m_hotberIndex--;
+            //m_hotberIndex--;
 
-            if (m_hotberIndex <= -1)
-            {
-                m_hotberIndex = 2;
-            }
+            //if (m_hotberIndex <= -1)
+            //{
+            //    m_hotberIndex = 2;
+            //}
+            m_hotberIndex = 0;
         }
 
-        if (m_isNext)
+        if (m_isHotber2)
         {
+            m_hotberIndex = 1;
+            //m_hotberIndex++;
 
-            m_hotberIndex++;
+            //if (m_hotberIndex >= 3)
+            //{
+            //    m_hotberIndex = 0;
+            //}
+        }
 
-            if (m_hotberIndex >= 3)
-            {
-                m_hotberIndex = 0;
-            }
+        if (m_isHotber3)
+        {
+            m_hotberIndex = 2;
         }
 
         m_displayManager.SetIndex(m_hotberIndex);
@@ -316,23 +352,23 @@ public class PlayerController : Entity
 
     [SerializeField] private float testknockback;
 
-    [ContextMenu("ApplyKnockBack")]
-    public void ApplyKnockBack()
-    {
-        DamageData data = new();
-        {
-            data.Attack = 0f;
-            data.AttackDir = new Vector3(1, 0, 0);
-            data.CriticalRate = 0f;
-            data.CriticalDamage = 0f;
-            data.BreakRate = 0;
-            data.Knockback = testknockback;
-            data.StunDuration = 0;
-        }
+    //[ContextMenu("ApplyKnockBack")]
+    //public void ApplyKnockBack()
+    //{
+    //    DamageData data = new();
+    //    {
+    //        data.Attack = 0f;
+    //        data.AttackDir = new Vector3(1, 0, 0);
+    //        data.CriticalRate = 0f;
+    //        data.CriticalDamage = 0f;
+    //        data.BreakRate = 0;
+    //        data.Knockback = testknockback;
+    //        data.StunDuration = 0;
+    //    }
 
 
-        TakeDamage(data);
-    }
+    //    TakeDamage(data);
+    //}
 
     #region Object_SetActive_Method
     public void ReticleActive(bool active)
@@ -353,6 +389,11 @@ public class PlayerController : Entity
     public void TextErrorMessageActive(bool active)
     {
         m_textErrorMessage.SetActive(active);
+    }
+
+    public void CancelMessageActive(bool active)
+    {
+        m_cancelMessage.SetActive(active);
     }
 
     public void ItemDescriptionPanelActive(bool active)
@@ -383,8 +424,12 @@ public class PlayerController : Entity
 
     private void OnInteract()
     {
+        if (!m_canInteract) return;
+
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
+
+    public void SetCanInteract(bool value) => m_canInteract = value;
 
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {
@@ -399,11 +444,13 @@ public class PlayerController : Entity
 
     public bool CheckTrophy()
     {
+        if (m_titleTrophy) return false;
+
         if(!m_isWinnerTrophy) return false;
 
         if (!m_isLoserTrophy) return false;
 
-        if(!m_isTrophy) return false;
+        if(!m_isNormalTrophy) return false;
 
         return true;
     }
@@ -417,5 +464,7 @@ public class PlayerController : Entity
             m_input.OnInputClear();
         }
     }
+
+    
 
 }

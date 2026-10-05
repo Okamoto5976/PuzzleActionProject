@@ -9,8 +9,6 @@ public class KnockBackBomb : TrapBase
     private bool m_isFuseActive=false;
     private float m_fuseTimer = 0f;
 
-    [SerializeField] private EffectEventDataSO m_effectEventData;
-
     [SerializeField] private ParticleSystem m_fireParticle;
 
     protected override void OnHit()
@@ -80,20 +78,18 @@ public class KnockBackBomb : TrapBase
             target.TakeDamage(m_damageData);
         }
 
-        if (m_effectEventData != null)
-        {
-            Effect data = new Effect()
-            {
-                effectType = Enum_EffectType.Explosion,
-                effectPos = transform.position + new Vector3(0f, 0.5f, 0f),
-                effectRot = transform.rotation,
-            };
-
-            m_effectEventData.Raise(data);
-        }
+        Particle();
 
         OnReturnPool();
     }
+
+    private void Particle()
+    {
+        var pos = transform.position + new Vector3(0f, 0.5f, 0f);
+
+        ParticleManager.Instance.PlayParticle(Enum_EffectType.Explosion, pos);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

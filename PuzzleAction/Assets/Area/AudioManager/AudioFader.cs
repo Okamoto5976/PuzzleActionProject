@@ -11,6 +11,8 @@ public class AudioFader : MonoBehaviour
     // ★ フェードアウト後に別BGMを再生
     public void FadeOutAndPlay(AudioClip nextClip, float targetVolume = 1f)
     {
+        if(audioSource.clip == nextClip) return;
+
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 
@@ -48,5 +50,12 @@ public class AudioFader : MonoBehaviour
         }
 
         audioSource.volume = targetVolume;
+    }
+
+    public void InstancePlay(AudioClip nextClip, float targetVolume = 1f)
+    {
+        audioSource.clip = nextClip;
+        audioSource.volume = targetVolume;
+        audioSource.Play();
     }
 }

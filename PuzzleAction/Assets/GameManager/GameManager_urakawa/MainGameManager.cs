@@ -1,47 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
 {
-    //[SerializeField] private IntRunTime m_scoreRuntime;
-    //[SerializeField] private IntRunTime m_moneyRuntime;
-    [SerializeField] private TimeManager timemanager;
-
-    //[Header("Clear")]
-    //[SerializeField] private IntRunTime m_level;
+    public static MainGameManager Instance;
 
     [Header("Event")]
     [SerializeField] private BoolEventSO m_gameOverUIEvent;
     [SerializeField] private BoolEventSO m_gameClearUIEvent;
 
     [SerializeField] private EventSO m_playerDeadEvent;
-    //[SerializeField] private BoolEventSO m_menuUIEvent;
-    //[SerializeField] private BoolEventSO m_optionUIEvent;
-    //[SerializeField] private BoolEventSO m_inventoryUIEvent;
-    //[SerializeField] private BoolEventSO m_shopUIEvent;
 
-    [SerializeField] private EventSO m_gameOverEvent;
-    [SerializeField] private EventSO m_gameClearEvent;
+    //[SerializeField] private EventSO m_gameOverEvent;
+    //[SerializeField] private EventSO m_gameClearEvent;
 
-    [SerializeField] private SceneEventScript m_sceneEvent;
+    //[SerializeField] private SceneEventScript m_sceneEvent;
 
     [SerializeField] private StaticSceneAsset m_mapPhaseScene;
 
     [SerializeField] private InventorySystem m_inventorySystem;
 
+    private PlayerSave m_playerSave;
+
     private bool m_isGameOver = false;
-    
+    public bool IsGameOver => m_isGameOver;
+
+    [SerializeField] private EntityHP m_playerHP;
+    [SerializeField] private PlayerController m_playerController;
+
+    //=========tutorial===============
+    private TutorialSave m_tutorialSave = new();
+
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
+
     void Start()
     {
         Time.timeScale = 1f;
 
-        if(!GameManager.Instance.ModifyMoney(5000))
+        if(GameManager.Instance.IsTutorial)
         {
-            Debug.LogError("ModifyMoney over ");
+            GameManager.Instance.ModifyMoney(100);
         }
+
+        //if(!GameManager.Instance.ModifyMoney(5000))
+        //{
+        //    Debug.LogError("ModifyMoney over ");
+        //}
     }
 
     private void OnEnable()
@@ -67,16 +80,16 @@ public class MainGameManager : MonoBehaviour
         //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
-        timemanager.DecreaseValue(Time.deltaTime);
+        //timemanager.DecreaseValue(Time.deltaTime);
 
         //デバック用
         //Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
         
         //時間切れ
-        if (timemanager.Value <= 0)
-        {
-            //GameOver();
-        }
+        //if (timemanager.Value <= 0)
+        //{
+        //    //GameOver();
+        //}
     }
     
 
@@ -93,45 +106,44 @@ public class MainGameManager : MonoBehaviour
 
         m_inventorySystem.Save();
 
-        //m_isGameOver = true;
-
-        //リザルト表示、関数を呼ぶ
-        //if (m_level.Value % 5 == 0)
-        //{
-        //    m_gameClearUIEvent.Raise(true);
-        //    m_gameClearEvent.Raise();
-
-        //    //m_level.AddValue(1);
-
-        //    return;
-
-        //}
-
         //クリア階層記録　
-        GameManager.Instance.AddLevel(1);
-        //m_level.AddValue(1);
-        //Debug.Log($"クリア回数：{m_level.Value}");
-        //Debug.Log($"{m_level.name} : {m_level.Value}  InstanceID={m_level.GetInstanceID()}");
+
+        PlayerData data = new PlayerData();
 
 
-
-        
-
-        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
-
-        //for example
-        //player do not move, state change, save, result
-        if (m_gameClearEvent != null)
+        //TutorialはHPを復活させる
+        if (GameManager.Instance.IsTutorial)
         {
-            m_gameClearEvent.Raise();
+            data.m_hp = (int)m_playerController.HP;
+
+
+            GameManager.Instance.SetIsTutorial(false);
+            var tutorialData = m_tutorialSave.LoadTutorialData();
+
+            if(tutorialData != null)
+            {
+                tutorialData = new()
+                {
+                    m_tutorialCompleted = false,
+                    m_GoalTutorialCompleted = false,
+                };
+            }
+
+            tutorialData.m_tutorialCompleted = true;
+            m_tutorialSave.SaveTutorialData(tutorialData);
+        }
+        else
+        {
+            data.m_hp = m_playerHP.CurrentHP;
+
+            GameManager.Instance.AddLevel(1);
 
         }
+        m_playerSave = new();
 
-        //return;
+        m_playerSave.SavePlayerData(data);
 
-        //m_sceneEvent.TriggerEvent(m_mapPhaseScene);
-
-        LoadManager.m_instance.LoadScene("MapSelectionPhase");
+        LoadManager.m_instance.LoadScene(m_mapPhaseScene.Value);
     }
 
     //ゲームオーバー
@@ -147,7 +159,7 @@ public class MainGameManager : MonoBehaviour
 
         //UIを表示させない
 
-        
+        //リザルト
 
         //Sceneリセット　ゲームリセット
         //SceneMove Tile

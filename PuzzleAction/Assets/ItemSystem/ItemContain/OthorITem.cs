@@ -6,7 +6,13 @@ public class OthorItem:Item
 
     public override void AddPassive(PlayerController player)
     {
-        switch(m_passiveType)
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
+
+        switch (m_passiveType)
         { 
             case Passive.Coupon:
                 player.m_isCoupon = true;
