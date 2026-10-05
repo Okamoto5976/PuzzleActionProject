@@ -40,10 +40,9 @@ public class PoisonMagic : TrapBase
     
     private void FixedUpdate()
     {
-        if (!m_isAreaActive && !m_isAddForceCalled)
+       if(!m_isAreaActive)
         {
-            OnAddForce(m_dir, m_power);
-            m_isAddForceCalled = true;
+            OnMove(m_dir);
         }
     }
 
