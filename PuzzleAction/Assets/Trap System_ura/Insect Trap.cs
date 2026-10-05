@@ -5,10 +5,10 @@ using UnityEngine;
 public class InsectTrap : TrapBase
 {
     [Header("Life Time")]
-    [SerializeField] private float m_lifeTime = 10.0f;
+    [SerializeField] private float m_lifeTime = 5.0f;
 
     [Header("Stun Setting")]
-    [SerializeField] private float m_stunDuration = 5.0f;
+    [SerializeField] private float m_stunDuration = 10.0f;
     [SerializeField] private float m_stunInterval = 1.0f;
 
     private readonly HashSet<Entity> m_targets =
@@ -16,7 +16,7 @@ public class InsectTrap : TrapBase
 
     private Coroutine m_stunCoroutine;
     private Coroutine m_lifeCoroutine;
-
+    
 
     protected override void EntitySetUp()
     {
@@ -99,6 +99,7 @@ public class InsectTrap : TrapBase
 
     protected override void OnHit()
     {
+
     }
 
 

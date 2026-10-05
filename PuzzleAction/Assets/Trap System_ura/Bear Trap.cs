@@ -98,6 +98,7 @@ public class BearTrap : TrapBase
             yield return new WaitForSeconds(1.0f);
         }
 
+
         m_damageCoroutine = null;
     }
 
