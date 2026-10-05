@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyHP : EntityHP
 {
+    [SerializeField] private int m_dropMoney = 160;
     private ReturnObjectToPool m_returnObjPool;
     [SerializeField] private bool m_isItemDrop;
 
@@ -19,7 +20,7 @@ public class EnemyHP : EntityHP
         if (enemy.CurrentState == Entity.EntityState.Dead) return;
 
         //dropMoney
-        m_dropMoneyEventSO.Raise(transform.position, 160);
+        m_dropMoneyEventSO.Raise(transform.position, m_dropMoney);
 
         //kill enemy
         enemy.KillEntity();

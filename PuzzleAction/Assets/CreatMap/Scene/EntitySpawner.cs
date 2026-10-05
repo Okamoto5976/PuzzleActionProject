@@ -47,7 +47,6 @@ public class EntitySpawner : MonoBehaviour
     [SerializeField] private Middleman_Treasure m_treasurePool;
     [SerializeField] private GachaEngine m_treasureGachaEngine;
     [SerializeField] private TreasureRarityTable m_treasureRarityTable;
-    [SerializeField] private int m_treasureCount = 3;
 
     [Header("========== Treasure ==========")]
     [SerializeField] private GameObject m_spring;
@@ -247,24 +246,30 @@ public class EntitySpawner : MonoBehaviour
 
         foreach (var pos in positions)
         {
-            Vector3 worldPositions = m_mapGeneration.GridToWorld(pos);
-            Vector3 WorldPositions = worldPositions + GetRandomSpawnOffset();
+            Vector3 centerPos =
+                m_mapGeneration.GridToWorld(pos);
 
+            int spawnNum = GetEnemyCountPerTile();
 
-            SpawnEnemyByGacha(WorldPositions);
-
-            // 2 enemies spawn
-            if (Random.Range(0f, 1f) <= 0.05f)
+            for (int i = 0; i < spawnNum; i++)
             {
+                Vector3 spawnPos = centerPos + GetRandomSpawnOffset();
 
-                SpawnEnemyByGacha(WorldPositions);
-
-                Debug.Log($"Double Spawn : {WorldPositions}");
+                SpawnEnemyByGacha(spawnPos);
             }
+
             m_reservedPosition.Add(pos);
         }
-
     }
+    private int GetEnemyCountPerTile()
+    {
+        float rand = Random.value;
+        if (rand <= 0.001f) return 5;
+        if (rand <= 0.10f)  return 4;
+        if (rand <= 0.40f)  return 3;
+                            return 2;
+    }
+
     private void SpawnEnemyByGacha(Vector3 position)
     {
         if (m_enemyPool == null)
@@ -294,7 +299,6 @@ public class EntitySpawner : MonoBehaviour
             return;
         }
 
-        // �����A���e�B�������_��
         Enum_EnemyType selectedType = candidates[Random.Range(0, candidates.Count)];
         EnemyController enemy =m_enemyPool.GetComponent(selectedType);
 
@@ -516,13 +520,17 @@ public class EntitySpawner : MonoBehaviour
                 //reject startPos goalPos
                 if(IsForbiddenPos(pos)) continue;
                 //reject Enemy, Trap, Shop, Boss. position
-                if (m_reservedPosition.Contains(pos)) continue;
+                if (room.m_type != AreaType.Damage)
+                {
+                    if (m_reservedPosition.Contains(pos)) continue;
+                }
                 candidates.Add(pos);
             }
         }
 
         //Return smallest value
-        int count = Mathf.Min(m_treasureCount, candidates.Count);
+        int treasureCount = GetTreasureCount();
+        int count = Mathf.Min(treasureCount, candidates.Count);
 
         for (int i = 0; i < count; i++)
         {
@@ -583,6 +591,17 @@ public class EntitySpawner : MonoBehaviour
                     break;
                 }
         }
+    }
+    private int GetTreasureCount()
+    {
+        int pieceCount = m_mapClassData.roomDatas.Count;
+
+        if (pieceCount <= 4) return 1;
+        if (pieceCount <= 7) return 2;
+        if (pieceCount <= 12) return 3;
+        if (pieceCount <= 17) return 4;
+
+        return 5;
     }
     #endregion
 
@@ -673,13 +692,18 @@ public class EntitySpawner : MonoBehaviour
                 //reject startPos goalPos
                 if (IsForbiddenPos(pos)) continue;
                 //reject Enemy, Trap, Shop, Boss. position
-                if (m_reservedPosition.Contains(pos)) continue;
+                if (room.m_type != AreaType.Damage)
+                {
+                    if (m_reservedPosition.Contains(pos)) continue;
+                }
                 candidates.Add(pos);
             }
         }
 
         //Return smallest value
-        int count = Mathf.Min(m_treasureCount, candidates.Count);
+        int treasureCount = GetTreasureCount();
+
+        int count = Mathf.Min(treasureCount, candidates.Count);
 
         for (int i = 0; i < count; i++)
         {
