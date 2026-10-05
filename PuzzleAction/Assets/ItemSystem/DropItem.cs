@@ -76,6 +76,8 @@ public class DropItem : MonoBehaviour
 
     public void Initialize(Item data)
     {
+        float time = m_timeToReturn;
+
         m_ignoreTime = 0.5f;
         //m_isWall = false;
         m_isGround = false;
@@ -89,7 +91,7 @@ public class DropItem : MonoBehaviour
 
         //Debug.Log("Item Init");
 
-        Invoke(nameof(Return), m_timeToReturn); // timeToReturn秒後にReturnメソッドを呼び出す
+        Invoke(nameof(Return), time); // timeToReturn秒後にReturnメソッドを呼び出す
         if (data == null) return;
         SetItemData(data);
     }

@@ -1692,7 +1692,7 @@ MonoBehaviour:
   m_masterSlider: {fileID: 1347372924}
   m_bgmSlider: {fileID: 355828148}
   m_seSlider: {fileID: 1183239571}
-  m_bgm: {fileID: 11400000, guid: 5dcf4998746e9bd41b1ddeb5d1b75842, type: 2}
+  m_bgm: {fileID: 11400000, guid: 21159d252c5796e42843e21355b1f23f, type: 2}
   m_tutorial: {fileID: 1302782666}
 --- !u!4 &485263211
 Transform:
