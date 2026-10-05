@@ -98,6 +98,12 @@ public class PlayerController : Entity
     [HideInInspector] public bool m_titleTrophy;
 
 
+    //audioData
+    [SerializeField] private AudioData m_walkSE;
+    [SerializeField] private AudioData m_pull;
+    [SerializeField] private AudioData m_stunSE;
+    [SerializeField] private AudioData m_hotberSE;
+
 
     //[Header("Audio")]
     //[SerializeField] private AudioData 
@@ -458,5 +464,7 @@ public class PlayerController : Entity
             m_input.OnInputClear();
         }
     }
+
+    
 
 }

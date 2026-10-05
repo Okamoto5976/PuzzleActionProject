@@ -9,6 +9,7 @@ public enum MapPlaceErrorMessageType
     NotPieceConnected, //if all piece to place not connected
     NotRouteConnected, //if not connected from start to end
     NotTutorial,
+    NotStartOrGoal
 }
 
 [System.Serializable]

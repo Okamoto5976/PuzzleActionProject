@@ -19,6 +19,14 @@ abstract public class EntityHP : MonoBehaviour
 
     [SerializeField] private DamageParticleController m_damageParticleController;
 
+    //Audio
+    [SerializeField] private AudioData m_damageSE;
+    [SerializeField] private AudioData m_criticalSE;
+    [SerializeField] private AudioData m_burnSE;
+    [SerializeField] private AudioData m_gasSE;
+
+
+
     private void Awake()
     {
         m_entity = GetComponent<Entity>();
@@ -51,6 +59,8 @@ abstract public class EntityHP : MonoBehaviour
         //    return;
         //}
 
+        AudioData seData = null;
+
         bool isBreak = false;
 
         if(Random.Range(0f,100f)<=data.BreakRate)
@@ -63,6 +73,7 @@ abstract public class EntityHP : MonoBehaviour
         if(Random.Range(0f,100f)<=data.CriticalRate)
         {
             isCritical = true;
+            seData = m_criticalSE;
         }
 
         float damage = 0;
@@ -85,6 +96,7 @@ abstract public class EntityHP : MonoBehaviour
             else
             {
                 damage = data.Attack;
+                seData = m_damageSE;
             }
 
               damage = Mathf.Max(damage - (int)m_entity.DEF, 0);
@@ -102,7 +114,7 @@ abstract public class EntityHP : MonoBehaviour
         }
 
             m_currentHP -= (int)damage;
-
+        AudioManager.Instance.PlayAudio(seData);
 
 
         if(isCritical)

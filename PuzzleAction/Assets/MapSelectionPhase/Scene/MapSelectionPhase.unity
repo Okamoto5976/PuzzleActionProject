@@ -1595,7 +1595,7 @@ GameObject:
   - component: {fileID: 1995151482}
   - component: {fileID: 1995151483}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MapSelectionPhaseSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1639,6 +1639,7 @@ MonoBehaviour:
   m_nextsceneButton: {fileID: 1187506717}
   m_previewRoot: {fileID: 1103900703}
   m_tilePrefab: {fileID: 4078036842766913395, guid: a5a07a4e2c0691c4bbdaf88e5bdcb7c2, type: 3}
+  m_moneyTextPrefab: {fileID: 324648357989842648, guid: 35fb17bc1ef257a41aa91ddaad597591, type: 3}
   m_maxPreviewWidth: 500
   m_previewSpacing: 100
   m_mapPieceSystem: {fileID: 11400000, guid: e146380b9990c5746a4d09a816b1ddd5, type: 2}

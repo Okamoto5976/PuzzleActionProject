@@ -186,6 +186,8 @@ MonoBehaviour:
   m_creatScene: {fileID: 11400000, guid: eb113ea3a6b08d24a891a49443c1d177, type: 2}
   m_instanceCounterList:
   - {fileID: 11400000, guid: 740bbc6a94d61804482ab12b48c472e7, type: 2}
+  m_placeSE: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
+  m_liftSE: {fileID: 11400000, guid: 06de95fdd95dca54c8d62330eefcab3c, type: 2}
   m_tutorialAreaTypeOrder: 02000000030000000000000001000000
 --- !u!114 &50533902
 MonoBehaviour:
@@ -210,6 +212,8 @@ MonoBehaviour:
     Message: "\u30DC\u30B9\u30A8\u30EA\u30A2\u304C\u7F6E\u304B\u308C\u3066\u3044\u307E\u305B\u3093"
   - Type: 4
     Message: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u306B\u5F93\u3063\u3066\u304F\u3060\u3055\u3044"
+  - Type: 5
+    Message: "\u3053\u306E\u30D4\u30FC\u30B9\u306F\u30B9\u30BF\u30FC\u30C8\u3068\u30B4\u30FC\u30EB\u306E\u4F4D\u7F6E\u306B\u8A2D\u7F6E\u3067\u304D\u307E\u305B\uFF4E"
   m_panel: {fileID: 474219650}
   m_errorText: {fileID: 1558637464}
 --- !u!114 &50533903
@@ -251,6 +255,7 @@ MonoBehaviour:
   m_guide: {fileID: 1466289117}
   m_rulePanel: {fileID: 1650921920}
   m_bgm: {fileID: 11400000, guid: 1fbe9cf3f999c8d43acf83f760fd2fab, type: 2}
+  m_UISE: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!114 &50533905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +279,7 @@ MonoBehaviour:
   m_mapPlaceSystem: {fileID: 50533900}
   m_tutorialCompletedPanel: {fileID: 1905336972}
   m_resetButton: {fileID: 1716996595}
+  m_uiSE: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!1 &82925917
 GameObject:
   m_ObjectHideFlags: 0
@@ -2005,7 +2011,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50533904}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: SetRulePanel
+        m_MethodName: ClickRulePanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2675,7 +2681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u30EB\u30FC\u30EB\\n\\n\u30B0\u30EA\u30C3\u30C9\u306E\u30B9\u30BF\u30FC\u30C8\uFF08\u7DD1\uFF09\u304B\u3089\u30B4\u30FC\u30EB\uFF08\u8D64\uFF09\u307E\u3067\u3064\u306A\u3052\u308B\u3053\u3068\\n\\n\u3059\u3079\u3066\u306E\u30D4\u30FC\u30B9\u304C\u3064\u306A\u304C\u3063\u3066\u3044\u308B\u3053\u3068\\n\\n\u6700\u9577\u30EB\u30FC\u30C8\u306E\u9053\u304C\u3064\u306A\u304C\u308B\\n\\n\u30A8\u30EA\u30A2\u306E\u7A2E\u985E\u306B\u5FDC\u3058\u8A2D\u7F6E\u6570\u306E\u5236\u9650\u304C\u3042\u308B\\n\\n\u30DC\u30B9\u30A8\u30EA\u30A2\u304C\u3042\u308B\u306A\u3089\u5FC5\u305A\u8A2D\u7F6E\u3057\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044"
+  m_text: "\u30EB\u30FC\u30EB\\n\\n\u30B0\u30EA\u30C3\u30C9\u306E\u30B9\u30BF\u30FC\u30C8\uFF08\u7DD1\uFF09\u304B\u3089\u30B4\u30FC\u30EB\uFF08\u8D64\uFF09\u307E\u3067\u3064\u306A\u3052\u308B\u3053\u3068\\n\\n\u3059\u3079\u3066\u306E\u30D4\u30FC\u30B9\u304C\u3064\u306A\u304C\u3063\u3066\u3044\u308B\u3053\u3068\\n\\n\u6700\u9577\u30EB\u30FC\u30C8\u306E\u9053\u304C\u3064\u306A\u304C\u308B\\n\\n\u30A8\u30EA\u30A2\u306E\u7A2E\u985E\u306B\u5FDC\u3058\u8A2D\u7F6E\u6570\u306E\u5236\u9650\u304C\u3042\u308B\\n\\n\u5996\u7CBE\u30A8\u30EA\u30A2\u306F\u30B9\u30BF\u30FC\u30C8\u3068\u30B4\u30FC\u30EB\u306E\u4F4D\u7F6E\u306B\u8A2D\u7F6E\u3067\u304D\u306A\u3044\\n\\n\u30DC\u30B9\u30A8\u30EA\u30A2\u304C\u3042\u308B\u306A\u3089\u5FC5\u305A\u8A2D\u7F6E\u3057\u306A\u3051\u308C\u3070\u306A\u3089\u306A\u3044\\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b212a8d1d783754eb0489bf1003b9f6, type: 2}
   m_sharedMaterial: {fileID: 8697813711122043771, guid: 3b212a8d1d783754eb0489bf1003b9f6, type: 2}
@@ -3342,7 +3348,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50533904}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: SetRulePanel
+        m_MethodName: ClickRulePanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3436,7 +3442,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50533905}
         m_TargetAssemblyTypeName: MapPieceTutorial, Assembly-CSharp
-        m_MethodName: SetCompletedPanel
+        m_MethodName: ClickSetCompletedPanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6597,7 +6603,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50533905}
         m_TargetAssemblyTypeName: MapPieceTutorial, Assembly-CSharp
-        m_MethodName: SetCompletedPanel
+        m_MethodName: ClickSetCompletedPanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7051,7 +7057,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 50533904}
         m_TargetAssemblyTypeName: BoardManager, Assembly-CSharp
-        m_MethodName: SetRulePanel
+        m_MethodName: ClickRulePanel
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

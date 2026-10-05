@@ -110,6 +110,10 @@ public class MapPlaceSystem : MonoBehaviour
 
     //[SerializeField] private IntRunTime m_level;
 
+    [SerializeField] private AudioData m_placeSE;
+    [SerializeField] private AudioData m_liftSE;
+
+
     private bool m_canMovePiece = true;
 
     public void SetCanMovePiece(bool value) => m_canMovePiece = value;
@@ -271,6 +275,14 @@ public class MapPlaceSystem : MonoBehaviour
 
                                     return;
                                 }
+
+                                if(CheckStartorGorlPos())
+                                {
+                                    m_errorMessageClass.ShowErrorMessage(MapPlaceErrorMessageType.NotStartOrGoal);
+
+                                    return;
+                                }
+
                                 m_fairyPieceCount++;
                                 break;
                         }
@@ -430,6 +442,8 @@ public class MapPlaceSystem : MonoBehaviour
 
     private void PlaceRoom(AreaType type)
     {
+        AudioManager.Instance.PlayAudio(m_placeSE);
+
         m_mapClass.PlaceRoom(m_room, m_origin - m_difference);
 
 
@@ -472,8 +486,33 @@ public class MapPlaceSystem : MonoBehaviour
         }
     }
 
+    private bool CheckStartorGorlPos()
+    {
+
+        //m_origin - m_difference;//これが座標 ここからそのピースの大きさをみて　ゴールぽず　スタートぽずが　どうかをみる
+
+        Vector2Int origin = new Vector2Int(m_origin.x - m_difference.x, m_origin.y - m_difference.y);
+
+        for (int y = 0; y < m_room.Size.y; y++)
+        {
+            for (int x = 0; x < m_room.Size.x; x++)
+            {
+                if (m_room.GetFloor(x, y).State == Floor.FloorState.empty) continue;
+                Vector2Int pos = origin + new Vector2Int(x, y);
+
+                if(m_startPos == pos) return true;
+                if(m_endPos == pos) return true;
+            }
+
+        }
+
+        return false;
+    }
+
     private void RemoveRoom()
     {
+        AudioManager.Instance.PlayAudio(m_liftSE);
+
         Vector2Int origin = new Vector2Int(m_origin.x, m_origin.y);
 
         var id = m_mapClass.GetFloorID(origin.x, origin.y);

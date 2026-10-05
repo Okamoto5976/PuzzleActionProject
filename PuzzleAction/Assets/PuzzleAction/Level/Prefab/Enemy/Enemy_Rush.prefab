@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 541972471744533260}
   - component: {fileID: 5314661228541134203}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ CapsuleCollider:
   m_Radius: 1.5
   m_Height: 3
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0.5}
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0

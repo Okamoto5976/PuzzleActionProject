@@ -19,6 +19,8 @@ public class MapPieceTutorial : MonoBehaviour
     private TutorialSave m_tutorialSave = new();
     [SerializeField] private GameObject m_resetButton;
 
+    [SerializeField] private AudioData m_uiSE;
+
     private void Start()
     {
         //tutorial‚ª true‚ªŠm”F
@@ -41,7 +43,7 @@ public class MapPieceTutorial : MonoBehaviour
 
             if(!data.m_GoalTutorialCompleted)
             {
-                m_tutorialCompletedPanel.SetActive(true);
+                SetCompletedPanel(true);
                 
                 data.m_GoalTutorialCompleted = true;
 
@@ -53,6 +55,8 @@ public class MapPieceTutorial : MonoBehaviour
 
     public void NextText()
     {
+        AudioManager.Instance.PlayAudio(m_uiSE);
+
         if(m_num >= m_tutorialText.Count)
         {
             m_tutorialPanel.SetActive(false);
@@ -67,8 +71,17 @@ public class MapPieceTutorial : MonoBehaviour
         m_num++;
     }
 
-    public void SetCompletedPanel(bool value)
+    public void ClickSetCompletedPanel(bool value)
+    {
+
+        AudioManager.Instance.PlayAudio(m_uiSE);
+        SetCompletedPanel(value);
+
+    }
+
+    private void SetCompletedPanel(bool value)
     {
         m_tutorialCompletedPanel.SetActive(value);
+
     }
 }
