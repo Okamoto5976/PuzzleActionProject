@@ -317,7 +317,7 @@ public class EntitySpawner : MonoBehaviour
     {
         Vector2Int center = room.m_roomSizes[room.m_roomSizes.Count / 2];
         Enum_BossType bossType = GetCurrentBossType();
-        BossEnemyController boss = m_bossEnemyPool.GetComponent(bossType);
+        BossEnemyController boss = m_bossEnemyPool.GetBoss(bossType);
 
         if (boss == null)
         {
