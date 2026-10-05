@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(ReturnObjectToPool))]
 public class GasCylinder : TrapBase
 {
@@ -9,7 +10,6 @@ public class GasCylinder : TrapBase
     [SerializeField] private float m_tickInterval = 0.5f;
 
     private bool m_isGassing = false;
-    private bool m_isAddForceCalled = false;
     private float m_gasTimer = 0f;
     private float m_tickTimer = 0f;
 
@@ -18,7 +18,6 @@ public class GasCylinder : TrapBase
     protected override void EntitySetUp()
     {
         m_isGassing = false;
-        m_isAddForceCalled = false;
         m_gasTimer = 0f;
         m_tickTimer = 0f;
         m_targetsInRange.Clear();
@@ -123,11 +122,13 @@ public class GasCylinder : TrapBase
                     target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
                 }
             }
+        Debug.Log(target.name);
         }
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
+        Debug.Log("‰Î‚Á‚Æ");
         if (!m_isGassing)
         {
             Entity hitTarget = other.GetComponentInParent<Entity>();
