@@ -7161,7 +7161,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Player\u306F\u3000ASDW\u3067\u52D5\u304D\u307E\u3059\n\nShift\u3067\u3000\u56DE\u907F\u304C\u3067\u304D\u307E\u3059\n\u304B\u3044\u3072\u4E2D\u306F\u3000\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u307E\u305B\u3093"
+  m_text: "Player\u306F\u3000ASDW\u3067\u52D5\u304D\u307E\u3059\n\nShift\u3067\u3000\u56DE\u907F\u304C\u3067\u304D\u307E\u3059\n\u56DE\u907F\u4E2D\u306F\u3000\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u307E\u305B\u3093"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b212a8d1d783754eb0489bf1003b9f6, type: 2}
   m_sharedMaterial: {fileID: 8697813711122043771, guid: 3b212a8d1d783754eb0489bf1003b9f6, type: 2}
