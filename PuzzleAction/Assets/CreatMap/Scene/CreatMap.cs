@@ -47,7 +47,6 @@ public class CreatMap : MonoBehaviour
 
         m_mapGenerate.Generate(m_mapClassData);
         m_entitySpawner.Generate(m_mapClassData, m_mapGenerate);
-        ApplyMapReward();
     }
 
     private void Start()
@@ -73,13 +72,6 @@ public class CreatMap : MonoBehaviour
 
         m_enemyCameraDetector.SetMapBGM(list[0].m_audioData);
 
-    }
-    private void ApplyMapReward()
-    {
-        MapRewardData reward = m_mapClassData.RewardData;
-        if (reward == null) return;
-        if (reward.StartMoney <= 0) return;
-        GameManager.Instance.ModifyMoney(reward.StartMoney);
     }
 }
 

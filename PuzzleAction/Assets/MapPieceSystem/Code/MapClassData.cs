@@ -10,13 +10,11 @@ public class MapClassData : ScriptableObject
     private Vector2Int m_goalPos;
     private Vector2Int m_startPos;
 
-    private MapRewardData m_rewardData;
-
     public MapClass MapClass => m_mapClass;
     public List<RoomData> roomDatas => m_roomDatas;
     public Vector2Int GoalPos => m_goalPos;
     public Vector2Int StartPos => m_startPos;
-    public MapRewardData RewardData => m_rewardData;
+
     public void SetMapClass(MapClass mapClass)
     {
         m_mapClass = mapClass;
@@ -36,9 +34,4 @@ public class MapClassData : ScriptableObject
     {
         m_startPos = startPos;
     }
-    public void SetRewardData(MapRewardData rewardData)
-    {
-        m_rewardData = rewardData;
-    }
-
 }
