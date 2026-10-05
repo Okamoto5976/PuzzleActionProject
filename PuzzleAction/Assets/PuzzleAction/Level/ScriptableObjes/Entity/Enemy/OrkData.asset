@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7541d2123e2bc949ad3db636c0979b3, type: 3}
   m_Name: OrkData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
-  m_hp: 30
-  m_str: 15
-  m_knockBack: 5.5
-  m_def: 0
-  m_speed: 5
-  m_criticalRate: 20
+  m_hp: 120
+  m_str: 20
+  m_knockBack: 0.5
+  m_def: 5
+  m_speed: 4
+  m_criticalRate: 10
   m_criticalDamage: 1.75
   m_breakRate: 0
   m_stunDuration: 0
-  m_poisonRes: 0
-  m_stunRes: 0
-  m_swampRes: 0
-  m_gasRes: 0
+  m_poisonRes: 0.2
+  m_stunRes: 0.5
+  m_swampRes: 0.5
+  m_gasRes: 0.1
   m_burnRes: 0
