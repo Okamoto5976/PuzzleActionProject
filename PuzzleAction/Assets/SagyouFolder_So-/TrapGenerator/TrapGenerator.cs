@@ -3,5 +3,5 @@ using UnityEngine;
 
 public abstract class TrapGenerator
 {
-    public abstract void SpawnTraps(List<Vector3> positions, Vector3 squareSize, Middleman_Trap trapPools, Enum_TrapType trapType, float density);
+    public abstract void SpawnTraps(List<Vector3> positions, Vector3 squareSize, Middleman_Trap trapPools, Enum_TrapType trapType, float density, Vector3 exclude);
 }
