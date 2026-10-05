@@ -23,6 +23,7 @@ public class SpikeTrap : TrapBase
 
     private Coroutine m_damageCoroutine;
 
+    [SerializeField] private AudioData m_se;
     public override void TrapInit()
     {
         base.TrapInit();
@@ -98,7 +99,7 @@ public class SpikeTrap : TrapBase
                     continue;
                 }
 
-                if(target.gameObject.activeSelf == false)
+                if(!target.gameObject.activeInHierarchy)
                 {
 
                     removeTargets.Add(target);
@@ -108,13 +109,13 @@ public class SpikeTrap : TrapBase
                 target.TakeDamage(m_damageData);
             }
 
-            OnHit();
 
             foreach(Entity target in removeTargets)
             {
                 m_targets.Remove(target);
             }
 
+            OnHit();
             yield return new WaitForSeconds(
                 m_damageInterval);
         }
@@ -138,6 +139,6 @@ public class SpikeTrap : TrapBase
 
     protected override void OnHit()
     {
-
+        AudioManager.Instance.PlayAudio(m_se);
     }
 }

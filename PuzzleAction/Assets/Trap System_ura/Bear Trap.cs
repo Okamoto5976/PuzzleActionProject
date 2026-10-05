@@ -14,6 +14,8 @@ public class BearTrap : TrapBase
     private Coroutine m_recoveryCoroutine;
     private Coroutine m_damageCoroutine;
 
+    [SerializeField] private AudioData m_se;
+
     protected override void EntitySetUp()
     {
         m_isActive = true;
@@ -83,6 +85,9 @@ public class BearTrap : TrapBase
     {
         while (m_targets.Count > 0)
         {
+            List<Entity> removeTargets = new List<Entity>();
+
+
             foreach (Entity target in m_targets)
             {
                 if (target == null)
@@ -90,11 +95,24 @@ public class BearTrap : TrapBase
                     continue;
                 }
 
+                if (!target.gameObject.activeInHierarchy)
+                {
+
+                    removeTargets.Add(target);
+                    continue;
+                }
+
+
                 target.TakeDamage(m_damageData);
             }
 
-            OnHit();
 
+            foreach (Entity target in removeTargets)
+            {
+                m_targets.Remove(target);
+            }
+
+            OnHit();
             yield return new WaitForSeconds(1.0f);
         }
 
@@ -134,7 +152,7 @@ public class BearTrap : TrapBase
 
     protected override void OnHit()
     {
-
+        AudioManager.Instance.PlayAudio(m_se);
     }
 
     public override void TrapInit()

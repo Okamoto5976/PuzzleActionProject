@@ -56,7 +56,7 @@ MonoBehaviour:
   m_explosionTimer: 1.5
   m_fireParticle: {fileID: 7447349913393547030}
   m_radius: 5
-  m_effectEventData: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
+  m_se: {fileID: 11400000, guid: 7e76965e45f4e7f4c9b4eed3d8e16913, type: 2}
 --- !u!114 &5034231960300179592
 MonoBehaviour:
   m_ObjectHideFlags: 0

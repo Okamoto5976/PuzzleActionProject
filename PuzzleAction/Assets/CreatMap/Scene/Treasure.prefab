@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Treasure
   m_itemDropGachaEngine: {fileID: 11400000, guid: 8edaebc22064db848907e39a6a522f9c, type: 2}
-  m_openSE: {fileID: 11400000, guid: c03639c3cfe69d64299a079f200b54f3, type: 2}
+  m_openSE: {fileID: 11400000, guid: cebf2bd7b368f6e4dbd2a587a5410a40, type: 2}
 --- !u!135 &269757926679234422
 SphereCollider:
   m_ObjectHideFlags: 0

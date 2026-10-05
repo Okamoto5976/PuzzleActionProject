@@ -14,6 +14,8 @@ public class DynamiteTrap : TrapBase
     [SerializeField] private HitCollider m_hitCollider;
     [SerializeField] private float m_radius;
 
+    [SerializeField] private AudioData m_se;
+
 
     private bool m_isTimer = false;
 
@@ -102,6 +104,8 @@ public class DynamiteTrap : TrapBase
         }
 
         Particle();
+
+        AudioManager.Instance.PlayAudio(m_se);
 
         OnReturnPool();
     }

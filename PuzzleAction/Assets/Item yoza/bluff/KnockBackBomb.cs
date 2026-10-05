@@ -11,9 +11,13 @@ public class KnockBackBomb : TrapBase
 
     [SerializeField] private ParticleSystem m_fireParticle;
 
+    [SerializeField] private AudioData m_se;
+
     protected override void OnHit()
     {
         Explode();
+
+        AudioManager.Instance.PlayAudio(m_se);
     }
     protected override void EntitySetUp()
     {

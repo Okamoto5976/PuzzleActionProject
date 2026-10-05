@@ -109,6 +109,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   m_team: 1
   m_data: {fileID: 11400000, guid: 24640000076cea648a35ec0c41dcdd4b, type: 2}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
   m_attackRange: 2.5
@@ -136,7 +139,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   m_currentHP: 0
   m_max: 0
+  m_isTutorial: 0
   m_damageParticleController: {fileID: 3109024123308804497}
+  m_damageSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
+  m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
+  m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
+  m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
+  m_dropMoney: 160
   m_isItemDrop: 1
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &-8358337252980725659
@@ -151,7 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7721ef16df94d244c9248d6ba745026d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Explosion
-  m_effectEventData: {fileID: 11400000, guid: e6cdaafa9c0859f47b35476cb1183c83, type: 2}
 --- !u!114 &2784328855026812732
 MonoBehaviour:
   m_ObjectHideFlags: 0
