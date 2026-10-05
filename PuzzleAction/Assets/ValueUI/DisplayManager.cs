@@ -8,7 +8,6 @@ public class DisplayManager : MonoBehaviour
     [Header("UI References")]
     //[SerializeField] private HPUI hpUI;
     [SerializeField] private PlayerHPUI playerHPUI;
-    [SerializeField] private BossHPUI bossHPUI;
     //[SerializeField] private TMP_Text hpText;
     [SerializeField] private MoneyUI moneyUI;  
     //[SerializeField] private ScoreUI scoreUI;
