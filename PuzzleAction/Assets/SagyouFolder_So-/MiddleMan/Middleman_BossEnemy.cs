@@ -3,33 +3,20 @@ using UnityEngine;
 
 public class Middleman_BossEnemy : MiddlemanBase<Enum_BossType, ComponentPoolHandler_BossEnemy, BossEnemyController>
 {
-    //[System.Serializable]
-    //private struct BossDict
-    //{
-    //    public Enum_BossType type;
-    //    public ComponentPoolHandler_BossEnemy pool;
-    //}
+    private BossEnemyController _currentBossEnemyController;
+    private float _bossMaxHP;
+    private bool _isBossActive = false;
 
-    //[SerializeField] private List<BossDict> m_bossPools;
+    public float BossHP => _currentBossEnemyController == null ? 0 : _currentBossEnemyController.HP;
+    public float BossMaxHP => _bossMaxHP;
 
-    //public void InitializePool()
-    //{
-    //    foreach (var boss in m_bossPools)
-    //    {
-    //        boss.pool.Initialize();
-    //    }
-    //}
+    public bool IsBossActive => _isBossActive;
 
-    //public BossEnemyController GetBoss(Enum_BossType type)
-    //{
-    //    var pool = m_bossPools.Find(x => x.type == type).pool;
-
-    //    if (pool == null)
-    //    {
-    //        Debug.LogError($"BossPool Missing : {type}");
-    //        return null;
-    //    }
-
-    //    return pool.GetComponentFromPool();
-    //}
+    public BossEnemyController GetBoss(Enum_BossType bossType)
+    {
+        _currentBossEnemyController = GetComponent(bossType);
+        _bossMaxHP = _currentBossEnemyController.HP;
+        _isBossActive = true;
+        return _currentBossEnemyController;
+    }
 }
