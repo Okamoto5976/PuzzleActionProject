@@ -387,15 +387,21 @@ abstract public class Entity : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="speed">計算後の値を入力</param>
+    [SerializeField] private LayerMask wallLayer;
+
     public void Move(Vector3 dir, float speed)
     {
         dir = dir.normalized;
 
-        m_velocity = m_rb.linearVelocity;
+        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, 1.5f, wallLayer))
+        {
+            Debug.Log("かべにあたった");
+            dir = Vector3.ProjectOnPlane(dir, hit.normal).normalized;
+        }
 
+        m_velocity = m_rb.linearVelocity;
         m_velocity.x = dir.x * speed;
         m_velocity.z = dir.z * speed;
-
         m_rb.linearVelocity = m_velocity;
     }
 
