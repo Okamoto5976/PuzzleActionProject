@@ -17,12 +17,13 @@ MonoBehaviour:
     itemID: 80
     itemName: Poi
     itemIcon: {fileID: 21300000, guid: 355b4a593e9ed664ab17ea6f3e7a3f60, type: 3}
-    description: "\u61D0\u304B\u3057\u306E\u601D\u3044\u51FA\u3002\u3000\u52B9\u679C\uFF1A"
+    description: "\u61D0\u304B\u3057\u306E\u601D\u3044\u51FA\u3002\\n\u52B9\u679C\uFF1A"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
     price: 9999
+  m_se: {fileID: 0}
   m_buffEffectType: 1
   m_buffItemClass: []
   m_passiveType: 19

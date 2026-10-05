@@ -17,7 +17,7 @@ MonoBehaviour:
     itemID: 51
     itemName: Banana
     itemIcon: {fileID: 21300000, guid: 5568ee8b77debf347833d3c9d6a5e3c9, type: 3}
-    description: "\u30D0\u30CA\u30CA\u306E\u76AE\u3092\u30DD\u30A4\u6368\u3066\u3059\u308B\u3002\u8E0F\u3080\u3068\u6ED1\u308B\u3000\u52B9\u679C\uFF1A\u30B9\u30BF\u30F3"
+    description: "\u30D0\u30CA\u30CA\u306E\u76AE\u3092\u30DD\u30A4\u6368\u3066\u3059\u308B\u3002\u8E0F\u3080\u3068\u6ED1\u308B\\n\u52B9\u679C\uFF1A\u30B9\u30BF\u30F3"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0

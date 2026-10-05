@@ -17,7 +17,7 @@ MonoBehaviour:
     itemID: 4
     itemName: MaxHealPotion
     itemIcon: {fileID: 21300000, guid: a9aa5ef5ca3b9aa42bb93119df3cee6b, type: 3}
-    description: "\u6B7B\u306E\u6DF5\u304B\u3089\u8607\u308A\u3057\u4F1D\u8AAC\u306E\u85AC\u3002\u3000\u52B9\u679C\uFF1AHP+9999"
+    description: "\u6B7B\u306E\u6DF5\u304B\u3089\u8607\u308A\u3057\u4F1D\u8AAC\u306E\u85AC\u3002\\n\u52B9\u679C\uFF1AHP+9999"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 0

@@ -17,7 +17,7 @@ MonoBehaviour:
     itemID: 60
     itemName: RockMagic
     itemIcon: {fileID: 21300000, guid: b88dbd5c63f709b4d843db8d8e6c638a, type: 3}
-    description: "\u5927\u304D\u306A\u5CA9\u304C\u51FA\u73FE\u3059\u308B\u3002\u3000\u52B9\u679C\uFF1A\u969C\u5BB3\u7269\u304C\u51FA\u73FE\u3000"
+    description: "\u5927\u304D\u306A\u5CA9\u304C\u51FA\u73FE\u3059\u308B\u3002\\n\u52B9\u679C\uFF1A\u969C\u5BB3\u7269\u304C\u51FA\u73FE\u3000"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
