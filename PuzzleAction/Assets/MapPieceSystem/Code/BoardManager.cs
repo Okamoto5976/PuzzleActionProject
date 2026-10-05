@@ -38,6 +38,8 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField] private AudioData m_bgm;
 
+    [SerializeField] private AudioData m_UISE;
+
     private void Awake()
     {
         m_mapSystem = GetComponent<MapPlaceSystem>();
@@ -247,6 +249,7 @@ public class BoardManager : MonoBehaviour
         if (m_coroutine != null) return;
         m_isGuide = !m_isGuide;
 
+        AudioManager.Instance.PlayAudio(m_UISE);
 
         if(m_isGuide)
         {
@@ -285,7 +288,13 @@ public class BoardManager : MonoBehaviour
         m_coroutine = null;
     }
 
-    public void SetRulePanel(bool value)
+    public void ClickRulePanel(bool value)
+    {
+        AudioManager.Instance.PlayAudio(m_UISE);
+        SetRulePanel(value);
+    }
+
+    private void SetRulePanel(bool value)
     {
         m_rulePanel.SetActive(value);
     }
