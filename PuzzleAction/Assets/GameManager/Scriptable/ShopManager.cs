@@ -29,7 +29,6 @@ public class ShopManager : MonoBehaviour
 
     //private List<Data> t_itemDataList = new();
 
-    [SerializeField] private IntRunTime m_currentLevel;
     [SerializeField] private ItemManager m_itemManager;   
     [SerializeField] private EventBusAsset m_onGenerateShopInventories;
     [SerializeField] private InstanceCounter m_shopCount;
@@ -72,6 +71,25 @@ public class ShopManager : MonoBehaviour
     [Header("Shop Item Rarity Overlay")]
     [SerializeField] private ShopRarityVisuals m_shopRarityVisuals;
 
+    [Header("Passive Effect")]
+    [SerializeField] private PlayerController m_playerController;
+
+    private bool m_isCoupon;
+    private bool m_isMemberShip;
+
+    private float m_discount;
+
+    [SerializeField] private AudioData m_enteySE;
+    [SerializeField] private AudioData m_bgm;
+    [SerializeField] private AudioData m_buySE;
+
+    private AudioData m_mapBGM;
+
+    [Header("Tutorial")]
+    [SerializeField] private TutorialManager m_tutorialManager;
+
+    [SerializeField] private List<Item> m_tutorialItemes;
+
     //========Debug===============
     [Header("Debug")]
     [SerializeField] private bool m_isDebug;
@@ -110,12 +128,12 @@ public class ShopManager : MonoBehaviour
 
     private void OnEnable()
     {
-        m_shopIdEvent.Register(SetDatasToSlots);
+        m_shopIdEvent.Register(SetDatasToSlotsWhenEnter);
     }
 
     private void OnDisable()
     {
-        m_shopIdEvent.Unregister(SetDatasToSlots);
+        m_shopIdEvent.Unregister(SetDatasToSlotsWhenEnter);
     }
 
     /// <summary>
@@ -172,18 +190,55 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < SlotCount; i++)
         {
             var rarity = i < forcedRarityCount ? m_defaultShopRarity : m_shopItemGachaEngine.Collapse();
-            ShopItem item = new()
+            ShopItem item = new();
+
+
+            if (GameManager.Instance.IsTutorial)
             {
-                IsSold = false,
-                data = m_itemManager.GetRandomShopItemByRarity(rarity)
-            };
+                item.IsSold = false;
+                item.data = m_tutorialItemes[i];
+            }
+            else
+            {
+                item.IsSold = false;
+                item.data = m_itemManager.GetRandomShopItemByRarity(rarity);
+            }
+               
             newInventory.inventory.Add(item);
         }
         return newInventory;
     }
 
-    private void SetDatasToSlots(int id)
+    private void SetDatasToSlotsWhenEnter(int id)
     {
+        if(GameManager.Instance.IsTutorial)
+        {
+            if (!IsTutorial(true)) return;
+        }
+
+        GameManager.Instance.SetIsShop(true);
+
+        m_mapBGM = AudioManager.Instance.GetNowBGM();
+
+        AudioManager.Instance.PlayAudio(m_enteySE);
+        AudioManager.Instance.InstancePlayAudio(m_bgm);
+
+
+        m_isCoupon = m_playerController.m_isCoupon;
+        m_isMemberShip = m_playerController.m_isMemberShip;
+
+        m_discount = 0f;
+
+        if (m_isCoupon)
+        {
+            m_discount += 0.2f;
+        }
+
+        if(m_isMemberShip)
+        {
+            m_discount += 0.3f;
+        }
+
         SetShopText();
 
         SetDatasToSlotsFromInventory(m_shopInventories[id]);
@@ -191,6 +246,39 @@ public class ShopManager : MonoBehaviour
         _currentShopId = id;
 
         m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Welcome);
+    }
+
+    private void SetDatasToSlotsWhenLeave(int id)
+    {
+        
+        GameManager.Instance.SetIsShop(false);
+
+
+        AudioManager.Instance.PlayAudio(m_enteySE);
+        AudioManager.Instance.InstancePlayAudio(m_mapBGM);
+
+        m_isCoupon = m_playerController.m_isCoupon;
+        m_isMemberShip = m_playerController.m_isMemberShip;
+
+        m_discount = 0f;
+
+        if (m_isCoupon)
+        {
+            m_discount += 0.2f;
+        }
+
+        if (m_isMemberShip)
+        {
+            m_discount += 0.3f;
+        }
+
+        SetShopText();
+
+        SetDatasToSlotsFromInventory(m_shopInventories[id]);
+        //textManager start
+        _currentShopId = id;
+
+        m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.SeeYou);
     }
 
     private void SetShopText()
@@ -204,7 +292,11 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < SlotCount; i++)
         {
             var shopItem = shopInventory.inventory[i];
-            m_goodsPrefab[i].SetData(shopItem, m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity));
+            m_goodsPrefab[i].SetData(
+                shopItem,
+                m_shopRarityVisuals.GetSpriteForRarity(shopItem.data.Data.Rarity),
+                m_discount
+                );
         }
     }
 
@@ -232,10 +324,17 @@ public class ShopManager : MonoBehaviour
         //Debug.Log($"{_currentShopId}, {slotId}, {m_shopInventories[_currentShopId].inventory[slotId].IsSold}");
         var data = m_shopInventories[_currentShopId].inventory[slotId].data;
 
+        int price = Mathf.CeilToInt(data.Data.Price * (1f - m_discount));
+
+        if (GameManager.Instance.IsTutorial)
+        {
+            price = 10;
+        }
+
         int money = GameManager.Instance.Money;
 
         //少ない　購入出来ない場合
-        if (data.Data.Price > money)
+        if (price > money)
         {
             Debug.Log("you do not have money");
 
@@ -254,12 +353,14 @@ public class ShopManager : MonoBehaviour
                 return false;
             }
 
-            int value = -(data.Data.Price);
+            int value = -(price);
 
             if(!GameManager.Instance.ModifyMoney(value))
             {
                 Debug.LogError("Modify over");
             }
+
+            AudioManager.Instance.PlayAudio(m_buySE);
 
             m_moneyText.text = "money :" + GameManager.Instance.Money.ToString();//再び最新を表示
 
@@ -271,15 +372,24 @@ public class ShopManager : MonoBehaviour
 
             m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.Buy);
 
+
+            //===================Tutorial=====================
+
+            if(data.ItemType == ItemType.Active)
+            {
+                m_tutorialManager.m_isPurchase = true;
+
+            }
+
             return true;
         }
     }
 
     //説明文表示
-    public void OnInfoPanelFromGoods(ItemData data)
+    public void OnInfoPanelFromGoods(ItemData data, Vector3 goodsPos)
     {
         m_infoTextPrefab.gameObject.SetActive(true);
-        m_infoTextPrefab.GetItemDataInfo(data);
+        m_infoTextPrefab.GetItemDataInfo(data, goodsPos);
     }
 
     //説明文非表示
@@ -293,10 +403,38 @@ public class ShopManager : MonoBehaviour
 
     public void OnClose()
     {
+        if (GameManager.Instance.IsTutorial)
+        {
+            if (!IsTutorial(false)) return;
+        }
+
+
         m_showShopUI.Raise(false);
-        SetDatasToSlots(_currentShopId);
+        SetDatasToSlotsWhenLeave(_currentShopId);
 
         GameManager.Instance.OnSetStop(false);
         m_palyerIgnoreInput.Raise(false);
+    }
+
+    private bool IsTutorial(bool isEnter)
+    {
+        if (isEnter)
+        {
+            m_tutorialManager.ShopEnterTutorial();
+            return true;
+        }
+        else
+        {
+            if(m_tutorialManager.m_isPurchase)
+            {
+                m_tutorialManager.ShopLeaveTutorial();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

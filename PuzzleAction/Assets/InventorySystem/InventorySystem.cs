@@ -38,12 +38,11 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject hotbarPanel;
 
     [SerializeField] private SaveData saveData;
-    [SerializeField] private ItemManager itemManager;
     [SerializeField] private InventorySaveManager m_saveManager;
 
-    [SerializeField] private List<Image> mainHotbarImages;
+    //[SerializeField] private List<Image> mainHotbarImages;
 
-    private ItemManager m_itemManager;
+    [SerializeField] private ItemManager m_itemManager;
 
     //passive effect add player
     [SerializeField] private PlayerController m_player;
@@ -58,10 +57,15 @@ public class InventorySystem : MonoBehaviour
 
         hotbarSlots = hotbarPanel.GetComponentsInChildren<SlotUI>(true);
 
-        m_itemManager = FindAnyObjectByType<ItemManager>();
+        //m_itemManager = FindAnyObjectByType<ItemManager>();
     }
 
     private void Start()
+    {
+        //Initialized();
+    }
+
+    public void Initialized()
     {
         for (int i = 0; i < hotbars.Length; i++)
         {
@@ -71,6 +75,7 @@ public class InventorySystem : MonoBehaviour
 
         UpdateUI();
     }
+
     //[SerializeField] private Data data;
 
     //private void Update()
@@ -88,13 +93,13 @@ public class InventorySystem : MonoBehaviour
     //    }
     //}
 
-    public void OnItem(Item data, int count)
-    {
-        if (AddItem(data, count))
-        {
+    //public void OnItem(Item data, int count)
+    //{
+    //    if (AddItem(data, count))
+    //    {
            
-        }
-    }
+    //    }
+    //}
     public void Save()
     {
         SaveInventory();
@@ -582,6 +587,7 @@ public class InventorySystem : MonoBehaviour
     {
         saveData.activeItems.Clear();
         saveData.passiveItems.Clear();
+        saveData.hotbarItems.Clear();
 
         foreach (ItemBox item in activeInventory)
         {
@@ -603,6 +609,29 @@ public class InventorySystem : MonoBehaviour
             saveData.passiveItems.Add(saveItem);
         }
 
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            SaveItemData saveItem = new SaveItemData();
+
+            int inventoryIndex = hotbars[i];
+
+            // Hotbarが空
+            if (inventoryIndex < 0 ||
+                inventoryIndex >= activeInventory.Count)
+            {
+                saveItem.id = -1;
+                saveItem.count = 0;
+            }
+            else
+            {
+                ItemBox item = activeInventory[inventoryIndex];
+
+                saveItem.id = item.data.ID;
+                saveItem.count = item.count;
+            }
+            saveData.hotbarItems.Add(saveItem);
+        }
+
         Debug.Log("=== Active ===");
 
         foreach (SaveItemData item in saveData.activeItems)
@@ -616,6 +645,13 @@ public class InventorySystem : MonoBehaviour
         {
             Debug.Log($"ID:{item.id} Count:{item.count}");
         }
+
+        Debug.Log("=== Hotbar ===");
+        for (int i = 0; i < saveData.hotbarItems.Count; i++)
+        {
+            Debug.Log($"Hotbar[{i}]ID:{saveData.hotbarItems[i].id}");
+        }
+
     }
 
     public void LoadInventory()
@@ -624,11 +660,17 @@ public class InventorySystem : MonoBehaviour
         activeInventory.Clear();
         passiveInventory.Clear();
 
+        // Hotbarを一度空にする
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            hotbars[i] = -1;
+        }
+
         foreach (SaveItemData saveItem in saveData.activeItems)
         {
             Debug.Log($"ロード中 ID:{saveItem.id}");
 
-            Item data = itemManager.GetItem(saveItem.id);
+            Item data = m_itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {
@@ -642,7 +684,7 @@ public class InventorySystem : MonoBehaviour
 
         foreach (SaveItemData saveItem in saveData.passiveItems)
         {
-            Item data = itemManager.GetItem(saveItem.id);
+            Item data = m_itemManager.GetItem(saveItem.id);
 
             if (data != null)
             {
@@ -655,7 +697,44 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < saveData.hotbarItems.Count &&  i < hotbars.Length; i++)
+        {
+            SaveItemData hotbarSave = saveData.hotbarItems[i];
+            // 保存時に空だったHotbar
+            if (hotbarSave.id < 0)
+            {
+                hotbars[i] = -1;
+                continue;
+            }
+            // ActiveInventoryから同じIDを探す
+            for(int j = 0; j < activeInventory.Count; j++)
+            {
+                if (activeInventory[j].data.ID == hotbarSave.id)
+                {
+                    hotbars[i] = j;
+                    break;
+                }
+            }
+        }
+
         UpdateUI();
+
+        // メインHotbarの画像も復元
+        for (int i = 0; i < hotbars.Length; i++)
+        {
+            int inventoryIndex = hotbars[i];
+
+            if (inventoryIndex >= 0 &&
+                inventoryIndex < activeInventory.Count)
+            {
+                m_displayManager.SetHotberImage(i, activeInventory[inventoryIndex].data.icon);
+                }
+            else
+            {
+                m_displayManager.ResetHotberImage(i);
+            }
+        }
+        Debug.Log($"Hotbar Load = [{hotbars[0]}, {hotbars[1]}, {hotbars[2]}]");
     }
 
     //private void OnUpdateMainHotber()

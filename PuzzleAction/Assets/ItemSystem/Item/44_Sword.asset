@@ -17,10 +17,37 @@ MonoBehaviour:
     itemID: 44
     itemName: Sword
     itemIcon: {fileID: 21300000, guid: 0203eb09a9bd3b64a8b4d0876585bc83, type: 3}
-    description: 
+    description: "\u6301\u3061\u4E3B\u306E\u7CBE\u795E\u306B\u3082\u8CA0\u3051\u305A\u3001\u6050\u308D\u3057\u3044\u9B54\u529B\u3067\u4F55\u3082\u304B\u3082\u98F2\u307F\u8FBC\u307F\u3001\u529B\u306B\u6EBA\u308C\u3055\u305B\u308B\u3002\\n\u3000\u6027\u80FD\uFF1A\u6575\u306B\u591A\u304F\u306E\u30C7\u30D0\u30D5\u3092\u4E0E\u3048\u308B"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 3
-    price: 100
-    Type: 0
+    price: 666
+  m_se: {fileID: 11400000, guid: 0c055665e11bbff489c1241cab42035d, type: 2}
+  m_damage:
+    Attack: 20
+    CriticalRate: 9
+    CriticalDamage: 0.5
+    BreakRate: -1
+    Knockback: 0
+    StunDuration: 0
+    AttackDir: {x: 0, y: 0, z: 0}
+  m_isRayCollider: 0
+  m_range: 5
+  m_selfBuffList: []
+  m_targetBuffList:
+  - m_value: 10
+    m_statusType: 1
+    m_modifierType: 1
+    m_duration: 10
+    m_buffID: 19
+  - m_value: 10
+    m_statusType: 3
+    m_modifierType: 1
+    m_duration: 10
+    m_buffID: 21
+  - m_value: 10
+    m_statusType: 14
+    m_modifierType: 0
+    m_duration: 10
+    m_buffID: 20

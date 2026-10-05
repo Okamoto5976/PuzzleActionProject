@@ -16,13 +16,13 @@ MonoBehaviour:
   m_data:
     itemID: 32
     itemName: Arrow
-    itemIcon: {fileID: 21300000, guid: 79b566b0097c3464f98aae5d78b90658, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 94849ac1dd818e8469a708c52a107162, type: 3}
+    description: "\u6575\u306B\u77E2\\n\u3092\u5C04\u3066\\n\\n\\n\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3002"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
     itemType: 0
     m_itemUseType: 1
-    price: 100
-    Type: 0
+    price: 80
+  m_se: {fileID: 11400000, guid: 9e66bd9db76374b4f9a437518027f9cb, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 0

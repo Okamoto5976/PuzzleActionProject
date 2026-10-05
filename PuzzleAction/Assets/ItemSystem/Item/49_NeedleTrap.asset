@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 49
     itemName: NeedleTrap
     itemIcon: {fileID: 21300000, guid: e9ac0b7d99988434f92b34ae9d945903, type: 3}
-    description: 
+    description: "\u30C8\u30E9\u3070\u3055\u307F\u3088\u308A\u7BC4\u56F2\u304C\u5E83\u304F\u3001\u89E6\u308C\u308B\u3068\u5C0F\u30C0\u30E1\u30FC\u30B8\u3092\u53D7\u3051\u308B\u3002\uFF08\u6642\u9593\u7D4C\u904E\u3067\u5FA9\u6D3B\uFF09"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 2
-    price: 100
-    Type: 0
+    price: 180
+  m_se: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 13

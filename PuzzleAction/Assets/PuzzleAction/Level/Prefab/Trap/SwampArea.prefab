@@ -28,8 +28,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8921793828245241595}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -4873,8 +4873,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8921793828245241595}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4944,9 +4944,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8921793828245241595}
-  - component: {fileID: 8405277235771965073}
+  - component: {fileID: -705482254768183235}
   - component: {fileID: 4969366526268400199}
-  - component: {fileID: -3666215338690354308}
+  - component: {fileID: 5931104486333945943}
   m_Layer: 0
   m_Name: SwampArea
   m_TagString: Untagged
@@ -4965,13 +4965,13 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6386705504979351439}
   - {fileID: 4854082960821804819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8405277235771965073
+--- !u!114 &-705482254768183235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4980,13 +4980,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8719441754121234464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3fcfd29f6841f4e9e136d0ef81a9bd, type: 3}
+  m_Script: {fileID: 11500000, guid: 05d21698facdbe341b03ef9a863f057b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SwampTrap
+  m_EditorClassIdentifier: Assembly-CSharp::AreaTrap
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 1ee9ee7b84ccb8444826b4a12cae7a17, type: 2}
   m_speed: 0
-  m_attackType: 0
 --- !u!114 &4969366526268400199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4999,7 +4998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
---- !u!65 &-3666215338690354308
+--- !u!65 &5931104486333945943
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5018,5 +5017,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.5, y: 1, z: 9.5}
+  m_Size: {x: 9, y: 1, z: 9}
   m_Center: {x: 0, y: 0, z: 0}

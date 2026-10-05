@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4394588411869608862}
   - component: {fileID: 2729078276514476740}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,10 +51,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 1
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Center: {x: 0, y: 1, z: -0.5}
 --- !u!1 &6967910656285339947
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,9 +69,8 @@ GameObject:
   - component: {fileID: -1027978937202661744}
   - component: {fileID: -1927861824572852744}
   - component: {fileID: 8554935031461210398}
-  - component: {fileID: -7481010698654928406}
   - component: {fileID: -8786459632492989013}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy_Slime_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,19 +107,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82d835c794b6ba84ba98f97b659065cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: 9c5d6e2a09263b7468aeb8b7460701ae, type: 2}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 0
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
   m_attackRange: 2
   m_attackCooldown: 2
   m_attackHitBox:
-    m_transform: {fileID: 5192190198220617858}
+    m_pos: {x: 0, y: 0, z: 0}
+    m_hitBoxOffset: {x: 0, y: 1, z: 0}
     m_radius: 2
-  m_attackItem: {fileID: 0}
-  m_itemDropGachaEngine: {fileID: 11400000, guid: 54b3b445d463ca3478cbd096561a2733, type: 2}
+  m_isRandom: 0
+  m_attackItems: []
+  m_power: 3
+  m_shootOffset: {x: 0, y: 1, z: 0}
+  m_itemDropGachaEngine: {fileID: 11400000, guid: 229eced649429d947914dd01c24d196e, type: 2}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -168,7 +172,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!114 &-1927861824572852744
 MonoBehaviour:
@@ -184,8 +188,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
   m_currentHP: 0
   m_max: 0
+  m_isTutorial: 0
   m_damageParticleController: {fileID: 3109024123308804497}
+  m_damageSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
+  m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
+  m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
+  m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
+  m_dropMoney: 160
   m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &8554935031461210398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,23 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c68055faec280a4fa3ff7b8baddf9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Slime_Blue
---- !u!114 &-7481010698654928406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
-  m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 5192190198220617858}
-    m_radius: 3
 --- !u!114 &-8786459632492989013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,13 +229,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5192190198220617858}
     m_Modifications:
+    - target: {fileID: 44688392065161030, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_Name
       value: DamagePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.08725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.y
@@ -249,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.47965
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalRotation.w
@@ -310,15 +312,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 82741312345405175, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -331,6 +333,10 @@ PrefabInstance:
     - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Name
       value: EnemyRenderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -376,6 +382,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b5fded129109753448dc5ede65b7dcfb, type: 2}
+    - target: {fileID: 7537675690710177230, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357025503503154993, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

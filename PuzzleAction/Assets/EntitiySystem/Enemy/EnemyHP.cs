@@ -2,17 +2,14 @@ using UnityEngine;
 
 public class EnemyHP : EntityHP
 {
+    [SerializeField] private int m_dropMoney = 160;
     private ReturnObjectToPool m_returnObjPool;
     [SerializeField] private bool m_isItemDrop;
 
+    [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
+
     protected override void Die()
     {
-        //Debug.LogWarning($"{this.name} enemy die");
-
-        //Ž€‚ñ‚¾‚Æ‚«pool‚É–ß‚é
-        // player get money
-        // add score
-        // item drop
         EnemyController enemy = GetComponent<EnemyController>();
         if(enemy == null)
         {
@@ -21,6 +18,9 @@ public class EnemyHP : EntityHP
         }
 
         if (enemy.CurrentState == Entity.EntityState.Dead) return;
+
+        //dropMoney
+        m_dropMoneyEventSO.Raise(transform.position, m_dropMoney);
 
         //kill enemy
         enemy.KillEntity();
@@ -37,6 +37,11 @@ public class EnemyHP : EntityHP
 
         }
         m_returnObjPool.ReturnToPool();
+
+        //EnemyController enemy = GetComponent<EnemyController>();
+        //enemy.ChangeState(Entity.EntityState.Idle);
+        //m_entity.HealHP(m_entity.HP);
+
         Debug.Log("EnemyReturnPool");
 
     }

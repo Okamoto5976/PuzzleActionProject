@@ -16,18 +16,18 @@ MonoBehaviour:
   m_data:
     itemID: 19
     itemName: ExtraCriticalDamageUPPotion
-    itemIcon: {fileID: 21300000, guid: c97f9052bc09b254aa59dedaaefef40b, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 796ac6d82e6a85f46b6cf3e2616a7266, type: 3}
+    description: "\u3044\u3064\u6765\u308B\u304B\u5206\u304B\u3089\u306A\u3044\u5727\u5012\u7684\u706B\u529B\u306B\u6575\u306F\u81C6\u3059\u308B\u3002\u3000\\n\u52B9\u679C\uFF1A\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u30C0\u30E1\u30FC\u30B8\u304C\u304B\u306A\u308A\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 600
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
-  - m_value: 20
-    m_statusType: 7
+  - m_value: 0.4
+    m_statusType: 6
     m_modifierType: 0
     m_duration: 30
     m_buffID: 15

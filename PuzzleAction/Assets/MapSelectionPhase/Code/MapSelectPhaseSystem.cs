@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MapBGMData;
+
 
 public class MapSelectPhaseSystem : MonoBehaviour
 {
@@ -9,9 +12,14 @@ public class MapSelectPhaseSystem : MonoBehaviour
     [SerializeField] private List<MapSettingSO> m_allMaps;
     [SerializeField] private int m_mapCount = 3;
 
+    [SerializeField] private AudioData m_bgm;
+    private Dictionary<int, MapRewardData> m_mapRewards = new();
+
     [Header("UI")]
+    [SerializeField] private UnityEngine.UI.Button m_nextsceneButton;
     [SerializeField] private RectTransform m_previewRoot;
     [SerializeField] private Image m_tilePrefab;
+    [SerializeField] private TMP_Text m_moneyTextPrefab;
 
     [SerializeField] private float m_maxPreviewWidth = 250f;
     [SerializeField] private float m_previewSpacing = 100f;
@@ -24,9 +32,39 @@ public class MapSelectPhaseSystem : MonoBehaviour
     private float m_currentX;
     private int m_selectedIndex = -1;
 
+    [Header("Tutorial")]
+    [SerializeField] private MapSettingSO m_tutorialMap;
+    [SerializeField] private GameObject m_guidePanel;
+
     private void Start()
     {
+        m_nextsceneButton.onClick.AddListener(GoMapPieceSystem);
+
+        if(GameManager.Instance.IsTutorial)
+        {
+            m_guidePanel.SetActive(true);
+            Tutorial();
+            return;
+        }
+
+        m_guidePanel.SetActive(false);
+
+
         CreateRandomMaps();
+        GenerateRewards();
+        CreatePreviews();
+
+        AudioManager.Instance.PlayAudio(m_bgm);
+
+    }
+
+    private void Tutorial()
+    {
+        m_selectedMaps.Add(m_tutorialMap);
+
+        m_mapRewards.Clear();
+        m_mapRewards.Add(0, new MapRewardData(){StartMoney = 1000});
+
         CreatePreviews();
     }
 
@@ -119,23 +157,39 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
                 if (x == 0 && y == 0)
                 {
-                    Debug.LogWarning($"IsActiveTile(0, 0) = {active}");
+                    //Debug.LogWarning($"IsActiveTile(0, 0) = {active}");
                 }
 
-                tile.color =    
-                    active
-                    ? Color.white
-                    : Color.clear;
+                tile.color = active ? Color.white : Color.clear;
 
-                Debug.Log(tile.color);
             }
         }
-
-
-
         m_previews.Add(root);
-    }
 
+        GameObject rewardObj = new GameObject("RewardText");
+
+        rewardObj.transform.SetParent(root, false);
+        TMP_Text moneyText = Instantiate(m_moneyTextPrefab, rewardObj.transform);
+        moneyText.text = $" + ¥{m_mapRewards[index].StartMoney}";
+        moneyText.alignment = TextAlignmentOptions.Center;
+
+        RectTransform textRect = moneyText.rectTransform;
+        textRect.anchorMin = new Vector2(0.5f, 1f);
+        textRect.anchorMax = new Vector2(0.5f, 1f);
+        textRect.pivot = new Vector2(0.5f, 0f);
+        textRect.anchoredPosition = new Vector2(0, 260f);
+    }
+    private void GenerateRewards()
+    {
+        //reset 
+        m_mapRewards.Clear();
+        for (int i = 0; i < m_selectedMaps.Count; i++)
+        {
+            MapRewardData reward = new();
+            reward.StartMoney = Random.Range(500, 2001);
+            m_mapRewards.Add(i, reward);
+        }
+    }
     #endregion
 
     #region Select
@@ -150,7 +204,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         Highlight(index);
 
-        Debug.Log($"Selected : {m_selectedMaps[index].mapName}");
+        if (m_selectedMaps[index].mapName == null) return;
     }
 
     public void Deselect()
@@ -166,11 +220,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
         {
             bool selected = i == index;
 
-            //�����傫������
-            m_previews[i].localScale =
-                selected
-                ? Vector3.one * 1.1f
-                : Vector3.one;
+            m_previews[i].localScale = selected  ? Vector3.one * 1.1f : Vector3.one;
         }
     }
 
@@ -183,9 +233,6 @@ public class MapSelectPhaseSystem : MonoBehaviour
         var definition = m_selectedMaps[m_selectedIndex];
 
         MapClass map = new MapClass(definition.size.x, definition.size.y);
-
-        // �S�� Blocked
-
         for (int y = 0; y < definition.size.y; y++)
         {
             for (int x = 0; x < definition.size.x; x++)
@@ -194,24 +241,21 @@ public class MapSelectPhaseSystem : MonoBehaviour
             }
         }
 
-        // Shape��1�����L��
-
         for (int y = 0; y < definition.size.y; y++)
         {
             for (int x = 0; x < definition.size.x; x++)
             {
-                if (!definition.IsActiveTile(x, y))
-                    continue;
+                if (!definition.IsActiveTile(x, y)) continue;
 
                 map.GetFloor(x, y).SetState(Floor.FloorState.empty);
             }
         }
-
         map.UpdateFloors();
 
         m_mapClassData.SetMapClass(map);
         m_mapClassData.SetStartPos(definition.startPos);
         m_mapClassData.SetGoalPos(definition.goalPos);
+        m_mapClassData.SetRewardData(m_mapRewards[m_selectedIndex]);
     }
 
     #endregion
@@ -222,12 +266,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
     {
         if (m_selectedIndex == -1)
         {
-            Debug.Log("Map Not Selected");
             return;
         }
-
-        //SceneManager.LoadScene("MapPieceSystem");
-
         LoadManager.m_instance.LoadScene(m_mapPieceSystem.Value);
     }
 

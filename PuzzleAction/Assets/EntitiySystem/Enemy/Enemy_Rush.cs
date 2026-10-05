@@ -43,6 +43,10 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, m_controller.Target.Value);
+        if(distance <= m_controller.FindRange && distance >= m_controller.AttackRange)
+        {
+            m_controller.SetDestination(m_controller.Target.Value, m_controller.Speed);
+        }
         if (distance > m_controller.FindRange)
         {
             m_lineRenderer.enabled = false;
@@ -114,9 +118,11 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
     // ==================Rush
     private void UpdateRush()
     {
+        if (m_controller.IsStun) return;
+        if (m_controller.IsKnockBack) return;
         transform.rotation = Quaternion.LookRotation(m_dir);
 
-        m_controller.Move(m_dir, m_controller.EvasionSpeed);
+        m_controller.InputMove(m_dir, m_controller.Speed * 1.5f);
 
         float distanceToPlayer = Vector3.Distance(transform.position, m_controller.Target.Value);
         if (distanceToPlayer <= m_controller.AttackRange)

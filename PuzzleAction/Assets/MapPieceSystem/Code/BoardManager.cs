@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum GridKind
 {
@@ -31,9 +33,23 @@ public class BoardManager : MonoBehaviour
 
     [SerializeField] private Transform m_parent;
 
+    [SerializeField] private RectTransform m_guide;
+    [SerializeField] private GameObject m_rulePanel;
+
+    [SerializeField] private AudioData m_bgm;
+
+    [SerializeField] private AudioData m_UISE;
+
     private void Awake()
     {
         m_mapSystem = GetComponent<MapPlaceSystem>();
+    }
+
+    private void Start()
+    {
+        SetRulePanel(false);
+
+        AudioManager.Instance.PlayAudio(m_bgm);
     }
 
     private void Update()
@@ -223,5 +239,63 @@ public class BoardManager : MonoBehaviour
         {
             room.OnGlowGrid(value);
         }
+    }
+
+    private bool m_isGuide;
+    private Coroutine m_coroutine;
+
+    public void Guide()
+    {
+        if (m_coroutine != null) return;
+        m_isGuide = !m_isGuide;
+
+        AudioManager.Instance.PlayAudio(m_UISE);
+
+        if(m_isGuide)
+        {
+            Vector2 target = m_guide.anchoredPosition + new Vector2(+400f, 0);
+
+
+            m_coroutine = StartCoroutine(MovePanel(m_guide, target, 0.3f));
+        }
+        else
+        {
+            Vector2 target = m_guide.anchoredPosition + new Vector2(-400f, 0);
+
+
+            m_coroutine = StartCoroutine(MovePanel(m_guide, target, 0.3f));
+
+        }
+    }
+
+    private IEnumerator MovePanel(RectTransform panel, Vector2 target, float duration)
+    {
+        Vector2 start = panel.anchoredPosition;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+
+            float t = time / duration;
+            panel.anchoredPosition = Vector2.Lerp(start, target, t);
+
+            yield return null;
+        }
+
+        panel.anchoredPosition = target;
+
+        m_coroutine = null;
+    }
+
+    public void ClickRulePanel(bool value)
+    {
+        AudioManager.Instance.PlayAudio(m_UISE);
+        SetRulePanel(value);
+    }
+
+    private void SetRulePanel(bool value)
+    {
+        m_rulePanel.SetActive(value);
     }
 }

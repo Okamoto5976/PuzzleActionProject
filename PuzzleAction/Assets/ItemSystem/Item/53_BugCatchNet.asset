@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 53
     itemName: BugCatchNet
     itemIcon: {fileID: 21300000, guid: dc96d91ff6f1e4145bff87ba8ab1a94b, type: 3}
-    description: 
+    description: "\u9577\u6642\u9593\u3001\u6575\u3092\u62D8\u675F\u3059\u308B\u3002\u3000"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 2
-    price: 100
-    Type: 0
+    price: 480
+  m_se: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 17

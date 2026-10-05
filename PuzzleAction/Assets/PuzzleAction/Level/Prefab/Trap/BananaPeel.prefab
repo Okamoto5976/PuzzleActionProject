@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 1247948520189622386}
   - component: {fileID: 4575931628719985468}
   - component: {fileID: 4138614842166381810}
-  - component: {fileID: 7706723318586981466}
-  - component: {fileID: 400712983052551596}
+  - component: {fileID: 5203426589339746040}
   m_Layer: 0
   m_Name: BananaPeel
   m_TagString: Untagged
@@ -49,9 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bananapeel
   m_isFowardDir: 0
-  m_str: 0
+  m_trapData: {fileID: 11400000, guid: 3ee6db1a0a5e32f4d956ea9d602c74c6, type: 2}
   m_speed: 0
-  m_attackType: 0
   m_stunDuration: 2
 --- !u!114 &4138614842166381810
 MonoBehaviour:
@@ -65,34 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb661c606c4f0a9429eb3eca6a586188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReturnObjectToPool
---- !u!54 &7706723318586981466
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5405777550611800389}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
---- !u!65 &400712983052551596
+--- !u!65 &5203426589339746040
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +92,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1247948520189622386}
     m_Modifications:
+    - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 82741312345405175, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3716078111463343107, guid: ac5f4c61a7563e240b8551830665de41, type: 3}
       propertyPath: m_Sprite
       value: 

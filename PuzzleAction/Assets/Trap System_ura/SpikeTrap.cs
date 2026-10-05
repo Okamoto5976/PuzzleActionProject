@@ -1,94 +1,144 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class SpikeTrap : TrapBase
 {
-    [Header("Trap")]
-    [SerializeField]
-    private float m_cooldown = 2.0f;
-   
     private bool m_isActive = true;
+
+    [Header("Damage")]
+    [SerializeField]
+    private float m_damageInterval = 0.5f;
 
     private void Awake()
     {
+        m_isActive = true;
         m_anim = GetComponentInChildren<Animator>();
+    }
+
+
+    private HashSet<Entity> m_targets =
+        new HashSet<Entity>();
+
+    private Coroutine m_damageCoroutine;
+
+    [SerializeField] private AudioData m_se;
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_targets.Clear();
     }
 
     protected override void EntitySetUp()
     {
-        
-        m_damageData = new DamageData
+        m_targets.Clear();
+
+        if (m_damageCoroutine != null)
         {
-            Attack = m_str,
-            AttackType = m_attackType,
-
-            CriticalRate = m_owner.CriticalRate,
-            CriticalDamage = m_owner.CriticalDamage,
-            BreakRate = m_owner.BreakRate,
-        };
-
-        m_isActive = true;
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
     }
-  
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-
-        m_damageData = new DamageData
-        {
-            Attack = m_str,
-            AttackType = m_attackType,
-
-            CriticalRate = 0,
-            CriticalDamage = 0,
-            BreakRate = 0,
-        };
-
-        m_isActive = true;
-    }
-
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (!m_isActive)
+        Entity target =
+            other.GetComponentInParent<Entity>();
+
+        if (target == null)
         {
             return;
         }
 
-        Entity entity = other.GetComponent<Entity>();
-
-        if (entity == null)
+        if (target.Team == m_team)
         {
             return;
         }
 
-        if (entity.Team == Team)
+        m_targets.Add(target);
+
+        if (m_damageCoroutine == null)
         {
-            return;
+            m_damageCoroutine =
+                StartCoroutine(DamageCoroutine());
         }
-
-        m_anim.SetTrigger("Active");
-        entity.TakeDamage(m_damageData);
-
-        OnHit();
-
-        m_isActive = false;
-
-        StartCoroutine(Cooldown());
     }
 
-
-    private IEnumerator Cooldown()
+    private void OnTriggerExit(Collider other)
     {
-        yield return new WaitForSeconds(m_cooldown);
+        Entity target =
+            other.GetComponentInParent<Entity>();
 
-        m_isActive = true;
+        if (target == null)
+        {
+            return;
+        }
+
+        m_targets.Remove(target);
+
+        if (m_targets.Count == 0)
+        {
+            StopDamage();
+        }
     }
 
+    private IEnumerator DamageCoroutine()
+    {
+        while (m_targets.Count > 0)
+        {
+            m_anim.SetTrigger("Action");
+
+            List<Entity> removeTargets = new List<Entity>();
+
+            foreach (Entity target in m_targets)
+            {
+                if (target == null)
+                {
+                    continue;
+                }
+
+                if(!target.gameObject.activeInHierarchy)
+                {
+
+                    removeTargets.Add(target);
+                    continue;
+                }
+
+                target.TakeDamage(m_damageData);
+            }
+
+
+            foreach(Entity target in removeTargets)
+            {
+                m_targets.Remove(target);
+            }
+
+            OnHit();
+            yield return new WaitForSeconds(
+                m_damageInterval);
+        }
+        m_damageCoroutine = null;
+    }
+
+    private void StopDamage()
+    {
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
+    }
+
+    private void OnDisable()
+    {
+        StopDamage();
+        m_targets.Clear();
+    }
 
     protected override void OnHit()
     {
-        
+        AudioManager.Instance.PlayAudio(m_se);
     }
 }
-

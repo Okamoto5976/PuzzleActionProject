@@ -6,15 +6,26 @@ abstract public class EntityHP : MonoBehaviour
 
     private AudioSource m_audioSource;
 
-    [SerializeField] private int m_currentHP;
+    [SerializeField] protected int m_currentHP;
     [SerializeField] private int m_max;
     public int CurrentHP { get => m_currentHP;}
 
     public int MaxHP => (int)m_entity.HP;
 
-    
+
+    //======Player Tutorial==============
+    public bool m_isTutorial = false;
+
 
     [SerializeField] private DamageParticleController m_damageParticleController;
+
+    //Audio
+    [SerializeField] private AudioData m_damageSE;
+    [SerializeField] private AudioData m_criticalSE;
+    [SerializeField] private AudioData m_burnSE;
+    [SerializeField] private AudioData m_gasSE;
+
+
 
     private void Awake()
     {
@@ -28,7 +39,7 @@ abstract public class EntityHP : MonoBehaviour
         m_max = MaxHP;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         if (m_entity == null) return;
         m_currentHP = (int)m_entity.HP;
@@ -36,18 +47,6 @@ abstract public class EntityHP : MonoBehaviour
 
     public virtual void TakeDamage(DamageData data)//DamageData
     {
-        switch (data.AttackType)
-        {
-            case AttackType.None:
-                break;
-
-            case AttackType.Recovery:
-                Heal(data.Attack);
-                break;
-
-            case AttackType.Fire:
-                break;
-        }
 
         //float hitRate =
         //    data.HitRate - m_entity.DEX;
@@ -60,18 +59,21 @@ abstract public class EntityHP : MonoBehaviour
         //    return;
         //}
 
+        AudioData seData = null;
+
         bool isBreak = false;
 
-        if(Random.Range(0f,1f)<=data.BreakRate)
+        if(Random.Range(0f,100f)<=data.BreakRate)
         {
             isBreak = true;
         }
 
         bool isCritical = false;
 
-        if(Random.Range(0f,1f)<=data.CriticalRate)
+        if(Random.Range(0f,100f)<=data.CriticalRate)
         {
             isCritical = true;
+            seData = m_criticalSE;
         }
 
         float damage = 0;
@@ -81,19 +83,39 @@ abstract public class EntityHP : MonoBehaviour
         {
             damage = 9999;
 
+            Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = BreakAttack");
+
         }
         else
         {
-            damage = Mathf.Max(data.Attack -(int) m_entity.DEF, 1);
+            //クリティカルを先にアタックにかけて　
+            if (isCritical)
+            {
+                damage = (data.Attack * data.CriticalDamage);
+            }
+            else
+            {
+                damage = data.Attack;
+                seData = m_damageSE;
+            }
 
-            //Critical
+              damage = Mathf.Max(damage - (int)m_entity.DEF, 0);
+
             if(isCritical)
             {
-                damage = (int)(damage * data.CriticalDamage);
+                Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = ( Attack : {data.Attack} * CD : {data.CriticalDamage}) - DEF : {m_entity.DEF}");
+
+            }
+            else
+            {
+                Debug.Log($"{gameObject.name}のダメージ処理 : {damage} = Attack : {data.Attack} - DEF : {m_entity.DEF}");
+
             }
         }
 
             m_currentHP -= (int)damage;
+        AudioManager.Instance.PlayAudio(seData);
+
 
         if(isCritical)
         {
@@ -119,38 +141,35 @@ abstract public class EntityHP : MonoBehaviour
 
         m_currentHP = Mathf.Max(m_currentHP, 0);
 
+
         //Debug.Log($"{gameObject.name} : {damage}damage");
 
-        Debug.Log($"{gameObject.name} HP : {m_currentHP}");
+        //Debug.Log($"{gameObject.name} HP : {m_currentHP}");
 
-        if(m_entity.DamageSE !=null&&m_audioSource!=null)
-        {
-            m_audioSource.PlayOneShot(m_entity.DamageSE);
-        }
+        //if(m_entity.DamageSE !=null&&m_audioSource!=null)
+        //{
+        //    m_audioSource.PlayOneShot(m_entity.DamageSE);
+        //}
 
-        float knockBackPower = Mathf.Max(data.Knockback - m_entity.DEF, 0);
-
-        //float stunPower = Mathf.Max(data.StunDuration - m_entity.StunRes, 0);
-
-        //float stunTime=stunPower * 0.1f;
-
-        m_entity.AddControlEffectStun(data.StunDuration);
-
+        float knockBackPower = Mathf.Clamp(data.Knockback - m_entity.DEF, 0f, 3f);
         Vector3 dir = data.AttackDir.normalized;
 
+
         m_entity.ApplyKnockBack(dir, knockBackPower);
+
+
+        m_entity.ApplyStun(data.StunDuration);
+
+        if(m_isTutorial)
+        {
+            m_currentHP = Mathf.Max(m_currentHP, 1);
+        }
 
         if ( m_currentHP <= 0 ) 
         {
             Die();
         }
     }
-
-    public void Damage(int value)
-    {
-
-    }
-
 
     public void Heal(float amount)
     {
@@ -170,21 +189,21 @@ abstract public class EntityHP : MonoBehaviour
             case StatusType.Gas:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Gas);
                 }
                 break;
             case StatusType.Poison:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Poison);
                 }
                 break;
             case StatusType.Burn:
                 if (m_damageParticleController != null)
                 {
-                    Debug.Log("damage particle");
+                    //Debug.Log("damage particle");
                     m_damageParticleController.DoDamageParticle((uint)damage, DamageParticleType.Burn);
                 }
                 break;

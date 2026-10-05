@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,6 +17,8 @@ public class BossEnemyController : Entity
     [SerializeField] private float m_attackCooldown = 3f;
 
     [Header("Drop")]
+    [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [SerializeField] private int m_dropCount = 3;
 
     [Header("Ref")]
@@ -23,7 +27,29 @@ public class BossEnemyController : Entity
 
     [Header("Item")]
     [SerializeField] private Item m_attackItem;
+    [SerializeField] private float m_power = 24f;
+    [SerializeField] private Vector3 m_shootOffset = new Vector3(0f, 0.5f, 0f);
+    #region UnityEditor
+    #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            if (m_attackItem == null) return;
+
+            Vector3 shootPos = transform.position + m_shootOffset;
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(shootPos, 0.15f);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(shootPos, shootPos + transform.forward * 2f);
+
+            Handles.color = Color.white;
+            Handles.Label(shootPos + Vector3.up * 0.3f, "Shoot Offset");
+        }
+    #endif
+    #endregion
     private ItemManager m_itemManager;
+    private List<Item> m_dropItems = new();
 
     private float m_cooldownTimer;
     private bool m_isCooldownReady = true;
@@ -32,17 +58,32 @@ public class BossEnemyController : Entity
     private IBossBehaviour m_bossBehaviour;
     private ReturnObjectToPool m_returnPool;
 
+    public bool CanAction => CurrentState != EntityState.Dead && !IsStun;
     public float FindRange => m_findRange;
     public float AttackRange => m_attackRange;
-
     public bool IsCooldownReady => m_isCooldownReady;
-
+    public float ShootPower => m_power;
     public Vector3 SpawnPosition { get; private set; }
-
     public NavMeshAgent Agent => m_agent;
-
     public Vector3Asset Target => m_target;
 
+    public void InitializeSpawn()
+    {
+        ChangeState(EntityState.Idle);
+
+        m_isCooldownReady = true;
+        m_cooldownTimer = 0f;
+
+        if (m_entityHP is EnemyHP hp)
+        {
+            hp.ResetHP();
+        }
+
+        SetCanMove(true);
+        SetIsStun(false);
+        SetIsInvincible(false);
+        AssignDropItem();
+    }
     #region UNITY EVENT
     protected override void Awake()
     {
@@ -51,17 +92,17 @@ public class BossEnemyController : Entity
         SpawnPosition = transform.position;
 
         m_agent = GetComponent<NavMeshAgent>();
-        m_hitCollider = GetComponent<HitCollider>();
+        m_hitCollider = new HitCollider(true);
         m_bossBehaviour = GetComponent<IBossBehaviour>();
         m_returnPool = GetComponent<ReturnObjectToPool>();
         m_itemManager = FindAnyObjectByType<ItemManager>();
 
-        m_attackHitBox.m_transform = gameObject.transform;
+        m_attackHitBox.m_pos = gameObject.transform.position;
 
-        if (m_attackItem == null)
-        {
-            Debug.LogWarning($"{name} AttackItem Missing");
-        }
+        //if (m_attackItem == null)
+        //{
+        //    Debug.LogWarning($"{name} AttackItem Missing");
+        //}
 
         if (m_itemManager == null)
         {
@@ -80,8 +121,17 @@ public class BossEnemyController : Entity
     private void Update()
     {
         if (CurrentState == Entity.EntityState.Dead) return;
+        if (IsStun)
+        {
+            Stop();
+            if (m_anim != null)
+            {
+                m_anim.SetBool("Move", false);
+            }
+            return;
+        }
         if (m_target == null) return;
-        OnUpdateFlag();
+        UpdateFlag();
         HandleCooldown();
 
         float distance = Vector3.Distance(transform.position, m_target.Value);
@@ -139,15 +189,20 @@ public class BossEnemyController : Entity
     {
         if (CurrentState == Entity.EntityState.Dead) return false;
         if (!m_isCooldownReady) return false;
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Attack");
+
+        }
         Attack();
         ConsumeCooldown();
         return true;
     }
     public void Attack()
     {
-        Debug.DrawLine(transform.position, m_attackHitBox.m_transform.position, Color.red, 2f);
-        Debug.Log(Vector3.Distance(m_attackHitBox.m_transform.position, m_target.Value));
-        Debug.Log(m_attackHitBox.m_transform.position);
+        Debug.DrawLine(transform.position, m_attackHitBox.m_pos, Color.red, 2f);
+        Debug.Log(Vector3.Distance(m_attackHitBox.m_pos, m_target.Value));
+        Debug.Log(m_attackHitBox.m_pos);
         Debug.Log(m_attackHitBox.m_radius);
 
 
@@ -160,14 +215,27 @@ public class BossEnemyController : Entity
             CriticalDamage = CriticalDamage,
             BreakRate = BreakRate,
             Knockback = KnockBack,
-            StunDuration = Stun,
+            StunDuration = m_data.StunDuration,
             AttackDir = transform.forward,
-            Attacker = this,
-            //AttackerSE = AttackSE,
-            //AudioSource = AudioSource
         };
+        m_attackHitBox.m_pos = transform.position;
 
-        m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        var hits = m_hitCollider.AttackCollider(damage, Team, m_attackHitBox);
+        DebugViewCollider.Instance.ViewHitCollider(m_attackHitBox);
+
+        foreach (Collider hit in hits)
+        {
+            Entity entity = hit.GetComponentInParent<Entity>();
+            if (entity == null)
+            {
+                continue;
+            }
+
+            if (entity.Team == Team) continue;
+
+            entity.TakeDamage(damage);
+        }
+
         Debug.Log("BossEnemyController : Player ‚ÉHIT");
     }
     public void UseItem(Vector3 dir)
@@ -176,7 +244,10 @@ public class BossEnemyController : Entity
         {
             entity = this,
             pos = transform.position,
-            dir = dir
+            dir = dir, 
+            power = m_power, 
+            offset = m_shootOffset,
+            
         };
 
         m_itemManager.OnUseItem(m_attackItem, data);
@@ -184,8 +255,9 @@ public class BossEnemyController : Entity
     #endregion
 
     #region MOVE
-    public void Move(Vector3 dir, float speed)
+    public void InputMove(Vector3 dir, float speed)
     {
+        if (!CanAction) return;
         if (dir == Vector3.zero)
         {
             Stop();
@@ -200,7 +272,10 @@ public class BossEnemyController : Entity
     public void SetDestination(Vector3 pos, float speed)
     {
         m_agent.isStopped = false;
-
+        if (m_anim != null)
+        {
+            m_anim.SetBool("Move", !m_agent.isStopped);
+        }
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
         m_agent.stoppingDistance = m_attackRange;
@@ -230,7 +305,7 @@ public class BossEnemyController : Entity
 
         for (float i = range; i >= 0; i--)
         {
-            Vector3 randomPoint = transform.position + new Vector3((Random.value * 2 - 1) * range, 0, (Random.value * 2 - 1) * range);
+            Vector3 randomPoint = transform.position + new Vector3((UnityEngine.Random.value * 2 - 1) * range, 0, (UnityEngine.Random.value * 2 - 1) * range);
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
             {
                 result.x = hit.position.x;
@@ -254,16 +329,15 @@ public class BossEnemyController : Entity
     }
     private void DropItems()
     {
-        if (m_itemManager == null)
-            return;
+        if (m_itemManager == null) return;
 
-        for (int i = 0; i < m_dropCount; i++)
+        foreach (Item item in m_dropItems)
         {
-            Vector3 pos = transform.position + Random.insideUnitSphere;
+            if (item == null) continue;
 
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere;
             pos.y = transform.position.y;
-
-            //m_itemManager.DropItemSetData(pos, m_dropCount);
+            m_itemManager.DropItemSetData(pos, item);
         }
     }
     #endregion
@@ -286,11 +360,31 @@ public class BossEnemyController : Entity
         }
 
         //set enemy info
+        enemy.ChangeState(Entity.EntityState.Idle);
         enemy.transform.position = position;
         enemy.gameObject.SetActive(true);
-        Debug.Log($"spawn : {enemy}");
+
+        enemy.InitializeSpawn();
+        enemy.AssignDropItem();
 
         return enemy;
+    }
+    public void AssignDropItem()
+    {
+        if (m_itemManager == null) return;
+        if (m_itemDropGachaEngine == null) return;
+
+        m_dropItems.Clear();
+
+        for (int i = 0; i < m_dropCount; i++)
+        {
+            RarityEnumAsset rarity = m_itemDropGachaEngine.Collapse();
+            Item item = m_itemManager.DropItem(rarity);
+            if (item != null)
+            {
+                m_dropItems.Add(item);
+            }
+        }
     }
     #endregion
 }

@@ -4,17 +4,13 @@ using UnityEngine;
 public class FireMagic : TrapBase
 {
     [Header("Fire Magic Settings")]
-    [SerializeField] private float m_damage = 10f;
-    [SerializeField] private float m_burnDamage = 2f;
-    [SerializeField] private float m_burnDuration = 4f;
+    [SerializeField] private LayerMask m_hitLayers;
     [SerializeField] private float m_lifeTime = 5f;
 
-    private bool m_isAddForceCalled = false;
     private float m_timer = 0f;
 
     protected override void EntitySetUp()
     {
-        m_isAddForceCalled = false;
         m_timer = 0f;
 
         if(m_rb!=null)
@@ -25,19 +21,10 @@ public class FireMagic : TrapBase
             m_rb.angularVelocity = Vector3.zero;
         }
     }
-    public override void TrapInit(ItemRecieveData data)
-    {
-        base.TrapInit(data);
-        //EntitySetUp();
-    }
 
     private void FixedUpdate()
     {
-        if(!m_isAddForceCalled)
-        {
-            OnAddForce(m_dir, m_power);
-            m_isAddForceCalled=true;
-        }
+        OnMove(m_dir);
     }
 
     private void Update()
@@ -58,28 +45,32 @@ public class FireMagic : TrapBase
 
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
+        if ((m_hitLayers.value & (1 << other.gameObject.layer)) != 0)
+        {
+            OnHit();
+            return;
+        }
+
+        Entity target =other.GetComponentInParent<Entity>();
+
         if (m_team == TeamType.Nature) return;
 
-        Entity target =other.GetComponent<Entity>();
-        if(target==null) return;
-        if (target.Team == m_team) return;
 
-        DamageData damageData = new DamageData
-        {
-            Attack = m_damage,
-            Attacker = m_owner,
-            AttackDir = m_dir,
-        };
-        target.TakeDamage(damageData);
+        if (target == null || target.Team == m_team) return;
 
-        StatusModifier burnModifier = new StatusModifier
+        target.TakeDamage(m_damageData);
+
+        if (m_trapData.m_buffSetting.Count != 0)
         {
-            m_statType = StatusType.Burn,
-            m_value = m_burnDamage,
-            m_modType = ModifierType.Add
-        };
-        target.AddBuff(burnModifier, BuffID.Burn, m_burnDuration);
+            foreach (var buff in m_trapData.m_buffSetting)
+            {
+                if (buff.m_duration <= 0) continue;
+
+                var modifier = SetModifier(buff);
+
+                target.AddBuff(modifier, buff.m_buffID, buff.m_duration);
+            }
+        }
 
         OnHit();
     }

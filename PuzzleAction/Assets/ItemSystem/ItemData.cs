@@ -1,11 +1,5 @@
 using UnityEngine;
 
-public enum Type
-{
-    PlayerItem,
-    EnemyItem
-}
-
 //public enum Grade
 //{
 //    Comon,
@@ -38,7 +32,6 @@ public class ItemData
     [SerializeField] private ItemType itemType;
     [SerializeField] private ItemUseType m_itemUseType;
     [SerializeField, Min(0)] private int price;
-    [SerializeField] private Type Type;
     //[SerializeField] private Grade itemGrade;
 
     public int ItemID { get => itemID; }
@@ -53,7 +46,6 @@ public class ItemData
     public int Price => price;
     public bool IsShopCompatible => price > 0;
 
-    public Type type { get => Type; }
     //public Grade ItemGrade { get => itemGrade; }
 }
 

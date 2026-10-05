@@ -3,22 +3,24 @@ using UnityEngine;
 public class RockTrap : TrapBase
 {
     [SerializeField] private LayerMask m_hitLayers;
-    //private void OnEnable()
-    //{
-    //    if (m_rb != null)
-    //    {
-    //        m_rb.linearVelocity = Vector3.zero;
-    //        m_rb.angularVelocity = Vector3.zero;
-    //    }
-    //}
+
+    private bool m_isInitialized;
+
+    private void FixedUpdate()
+    {
+        if (!m_isInitialized)
+            return;
+
+        OnAddForce(m_dir, m_power);
+
+        m_isInitialized = false;
+    }
 
     protected override void EntitySetUp()
     {
-        if (m_rb != null)
-        {
-            m_rb.linearVelocity = Vector3.zero;
-            m_rb.angularVelocity = Vector3.zero;
-        }
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+        m_isInitialized = true;
     }
 
     protected override void OnHit()
@@ -55,10 +57,7 @@ public class RockTrap : TrapBase
 
         target.TakeDamage(m_damageData);
 
-        //Debug.Log(
-        //    $"{other.name} Hit");
-
-        //Destroy(gameObject);
+   
         OnHit();
     }
 

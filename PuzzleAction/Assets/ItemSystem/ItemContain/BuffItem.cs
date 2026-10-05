@@ -1,4 +1,3 @@
-using Mono.Cecil;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BuffItem", menuName = "Scriptable Objects/Datas/BuffItem")]
@@ -6,34 +5,10 @@ using UnityEngine;
 public class BuffItem : Item 
 {
 
-    //public enum BuffType
-    //{
-    //    AttackUp, 
-    //    DefenseUp, 
-    //    SpeedUp,
-    //    AttackDown, 
-    //    DefenseDown, 
-    //    SpeedDown, 
-    //}
-
-    [System.Serializable]
-    public class BuffItemClass
-    {
-        public float m_value;
-        public StatusType m_statusType;//what status? HP, Strength
-        public ModifierType m_modifierType;//what mod? Add, Multiply
-
-        [Header("----Active Buff Setting ----")]
-        public float m_duration;
-        public BuffID m_buffID;
-
-
-    }
-
     [Header("Buff Reference")]
     [SerializeField] private ItemType m_buffEffectType;
 
-    [SerializeField] private List<BuffItemClass> m_buffItemClass = new();
+    [SerializeField] private List<BuffSetting> m_buffItemClass = new();
 
     //[SerializeField] private BuffType m_buffType;
 
@@ -49,8 +24,13 @@ public class BuffItem : Item
     {
         if (m_buffEffectType == ItemType.Active)
         {
+            if (m_se != null)
+            {
+                AudioManager.Instance.PlayAudio(m_se);
 
-            foreach(var buff in m_buffItemClass)
+            }
+
+            foreach (var buff in m_buffItemClass)
             {
                 if (buff.m_duration <= 0) continue;
 
@@ -73,7 +53,31 @@ public class BuffItem : Item
     {
         Debug.LogWarning("AddPassive in item");
 
-        if(m_buffEffectType == ItemType.Passive)
+        if (m_se != null)
+        {
+            AudioManager.Instance.PlayAudio(m_se);
+
+        }
+
+        if (m_passiveType == Passive.WinnerTrophy)
+        {
+            player.m_isWinnerTrophy = true;
+        }
+        else if(m_passiveType == Passive.LoserTrophy)
+        {
+            player.m_isLoserTrophy = true;
+        }
+        else if(m_passiveType == Passive.Trophy)
+        {
+            player.m_isNormalTrophy = true;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = true;
+        }
+
+
+        if (m_buffEffectType == ItemType.Passive)
         {
             foreach (var buff in m_buffItemClass)
             {
@@ -101,93 +105,23 @@ public class BuffItem : Item
 
     public override void RemovePassive(PlayerController player)
     {
+        if (m_passiveType == Passive.WinnerTrophy)
+        {
+            player.m_isWinnerTrophy = false;
+        }
+        else if (m_passiveType == Passive.LoserTrophy)
+        {
+            player.m_isLoserTrophy = false;
+        }
+        else if (m_passiveType == Passive.Trophy)
+        {
+            player.m_isNormalTrophy = false;
+        }
+        else if(m_passiveType == Passive.TitleTrophy)
+        {
+            player.m_titleTrophy = false;
+        }
+
         player.RemovePassive(m_passiveType);
     }
 }
-
-//entity.BuffSet(buffType, value, buffDuration); //Entity��BuffSet��buffType��value��buffDuration��n��
-//switch (m_buffType)
-//{
-//    case BuffType.AttackUp:
-//        Buffdata.Add(this);
-//        StatusModifier modifier = new StatusModifier()
-//        {
-//            m_statType = StatusType.Strength,
-//            m_value = value,
-//            m_modType = ModifierType.Add
-//        };
-
-//        data.entity.AddBuff(modifier, m_buffDuration);
-
-//        break;
-//    case BuffType.DefenseUp:
-//        ////�h��͏㏸�̏���
-//        ////data.entity.BuffSet(value);
-//        //Buffdata.Add(this); //Buffdata�ɂ���BuffItem��ǉ�
-//        //statusModifier = new()
-//        //{
-//        //    m_statType = StatusType.Defense,
-//        //    m_value = value,
-//        //    m_modType = ModifierType.Add
-//        //};
-//        break;
-//    case BuffType.SpeedUp:
-//        ////���x�㏸�̏���
-//        ////data.entity.BuffSet(value);
-//        //Buffdata.Add(this); //Buffdata�ɂ���BuffItem��ǉ�
-//        //statusModifier = new()
-//        //{
-//        //    m_statType = StatusType.Speed,
-//        //    m_value = value,
-//        //    m_modType = ModifierType.Add
-//        //};
-//        break;
-//    case BuffType.AttackDown:
-//        ////�U���͌����̏���
-//        ////data.entity.BuffSet(value);
-//        //Buffdata.Add(this);
-//        //statusModifier = new()
-//        //{
-//        //    m_statType = StatusType.Strength,
-//        //    m_value = value,
-//        //    m_modType = ModifierType.Add
-//        //};
-//        break;
-//    case BuffType.DefenseDown:
-//        ////�h��͌����̏���
-//        ////data.entity.BuffSet(value);
-//        //Buffdata.Add(this);
-//        //statusModifier = new()
-//        //{
-//        //    m_statType = StatusType.Defense,
-//        //    m_value = value,
-//        //    m_modType = ModifierType.Add
-//        //};
-//        break;
-//    case BuffType.SpeedDown:
-//        ////���x�����̏���
-//        ////data.entity.BuffSet(value);
-//        //Buffdata.Add(this);
-//        //statusModifier = new()
-//        //{
-//        //    m_statType = StatusType.Speed,
-//        //    m_value = value,
-//        //    m_modType = ModifierType.Add
-//        //};
-//        break;
-//    default:
-//        break;
-//}
-//data.entity.AddBuff(statusModifier, buffDuration);
-
-//while (m_buffDuration > 0) //buffDuration��0�ɂȂ�܂Ń��[�v
-//{
-//    m_buffDuration = Time.deltaTime; //buffDuration�����炷
-//                                     //�o�t�̌��ʂ��ێ����鏈��
-//    if (m_buffDuration <= 0) //buffDuration��0�ȉ��ɂȂ����烋�[�v�𔲂���
-//    {
-//        //    data.entity.BaseValueReset(value); //Entity��BaseValue�����ɖ߂�����
-//        Buffdata.Remove(this); //Buffdata���炱��BuffItem���폜
-//    }
-
-//}

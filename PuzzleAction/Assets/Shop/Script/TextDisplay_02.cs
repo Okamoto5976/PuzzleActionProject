@@ -6,7 +6,7 @@ public class TextDisplay_02 : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI m_messageText;
     [SerializeField] private AudioSource m_audioSource;
-    [SerializeField] private AudioClip m_audioClip;
+    [SerializeField] private AudioData m_messegeSE;
     [SerializeField] private float m_pitch = 1.0f;
 
     public void ShowMessage(string message)
@@ -31,11 +31,13 @@ public class TextDisplay_02 : MonoBehaviour
         foreach (char c in message)
         {
             m_messageText.text += c;
-            if (m_audioClip != null)
+            if (m_messegeSE != null)
             {
                 m_audioSource.pitch = m_pitch;
-                m_audioSource.PlayOneShot(m_audioClip);
+                m_audioSource.PlayOneShot(m_messegeSE.audioClip, m_messegeSE.volume);
             }
+
+
 
             yield return new WaitForSecondsRealtime(speed);
         }

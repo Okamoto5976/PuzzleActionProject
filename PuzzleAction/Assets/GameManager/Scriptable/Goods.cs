@@ -55,12 +55,24 @@ public class Goods : MonoBehaviour,
     public void InjectShopManager(ShopManager manager) => m_shopManager = manager;
 
     // Set Data
-    public void SetData(ShopItem shopItem, Sprite rarityOverlay)
+    public void SetData(ShopItem shopItem, Sprite rarityOverlay, float discount)
     {
         //Debug.Log("setData");
         m_data = shopItem.data;
         m_icon.sprite = m_data.Data.ItemIcon;
-        m_priceText.text = m_data.Data.Price.ToString() + " $";
+
+        int price;
+        if(GameManager.Instance.IsTutorial)
+        {
+            price = 10;
+
+        }
+        else
+        {
+            price = Mathf.CeilToInt(m_data.Data.Price * (1f - discount));
+
+        }
+        m_priceText.text =price.ToString() + " $";
         m_overlay.sprite = rarityOverlay;
         SetSoldVisibility(shopItem.IsSold);
     }
@@ -72,7 +84,7 @@ public class Goods : MonoBehaviour,
         //SE再生
 
         //info　表示
-        m_shopManager.OnInfoPanelFromGoods(m_data.Data);
+        m_shopManager.OnInfoPanelFromGoods(m_data.Data, transform.position);
 
 
         //infoの量に応じて　大きさ変更したい

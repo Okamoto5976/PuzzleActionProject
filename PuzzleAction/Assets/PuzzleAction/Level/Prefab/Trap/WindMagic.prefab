@@ -27,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 2054412717152868468}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 708881130298213125}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -4848,7 +4848,7 @@ GameObject:
   - component: {fileID: 4502828650689982262}
   - component: {fileID: 4189156852500700316}
   - component: {fileID: 75954044710433413}
-  - component: {fileID: 3623572353761329010}
+  - component: {fileID: 3075880153720477113}
   m_Layer: 0
   m_Name: WindMagic
   m_TagString: Untagged
@@ -4865,7 +4865,7 @@ Transform:
   m_GameObject: {fileID: 6320741106677991950}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 119.77344, y: 173.44391, z: 2.73433}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4884,10 +4884,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd7f6d05938d1414e912d5c8aa71fcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KnockBackTrap
-  m_str: 0
-  m_speed: 0
-  m_attackType: 0
-  m_lifeTime: 3
+  m_isFowardDir: 1
+  m_trapData: {fileID: 11400000, guid: fe60e6caa22d88746ad5da6d56ed3092, type: 2}
+  m_speed: 6
+  m_hitLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_lifeTime: 10
 --- !u!114 &4189156852500700316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4927,8 +4930,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3623572353761329010
-BoxCollider:
+--- !u!135 &3075880153720477113
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4946,5 +4949,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}

@@ -16,9 +16,9 @@ TagManager:
   - Wall
   - Interact
   - Item
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Minimap
   - 
   - 
   - 

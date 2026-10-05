@@ -15,20 +15,20 @@ MonoBehaviour:
   m_type: 2
   m_data:
     itemID: 9
-    itemName: HighDefenceUpPorthion
-    itemIcon: {fileID: 21300000, guid: 3960c70ce2b6f6d418cbda673fd12796, type: 3}
-    description: 
+    itemName: HighDefenceUpPotion
+    itemIcon: {fileID: 21300000, guid: 27726452031391845bd2967ecfc6e037, type: 3}
+    description: "\u4F53\u304C\u304B\u306A\u308A\u4E08\u592B\u306B\u306A\u308B\\n\u52B9\u679C\uFF1A\u9632\u5FA1\u529B\u304C\u305D\u3053\u305D\u3053\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 160
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 10
     m_statusType: 3
     m_modifierType: 0
     m_duration: 30
-    m_buffID: 5
+    m_buffID: 8
   m_passiveType: 0

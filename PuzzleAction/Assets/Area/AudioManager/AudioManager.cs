@@ -5,9 +5,8 @@ using UnityEngine.UIElements;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance;
 
-    [SerializeField] private AudioEventSO audioEvent;
     [SerializeField] private AudioSource BGMSource;
     [SerializeField] private AudioSource SESource;
     [SerializeField] private AudioMixer m_audioMix;
@@ -15,6 +14,8 @@ public class AudioManager : MonoBehaviour
     //[SerializeField] private FloatRunTime m_seVolume;
 
     [SerializeField] private AudioFader audioFader;
+
+    private AudioData m_nowBGMData;
 
     //--option save set--------------------
     private OptionSaveManager m_optionSaveManager = new();
@@ -27,23 +28,16 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         //Singleton
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
         audioFader.audioSource = BGMSource;
     }
-    private void OnEnable()
-    {
-        audioEvent.Register(PlayAudio);
-    }
-    private void OnDisable()
-    {
-        audioEvent.Unregister(PlayAudio);
-    }
+
     private void Start()
     {
         var data = m_optionSaveManager.OnAudioLoad();
@@ -111,7 +105,7 @@ public class AudioManager : MonoBehaviour
     }
 
     //EventSOÇ©ÇÁìnÇ≥ÇÍÇΩAudioClipÇçƒê∂Ç∑ÇÈ
-    private void PlayAudio(AudioData data)
+    public void PlayAudio(AudioData data)
     {
         if (data.isLoop)
         {
@@ -124,12 +118,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public AudioData GetNowBGM()
+    {
+        return m_nowBGMData;
+    }
+
     private void PlayBGM(AudioData data)
     {
-       audioFader.FadeOutAndPlay(data.audioClip, data.clipVolume);
+        m_nowBGMData = data;
+        audioFader.FadeOutAndPlay(data.audioClip, data.volume);
     }
     private void PlaySE(AudioData data)
     {
-        SESource.PlayOneShot(data.audioClip, data.clipVolume);
+        SESource.PlayOneShot(data.audioClip, data.volume);
+    }
+
+    public void InstancePlayAudio(AudioData data)
+    {
+        m_nowBGMData = data;
+        audioFader.InstancePlay(data.audioClip, data.volume);
     }
 }

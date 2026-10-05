@@ -16,8 +16,12 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
         {
             m_enemyController.Stop();
 
+
+
             if (m_enemyController.TryAttack())
             {
+                Particle();
+
                 m_enemyController.ReturnPool();
             }
 
@@ -26,4 +30,11 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
         m_enemyController.SetDestination(m_enemyController.Target.Value, m_enemyController.Speed);
     }
     public void Stop() => m_enemyController.Stop();
+
+    private void Particle()
+    {
+        var pos = transform.position + new Vector3(0f, 0.5f, 0f);
+
+        ParticleManager.Instance.PlayParticle(Enum_EffectType.Explosion, pos);
+    }
 }

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    public static ItemManager Instance;
+
     //public List <Item> DropList=new();
     public List<Item> ItemList = new();
+    public List<Item> ShopList = new();
+    public List<Item> DropList = new();
     //private int nextId; //éüÇÃIDÇä«óùÇ∑ÇÈïœêî
     [SerializeField] private Middleman_Trap m_middleman_trap;
     //DropPool I_pool;
@@ -13,6 +17,19 @@ public class ItemManager : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private DropItem m_dropItem;
     [SerializeField] private List<DropItem> DropItems = new();
+
+    [SerializeField] private AudioData m_dropItemSE;
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
 
     //GachaEngine.RarityWithWeight
     //ListÇÃíÜÇ©ÇÁIDÇ∆ìØÇ∂ÉAÉCÉeÉÄÇíTÇ∑
@@ -80,19 +97,6 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private float m_groundPos;
     public void DropItemSetData(Vector3 pos, Item data)
     {
-        //get object"DropItem" from pool        
-        //set itemData in DropItem
-        //Data data = DropItem(PlayerItems)
-        //int index = Random.Range(0, PlayerItems.Count);
-        //Item data = PlayerItems[index];
-        //int dropIndex = Random.Range(0, DropItems.Count);
-        //DropItem m_dropItem = DropItems[dropIndex];
-        //m_dropItem.Initialize(data);
-        //set pos DropItem Position
-
-
-        //Debug.LogWarning("Drop Item");
-
         DropItem obj = m_itemPool.GetComponentFromPool();
         obj.gameObject.SetActive(true);
 
@@ -103,24 +107,11 @@ public class ItemManager : MonoBehaviour
         }
 
         obj.Initialize(data);
+        AudioManager.Instance.PlayAudio(m_dropItemSE);
 
         //m_dropItem.gameObject.transform.position = pos;
         obj.gameObject.transform.position = new Vector3(pos.x, m_groundPos, pos.z);
 
-
-        //foreach (var obj in DropItems)
-        //{
-        //    if (obj.name.Equals(data.name, System.StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        DropItem m_dropIndex = obj;
-        //        m_dropIndex.Initialize(data);
-        //        //set pos DropItem Position
-        //        m_dropIndex.gameObject.transform.position = pos;
-        //        //m_dropIndex.gameObject.SetActive(true);
-        //        //m_dropPool.ItemGet
-        //    }
-
-        //}
     }
 
 
@@ -153,10 +144,10 @@ public class ItemManager : MonoBehaviour
     /// <returns>List of items with matching rarity</returns>
     public List<Item> GetItemsByRarity(RarityEnumAsset rarity)
     {
-        var candidates = ItemList.FindAll(item => item.Data.Rarity == rarity);
+        var candidates = DropList.FindAll(item => item.Data.Rarity == rarity);
         if (candidates.Count == 0)
         {
-            LogRarityError (rarity, ItemList);
+            LogRarityError (rarity, DropList);
         }
         return candidates;
     }
@@ -203,7 +194,7 @@ public class ItemManager : MonoBehaviour
     /// <returns>a list of items with IsShopCompatible</returns>
     public List<Item> GetShopItems()
     {
-        return ItemList.FindAll(x => x.Data.IsShopCompatible);
+        return ShopList.FindAll(x => x.Data.IsShopCompatible);
     }
     /// <summary>
     /// Get a random item with IsShopCompatible
@@ -222,11 +213,5 @@ public class ItemManager : MonoBehaviour
     {
         return GetRandomItemFromListByRarity(rarity, GetShopItems());
     }
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            //DropItemSetData(new Vector3(0, 1, 0));
-        }
-    }
+   
 }

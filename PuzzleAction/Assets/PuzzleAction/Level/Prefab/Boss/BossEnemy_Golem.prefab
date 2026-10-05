@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4512741740859257585}
   - component: {fileID: -3879386613953403271}
   - component: {fileID: 3854363520186093158}
-  - component: {fileID: 6348467892270970175}
   - component: {fileID: 6295794922853557716}
   - component: {fileID: 1055531205892525742}
   m_Layer: 0
@@ -51,19 +50,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e737c20ba18e64bae7f8ddf1f8874d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossEnemyController
-  m_attackSE: {fileID: 0}
-  m_damageSE: {fileID: 0}
   m_team: 1
   m_data: {fileID: 11400000, guid: 92a9957c46579f948b388370e04f3577, type: 2}
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 20
   m_attackRange: 7
-  m_attackCooldown: 2
+  m_attackCooldown: 4
+  m_itemDropGachaEngine: {fileID: 11400000, guid: ce8a86fee1115a447b55261f20b575c0, type: 2}
   m_dropCount: 3
   m_attackHitBox:
-    m_transform: {fileID: 6054870468107764460}
-    m_radius: 3
-  m_attackItem: {fileID: 11400000, guid: f8b8b7942b605d141a874510820930d7, type: 2}
+    m_pos: {x: 0, y: 0, z: 0}
+    m_hitBoxOffset: {x: 0, y: 2, z: 0}
+    m_radius: 7
+  m_attackItem: {fileID: 11400000, guid: 07fa19ba75fe3e241b4091b13ab23ee0, type: 2}
+  m_power: 24
+  m_shootOffset: {x: 0, y: 2, z: 0}
 --- !u!114 &-3879386613953403271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,23 +100,7 @@ MonoBehaviour:
   m_max: 0
   m_damageParticleController: {fileID: 9160133618166530080}
   m_isItemDrop: 1
---- !u!114 &6348467892270970175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403334365191116840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32eace18d63a6f4eab284b2ed365c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HitCollider
-  m_isViewCollider: 1
-  m_isVisible: 1
-  hitBoxes:
-  - m_transform: {fileID: 6054870468107764460}
-    m_radius: 3
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!195 &6295794922853557716
 NavMeshAgent:
   m_ObjectHideFlags: 0

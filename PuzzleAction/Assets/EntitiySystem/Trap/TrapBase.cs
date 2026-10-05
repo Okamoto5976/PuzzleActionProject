@@ -11,19 +11,15 @@ public abstract class TrapBase : MonoBehaviour
     protected TeamType m_team = TeamType.Nature;
     public TeamType Team => m_team;
 
-    //Œü‚«‚É‰ž‚¶‚Ä@‚»‚Ì•û‚ð³–Ê‚É‚·‚é‚©
+    //velocity‚É‰ž‚¶‚Ä@‚»‚Ì•û‚ð³–Ê‚É‚·‚é‚©
     [SerializeField] private bool m_isFowardDir;
 
-    //[Header("TrapData")]
-    //[SerializeField]
-    //protected TrapData m_trapdata;
+    [SerializeField] protected TrapData m_trapData;
 
     //direction
     protected Vector3 m_dir;
 
-    [SerializeField] protected float m_str;
     [SerializeField] protected float m_speed;
-    [SerializeField] protected AttackType m_attackType;
     protected float m_power;//use arrow
 
     //startPosition
@@ -39,7 +35,6 @@ public abstract class TrapBase : MonoBehaviour
     protected DamageData m_damageData;
 
     //Receive orientation
-
     protected ReturnObjectToPool m_returnObjPool;
 
     protected Vector3 m_velocity;
@@ -53,12 +48,6 @@ public abstract class TrapBase : MonoBehaviour
     }
 
     protected abstract void EntitySetUp();
-
-    //m_startPosition =
-    //    m_owner.transform.position;
-
-    //m_range =
-    //    m_trapdata.range;
 
     protected abstract void OnHit();
 
@@ -79,113 +68,74 @@ public abstract class TrapBase : MonoBehaviour
             Quaternion.LookRotation(
                 m_dir);
         }
-        
 
         m_power = data.power;
 
-
-        //Œp³æ‚Å
-        //m_damageData = new DamageData
-        //{
-
-        //    Attack = m_str + owner.STR,
-        //    AttackType = m_attackType,
-        //    //HitRate
-        //    CriticalRate = owner.CriticalRate,
-        //    CriticalDamage = owner.CriticalDamage,
-        //    BreakRate = owner.BreakRate,
-        //    Knockback = owner.KnockBack,
-        //    StunDuration = owner.Stun,
-        //    //Duration
-        //    AttackDir = dir,
-        //    //SE
-
-        //};
+        CreateDamageData();
 
         EntitySetUp();//—á@•b”‚ðÝ’è‚µ@ŽžŠÔŒo‰ß‚Å”š”j‚È‚Ç
     }
 
-    //public void PullInit(
-    //    ItemRecieveData data)
-    //{
-    //    m_owner = data.entity;
-    //    m_team = m_owner.Team;
-
-    //    m_dir = data.dir.normalized;
-
-    //    gameObject.transform.position = data.pos + data.offset;
-
-    //    transform.rotation =
-    //        Quaternion.LookRotation(
-    //            m_dir);
-
-    //    m_power = data.;
-
-    //    //Œp³æ‚Å
-    //    //m_damageData = new DamageData
-    //    //{
-
-    //    //    Attack = m_str + owner.STR,
-    //    //    AttackType = m_attackType,
-    //    //    //HitRate
-    //    //    CriticalRate = owner.CriticalRate,
-    //    //    CriticalDamage = owner.CriticalDamage,
-    //    //    BreakRate = owner.BreakRate,
-    //    //    Knockback = owner.KnockBack,
-    //    //    StunDuration = owner.Stun,
-    //    //    //Duration
-    //    //    AttackDir = dir,
-    //    //    //SE
-
-    //    //};
-
-    //    EntitySetUp();//—á@•b”‚ðÝ’è‚µ@ŽžŠÔŒo‰ß‚Å”š”j‚È‚Ç
-    //}
-
-
     //use TrapArea
-    public virtual void TrapInit(ItemRecieveData data)
+    public virtual void TrapInit()
     {
-        
-
         m_owner = null;
 
         m_dir = Vector3.zero;
         m_team = TeamType.Nature;
 
-        gameObject.transform.position = data.pos;
+        CreateTrapDamageData();
     }
 
-    //protected DamageData SetDamageData()
-    //{
-    //    DamageData data = new DamageData
-    //    {
+    protected void CreateDamageData()
+    {
+        m_damageData = new DamageData
+        {
+            Attack = GetValue(m_trapData.m_attack, m_owner.STR + m_trapData.m_base),
+            CriticalRate = GetValue(m_trapData.m_criticalRate, m_owner.CriticalRate),
+            CriticalDamage = GetValue(m_trapData.m_criticalDamage, m_owner.CriticalDamage),
+            BreakRate = GetValue(m_trapData.m_breakRate, m_owner.BreakRate),
+            Knockback = GetValue(m_trapData.m_knockback, m_owner.KnockBack),
+            StunDuration = GetValue(m_trapData.m_stunDuration, m_owner.StunPower),
 
-    //        Attack = m_str,
-    //        AttackType = m_attackType,
-    //        //HitRate
+            AttackDir = m_dir
+        };
+    }
 
-    //        //Duration
-    //        //SE
+    protected float GetValue(float trapValue, float ownerValue)
+    {
+        return trapValue >= 0f ? trapValue : ownerValue;
+    }
 
-    //    };
+    protected void CreateTrapDamageData()
+    {
+        m_damageData = new DamageData
+        {
+            Attack = m_trapData.m_trapAttack,
+            CriticalRate = m_trapData.m_trapCriticalRate,
+            CriticalDamage = m_trapData.m_trapCriticalDamage,
+            BreakRate = m_trapData.m_trapBreakRate,
+            Knockback = m_trapData.m_trapKnockBack,
+            StunDuration = m_trapData.m_trapStunDuration,
 
-    //    return data;
-    //}
+            AttackDir = m_dir
+        };
+    }
 
-    //private void FixedUpdate()
-    //{
-    //    m_moveDir =
-    //        m_direction;
+    protected StatusModifier SetModifier(BuffSetting buff)
+    {
+        StatusModifier modifier = new StatusModifier()
+        {
+            m_statType = buff.m_statusType,
+            m_value = buff.m_value,
+            m_modType = buff.m_modifierType,
+        };
 
-    //    CallMove();
-
-    //    CheckRange();
-    //}
+        return modifier;
+    }
 
     protected void OnMove(Vector3 dir)
     {
-
         dir = dir.normalized;
 
         m_velocity = m_rb.linearVelocity;
@@ -194,19 +144,14 @@ public abstract class TrapBase : MonoBehaviour
         m_velocity.z = dir.z * m_speed;
 
         m_rb.linearVelocity = m_velocity;
-
     }
 
     protected void OnAddForce(Vector3 dir, float power)
     {
         dir = dir.normalized;
 
-
-
         m_rb.AddForce(dir * power, ForceMode.VelocityChange);
-
     }
-
 
     protected void CheckRange()
     {

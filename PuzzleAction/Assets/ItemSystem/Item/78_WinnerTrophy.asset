@@ -16,14 +16,15 @@ MonoBehaviour:
   m_data:
     itemID: 78
     itemName: WinnerTrophy
-    itemIcon: {fileID: 21300000, guid: ecde9c3e3848d764ebdff3165ee1b9d0, type: 3}
-    description: All Status UP
+    itemIcon: {fileID: 21300000, guid: 9989fceecd82157438787604d48db2ae, type: 3}
+    description: "\u304A\u3081\u3067\u3068\u3046\uFF01\u3000\u512A\u52DD\u30C8\u30ED\u30D5\u30A3\u30FC\u3092\u8D08\u5448\uFF01\\n\u52B9\u679C\uFF1A\u5168\u30B9\u30C6\u30FC\u30BF\u30B9
+      \u5C0F\u30A2\u30C3\u30D7"
     maxStack: 1
     rarity: {fileID: 11400000, guid: 2c01665677b2ba04780915e30eda720c, type: 2}
     itemType: 1
     m_itemUseType: 4
-    price: 100
-    Type: 0
+    price: 1000
+  m_se: {fileID: 0}
   m_buffEffectType: 1
   m_buffItemClass:
   - m_value: 1

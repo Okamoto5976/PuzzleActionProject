@@ -23,6 +23,8 @@ public enum Passive
     WinnerTrophy,
     LoserTrophy,
     Poi,
+    Trophy,
+    TitleTrophy,
 }
 
 public class PassiveStatus

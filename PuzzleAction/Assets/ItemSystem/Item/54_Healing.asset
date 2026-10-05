@@ -17,12 +17,12 @@ MonoBehaviour:
     itemID: 54
     itemName: Healing
     itemIcon: {fileID: 21300000, guid: 7eeadec2950004d43adc2d6f93ebd8de, type: 3}
-    description: 
+    description: "\u56DE\u5FA9\u30A8\u30EA\u30A2\u3092\u751F\u6210\u3059\u308B\u3002\\n\u52B9\u679C\uFF1A\u7BC4\u56F2\u5185\u306B\u7559\u307E\u308B\u3068\u5F90\u3005\u306B\u56DE\u5FA9\u3000"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 2
-    price: 100
-    Type: 0
+    price: 360
+  m_se: {fileID: 11400000, guid: 684baae14a17bf142849dc1a1938e12c, type: 2}
   TrapPrefab: {fileID: 0}
   m_enumTrap: 18

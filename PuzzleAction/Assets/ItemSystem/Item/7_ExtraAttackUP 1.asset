@@ -16,14 +16,14 @@ MonoBehaviour:
   m_data:
     itemID: 7
     itemName: ExtraAttackUPPotion
-    itemIcon: {fileID: 21300000, guid: 0c752ef179f634948ac5b648f878b2e8, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: ddbed92f6e5d12447a8a2103be996ec4, type: 3}
+    description: "\u5727\u5012\u7684\u306A\u529B\uFF01\u6575\u306B\u81EA\u8EAB\u306E\u8106\u3055\u3092\u7406\u89E3\u3055\u305B\u3088\u3046\uFF01\\n\u3000\u52B9\u679C\uFF1A\u653B\u6483\u529B\u304C\u304B\u306A\u308A\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 629f8a90fe84af14f852f897aaf5190d, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 480
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 20

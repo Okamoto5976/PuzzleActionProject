@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerController : Entity
 {
-    [Header("InputSystem")]
+    //---------input------------------
     private InputProvider m_input;
     
     private Vector2 m_move;
@@ -12,14 +12,33 @@ public class PlayerController : Entity
     private bool m_isActive;
     private bool m_isActiveHold;
     private bool m_isActiveRelease;
-    private bool m_isPrevious;
-    private bool m_isNext;
+    private bool m_isHotber1;
+    private bool m_isHotber2;
+    private bool m_isHotber3;
+    private bool m_isCancel;
     private bool m_isInteract;
     private bool m_isGetDropItem;
 
+    //--------component--------------
+    [Header("Component")]
+    private PlayerItemController m_playerItemController;
+
+    [SerializeField] private InventorySystem m_inventorySystem;
+
+    [SerializeField] private DisplayManager m_displayManager;
+
+
     [SerializeField] private Vector3Asset m_position;
-    [SerializeField] private Vector3 m_pullOffSet;
-    private Vector3 m_setOffSet;
+    public Vector3 m_pullOffSet;
+
+    [SerializeField] private SpriteRenderer m_spriteRenderer;
+
+    private int m_hotberIndex = 0;
+
+    private bool m_canInteract = true;
+
+    public bool CanInteract => m_canInteract;
+    
 
     [Header("Evasion")]
     [SerializeField] private float m_evasionDuration = 0.2f;
@@ -27,59 +46,74 @@ public class PlayerController : Entity
 
     private EntityPassiveBuffSystem m_passiveSystem;
 
-    [Header("InventorySystem")]
-    [SerializeField] private InventorySystem m_inventorySystem;
-
-    [SerializeField] private DisplayManager m_displayManager;
-
     public Vector3 MoveDirection => m_moveDir;
 
 
-    [SerializeField] private int m_hotberIndex = 0;
-
-    private bool m_isUsingArrow = false;
-    private bool m_isUsingSetItem = false;
-    private bool m_isUsingAttackItem = false;
 
     //when open shop, can not Input
     private bool m_ignoreInput = false;
     [SerializeField] private BoolEventSO m_canInputEvent;
 
     //--------player foward -----------------
+    [Header("PlayerFoward")]
     [SerializeField] private GameObject m_playerDirObject;
-    [SerializeField] private AimTrail m_aimTrail;
-
-    [SerializeField] private RectTransform m_reticle;
-    [SerializeField] private SpriteRenderer m_spriteRenderer;
-
     public Vector3 Forward => m_playerDirObject.transform.forward;
 
-    private Vector3 m_arrowTemporaryForward;
 
-    [Header("Set Trap on Space & Mouse")]
-    [SerializeField] private float m_trapPlaceRange = 5f;
-    [SerializeField] private GameObject m_trapPreview;
-    //[SerializeField] private GameObject m_trapRangeCircle;
-    private Vector3 m_trapSetPosition;
+    //--------ItemController----------------
+    [Header("ItemController")]
+    public RectTransform m_reticle;
+    public AimTrail m_aimTrail;
+    public LayerMask m_itemLayerMask;
+
+    public GameObject m_trapPreview;
+
+
+
 
     //InteractSystem
-    private InteractSystem m_interactSystem;
     [Header("Interact")]
+    private InteractSystem m_interactSystem;
     [SerializeField] private LayerMask m_interactLayer;
-    [Header("Item Search")]
-    [SerializeField] private LayerMask m_itemSerachLayer;
-    [SerializeField] private float m_itemSearchRange = 5f;
+
+
+    //------SearchItem-------------------------
     [Header("UI")]
-    [SerializeField] private GameObject m_textPanel;
+    public RectTransform m_textPanel;
     [SerializeField] private TMPro.TMP_Text m_nameText;
     [SerializeField] private TMPro.TMP_Text m_itemDescriptionText;
 
     //if inventory max 
     [SerializeField] private GameObject m_textErrorMessage;
 
+    //if using item view cancel 
+    [SerializeField] private GameObject m_cancelMessage;
+
+    //----passive effect---------------------
+    [HideInInspector] public bool m_isCoupon;
+    [HideInInspector] public bool m_isMemberShip;
+    [HideInInspector] public bool m_isWinnerTrophy;
+    [HideInInspector] public bool m_isLoserTrophy;
+    [HideInInspector] public bool m_isNormalTrophy;
+    [HideInInspector] public bool m_titleTrophy;
+
+
+    //audioData
+    [SerializeField] private AudioData m_walkSE;
+    [SerializeField] private AudioData m_pull;
+    [SerializeField] private AudioData m_stunSE;
+    [SerializeField] private AudioData m_hotberSE;
+
+
+    //[Header("Audio")]
+    //[SerializeField] private AudioData 
+
+
     protected override void Awake()
     {
         base.Awake();
+
+        m_playerItemController = new(this, m_inventorySystem);
 
         if(m_buffSystem != null)
         {
@@ -94,7 +128,9 @@ public class PlayerController : Entity
     {
         base.Start();
 
-        m_reticle.gameObject.SetActive(false);
+        ReticleActive(false);
+
+
         m_interactSystem = new();
 
         m_input = new InputProvider();
@@ -103,8 +139,8 @@ public class PlayerController : Entity
 
         m_nameText.text = "";
         m_itemDescriptionText.text = "";
-        m_textPanel.SetActive(false);
-        m_textErrorMessage.SetActive(false);
+        ItemDescriptionPanelActive(false);
+        TextErrorMessageActive(false);
     }
 
     private void OnEnable()
@@ -121,14 +157,19 @@ public class PlayerController : Entity
 
     private void FixedUpdate()
     {
-        CallMove();
+        m_isActive = m_input.IsActive;
+
+        InputMove();
+
     }
 
     private void Update()
     {
+        m_playerItemController.Update();
+
         if(m_currentState == EntityState.Dead) return;
 
-        OnUpdateFlag();
+        UpdateFlag();
 
         m_position.SetValue(transform.position);
 
@@ -137,15 +178,16 @@ public class PlayerController : Entity
         m_isActive = m_input.IsActive;
         m_isActiveHold = m_input.IsActiveHold;
         m_isActiveRelease = m_input.IsActiveRelease;
-        m_isPrevious = m_input.IsPrevious;
-        m_isNext = m_input.IsNext;
+        m_isHotber1 = m_input.IsHotber1;
+        m_isHotber2 = m_input.IsHotber2;
+        m_isHotber3 = m_input.IsHotber3;
+        m_isCancel = m_input.IsCancel;
         m_isInteract = m_input.IsInteract;
         m_isGetDropItem = m_input.IsGetDropItem;
 
         if (m_isGetDropItem)
         {
-            //Debug.Log("PlayerController");
-            OnuseItemGet();
+            m_playerItemController.GetItem();
         }
 
         if (m_isInteract)
@@ -158,33 +200,32 @@ public class PlayerController : Entity
             OnEvadeInput();
         }
 
-        InputMove();
         DoEvading();
+
+        if(m_isCancel)
+        {
+            m_playerItemController.UseItemCancel();
+        }
 
 
         if (m_isActive)
         {
-            OnUseItemPressed();
+            m_playerItemController.UseItemPressed(m_hotberIndex);
         }
 
         if (m_isActiveHold)
         {
-            OnUseItemHold();
+            m_playerItemController.UseItemHold();
         }
 
         if (m_isActiveRelease)
         {
-            OnUseItemRelease();
-        }
-
-        if(m_isGetDropItem)
-        {
-            OnuseItemGet();
+            m_playerItemController.UseItemRelease(m_hotberIndex);
         }
 
         InputHotber();
 
-        SearchItem();
+        m_playerItemController.SearchItem();
     }
 
     /// <summary>
@@ -215,13 +256,40 @@ public class PlayerController : Entity
 
     private void InputMove()
     {
+        if (m_currentState == EntityState.Dead) return;
+        if (m_currentState == EntityState.Attack) return;
+
+        if (IsKnockBack)
+        {
+            Move(m_knockBackVelocity, m_knockbackPower * 5f);
+            return;
+        }
+
+        if (!m_canMove ||
+            IsStun)
+        {
+            Move(Vector3.zero, 0f);
+            m_anim.SetBool("Run", false);
+
+            return;
+        }
+
         Vector2 input = m_input.Move;
         m_moveDir = new Vector3(input.x, 0f, input.y);
 
-        if(!m_isUsingSetItem)
+        if(!m_playerItemController.m_isUsingSetItem)
         {
             OnRotatePlayerDirObject(m_moveDir);
 
+        }
+
+        if (m_isEvading)
+        {
+            Move(m_evadeDirection, Speed * 1.5f);
+        }
+        else
+        {
+            Move(m_moveDir, Speed);
         }
 
 
@@ -248,235 +316,104 @@ public class PlayerController : Entity
     private void InputHotber()
     {
         //player use Arrow etc... not change hotber Item
-        if (m_isUsingArrow) return;
+        if (m_playerItemController.m_isUsingArrow) return;
 
-        if (m_isUsingSetItem) return;
+        if (m_playerItemController.m_isUsingSetItem) return;
 
-        if (m_isPrevious)
+        if (m_isHotber1)
         {
-            m_hotberIndex--;
+            //m_hotberIndex--;
 
-            if (m_hotberIndex <= -1)
-            {
-                m_hotberIndex = 2;
-            }
+            //if (m_hotberIndex <= -1)
+            //{
+            //    m_hotberIndex = 2;
+            //}
+            m_hotberIndex = 0;
         }
 
-        if (m_isNext)
+        if (m_isHotber2)
         {
+            m_hotberIndex = 1;
+            //m_hotberIndex++;
 
-            m_hotberIndex++;
+            //if (m_hotberIndex >= 3)
+            //{
+            //    m_hotberIndex = 0;
+            //}
+        }
 
-            if (m_hotberIndex >= 3)
-            {
-                m_hotberIndex = 0;
-            }
+        if (m_isHotber3)
+        {
+            m_hotberIndex = 2;
         }
 
         m_displayManager.SetIndex(m_hotberIndex);
     }
 
-    private ItemRecieveData CreateItemData(
-        Vector3 forward,
-        float power,
-        Vector3 offset = new Vector3())
-    {
-        return new ItemRecieveData
-        {
-            entity = this,
-            power = power,
-            pos = m_trapSetPosition,
-            dir = forward,
-            offset = offset,
+    [SerializeField] private float testknockback;
 
-        };
-    }
-
-    //private ItemRecieveData CreatePullItemData(Vector3 forward, float power)
+    //[ContextMenu("ApplyKnockBack")]
+    //public void ApplyKnockBack()
     //{
-    //    return new ItemRecieveData
+    //    DamageData data = new();
     //    {
-    //        entity = this,
-    //        power = power,
-    //        pos = transform.position,
-    //        dir = forward,
-    //        offset = m_pullOffSet,
-    //    };
+    //        data.Attack = 0f;
+    //        data.AttackDir = new Vector3(1, 0, 0);
+    //        data.CriticalRate = 0f;
+    //        data.CriticalDamage = 0f;
+    //        data.BreakRate = 0;
+    //        data.Knockback = testknockback;
+    //        data.StunDuration = 0;
+    //    }
+
+
+    //    TakeDamage(data);
     //}
 
-    private void OnUseItemPressed()
+    #region Object_SetActive_Method
+    public void ReticleActive(bool active)
     {
-        //Debug.Log("Pressed");
-
-        if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Arrow))
-        {
-            m_isUsingArrow = true;
-
-            m_power = 0f;
-            m_reticle.gameObject.SetActive(true);
-
-            m_aimTrail.gameObject.SetActive(true);
-
-            //start to pull the bow
-            
-
-
-        }
-        else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Set))
-        {
-            m_isUsingSetItem = true;
-            m_power = 0f;
-
-            m_reticle.gameObject.SetActive(true);
-
-            m_trapPreview.gameObject.SetActive(true);
-            //m_trapRangeCircle.transform.position = gameObject.transform.position;
-            //m_trapRangeCircle.transform.localScale = new Vector3(m_trapPlaceRange * 2, 0.5f, m_trapPlaceRange * 2);
-            //m_trapRangeCircle.gameObject.SetActive(true);
-            
-        }
-        else if(m_inventorySystem.IsCheckCurrentItem(m_hotberIndex, ItemUseType.Attack))
-        {
-            m_isUsingAttackItem = true;
-            m_power = 0f;
-            m_reticle.gameObject.SetActive(true);
-        }
-        else
-        {
-            ItemRecieveData data = CreateItemData(Forward, 0f, m_pullOffSet);
-
-            m_inventorySystem.UsePressed(m_hotberIndex, data);
-
-        }
-
+        m_reticle.gameObject.SetActive(active);
     }
 
-    private float m_power;
-
-    private void OnUseItemHold()
+    public void SetItemPreview(bool active)
     {
-        //Debug.Log("Hold");
-
-        if (m_isUsingArrow)
-        {
-            OnReticle();
-
-
-
-            m_power += Time.deltaTime;
-
-            m_power = Mathf.Min(m_power, 3f);
-
-            m_aimTrail.UpdateVariables(m_pullOffSet, m_arrowTemporaryForward, m_power * 8);
-        }
-        else if (m_isUsingSetItem)
-        {
-            OnReticle();
-            m_trapPreview.transform.position = m_trapSetPosition;
-        }
-        else if (m_isUsingAttackItem)
-        {
-            OnReticle();
-
-
-            m_power += Time.deltaTime;
-
-            m_power = Mathf.Min(m_power, 3f);
-        }
+        m_trapPreview.SetActive(active);
     }
 
-    private void OnUseItemRelease()
+    public void AimTrailActive(bool active)
     {
-        //Debug.Log("Release");
-
-        if(m_isUsingArrow)
-        {
-            m_isUsingArrow = false;
-
-            m_reticle.gameObject.SetActive(false);
-            m_aimTrail.gameObject.SetActive(false);
-
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power * 8, m_pullOffSet);
-            m_inventorySystem.UseRelease(m_hotberIndex, data);
-
-        }
-        else if(m_isUsingSetItem)
-        {
-            m_isUsingSetItem = false;
-
-            m_reticle.gameObject.SetActive(false);
-
-            m_trapPreview.SetActive(false);
-            //m_trapRangeCircle.gameObject.SetActive(false);
-
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, 0f, m_setOffSet);
-            m_inventorySystem.UseRelease(m_hotberIndex, data);
-        }
-        else if (m_isUsingAttackItem)
-        {
-            m_isUsingAttackItem = false;
-
-            m_reticle.gameObject.SetActive(false);
-
-            ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power);
-            m_inventorySystem.UseRelease(m_hotberIndex, data);
-        }
+        m_aimTrail.gameObject.SetActive(active);
     }
 
-    private void OnuseItemGet()
+    public void TextErrorMessageActive(bool active)
     {
-        if (m_selecrItem == null) return;
-
-        if(ReceiveItem(m_selecrItem.ItemData))
-        {
-            m_selecrItem.ItemGet();
-            m_selecrItem = null;
-        }
-        else
-        {
-            m_textErrorMessage.SetActive(true);
-            Invoke(nameof(CloseErrorMessage), 1f);
-        }
+        m_textErrorMessage.SetActive(active);
     }
 
-    private void CloseErrorMessage()
+    public void CancelMessageActive(bool active)
     {
-        m_textErrorMessage.SetActive(false);
+        m_cancelMessage.SetActive(active);
     }
 
-    private void OnReticle()
+    public void ItemDescriptionPanelActive(bool active)
     {
-        m_reticle.position = Input.mousePosition;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Plane plane = new Plane(Vector3.up, new Vector3(0f, transform.position.y, 0f));
-
-        if(plane.Raycast(ray, out float distance))
-        {
-            Vector3 mousePos = ray.GetPoint(distance);
-
-            Vector3 dir = mousePos - transform.position;
-            dir.y = 0f;
-
-            OnRotatePlayerDirObject(dir);
-
-            //temporary save, use when arrow pull
-            m_arrowTemporaryForward = Forward;
-
-            //trap
-            
-            Vector3 offset = mousePos - transform.position;
-            offset.y = 0f;
-
-            if(offset.magnitude > m_trapPlaceRange) offset = offset.normalized * m_trapPlaceRange;
-
-            m_trapSetPosition = transform.position + offset;
-        }
-
+        m_textPanel.gameObject.SetActive(active);
     }
+
+    public void ItemTextName(string name)
+    {
+        m_nameText.text = name;
+    }
+
+    public void ItemTextDescription(string description)
+    {
+        m_itemDescriptionText.text = description;
+    }
+    #endregion
 
     //this method is to rotate playerDirObject(arrowDir) 
-    private void OnRotatePlayerDirObject(Vector3 moveDir)
+    public void OnRotatePlayerDirObject(Vector3 moveDir)
     {
         //The arrow rotates only when there is input
         if (moveDir.sqrMagnitude > 0.01f)
@@ -487,19 +424,35 @@ public class PlayerController : Entity
 
     private void OnInteract()
     {
+        if (!m_canInteract) return;
+
         m_interactSystem.TryInteract(transform.position, m_interactLayer, this);
     }
+
+    public void SetCanInteract(bool value) => m_canInteract = value;
 
     public void AddPassive(List<StatusModifier> modifiers, Passive type)
     {
         //Debug.LogWarning(type);
-
         m_passiveSystem.AddPassive(modifiers, type);
     }
 
     public void RemovePassive(Passive type)
     {
         m_passiveSystem.RemoveBuff(type);
+    }
+
+    public bool CheckTrophy()
+    {
+        if (m_titleTrophy) return false;
+
+        if(!m_isWinnerTrophy) return false;
+
+        if (!m_isLoserTrophy) return false;
+
+        if(!m_isNormalTrophy) return false;
+
+        return true;
     }
 
     public void SetCanInput(bool ignoreInput)
@@ -511,67 +464,7 @@ public class PlayerController : Entity
             m_input.OnInputClear();
         }
     }
-    public virtual bool ReceiveItem(Item item)
-    {
-        Debug.Log("ReceiveItemäJén");
 
-        if (item == null)
-        {
-            Debug.Log("itemÇ™null");
-            return false;
-        }
+    
 
-        if (m_inventorySystem == null)
-        {
-            Debug.Log("InventorySystemÇ™null");
-            return false;
-        }
-
-        Debug.Log("AddItemÇåƒÇ—Ç‹Ç∑");
-
-        bool success = m_inventorySystem.AddItem(item, 1);
-
-        Debug.Log("AddItemèIóπ : " + success);
-
-        return success;
-    }
-    private DropItem m_selecrItem;
-    private Vector3 m_popupPosition;
-    private void SearchItem()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, m_itemSerachLayer))
-        {
-            DropItem drop = hit.collider.GetComponentInParent<DropItem>();
-
-            if (drop != null)
-            {
-
-                float distancee =Vector3.Distance(transform.position,drop.transform.position);
-                
-                if(distancee >m_itemSearchRange)
-                {
-                    m_selecrItem = null;
-                    m_itemDescriptionText.text = "";
-                    return;
-                }
-                if (m_selecrItem != drop)
-                {
-                    m_selecrItem = drop;
-                    m_popupPosition = Input.mousePosition + new Vector3(20f, -20f, 0f);
-                }
-
-                m_textPanel.SetActive(true);
-
-                m_nameText.text = drop.ItemData.ItemName;
-                m_itemDescriptionText.rectTransform.position = m_popupPosition;
-                m_itemDescriptionText.text = drop.ItemData.info;
-                return;
-            }
-        }
-        m_selecrItem = null;
-        m_itemDescriptionText.text = "";
-        m_textPanel.SetActive(false);
-    }
 }

@@ -16,14 +16,14 @@ MonoBehaviour:
   m_data:
     itemID: 6
     itemName: HighAttackUPPotion
-    itemIcon: {fileID: 21300000, guid: 0c752ef179f634948ac5b648f878b2e8, type: 3}
-    description: 
+    itemIcon: {fileID: 21300000, guid: 3b15185a59446754f83141cffcda3922, type: 3}
+    description: "\u529B\u304C\u307F\u306A\u304E\u308A\u3001\u30E4\u30EB\u6C17\u4E0A\u6607\uFF01\u3000\\n\u52B9\u679C\uFF1A\u653B\u6483\u529B\u304C\u305D\u3053\u305D\u3053\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: e540028e823d0544a876c45b088ea9ac, type: 2}
     itemType: 0
     m_itemUseType: 0
-    price: 100
-    Type: 0
+    price: 160
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 10

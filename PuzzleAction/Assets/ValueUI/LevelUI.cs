@@ -10,17 +10,29 @@ public class LevelUI : MonoBehaviour
         //levelText = GetComponent<TMP_Text>();
     }
 
+    //private
+
     /// <summary>
     /// DisplayManagerから呼ばれるスコア表示更新用メソッド
     /// </summary>
     /// <param name="level">現在の合計スコア</param>
-    public void UpdateScoreDisplay(int level)
+    public void UpdateScoreDisplay(float level)
     {
+
+
         if (levelText == null) levelText = GetComponent<TMP_Text>();
 
         if (levelText != null)
         {
-            levelText.text = "Level:" + level.ToString();
+            if(!GameManager.Instance.IsTutorial)
+            {
+                levelText.text = "Level:" + level.ToString();
+
+            }
+            else
+            {
+                levelText.text = "Level: Tutorial";
+            }
         }
     }
 }

@@ -15,19 +15,19 @@ MonoBehaviour:
   m_type: 2
   m_data:
     itemID: 14
-    itemName: CriticalRatePorthon
-    itemIcon: {fileID: 21300000, guid: c97f9052bc09b254aa59dedaaefef40b, type: 3}
-    description: 
+    itemName: CriticalRatePotion
+    itemIcon: {fileID: 21300000, guid: 463dc47f822cc0348abc3ddadcad50cb, type: 3}
+    description: "\u904B\u306F\u5909\u3048\u3089\u308C\u308B\u306E\u3060\u3088\u3002\\n\u3000\u52B9\u679C\uFF1A\u30AF\u30EA\u30C6\u30A3\u30AB\u30EB\u7387\u304C\u50C5\u304B\u306B\u5897\u52A0"
     maxStack: 10
     rarity: {fileID: 11400000, guid: 351ce8e8c2c13f14e8810046d0c1f522, type: 2}
     itemType: 0
     m_itemUseType: 0
     price: 100
-    Type: 0
+  m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
   - m_value: 5
-    m_statusType: 6
+    m_statusType: 5
     m_modifierType: 0
     m_duration: 30
     m_buffID: 10
