@@ -6,6 +6,7 @@ public class AudioSaveData
     public float m_masterVolume;
     public float m_bgmVolume;
     public float m_seVolume;
+    public float m_pitch;
 }
 
 public class OptionSaveManager
