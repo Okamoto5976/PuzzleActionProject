@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 542936587695842741}
   - component: {fileID: -132694917962651984}
   - component: {fileID: -406357800532673}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,6 +197,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0870c2fddf8f7d34d93c28726d07645e, type: 3}
       propertyPath: m_Name
       value: Worm
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0870c2fddf8f7d34d93c28726d07645e, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
