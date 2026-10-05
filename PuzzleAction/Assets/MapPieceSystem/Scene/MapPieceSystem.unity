@@ -179,7 +179,7 @@ MonoBehaviour:
   m_trapPieceMax: 10
   m_bossPieceMax: 1
   m_fairyPieceMax: 1
-  m_debugCheck: 1
+  m_debugCheck: 0
   m_size: {x: 10, y: 10}
   m_DebugStartPos: {x: 0, y: 0}
   m_DebugEndPos: {x: 5, y: 5}
