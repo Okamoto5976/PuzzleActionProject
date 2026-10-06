@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: PuzzleGame - Track 26 (FootstepB)
   m_EditorClassIdentifier: Assembly-CSharp::AudioData
   audioClip: {fileID: 8300000, guid: 9d6d4ed05687535498358fee63eba881, type: 3}
-  volume: 1
+  volume: 0.3
+  pitch: 1
   isLoop: 0

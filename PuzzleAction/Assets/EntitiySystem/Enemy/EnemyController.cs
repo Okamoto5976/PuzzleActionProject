@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using Unity.VisualScripting.FullSerializer;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -97,7 +99,6 @@ public class EnemyController : Entity
     //        return Mathf.Max(0f, finalSpeed);
     //    }
     //}
-
 
     public void InitializeSpawn()
     {
@@ -220,7 +221,7 @@ public class EnemyController : Entity
 
         }
 
-        Attack();
+        //Attack();
         ConsumeCooldown();
         return true;
     }
@@ -260,6 +261,13 @@ public class EnemyController : Entity
             entity.TakeDamage(damage);
         }
     }
+
+    public void HitAnim()
+    {
+        Debug.LogWarning("hitAnim");
+        //m_anim.SetTrigger("Hit");
+    }
+
     private AttackItem GetUseItem()
     {
         if (m_attackItems == null || m_attackItems.Count == 0) return null;
@@ -312,7 +320,19 @@ public class EnemyController : Entity
             }
         }
 
-        m_itemManager.OnUseItem(useData.attackItem, data);
+        m_attackItem = useData;
+        m_itemRecieveData = data;
+
+        //m_itemManager.OnUseItem(useData.attackItem, data);
+    }
+
+    private AttackItem m_attackItem;
+    private ItemRecieveData m_itemRecieveData;
+
+    public void OnUseItem()
+    {
+        m_itemManager.OnUseItem(m_attackItem.attackItem, m_itemRecieveData);
+
     }
     #endregion
 
@@ -490,8 +510,20 @@ public class EnemyController : Entity
     }
     public void ReturnPool()
     {
+        //ReturnObjectToPool pool = GetComponent<ReturnObjectToPool>();
+        //if(pool == null)
+        //{
+        //    Debug.LogWarning($"{this.name} : ReturnObjectToPool Not Found");
+        //}
+        //pool.ReturnToPool();
+
+        m_anim.SetTrigger("Die");
+    }
+
+    public void OnReturnPool()
+    {
         ReturnObjectToPool pool = GetComponent<ReturnObjectToPool>();
-        if(pool == null)
+        if (pool == null)
         {
             Debug.LogWarning($"{this.name} : ReturnObjectToPool Not Found");
         }

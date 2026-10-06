@@ -3,11 +3,21 @@ using UnityEngine;
 public class EnemyHP : EntityHP
 {
     [SerializeField] private int m_dropMoney = 160;
+    [SerializeField] private EnemyController m_enemyController;
     private ReturnObjectToPool m_returnObjPool;
     [SerializeField] private bool m_isItemDrop;
 
     [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
 
+    public override void TakeDamage(DamageData data)
+    {
+        if (m_entity.CurrentState == Entity.EntityState.Dead) return;
+
+        //m_enemyController.HitAnim();
+
+
+        base.TakeDamage(data);
+    }
     protected override void Die()
     {
         EnemyController enemy = GetComponent<EnemyController>();
@@ -31,18 +41,20 @@ public class EnemyHP : EntityHP
     }
     private void OnReturnPool()
     {
-        if (m_returnObjPool == null)
-        {
-            m_returnObjPool = GetComponent<ReturnObjectToPool>();
+        m_enemyController.ReturnPool();
 
-        }
-        m_returnObjPool.ReturnToPool();
+        //if (m_returnObjPool == null)
+        //{
+        //    m_returnObjPool = GetComponent<ReturnObjectToPool>();
+
+        //}
+        //m_returnObjPool.ReturnToPool();
 
         //EnemyController enemy = GetComponent<EnemyController>();
         //enemy.ChangeState(Entity.EntityState.Idle);
         //m_entity.HealHP(m_entity.HP);
 
-        Debug.Log("EnemyReturnPool");
+        //Debug.Log("EnemyReturnPool");
 
     }
 }

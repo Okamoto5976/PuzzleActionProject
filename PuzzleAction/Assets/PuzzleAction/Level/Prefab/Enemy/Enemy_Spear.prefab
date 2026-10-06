@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   m_team: 1
   m_data: {fileID: 11400000, guid: 26cbba5a9e604c148bdea6ea820d971a, type: 2}
+  m_stunSE: {fileID: 11400000, guid: 7f94ee93643c30546a9f5a12811500ea, type: 2}
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
   m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
   m_dropMoney: 160
+  m_enemyController: {fileID: 0}
   m_isItemDrop: 1
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!114 &2811649400638317769

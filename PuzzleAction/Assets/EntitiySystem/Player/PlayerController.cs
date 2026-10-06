@@ -27,7 +27,6 @@ public class PlayerController : Entity
 
     [SerializeField] private DisplayManager m_displayManager;
 
-
     [SerializeField] private Vector3Asset m_position;
     public Vector3 m_pullOffSet;
 
@@ -101,7 +100,6 @@ public class PlayerController : Entity
     //audioData
     [SerializeField] private AudioData m_walkSE;
     [SerializeField] private AudioData m_pull;
-    [SerializeField] private AudioData m_stunSE;
     [SerializeField] private AudioData m_hotberSE;
 
 

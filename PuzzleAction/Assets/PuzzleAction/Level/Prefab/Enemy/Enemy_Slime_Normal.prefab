@@ -65,10 +65,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5192190198220617858}
   - component: {fileID: 528806279578718545}
+  - component: {fileID: -1663391139054315957}
+  - component: {fileID: -1927861824572852744}
   - component: {fileID: 7341675702321249772}
   - component: {fileID: -1027978937202661744}
-  - component: {fileID: -1927861824572852744}
-  - component: {fileID: -1663391139054315957}
   - component: {fileID: -3125136422026260676}
   m_Layer: 11
   m_Name: Enemy_Slime_Normal
@@ -109,9 +109,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
   m_team: 1
   m_data: {fileID: 11400000, guid: 7c8788220b0c45c4091073f3c2c69bed, type: 2}
+  m_stunSE: {fileID: 11400000, guid: 7f94ee93643c30546a9f5a12811500ea, type: 2}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 8
   m_attackRange: 2
@@ -125,6 +126,42 @@ MonoBehaviour:
   m_power: 3
   m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 94ae6b8c44da9ae499c4ee1434739f33, type: 2}
+--- !u!114 &-1663391139054315957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b80fd11ca30244fa2c55a918953e95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Slime
+--- !u!114 &-1927861824572852744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967910656285339947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
+  m_currentHP: 0
+  m_max: 0
+  m_isTutorial: 0
+  m_damageParticleController: {fileID: 3109024123308804497}
+  m_damageSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
+  m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
+  m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
+  m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
+  m_dropMoney: 160
+  m_enemyController: {fileID: 528806279578718545}
+  m_isItemDrop: 1
+  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
 --- !u!195 &7341675702321249772
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -174,41 +211,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
---- !u!114 &-1927861824572852744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34470fa6705eba84ca1ba69c4d23d242, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyHP
-  m_currentHP: 0
-  m_max: 0
-  m_isTutorial: 0
-  m_damageParticleController: {fileID: 3109024123308804497}
-  m_damageSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
-  m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
-  m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
-  m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
-  m_dropMoney: 160
-  m_isItemDrop: 1
-  m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
---- !u!114 &-1663391139054315957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6967910656285339947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0b80fd11ca30244fa2c55a918953e95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Slime
 --- !u!114 &-3125136422026260676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,10 +328,78 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 528806279578718545}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 528806279578718545}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnReturnPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EnemyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EnemyController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_attackEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.96
+      objectReference: {fileID: 0}
     - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 98501614df76a5748b94cd84126e2fd2, type: 3}
+      objectReference: {fileID: 21300000, guid: 99f82a7770317f94382e8ab4c49f1e6f, type: 3}
+    - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Name
       value: EnemyRenderer

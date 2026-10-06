@@ -6,6 +6,8 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
 {
     private EnemyController m_enemyController;
 
+    [SerializeField] private AudioData m_explodeSE;
+
     public void Initialized(EnemyController enemyController)=>m_enemyController=enemyController;
 
     public void Execute()
@@ -21,8 +23,8 @@ public class Enemy_Explosion : MonoBehaviour,IEnemyBehaviour
             if (m_enemyController.TryAttack())
             {
                 Particle();
-
-                m_enemyController.ReturnPool();
+                AudioManager.Instance.PlayAudio(m_explodeSE);
+                //m_enemyController.ReturnPool();
             }
 
             return;

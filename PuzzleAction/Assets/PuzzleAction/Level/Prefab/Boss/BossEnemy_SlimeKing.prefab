@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossEnemyController
   m_team: 1
   m_data: {fileID: 11400000, guid: 133278f64e491ae448b7838ce5783e4b, type: 2}
+  m_stunSE: {fileID: 11400000, guid: 7f94ee93643c30546a9f5a12811500ea, type: 2}
   wallLayer:
     serializedVersion: 2
     m_Bits: 0

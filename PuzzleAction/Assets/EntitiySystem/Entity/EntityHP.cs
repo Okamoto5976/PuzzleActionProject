@@ -14,7 +14,7 @@ abstract public class EntityHP : MonoBehaviour
 
 
     //======Player Tutorial==============
-    public bool m_isTutorial = false;
+    [HideInInspector] public bool m_isTutorial = false;
 
 
     [SerializeField] private DamageParticleController m_damageParticleController;

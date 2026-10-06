@@ -60,6 +60,7 @@ abstract public class Entity : MonoBehaviour
     //component
     protected Rigidbody m_rb;
     protected Animator m_anim;
+
     protected EntityHP m_entityHP;
 
     protected EntityTemporaryBuffSystem m_buffSystem;
@@ -160,12 +161,14 @@ abstract public class Entity : MonoBehaviour
 
     private bool m_isCheckState = false;
 
+    [SerializeField] private AudioData m_stunSE;
+
+
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
-        m_anim = GetComponentInChildren<Animator>();
         m_entityHP = GetComponent<EntityHP>();
-
+        m_anim = GetComponentInChildren<Animator>();
         m_buffSystem=GetComponent<EntityTemporaryBuffSystem>();
 
         SetState();
@@ -310,6 +313,8 @@ abstract public class Entity : MonoBehaviour
         if (actualDuration <= 0f) return;
 
         StunTimer = actualDuration;
+
+        AudioManager.Instance.PlayAudio(m_stunSE);
     }
 
     //public void ApplyInvincible(float duration)

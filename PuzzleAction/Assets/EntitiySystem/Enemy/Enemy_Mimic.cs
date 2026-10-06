@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
 {
+    [SerializeField] private AudioData m_se;
+
     private EnemyController m_enemyController;
 
     private float m_awakeRange = 3f;
@@ -28,6 +30,8 @@ public class Enemy_Mimic : MonoBehaviour, IEnemyBehaviour
         }
         if(distance <= m_enemyController.AttackRange)
         {
+            AudioManager.Instance.PlayAudio(m_se);
+
             m_enemyController.Stop();
             m_enemyController.TryAttack();
             return;

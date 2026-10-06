@@ -115,6 +115,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8306823420184794276}
+  - component: {fileID: 3024846706255692688}
   - component: {fileID: 3676967130022225026}
   - component: {fileID: 3974805614645011884}
   m_Layer: 10
@@ -139,6 +140,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5882638269255150870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3024846706255692688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665925072150456027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c433ddeebd04bd042b49062af246b5f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimEvent
+  m_footSE: {fileID: 11400000, guid: 72661e4723be8f0438fedb0297da7f21, type: 2}
+  m_footAnotherSE: {fileID: 11400000, guid: 6725b5d50ad3f2e47b6073f5b2e73ba4, type: 2}
 --- !u!212 &3676967130022225026
 SpriteRenderer:
   serializedVersion: 2
@@ -282,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   m_team: 0
   m_data: {fileID: 11400000, guid: 5e6734f541e1de242834818a803524a4, type: 2}
+  m_stunSE: {fileID: 11400000, guid: 7f94ee93643c30546a9f5a12811500ea, type: 2}
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -313,10 +329,9 @@ MonoBehaviour:
   m_isLoserTrophy: 0
   m_isNormalTrophy: 0
   m_titleTrophy: 0
-  m_walkSE: {fileID: 0}
-  m_pull: {fileID: 0}
-  m_stunSE: {fileID: 0}
-  m_hotberSE: {fileID: 0}
+  m_walkSE: {fileID: 11400000, guid: 72661e4723be8f0438fedb0297da7f21, type: 2}
+  m_pull: {fileID: 11400000, guid: 91b7d059215278a4695183e7f1aeb716, type: 2}
+  m_hotberSE: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
   testknockback: 0
 --- !u!114 &-8794102270786672288
 MonoBehaviour:
