@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static MapBGMData;
 
 
 public class MapSelectPhaseSystem : MonoBehaviour
@@ -19,6 +18,9 @@ public class MapSelectPhaseSystem : MonoBehaviour
     [SerializeField] private UnityEngine.UI.Button m_nextsceneButton;
     [SerializeField] private RectTransform m_previewRoot;
     [SerializeField] private Image m_tilePrefab;
+
+    private readonly List<List<Image>> m_previewTiles = new();
+
     [SerializeField] private TMP_Text m_moneyTextPrefab;
 
     [SerializeField] private float m_maxPreviewWidth = 250f;
@@ -128,7 +130,6 @@ public class MapSelectPhaseSystem : MonoBehaviour
         // -------- Background --------
 
         Image background = rootObj.AddComponent<Image>();
-
         background.color = new Color(0f, 0f, 0f, 0f);
 
         // -------- Button --------
@@ -147,23 +148,21 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         // -------- Generate Tiles --------
 
+        List<Image> tiles = new();
         for (int y = 0; y < map.size.y; y++)
         {
             for (int x = 0; x < map.size.x; x++)
             {
                 Image tile = Instantiate(m_tilePrefab, root);
-
                 bool active = map.IsActiveTile(x, y);
-
-                if (x == 0 && y == 0)
-                {
-                    //Debug.LogWarning($"IsActiveTile(0, 0) = {active}");
-                }
 
                 tile.color = active ? Color.white : Color.clear;
 
+                tiles.Add(tile);
             }
         }
+
+        m_previewTiles.Add(tiles);
         m_previews.Add(root);
 
         GameObject rewardObj = new GameObject("RewardText");
@@ -193,24 +192,26 @@ public class MapSelectPhaseSystem : MonoBehaviour
     #endregion
 
     #region Select
+    private void Update()
+    {
+        if (m_selectedIndex < 0) return;
+
+        float alpha = Mathf.Lerp(0.6f, 1.0f, (Mathf.Sin(Time.time * 4f) + 1f) * 0.5f);
+        UpdateSelectedAlpha(alpha);
+    }
 
     private void SelectMap(int index)
     {
-        Debug.Log($"SelectMap : {index}");
-
+        //Debug.Log($"SelectMap : {index}");
         m_selectedIndex = index;
-
         ApplyMap();
-
         Highlight(index);
-
         if (m_selectedMaps[index].mapName == null) return;
     }
 
     public void Deselect()
     {
         m_selectedIndex = -1;
-
         Highlight(-1);
     }
 
@@ -220,12 +221,38 @@ public class MapSelectPhaseSystem : MonoBehaviour
         {
             bool selected = i == index;
 
-            m_previews[i].localScale = selected  ? Vector3.one * 1.1f : Vector3.one;
+            m_previews[i].localScale = selected ? Vector3.one * 1.1f : Vector3.one;
+
+            foreach (Image tile in m_previewTiles[i])
+            {
+                if (tile == null) continue;
+
+                if (tile.color.a <= 0f) continue;
+
+                Color color = tile.color;
+                color.a = selected ? 1f : 0.4f;
+                tile.color = color;
+            }
         }
     }
 
-    #endregion
+    private void UpdateSelectedAlpha(float alpha)
+    {
+        if (m_selectedIndex < 0) return;
 
+        if (m_selectedIndex >= m_previewTiles.Count) return;
+
+        foreach (Image tile in m_previewTiles[m_selectedIndex])
+        {
+            if (tile == null) continue;
+            if (tile.color.a <= 0f) continue;
+
+            Color color = tile.color;
+            color.a = alpha;
+            tile.color = color;
+        }
+    }
+    #endregion
     #region ApplyMap
 
     private void ApplyMap()
