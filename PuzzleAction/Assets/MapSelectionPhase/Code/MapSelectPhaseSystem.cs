@@ -56,6 +56,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
         GenerateRewards();
         CreatePreviews();
 
+        StartCoroutine(LoadManager.m_instance.FadeIn());
+
         AudioManager.Instance.PlayAudio(m_bgm);
 
     }

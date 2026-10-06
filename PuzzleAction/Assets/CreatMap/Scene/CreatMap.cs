@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -62,6 +63,8 @@ public class CreatMap : MonoBehaviour
         }
 
         PlayBGM();
+
+        StartCoroutine(MainGameManager.Instance.GameStartCoroutine());
     }
 
 

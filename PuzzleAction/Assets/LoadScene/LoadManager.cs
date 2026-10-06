@@ -48,9 +48,11 @@ public class LoadManager : MonoBehaviour
             yield return null;
         }
 
-        yield return FadeIn();
+        Time.timeScale = 1.0f;
 
-        m_panel.SetActive(false);
+        //yield return FadeIn();
+
+        //m_panel.SetActive(false);
 
     }
 
@@ -62,6 +64,9 @@ public class LoadManager : MonoBehaviour
     public IEnumerator FadeIn()
     {
         yield return Fade(0f);
+
+        m_panel.SetActive(false);
+
     }
 
     private IEnumerator Fade(float amount)

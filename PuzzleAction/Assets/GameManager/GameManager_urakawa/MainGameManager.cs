@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MainGameManager : MonoBehaviour
@@ -27,8 +28,16 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private EntityHP m_playerHP;
     [SerializeField] private PlayerController m_playerController;
 
+    [SerializeField] private TextCanvas m_textCanvas;
+
     //=========tutorial===============
     private TutorialSave m_tutorialSave = new();
+
+    //=========gameStart==============
+    [SerializeField] private GameObject m_playerRenderer;
+    [SerializeField] private GameObject m_playerDirObject;
+
+    [SerializeField] private CameraManager m_cameraManager;
 
 
     private void Awake()
@@ -57,6 +66,34 @@ public class MainGameManager : MonoBehaviour
         //}
     }
 
+    public IEnumerator GameStartCoroutine()
+    {
+        //m_playerController.gameObject.SetActive(false);
+        m_playerController.SetCanMove(false);
+        m_playerController.SetIsInvincible(true);
+        m_playerRenderer.SetActive(false);
+        m_playerDirObject.SetActive(false);
+
+        yield return StartCoroutine(LoadManager.m_instance.FadeIn());
+
+        //階層表示
+        yield return StartCoroutine(m_textCanvas.FadeOut());
+
+        yield return new WaitForSecondsRealtime(1.5f);
+
+
+        StartCoroutine(m_textCanvas.FadeIn());
+
+        m_cameraManager.Shake(2f);
+        m_playerController.SetCanMove(true);
+        //m_playerController.gameObject.SetActive(true);
+        m_playerController.SetIsInvincible(false);
+
+        m_playerRenderer.SetActive(true);
+        m_playerDirObject.SetActive(true);
+        yield return null;
+    }
+
     private void OnEnable()
     {
         m_playerDeadEvent.Register(OnPlayerDead);
@@ -71,25 +108,8 @@ public class MainGameManager : MonoBehaviour
     void Update()
     {
     
-
-        //if (Keyboard.current.mKey.wasPressedThisFrame)
-        //{
-        //    SceneManager.LoadScene("MapSelectionPhase");
-
-        //}
-        //ゲームオーバー後に止める
         if (m_isGameOver) return;
 
-        //timemanager.DecreaseValue(Time.deltaTime);
-
-        //デバック用
-        //Debug.Log($"Score: {m_scoreRuntime.Value} | Money: {m_moneyRuntime.Value} | Time: {timemanager.Value:F1}");
-        
-        //時間切れ
-        //if (timemanager.Value <= 0)
-        //{
-        //    //GameOver();
-        //}
     }
     
 
@@ -155,18 +175,30 @@ public class MainGameManager : MonoBehaviour
 
         Debug.Log("ゲームオーバー");
 
-        //Time.timeScale = 0f;
-
-        //UIを表示させない
-
-        //リザルト
-
-        //Sceneリセット　ゲームリセット
-        //SceneMove Tile
+        StartCoroutine(SlowTime());
 
         m_gameOverUIEvent.Raise(true);
 
-        //titel or restart
     }
+    private IEnumerator SlowTime()
+    {
+        float startTimeScale = Time.timeScale;
+        float duration = 1f;
+        float timer = 0f;
 
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            Time.timeScale = Mathf.Lerp(
+                startTimeScale,
+                0f,
+                timer / duration
+            );
+
+            yield return null;
+        }
+
+        Time.timeScale = 0f;
+    }
 }

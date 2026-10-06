@@ -140,6 +140,12 @@ public class MapPlaceSystem : MonoBehaviour
         m_boardManager.Generate(m_mapClass, m_startPos, m_endPos);
     }
 
+    private void Start()
+    {
+        StartCoroutine(LoadManager.m_instance.FadeIn());
+
+    }
+
     //コピー
     private MapClass CreateRuntimeMap(MapClass source)
     {

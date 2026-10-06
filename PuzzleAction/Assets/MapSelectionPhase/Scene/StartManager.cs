@@ -31,6 +31,8 @@ public class StartManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1.0f;
+
         var data = m_optionSaveManager.OnAudioLoad();
 
         if (data != null)
@@ -45,6 +47,9 @@ public class StartManager : MonoBehaviour
             m_bgmSlider.value = 0.8f;
             m_seSlider.value = 0.8f;
         }
+
+        StartCoroutine(LoadManager.m_instance.FadeIn());
+
 
         AudioManager.Instance.PlayAudio(m_bgm);
     }

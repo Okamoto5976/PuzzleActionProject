@@ -9,6 +9,8 @@ public class GameOverUISystem : MonoBehaviour
 
     public void OnExit()
     {
-        m_sceneEvent.TriggerEvent(m_exitScene);
+        //m_sceneEvent.TriggerEvent(m_exitScene);
+
+        LoadManager.m_instance.LoadScene(m_exitScene.Value);
     }
 }

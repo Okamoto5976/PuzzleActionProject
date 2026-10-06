@@ -11,11 +11,15 @@ public class GameClearUISystem : MonoBehaviour
 
     public void OnNextStage()
     {
-        m_sceneEvent.TriggerEvent(m_nextScene);
+        //m_sceneEvent.TriggerEvent(m_nextScene);
+        LoadManager.m_instance.LoadScene(m_nextScene.Value);
+
     }
 
     public void OnExit()
     {
-        m_sceneEvent.TriggerEvent(m_exitScene);
+        //m_sceneEvent.TriggerEvent(m_exitScene);
+        LoadManager.m_instance.LoadScene(m_exitScene.Value);
+
     }
 }
