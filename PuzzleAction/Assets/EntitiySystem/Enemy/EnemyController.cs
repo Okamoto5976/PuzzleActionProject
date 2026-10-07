@@ -271,7 +271,11 @@ public class EnemyController : Entity
     public void HitAnim()
     {
         Debug.LogWarning("hitAnim");
-        m_anim.SetTrigger("Hit");
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Hit");
+
+        }
     }
 
     private AttackItem GetUseItem()
