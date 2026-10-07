@@ -13,7 +13,7 @@ public class EnemyHP : EntityHP
     {
         if (m_entity.CurrentState == Entity.EntityState.Dead) return;
 
-        //m_enemyController.HitAnim();
+        m_enemyController.HitAnim();
 
 
         base.TakeDamage(data);
