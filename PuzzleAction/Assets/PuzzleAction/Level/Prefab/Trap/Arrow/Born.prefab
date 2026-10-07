@@ -211,7 +211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4534400832726257739}
-  - component: {fileID: 7277797425382834796}
+  - component: {fileID: 1778470294288042233}
   - component: {fileID: 8629952716382898349}
   - component: {fileID: 3760152005104094903}
   m_Layer: 0
@@ -238,7 +238,7 @@ Transform:
   - {fileID: 228403800297300342}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7277797425382834796
+--- !u!114 &1778470294288042233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,13 +247,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 9130968029162177211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7c635aab6f7f24d900190cd20b9383, type: 3}
+  m_Script: {fileID: 11500000, guid: 31b71039a1162f241af0e6b4b4e118e7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ArrowTrap
+  m_EditorClassIdentifier: Assembly-CSharp::BornTrap
   m_isFowardDir: 1
   m_trapData: {fileID: 11400000, guid: 3c96adc959573984490736414bda963f, type: 2}
   m_speed: 0
-  m_damageRate: 1
   m_hitLayers:
     serializedVersion: 2
     m_Bits: 192

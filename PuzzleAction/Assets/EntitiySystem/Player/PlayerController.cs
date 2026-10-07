@@ -119,6 +119,7 @@ public class PlayerController : Entity
         }
 
         m_passiveSystem = GetComponent<EntityPassiveBuffSystem>();
+        SetIsInvincible(true);
     }
 
 

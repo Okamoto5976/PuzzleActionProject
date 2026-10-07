@@ -27,6 +27,8 @@ public class ArrowTrap : TrapBase
 
     protected override void OnHit()
     {
+       
+
         OnReturnPool();
     }
 

@@ -158,6 +158,8 @@ public class StartManager : MonoBehaviour
 
     public void OnQuit()
     {
+
+        Debug.Log("quit");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

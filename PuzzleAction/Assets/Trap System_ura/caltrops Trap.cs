@@ -7,7 +7,6 @@ public class CaltropTrap : TrapBase
     [Header("Damage")]
     [SerializeField] private float m_damageInterval = 1.0f;
 
-    // åªç›ÅAÇ‹Ç´Ç—ÇµÇÃîÕàÕì‡Ç…Ç¢ÇÈEntity
     private HashSet<Entity> m_targets =
         new HashSet<Entity>();
 
@@ -72,23 +71,35 @@ public class CaltropTrap : TrapBase
 
     private IEnumerator DamageCoroutine()
     {
-        while (m_targets.Count > 0)
+     while (m_targets.Count > 0)
         {
-             
+            List<Entity> removeTargets = new List<Entity>();
+
             foreach (Entity target in m_targets)
             {
-                if (target == null)
+                if(target == null )
+                {
                     continue;
+                }
 
+                if(!target.gameObject.activeInHierarchy)
+                {
+                    removeTargets.Add(target);
+                    continue;
+                }
                 target.TakeDamage(m_damageData);
             }
-          
-            yield return new WaitForSeconds(
-                m_damageInterval);
+
+            foreach (Entity target in removeTargets)
+            {
+                m_targets.Remove(target);
+            }
+
+            OnHit();
+            yield return new WaitForSeconds(1.0f);
         }
 
-
-        m_damageCoroutine = null;
+        m_damageData = null;
     }
 
 

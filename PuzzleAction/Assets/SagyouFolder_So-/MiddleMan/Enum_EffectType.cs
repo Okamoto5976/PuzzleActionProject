@@ -4,4 +4,6 @@ using UnityEngine;
 public enum Enum_EffectType
 {
     Explosion,
+    HitFire,
+    HitPoison
 }

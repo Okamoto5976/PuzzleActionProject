@@ -3,20 +3,19 @@ using UnityEngine;
 
 public class Middleman_BossEnemy : MiddlemanBase<Enum_BossType, ComponentPoolHandler_BossEnemy, BossEnemyController>
 {
-    private BossEnemyController _currentBossEnemyController;
-    private float _bossMaxHP;
+    private BossEnemyHP _currentBossEnemyHP;
     private bool _isBossActive = false;
 
-    public float BossHP => _currentBossEnemyController == null ? 0 : _currentBossEnemyController.HP;
-    public float BossMaxHP => _bossMaxHP;
+    public float BossHP => _currentBossEnemyHP == null ? 0 : _currentBossEnemyHP.CurrentHP;
+    public float BossMaxHP => _currentBossEnemyHP == null ? 0 : _currentBossEnemyHP.MaxHP;
 
     public bool IsBossActive => _isBossActive;
 
     public BossEnemyController GetBoss(Enum_BossType bossType)
     {
-        _currentBossEnemyController = GetComponent(bossType);
-        _bossMaxHP = _currentBossEnemyController.HP;
+        var component = GetComponent(bossType);
+        _currentBossEnemyHP = component.GetComponent<BossEnemyHP>();
         _isBossActive = true;
-        return _currentBossEnemyController;
+        return component;
     }
 }

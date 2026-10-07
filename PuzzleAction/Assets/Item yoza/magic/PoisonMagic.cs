@@ -1,3 +1,5 @@
+
+
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -143,8 +145,8 @@ public class PoisonMagic : TrapBase
             m_rb.isKinematic = true;
         }
 
-        if(m_bulletObject != null) m_bulletObject.SetActive(false);
-        if(m_areaObjct!=null)m_areaObjct.SetActive(true);
+        if (m_bulletObject != null) m_bulletObject.SetActive(false);
+        if (m_areaObjct != null) m_areaObjct.SetActive(true);
 
         DetectInitialTargets();
 
@@ -197,4 +199,4 @@ public class PoisonMagic : TrapBase
             }
         }
     }
-}
+}//‚±‚ê

@@ -26,10 +26,20 @@ public class GachaEngine : ScriptableObject
     public int TotalRarityWeight => totalRarityWeight;
     public List<RarityEnumAsset> Rarities => rarityEnumAssets;
 
+#if UNITY_EDITOR
     private void OnValidate()
     {
         ReValidate();
     }
+#endif
+
+
+#if !UNITY_EDITOR
+    private void OnEnable()
+    {
+        ReValidate();
+    }
+#endif
 
     private void SetNewWeightTable (List<RarityWithWeight> weightTable)
     {

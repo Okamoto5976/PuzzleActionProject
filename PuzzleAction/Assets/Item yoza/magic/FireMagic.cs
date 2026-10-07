@@ -73,5 +73,7 @@ public class FireMagic : TrapBase
         }
 
         OnHit();
+
+        ParticleManager.Instance.PlayParticle(Enum_EffectType.HitFire, transform.position);
     }
 }

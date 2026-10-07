@@ -4,26 +4,26 @@ using UnityEngine.InputSystem;
 
 public class InteractArea : MonoBehaviour
 {
-    [SerializeField] private InputActionReference m_action;
-    private InputDisplayName m_inputDisplayNameClass;
+    //[SerializeField] private InputActionReference m_action;
+    //private InputDisplayName m_inputDisplayNameClass;
 
     [SerializeField] private GameObject m_interactionButton;
     [SerializeField] private TMP_Text m_text;
 
     [SerializeField] private Vector3Asset m_playerPos;
 
-    [SerializeField] private float m_range = 3f;
+    [SerializeField] private float m_range = 7f;
 
     private void Start()
     {
-        m_inputDisplayNameClass = new InputDisplayName();
+        //m_inputDisplayNameClass = new InputDisplayName();
 
-        m_text.text = m_inputDisplayNameClass.GetInputName(m_action);
+        ////m_text.text = m_inputDisplayNameClass.GetInputName(m_action);
 
-        if (m_interactionButton != null)
-        {
-            m_interactionButton.SetActive(false);
-        }
+        //if (m_interactionButton != null)
+        //{
+        //    m_interactionButton.SetActive(false);
+        //}
     }
 
     private void Update()
