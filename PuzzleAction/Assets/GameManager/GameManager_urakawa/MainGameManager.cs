@@ -71,7 +71,7 @@ public class MainGameManager : MonoBehaviour
     {
         //m_playerController.gameObject.SetActive(false);
         m_playerController.SetCanMove(false);
-        m_playerController.SetIsInvincible(true);
+        //m_playerController.SetIsInvincible(true);
         m_playerRenderer.SetActive(false);
         m_playerDirObject.SetActive(false);
 
