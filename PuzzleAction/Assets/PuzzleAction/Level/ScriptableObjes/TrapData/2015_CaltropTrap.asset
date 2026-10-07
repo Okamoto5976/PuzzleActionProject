@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d0c3bf1e21c8bd44a66c598f4e2cc22, type: 3}
   m_Name: 2015_CaltropTrap
   m_EditorClassIdentifier: Assembly-CSharp::TrapData
-  m_base: 10
+  m_base: 8
   m_attack: -1
   m_criticalRate: -1
   m_criticalDamage: -1
