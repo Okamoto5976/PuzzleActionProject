@@ -33,11 +33,6 @@ MonoBehaviour:
     m_duration: 0
     m_buffID: 0
   - m_value: 1
-    m_statusType: 4
-    m_modifierType: 1
-    m_duration: 0
-    m_buffID: 0
-  - m_value: 1
     m_statusType: 3
     m_modifierType: 1
     m_duration: 0
