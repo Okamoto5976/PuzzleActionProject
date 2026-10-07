@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChaseData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 100
-  m_str: 8
+  m_str: 20
   m_knockBack: 0
   m_def: 0
   m_speed: 5
