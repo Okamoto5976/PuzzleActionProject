@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3854363520186093158}
   - component: {fileID: 6295794922853557716}
   - component: {fileID: 1055531205892525742}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BossEnemy_Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 8894470687023955956}
   - component: {fileID: 510633199196273268}
   - component: {fileID: 8645272638787202301}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,9 +280,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6054870468107764460}
     m_Modifications:
+    - target: {fileID: 44688392065161030, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_Name
       value: DamagePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5468225253559505658, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 6628709658621111538, guid: f9312c12e1a5d674e8ae6576fc9ca267, type: 3}
       propertyPath: m_LocalPosition.x
