@@ -87,18 +87,6 @@ public class EnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
-    //public float CurrentMoveSpeed
-    //{
-    //    get
-    //    {
-    //        float slowMultiplier = 1f - Swamp * (1f - SlowRes);
-    //        slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
-
-    //        float finalSpeed = (Speed * slowMultiplier) - Slow;
-
-    //        return Mathf.Max(0f, finalSpeed);
-    //    }
-    //}
 
     public void InitializeSpawn()
     {
@@ -112,9 +100,23 @@ public class EnemyController : Entity
             hp.ResetHP();
         }
 
+        m_spawnPosition = transform.position;
+
+        m_agent.ResetPath();
+        m_agent.isStopped = false;
+
+        m_knockBackVelocity = Vector3.zero;
+
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+
+        m_rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
+        
         SetCanMove(true);
         SetIsStun(false);
         SetIsInvincible(false);
+
         AssignDropItem();
     }
 
@@ -260,6 +262,10 @@ public class EnemyController : Entity
 
             entity.TakeDamage(damage);
         }
+        Debug.Log(transform.position);
+        Debug.Log(m_attackHitBox.m_pos);
+        Debug.Log(m_attackHitBox.m_pos + m_attackHitBox.m_hitBoxOffset);
+        Debug.Log(m_target.Value);
     }
 
     public void HitAnim()
@@ -527,6 +533,8 @@ public class EnemyController : Entity
         {
             Debug.LogWarning($"{this.name} : ReturnObjectToPool Not Found");
         }
+        m_anim.Rebind();
+        m_anim.Update(0f);
         pool.ReturnToPool();
     }
     #endregion

@@ -447,9 +447,6 @@ abstract public class Entity : MonoBehaviour
 
     public void ChangeState(EntityState newState)
     {
-        if (m_currentState == EntityState.Dead) return;
-
-
         m_currentState = newState;
     }
 

@@ -74,16 +74,29 @@ public class BossEnemyController : Entity
         ChangeState(EntityState.Idle);
 
         m_isCooldownReady = true;
-        m_cooldownTimer = 0f;
+        m_attackCooldown = 0f;
 
         if (m_entityHP is EnemyHP hp)
         {
             hp.ResetHP();
         }
 
+        SpawnPosition = transform.position;
+
+        m_agent.ResetPath();
+        m_agent.isStopped = false;
+
+        m_knockBackVelocity = Vector3.zero;
+
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+
+        m_rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
         SetCanMove(true);
         SetIsStun(false);
         SetIsInvincible(false);
+
         AssignDropItem();
     }
     #region UNITY EVENT

@@ -129,7 +129,7 @@ public class Enemy_Rush : MonoBehaviour, IEnemyBehaviour
         {
             if (!m_hasHit)
             {
-                m_controller.TryAttack();
+                m_controller.Attack();
                 m_hasHit = true;
                 Stop();
                 return;
