@@ -76,7 +76,7 @@ public class AudioFader : MonoBehaviour
 
         while (timer < duration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             audioSource.volume = Mathf.Lerp(startVolume, 0f, timer / duration);
             yield return null;
         }

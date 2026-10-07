@@ -182,6 +182,8 @@ public class MainGameManager : MonoBehaviour
 
         Debug.Log("ゲームオーバー");
 
+        AudioManager.Instance.StopBGM();
+
         StartCoroutine(SlowTime());
 
         m_gameOverUIEvent.Raise(true);
