@@ -129,6 +129,12 @@ public class AudioManager : MonoBehaviour
         m_nowBGMData = data;
         audioFader.InstancePlay(data.audioClip, data.volume);
     }
+
+    public void StopBGM(float fadeDuration = 1f)
+    {
+        m_nowBGMData = null;
+        audioFader.FadeOutAndStop(fadeDuration);
+    }
 }
 
 //using UnityEngine;

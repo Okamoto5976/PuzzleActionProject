@@ -58,4 +58,32 @@ public class AudioFader : MonoBehaviour
         audioSource.volume = targetVolume;
         audioSource.Play();
     }
+
+    public void FadeOutAndStop(float duration = -1f)
+    {
+        if (duration < 0f) duration = fadeDuration;
+
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeOutAndStopCoroutine(duration));
+    }
+
+    private IEnumerator FadeOutAndStopCoroutine(float duration)
+    {
+        float startVolume = audioSource.volume;
+        float timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0f, timer / duration);
+            yield return null;
+        }
+
+        audioSource.volume = 0f;
+        audioSource.Stop();
+        audioSource.clip = null;
+        fadeCoroutine = null;
+    }
 }
