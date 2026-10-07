@@ -32,6 +32,7 @@ public class MainGameManager : MonoBehaviour
 
     //=========tutorial===============
     private TutorialSave m_tutorialSave = new();
+    [SerializeField] private TutorialManager m_tutorialManager;
 
     //=========gameStart==============
     [SerializeField] private GameObject m_playerRenderer;
@@ -91,6 +92,12 @@ public class MainGameManager : MonoBehaviour
 
         m_playerRenderer.SetActive(true);
         m_playerDirObject.SetActive(true);
+
+        if (GameManager.Instance.IsTutorial)
+        {
+            Debug.Log("Tutorial");
+            m_tutorialManager.PlayerControllerTutorial();
+        }
         yield return null;
     }
 

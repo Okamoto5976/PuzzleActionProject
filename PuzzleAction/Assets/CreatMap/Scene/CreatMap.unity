@@ -634,7 +634,6 @@ MonoBehaviour:
   m_player: {fileID: 128709781}
   m_mapBGMData: {fileID: 11400000, guid: 55f8ef41d8b2a284c9fc5e57c3d465f2, type: 2}
   m_enemyCameraDetector: {fileID: 1957982650}
-  m_tutorialManager: {fileID: 1376652705}
 --- !u!4 &74042322
 Transform:
   m_ObjectHideFlags: 0
@@ -2846,6 +2845,10 @@ PrefabInstance:
       propertyPath: m_playerDirObject
       value: 
       objectReference: {fileID: 2117838775}
+    - target: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
+      propertyPath: m_tutorialManager
+      value: 
+      objectReference: {fileID: 1376652705}
     - target: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
       propertyPath: m_playerController
       value: 

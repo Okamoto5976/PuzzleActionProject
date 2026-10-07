@@ -29,7 +29,7 @@ MonoBehaviour:
   m_buffItemClass:
   - m_value: 1
     m_statusType: 1
-    m_modifierType: 0
+    m_modifierType: 1
     m_duration: 0
     m_buffID: 0
   - m_value: 1
@@ -53,12 +53,12 @@ MonoBehaviour:
     m_duration: 0
     m_buffID: 0
   - m_value: 0.1
-    m_statusType: 7
+    m_statusType: 6
     m_modifierType: 1
     m_duration: 0
     m_buffID: 0
   - m_value: 1
-    m_statusType: 9
+    m_statusType: 7
     m_modifierType: 1
     m_duration: 0
     m_buffID: 0
