@@ -60,6 +60,8 @@ public class EnemyController : Entity
 
     [Header("Drop")]
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    [Header("Audio")]
+    [SerializeField] private AudioData m_attackSE;
     public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [NonSerialized] public Item m_dropItem;
 
@@ -230,6 +232,10 @@ public class EnemyController : Entity
     public void Attack()
     {
         if (m_hitCollider == null) return;
+        if (m_attackSE != null)
+        {
+            AudioManager.Instance.PlayAudio(m_attackSE);
+        }   
 
         DamageData damage = new DamageData
             {
@@ -262,10 +268,6 @@ public class EnemyController : Entity
 
             entity.TakeDamage(damage);
         }
-        Debug.Log(transform.position);
-        Debug.Log(m_attackHitBox.m_pos);
-        Debug.Log(m_attackHitBox.m_pos + m_attackHitBox.m_hitBoxOffset);
-        Debug.Log(m_target.Value);
     }
 
     public void HitAnim()
@@ -420,7 +422,8 @@ public class EnemyController : Entity
         //m_agent.speed = Mathf.Min(speed, CurrentMoveSpeed);
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
-        m_agent.stoppingDistance = m_attackRange;
+        m_agent.stoppingDistance = 0;
+        //m_agent.stoppingDistance = m_attackRange;
 
         m_agent.SetDestination(targetPos);
     }

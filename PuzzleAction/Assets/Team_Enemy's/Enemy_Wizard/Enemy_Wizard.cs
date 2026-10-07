@@ -20,7 +20,7 @@ public class Enemy_Wizard : MonoBehaviour, IEnemyBehaviour
         if (m_enemy.Target == null) return;
 
         float distance = Vector3.Distance(transform.position, m_enemy.Target.Value);
-        if (distance > m_enemy.AttackRange)
+        if (distance > m_enemy.AttackRange * 1.3f)
         {
             m_enemy.SetDestination(m_enemy.Target.Value, m_enemy.Speed);
         }
@@ -44,22 +44,28 @@ public class Enemy_Wizard : MonoBehaviour, IEnemyBehaviour
     private void Orbit()
     {
         Vector3 center = m_enemy.Target.Value;
+
         Vector3 offset = transform.position - center;
         offset.y = 0f;
 
-        //if (offset.sqrMagnitude < 0.01f)
-        //{
-        //    offset = transform.right;
-        //}
+        if (offset.sqrMagnitude < 0.01f)
+        {
+            offset = transform.right;
+        }
 
         Vector3 tangent = Vector3.Cross(Vector3.up, offset.normalized);
-
         if (m_isReverse)
         {
             tangent *= -1f;
         }
 
-        Vector3 targetPos = center + offset.normalized * m_enemy.AttackRange + tangent * m_enemy.Speed;
+        float desiredRadius = m_enemy.AttackRange;
+        float currentRadius = offset.magnitude;
+
+        Vector3 radiusCorrection = offset.normalized * (desiredRadius - currentRadius);
+        Vector3 moveDir = tangent + radiusCorrection * 3f;
+
+        Vector3 targetPos = transform.position + moveDir.normalized * 3f;
         m_enemy.SetDestination(targetPos, m_enemy.Speed);
     }
 
