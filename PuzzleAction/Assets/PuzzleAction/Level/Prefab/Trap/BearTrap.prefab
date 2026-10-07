@@ -50,7 +50,7 @@ MonoBehaviour:
   m_isFowardDir: 0
   m_trapData: {fileID: 11400000, guid: 307ca69b4203dbd41aba9969435c7df5, type: 2}
   m_speed: 0
-  m_recoveryTime: 2.5
+  m_recoveryTime: 5
   m_se: {fileID: 11400000, guid: 1f0f2224cac2d2d49a0f1a7f3c8dab26, type: 2}
 --- !u!114 &613635683574313116
 MonoBehaviour:
