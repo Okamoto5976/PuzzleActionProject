@@ -108,7 +108,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_findRange: 8
+  m_findRange: 13
   m_attackRange: 2
   m_attackCooldown: 3
   m_attackHitBox:
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: bd356a36a60fb7547af11d332ea8a4d9, type: 2}
+  m_attackSE: {fileID: 0}
 --- !u!114 &302776586832592860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
   m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
   m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
-  m_dropMoney: 160
+  m_dropMoney: 1000
   m_enemyController: {fileID: -2954304509094281346}
   m_isItemDrop: 1
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}

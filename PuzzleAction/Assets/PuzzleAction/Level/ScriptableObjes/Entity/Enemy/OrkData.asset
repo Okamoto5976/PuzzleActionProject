@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: OrkData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 120
-  m_str: 20
+  m_str: 25
   m_knockBack: 0.5
-  m_def: 5
+  m_def: 8
   m_speed: 4
   m_criticalRate: 10
-  m_criticalDamage: 1.75
+  m_criticalDamage: 1.5
   m_breakRate: 1
   m_stunDuration: 0
-  m_poisonRes: 0.2
+  m_poisonRes: 0.3
   m_stunRes: 0.5
-  m_swampRes: 0.5
-  m_gasRes: 0.1
+  m_swampRes: 1
+  m_gasRes: 0.3
   m_burnRes: 0

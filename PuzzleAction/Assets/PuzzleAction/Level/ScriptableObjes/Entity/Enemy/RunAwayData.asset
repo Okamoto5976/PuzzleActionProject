@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: RunAwayData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 70
-  m_str: 10
+  m_str: 0
   m_knockBack: 0
   m_def: 5
   m_speed: 6
-  m_criticalRate: 10
-  m_criticalDamage: 1.5
-  m_breakRate: 1
+  m_criticalRate: 0
+  m_criticalDamage: 0
+  m_breakRate: 0
   m_stunDuration: 0
   m_poisonRes: 0
   m_stunRes: 0

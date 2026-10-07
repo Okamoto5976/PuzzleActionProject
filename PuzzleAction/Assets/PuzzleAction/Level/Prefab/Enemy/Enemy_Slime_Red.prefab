@@ -114,7 +114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
-  m_findRange: 8
+  m_findRange: 13
   m_attackRange: 2
   m_attackCooldown: 2
   m_attackHitBox:
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_power: 3
   m_shootOffset: {x: 0, y: 0.5, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: 7880bb84d4509194992fc4baf87b9ccd, type: 2}
+  m_attackSE: {fileID: 0}
 --- !u!114 &-892202173841469504
 MonoBehaviour:
   m_ObjectHideFlags: 0
