@@ -74,7 +74,6 @@ public class BossEnemyController : Entity
         ChangeState(EntityState.Idle);
 
         m_isCooldownReady = true;
-        m_attackCooldown = 0f;
 
         if (m_entityHP is EnemyHP hp)
         {

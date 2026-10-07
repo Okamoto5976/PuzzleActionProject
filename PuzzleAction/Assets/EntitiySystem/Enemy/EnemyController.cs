@@ -95,7 +95,6 @@ public class EnemyController : Entity
         ChangeState(EntityState.Idle);
 
         m_isCooldownEnd = true;
-        m_attackCooldownDuration = 0f;
 
         if (m_entityHP is EnemyHP hp)
         {
