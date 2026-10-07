@@ -356,6 +356,7 @@ MonoBehaviour:
   m_blood: {fileID: 7711612278638627893}
   m_playerDeadEvent: {fileID: 11400000, guid: fc782fd3afb53c84997fbfd9f631bf13, type: 2}
   m_cameraManager: {fileID: 0}
+  m_dieSE: {fileID: 11400000, guid: 6bc3f231c0d0fec4bb7ca5a8741b1871, type: 2}
 --- !u!114 &8049973323928560549
 MonoBehaviour:
   m_ObjectHideFlags: 0

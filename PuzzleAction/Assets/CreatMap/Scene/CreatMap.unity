@@ -155,6 +155,53 @@ Transform:
   - {fileID: 2130997398}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2307369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2307370}
+  - component: {fileID: 2307371}
+  m_Layer: 0
+  m_Name: HitPoison
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2307370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 423272710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2307371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1d8fbe20c07a640a1637274cdaa4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Effect
+  m_prefab: {fileID: 6189868725422640481, guid: fce2096c24a78ea449d5be45bfc2107e, type: 3}
+  m_poolCount: 30
+  m_forcePoolCount: 1
 --- !u!1 &11185802
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,9 +586,9 @@ MonoBehaviour:
   m_mapClassData: {fileID: 11400000, guid: e308b8759bb6b4747b00683b5e39699c, type: 2}
   m_instanceCounterList: []
   m_rooms:
-  - m_type: 2
-    m_originPos: {x: 0, y: 0}
   - m_type: 3
+    m_originPos: {x: 0, y: 0}
+  - m_type: 4
     m_originPos: {x: 3, y: 0}
   - m_type: 0
     m_originPos: {x: 6, y: 0}
@@ -634,7 +681,6 @@ MonoBehaviour:
   m_player: {fileID: 128709781}
   m_mapBGMData: {fileID: 11400000, guid: 55f8ef41d8b2a284c9fc5e57c3d465f2, type: 2}
   m_enemyCameraDetector: {fileID: 1957982650}
-  m_tutorialManager: {fileID: 1376652705}
 --- !u!4 &74042322
 Transform:
   m_ObjectHideFlags: 0
@@ -2470,6 +2516,10 @@ MonoBehaviour:
   pools:
   - key: 0
     pool: {fileID: 1998405415}
+  - key: 1
+    pool: {fileID: 1014991538}
+  - key: 2
+    pool: {fileID: 2307371}
 --- !u!4 &423272710
 Transform:
   m_ObjectHideFlags: 0
@@ -2484,6 +2534,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1998405414}
+  - {fileID: 1014991537}
+  - {fileID: 2307370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &435115609
@@ -2846,6 +2898,10 @@ PrefabInstance:
       propertyPath: m_playerDirObject
       value: 
       objectReference: {fileID: 2117838775}
+    - target: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
+      propertyPath: m_tutorialManager
+      value: 
+      objectReference: {fileID: 1376652705}
     - target: {fileID: 1832269287731389094, guid: 6792897dcce8de54e851b34b7d20dd5e, type: 3}
       propertyPath: m_playerController
       value: 
@@ -5571,6 +5627,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Trap
   m_prefab: {fileID: 679799482741913749, guid: a29d9dbb901b28449b17510bed303143, type: 3}
   m_poolCount: 70
+  m_forcePoolCount: 1
+--- !u!1 &1014991536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014991537}
+  - component: {fileID: 1014991538}
+  m_Layer: 0
+  m_Name: HitFire
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1014991537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014991536}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 423272710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1014991538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014991536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1d8fbe20c07a640a1637274cdaa4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComponentPoolHandler_Effect
+  m_prefab: {fileID: 4510441628553899603, guid: 80e7ce79a7be41a4cb1c42959dea5f43, type: 3}
+  m_poolCount: 30
   m_forcePoolCount: 1
 --- !u!1 &1018647577
 GameObject:

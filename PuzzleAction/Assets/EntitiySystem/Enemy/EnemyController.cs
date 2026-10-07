@@ -60,6 +60,8 @@ public class EnemyController : Entity
 
     [Header("Drop")]
     [SerializeField] private GachaEngine m_itemDropGachaEngine;
+    [Header("Audio")]
+    [SerializeField] private AudioData m_attackSE;
     public GachaEngine ItemDropGachaEngine => m_itemDropGachaEngine;
     [NonSerialized] public Item m_dropItem;
 
@@ -87,34 +89,35 @@ public class EnemyController : Entity
     public NavMeshAgent Agent => m_agent;
     public AttackHitBox AttackHitBox => m_attackHitBox;
     public HitCollider HitCollider => m_hitCollider;
-    //public float CurrentMoveSpeed
-    //{
-    //    get
-    //    {
-    //        float slowMultiplier = 1f - Swamp * (1f - SlowRes);
-    //        slowMultiplier = Mathf.Clamp(slowMultiplier, 0.25f, 1f);
-
-    //        float finalSpeed = (Speed * slowMultiplier) - Slow;
-
-    //        return Mathf.Max(0f, finalSpeed);
-    //    }
-    //}
 
     public void InitializeSpawn()
     {
         ChangeState(EntityState.Idle);
 
         m_isCooldownEnd = true;
-        m_attackCooldownDuration = 0f;
 
         if (m_entityHP is EnemyHP hp)
         {
             hp.ResetHP();
         }
 
+        m_spawnPosition = transform.position;
+
+        m_agent.ResetPath();
+        m_agent.isStopped = false;
+
+        m_knockBackVelocity = Vector3.zero;
+
+        m_rb.linearVelocity = Vector3.zero;
+        m_rb.angularVelocity = Vector3.zero;
+
+        m_rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
+        
         SetCanMove(true);
         SetIsStun(false);
         SetIsInvincible(false);
+
         AssignDropItem();
     }
 
@@ -228,6 +231,10 @@ public class EnemyController : Entity
     public void Attack()
     {
         if (m_hitCollider == null) return;
+        if (m_attackSE != null)
+        {
+            AudioManager.Instance.PlayAudio(m_attackSE);
+        }   
 
         DamageData damage = new DamageData
             {
@@ -265,7 +272,11 @@ public class EnemyController : Entity
     public void HitAnim()
     {
         Debug.LogWarning("hitAnim");
-        //m_anim.SetTrigger("Hit");
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Hit");
+
+        }
     }
 
     private AttackItem GetUseItem()
@@ -410,7 +421,8 @@ public class EnemyController : Entity
         //m_agent.speed = Mathf.Min(speed, CurrentMoveSpeed);
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
-        m_agent.stoppingDistance = m_attackRange;
+        m_agent.stoppingDistance = 0;
+        //m_agent.stoppingDistance = m_attackRange;
 
         m_agent.SetDestination(targetPos);
     }
@@ -527,6 +539,8 @@ public class EnemyController : Entity
         {
             Debug.LogWarning($"{this.name} : ReturnObjectToPool Not Found");
         }
+        m_anim.Rebind();
+        m_anim.Update(0f);
         pool.ReturnToPool();
     }
     #endregion

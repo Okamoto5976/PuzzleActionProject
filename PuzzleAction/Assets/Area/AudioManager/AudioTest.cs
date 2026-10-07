@@ -39,4 +39,14 @@ public class AudioTest : MonoBehaviour
             isLoop = false
         });
     }
+
+    // BGM停止テスト(フェードアウト)
+    public void StopBGM()
+    {
+        AudioManager.Instance.StopBGM();      // 2秒かけて停止
+    }
+    public void StopBGMFast()
+    {
+        AudioManager.Instance.StopBGM(0.5f);  // 0.5秒で停止
+    }
 }

@@ -46,6 +46,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
         {
             m_guidePanel.SetActive(true);
             Tutorial();
+            StartCoroutine(LoadManager.m_instance.FadeIn());
+
             return;
         }
 

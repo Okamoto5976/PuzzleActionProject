@@ -11,6 +11,8 @@ public class PlayerHP : EntityHP
 
     private PlayerSave m_playerSave;
 
+    [SerializeField] private AudioData m_dieSE;
+
 
     protected override void Start()
     {
@@ -40,6 +42,7 @@ public class PlayerHP : EntityHP
     protected override void Die()
     {
         Debug.Log("ゲームオーバー");
+        AudioManager.Instance.PlayAudio(m_dieSE);
 
         m_playerDeadEvent.Raise();
 

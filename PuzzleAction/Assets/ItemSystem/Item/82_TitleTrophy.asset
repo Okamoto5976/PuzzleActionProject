@@ -26,5 +26,35 @@ MonoBehaviour:
     price: 8888
   m_se: {fileID: 0}
   m_buffEffectType: 1
-  m_buffItemClass: []
+  m_buffItemClass:
+  - m_value: 100
+    m_statusType: 0
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 10
+    m_statusType: 1
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 10
+    m_statusType: 3
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 10
+    m_statusType: 5
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 0.4
+    m_statusType: 6
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
+  - m_value: 5
+    m_statusType: 7
+    m_modifierType: 0
+    m_duration: 0
+    m_buffID: 0
   m_passiveType: 21

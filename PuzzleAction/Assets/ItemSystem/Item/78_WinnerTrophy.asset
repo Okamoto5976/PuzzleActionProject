@@ -33,11 +33,6 @@ MonoBehaviour:
     m_duration: 0
     m_buffID: 0
   - m_value: 1
-    m_statusType: 4
-    m_modifierType: 0
-    m_duration: 0
-    m_buffID: 0
-  - m_value: 1
     m_statusType: 3
     m_modifierType: 0
     m_duration: 0
@@ -53,12 +48,12 @@ MonoBehaviour:
     m_duration: 0
     m_buffID: 0
   - m_value: 0.1
-    m_statusType: 7
+    m_statusType: 6
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0
   - m_value: 1
-    m_statusType: 9
+    m_statusType: 7
     m_modifierType: 0
     m_duration: 0
     m_buffID: 0

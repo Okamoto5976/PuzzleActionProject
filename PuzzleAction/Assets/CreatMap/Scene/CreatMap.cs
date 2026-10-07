@@ -20,8 +20,6 @@ public class CreatMap : MonoBehaviour
     [SerializeField] private MapBGMData m_mapBGMData;
     [SerializeField] private EnemyCameraDetector m_enemyCameraDetector;
 
-    //============Tutorial========================
-    [SerializeField] private TutorialManager m_tutorialManager;
 
     private void Awake()
     {
@@ -56,11 +54,7 @@ public class CreatMap : MonoBehaviour
         m_inventorySystem.Initialized();
         m_entitySpawner.SpawnTitleTrophy(m_player.transform.position);
 
-        if(GameManager.Instance.IsTutorial)
-        {
-            Debug.Log("Tutorial");
-            m_tutorialManager.PlayerControllerTutorial();
-        }
+        
 
         PlayBGM();
 
