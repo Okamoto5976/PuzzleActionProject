@@ -116,7 +116,7 @@ MonoBehaviour:
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 16
   m_attackRange: 8
-  m_attackCooldown: 2
+  m_attackCooldown: 1.3
   m_attackHitBox:
     m_pos: {x: 0, y: 0, z: 0}
     m_hitBoxOffset: {x: 0, y: 1, z: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_attackItems:
   - ItemAnimation: Item
     attackItem: {fileID: 11400000, guid: c4bc40cddfe63b342be0ca82f791227e, type: 2}
-  m_power: 3
+  m_power: 2
   m_shootOffset: {x: 0, y: 1, z: 0}
   m_itemDropGachaEngine: {fileID: 11400000, guid: b0f08d42bd832674c8002f0211d4617a, type: 2}
 --- !u!114 &8382535904999966303
