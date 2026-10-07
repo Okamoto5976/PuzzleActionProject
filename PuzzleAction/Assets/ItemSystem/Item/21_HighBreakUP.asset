@@ -29,6 +29,6 @@ MonoBehaviour:
   - m_value: 10
     m_statusType: 7
     m_modifierType: 0
-    m_duration: 30
+    m_duration: 60
     m_buffID: 17
   m_passiveType: 0

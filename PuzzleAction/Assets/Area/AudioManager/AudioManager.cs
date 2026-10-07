@@ -41,9 +41,9 @@ public class AudioManager : MonoBehaviour
 
         if (data != null)
         {
-            SetMaster(data.m_masterVolume);
-            SetBGM(data.m_bgmVolume);
-            SetSE(data.m_seVolume);
+            SetMaster(data.masterVolume);
+            SetBGM(data.bgmVolume);
+            SetSE(data.seVolume);
         }
         else
         {
@@ -62,6 +62,9 @@ public class AudioManager : MonoBehaviour
 
         m_audioMix.SetFloat("Master", db);
         m_masterVolume = volume;
+
+        Save();
+
     }
 
     public void SetBGM(float volume)
@@ -70,6 +73,8 @@ public class AudioManager : MonoBehaviour
 
         m_audioMix.SetFloat("BGM", db);
         m_bgmVolume = volume;
+        Save();
+
     }
 
     public void SetSE(float volume)
@@ -78,6 +83,20 @@ public class AudioManager : MonoBehaviour
 
         m_audioMix.SetFloat("SE", db);
         m_seVolume = volume;
+
+        Save();
+    }
+
+    private void Save()
+    {
+        AudioSaveData data = new AudioSaveData()
+        {
+            masterVolume = m_masterVolume,
+            bgmVolume = m_bgmVolume,
+            seVolume = m_seVolume,
+        };
+
+        m_optionSaveManager.OnAudioSave(data);
     }
 
     // BGMÇÃPitchïœçX

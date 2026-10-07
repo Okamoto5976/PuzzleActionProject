@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class AudioSaveData
 {
-    public float m_masterVolume;
-    public float m_bgmVolume;
-    public float m_seVolume;
-    public float m_pitch;
+    public float masterVolume;
+    public float bgmVolume;
+    public float seVolume;
+    public float pitch;
 }
 
 public class OptionSaveManager

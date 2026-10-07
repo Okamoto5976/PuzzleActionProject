@@ -26,12 +26,12 @@ public class LevelUI : MonoBehaviour
         {
             if(!GameManager.Instance.IsTutorial)
             {
-                levelText.text = "Level:" + level.ToString();
+                levelText.text = level.ToString() + "階層";
 
             }
             else
             {
-                levelText.text = "Level: Tutorial";
+                levelText.text = "チュートリアル";
             }
         }
     }

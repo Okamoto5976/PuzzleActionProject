@@ -37,9 +37,9 @@ public class StartManager : MonoBehaviour
 
         if (data != null)
         {
-            m_masterSlider.value = data.m_masterVolume;
-            m_bgmSlider.value = data.m_bgmVolume;
-            m_seSlider.value = data.m_seVolume;
+            m_masterSlider.value = data.masterVolume;
+            m_bgmSlider.value = data.bgmVolume;
+            m_seSlider.value = data.seVolume;
         }
         else
         {

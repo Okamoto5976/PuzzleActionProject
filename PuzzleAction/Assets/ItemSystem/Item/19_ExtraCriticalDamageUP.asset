@@ -26,9 +26,9 @@ MonoBehaviour:
   m_se: {fileID: 11400000, guid: 135bf20b00e2ac94283a83aa7e7a1008, type: 2}
   m_buffEffectType: 0
   m_buffItemClass:
-  - m_value: 0.4
+  - m_value: 0.8
     m_statusType: 6
     m_modifierType: 0
-    m_duration: 30
+    m_duration: 60
     m_buffID: 15
   m_passiveType: 0

@@ -29,7 +29,7 @@ public class TestAddItem : MonoBehaviour
     [ContextMenu("AddMoney")]
     public void Money()
     {
-        GameManager.Instance.ModifyMoney(50);
+        GameManager.Instance.ModifyMoney(5000);
     }
 
 

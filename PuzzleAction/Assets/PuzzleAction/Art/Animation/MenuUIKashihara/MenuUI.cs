@@ -31,6 +31,9 @@ public class MenuUI : MonoBehaviour
     [Header("MenuScene")]
     [SerializeField] private GameObject[] m_scene;
 
+    [SerializeField] private StaticSceneAsset m_exitScene;
+
+
     private void OnEnable()
     {
         TransitionTitle();
@@ -42,9 +45,9 @@ public class MenuUI : MonoBehaviour
 
         if(data != null)
         {
-            m_masterSlider.value = data.m_masterVolume;
-            m_bgmSlider.value = data.m_bgmVolume;
-            m_seSlider.value = data.m_seVolume;
+            m_masterSlider.value = data.masterVolume;
+            m_bgmSlider.value = data.bgmVolume;
+            m_seSlider.value = data.seVolume;
         }
         else
         {
@@ -100,14 +103,16 @@ public class MenuUI : MonoBehaviour
     //}
 
 
-    public void TransitionGame()
-    {
-        Debug.Log("Start!!!");
-    }
+    //public void TransitionGame()
+    //{
+    //    Debug.Log("Start!!!");
+    //}
 
     public void ExitSesssion()
     {
-        Debug.Log("Exit");
+        LoadManager.m_instance.LoadScene(m_exitScene.Value);
+
+        //Debug.Log("Exit");
     }
 
     public void SetMasterVolume(float value)

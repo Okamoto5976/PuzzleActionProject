@@ -1716,6 +1716,7 @@ MonoBehaviour:
   m_scene:
   - {fileID: 3246868586156816132}
   - {fileID: 3573474587166616909}
+  m_exitScene: {fileID: 11400000, guid: 8a9d9297257ddd349993156abe1ce1a1, type: 2}
 --- !u!1 &2463925483127098325
 GameObject:
   m_ObjectHideFlags: 0

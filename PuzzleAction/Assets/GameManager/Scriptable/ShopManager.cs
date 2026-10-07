@@ -278,7 +278,7 @@ public class ShopManager : MonoBehaviour
         //textManager start
         _currentShopId = id;
 
-        m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.SeeYou);
+        //m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.SeeYou);
     }
 
     private void SetShopText()

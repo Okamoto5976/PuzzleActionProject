@@ -133,7 +133,7 @@ abstract public class Entity : MonoBehaviour
     public bool CanMove { get => m_canMove; }
     public bool IsStun => m_isStun || StunTimer > 0f;
     //public bool IsInvincible => m_isInvincible || InvincibleTimer > 0f;
-    public bool IsInvincible => m_isInvincible;
+    public bool IsInvincible => Invincible > 0f  || m_isInvincible;
     public bool IsKnockBack => m_isKnockBack || KnockBackTimer > 0f;
     public bool IsEvading
     {
