@@ -15,6 +15,10 @@ public class BearTrap : TrapBase
     private Coroutine m_damageCoroutine;
 
     [SerializeField] private AudioData m_se;
+    private void Awake()
+    {
+        m_anim = GetComponentInChildren<Animator>();
+    }
 
     protected override void EntitySetUp()
     {
@@ -83,6 +87,8 @@ public class BearTrap : TrapBase
 
     private IEnumerator DamageCoroutine()
     {
+        m_anim.SetBool("Attack", true);
+
         while (m_targets.Count > 0)
         {
             List<Entity> removeTargets = new List<Entity>();
@@ -122,6 +128,8 @@ public class BearTrap : TrapBase
 
     private void StopDamage()
     {
+        m_anim.SetBool("Attack", false);
+
         if (m_damageCoroutine != null)
         {
             StopCoroutine(m_damageCoroutine);
