@@ -53,6 +53,7 @@ public class BossEnemyController : Entity
 
     private float m_cooldownTimer;
     private bool m_isCooldownReady = true;
+    private bool m_isRotating = true;
 
     private NavMeshAgent m_agent;
     private IBossBehaviour m_bossBehaviour;
@@ -66,6 +67,7 @@ public class BossEnemyController : Entity
     public Vector3 SpawnPosition { get; private set; }
     public NavMeshAgent Agent => m_agent;
     public Vector3Asset Target => m_target;
+    public Vector3 Forward => transform.forward;
 
     public void InitializeSpawn()
     {
@@ -120,24 +122,16 @@ public class BossEnemyController : Entity
 
     private void Update()
     {
-        if (CurrentState == Entity.EntityState.Dead) return;
-        if (IsStun)
-        {
-            Stop();
-            if (m_anim != null)
-            {
-                m_anim.SetBool("Move", false);
-            }
-            return;
-        }
-        if (m_target == null) return;
         UpdateFlag();
-        HandleCooldown();
 
+        if (HandleStateMovement()) return;
+
+        if (m_target == null) return;
+
+        HandleCooldown();
         float distance = Vector3.Distance(transform.position, m_target.Value);
 
-        Rotate();
-
+        HandleRotation(distance);
         if (distance > m_findRange)
         {
             StopAll();
@@ -255,55 +249,113 @@ public class BossEnemyController : Entity
     #endregion
 
     #region MOVE
+    private bool HandleStateMovement()
+    {
+        if (CurrentState == EntityState.Dead) return true;
+
+        if (IsKnockBack)
+        {
+            m_agent.ResetPath();
+            m_agent.isStopped = true;
+
+            m_agent.Move(m_knockBackVelocity.normalized * (m_knockbackPower * 5f) * Time.deltaTime);
+
+            return true;
+        }
+
+        if (!m_canMove || IsStun)
+        {
+            m_agent.ResetPath();
+            Stop();
+            if (m_anim != null)
+            {
+                m_anim.SetBool("Move", false);
+            }
+            return true;
+        }
+
+        return false;
+    }
     public void InputMove(Vector3 dir, float speed)
     {
-        if (!CanAction) return;
         if (dir == Vector3.zero)
         {
             Stop();
+
+            m_agent.Move(Vector3.zero);
             return;
         }
 
         m_agent.isStopped = false;
         m_agent.speed = speed;
 
-        m_agent.Move(dir * speed * Time.deltaTime);
+        m_agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        m_agent.avoidancePriority = 50;
+        m_agent.Move(dir * m_agent.speed * Time.deltaTime);
     }
     public void SetDestination(Vector3 pos, float speed)
     {
-        m_agent.isStopped = false;
+        if (CurrentState == EntityState.Dead) return;
+
         if (m_anim != null)
         {
             m_anim.SetBool("Move", !m_agent.isStopped);
         }
+
+        m_agent.isStopped = false;
+
         m_agent.speed = speed;
         m_agent.acceleration = speed * 2.5f;
         m_agent.stoppingDistance = m_attackRange;
 
         m_agent.SetDestination(pos);
     }
+    #endregion
+
+    #region ROTATE
+    private void HandleRotation(float distance)
+    {
+        if (!m_isRotating) return;
+        if (distance > m_findRange) return;
+
+        Vector3 dir = m_target.Value - transform.position;
+        Rotate(dir);
+    }
+    private void Rotate(Vector3 dir)
+    {
+        dir.y = 0f;
+        if (dir == Vector3.zero) return;
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
+    }
+    public void SetEnableRotation(bool state)
+    {
+        m_isRotating = state;
+    }
+    #endregion
+
+    #region STOP
     public void Stop()
     {
         m_agent.isStopped = true;
+
+        if (m_anim != null)
+        {
+            m_anim.SetBool("Move", false);
+        }
     }
     private void StopAll()
     {
         Stop();
         m_bossBehaviour?.Stop();
     }
-    private void Rotate()
-    { 
-        Vector3 dir = m_target.Value - transform.position;
-        dir.y = 0;
-        if (dir == Vector3.zero) return;
+    #endregion
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10f * Time.deltaTime);
-    }
-    public Vector3 GetRandomPosition(float range)
+    #region POSITION
+    public Vector2 GetRandomPosition(float range)
     {
-        Vector3 result = transform.position;
-
-        for (float i = range; i >= 0; i--)
+        Vector2 result = new Vector2(transform.position.x, transform.position.z);
+        for (float i = range; i >= 0; i -= 1f)
         {
             Vector3 randomPoint = transform.position + new Vector3((UnityEngine.Random.value * 2 - 1) * range, 0, (UnityEngine.Random.value * 2 - 1) * range);
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
@@ -313,7 +365,17 @@ public class BossEnemyController : Entity
                 break;
             }
         }
+
         return result;
+    }
+    public void TeleportToPosition(Vector2 position)
+    {
+        Vector3 origin = transform.position;
+
+        origin.x = position.x;
+        origin.z = position.y;
+
+        m_agent.Warp(origin);
     }
     #endregion
 
