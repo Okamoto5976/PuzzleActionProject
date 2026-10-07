@@ -72,7 +72,7 @@ MonoBehaviour:
   m_stunSE: {fileID: 11400000, guid: 7f94ee93643c30546a9f5a12811500ea, type: 2}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_target: {fileID: 11400000, guid: 00eff10709c6e1240b962a69d02ff272, type: 2}
   m_findRange: 10
   m_attackRange: 4

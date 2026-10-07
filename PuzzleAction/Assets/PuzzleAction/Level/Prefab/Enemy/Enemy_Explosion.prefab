@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7721ef16df94d244c9248d6ba745026d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Explosion
-  m_explodeSE: {fileID: 0}
+  m_explodeSE: {fileID: 11400000, guid: 7e76965e45f4e7f4c9b4eed3d8e16913, type: 2}
 --- !u!114 &2784328855026812732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,15 +395,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00192
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.8123
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.08325
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_LocalRotation.w
