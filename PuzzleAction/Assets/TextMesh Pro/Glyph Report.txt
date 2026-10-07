@@ -1,0 +1,13 @@
+Font: JF Dot Shinonome Gothic 12  Style: Regular
+Point Size: 21   Padding: 0   SP/PD Ratio: 0.0%
+
+Characters included: 686/687
+Missing characters: 1
+Excluded characters: 0
+
+Characters missing from font file:
+----------------------------------------
+ID: 9	Hex: 9	Char [	]
+
+Characters excluded from packing:
+----------------------------------------
