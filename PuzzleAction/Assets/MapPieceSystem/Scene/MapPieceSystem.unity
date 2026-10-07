@@ -254,7 +254,7 @@ MonoBehaviour:
   m_parent: {fileID: 694388302}
   m_guide: {fileID: 1466289117}
   m_rulePanel: {fileID: 1650921920}
-  m_bgm: {fileID: 11400000, guid: 1fbe9cf3f999c8d43acf83f760fd2fab, type: 2}
+  m_bgm: {fileID: 11400000, guid: ee53b47dcff05fb4983553b812c535c4, type: 2}
   m_UISE: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!114 &50533905
 MonoBehaviour:
