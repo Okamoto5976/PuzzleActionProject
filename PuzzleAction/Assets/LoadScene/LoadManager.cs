@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class LoadManager : MonoBehaviour
 {
@@ -10,6 +11,18 @@ public class LoadManager : MonoBehaviour
     [SerializeField] private float m_fadeTime = 0.5f;
 
     [SerializeField] private GameObject m_panel;
+
+    [SerializeField] private TMP_Text m_tipsText;
+    private int m_lastTip = -1;
+    [TextArea(2, 5)]
+    [SerializeField]    private string[] m_tips =
+        {
+        "炎、毒、ガス のバフダメージは HP１残ります",
+        "アイテムの[ダイナマイト]　[けおどし爆弾]は　使用者も　ダメージを受けます",
+        "特定のアイテムを揃えて持っておくといいことが...？",
+        "マップピース設置は スタート地点に 危険を置かないよう気を付けましょう",
+        "５階層ごとにボスがおり、倒さないとゴールはできません",
+        };
 
     void Awake()
     {
@@ -24,13 +37,26 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    public void LoadScene(string  sceneName)
+    public void LoadScene(string sceneName)
     {
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        if (m_tips.Length > 0)
+        {
+            int index;
+
+            do
+            {
+                index = Random.Range(0, m_tips.Length);
+            }
+            while (m_tips.Length > 1 && index == m_lastTip);
+
+            m_lastTip = index;
+            m_tipsText.text = m_tips[index];
+        }
         m_panel.SetActive(true);
 
         yield return FadeOut();
@@ -69,7 +95,7 @@ public class LoadManager : MonoBehaviour
         float startAlpha = m_canvasGroup.alpha;
         float time = 0f;
 
-        while(time < m_fadeTime)
+        while (time < m_fadeTime)
         {
             time += Time.unscaledDeltaTime;
 
