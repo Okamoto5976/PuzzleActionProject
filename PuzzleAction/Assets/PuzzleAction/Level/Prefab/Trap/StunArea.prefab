@@ -4954,6 +4954,7 @@ MonoBehaviour:
   m_trapData: {fileID: 11400000, guid: 92d3a5500578a2f458ff2128ebeee36c, type: 2}
   m_speed: 0
   m_stunParticle: {fileID: 7656174984068059964}
+  m_se: {fileID: 11400000, guid: c610e68b4a31eb940b29004e6965c694, type: 2}
 --- !u!114 &4969366526268400199
 MonoBehaviour:
   m_ObjectHideFlags: 0

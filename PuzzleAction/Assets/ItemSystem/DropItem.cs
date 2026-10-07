@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DropItem : MonoBehaviour
 {
@@ -27,23 +28,7 @@ public class DropItem : MonoBehaviour
     //private bool m_isWall;
     private bool m_isGround;
 
-    ////playerの座標が自身の半径３mいないに　プレイヤーが入ったら　プレイヤーにアイテムを渡す。
-    //private void ItemGet(Collider other)
-    //{
-    //    if (Vector3.Distance(transform.position, other.transform.position) <= radius)
-    //    {
-    //        if (pool == null)
-    //        {
-    //            Debug.LogError("Pool is not assigned.");
-    //            return;
-    //        }
-    //        if (other.CompareTag("Player"))
-    //        {
-    //            //Add.inventory();
-    //            Return();
-    //        }
-    //    }
-    //}
+    private Coroutine m_returnCoroutine;
 
     private void Awake()
     {
@@ -71,13 +56,17 @@ public class DropItem : MonoBehaviour
     //call entity get dropItem
     public void ItemGet()
     {
+        if (m_returnCoroutine != null)
+        {
+            StopCoroutine(m_returnCoroutine);
+            m_returnCoroutine = null;
+        }
+
         Return();
     }
 
     public void Initialize(Item data)
     {
-        float time = m_timeToReturn;
-
         m_ignoreTime = 0.5f;
         //m_isWall = false;
         m_isGround = false;
@@ -89,9 +78,14 @@ public class DropItem : MonoBehaviour
         //y軸の初速
         m_velocity.y = 5f;
 
-        //Debug.Log("Item Init");
 
-        Invoke(nameof(Return), time); // timeToReturn秒後にReturnメソッドを呼び出す
+        if (m_returnCoroutine != null)
+        {
+            StopCoroutine(m_returnCoroutine);
+        }
+
+        m_returnCoroutine = StartCoroutine(ReturnCoroutine());
+
         if (data == null) return;
         SetItemData(data);
     }
@@ -101,6 +95,14 @@ public class DropItem : MonoBehaviour
         m_itemData = data;
 
         m_renderer.sprite = data.icon;
+    }
+
+    private IEnumerator ReturnCoroutine()
+    {
+        yield return new WaitForSeconds(m_timeToReturn);
+
+        Return();
+        m_returnCoroutine = null;
     }
 
     private void Return()

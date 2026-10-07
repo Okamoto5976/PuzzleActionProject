@@ -390,6 +390,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AreaParticle
       objectReference: {fileID: 0}
+    - target: {fileID: 5348808507771183334, guid: 56f8398a926002f4fb6d5fea32420d27, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

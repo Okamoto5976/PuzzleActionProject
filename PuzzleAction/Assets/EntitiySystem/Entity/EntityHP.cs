@@ -21,6 +21,7 @@ abstract public class EntityHP : MonoBehaviour
 
     //Audio
     [SerializeField] private AudioData m_damageSE;
+
     [SerializeField] private AudioData m_criticalSE;
     [SerializeField] private AudioData m_burnSE;
     [SerializeField] private AudioData m_gasSE;
@@ -66,6 +67,7 @@ abstract public class EntityHP : MonoBehaviour
         if(Random.Range(0f,100f)<=data.BreakRate)
         {
             isBreak = true;
+            seData = m_damageSE;
         }
 
         bool isCritical = false;

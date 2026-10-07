@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using TMPro;
 
 public class PlayerController : Entity
 {
@@ -87,6 +88,10 @@ public class PlayerController : Entity
 
     //if using item view cancel 
     [SerializeField] private GameObject m_cancelMessage;
+    [SerializeField] private GameObject m_InteractMessage;
+
+    [SerializeField] private GameObject m_itemMessage;
+
 
     //----passive effect---------------------
     [HideInInspector] public bool m_isCoupon;
@@ -169,6 +174,25 @@ public class PlayerController : Entity
         if(m_currentState == EntityState.Dead) return;
 
         UpdateFlag();
+
+        if(m_interactSystem.CanInteract(transform.position, m_interactLayer))
+        {
+            m_InteractMessage.SetActive(true);
+        }
+        else
+        {
+            m_InteractMessage.SetActive(false);
+
+        }
+
+        if(m_playerItemController.CanGetItem())
+        {
+            m_itemMessage.SetActive(true);
+        }
+        else
+        {
+            m_itemMessage.SetActive(false);
+        }
 
         m_position.SetValue(transform.position);
 

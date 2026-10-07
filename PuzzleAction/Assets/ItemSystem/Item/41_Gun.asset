@@ -25,14 +25,14 @@ MonoBehaviour:
     price: 600
   m_se: {fileID: 11400000, guid: 1136bf377e409654da321a2923128954, type: 2}
   m_damage:
-    Attack: 30
-    CriticalRate: -1
-    CriticalDamage: -1
+    Attack: 40
+    CriticalRate: 9
+    CriticalDamage: 0.5
     BreakRate: -1
     Knockback: 15
     StunDuration: 5
     AttackDir: {x: 0, y: 0, z: 0}
-  m_isRayCollider: 1
+  m_isRayCollider: 0
   m_range: 5
   m_selfBuffList: []
   m_targetBuffList: []

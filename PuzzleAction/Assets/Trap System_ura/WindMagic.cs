@@ -56,12 +56,11 @@ public class WindMagic : TrapBase
         Entity target =
             other.GetComponentInParent<Entity>();
 
-        if (target == null)
-            return;
+        if (target == null) return;
 
-        if (m_owner != null &&
-            target == m_owner)
-            return;
+        if (target.Team == TeamType.Nature) return;
+
+        if (target.Team == m_team) return;
 
         target.TakeDamage(m_damageData);
 

@@ -305,6 +305,20 @@ public class PlayerItemController
         }
     }
 
+    public bool CanGetItem()
+    {
+        DropItem item = GetNearestItem();
+
+        if (item != null) 
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public virtual bool ReceiveItem(Item item)
     {
         //Debug.Log("ReceiveItemŠJŽn");

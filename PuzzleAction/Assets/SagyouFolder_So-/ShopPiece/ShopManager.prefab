@@ -69,6 +69,8 @@ MonoBehaviour:
   m_enteySE: {fileID: 11400000, guid: 0534074b3485996498f3d5109f4ec9b1, type: 2}
   m_bgm: {fileID: 11400000, guid: ffba4064737c22a42b03e2dc0d569cb8, type: 2}
   m_buySE: {fileID: 11400000, guid: 5beb11598cb8c604cbb18298d9ba7f05, type: 2}
+  m_noBuySE: {fileID: 11400000, guid: 4f1f73eca35730249b9373596532f78c, type: 2}
+  m_tutorialManager: {fileID: 0}
   m_tutorialItemes:
   - {fileID: 11400000, guid: b0f2775e3685acb45b05df8ce41899ee, type: 2}
   - {fileID: 11400000, guid: cee31a69152a0fa45add68f50490e7bb, type: 2}

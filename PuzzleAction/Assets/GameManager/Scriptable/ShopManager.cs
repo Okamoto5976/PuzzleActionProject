@@ -82,6 +82,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private AudioData m_enteySE;
     [SerializeField] private AudioData m_bgm;
     [SerializeField] private AudioData m_buySE;
+    [SerializeField] private AudioData m_noBuySE;
 
     private AudioData m_mapBGM;
 
@@ -337,6 +338,8 @@ public class ShopManager : MonoBehaviour
         if (price > money)
         {
             Debug.Log("you do not have money");
+
+            AudioManager.Instance.PlayAudio(m_noBuySE);
 
             m_messageManager?.MessageDisplayRandom(Enum_ShopMessageType.NoMoney);
             return false;

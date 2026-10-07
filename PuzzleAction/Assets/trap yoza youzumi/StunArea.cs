@@ -9,6 +9,8 @@ public class StunArea : TrapBase
 
     private float m_timer;
 
+    [SerializeField] private AudioData m_se;
+
     protected override void EntitySetUp()
     {
     }
@@ -25,6 +27,11 @@ public class StunArea : TrapBase
         {
             m_timer = 0f;
             m_stunParticle.Play();
+
+            if(m_HitTargets.Count > 0)
+            {
+                AudioManager.Instance.PlayAudio(m_se);
+            }
 
             for (int i = 0; i < m_HitTargets.Count; i++)
             {
