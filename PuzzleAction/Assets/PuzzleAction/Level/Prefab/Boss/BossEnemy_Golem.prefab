@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2904195036429326108}
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_dropMoney: 1000
   m_isItemDrop: 1
   m_dropMoneyEventSO: {fileID: 11400000, guid: 6d0ffafaca758a148a55d94701df6b10, type: 2}
+  m_bossAnim: {fileID: 3706960457838832472}
 --- !u!195 &6295794922853557716
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -326,17 +327,37 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 403334365191116840}
+      objectReference: {fileID: 3854363520186093158}
     - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnReturnPool
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BossEnemyHP, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 894199913701251082, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_dieEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 47dfab3d0e41ea0408d3a4d98025cb50, type: 3}
+      objectReference: {fileID: 21300000, guid: 6a46b38d9de1fe545b956243955cf6c4, type: 3}
+    - target: {fileID: 3716078111463343107, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4052661641254162185, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
       propertyPath: m_Name
       value: EnemyRenderer
@@ -390,6 +411,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+--- !u!95 &3706960457838832472 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6859737750580109889, guid: 597d7020f871fba41b5894a9544579b0, type: 3}
+  m_PrefabInstance: {fileID: 7801197480473594137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4511955459999305836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5971426017874123125, guid: 597d7020f871fba41b5894a9544579b0, type: 3}

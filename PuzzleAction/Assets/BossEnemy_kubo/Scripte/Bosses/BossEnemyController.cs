@@ -197,7 +197,7 @@ public class BossEnemyController : Entity
         if (!m_isCooldownReady) return false;
         if (m_anim != null)
         {
-            m_anim.SetTrigger("Attack");
+            m_anim.SetTrigger("Action");
 
         }
         Attack();
@@ -255,6 +255,11 @@ public class BossEnemyController : Entity
             offset = m_shootOffset,
             
         };
+
+        if (m_anim != null)
+        {
+            m_anim.SetTrigger("Item");
+        }
 
         m_itemManager.OnUseItem(m_attackItem, data);
     }

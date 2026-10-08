@@ -9,6 +9,14 @@ public class BossEnemyHP : EntityHP
 
     [SerializeField] private DropMoneyEventSO m_dropMoneyEventSO;
 
+    [SerializeField] private Animator m_bossAnim;
+
+    public override void TakeDamage(DamageData data)
+    {
+        m_bossAnim.SetTrigger("Hit");
+        base.TakeDamage(data);
+    }
+
     protected override void Die()
     {
         BossEnemyController boss = GetComponent<BossEnemyController>();
@@ -24,10 +32,10 @@ public class BossEnemyHP : EntityHP
 
         boss.KillEntity();
         boss.OnDead(m_isItemDrop);
-        OnReturnPool();
+        m_bossAnim.SetTrigger("Die");
     }
 
-    private void OnReturnPool()
+    public void OnReturnPool()
     {
         if (m_returnObjPool == null)
         {
