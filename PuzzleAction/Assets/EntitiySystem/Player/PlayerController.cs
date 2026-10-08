@@ -107,6 +107,7 @@ public class PlayerController : Entity
     [SerializeField] private AudioData m_pull;
     [SerializeField] private AudioData m_hotberSE;
 
+    [SerializeField] private GameObject m_attackParticle;
 
     //[Header("Audio")]
     //[SerializeField] private AudioData 
@@ -432,6 +433,11 @@ public class PlayerController : Entity
     public void ItemTextDescription(string description)
     {
         m_itemDescriptionText.text = description;
+    }
+
+    public void AttackParticle(bool active)
+    {
+        m_attackParticle.SetActive(active);
     }
     #endregion
 

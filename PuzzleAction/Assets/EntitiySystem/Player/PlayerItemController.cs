@@ -66,6 +66,8 @@ public class PlayerItemController
         }
         else if(m_isUsingAttackItem)
         {
+            m_playerController.AttackParticle(false);
+
             m_isUsingAttackItem = false;
             m_power = 0f;
         }
@@ -111,6 +113,7 @@ public class PlayerItemController
         {
             m_playerController.CancelMessageActive(true);
 
+            m_playerController.AttackParticle(true);
 
             m_isUsingAttackItem = true;
             m_power = 3f;
@@ -186,6 +189,9 @@ public class PlayerItemController
         else if (m_isUsingAttackItem)
         {
             m_isUsingAttackItem = false;
+
+            m_playerController.AttackParticle(false);
+
 
             ItemRecieveData data = CreateItemData(m_arrowTemporaryForward, m_power);
             m_inventorySystem.UseRelease(hotberIndex, data);

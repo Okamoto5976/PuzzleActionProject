@@ -189,7 +189,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
         for (int i = 0; i < m_selectedMaps.Count; i++)
         {
             MapRewardData reward = new();
-            reward.StartMoney = Random.Range(500, 2001);
+            reward.StartMoney = Random.Range(500, 1000);
             m_mapRewards.Add(i, reward);
         }
     }

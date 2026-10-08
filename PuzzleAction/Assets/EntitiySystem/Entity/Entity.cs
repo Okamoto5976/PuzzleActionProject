@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -163,7 +164,9 @@ abstract public class Entity : MonoBehaviour
 
     [SerializeField] private AudioData m_stunSE;
 
-
+    //[SerializeField] private GameObject m_stunParticle;
+    //private Coroutine m_stunCoroutine;
+     
     protected virtual void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -315,7 +318,31 @@ abstract public class Entity : MonoBehaviour
         StunTimer = actualDuration;
 
         AudioManager.Instance.PlayAudio(m_stunSE);
+
+        //m_stunParticle.SetActive(true);
+
+        //if (m_stunCoroutine != null)
+        //{
+        //    StopCoroutine(m_stunCoroutine);
+        //    StartCoroutine(StunCoroutine(actualDuration));
+
+        //}
+        //else
+        //{
+        //    StartCoroutine(StunCoroutine(actualDuration));
+
+        //}
+
     }
+
+    //private IEnumerator StunCoroutine(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+
+    //    m_stunParticle.SetActive(false);
+
+    //    m_stunCoroutine = null;
+    //}
 
     //public void ApplyInvincible(float duration)
     //{

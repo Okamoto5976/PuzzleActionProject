@@ -50,9 +50,11 @@ public class KnockBackBomb : TrapBase
 
         Entity target = other.GetComponentInParent<Entity>();
 
+        if (target == null || target.Team == m_team) return;
+
+
         if (target.Team == TeamType.Nature) return;
 
-        if (target == null || target.Team == m_team) return;
 
         if (m_fireParticle != null) m_fireParticle.Play();
         m_isFuseActive = true;
