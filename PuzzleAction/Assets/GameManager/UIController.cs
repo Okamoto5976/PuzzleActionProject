@@ -27,7 +27,6 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_Text m_moneyText;
     [SerializeField] private string m_moneyName;
 
-
     public bool IsMenu => m_menuUI.gameObject.activeSelf;
     private bool m_isInventory = false;
     //private bool isInventoryOpen = false;
@@ -125,6 +124,5 @@ public class UIController : MonoBehaviour
 
         m_gameClearUI.SetActive(isbool);
     }
-
 
 }

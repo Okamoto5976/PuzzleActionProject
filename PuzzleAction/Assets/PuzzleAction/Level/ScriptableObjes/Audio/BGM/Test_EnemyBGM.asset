@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Test_EnemyBGM
   m_EditorClassIdentifier: Assembly-CSharp::AudioData
   audioClip: {fileID: 8300000, guid: cb5001be75e426f48ad1bbac376ef364, type: 3}
-  volume: 1
+  volume: 0.8
+  pitch: 1
   isLoop: 1

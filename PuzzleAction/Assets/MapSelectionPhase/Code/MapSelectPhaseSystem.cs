@@ -34,6 +34,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
     private float m_currentX;
     private int m_selectedIndex = -1;
 
+    [SerializeField] private AudioData m_se;
+
     [Header("Tutorial")]
     [SerializeField] private MapSettingSO m_tutorialMap;
     [SerializeField] private GameObject m_guidePanel;
@@ -41,6 +43,7 @@ public class MapSelectPhaseSystem : MonoBehaviour
     private void Start()
     {
         m_nextsceneButton.onClick.AddListener(GoMapPieceSystem);
+        AudioManager.Instance.PlayAudio(m_bgm);
 
         if(GameManager.Instance.IsTutorial)
         {
@@ -60,7 +63,6 @@ public class MapSelectPhaseSystem : MonoBehaviour
 
         StartCoroutine(LoadManager.m_instance.FadeIn());
 
-        AudioManager.Instance.PlayAudio(m_bgm);
 
     }
 
@@ -72,6 +74,11 @@ public class MapSelectPhaseSystem : MonoBehaviour
         m_mapRewards.Add(0, new MapRewardData(){StartMoney = 1000});
 
         CreatePreviews();
+    }
+
+    public void OnSE()
+    {
+        AudioManager.Instance.PlayAudio(m_se);
     }
 
     #region Create Maps
@@ -207,6 +214,8 @@ public class MapSelectPhaseSystem : MonoBehaviour
     private void SelectMap(int index)
     {
         //Debug.Log($"SelectMap : {index}");
+        OnSE();
+
         m_selectedIndex = index;
         ApplyMap();
         Highlight(index);

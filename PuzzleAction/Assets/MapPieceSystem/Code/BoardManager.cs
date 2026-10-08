@@ -298,4 +298,9 @@ public class BoardManager : MonoBehaviour
     {
         m_rulePanel.SetActive(value);
     }
+
+    public void OnSE()
+    {
+        AudioManager.Instance.PlayAudio(m_UISE);
+    }
 }

@@ -33,7 +33,7 @@ public class MenuUI : MonoBehaviour
 
     [SerializeField] private StaticSceneAsset m_exitScene;
 
-
+    [SerializeField] private AudioData m_se;
     private void OnEnable()
     {
         TransitionTitle();
@@ -128,5 +128,10 @@ public class MenuUI : MonoBehaviour
     public void SetSEVolume(float value)
     {
         AudioManager.Instance.SetSE(value);
+    }
+
+    public void OnSE()
+    {
+        AudioManager.Instance.PlayAudio(m_se);
     }
 }

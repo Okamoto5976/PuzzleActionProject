@@ -214,12 +214,16 @@ public class InventoryUIController : MonoBehaviour
 
     //=========hotbar=====================
 
+    [SerializeField] private AudioData m_SE;
+
     public void OnMoveItemHotber1()
     {
         //Debug.Log($"Hotbar1 index = {m_index}");
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(0, m_index);
+
+        AudioManager.Instance.PlayAudio(m_SE);
     }
 
     public void OnMoveItemHotber2()
@@ -229,6 +233,9 @@ public class InventoryUIController : MonoBehaviour
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(1, m_index);
+
+        AudioManager.Instance.PlayAudio(m_SE);
+
     }
 
     public void OnMoveItemHotber3()
@@ -238,6 +245,9 @@ public class InventoryUIController : MonoBehaviour
         if (m_index == -1) return;
 
         inventorySystem.AddHotber(2, m_index);
+
+        AudioManager.Instance.PlayAudio(m_SE);
+
     }
 
     public void OnUseHotbar1()

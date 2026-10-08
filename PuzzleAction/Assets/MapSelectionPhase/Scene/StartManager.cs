@@ -23,6 +23,8 @@ public class StartManager : MonoBehaviour
     //-----audio save set-------------
     private OptionSaveManager m_optionSaveManager = new();
 
+    [SerializeField] private AudioData m_se;
+
     private void Awake()
     {
         m_inventorySaveManager = GetComponent<InventorySaveManager>();
@@ -154,6 +156,11 @@ public class StartManager : MonoBehaviour
     public void OnOption(bool isActive)
     {
         m_option.SetActive(isActive);
+    }
+
+    public void OnSE()
+    {
+        AudioManager.Instance.PlayAudio(m_se);
     }
 
     public void OnQuit()

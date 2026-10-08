@@ -205,6 +205,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &974063507436573132
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,6 +722,18 @@ MonoBehaviour:
       - m_Target: {fileID: 6647856782984371037}
         m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
         m_MethodName: TransitionTitle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1452,6 +1476,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2263917592044953373
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,6 +1749,7 @@ MonoBehaviour:
   - {fileID: 3246868586156816132}
   - {fileID: 3573474587166616909}
   m_exitScene: {fileID: 11400000, guid: 8a9d9297257ddd349993156abe1ce1a1, type: 2}
+  m_se: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!1 &2463925483127098325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,6 +1943,18 @@ MonoBehaviour:
       - m_Target: {fileID: 6647856782984371037}
         m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
         m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2224,6 +2273,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3573474587166616909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,6 +2450,18 @@ MonoBehaviour:
       - m_Target: {fileID: 6647856782984371037}
         m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
         m_MethodName: TransitionOption
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6647856782984371037}
+        m_TargetAssemblyTypeName: MenuUI, Assembly-CSharp
+        m_MethodName: OnSE
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

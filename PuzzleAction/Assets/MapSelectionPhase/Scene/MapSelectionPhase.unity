@@ -565,7 +565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &793350729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,7 +627,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &793350732
 RectTransform:
@@ -1011,7 +1011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1278535342
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1152,7 +1152,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1279287836}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1995151483}
+        m_TargetAssemblyTypeName: MapSelectPhaseSystem, Assembly-CSharp
+        m_MethodName: OnSE
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1279287836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,7 +1723,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f191b4c47604e1c47a4c5e5e21383295, type: 2}
   - {fileID: 11400000, guid: 05bc432151649f9429546512e0a179a3, type: 2}
   m_mapCount: 3
-  m_bgm: {fileID: 11400000, guid: ee53b47dcff05fb4983553b812c535c4, type: 2}
+  m_bgm: {fileID: 11400000, guid: 21159d252c5796e42843e21355b1f23f, type: 2}
   m_nextsceneButton: {fileID: 1279287835}
   m_previewRoot: {fileID: 1103900703}
   m_tilePrefab: {fileID: 4078036842766913395, guid: a5a07a4e2c0691c4bbdaf88e5bdcb7c2, type: 3}
@@ -1719,6 +1731,7 @@ MonoBehaviour:
   m_maxPreviewWidth: 500
   m_previewSpacing: 100
   m_mapPieceSystem: {fileID: 11400000, guid: e146380b9990c5746a4d09a816b1ddd5, type: 2}
+  m_se: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
   m_tutorialMap: {fileID: 11400000, guid: c80b372e9de729641ac9ff706c6ccd70, type: 2}
   m_guidePanel: {fileID: 1278535341}
 --- !u!1 &2125702354

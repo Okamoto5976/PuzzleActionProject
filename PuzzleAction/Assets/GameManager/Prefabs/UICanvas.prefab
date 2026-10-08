@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1937743798075466945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameOverUISystem
   m_sceneEvent: {fileID: 11400000, guid: f36914501f8c0794181e6831ceed798d, type: 2}
   m_exitScene: {fileID: 11400000, guid: 8a9d9297257ddd349993156abe1ce1a1, type: 2}
+  m_se: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!1 &8714338102213132261
 GameObject:
   m_ObjectHideFlags: 0

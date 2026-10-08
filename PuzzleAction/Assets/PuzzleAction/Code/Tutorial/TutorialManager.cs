@@ -42,6 +42,8 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] private GameObject m_backPanel;
 
+    [SerializeField] private AudioData m_clickSE;
+
     private void Start()
     {
         if (!GameManager.Instance.IsTutorial) return;
@@ -416,6 +418,11 @@ public class TutorialManager : MonoBehaviour
 
         //false
         //–ß‚·
+    }
+
+    public void OnSE()
+    {
+        AudioManager.Instance.PlayAudio(m_clickSE);
     }
 
 

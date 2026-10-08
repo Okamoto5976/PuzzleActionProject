@@ -2892,6 +2892,7 @@ MonoBehaviour:
   m_hotbarPanel: {fileID: 4232691192695798958}
   m_Panel: {fileID: 5203998159795532254}
   m_tutorialManager: {fileID: 0}
+  m_SE: {fileID: 11400000, guid: d37cedaf3a550d04a9ef8005bb34965d, type: 2}
 --- !u!114 &7778454511017329269
 MonoBehaviour:
   m_ObjectHideFlags: 0
