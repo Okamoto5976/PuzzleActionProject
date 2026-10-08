@@ -299,52 +299,95 @@ public class EnemyController : Entity
 
         return item;
     }
-    public void UseItem(Vector3 dir)
+    public void UseItem()
     {
         AttackItem useData = GetUseItem();
 
         if (useData == null) return;
+
         if (useData.attackItem == null)
         {
-            Debug.LogError($"{name} attackItem is NULL"); return;
+            Debug.LogError($"{name} attackItem is NULL");
+            return;
         }
 
-        ItemRecieveData data =
-            new ItemRecieveData
-            {
-                entity = this,
-                pos = transform.position,
-                dir = dir,
-                power = m_power * 8,
-                offset = m_shootOffset,
-            };
-
-        if (m_anim != null && !string.IsNullOrEmpty(useData.ItemAnimation))
+        if (m_anim != null &&
+            !string.IsNullOrEmpty(useData.ItemAnimation))
         {
             if (m_anim.parameters.Any(x => x.name == useData.ItemAnimation))
             {
                 m_anim.SetTrigger(useData.ItemAnimation);
             }
-            else
-            {
-                Debug.LogWarning($"{name} Animator Parameter Missing : {useData.ItemAnimation}");
-            }
         }
 
         m_attackItem = useData;
-        m_itemRecieveData = data;
-
-        //m_itemManager.OnUseItem(useData.attackItem, data);
     }
+    //public void UseItem(Vector3 dir)
+    //{
+    //    AttackItem useData = GetUseItem();
+
+    //    if (useData == null) return;
+    //    if (useData.attackItem == null)
+    //    {
+    //        Debug.LogError($"{name} attackItem is NULL"); return;
+    //    }
+
+    //    ItemRecieveData data =
+    //        new ItemRecieveData
+    //        {
+    //            entity = this,
+    //            pos = transform.position,
+    //            dir = dir,
+    //            power = m_power * 8,
+    //            offset = m_shootOffset,
+    //        };
+
+    //    if (m_anim != null && !string.IsNullOrEmpty(useData.ItemAnimation))
+    //    {
+    //        if (m_anim.parameters.Any(x => x.name == useData.ItemAnimation))
+    //        {
+    //            m_anim.SetTrigger(useData.ItemAnimation);
+    //        }
+    //        else
+    //        {
+    //            Debug.LogWarning($"{name} Animator Parameter Missing : {useData.ItemAnimation}");
+    //        }
+    //    }
+
+    //    m_attackItem = useData;
+    //    m_itemRecieveData = data;
+
+    //    //m_itemManager.OnUseItem(useData.attackItem, data);
+    //}
 
     private AttackItem m_attackItem;
     private ItemRecieveData m_itemRecieveData;
 
     public void OnUseItem()
     {
-        m_itemManager.OnUseItem(m_attackItem.attackItem, m_itemRecieveData);
+        if (m_target == null) return;
 
+        Vector3 dir = m_target.Value - transform.position;
+        dir.y = 0f;
+        transform.rotation = Quaternion.LookRotation(dir);
+
+        ItemRecieveData data =
+            new ItemRecieveData
+            {
+                entity = this,
+                pos = transform.position,
+                dir = dir.normalized,
+                power = m_power * 8,
+                offset = m_shootOffset,
+            };
+
+        m_itemManager.OnUseItem(m_attackItem.attackItem, data);
     }
+    //public void OnUseItem()
+    //{
+    //    m_itemManager.OnUseItem(m_attackItem.attackItem, m_itemRecieveData);
+
+    //}
     #endregion
 
     #region MOVE
