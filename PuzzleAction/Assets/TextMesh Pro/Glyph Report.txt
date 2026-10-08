@@ -1,7 +1,7 @@
 Font: JF Dot Shinonome Gothic 12  Style: Regular
-Point Size: 21   Padding: 0   SP/PD Ratio: 0.0%
+Point Size: 18   Padding: 2   SP/PD Ratio: 11.1%
 
-Characters included: 686/687
+Characters included: 694/695
 Missing characters: 1
 Excluded characters: 0
 
