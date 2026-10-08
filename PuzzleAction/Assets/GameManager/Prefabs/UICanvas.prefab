@@ -1802,9 +1802,9 @@ MonoBehaviour:
   m_gameOverUIEvent: {fileID: 11400000, guid: 7eeab09825dd6ab49a9d42adf6296453, type: 2}
   m_tutorialManager: {fileID: 0}
   m_levelText: {fileID: 4939417214284880064}
-  m_levelName: "\u6700\u9AD8\u5230\u9054\u968E\u5C64"
+  m_levelName: "\u6700\u9AD8\u5230\u9054\u968E\u5C64 : "
   m_moneyText: {fileID: 1442973538863251813}
-  m_moneyName: "\u6240\u6301\u91D1"
+  m_moneyName: "\u6240\u6301\u91D1 : $"
 --- !u!114 &1016455214197741527
 MonoBehaviour:
   m_ObjectHideFlags: 0

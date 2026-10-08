@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerHP : EntityHP
 {
     [SerializeField] private ParticleSystem m_blood;
+    [SerializeField] private ParticleSystem m_dieParticle;
 
     [SerializeField] private EventSO m_playerDeadEvent;
 
@@ -41,6 +42,8 @@ public class PlayerHP : EntityHP
     [ContextMenu("PlayerDead")]
     protected override void Die()
     {
+        m_dieParticle.Play();
+
         Debug.Log("ゲームオーバー");
         AudioManager.Instance.PlayAudio(m_dieSE);
 

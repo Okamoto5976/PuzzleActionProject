@@ -114,7 +114,7 @@ public class UIController : MonoBehaviour
 
         m_gameOverUI.SetActive(isbool);
 
-        m_levelText.text = m_levelName + GameManager.Instance.Level.ToString();
+        m_levelText.text = m_levelName + GameManager.Instance.Level.ToString() + "ŠK‘w";
         m_moneyText.text = m_moneyName + GameManager.Instance.Money.ToString();
 
     }

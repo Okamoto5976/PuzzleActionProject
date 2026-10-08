@@ -281,6 +281,7 @@ Transform:
   - {fileID: 781869982463653725}
   - {fileID: 3799260462204051300}
   - {fileID: 8599651168551484272}
+  - {fileID: 7686437201053534320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &292732359283115402
@@ -323,6 +324,8 @@ MonoBehaviour:
   m_itemDescriptionText: {fileID: 0}
   m_textErrorMessage: {fileID: 0}
   m_cancelMessage: {fileID: 0}
+  m_InteractMessage: {fileID: 0}
+  m_itemMessage: {fileID: 0}
   m_isCoupon: 0
   m_isMemberShip: 0
   m_isWinnerTrophy: 0
@@ -350,11 +353,11 @@ MonoBehaviour:
   m_isTutorial: 0
   m_damageParticleController: {fileID: 8834109383432628176}
   m_damageSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
-  m_breakSE: {fileID: 11400000, guid: 831039b84f6e49646beecf21a3795018, type: 2}
   m_criticalSE: {fileID: 11400000, guid: c82ef0266b0815a47abc53150914e993, type: 2}
   m_burnSE: {fileID: 11400000, guid: d553ef9539d15b341be4cfab1dfad9ef, type: 2}
   m_gasSE: {fileID: 11400000, guid: 5400cd270f909f84e8fc9286baceb69f, type: 2}
   m_blood: {fileID: 7711612278638627893}
+  m_dieParticle: {fileID: 7759810922234269091}
   m_playerDeadEvent: {fileID: 11400000, guid: fc782fd3afb53c84997fbfd9f631bf13, type: 2}
   m_cameraManager: {fileID: 0}
   m_dieSE: {fileID: 11400000, guid: 6bc3f231c0d0fec4bb7ca5a8741b1871, type: 2}
@@ -1034,6 +1037,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81e4d446931be2743bc9315b2489b62e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AimTrail
+--- !u!1001 &2425576066755354740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5968134673738187912}
+    m_Modifications:
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5469287784375368751, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+      propertyPath: m_Name
+      value: PlayerDieParticle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+--- !u!4 &7686437201053534320 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5405117232281856004, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+  m_PrefabInstance: {fileID: 2425576066755354740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &7759810922234269091 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5339301579811728855, guid: 33ed352944d49fa4e9acf2f481a0698e, type: 3}
+  m_PrefabInstance: {fileID: 2425576066755354740}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3444739532293878978
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1054,13 +1124,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4957067741838506231, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4957067741838506231, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4957067741838506231, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7583045853468929143, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7583045853468929143, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.705
+      value: 1.81
       objectReference: {fileID: 0}
     - target: {fileID: 7583045853468929143, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1094,6 +1176,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9025968328586581396, guid: 348bde615cc56864fb0ee1e6f4bfb0b6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a4fb48a324a66c34ab0052402445d0d9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
