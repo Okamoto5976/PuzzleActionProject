@@ -308,7 +308,7 @@ public class PlayerController : Entity
 
         if (m_isEvading)
         {
-            Move(m_evadeDirection, Speed * 1.5f);
+            Move(m_evadeDirection, Speed * 1.8f);
         }
         else
         {
