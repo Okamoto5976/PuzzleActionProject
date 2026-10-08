@@ -23,6 +23,18 @@ public class CaltropTrap : TrapBase
         }
     }
 
+    public override void TrapInit()
+    {
+        base.TrapInit();
+
+        m_targets.Clear();
+        if (m_damageCoroutine != null)
+        {
+            StopCoroutine(m_damageCoroutine);
+            m_damageCoroutine = null;
+        }
+    }
+
     protected override void OnHit()
     {
     }
@@ -71,7 +83,7 @@ public class CaltropTrap : TrapBase
 
     private IEnumerator DamageCoroutine()
     {
-     while (m_targets.Count > 0)
+        while (m_targets.Count > 0)
         {
             List<Entity> removeTargets = new List<Entity>();
 
@@ -99,7 +111,9 @@ public class CaltropTrap : TrapBase
             yield return new WaitForSeconds(1.0f);
         }
 
-        m_damageData = null;
+        //m_damageData = null;
+        m_damageCoroutine = null;
+
     }
 
 
