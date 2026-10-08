@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class DisplayManager : MonoBehaviour
 {
+    [SerializeField] private BoolEventSO m_canGoalEvent;
+    [SerializeField] private GameObject m_goalText;
+
     [Header("UI References")]
     //[SerializeField] private HPUI hpUI;
     [SerializeField] private PlayerHPUI playerHPUI;
@@ -48,6 +51,16 @@ public class DisplayManager : MonoBehaviour
         {
             frame.material = Instantiate(m_frameMaterial);
         }
+    }
+
+    private void OnEnable()
+    {
+        m_canGoalEvent.Register(CanGoalText);
+    }
+
+    private void OnDisable()
+    {
+        m_canGoalEvent.Unregister(CanGoalText);
     }
 
     private void Update()
@@ -126,6 +139,11 @@ public class DisplayManager : MonoBehaviour
         }
 
         Debug.LogWarning("BuffIconImage Not enough");
+    }
+
+    public void CanGoalText(bool value)
+    {
+        m_goalText.SetActive(value);
     }
 
     //public void UpdatePlayerHP(int currenHP, int maxHP)

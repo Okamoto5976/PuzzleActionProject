@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GoalSystem : MonoBehaviour, IInteractable
@@ -9,7 +10,11 @@ public class GoalSystem : MonoBehaviour, IInteractable
     //[SerializeField] private bool m_hasKey;//å„ÅXRuntimeDatabool
     //[SerializeField] private float m_goalRadius;
 
+    [SerializeField] private BoolEventSO m_canGoalEvent;
+
     private bool m_isClear = false;
+
+    private Coroutine m_coroutine;
 
     private void Start()
     {
@@ -31,6 +36,14 @@ public class GoalSystem : MonoBehaviour, IInteractable
             if (!GameManager.Instance.HasKey)
             {
                 Debug.Log("Can't goal");
+                m_canGoalEvent.Raise(true);
+
+                if(m_coroutine == null)
+                {
+                    m_coroutine = StartCoroutine(EventCoroutine());
+
+                }
+
                 return;
             }
             else
@@ -50,5 +63,14 @@ public class GoalSystem : MonoBehaviour, IInteractable
     public void SetValue(bool value)
     {
         m_keyDoor = value;
+    }
+
+    private IEnumerator EventCoroutine()
+    {
+        yield return new WaitForSeconds(3f);
+
+        m_canGoalEvent.Raise(false);
+
+        m_coroutine = null;
     }
 }
