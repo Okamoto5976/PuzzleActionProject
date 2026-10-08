@@ -2578,8 +2578,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 308495851, guid: 5d2c21aee37db3643b50c2b3aaadc81a, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: -52570221, guid: 83d4a1d60800cd74ba69d6a705489273, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3322,8 +3322,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1080601344, guid: 6d714da9f892ff94a825cdf10892441b, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: -52570221, guid: 83d4a1d60800cd74ba69d6a705489273, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
