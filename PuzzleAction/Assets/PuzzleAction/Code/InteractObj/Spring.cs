@@ -13,6 +13,9 @@ public class Spring : MonoBehaviour, IInteractable
     [SerializeField] private int m_minMoney;
     [SerializeField] private int m_maxMoney;
 
+    [SerializeField] private ParticleSystem m_particle;
+    [SerializeField] private AudioData m_se;
+
 
     public void OnInteract(Entity entity)
     {
@@ -35,7 +38,8 @@ public class Spring : MonoBehaviour, IInteractable
                 break;
         }
 
-
+        m_particle.Play();
+        AudioManager.Instance.PlayAudio(m_se);
         
 
         m_isActive = true;
