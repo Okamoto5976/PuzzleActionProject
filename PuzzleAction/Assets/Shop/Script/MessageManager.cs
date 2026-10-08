@@ -11,7 +11,6 @@ public class MessageManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_speakerText;
     [SerializeField] private GameObject m_speechParent;
     private TextDisplay_02 m_textDisplay;
-
     private void Awake()
     {
         m_textDisplay = GetComponent<TextDisplay_02>();
