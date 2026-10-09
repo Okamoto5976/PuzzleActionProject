@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
   m_hp: 70
   m_str: 15
-  m_knockBack: 8
+  m_knockBack: 6
   m_def: 5
   m_speed: 4
   m_criticalRate: 10
