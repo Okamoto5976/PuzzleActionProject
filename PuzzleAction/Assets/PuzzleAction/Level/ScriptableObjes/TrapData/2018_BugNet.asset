@@ -18,7 +18,7 @@ MonoBehaviour:
   m_criticalDamage: 0
   m_breakRate: 0
   m_knockback: 0
-  m_stunDuration: 10
+  m_stunDuration: 20
   m_trapAttack: 0
   m_trapCriticalRate: 0
   m_trapCriticalDamage: 0

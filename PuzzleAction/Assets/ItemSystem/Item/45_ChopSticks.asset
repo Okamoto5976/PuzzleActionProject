@@ -25,10 +25,10 @@ MonoBehaviour:
     price: 1111
   m_se: {fileID: 11400000, guid: 0c055665e11bbff489c1241cab42035d, type: 2}
   m_damage:
-    Attack: 10
+    Attack: 15
     CriticalRate: 9
     CriticalDamage: 0.5
-    BreakRate: 10
+    BreakRate: 20
     Knockback: 0
     StunDuration: 0
     AttackDir: {x: 0, y: 0, z: 0}
