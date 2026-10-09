@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7541d2123e2bc949ad3db636c0979b3, type: 3}
   m_Name: MimicData
   m_EditorClassIdentifier: Assembly-CSharp::EntityData
-  m_hp: 250
+  m_hp: 200
   m_str: 30
   m_knockBack: 0
   m_def: 10
